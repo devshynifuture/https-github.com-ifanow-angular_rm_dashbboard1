@@ -96,8 +96,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [(new Date(remainingData.savingEndDate).getFullYear()), [Validators.required]],
       savingEndDateMonth: [('0' + (new Date(remainingData.savingEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
-      goalStartDateYear: [(new Date(remainingData.goalStartDate).getFullYear()), [Validators.required]],
-      goalStartDateMonth: [('0' + (new Date(remainingData.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
+      goalStartDateYear: [(new Date(this.data.goalStartDate).getFullYear()), [Validators.required]],
+      goalStartDateMonth: [('0' + (new Date(this.data.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
+      goalEndDateMonth:[('0' + (new Date(this.data.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
+      goalEndDateYear:[(new Date(this.data.goalEndDate).getFullYear()), [Validators.required]],
       savingStatus: [remainingData.savingType, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
@@ -106,7 +108,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       stepUp: [(remainingData.stepUp)?remainingData.stepUp:'', [Validators.required]]
     })
 
-    if (this.data.singleOrMulti == 2) {
+    if (!remainingData.goalEndDate && this.data.singleOrMulti == 2) {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
