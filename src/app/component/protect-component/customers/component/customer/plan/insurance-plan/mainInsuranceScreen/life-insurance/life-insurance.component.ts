@@ -10,17 +10,32 @@ import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { forkJoin } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-life-insurance',
   templateUrl: './life-insurance.component.html',
-  styleUrls: ['./life-insurance.component.scss']
+  styleUrls: ['./life-insurance.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class LifeInsuranceComponent implements OnInit {
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
   displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
-  dataSource1 = ELEMENT_DATA1;
+  displayedColumns3 = ['name', 'sum', 'premium', 'status'];
+  // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
+  // dataSouce3=ELEMENT_DATA4;
+
+  dataSouce3=[{},{},{}]
+  dataSource1 = [{},{},{}];
+  expandedElement: PeriodicElement | null;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   inputData: any;
@@ -58,6 +73,7 @@ export class LifeInsuranceComponent implements OnInit {
   counter: any;
   isLoading: boolean;
   insuranceDetails: any;
+  isLoadingPlan = true;
   @Output() outputChange = new EventEmitter<any>();
   constructor(private subInjectService: SubscriptionInject, 
     private custumService: CustomerService, 
@@ -119,23 +135,65 @@ export class LifeInsuranceComponent implements OnInit {
     });
   }
   getDetailsInsurance(){
+    this.dataSource1 =[{},{},{}];
+    // this.dataSouce3=[{},{},{}];
+    this.insuranceDetails = '';
     let obj = {
       clientId: this.clientId,
       familyMemberId : this.inputData.familyMemberId,
       id:this.inputData.id,
     }
+    let obj2 = {
+      clientId: this.clientId,
+      familyMemberId : this.inputData.familyMemberId,
+      advisorId:this.advisorId,
+    }
     this.loader(1);
-    this.planService.getDetailsInsurance(obj).subscribe(
-      data => this.getDetailsInsuranceRes(data),
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-        this.loader(-1);
+    this.isLoadingPlan = true;
+    // this.planService.getDetailsInsurance(obj).subscribe(
+    //   data => this.getDetailsInsuranceRes(data),
+    //   err => {
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //     this.loader(-1);
+    //     this.isLoadingPlan = false;
+    //   }
+    // );
+
+    const detailofInsurance = this.planService.getDetailsInsurance(obj);
+    const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
+    const recommndationGet = this.planService.getInsuranceAdvice(obj2);
+    forkJoin(detailofInsurance, suggestPolicyGet,recommndationGet).subscribe(result => {
+      this.getDetailsInsuranceRes(result[0])
+      if(result[1]){
+        let insData = result[1];
+        insData.forEach(element => {
+          element.expanded = false;
+        });
+         this.dataSouce3=result[1];
+      }else{
+        this.dataSouce3=[];
       }
-    );
+      if(result[2]){
+        this.dataSource1=result[2];
+      }else{
+        this.dataSouce3=[]
+      }
+      this.isLoadingPlan = false;
+      // this.allAssets = [...otherAssetRes, ...mfAssetRes];
+      // this.loaderFn.decreaseCounter();
+    }, err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.insuranceDetails='';
+          this.dataSource1=[];
+          this.dataSouce3=[];
+          this.loader(-1);
+          this.isLoadingPlan = false;
+    })
   }
   getDetailsInsuranceRes(data){
     console.log('getDetailsInsuranceRes res',data)
     this.insuranceDetails = data
+    this.dataSource1 = ELEMENT_DATA1;
 
   }
   loader(increamenter) {
@@ -145,6 +203,10 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.isLoading = true;
     }
+  }
+  getDataInv(data){
+    data.expanded =! data.expanded;
+    console.log( data);
   }
   needAnalysis(data) {
     const fragmentData = {
@@ -187,7 +249,7 @@ export class LifeInsuranceComponent implements OnInit {
   recommendationsPolicy(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
-      data,
+      data:this.inputData,
       componentName: AddRecommendationsInsuComponent,
       id: 1,
       state: 'open',
@@ -248,4 +310,93 @@ const ELEMENT_DATA2: PeriodicElement2[] = [
   { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
   { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
 
+];
+export interface PeriodicElement4 {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+  description: string;
+}
+
+const ELEMENT_DATA4: PeriodicElement4[] = [
+  {
+    position: 1,
+    name: 'Hydrogen',
+    weight: 1.0079,
+    symbol: 'H',
+    description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
+        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`
+  }, {
+    position: 2,
+    name: 'Helium',
+    weight: 4.0026,
+    symbol: 'He',
+    description: `Helium is a chemical element with symbol He and atomic number 2. It is a
+        colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
+        group in the periodic table. Its boiling point is the lowest among all the elements.`
+  }, {
+    position: 3,
+    name: 'Lithium',
+    weight: 6.941,
+    symbol: 'Li',
+    description: `Lithium is a chemical element with symbol Li and atomic number 3. It is a soft,
+        silvery-white alkali metal. Under standard conditions, it is the lightest metal and the
+        lightest solid element.`
+  }, {
+    position: 4,
+    name: 'Beryllium',
+    weight: 9.0122,
+    symbol: 'Be',
+    description: `Beryllium is a chemical element with symbol Be and atomic number 4. It is a
+        relatively rare element in the universe, usually occurring as a product of the spallation of
+        larger atomic nuclei that have collided with cosmic rays.`
+  }, {
+    position: 5,
+    name: 'Boron',
+    weight: 10.811,
+    symbol: 'B',
+    description: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
+        by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
+        low-abundance element in the Solar system and in the Earth's crust.`
+  }, {
+    position: 6,
+    name: 'Carbon',
+    weight: 12.0107,
+    symbol: 'C',
+    description: `Carbon is a chemical element with symbol C and atomic number 6. It is nonmetallic
+        and tetravalent—making four electrons available to form covalent chemical bonds. It belongs
+        to group 14 of the periodic table.`
+  }, {
+    position: 7,
+    name: 'Nitrogen',
+    weight: 14.0067,
+    symbol: 'N',
+    description: `Nitrogen is a chemical element with symbol N and atomic number 7. It was first
+        discovered and isolated by Scottish physician Daniel Rutherford in 1772.`
+  }, {
+    position: 8,
+    name: 'Oxygen',
+    weight: 15.9994,
+    symbol: 'O',
+    description: `Oxygen is a chemical element with symbol O and atomic number 8. It is a member of
+         the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing
+         agent that readily forms oxides with most elements as well as with other compounds.`
+  }, {
+    position: 9,
+    name: 'Fluorine',
+    weight: 18.9984,
+    symbol: 'F',
+    description: `Fluorine is a chemical element with symbol F and atomic number 9. It is the
+        lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard
+        conditions.`
+  }, {
+    position: 10,
+    name: 'Neon',
+    weight: 20.1797,
+    symbol: 'Ne',
+    description: `Neon is a chemical element with symbol Ne and atomic number 10. It is a noble gas.
+        Neon is a colorless, odorless, inert monatomic gas under standard conditions, with about
+        two-thirds the density of air.`
+  },
 ];

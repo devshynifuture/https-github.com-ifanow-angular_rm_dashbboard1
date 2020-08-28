@@ -240,4 +240,13 @@ export class PlanService {
   deleteInsurancePlanning(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_INPLANNING+ 'id=' + data, '')
   }
+  getInsuranceRecommendation(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RECOMMENDATION_LIST_GET+ 'id=' + data, '')
+  }
+  getInsuranceAdvice(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.INSURANCE_ADVICE_GET, data)
+  }
+  getSuggestPolicy(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SUGGEST_POLICY_GET, data)
+  }
 }
