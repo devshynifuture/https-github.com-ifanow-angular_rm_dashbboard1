@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -67,6 +67,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   sendObj: any;
   needBase: any;
   id: any;
+  insuranceData: any;
   constructor(private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService) {
@@ -74,6 +75,10 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
   }
 
+  @Input() set data(data) {
+    this.insuranceData = data;
+    console.log(data)
+  }
 
   ngOnInit() {
     this.getdataForm(null)
@@ -94,7 +99,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   getAnalysis() {
 
     let obj = {
-      id: 1,
+      id: this.insuranceData.id,
       dependantId: 0,
       lifeExpectancy: 0
     }

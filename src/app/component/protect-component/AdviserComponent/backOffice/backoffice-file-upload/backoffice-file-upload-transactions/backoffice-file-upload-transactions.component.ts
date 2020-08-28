@@ -90,7 +90,6 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       .subscribe((data) => {
         this.isLoading = false;
         if (data) {
-          console.log(data);
           data.map(element => {
             element.rt = this.getRtNameFromRtId(parseInt(element.rt));
 

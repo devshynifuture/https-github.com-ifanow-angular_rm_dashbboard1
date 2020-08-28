@@ -898,6 +898,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  todoDescription = ''
+
   addTodoList(value) {
     const obj = {
       id: 0,
@@ -906,6 +908,7 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.addNotes(obj).subscribe(
       data => {
+        this.todoDescription = ''
         if (data) {
           this.eventService.openSnackBar('To-Do note is added', 'Dismiss');
           this.showInput = false;
@@ -1434,6 +1437,9 @@ export class DashboardComponent implements OnInit {
         this.mfDataflag = false;
         if (data) {
           this.keyMetricJson.mfAum = data.totalAumRupees;
+        }
+        else {
+          this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
         }
         this.loaderFun()
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)

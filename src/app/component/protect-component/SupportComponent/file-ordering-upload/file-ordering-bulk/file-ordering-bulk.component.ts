@@ -255,7 +255,6 @@ export class FileOrderingBulkComponent implements OnInit {
           element.refresh = "";
           element.rtId = res.rtId;
           element.rmId = res.rmId;
-          element.days = this.days;
           element.arnRiaDetailId = res.arnRiaDetailId;
           element.description = res.description;
           element.fromDate = res.fromDate;

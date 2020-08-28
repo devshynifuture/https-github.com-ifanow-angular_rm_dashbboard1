@@ -1,8 +1,8 @@
 <div class="row pb-12 insuFixedHeader pt-28 bb-grey">
     <div class="col-md-10 p-0">
-        <h3 class="m-0">{{getData.heading}} - Rahul Jain</h3>
+        <h3 class="m-0">{{getData ? getData.heading : ''}} - {{inputData ? inputData.holderName : ''}}</h3>
     </div>
-    <div class="col-md-2 pr-0 right text-right">
+    <div class="col-md-2 pr-0 right text-right" (click)="deleteInsurance()">
         <img src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 m-0">STATUS</p>
-                    <mat-progress-bar mode="determinate" value="32" class="h-30 bg-primary " placeholder="32%">
+                    <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails.status : 0" class="h-30 bg-primary " placeholder="32%">
                         32%
                     </mat-progress-bar>
                 </div>

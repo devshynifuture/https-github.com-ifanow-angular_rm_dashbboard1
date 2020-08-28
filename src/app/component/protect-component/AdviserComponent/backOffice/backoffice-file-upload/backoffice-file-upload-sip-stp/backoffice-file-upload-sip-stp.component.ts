@@ -69,6 +69,7 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
     }
     this.reconService.getBackOfficeSipStp(obj).subscribe((data) => {
       if (data) {
+        console.log("stp sip ", data);
         data.map(element => {
           // if(!isNaN(Number(element.rt))){
           //   element.rt = this.getRtNameFromRtId(parseInt(element.rt));
@@ -84,7 +85,7 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
           } else if (element.processStatus === 1) {
             element.status = "Success";
           } else if (element.processStatus === -1) {
-            element.status = "Duplicate";
+            element.status = "Failed";
           } else {
             element.status = "Failed";
           }

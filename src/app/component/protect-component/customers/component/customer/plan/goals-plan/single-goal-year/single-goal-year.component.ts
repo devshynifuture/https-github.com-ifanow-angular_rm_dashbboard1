@@ -45,6 +45,7 @@ export class SingleGoalYearComponent implements OnInit {
   };
   idWiseData: any;
   getLifeExpentancy: any;
+  dateF: number;
 
   constructor(
     private eventService: EventService,
@@ -125,18 +126,22 @@ export class SingleGoalYearComponent implements OnInit {
         break;
       case AppConstants.RETIREMENT_GOAL: // retirement
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
-        obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100+this.singleYearGoalForm.get('costReduction').value))/100
+        obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100 + this.singleYearGoalForm.get('costReduction').value)) / 100
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         futureDate = new Date(currentDate);
         const data = new Date()
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
         const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
-        const dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
-        obj['goalEndDate'] = this.datePipe.transform(dateF, 'yyyy-MM-dd')
+        if (this.singleYearGoalForm.get('lifeExpectancy').value) {
+          this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.singleYearGoalForm.get('lifeExpectancy').value)
+        } else {
+          this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
+        }
+        obj['goalEndDate'] = this.datePipe.transform(this.dateF, 'yyyy-MM-dd')
         obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
-        obj['monthlyExpense']= this.singleYearGoalForm.get('cost').value;
-        obj['goalAdditionDate']=this.datePipe.transform(new Date, 'yyyy-MM-dd')
+        obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
+        obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
         break;
       case AppConstants.CAR_GOAL: // Car
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -264,7 +269,7 @@ export class SingleGoalYearComponent implements OnInit {
 
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value) {
- 
+
     if (this.goalTypeData.validations.showAge) {
       this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
       this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
@@ -272,12 +277,12 @@ export class SingleGoalYearComponent implements OnInit {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(value){
+    if (value) {
       if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
         this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
       }
     }
-   
+
   }
 
   initializeForm() {
@@ -293,6 +298,7 @@ export class SingleGoalYearComponent implements OnInit {
     // if goal is retirement
     if (this.goalTypeData.id === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
+      this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, []));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());

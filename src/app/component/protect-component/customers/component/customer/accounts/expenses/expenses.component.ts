@@ -11,7 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DatePipe, formatDate } from '@angular/common';
-import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker'
+import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from 'saturn-datepicker'
 import { DetailedViewExpensesComponent } from '../../../common-component/detailed-view-expenses/detailed-view-expenses.component';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -19,6 +19,8 @@ import { RecurringCommitmentsDetailedViewComponent } from '../../../common-compo
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { element } from 'protractor';
+import { CustomerService } from '../../customer.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -32,12 +34,12 @@ export const MY_FORMATS = {
   },
 };
 export const PICK_FORMATS = {
-  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   display: {
     dateInput: 'input',
-    monthYearLabel: {year: 'numeric', month: 'short'},
-    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
-    monthYearA11yLabel: {year: 'numeric', month: 'long'}
+    monthYearLabel: { year: 'numeric', month: 'short' },
+    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+    monthYearA11yLabel: { year: 'numeric', month: 'long' }
   }
 };
 @Component({
@@ -46,13 +48,13 @@ export const PICK_FORMATS = {
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-  
+
   reportDate;
   styleElement: HTMLStyleElement;
-  colors : Array<string> = ["#FF8C00", "#00ff00"];
+  colors: Array<string> = ["#FF8C00", "#00ff00"];
 
   displayedColumns = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
-  displayedColumns1 = ['no', 'expense', 'date', 'desc', 'mode', 'amt','icons'];
+  displayedColumns1 = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
 
   dataSource = new MatTableDataSource([] as Array<any>);
 
@@ -82,7 +84,7 @@ export class ExpensesComponent implements OnInit {
   getOrgData: any;
   selectedPeriod: string;
   selectedDateRange: {};
-  filterDate =[];
+  filterDate = [];
   startDateDisp: string;
   endDateDisp: string;
   budgetAmount = 0;
@@ -119,25 +121,28 @@ export class ExpensesComponent implements OnInit {
   expenseList: any;
   recurringTrnList: any;
   expenseGraph: void;
+  familyList: any;
+  clientDob:any;
 
   // periodSelection: any;
 
-  constructor(private fileUpload: FileUploadServiceService,private fb: FormBuilder,
-    private datePipe: DatePipe,private subInjectService: SubscriptionInject, 
+  constructor(private fileUpload: FileUploadServiceService, private fb: FormBuilder,
+    private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private planService: PlanService,
-    private _bottomSheet : MatBottomSheet,
+    private _bottomSheet: MatBottomSheet,
     private constantService: ConstantsService, private eventService: EventService,
-     public dialog: MatDialog,private util:UtilService) {
+    public dialog: MatDialog, private util: UtilService,public peopleService:PeopleService) {
   }
 
   ngOnInit() {
     this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
-  this.styleElement = document.createElement('style');
-  this.changeColors();
+    this.styleElement = document.createElement('style');
+    this.changeColors();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
+    this.getListFamilyMem()
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
@@ -150,7 +155,7 @@ export class ExpensesComponent implements OnInit {
     // this.getTimePeriod();
     // this.getTransaction();
     // this.getAssetOfExpense();
-    this.filterDate = [{name:'period'}]
+    this.filterDate = [{ name: 'period' }]
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
 
     // setTimeout(() => {
@@ -179,21 +184,21 @@ export class ExpensesComponent implements OnInit {
     this.styleElement.type = 'text/css';
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
-  
+
   }
-  getExpenseGraphValue(){
+  getExpenseGraphValue() {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      startDate : this.startDate, 
+      startDate: this.startDate,
       endDate: this.endDate
-     
+
     };
     this.planService.getExpenseGraph(obj).subscribe(
       data => {
-        if(data){
-          this.basicAmountPercent =  data.Basic ? data.Basic.categoryWisePercentage : 0
-          this.rdAmountPercent =  data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
+        if (data) {
+          this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
+          this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
           this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
           this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
           this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
@@ -208,7 +213,7 @@ export class ExpensesComponent implements OnInit {
           this.housingAmount = data.Housing;
           this.spent = data.total;
           this.cashFlow('piechartExpense')
-        }else{
+        } else {
           this.cashFlow('piechartExpense')
         }
         console.log(data);
@@ -216,23 +221,23 @@ export class ExpensesComponent implements OnInit {
         this.cashFlow('piechartExpense')
 
         this.eventService.showErrorMessage(error);
-        
+
       }
     );
   }
-  getAllExpense(){
+  getAllExpense() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.dataSource1.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      startDate:this.startDate, 
-      endDate:this.endDate
+      startDate: this.startDate,
+      endDate: this.endDate
     };
     this.planService.getAllExpense(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.expenseList = data.expenseList;
           this.recurringTrnList = data.recurringExpenseList;
           this.expenseList.forEach(singleExpense => {
@@ -249,14 +254,14 @@ export class ExpensesComponent implements OnInit {
             }
           });
           this.recurringTransaction = this.recurringTrnList;
-          this.dataSource.data = [ ...this.transaction, ...this.recurringTransaction];
-    
+          this.dataSource.data = [...this.transaction, ...this.recurringTransaction];
+
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
           this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
-          console.log('All expense data',data);
+          console.log('All expense data', data);
         }
         this.isLoading = false;
       }, (error) => {
@@ -264,47 +269,47 @@ export class ExpensesComponent implements OnInit {
       }
     );
   }
-  getAssetData(data){
-    if(data){
-      let finalArray=[];
-      let committedInvestmentExpense =  this.filterAssetData(data.committedInvestmentExpense);
-      let committedExpenditureExpense =  this.filterAssetData(data.committedExpenditureExpense);
-      let pord =  this.filterAssetData(data.pord);
-      let lifeInsuranceList=  this.filterAssetData(data.lifeInsuranceList);
+  getAssetData(data) {
+    if (data) {
+      let finalArray = [];
+      let committedInvestmentExpense = this.filterAssetData(data.committedInvestmentExpense);
+      let committedExpenditureExpense = this.filterAssetData(data.committedExpenditureExpense);
+      let pord = this.filterAssetData(data.pord);
+      let lifeInsuranceList = this.filterAssetData(data.lifeInsuranceList);
       let generalInsuranceExpense = this.filterAssetData(data.generalInsurancePremium);
       let ssy = this.filterAssetData(data.ssy);
       let loanExpense = this.filterAssetData(data.loanEmi);
       let recurringDeposit = this.filterAssetData(data.recurringAssetList);
       let sipExpense = this.filterAssetData(data.mutualFundSipList);
       this.expenseAssetData = data;
-       finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...lifeInsuranceList,...generalInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+      finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense, ...pord, ...lifeInsuranceList, ...generalInsuranceExpense, ...ssy, ...loanExpense, ...recurringDeposit, ...sipExpense];
 
       console.log(finalArray)
       this.dataSource1.data = finalArray;
-       this.dataSource1.sort = this.recurringTransactionTabSort;
+      this.dataSource1.sort = this.recurringTransactionTabSort;
 
 
-      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',this.dataSource1.data);
+      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.dataSource1.data);
     }
   }
-  filterAssetData(data){
+  filterAssetData(data) {
     let obj;
-    let filterArray =[]
-    if(data){
-       obj={
-        name:data[1].name,total:data[2].total,assetList:data[0].assetList
-       }
+    let filterArray = []
+    if (data) {
+      obj = {
+        name: data[1].name, total: data[2].total, assetList: data[0].assetList
+      }
     }
-    if(obj){
+    if (obj) {
       // filterArray.push({name:data[1].name},{total:data[2].total},{});
       filterArray.push(obj);
 
     }
     return filterArray
   }
-  getExpenseGraphValueNew(data){
-    this.basicAmountPercent =  data.Basic ? data.Basic.categoryWisePercentage : 0
-    this.rdAmountPercent =  data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
+  getExpenseGraphValueNew(data) {
+    this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
+    this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
     this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
     this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
     this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
@@ -320,19 +325,19 @@ export class ExpensesComponent implements OnInit {
     this.spent = data.total;
     this.cashFlow('piechartExpense')
   }
-  getBudgetGraphValues(){
+  getBudgetGraphValues() {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      startDate:this.startDate, 
-      endDate:this.endDate
+      startDate: this.startDate,
+      endDate: this.endDate
     };
     this.planService.getBudgetGraph(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.budgetAmount = data.budgetAmount
           this.budgetChart('bugetChart')
-        }else{
+        } else {
           this.budgetChart('bugetChart')
         }
 
@@ -342,32 +347,32 @@ export class ExpensesComponent implements OnInit {
       }
     );
   }
-  getStartAndEndDate(val){
+  getStartAndEndDate(val) {
     var date = new Date();
-    if(val == '1'){
+    if (val == '1') {
       var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
       var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    }else if(val == '2'){
-      var firstDay = new Date(date.getFullYear(), date.getMonth()-1, 1);
+    } else if (val == '2') {
+      var firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
       var lastDay = new Date(date.getFullYear(), date.getMonth(), 0);
-    }else if(val == '3'){
+    } else if (val == '3') {
       var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-      var lastDay = new Date(date.getFullYear(), date.getMonth()+3, 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth() + 3, 1);
 
-    }else if(val == '4'){
-      var firstDay = new Date(date.getFullYear(), date.getMonth()-3, 1);
-      var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth()+3, 1);
-    }else if(val == '5'){
+    } else if (val == '4') {
+      var firstDay = new Date(date.getFullYear(), date.getMonth() - 3, 1);
+      var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth() + 3, 1);
+    } else if (val == '5') {
       var firstDay = new Date(date.getFullYear(), 0, 1);
       var lastDay = new Date(date.getFullYear(), 11, 31);
-    }else if(val == '6'){
-      var firstDay = new Date(date.getFullYear()-1, 0, 1);
-      var lastDay = new Date(date.getFullYear()-1, 11, 31);
-    }else if(val == '7'){
+    } else if (val == '6') {
+      var firstDay = new Date(date.getFullYear() - 1, 0, 1);
+      var lastDay = new Date(date.getFullYear() - 1, 11, 31);
+    } else if (val == '7') {
       var firstDay = new Date(date.getFullYear(), 3, 1);
-      var lastDay = new Date(date.getFullYear()+1, 2, 31);
-    }else if(val == '8'){
-      var firstDay = new Date(date.getFullYear()-1, 3, 1);
+      var lastDay = new Date(date.getFullYear() + 1, 2, 31);
+    } else if (val == '8') {
+      var firstDay = new Date(date.getFullYear() - 1, 3, 1);
       var lastDay = new Date(date.getFullYear(), 2, 31);
     }
 
@@ -375,8 +380,8 @@ export class ExpensesComponent implements OnInit {
     this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
     this.startDateDisp = this.datePipe.transform(firstDay, 'dd-MM-yyyy');
     this.endDateDisp = this.datePipe.transform(lastDay, 'dd-MM-yyyy');
-    console.log('start Date,,,,,,,,,,,,,,,,',this.startDate);
-    console.log('endDate,,,,,,,,,,,,,,,,',this.endDate);
+    console.log('start Date,,,,,,,,,,,,,,,,', this.startDate);
+    console.log('endDate,,,,,,,,,,,,,,,,', this.endDate);
 
   }
   generatePdf(tmp) {
@@ -385,15 +390,15 @@ export class ExpensesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById(tmp);
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    if(tmp == 'template'){
+    if (tmp == 'template') {
       let expenseSvg = this.expenseChart.getSVG();
-       header = this.transactionExpens.nativeElement.innerHTML
-       this.util.htmlToPdf('',para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg);
+      header = this.transactionExpens.nativeElement.innerHTML
+      this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg);
 
-    }else{
+    } else {
       let budgetSvg = this.budgetChartSvg.getSVG();
-       header = this.budgetPdf.nativeElement.innerHTML
-       this.util.htmlToPdf('',para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg);
+      header = this.budgetPdf.nativeElement.innerHTML
+      this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg);
 
 
     }
@@ -401,7 +406,7 @@ export class ExpensesComponent implements OnInit {
 
   }
 
-  Excel(tableTitle,tmp) {
+  Excel(tableTitle, tmp) {
     setTimeout(() => {
       var blob = new Blob([document.getElementById(tmp).innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
@@ -462,7 +467,7 @@ export class ExpensesComponent implements OnInit {
   getBugetTab(tab) {
     this.isTabLoaded = true;
     if (tab == 'Budget') {
-       this.getBudgetGraphValues();
+      this.getBudgetGraphValues();
       this.getBudgetList();
       this.getBugetRecurring();
       // setTimeout(() => {
@@ -480,13 +485,42 @@ export class ExpensesComponent implements OnInit {
       // }, 300);
     }
   }
+  getListFamilyMem() {
+
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        let array = [];
+        data.forEach(element => {
+          if(element.familyMemberId == 0 ){
+            this.clientDob =this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'); 
+          }else{
+            const obj={
+              'id':this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+            }
+            array.push(obj);
+          }
+         
+        });
+       this.familyList =  array.map(function(obj,ind) { 
+         let val = 'id'+ind;
+         obj[val] = obj['id']
+         delete obj['id'];
+          return obj; 
+      }); 
+        
+      }
+    );
+  }
   removeDate(item) {
     this.filterDate.splice(item, 1);
 
 
   }
   cashFlow(id) {
-   this.expenseChart= Highcharts.chart('piechartExpense', {
+    this.expenseChart = Highcharts.chart('piechartExpense', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -605,7 +639,7 @@ export class ExpensesComponent implements OnInit {
           //     enabled: false
           //   }
           // },
-          
+
         ]
       }]
     });
@@ -640,12 +674,12 @@ export class ExpensesComponent implements OnInit {
     if (data) {
       data.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.spent/singleExpense.amount)*100;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
-        if(singleExpense.progressPercent > 100){
+        if (singleExpense.progressPercent > 100) {
           singleExpense.spentPer = 100;
           singleExpense.budgetPer = singleExpense.progressPercent - 100;
-        }else{
+        } else {
           singleExpense.spentPer = singleExpense.progressPercent;
         }
         const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
@@ -666,10 +700,12 @@ export class ExpensesComponent implements OnInit {
       clientId: this.clientId,
       allOrSingle: 1,
       endDate: this.endDate,
-      startDate:this.startDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
+      clientDob :this.clientDob,
+      fmDobList:JSON.stringify(this.familyList)
     };
     this.dataSource5.data = [{}, {}, {}];
     this.planService.otherCommitmentsGet(obj).subscribe(
@@ -702,8 +738,8 @@ export class ExpensesComponent implements OnInit {
     this.isLoading = false;
     console.log('otherCommitmentsGetRes', data)
   }
-  addFilterPeriod(value){
-    let val=value.value
+  addFilterPeriod(value) {
+    let val = value.value
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
@@ -735,11 +771,11 @@ export class ExpensesComponent implements OnInit {
   getRecuringExpenseRes(data) {
     if (!data) {
       this.noData = 'No data found';
-      this.recurringTransaction =data;
-      if(this.recurringTransaction && this.transaction){
-        this.dataSource.data = [ ...this.transaction, ...this.recurringTransaction];
-      }else{
-        this.dataSource.data = [ ...this.transaction];
+      this.recurringTransaction = data;
+      if (this.recurringTransaction && this.transaction) {
+        this.dataSource.data = [...this.transaction, ...this.recurringTransaction];
+      } else {
+        this.dataSource.data = [...this.transaction];
       }
 
       // this.dataSource.data = data;
@@ -755,7 +791,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.recurringTransaction = data;
-      this.dataSource.data = [ ...this.transaction, ...this.recurringTransaction];
+      this.dataSource.data = [...this.transaction, ...this.recurringTransaction];
 
       // this.dataSource.data = data;
       this.dataSource.sort = this.TransactionSort;
@@ -817,39 +853,39 @@ export class ExpensesComponent implements OnInit {
     this.cashFlow('piechartExpense')
 
   }
-  getAssetOfExpense(){
+  getAssetOfExpense() {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       endDate: this.endDate,
       startDate: this.startDate,
-    };                                                    
+    };
     this.isLoading = true;
     this.dataSource1.data = [{}, {}, {}];
     this.planService.getAssetsOfExpense(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.expenseAssetData = data;
-          let finalArray=[];
-          let dataAsset =data;
-          this.assetList =[{name:'pord'},{name:'ssy'},{name:'recurringDeposit'},{name:'mutualfund'}]
+          let finalArray = [];
+          let dataAsset = data;
+          this.assetList = [{ name: 'pord' }, { name: 'ssy' }, { name: 'recurringDeposit' }, { name: 'mutualfund' }]
           Object.entries(this.assetList).forEach(([key, value]) => {
 
-            let  obj = value.name
-            let assetData= dataAsset[obj];
-            if(assetData){
+            let obj = value.name
+            let assetData = dataAsset[obj];
+            if (assetData) {
               assetData.forEach(element => {
                 finalArray.push(element)
               });
             }
 
-            console.log(key,value);
+            console.log(key, value);
           });
           this.dataSource1.data = finalArray;
-           this.dataSource1.sort = this.recurringTransactionTabSort;
+          this.dataSource1.sort = this.recurringTransactionTabSort;
 
 
-          console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',this.dataSource1.data);
+          console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.dataSource1.data);
         }
       }, (error) => {
         this.getRecuringTransactions();
@@ -869,7 +905,7 @@ export class ExpensesComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-       if (value == 'expense' && data.repeatFrequency && data.continueTill) {
+        if (value == 'expense' && data.repeatFrequency && data.continueTill) {
           this.planService.deleteExpenseRecurring(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Recurring expense transaction is deleted', 'Dismiss');
@@ -879,7 +915,7 @@ export class ExpensesComponent implements OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        }else  if (value == 'expense' && !data.repeatFrequency && !data.continueTill) {
+        } else if (value == 'expense' && !data.repeatFrequency && !data.continueTill) {
           this.planService.deleteExpenseTransaction(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Expense transaction is deleted', 'Dismiss');
@@ -941,23 +977,23 @@ export class ExpensesComponent implements OnInit {
       componentName: AddExpensesComponent
     };
     fragmentData.data.getData = {
-      expenseList:this.dataSource.data,
-      budgetList:this.dataSource4.data,
-      otherCommitments:this.dataSource5.data
+      expenseList: this.dataSource.data,
+      budgetList: this.dataSource4.data,
+      otherCommitments: this.dataSource5.data
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' || sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn'){
+            if (sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' || sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn') {
               // this.getTransaction();
               this.getAllExpense();
               // this.getExpenseGraphValue();
-            }else if(sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget'){
+            } else if (sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget') {
               this.getBudgetList();
               this.getBudgetGraphValues();
-            }else{
+            } else {
               this.getBugetRecurring();
               this.getBudgetGraphValues();
             }
@@ -969,7 +1005,7 @@ export class ExpensesComponent implements OnInit {
       }
     );
   }
-  detailedViewExpense(data,value) {
+  detailedViewExpense(data, value) {
     const fragmentData = {
       flag: 'detailedView',
       data,
@@ -995,13 +1031,13 @@ export class ExpensesComponent implements OnInit {
       }
     );
   }
-  detailedViewRecurring(data,value){
+  detailedViewRecurring(data, value) {
     data.startDate = this.startDateDisp;
     data.endDate = this.endDateDisp;
 
     const fragmentData = {
       flag: 'detailedView',
-      data:data,
+      data: data,
       id: 1,
       state: 'open50',
       componentName: RecurringCommitmentsDetailedViewComponent
