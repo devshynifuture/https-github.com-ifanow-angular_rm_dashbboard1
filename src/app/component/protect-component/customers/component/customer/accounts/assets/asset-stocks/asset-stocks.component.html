@@ -383,7 +383,7 @@
                                         *ngIf="element.stockType != 1">{{isLoading?'':element.scripName}}</span>
                                     <span *ngIf="element.stockType == 1">{{isLoading?'':'Portfolio'}}</span></div>
                             </td>
-                            <th *matFooterCellDef [attr.colspan]="4" class="br proximaFont amt text-right f-600 p-8"
+                            <th *matFooterCellDef  class="br proximaFont amt text-right f-600 p-8"
                                 mat-header-cell style="background-color: #fff !important;"> Total
                             </th>
                         </ng-container>
@@ -449,7 +449,7 @@
                                         *ngIf="element.stockType == 2 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
                                 </div>
                             </td>
-                            <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+                            <td *matFooterCellDef  class="br t-8 text-right" mat-footer-cell [attr.colspan]="3" ><span style="visibility: hidden;">abc</span></td>
 
                         </ng-container>
                         <ng-container matColumnDef="price">
@@ -460,7 +460,7 @@
                                 <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
                                         appFormatNumber>{{element.averagePrice}}</span></div>
                             </td>
-                            <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+                            <!-- <th *matFooterCellDef class="br t-8 text-right" mat-footer-cell><span style="visibility: hidden;">abc</span></th> -->
 
                         </ng-container>
                         <ng-container matColumnDef="mprice">
@@ -471,7 +471,7 @@
                                 <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
                                         appFormatNumber>{{element.scripCurrentValue}}</span></div>
                             </td>
-                            <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
+                            <!-- <th *matFooterCellDef class="br t-8 text-right" mat-footer-cell><span style="visibility: hidden;">abc</span></th> -->
 
                         </ng-container>
 

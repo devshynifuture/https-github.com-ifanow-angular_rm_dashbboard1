@@ -461,7 +461,7 @@ export class FixedDepositMobComponent implements OnInit {
     if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    if (data.ownerList) {
+    if (data.ownerList && data.ownerList > 0) {
       this.getCoOwner.removeAt(0);
       data.ownerList.forEach(element => {
         this.addNewCoOwner(element);

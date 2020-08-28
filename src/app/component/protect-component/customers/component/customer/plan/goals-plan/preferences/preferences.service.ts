@@ -123,8 +123,11 @@ export class PreferencesService {
     } else {
       switch (data.goalType) {
         case AppConstants.CAR_GOAL:
+          return data.remainingData.goalPresentValue;
         case AppConstants.HOUSE_GOAL:
+          return data.remainingData.goalPresentValue;
         case AppConstants.OTHERS_GOAL:
+          return data.remainingData.goalPresentValue;
         case AppConstants.BIG_SPEND_GOAL:
         case AppConstants.MARRIAGE_GOAL:
           return data.remainingData.goalPresentValue;
@@ -132,7 +135,7 @@ export class PreferencesService {
         case AppConstants.EMERGENCY_GOAL:
           return data.remainingData.goalFV;
           case AppConstants.RETIREMENT_GOAL:
-            return data.remainingData.goalFV;
+            return data.remainingData.goalPresentValue;
         default:
           console.error('Invalid goal type found', data.goalType);
           return 0;

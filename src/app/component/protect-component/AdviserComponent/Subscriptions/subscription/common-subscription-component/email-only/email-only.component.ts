@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormGroup, FormBuilder } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
@@ -136,7 +136,7 @@ export class EmailOnlyComponent implements OnInit {
   emailData;
   advisorData: any;
   visible = true;
-
+  subjectFormCOntrol = new FormControl();
   config = {
     charCounterCount: false
   };
@@ -234,6 +234,21 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   saveEmailTemplate() {
+    let errorFlag;
+    if (this._inputData.subjectEditable) {
+      const subjeStringArray = this._inputData.subject.split(' ');
+      subjeStringArray.forEach(element => {
+        if (element.includes('$')) {
+          if (element !== '$client_display_name,') {
+            errorFlag = true;
+            this.eventService.openSnackBar('Please use valid placeholder', "Dismiss")
+          }
+        }
+      });
+    }
+    if (errorFlag && this._inputData.subjectEditable) {
+      return
+    }
     this.barButtonOptions1.active = true;
     const obj = {
       id: this._inputData.id,

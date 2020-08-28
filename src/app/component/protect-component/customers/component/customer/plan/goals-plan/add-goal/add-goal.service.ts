@@ -19,7 +19,9 @@ export class AddGoalService {
 
   allocateOtherAssetToGoal(event, advisor_client_id, selectedGoal) {
     let dashBoardData = selectedGoal.dashboardData
-    if (dashBoardData.debt_monthly && dashBoardData.equity_monthly && dashBoardData.lump_debt && dashBoardData.lump_equity) {
+    if (dashBoardData.debt_monthly == 0  && dashBoardData.equity_monthly == 0 && dashBoardData.lump_debt ==0 && dashBoardData.lump_equity ==0) {
+      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
+    } else {
       let asset: any = event.item.data;
       let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
       if (asset.absAllocation < 100) {
@@ -33,15 +35,14 @@ export class AddGoalService {
       } else {
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
-
-    } else {
-      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     }
 
   }
   allocateMFToGoal(mfAsset, advisor_client_id, selectedGoal) {
     let dashBoardData = selectedGoal.dashboardData
-    if (dashBoardData.debt_monthly && dashBoardData.equity_monthly && dashBoardData.lump_debt && dashBoardData.lump_equity) {
+    if (dashBoardData.debt_monthly == 0  && dashBoardData.equity_monthly == 0 && dashBoardData.lump_debt ==0 && dashBoardData.lump_equity ==0) {
+      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
+    } else {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
       if (mfAsset.absAllocation < 100) {
         mfAsset.goalAssetMapping.forEach(element => {
@@ -54,8 +55,6 @@ export class AddGoalService {
       } else {
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
-    } else {
-      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     }
 
   }

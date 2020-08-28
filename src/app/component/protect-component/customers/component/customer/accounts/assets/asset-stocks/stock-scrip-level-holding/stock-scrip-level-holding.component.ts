@@ -218,6 +218,18 @@ addNewNominee(data) {
 // ===================owner-nominee directive=====================//
   selectedScript:any=[];
   getFormData(data) {
+    
+    this.scipLevelHoldingForm = this.fb.group({
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
+      })]),
+      portfolioName: ['', [Validators.required]]
+    })
+
     if (data == null) {
       data = {};
       this.addHoldings();
@@ -229,18 +241,8 @@ addNewNominee(data) {
       this.familyMemberId = data.familyMemberId;
       this.ownerName = data.ownerName;
      
-      // this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
+      this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
     }
-    this.scipLevelHoldingForm = this.fb.group({
-      getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['', [Validators.required]],
-        share: ['', [Validators.required]],
-        familyMemberId: 0,
-        id: 0,
-        isClient:0
-      })]),
-      portfolioName: ['', [Validators.required]]
-    })
 
     this.optionForm = this.fb.group({
       getNomineeName: this.fb.array([this.fb.group({
@@ -281,7 +283,7 @@ addNewNominee(data) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
 
-    if (data.ownerList) {
+    if (data.ownerList && data.ownerList > 0) {
       this.getCoOwner.removeAt(0);
       data.ownerList.forEach(element => {
         this.addNewCoOwner(element);
