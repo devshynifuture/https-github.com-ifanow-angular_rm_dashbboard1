@@ -60,7 +60,7 @@ export class CommoditiesComponent implements OnInit {
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
      private pdfGen:PdfGenService,  private subInjectService: SubscriptionInject, 
-     private custumService: CustomerService, private eventService: EventService, 
+     private custumService: CustomerService, private eventService: EventService,
      public utils: UtilService, public dialog: MatDialog,
      private _bottomSheet : MatBottomSheet, private assetValidation: AssetValidationService) { }
   ngOnInit() {
@@ -229,7 +229,7 @@ export class CommoditiesComponent implements OnInit {
   }
   @Output() changeCount = new EventEmitter();
   getGoldRes(data) {
-    this.changeCount.emit("call")
+    this.assetValidation.getAssetCountGLobalData()
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
     if (data == undefined) {
