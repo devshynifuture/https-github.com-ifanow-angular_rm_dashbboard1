@@ -25,7 +25,7 @@ export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
     'dividend', 'icons'];
 
-  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
+  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'bal',  'ret',
     'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
