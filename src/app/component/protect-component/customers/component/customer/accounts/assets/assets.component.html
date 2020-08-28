@@ -25,8 +25,8 @@
                         </li>
                     </ul> -->
                     <ul class="vertical-menu ">
-                        <li *ngFor="let singleAssetType of assetSideBarData" (click)="clickable(singleAssetType)" [routerLink]="singleAssetType.link"
-                             class=" c-p">
+                        <li *ngFor="let singleAssetType of assetSideBarData" (click)="clickable(singleAssetType)"
+                            routerLinkActive="activeColor lt" [routerLink]="singleAssetType.link" class=" c-p">
                             <div class="row">
                                 <div class="col-md-9 p-0 ws-nowrap">
                                     {{ singleAssetType.name }}
@@ -97,20 +97,20 @@
                 </div>
             </div>
             <div class="row">
-               
-                 
+
+
                 <div class="tabViewSelectMenu col-md-12 pr-8 text-right">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="viewMode"   class="form-control select_menu">
-                      <mat-option value=""  [value]="singleAssetType.viewmode"
-                            *ngFor="let singleAssetType of assetSideBarData"
-                            (click)="viewMode =singleAssetType.viewmode;sidenavState = false;">
-                            {{ singleAssetType.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                 </div>
-                
+                        <mat-select [(ngModel)]="viewMode" class="form-control select_menu">
+                            <mat-option value="" [value]="singleAssetType.viewmode"
+                                *ngFor="let singleAssetType of assetSideBarData"
+                                (click)="viewMode =singleAssetType.viewmode;sidenavState = false;">
+                                {{ singleAssetType.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
 
                 <!-- <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
@@ -151,7 +151,7 @@
                     <div *ngSwitchCase="'tab9'">
                     </div>
                 </div> -->
-                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" >
+                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height">
                     <router-outlet></router-outlet>
                 </div>
             </div>

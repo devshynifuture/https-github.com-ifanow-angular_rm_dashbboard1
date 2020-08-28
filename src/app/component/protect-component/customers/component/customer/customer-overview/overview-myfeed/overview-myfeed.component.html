@@ -114,7 +114,8 @@
 
 
 
-                            <div class="col-md-12" *ngIf="!isLoadingAssetAllocation && isAssetAllocationDataLoaded ">
+                            <div class="col-md-12" [routerLink]="['/customer/detail/account/summary']"
+                                *ngIf="!isLoadingAssetAllocation && isAssetAllocationDataLoaded ">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -185,7 +186,7 @@
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
                                 #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)"
                                 *ngIf="tabsLoaded.portfolioData.dataLoaded">
-                                <div class="fundBox bg-white slide  " ngxSlickItem
+                                <div [routerLink]="portData.path" class="fundBox bg-white slide  " ngxSlickItem
                                     *ngFor="let portData of portFolioData">
 
                                     <div class="row">
@@ -193,8 +194,7 @@
                                             <h5 class="roboto">{{portData.assetTypeString}}</h5>
                                         </div>
                                         <div class="col-md-3 pl-0 d-flex justify-content-end">
-                                            <span *ngIf="portData.currentValue==0"
-                                                (click)="routeAndAddQueryParams(portData.assetTypeString)"
+                                            <span *ngIf="portData.currentValue==0" [routerLink]="portData.path"
                                                 class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                                 Add
                                             </span>
@@ -329,7 +329,7 @@
                     <!-- MF chart -->
                     <div class="wrapperBox">
                         <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.isLoading">
-                            <div class="col-md-12"
+                            <div [routerLink]="['/customer/detail/account/assets/mutual']" class="col-md-12"
                                 *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                 <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBoxMutual bg-white">
@@ -498,7 +498,8 @@
                         <div class="row">
                             <div class="col-md-12 ">
                                 <h5 class="roboto  mb-0">Sub category wise summary - mutual funds</h5>
-                                <div class="borderChatBox bg-white">
+                                <div [routerLink]="['/customer/detail/account/assets/mutual']"
+                                    class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-6 heightBox1 ">
                                             <div class="piechartMutualFund1" [chart]="mfSubCategoryPieConfig"></div>
@@ -536,7 +537,8 @@
                             <!-- portfolio data present -->
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
                                 #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
-                                <div class="fundBox2 bg-white slide" ngxSlickItem
+                                <div [routerLink]="['/customer/detail/account/assets/mutual']"
+                                    class="fundBox2 bg-white slide" ngxSlickItem
                                     *ngFor="let item of familyWiseAllocation">
                                     <div class="row align-items-center">
                                         <div class="col-md-3">
@@ -1040,7 +1042,8 @@
                             </div>
                         </div>
 
-                        <div class="riskProfileBox p-20 bg-white"
+                        <div [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}"
+                            class="riskProfileBox p-20 bg-white"
                             *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                             <div class="row" *ngFor="let risk of riskProfile">
                                 <div class="col-md-4 text-center">
