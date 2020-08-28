@@ -203,7 +203,10 @@
 
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
+                                            <p *ngIf="portData.assetType!=2" class="m-0 text-primitive f-12">CURRENT
+                                                VALUE</p>
+                                            <p *ngIf="portData.assetType==2" class="m-0 text-primitive f-12">OUTSTANDING
+                                                BAL</p>
                                             <h3 class="mb-20 roboto">₹<span
                                                     appFormatNumber>{{portData.currentValue}}</span>
                                             </h3>
@@ -212,18 +215,22 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
+                                            <p *ngIf="portData.assetType!=2" class="m-0 l-18 text-primitive f-12">AMT
+                                                INVESTED</p>
+                                            <p *ngIf="portData.assetType==2" class="m-0 l-18 text-primitive f-12">
+                                                ORIGINAL LOAN</p>
                                             <p class="m-0 roboto"
-                                                [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
-                                                ₹<span appFormatNumber>{{portData.investedAmount}}</span>
+                                                [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0,'':portData.investedAmount==''}">
+                                                <span *ngIf="portData.investedAmount">₹</span><span
+                                                    appFormatNumber>{{portData.investedAmount ? portData.investedAmount : '-'}}</span>
                                             </p>
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
                                             <p class="m-0 roboto"
-                                                [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
-                                                ₹<span
-                                                    appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
+                                                [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0,'':portData.gainAmount==''}">
+                                                <span *ngIf="portData.gainAmount">₹</span><span
+                                                    appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : '-'}}</span>
                                             </p>
                                         </div>
                                     </div>

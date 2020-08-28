@@ -533,11 +533,19 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         })
         let mfIndex = this.portFolioData.findIndex(record => record.assetType === 5);
 
-        // this.portFolioData.forEach((element,ind) => {
-        //   if(element.assetType == 5){
-        //    mfIndex = element[ind]
-        //   }
-        // })
+        this.portFolioData.forEach((element, ind) => {
+          if (element.assetType == 2) {
+            element['gainAmount'] = ''
+          }
+          if (element.assetType == 31) {
+            element['investedAmount'] = ''
+            element['gainAmount'] = ''
+          }
+          if (element.assetType == 9) {
+            element['investedAmount'] = ''
+            element['gainAmount'] = ''
+          }
+        })
         this.portFolioData.splice(mfIndex, 1)
 
       }
