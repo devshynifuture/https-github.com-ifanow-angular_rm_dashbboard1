@@ -35,7 +35,7 @@ export class MutualFundSummaryComponent implements OnInit {
   displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'investedDate', 'icons'];
   displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
-    'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal','investedDateTotal', 'iconsTotal'];
+    'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal', 'investedDateTotal', 'iconsTotal'];
   mfData: any;
   grandTotal: any = {};
   // subCategoryData: any[];
@@ -126,8 +126,9 @@ export class MutualFundSummaryComponent implements OnInit {
   isBulkDataResponse = false; tweleventhArrayGTotal: any;
   tweleventhArrayTotal: any;
   tweleventhArray: any;
-  cashFlowObj:any;
+  cashFlowObj: any;
   cashFlowXirr: any;
+  msg: string;
   // setTrueKey = false;
 
 
@@ -383,7 +384,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   styleObject(header, ind): Object {
-    
+
     if (header == 'schemeName') {
       this.customDataSource.data.array.push({
         'name': 'Scheme Name', 'index': ind, isCheked: true, style: {
@@ -815,9 +816,9 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'navDate') {
       this.customDataSource.data.array.push({
-        'name': 'NAV', 'index': ind, isCheked: true,
+        'name': 'NAV/Date', 'index': ind, isCheked: true,
         style: {
-          'width': '6%',
+          'width': '7%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
@@ -865,7 +866,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'SIP amount', 'index': ind, isCheked: true,
         style: {
-          'width': '5%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
@@ -1141,7 +1142,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element == 'dividendPayout') { name = 'Dividend payout' };
       if (element == 'switchOut') { name = 'Withdrawals Switch outs' };
       if (element == 'balanceUnit') { name = 'Balance Unit' };
-      if (element == 'navDate') { name = 'NAV' };
+      if (element == 'navDate') { name = 'NAV/Date' };
       if (element == 'sipAmount') { name = 'SIP' };
       if (element == 'investedDate') { name = 'Invested date' };
 
@@ -1227,7 +1228,7 @@ export class MutualFundSummaryComponent implements OnInit {
         myArray.forEach(val => list.push(Object.assign({}, val)));
         this.summary.data = list;
         console.log('Summmary data get here ===', this.summary)
-        if(!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)){
+        if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)) {
           this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
           this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
           this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
@@ -1491,7 +1492,7 @@ export class MutualFundSummaryComponent implements OnInit {
               };
               this.displayColArray.push(obj);
             });
-            if(this.rightFilterData.mfData){
+            if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             }
             this.mfData = this.reponseData;
@@ -1619,10 +1620,8 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        console.log('type', type)
-        if (type == false) {
-          // element.navDate = element.nav +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | ' +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+''+element.navDate
-        }
+        element.navDate = (element.nav + '$NEXTLINE ' +element.navDate);
+        console.log(element.navDate)
       }
     });
     this.displayedColumns.forEach((element, ind) => {
@@ -1634,9 +1633,9 @@ export class MutualFundSummaryComponent implements OnInit {
     setTimeout(() => {
       const para = document.getElementById('template');
       // const header = document.getElementById('templateHeader');
-       const header = this.summaryTemplateHeader.nativeElement.innerHTML
+      const header = this.summaryTemplateHeader.nativeElement.innerHTML
 
-      this.returnValue = this.utilService.htmlToPdf(header,para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
   }
@@ -1670,8 +1669,8 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'balanceUnit';
         break;
-      case 'NAV':
-        obj = 'nav';
+      case 'NAV/Date':
+        obj = 'navDate';
         break;
       case 'SIP amount':
         obj = 'sipAmount';
@@ -1713,7 +1712,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = '';
         break;
-      case 'NAV':
+      case 'NAV/Date':
         obj = 'totalNavDate';
         break;
       case 'SIP amount':
@@ -1756,7 +1755,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = '';
         break;
-      case 'NAV':
+      case 'NAV/Date':
         obj = '0';
         break;
       case 'SIP amount':
@@ -1938,7 +1937,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
-          //element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
+          element.navDate = (element.nav + ' $NEXTLINE ' +element.navDate);
         }
       }
     });
@@ -1952,12 +1951,12 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
-       const header = this.summaryTemplateHeader.nativeElement.innerHTML
+      const header = this.summaryTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
-        header:header,
+        header: header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
