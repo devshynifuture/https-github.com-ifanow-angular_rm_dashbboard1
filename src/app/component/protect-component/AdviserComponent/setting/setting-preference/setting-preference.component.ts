@@ -396,6 +396,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       bodyChange: !data.bodyEditable,
       component_type: 'email_template',
       email_header: data.title,
+      subjectEditable: data.subjectEditable
     }
     const fragmentData = {
       flag: value,

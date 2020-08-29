@@ -22,7 +22,8 @@
                             <h5 class="mb-8 text-black pl-0">{{Questions.Q}}</h5>
                             <div class="form-group">
                                 <mat-form-field>
-                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="goalMember" class="form-control br-0 br-none">
+                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)"
+                                        formControlName="goalMember" class="form-control br-0 br-none">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
                                             {{familyMember.displayName}}</mat-option>
@@ -37,28 +38,59 @@
                     </div>
 
                     <!-- AGE FIELD -->
-                    <div class="row" [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
+                    <div class="row"
+                        [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q1}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group ">
                                         <mat-form-field>
-                                            <input type="number" formControlName="age" autocomplete="off" matInput [value]="singleYearGoalForm.value.age" class="form-control br-0" [placeholder]="goalTypeData.placeHolder">
+                                            <input type="number" formControlName="age" autocomplete="off" matInput
+                                                [value]="singleYearGoalForm.value.age" class="form-control br-0"
+                                                [placeholder]="goalTypeData.placeHolder">
                                         </mat-form-field>
-                                        <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This field is required
+                                        <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This
+                                            field is required
                                         </mat-error>
                                     </div>
                                 </div>
                                 <div class=" col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age" [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
+                                        <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age"
+                                            [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <!-- RETIREMENT EXPENSE -->
+                    <div class="row pt-20" *ngIf="Questions.Q7">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">{{Questions.Q7}}</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input type="number" formControlName="lifeExpectancy" autocomplete="off"
+                                                matInput [value]="singleYearGoalForm.value.lifeExpectancy"
+                                                class="form-control br-0 rupess"
+                                                [disabled]="singleYearGoalForm.value.lifeExpectancy">
+                                            <mat-error class="f-12">This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider formControlName="lifeExpectancy"
+                                            [value]="singleYearGoalForm.value.lifeExpectancy"
+                                            [min]="singleYearGoalForm.get('age').value"
+                                            [max]="goalTypeData.validations.maxLife"></mat-slider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- GOAL COST -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
@@ -67,16 +99,23 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group ">
                                         <mat-form-field>
-                                            <input type="number" formControlName="cost" autocomplete="off" matInput [value]="singleYearGoalForm.value.cost" class="form-control br-0 rupess">
-                                            
-                                            <mat-error *ngIf="singleYearGoalForm.get('cost').errors?.required">This field is required</mat-error>
-                                            <mat-error *ngIf="singleYearGoalForm.get('cost').errors?.min || singleYearGoalForm.get('cost').errors?.max">Please enter valid value</mat-error>
+                                            <input type="number" formControlName="cost" autocomplete="off" matInput
+                                                [value]="singleYearGoalForm.value.cost"
+                                                class="form-control br-0 rupess">
+
+                                            <mat-error *ngIf="singleYearGoalForm.get('cost').errors?.required">This
+                                                field is required</mat-error>
+                                            <mat-error
+                                                *ngIf="singleYearGoalForm.get('cost').errors?.min || singleYearGoalForm.get('cost').errors?.max">
+                                                Please enter valid value</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="cost" [value]="singleYearGoalForm.value.cost" [min]="goalTypeData.validations.minCost" [max]="goalTypeData.validations.maxCost"></mat-slider>
+                                        <mat-slider formControlName="cost" [value]="singleYearGoalForm.value.cost"
+                                            [min]="goalTypeData.validations.minCost"
+                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -91,15 +130,20 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input type="number" formControlName="costReduction" autocomplete="off" matInput [value]="singleYearGoalForm.value.costReduction" class="form-control br-0 rupess"
-                                            [disabled]="singleYearGoalForm.value.costReduction">
+                                            <input type="number" formControlName="costReduction" autocomplete="off"
+                                                matInput [value]="singleYearGoalForm.value.costReduction"
+                                                class="form-control br-0 rupess"
+                                                [disabled]="singleYearGoalForm.value.costReduction">
                                             <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="costReduction" [value]="singleYearGoalForm.value.costReduction" [min]="goalTypeData.validations.maxCostReduction" [max]="goalTypeData.validations.minCostReduction"></mat-slider>
+                                        <mat-slider formControlName="costReduction"
+                                            [value]="singleYearGoalForm.value.costReduction"
+                                            [min]="goalTypeData.validations.maxCostReduction"
+                                            [max]="goalTypeData.validations.minCostReduction"></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +197,8 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group ">
                                         <mat-form-field>
-                                            <input formControlName="goalName" autocomplete="off" matInput class="form-control br-0">
+                                            <input formControlName="goalName" autocomplete="off" matInput
+                                                class="form-control br-0">
                                             <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -175,7 +220,8 @@
                                 <div class="col-md-8 p-0">
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input formControlName="goalDescription" autocomplete="off" matInput class="form-control br-0">
+                                            <input formControlName="goalDescription" autocomplete="off" matInput
+                                                class="form-control br-0">
                                             <mat-error class="f-12">This field is required</mat-error>
                                             <mat-hint>Optional</mat-hint>
                                         </mat-form-field>
@@ -194,14 +240,16 @@
                     </div>
 
                 </div>
-                <input #file (change)="previewGoalImage($event)" accept='image/*' formControlName="logo" type="file" [hidden]="true">
+                <input #file (change)="previewGoalImage($event)" accept='image/*' formControlName="logo" type="file"
+                    [hidden]="true">
             </div>
         </div>
         <div class="col-md-4"></div>
 
     </div>
     <div class="col-md-4 p-0">
-        <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are planning for their house goal.<img src="/assets/images/svg/info.svg"></h5>
+        <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are
+            planning for their house goal.<img src="/assets/images/svg/info.svg"></h5>
         <h5 class="m-0 f-500 text-black pt-20">Retirement age</h5>
         <div class="row pt-12">
             <div class="col-md-10 pl-0">

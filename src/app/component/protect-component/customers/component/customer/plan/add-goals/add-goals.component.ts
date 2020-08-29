@@ -108,6 +108,7 @@ export class AddGoalsComponent implements OnInit {
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'Age you want to retire?',
+            Q7: 'Your life expentancy?',
             Q2: 'Your current monthly expenses?',
             Q5: "At retirement, by what % will the expenses change?",
             Q6: "Milestones you'd also like to plan for (optional)",
@@ -142,6 +143,8 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
+            minLife:0,
+            maxLife:100,
             minCost: 500000,
             maxCost: 100000000,
             showAge: true,

@@ -498,15 +498,17 @@ export class ExpensesComponent implements OnInit {
             this.clientDob =this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'); 
           }else{
             const obj={
-              'id':this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+              'dob':this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+              'id':element.familyMemberId
             }
             array.push(obj);
           }
          
         });
        this.familyList =  array.map(function(obj,ind) { 
-         let val = 'id'+ind;
-         obj[val] = obj['id']
+         let val = obj.id;
+         obj[val] = obj['dob']
+         delete obj['dob'];
          delete obj['id'];
           return obj; 
       }); 

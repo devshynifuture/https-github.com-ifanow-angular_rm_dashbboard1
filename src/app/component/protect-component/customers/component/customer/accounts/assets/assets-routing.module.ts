@@ -25,43 +25,48 @@ const routes: Routes = [
     children: [
       {
         path: 'mutual', component: MutualFundComponent,
-    
-      }, 
+
+      },
       {
         path: 'stock', component: AssetStocksComponent,
-    
-      }, 
+
+      },
       {
         path: 'fix', component: FixedIncomeComponent,
-    
-      }, 
+
+      },
       {
         path: 'real', component: RealEstateComponent,
-    
-      }, 
+
+      },
       {
         path: 'retire', component: RetirementAccountComponent,
-    
-      }, 
+
+      },
       {
         path: 'small', component: SmallSavingSchemeComponent,
-    
-      }, 
+
+      },
       {
         path: 'cash_bank', component: CashAndBankComponent,
-    
-      }, 
+
+      },
       {
         path: 'commodities', component: CommoditiesComponent,
-    
+
+      },
+      {
+        path: '',
+        redirectTo: 'mutual',
+        pathMatch: 'full'
       }
     ]
-  }, 
-  
+  },
+
   {
     path: 'overview', component: MutualFundOverviewComponent,
 
-  }, 
+  },
   {
     path: 'summary', component: MutualFundSummaryComponent,
 
