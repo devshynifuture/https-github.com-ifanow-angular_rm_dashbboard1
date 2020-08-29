@@ -604,7 +604,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       })
   }
 
-  openPopup(value) {
+  openPopup(value, data) {
     const dialogData = {
       data: value,
       header: 'EMAIL VERIFICATION REQUIRED',

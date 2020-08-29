@@ -2,7 +2,6 @@
     <div class="col-md-12 pr-0">
         <div class="row justify-content-right" [formGroup]="selectBrokerForm">
             <div class="col-lg-6 col-md-2"></div>
-
             <div class="col-lg-4 col-md-6">
                 <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected"
                     matTooltipPosition="below">
@@ -11,7 +10,6 @@
                         START RECONCILIATION
                     </button>
                 </div>
-
             </div>
             <div class="col-lg-2 col-md-4">
                 <mat-select class="b-a w-200 mr-10 text-left form-control" formControlName="selectBrokerId"
@@ -89,7 +87,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="deleted">
                     <th mat-header-cell *matHeaderCellDef class="text-left" sticky> Delete </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
@@ -98,7 +95,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="reordered">
                     <th mat-header-cell *matHeaderCellDef class="text-left br" sticky> Re ordered </th>
                     <td mat-cell *matCellDef="let element" class="text-left br">
@@ -107,7 +103,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="orderSuccess">
                     <th mat-header-cell *matHeaderCellDef class="text-left" sticky> Success </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
@@ -116,7 +111,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="orderFailed">
                     <th mat-header-cell *matHeaderCellDef class="text-left br" sticky> Failed </th>
                     <td mat-cell *matCellDef="let element" class="text-left br">
@@ -125,7 +119,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="action" sticky>
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element">
@@ -146,7 +139,6 @@
         </h4>
     </div>
 </div>
-
 <div class="row text-center pt-0 p-16"
     *ngIf="selectBrokerForm.get('selectBrokerId').invalid && selectBrokerForm.get('selectBrokerId').untouched">
     <div class="col-md-12 b-a p-44 mt-12 text-primitive">
