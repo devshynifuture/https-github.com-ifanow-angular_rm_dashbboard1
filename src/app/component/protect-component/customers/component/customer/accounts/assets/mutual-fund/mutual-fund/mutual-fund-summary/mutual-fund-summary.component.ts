@@ -1620,7 +1620,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        element.navDate = (element.nav + ' $NEXTLINE ' +element.navDate);
+        element.navDate = (element.nav + '$NEXTLINE ' +element.navDate);
         console.log(element.navDate)
       }
     });
