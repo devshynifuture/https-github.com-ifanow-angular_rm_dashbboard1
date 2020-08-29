@@ -54,14 +54,14 @@ export class CrmTasksComponent implements OnInit {
     this.registerForPushNotification();
   }
 
-  registerForPushNotification(){
+  registerForPushNotification() {
     this.webPushNotify.enableWebPushNotification();
   }
 
   setFilterValue() {
     this.isFilterSet = true;
     this.filterValueId = this.filterFormControl.value;
-    if(this.filterValueId === 5){
+    if (this.filterValueId === 5) {
       this.openDateDialog();
     } else {
       this.finalTaskList = [];
@@ -69,15 +69,15 @@ export class CrmTasksComponent implements OnInit {
     }
   }
 
-  openDateDialog(){
-    const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent,{
-        width: '663px',
-        data: ''
+  openDateDialog() {
+    const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent, {
+      width: '663px',
+      data: ''
     })
 
     dialogRef.afterClosed()
-      .subscribe(res=>{
-        if(res){
+      .subscribe(res => {
+        if (res) {
           this.customDateFilter = true;
           this.customFromToDate = res;
           this.finalTaskList = [];
@@ -112,12 +112,12 @@ export class CrmTasksComponent implements OnInit {
     }
     if (this.isFilterSet) {
       data['dateFilter'] = this.filterValueId
-      if(this.customDateFilter){
+      if (this.customDateFilter) {
         data['fromDate'] = this.customFromToDate.fromDate;
-        data['toDate'] = this.customFromToDate.toDate; 
+        data['toDate'] = this.customFromToDate.toDate;
       }
     }
-    
+
     this.crmTaskService.getAllTaskListValues(data)
       .subscribe(res => {
         this.isLoading = false;
@@ -235,44 +235,8 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
-  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } 
+  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
+  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
+
 ];
 
