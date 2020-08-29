@@ -240,9 +240,9 @@ export class EmailOnlyComponent implements OnInit {
       subjeStringArray.forEach(element => {
         if (element.includes('$')) {
           element = element.replace(',', '');
-          if (element !== '$client_display_name,') {
+          if (element !== '$client_display_name') {
             errorFlag = true;
-            this.eventService.openSnackBar('$client_display_name is allowed as placeholder', "Dismiss")
+            this.eventService.openSnackBar('Only $client_display_name is allowed as placeholder', "Dismiss")
           }
         }
       });
