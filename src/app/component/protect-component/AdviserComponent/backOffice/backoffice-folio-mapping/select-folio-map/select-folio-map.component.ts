@@ -62,6 +62,8 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   setUserDetail(value, typedValue) {
+    this.searchFamilyOrClientForm.controls['searchFamilyOrClient'].enable({emitEvent:false});
+    
     this.doShowDetails = true;
     this.searchKeyword = typedValue;
     this.selectedClient = value;
@@ -72,7 +74,6 @@ export class SelectFolioMapComponent implements OnInit {
     this.selectedClientDob = value.birthDate;
     this.selectedClientGrpHeadMobNum = value.mobileNo;
     this.selectedClientGrpHeadEmail = value.emailId;
-
   }
 
   displayFn(value): string | undefined {
@@ -104,25 +105,30 @@ export class SelectFolioMapComponent implements OnInit {
         )
       )
       .subscribe(data => {
-        this.arrayOfFamilyMemberOrClient = data;
-        this.arrayOfFamilyMemberOrClient.map(element => {
-          element.showName = ''
-        });
-        this.arrayOfFamilyMemberOrClient.map(item=>{
-          if(item.familyId > 0){
-            item.showName = item.familyMemberName
+        if(data){
+          this.arrayOfFamilyMemberOrClient = data;
+          this.arrayOfFamilyMemberOrClient.map(element => {
+            element.showName = ''
+          });
+          this.arrayOfFamilyMemberOrClient.map(item=>{
+            if(item.familyId > 0){
+              item.showName = item.familyMemberName
+            } else {
+              item.showName = item.clientName
+            }
+          })
+          console.log("this is advisor name::::::::", data);
+          if (data && data['length'] > 0) {
+            this.arrayOfFamilyMemberOrClientError = false;
           } else {
-            item.showName = item.clientName
+            this.arrayOfFamilyMemberOrClientError = true;
+            this.errorMsg = 'No data Found';
           }
-        })
-        console.log("this is advisor name::::::::", data);
-        if (data && data['length'] > 0) {
-          this.arrayOfFamilyMemberOrClientError = false;
+          console.log("this is some value", this.arrayOfFamilyMemberOrClient);
         } else {
           this.arrayOfFamilyMemberOrClientError = true;
           this.errorMsg = 'No data Found';
         }
-        console.log("this is some value", this.arrayOfFamilyMemberOrClient);
       }, err => {
         this.arrayOfFamilyMemberOrClientError = true;
         this.errorMsg = 'Something went wrong';
@@ -158,8 +164,13 @@ export class SelectFolioMapComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
+          // update call responds with 200 refresh or else no refresh
+          if(res.statusCode === 200){
+            this.dialogClose(true);
+          } else {
+            this.dialogClose(false);
+          }
           this.eventService.openSnackBar("Mapped Successfully !", "DISMISS");
-          this.dialogClose(true)
         } else {
           this.eventService.openSnackBar("Something went wrong!", "DISMISS");
         }

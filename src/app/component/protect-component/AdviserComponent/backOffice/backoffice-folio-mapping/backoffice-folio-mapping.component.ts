@@ -272,7 +272,12 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result) {
+      if (result.refresh) {
+        this.showMappingBtn = false;
+        this.selection.clear();
+        this.selectedFolioCount = 0;
+        this.finalUnmappedList = [];
+        this.finalUnmappedListSearch = [];
         this.initPoint();
       }
     });
@@ -289,19 +294,6 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },

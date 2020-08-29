@@ -177,6 +177,31 @@ export class HttpService {
       });
   }
 
+  putWithStatusCode(url: string, body, options?){
+    let httpOptions = {
+      headers: new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json')
+    };
+    if (options != undefined) {
+      httpOptions = options;
+    }
+
+    return this._http
+    .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
+    .map((res: any) => {
+      if (res == null) {
+        return res;
+      } else if (res.status === 200) {
+        const resData = this.changeBase64ToString(res);
+        return { res: resData, statusCode: res.status } ;
+      } else {
+        const err = new Error(res.message);
+        throwError(err);
+        // this._router.navigate(['login']);
+      }
+    });
+  }
+
   percentDone:any;
   callEvent:any = 'events'
   putExternal(url: string, body, options?): Observable<any> {

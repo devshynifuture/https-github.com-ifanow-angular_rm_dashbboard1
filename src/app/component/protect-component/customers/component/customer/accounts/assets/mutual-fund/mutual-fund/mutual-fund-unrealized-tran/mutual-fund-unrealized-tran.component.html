@@ -613,13 +613,13 @@
                  Mutual fund summary</p>
          </td> -->
          <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
-            <div
+            <div style="width: 200px;"
                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-               <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+               <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </div>
-            <div
+            <div style="width: 200px;"
                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-               <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+               <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </div>
             <div
                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">

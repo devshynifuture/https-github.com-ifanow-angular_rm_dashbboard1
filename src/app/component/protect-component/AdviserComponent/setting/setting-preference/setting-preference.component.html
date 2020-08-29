@@ -229,9 +229,12 @@
                                                     <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
                                                         Edit
                                                     </button>
-                                                    <!-- <button mat-menu-item (click)="openPopup('')">
-                                                        Update automated subject
-                                                    </button> -->
+                                                    <button mat-menu-item
+                                                        (click)="openPopup((element.templateEnableOrDisable == 0)?'DISABLE':'ENABLE',element)">
+                                                        {{(element.templateEnableOrDisable == 0)?'Disable':'Enable'}}
+                                                        automated
+                                                        subject
+                                                    </button>
                                                     <!-- <button mat-menu-item (click)="deleteModal('template',element)">
                                                         <span>Delete</span>
                                                     </button> -->

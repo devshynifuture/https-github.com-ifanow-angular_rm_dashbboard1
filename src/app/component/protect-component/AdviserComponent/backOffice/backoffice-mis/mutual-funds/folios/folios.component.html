@@ -45,7 +45,8 @@
         <div class="form-group folioInputBox ">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
                 <input class="form-control pr-32" matInput #panRef placeholder="Enter PAN">
-                <mat-icon class="positionIcon" *ngIf="panRef.value.length > 1" matSuffix (click)="getData(panRef.value,'pan')">check</mat-icon>
+                <mat-icon class="positionIcon" matSuffix (click)="getData(panRef.value,'pan')">search
+                </mat-icon>
             </mat-form-field>
         </div>
     </div>
@@ -53,7 +54,10 @@
         <div class="form-group folioInputBox ">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
                 <input class="form-control pr-32" matInput #folioRef placeholder="Enter folio number">
-                <mat-icon class="positionIcon" *ngIf="folioRef.value.length > 1"  matSuffix (click)="getData(folioRef.value,'folio')">check</mat-icon>
+               
+                <mat-icon class="positionIcon" matSuffix (click)="getData(folioRef.value,'folio')">search
+                </mat-icon>  
+
             </mat-form-field>
         </div>
     </div>
