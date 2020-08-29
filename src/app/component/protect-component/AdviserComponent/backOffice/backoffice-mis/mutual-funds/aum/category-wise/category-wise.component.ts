@@ -100,6 +100,9 @@ export class CategoryWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
   arnRiaList = [];
+  selectedSchemeName: any;
+  selectedSubCategoryName: any;
+  selectedCategoryName: any;
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
@@ -243,7 +246,7 @@ export class CategoryWiseComponent implements OnInit {
   // }
 
   showSubTableList(index, category, catIndex) {
-
+    this.selectedCategoryName = category.name;
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
 
@@ -324,6 +327,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showSchemeName(subCategory, index, catIndex) {
+    this.selectedSubCategoryName = subCategory.name;
     this.selectedSubCategory = index;
     this.selectedCategory = catIndex;
     subCategory.showSubCategory = !subCategory.showSubCategory;
@@ -389,6 +393,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showApplicantName(schemeData, index, subCatIndex, catIndex) {
+    this.selectedSchemeName = schemeData.name;
     this.selectedSubCategory = subCatIndex;
     this.selectedCategory = catIndex;
     this.selectedClientIndex = index;
@@ -587,7 +592,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: true,
       schemeList: false,
       applicantList: false
-    }, this.schemeWiseTotalArr);
+    }, this.schemeWiseTotalArr, "Category: " + this.selectedCategoryName);
   }
 
   exportToExcelReport(choice, catIndex, subCatIndex, schemeIndex) {
