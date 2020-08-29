@@ -452,7 +452,7 @@ export class ClientWiseComponent implements OnInit {
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
-        this.investorWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
+        this.investorWiseTotal = ['Total', '', sumAumTotalTemp, Math.round(sumWeightInPercTemp)];
         break;
       case 'schemes':
         // schemes
@@ -468,7 +468,7 @@ export class ClientWiseComponent implements OnInit {
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
-        this.schemeWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
+        this.schemeWiseTotal = ['Total', '', sumAumTotalTemp, Math.round(sumWeightInPercTemp)];
         break;
       case 'scheme-folio':
         // scheme folio
@@ -485,7 +485,7 @@ export class ClientWiseComponent implements OnInit {
           });
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
-          this.scheme2WiseTotal = ['Total', '', '', sumAumTotalTemp, '', sumWeightInPercTemp];
+          this.scheme2WiseTotal = ['Total', '', '', sumAumTotalTemp, '', Math.round(sumWeightInPercTemp)];
         });
         break;
     }

@@ -603,4 +603,34 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         }
       })
   }
+
+  openPopup(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'EMAIL VERIFICATION REQUIRED',
+      body: 'If you wish to send an email with your email address, Please verify it before proceeding. Please make a note the process of verification takes 24 to 48 hours. Would you like to proceed?',
+      body2: '',
+      btnYes: 'CANCEL',
+      btnNo: 'PROCEED',
+      positiveMethod: () => {
+        dialogRef.close();
+        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, tab2view: true });
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }
