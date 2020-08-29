@@ -1619,9 +1619,9 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.forEach(element => {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
-        var type = typeof element.navDate == "boolean" ? element.navDate : false;    
-          element.navDate = element.nav+' | \n'+element.navDate
-          console.log(element.navDate)
+        var type = typeof element.navDate == "boolean" ? element.navDate : false;
+        element.navDate = (element.nav + ' | ' +element.navDate);
+        console.log(element.navDate)
       }
     });
     this.displayedColumns.forEach((element, ind) => {
@@ -1937,7 +1937,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
-          element.navDate = element.nav+' | \n'+element.navDate
+          element.navDate = element.nav + ' | \n' + element.navDate
         }
       }
     });
