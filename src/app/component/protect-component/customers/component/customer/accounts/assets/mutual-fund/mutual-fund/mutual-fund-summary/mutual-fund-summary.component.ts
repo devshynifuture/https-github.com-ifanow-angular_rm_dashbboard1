@@ -866,7 +866,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'SIP amount', 'index': ind, isCheked: true,
         style: {
-          'width': '5%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
