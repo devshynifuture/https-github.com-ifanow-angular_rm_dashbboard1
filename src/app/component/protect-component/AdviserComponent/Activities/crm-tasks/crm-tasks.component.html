@@ -1,40 +1,51 @@
-<div id="ui-activies">
-    <div class="row main-header">
+<div id="ui-crm-task">
+    <div class="row header-crm">
         <div class="col-md-12 p-0">
             <h3 class="m-0 p-18">Tasks</h3>
         </div>
     </div>
-    <div class="row pt-80 pr-8">
+    <div class="row pt-150 pr-8 pb-10">
         <div class="col-md-6">
 
         </div>
-        <div class="col-md-6  d-flex align-items-center justify-content-end mt-8 crm-task-selects">
-            <mat-form-field float="never" appearance="standard" class="form-group w-40 mb-0">
-                <mat-select class="form-control" [formControl]="filterFormControl">
-                    <mat-option *ngFor="let item of dateFilterList" [value]="item.id" (click)="setFilterValue()">
-                        {{ item.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <a href="" class="c-p downloadPdfIcon ml-12">
-                <img class="c-p" src="assets/images/svg/download-bordered.svg">
-            </a>
+        <div class="col-md-6  crm-task-selects p-0">
+            <div class="row w-100 text-right align-items-center">
+                <div class="col-md-7">
+                    <mat-form-field float="never" appearance="standard" class="form-group mb-0">
+                        <mat-select class="form-control" [formControl]="filterFormControl">
+                            <mat-option *ngFor="let item of dateFilterList" [value]="item.id"
+                                (click)="setFilterValue()">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 p-0 d-flex">
+                    <a href="" class="c-p downloadPdfIcon ml-12">
+                        <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                    </a>
 
-            <a href="" class="downloadPdfIcon">
-                <img class="" src="assets/images/svg/up-down.svg">
-            </a>
-            <button (click)="openAddTask(null)" class="btn-primary br-0 ml-12" mat-stroked-button>
-                ADD NEW
-            </button>
+                    <a href="" class="downloadPdfIcon">
+                        <img class="" src="assets/images/svg/up-down.svg">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <button (click)="openAddTask(null)" class="btn-primary br-0 ml-12" mat-stroked-button>
+                        ADD NEW
+                    </button>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
     <div class="wrapper-20 pt-0 crm-task">
-        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)" class="example-container"
-            *ngIf="dataSource.data && dataSource.data.length>0">
-            <table [dataSource]="dataSource" #tableEl class="mt-8" id="table-low" mat-table
-                [appSkeletonLoading]="isLoading">
+        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)"
+            class="ox-hide crm-task-scroll" *ngIf="dataSource.data && dataSource.data.length>0">
+            <table [dataSource]="dataSource" #tableEl id="tbs" mat-table [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="client">
-                    <th *matHeaderCellDef class="" mat-header-cell> Client</th>
+                    <th *matHeaderCellDef class="" mat-header-cell sticky> Client</th>
                     <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                         <div class="bar">
                             {{element.client}}
@@ -42,14 +53,14 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="member">
-                    <th *matHeaderCellDef class="" mat-header-cell> Family member</th>
+                    <th *matHeaderCellDef class="" mat-header-cell sticky> Family member</th>
                     <td *matCellDef="let element" mat-cell
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.member}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="des">
-                    <th *matHeaderCellDef class="" mat-header-cell> Description</th>
+                    <th *matHeaderCellDef class="" mat-header-cell sticky> Description</th>
                     <td *matCellDef="let element" mat-cell
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)">
                         <div class="bar">
@@ -63,34 +74,34 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="cat">
-                    <th *matHeaderCellDef mat-header-cell> Category</th>
+                    <th *matHeaderCellDef mat-header-cell sticky> Category</th>
                     <td *matCellDef="let element" mat-cell
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.cat}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="assigned">
-                    <th *matHeaderCellDef mat-header-cell> Assigned to</th>
+                    <th *matHeaderCellDef mat-header-cell sticky> Assigned to</th>
                     <td *matCellDef="let element" mat-cell
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.assigned}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="dueDate">
-                    <th *matHeaderCellDef mat-header-cell> Due date</th>
+                    <th *matHeaderCellDef mat-header-cell sticky> Due date</th>
                     <td *matCellDef="let element" mat-cell
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.dueDate}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="taskStatus">
-                    <th *matHeaderCellDef mat-header-cell> Status</th>
+                    <th *matHeaderCellDef mat-header-cell sticky> Status</th>
                     <td *matCellDef="let element" mat-cell class="c-p">
                         <div class="bar">{{element.taskStatus}}</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="menuList">
-                    <th *matHeaderCellDef mat-header-cell></th>
+                    <th *matHeaderCellDef mat-header-cell sticky></th>
                     <td *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar" *ngIf="!isLoading">
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
@@ -100,12 +111,12 @@
                         </div>
                     </td>
                 </ng-container>
-                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matHeaderRowDef="displayedColumns;sticky: true;" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
         <div class="b-a text-center p-44 mt-20" *ngIf="dataSource.data === null">
-            <h5>
+            <h5 class="m-0">
                 No Data Found
             </h5>
         </div>

@@ -27,7 +27,7 @@
                         <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
                         </mat-option>
                         <ng-container *ngIf="!isLoadingForDropDown">
-                            <mat-option (onSelectionChange)="setUserDetail(item, searchFamilyClientRef.value)"
+                            <mat-option (click)="setUserDetail(item, searchFamilyClientRef.value)"
                                 *ngFor="let item of arrayOfFamilyMemberOrClient" [value]="item.showName"
                                 [matTooltip]="item.showName" matTooltipPosition="after">
                                 <span>

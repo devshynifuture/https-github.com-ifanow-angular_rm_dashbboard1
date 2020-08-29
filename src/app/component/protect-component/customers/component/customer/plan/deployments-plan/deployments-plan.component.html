@@ -1,6 +1,7 @@
 <div id="investmentPlan">
     <div class="row" style="  height: calc(100vh - 126px);">
-        <div class="col-md-2 bg-grey lter p-0 pt-8 responsive-left-side-top responsive-flex-auto">
+        <div
+            class="col-xl-2 col-lg-2 col-md-12 bg-grey lter p-0 pt-8 responsive-left-side-top responsive-flex-auto d-none-992">
             <ul class="vertical-menu responsive-left-side">
                 <li class="c-p f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
                     [ngClass]="{'activeColor': type==1}">
@@ -29,7 +30,21 @@
             </ul>
         </div>
 
-        <div class="col-md-10 responsive-right-side-top">
+        <div class="col-xl-10 col-lg-10 col-md-12">
+            <div class="col-md-12 text-right d-lg-none pr-0">
+                <div class="text-right p-24 pr-0 pb-12">
+                    <mat-form-field class="w-30">
+                        <mat-select class="form-control" [(ngModel)]="selectedTab">
+                            <mat-option value="Goal based">
+                                Goal based
+                            </mat-option>
+                            <mat-option value="Non goal based">
+                                Non goal based
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
             <div class="row pt-28">
                 <div class="col-md-12">
                     <button mat-stroked-button class="br-0 text-primary">Rahul
@@ -57,7 +72,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-10 deployment" *ngIf="dataSource">
+                <div class="col-xl-10 col-lg-10 col-md-12 deployment" *ngIf="dataSource">
 
                     <!-- use this table for header  -->
                     <!-- <div class="deployment-top">

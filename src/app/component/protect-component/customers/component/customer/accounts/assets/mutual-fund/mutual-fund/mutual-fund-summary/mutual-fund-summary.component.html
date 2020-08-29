@@ -1,7 +1,7 @@
 <div class="wrapper-8">
     <div class="row pb-12">
         <div class="col-md-4 pl-0">
-            <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
+            <h4 class="m-0 text-black roboto pt-8">Mutual fund summary </h4>
         </div>
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center">
             <div class="pdfClass"
@@ -475,13 +475,13 @@
         align="center; page-break-before: always;border-collapse: separate;">
         <tr>
             <td style="text-align: left; vertical-align: top;" colspan="4" *ngIf="getOrgData">
-                <div
+                <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                 </div>
-                <div
+                <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
                 </div>
                 <div
                     *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
@@ -737,3 +737,5 @@
         </tr>
     </table>
 </div>
+
+

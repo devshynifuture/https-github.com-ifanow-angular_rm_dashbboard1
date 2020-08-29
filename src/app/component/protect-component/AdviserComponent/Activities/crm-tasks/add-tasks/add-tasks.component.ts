@@ -150,7 +150,7 @@ export class AddTasksComponent implements OnInit {
       this.setTeamMember(data.assignedTo);
 
       this.addTaskForm = this.fb.group({
-        searchTemplateList: [data.taskTemplateId,],
+        searchTemplateList: [data.taskTemplateId ? data.taskTemplateId : ''],
         searchClientList: [data.displayName, Validators.required],
         assignedTo: [data.assignedTo, Validators.required],
         taskDueDate: [moment(data.dueDateTimeStamp),],
@@ -173,12 +173,12 @@ export class AddTasksComponent implements OnInit {
       this.selectClient(this.selectedClient);
     } else {
       this.addTaskForm = this.fb.group({
-        searchTemplateList: [,],
+        searchTemplateList: ["",],
         searchClientList: [, Validators.required],
-        assignedTo: [, Validators.required],
+        assignedTo: ["", Validators.required],
         taskDueDate: [,],
         taskDescription: [, Validators.required],
-        familyMemberId: [,],
+        familyMemberId: ["",],
         subTask: this.fb.array([]),
         taskTurnAroundTime: [,],
         continuesTill: [,],

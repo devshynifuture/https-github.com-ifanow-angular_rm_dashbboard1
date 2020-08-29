@@ -603,4 +603,47 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         }
       })
   }
+
+  openPopup(value, data) {
+    const header = (data.templateEnableOrDisable == 0) ? 'disable' : 'enable';
+    const dialogData = {
+      data: 'TEMPLATE',
+      header: header.toUpperCase(),
+      body: `Are you sure you want to ${header}?`,
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: header.toUpperCase(),
+      positiveMethod: () => {
+        const obj = {
+          "advisorId": this.advisorId,
+          "advisorEmailCategoryId": data.emailTemplateId,
+          "enableOrDisable": header == 'enable' ? 0 : 1,
+          id: data.advisorEmailPermissionId
+        }
+        this.orgSetting.enableDisableTemplate(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar("Updated sucessfully", "Dismiss")
+            dialogRef.close();
+            this.getEmailTemplate();
+          }
+
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }

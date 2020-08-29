@@ -76,7 +76,7 @@
 
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="name.totalAum"></span>
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="name.totalAum" [shouldRoundOff]="false"></span>
                                     </div>
                                 </td>
 
@@ -157,7 +157,7 @@
 
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingInvestor}">
-                                                        {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : investor.totalAum}}</span>
+                                                        {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingInvestor" [shouldRoundOff]="false" [value]="investor.totalAum"></span>
                                                     </div>
                                                 </td>
 
@@ -231,7 +231,7 @@
 
                                                                 <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingScheme}">
-                                                                        {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme" [value]="scheme.totalAum"></span>
+                                                                        {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme" [value]="scheme.totalAum" [shouldRoundOff]="false"></span>
                                                                     </div>
                                                                 </td>
 
@@ -318,7 +318,7 @@
                                                                                 </td>
                                                                                 <td class="text-right">
                                                                                     <div [ngClass]="{'bar': isLoadingFolio}">
-                                                                                        {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio" [value]="folio.totalAum"></span>
+                                                                                        {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio" [shouldRoundOff]="false" [value]="folio.totalAum"></span>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-right">
@@ -374,7 +374,7 @@
                             <tr *ngIf="!isLoading && clientList.length>0">
                                 <td class="p-table  "><strong>Total</strong></td>
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"></span></strong>
+                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="false"></span></strong>
                                 </td>
                                 <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong></td>
                                 <td></td>

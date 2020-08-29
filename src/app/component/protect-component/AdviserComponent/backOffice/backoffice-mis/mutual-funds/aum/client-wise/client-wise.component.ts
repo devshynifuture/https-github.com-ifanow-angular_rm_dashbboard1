@@ -380,8 +380,10 @@ export class ClientWiseComponent implements OnInit {
         field1: element.index,
         field2: element.name,
         field3: element.folioNumber,
-        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-        field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: element.totalAum,
+        // field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        field5: element.balanceUnit,
         field6: element.weightInPerc
       });
     });
@@ -413,7 +415,8 @@ export class ClientWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.name,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         investorList: [],
       };
@@ -441,14 +444,15 @@ export class ClientWiseComponent implements OnInit {
           this.arrayOfExcelData[index].investorList.push({
             index: index1 + 1,
             name: element.investorName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
-        this.investorWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
+        this.investorWiseTotal = ['Total', '', sumAumTotalTemp, Math.round(sumWeightInPercTemp)];
         break;
       case 'schemes':
         // schemes
@@ -456,14 +460,15 @@ export class ClientWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
-        this.schemeWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
+        this.schemeWiseTotal = ['Total', '', sumAumTotalTemp, Math.round(sumWeightInPercTemp)];
         break;
       case 'scheme-folio':
         // scheme folio
@@ -472,13 +477,15 @@ export class ClientWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.schemeName,
             folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
+            // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            balanceUnit: element.balanceUnit,
             weightInPerc: element.weightInPercentage
           });
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
-          this.scheme2WiseTotal = ['Total', '', '', sumAumTotalTemp, '', sumWeightInPercTemp];
+          this.scheme2WiseTotal = ['Total', '', '', sumAumTotalTemp, '', Math.round(sumWeightInPercTemp)];
         });
         break;
     }

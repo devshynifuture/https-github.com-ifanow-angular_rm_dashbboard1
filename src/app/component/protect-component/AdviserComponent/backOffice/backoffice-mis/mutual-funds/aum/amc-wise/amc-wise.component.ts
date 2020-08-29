@@ -223,14 +223,16 @@ export class AmcWiseComponent implements OnInit {
     applicantList.forEach(element => {
       newArray.push({
         field1: element.name,
-        field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        // field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        field2: element.balanceUnit,
         field3: element.folioNumber,
-        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: element.totalAum,
         field5: element.weightInPerc
       });
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'Mis Report - AMC wise AUM', this.applicantWiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'MIS Report - AMC wise AUM', this.applicantWiseTotal);
   }
 
   schemeWiseExcelReport(index) {
@@ -285,29 +287,32 @@ export class AmcWiseComponent implements OnInit {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
-        this.schemeWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
+        this.schemeWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'applicant':
         // applicant
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedAmc].schemeList[index].applicantList.push({
             name: element.investorName,
-            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            balanceUnit: element.balanceUnit,
             folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage
           });
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
-        this.applicantWiseTotal = ['Total', '', '', sumAumTotal, sumWeightInPercTotal];
+        this.applicantWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
     }
   }
@@ -324,7 +329,8 @@ export class AmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.name,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });

@@ -1,5 +1,5 @@
 <div class="row pt-10 pb-28">
-    <div class="col-md-12 pl-0">
+    <div class="col-md-12 pl-8">
         <button mat-button (click)="selectedTab=1"
             [ngClass]="{'mat-stroked-button': selectedTab==1,'text-primary':selectedTab==1}"
             class="br-0 text-custom">PPF</button>
@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div>
+<div class="p-8">
 
     <app-ppf-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==1"></app-ppf-scheme>
     <app-nsc-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==2"></app-nsc-scheme>
