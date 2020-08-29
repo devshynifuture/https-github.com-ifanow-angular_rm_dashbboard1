@@ -75,6 +75,8 @@ export class LifeInsuranceComponent implements OnInit {
   insuranceDetails: any;
   isLoadingPlan = true;
   @Output() outputChange = new EventEmitter<any>();
+  @Output() stopLoaderWhenReponse = new EventEmitter<any>();
+
   constructor(private subInjectService: SubscriptionInject, 
     private custumService: CustomerService, 
     private utils: UtilService,
@@ -136,7 +138,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   getDetailsInsurance(){
     this.dataSource1 =[{},{},{}];
-    // this.dataSouce3=[{},{},{}];
+    this.dataSouce3=[{},{},{}];
     this.insuranceDetails = '';
     let obj = {
       clientId: this.clientId,
@@ -178,11 +180,13 @@ export class LifeInsuranceComponent implements OnInit {
       }else{
         this.dataSouce3=[]
       }
+      this.stopLoaderWhenReponse.emit(true);
       this.isLoadingPlan = false;
       // this.allAssets = [...otherAssetRes, ...mfAssetRes];
       // this.loaderFn.decreaseCounter();
     }, err => {
           this.eventService.openSnackBar(err, 'Dismiss');
+          this.stopLoaderWhenReponse.emit(true);
           this.insuranceDetails='';
           this.dataSource1=[];
           this.dataSouce3=[];
@@ -230,7 +234,7 @@ export class LifeInsuranceComponent implements OnInit {
   suggestPolicy(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
-      data,
+      data : this.inputData,
       componentName: AddSuggestPolicyComponent,
       id: 1,
       state: 'open',

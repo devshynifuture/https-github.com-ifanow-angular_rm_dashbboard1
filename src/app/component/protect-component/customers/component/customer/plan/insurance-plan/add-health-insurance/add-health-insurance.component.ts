@@ -17,6 +17,8 @@ import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance
 export class AddHealthInsuranceComponent implements OnInit {
   inputData: any;
   showInsurance: { value: string; header: string; heading: string; subHeading: string, logo: string, smallHeading: string };
+  isChecked: any;
+  showError: boolean;
 
   @Input()
   set data(data) {
@@ -30,7 +32,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
   dataSource2 = ELEMENT_DATA2;
   showExisting = false;
-
+  selectPolicy=''
   insuranceData = [{
     value: '1',
     header: 'Add Health Insurance',
@@ -100,29 +102,46 @@ export class AddHealthInsuranceComponent implements OnInit {
     });
   }
   openExistingPolicy() {
+    this.selectPolicy= "1"
+    console.log(this.selectPolicy)
     this.showExisting = true
   }
+  addPolicy(event, element) {
+    element.selected = event.checked;
+    this.isChecked = event.checked
+    if(this.isChecked){
+      this.showError = false;
+    }
+  }
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    if(!this.showExisting){
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    }else{
+      this.showExisting = false;
+    }
   }
   showHealthInsurance(data) {
-    this.close();
-    const fragmentData = {
-      flag: 'app-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: ShowHealthPlanningComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
+    if(this.isChecked){
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      const fragmentData = {
+        flag: 'app-customer',
+        id: 1,
+        data,
+        direction: 'top',
+        componentName: ShowHealthPlanningComponent,
+        state: 'open'
+      };
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
         }
-      }
-    );
+      );
+    }else{
+      this.showError = true;
+    }
   }
 }
 

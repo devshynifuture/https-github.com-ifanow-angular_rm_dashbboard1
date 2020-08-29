@@ -21,7 +21,8 @@ export class AddInsuranceUpperComponent implements OnInit {
     const fragmentData = {
       direction: 'top',
       componentName: AddInsuranceUpperComponent,
-      state: 'close'
+      state: 'close',
+      data:false
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
@@ -49,6 +50,15 @@ export class AddInsuranceUpperComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if(sideBarData.data == true){
+            const fragmentData = {
+              direction: 'top',
+              componentName: AddInsuranceUpperComponent,
+              state: 'close',
+              data:sideBarData.data
+            };
+            this.eventService.changeUpperSliderState(fragmentData);
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

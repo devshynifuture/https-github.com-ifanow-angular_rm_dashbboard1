@@ -12,7 +12,8 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   inputData: any;
   showInsurance: any;
   suggestPolicy: any;
-
+  storeData: string;
+  showRecommendation=false;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private custumService: CustomerService, ) { }
 
   @Input()
@@ -24,6 +25,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.storeData ='Here you can write recommendations';
     console.log('heder', this.inputData)
     this.showInsurance = this.inputData
     this.getdataForm('');
@@ -47,6 +49,9 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   }
   getFormControl(): any {
     return this.suggestPolicy.controls;
+  }
+  saveData(data) {
+
   }
   saveSuggested() {
 

@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./add-life-insurance.component.scss']
 })
 export class AddLifeInsuranceComponent implements OnInit {
-  displayedColumns: string[] = ['client', 'cat', 'des', 'checkbox', 'icons'];
+  displayedColumns: string[] = ['client', 'cat', 'des', 'checkbox'];
   dataSource: any = new MatTableDataSource();
 
   counter: number;
@@ -34,6 +34,7 @@ export class AddLifeInsuranceComponent implements OnInit {
     fullWidth: false,
   };
   familyMemberSend: any;
+  addplan = false;
 
   constructor(
     private planService: PlanService,
@@ -48,14 +49,15 @@ export class AddLifeInsuranceComponent implements OnInit {
     this.getfamilyMemberInsurance()
     this.familyMemberSend = []
   }
-  close(state) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(state,flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',data:flag });
   }
   addInsurance(event, element) {
     console.log(element)
     console.log(event)
     element.selected = event.checked
     if (event.checked == true) {
+      this.addplan = false;
       this.familyMemberSend.push(element);
     } else {
       this.familyMemberSend.pop(element);
@@ -101,9 +103,12 @@ export class AddLifeInsuranceComponent implements OnInit {
           this.loader(-1);
         }
       );
+    }else{
+      this.addplan= true;
     }
   }
   addInsuranceRes(data) {
+    this.close(false,true);
     console.log(data)
   }
 }
