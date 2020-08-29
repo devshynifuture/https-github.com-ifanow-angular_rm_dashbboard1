@@ -1,10 +1,10 @@
 <div class="row pt-150">
-    <div class="col-md-4 d-flex align-items-center">
+    <div class="col-lg-4 col-md-4 d-flex align-items-center">
         <h3 class="m-0 roboto f-400">SIP Cleanup</h3>
     </div>
-    <div class="col-md-8">
+    <div class="col-lg-8 col-md-12 md-pt-16">
         <div class="row" [formGroup]="filterForm">
-            <div class="col-md-2 pr-0">
+            <div class="col-md-2 pr-0 pl-0-991">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="activeCeased">
                         <mat-option [value]="1">Active only</mat-option>
@@ -59,127 +59,130 @@
     </div>
 </div>
 
-<div class="row pt-24 sip-cleanup">
-    <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" id="table-low" class="skeletionAnimation"
-            [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef>
-                    <span *ngIf="!isLoading">
-                        <mat-checkbox (change)="$event ? masterToggle() : null;selectAllData($event.checked)"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
-                            *ngIf="!isLoading">
-                        </mat-checkbox>
-                    </span>
-                </th>
-                <td mat-cell *matCellDef="let row;index as i">
-                    <div class="bar">
+<div class="row pt-24 sip-cleanup pb-28">
+    <div class="col-md-12 ">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide sip-cleanup-scroll responsive-table-port">
+            <table mat-table [dataSource]="dataSource" id="tbs" class="skeletionAnimation"
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="checkbox" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="br">
                         <span *ngIf="!isLoading">
-                            <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null;selectMultipleData($event.checked,row,i)"
-                                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                            <mat-checkbox (change)="$event ? masterToggle() : null;selectAllData($event.checked)"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()" *ngIf="!isLoading">
                             </mat-checkbox>
                         </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br"> Scheme Details </th>
-                <td mat-cell *matCellDef="let element" class="br c-p" (click)="openRecordDeatils(element)">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{element.schemeName ? element.schemeName: '-'}}
-                            {{element.folioNumber}}</span>
-                    </div>
-                </td>
-            </ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row;index as i" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null;selectMultipleData($event.checked,row,i)"
+                                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                </mat-checkbox>
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Scheme Details </th>
+                    <td mat-cell *matCellDef="let element" class="br c-p" (click)="openRecordDeatils(element)">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.schemeName ? element.schemeName: '-'}}
+                                {{element.folioNumber}}</span>
+                        </div>
+                    </td>
+                </ng-container>
 
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> Investor Name </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{element.investorName ? element.investorName:'-'}}</span>
-                    </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Investor Name </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.investorName ? element.investorName:'-'}}</span>
+                        </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{element.type}} /
-                            &#8377;<span appFormatNumber [value]="element.amount">{{ element.amount }}</span></span>
-                    </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.type}} /
+                                &#8377;<span appFormatNumber [value]="element.amount">{{ element.amount }}</span></span>
+                        </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="rdate">
-                <th mat-header-cell *matHeaderCellDef class="br"> Regd Date </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{element.registeredDate}}</span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="fdate">
-                <th mat-header-cell *matHeaderCellDef class="br"> From Date</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{ element.from_date }}</span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="tdate">
-                <th mat-header-cell *matHeaderCellDef class="br"> To Date </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{ element.to_date }}</span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="tra">
-                <th mat-header-cell *matHeaderCellDef class="br"> Txn No </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="!isLoading">{{element.transactionNumber}}</span>
-                    </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="rdate">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Regd Date </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.registeredDate}}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="fdate">
+                    <th mat-header-cell *matHeaderCellDef class="br"> From Date</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{ element.from_date }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tdate">
+                    <th mat-header-cell *matHeaderCellDef class="br"> To Date </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{ element.to_date }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tra">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Txn No </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.transactionNumber}}</span>
+                        </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef class="br"> Action</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div *ngIf="filterForm.get('markUnmark').value==0 && !isLoading" class="d-flex">
-                        <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
-                            (click)="setKeepOrRemove(element,'keep')">
-                            Keep
-                        </button>
-                        <button mat-stroked-button class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
-                            (click)="setKeepOrRemove(element,'remove')">
-                            Remove
-                        </button>
-                    </div>
-                    <div *ngIf="filterForm.get('markUnmark').value==1 && !isLoading" class="d-flex">
-                        <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
-                            [disabled]="element.removeStatus == 0"
-                            [ngClass]="element.removeStatus==0 ? 'disableClass':''"
-                            (click)="setKeepOrRemove(element,'keep')">
-                            Keep
-                        </button>
-                        <button mat-stroked-button class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
-                            [disabled]="element.removeStatus == 1"
-                            [ngClass]="element.removeStatus == 1 ? 'disableClass':''"
-                            (click)="setKeepOrRemove(element,'remove')">
-                            Remove
-                        </button>
-                    </div>
-                    <div class="bar">
-                        <span *ngIf="isLoading"></span>
-                    </div>
-                </td>
-            </ng-container>
-            <!-- <ng-container matColumnDef="menu">
+                <ng-container matColumnDef="action" sticky>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Action</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div *ngIf="filterForm.get('markUnmark').value==0 && !isLoading" class="d-flex">
+                            <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
+                                (click)="setKeepOrRemove(element,'keep')">
+                                Keep
+                            </button>
+                            <button mat-stroked-button
+                                class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
+                                (click)="setKeepOrRemove(element,'remove')">
+                                Remove
+                            </button>
+                        </div>
+                        <div *ngIf="filterForm.get('markUnmark').value==1 && !isLoading" class="d-flex">
+                            <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
+                                [disabled]="element.removeStatus == 0"
+                                [ngClass]="element.removeStatus==0 ? 'disableClass':''"
+                                (click)="setKeepOrRemove(element,'keep')">
+                                Keep
+                            </button>
+                            <button mat-stroked-button
+                                class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
+                                [disabled]="element.removeStatus == 1"
+                                [ngClass]="element.removeStatus == 1 ? 'disableClass':''"
+                                (click)="setKeepOrRemove(element,'remove')">
+                                Remove
+                            </button>
+                        </div>
+                        <div class="bar">
+                            <span *ngIf="isLoading"></span>
+                        </div>
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="menu">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
                     <span class="material-icons c-p" [matMenuTriggerFor]="menu">
@@ -193,9 +196,10 @@
                 </td>
             </ng-container> -->
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
         <div class="row" *ngIf="dataSource.filteredData.length === 0">
             <div class="col-md-12 text-center p-0">
                 <h4 class="p-44 b-a">

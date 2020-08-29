@@ -46,11 +46,12 @@
     position: fixed;
     display: block !important;
     width: 16.70%;
+    height: 100%;
   }
 
   li {
     height: 40px;
-    line-height: 24px;
+    // line-height: 24px;
     padding: 9px 0px 0 24px;
     font-size: 14px;
     font-style: normal;
@@ -245,5 +246,20 @@ hr#suggest-advice-bottom {
     li {
       padding: 9px 0px 24px 13px !important;
     }
+  }
+}
+
+@media(max-width:992px) {
+  #ui-activity-secondhead {
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+      background-color: #fff;
+    }
+
+    .mat-tab-link.min-width-140,
+    .mat-tab-link.min-width-90 {
+      min-width: auto !important;
+    }
+
+
   }
 }

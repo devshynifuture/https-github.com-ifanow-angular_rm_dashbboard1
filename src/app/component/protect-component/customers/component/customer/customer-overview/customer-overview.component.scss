@@ -1,24 +1,19 @@
 .wrapperOverview {
-    .row {
-        margin-right: -15px !important;
-        margin-left: -15px !important;
-    }
-    .mt80 {
-        margin-top: 80px !important;
-    }
+  .row {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+  }
+
+  .mt80 {
+    margin-top: 80px !important;
+  }
 }
 
 .active {
-    background-color: #E2E2E2 !important;
-    color: #008FFF !important;
+  background-color: #E2E2E2 !important;
+  color: #008FFF !important;
 }
 
 .tabDisplay {
-    display: inline-block;
-}
- 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-    .tabDisplay {
-        display: none;
-    }
+  display: inline-block;
 }

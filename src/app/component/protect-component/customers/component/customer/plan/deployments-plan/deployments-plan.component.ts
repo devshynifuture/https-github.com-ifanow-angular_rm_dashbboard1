@@ -23,6 +23,7 @@ export class DeploymentsPlanComponent implements OnInit {
   displayedColumns1: string[] = ['position1', 'name1', 'weight1', 'symbol1'];
   dataSource;
   dataSourceT;
+  selectedTab = " Goal based";
   clientId: any;
   advisorId: any;
   selectedDeployments: any = [];

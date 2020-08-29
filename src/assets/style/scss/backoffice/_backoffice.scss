@@ -12,6 +12,11 @@
 }
 
 .sip-cleanup {
+  .sip-cleanup-scroll {
+    overflow-y: auto !important;
+    height: calc(100vh - 245px);
+  }
+
   #table-low {
     tr.mat-header-row {
       height: 40px !important;
@@ -83,6 +88,15 @@
   height: 26px !important;
   min-width: auto !important;
 
+}
+
+.data-operations {
+
+  .recon-cams,
+  .recon-karvy {
+    overflow-y: auto !important;
+    height: calc(100vh - 275px);
+  }
 }
 
 .recon-cams,
@@ -357,5 +371,15 @@
     background-color: #007F6A;
     color: #fff;
     padding: 2px 4px;
+  }
+}
+
+@media(max-width:1124px) {
+
+  .data-operations,
+  .sip-cleanup {
+    #tbs th {
+      white-space: nowrap;
+    }
   }
 }

@@ -4,14 +4,7 @@
 //   providedIn: 'root'
 // })
 export class AppConstants {
-  constructor() { }
-
-  public static getMonthsArr() {
-    const month = f => Array.from(Array(12), (e, i) => new Date(25e8 * ++i).toLocaleString('en-US', { month: f }));
-    const shortMonths = month('short');
-    const longMonths = month('long');
-    const monthNumbers = Array(12).fill(0).map((_, i) => ('0' + (i + 1)).toString().slice(-2))
-    return monthNumbers.map((v, i) => { return { number: v, short: shortMonths[i], long: longMonths[i] } });
+  constructor() {
   }
 
 
@@ -45,7 +38,7 @@ export class AppConstants {
     REENTER_NEW_PASSWORD: 'Re-enter new password',
     TEMPLATE_NAME: 'Template name',
     SELECT_OWNER: 'Select owner',
-  }
+  };
   public static EDUCATION_GOAL = 6;
   public static VACATION_GOAL = 5;
   public static RETIREMENT_GOAL = 1;
@@ -73,4 +66,14 @@ export class AppConstants {
 
 
   public static EMAIL_DOMAINS = ['gmail.com', 'hotmail.com', 'mail.com', 'outlook.com', 'yahoo.com', 'yahoo.co.in', 'rediffmail.com'];
+
+  public static getMonthsArr() {
+    const month = f => Array.from(Array(12), (e, i) => new Date(25e8 * ++i).toLocaleString('en-US', {month: f}));
+    const shortMonths = month('short');
+    const longMonths = month('long');
+    const monthNumbers = Array(12).fill(0).map((_, i) => ('0' + (i + 1)).toString().slice(-2));
+    return monthNumbers.map((v, i) => {
+      return {number: v, short: shortMonths[i], long: longMonths[i]};
+    });
+  }
 }

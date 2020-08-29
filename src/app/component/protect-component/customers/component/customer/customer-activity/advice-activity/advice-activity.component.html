@@ -1,6 +1,6 @@
 <div id="ui-activity">
     <div class="row no-wrap" style="height: calc(100vh - 118px);">
-        <div class="col-md-2  p-0 pt-8 responsive-left-side-top responsive-flex-auto">
+        <div class="col-xl-2 col-lg-2 col-md-12  p-0 pt-8 responsive-left-side-top responsive-flex-auto d-none-992">
             <ul class="vertical-menu bg-grey lter responsive-left-side">
                 <li [routerLink]="['/customer/detail/activity/advice/all-portfolio']" routerLinkActive="activeColor"
                     class="c-p pr-0">
@@ -46,8 +46,8 @@
                         </div>
                     </div>
                 </li> -->
-                <li *ngFor="let singleAsset of leftSidebarList" routerLink={{singleAsset.urlPath}}
-                    routerLinkActive="activeColor" class="c-p">
+                <li (click)="selectedTab=singleAsset.name" *ngFor="let singleAsset of leftSidebarList"
+                    routerLink={{singleAsset.urlPath}} routerLinkActive="activeColor" class="c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">
                             {{singleAsset.name}}
@@ -96,7 +96,30 @@
         </div>
 
 
-        <div class="col-md-10 p-0 responsive-right-side-top">
+        <div class="col-xl-10 col-lg-10 col-md-12 p-0">
+            <div class="col-md-12 text-right d-lg-none">
+                <div class="text-right p-24 pr-0 pb-12">
+                    <mat-form-field class="w-30">
+                        <mat-select class="form-control" [(ngModel)]="selectedTab">
+                            <mat-option value="ALL PORTFOLIO"
+                                [routerLink]="['/customer/detail/activity/advice/all-portfolio']">
+                                ALL PORTFOLIO
+                            </mat-option>
+                            <mat-option value="ASSETS" [routerLink]="['/customer/detail/activity/advice/asset']">
+                                ASSETS
+                            </mat-option>
+                            <mat-option value="Mutual funds"
+                                [routerLink]="['/customer/detail/activity/advice/mutualFund']">
+                                Mutual funds
+                            </mat-option>
+                            <mat-option *ngFor="let singleAsset of leftSidebarList" routerLink={{singleAsset.urlPath}}
+                                value="singleAsset.name">
+                                {{singleAsset.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
             <router-outlet></router-outlet>
             <!-- <div *ngSwitchCase="'tab1'">
                 <app-advice-all-portfolio></app-advice-all-portfolio>

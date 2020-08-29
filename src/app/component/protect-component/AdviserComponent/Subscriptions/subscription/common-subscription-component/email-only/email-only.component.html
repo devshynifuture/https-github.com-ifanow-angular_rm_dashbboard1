@@ -63,7 +63,12 @@
                 <p class="m-0 text-black roboto f-400 pt-8">Subject</p>
             </div>
             <div class="col-md-9 col-lg-9 pr-0">
-                <mat-form-field>
+                <mat-form-field *ngIf="_inputData.subjectChange!=undefined">
+                    <input matInput [formControl]="subjectFormCOntrol" [(ngModel)]="_inputData.subject"
+                        class="form-control h-40" [readonly]="_inputData.subjectEditable==false" readonly>
+                    <mat-error *ngIf="subjectFormCOntrol.errors?.invalid">Subject is invalid</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="_inputData.subjectChange==undefined">
                     <input matInput [(ngModel)]="_inputData.subject" class="form-control h-40"
                         [readonly]="_inputData.subjectChange" readonly>
                 </mat-form-field>
