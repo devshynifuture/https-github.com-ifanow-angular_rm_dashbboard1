@@ -465,7 +465,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'schemes':
         this.schemeWiseTotalArr = [];
@@ -484,7 +484,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'applicant':
         this.applicantWiseTotalArr = [];
@@ -504,7 +504,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
     }
   }
