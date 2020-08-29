@@ -324,11 +324,11 @@ export const appConfig = {
   REMOVE_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/life/insurance/delete',
   LIFE_ANALYSIS_ADD: 'insurance/planning/life/insurance/need/analysis/save',
   GET_DETAILED_INSURANCE: 'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
-  DELETE_INSURANCE_INPLANNING:'insurance/planning/life/insurance/delete?',
-  NEED_BASED_ANALYSIS:'insurance/planning/life/insurance/need/based/analysis/get',
-  RECOMMENDATION_LIST_GET:'insurance/planning/life/insurance/recommendation/list/get?',
-  INSURANCE_ADVICE_GET:'insurance/planning/life/insurance/advice/get',
-  SUGGEST_POLICY_GET:'insurance/planning/life/insurance/suggest-policy/get',
+  DELETE_INSURANCE_INPLANNING: 'insurance/planning/life/insurance/delete?',
+  NEED_BASED_ANALYSIS: 'insurance/planning/life/insurance/need/based/analysis/get',
+  RECOMMENDATION_LIST_GET: 'insurance/planning/life/insurance/recommendation/list/get?',
+  INSURANCE_ADVICE_GET: 'insurance/planning/life/insurance/advice/get',
+  SUGGEST_POLICY_GET: 'insurance/planning/life/insurance/suggest-policy/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -743,6 +743,7 @@ export const appConfig = {
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
+  ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
