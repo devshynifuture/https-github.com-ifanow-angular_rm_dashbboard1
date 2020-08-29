@@ -482,7 +482,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'Current value', 'index': ind, isCheked: true,
         style: {
-          'width': '7%',
+          'width': '9%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -530,7 +530,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'Unrealized profit', 'index': ind, isCheked: true,
         style: {
-          'width': '8%',
+          'width': '9%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -626,7 +626,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'XIRR', 'index': ind, isCheked: true,
         style: {
-          'width': '4%',
+          'width': '5%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -818,7 +818,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'NAV/Date', 'index': ind, isCheked: true,
         style: {
-          'width': '11%',
+          'width': '7%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
