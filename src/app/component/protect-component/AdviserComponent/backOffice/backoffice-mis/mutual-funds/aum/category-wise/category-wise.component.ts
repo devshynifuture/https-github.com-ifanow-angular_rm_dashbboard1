@@ -100,6 +100,9 @@ export class CategoryWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
   arnRiaList = [];
+  selectedSchemeName: any;
+  selectedSubCategoryName: any;
+  selectedCategoryName: any;
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
@@ -243,7 +246,7 @@ export class CategoryWiseComponent implements OnInit {
   // }
 
   showSubTableList(index, category, catIndex) {
-
+    this.selectedCategoryName = category.name;
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
 
@@ -324,6 +327,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showSchemeName(subCategory, index, catIndex) {
+    this.selectedSubCategoryName = subCategory.name;
     this.selectedSubCategory = index;
     this.selectedCategory = catIndex;
     subCategory.showSubCategory = !subCategory.showSubCategory;
@@ -389,6 +393,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showApplicantName(schemeData, index, subCatIndex, catIndex) {
+    this.selectedSchemeName = schemeData.name;
     this.selectedSubCategory = subCatIndex;
     this.selectedCategory = catIndex;
     this.selectedClientIndex = index;
@@ -425,7 +430,8 @@ export class CategoryWiseComponent implements OnInit {
       dataValue = {
         index: index1 + 1,
         categoryName: element.name,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         subCatList: []
       };
@@ -456,14 +462,15 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'schemes':
         this.schemeWiseTotalArr = [];
@@ -474,14 +481,15 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             applicantList: [],
           });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'applicant':
         this.applicantWiseTotalArr = [];
@@ -491,15 +499,17 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
               name: element.name,
-              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              balanceUnit: element.balanceUnit,
               folioNumber: element.folioNumber,
-              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              totalAum: element.totalAum,
               weightInPerc: element.weightInPercentage,
             });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
-        this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
+        this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
     }
   }
@@ -535,7 +545,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: false,
       schemeList: false,
       applicantList: false
-    }, this.subCategoryWiseTotalArr);
+    }, this.subCategoryWiseTotalArr, "Category: -" + this.selectedCategoryName);
   }
 
   applicantWiseExcelSheet(index) {
@@ -544,9 +554,11 @@ export class CategoryWiseComponent implements OnInit {
     applicantList.forEach(element => {
       newarr.push({
         field1: element.name,
-        field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        // field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        field2: element.balanceUnit,
         field3: element.folioNumber,
-        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: element.totalAum,
         field5: element.weightInPerc,
       });
     });
@@ -580,7 +592,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: true,
       schemeList: false,
       applicantList: false
-    }, this.schemeWiseTotalArr);
+    }, this.schemeWiseTotalArr, "Category: " + this.selectedCategoryName);
   }
 
   exportToExcelReport(choice, catIndex, subCatIndex, schemeIndex) {

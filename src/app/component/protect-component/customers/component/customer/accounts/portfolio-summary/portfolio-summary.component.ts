@@ -9,8 +9,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {UtilService} from 'src/app/services/util.service';
-import { Chart } from 'angular-highcharts';
-import { AppConstants } from 'src/app/services/app-constants';
+import {Chart} from 'angular-highcharts';
+import {AppConstants} from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -132,6 +132,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.filterCashflowData();
     });
   }
+
   initializePieChart() {
     let chartConfig: any = {
       chart: {
@@ -178,6 +179,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     }
     this.assetAllocationPieConfig = new Chart(chartConfig);
   }
+
   calculateTotalSummaryValues() {
     this.letsideBarLoader = true;
     console.log(new Date(this.asOnDate).getTime());
@@ -267,7 +269,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           //   this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           //   this.portFolioData.unshift(stock);
           // }
-  
+
           let chartData = [];
           let counter = 0;
           let othersData = {
@@ -302,18 +304,18 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
               hasNoDataCounter--;
             }
           });
-          if(chartData){
+          if (chartData) {
             let index;
-            let obj={};
-            chartData = this.sorting(chartData,'name');
-            chartData.forEach((element,ind) => {
-                if(element.name == 'Others'){
-                  index = ind
-                }
+            let obj = {};
+            chartData = this.sorting(chartData, 'name');
+            chartData.forEach((element, ind) => {
+              if (element.name == 'Others') {
+                index = ind
+              }
             });
-            if(index){
-               obj = chartData.splice(index, 1);
-              let outputObj=obj[0]
+            if (index) {
+              obj = chartData.splice(index, 1);
+              let outputObj = obj[0]
               chartData.push(outputObj)
             }
           }
@@ -342,6 +344,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   sorting(data, filterId) {
     if (data) {
       data.sort((a, b) =>
@@ -352,6 +355,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
     return data
   }
+
   getSummaryList(obj) {
     this.summaryFlag = true;
     this.cusService.getAumGraphData(obj).subscribe(
@@ -375,6 +379,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   assetAllocationPieChartDataMgnt(data) {
     this.assetAllocationPieConfig.removeSeries(0);
     this.assetAllocationPieConfig.addSeries({
@@ -385,6 +390,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       data: data,
     }, true, true);
   }
+
   getCashFlowList(obj) {
     this.cashflowFlag = true;
     this.cashFlowViewDataSource = [{}, {}, {}];

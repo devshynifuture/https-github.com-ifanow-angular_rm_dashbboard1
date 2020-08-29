@@ -466,529 +466,538 @@
 
 
 
-// @media(max-width:1172px) {
-//   #ui-overview-subscription .vertical-menu {
-//     width: 16.45% !important;
-//   }
-
-// }
-
-// @media(max-width:1142px) {
-
-
-//   .overflow-y-auto-1142 {
-//     overflow: unset !important;
-//     overflow-y: auto !important;
-//   }
-
-//   #ui-insurance {
-//     li {
-//       padding: 10px !important;
-//     }
-//   }
-
-//   .client-upper-subscription {
-//     #table-low {
-//       .mat-sort-header-button {
-//         white-space: nowrap !important;
-//       }
-
-//       th {
-//         z-index: 100 !important;
-//       }
-
-//       th.mat-header-cell:first-of-type {
-//         z-index: 101 !important;
-
-//       }
-
-//       td.mat-cell:first-of-type,
-//       th.mat-header-cell:first-of-type {
-//         left: -2px !important;
-//       }
-//     }
-//   }
-
-//   .future-contribution {
-//     .f-14 {
-//       font-size: 13px !important;
-//     }
-
-//     h5 {
-//       font-size: 14px !important;
-//     }
-//   }
-
-//   .tabView {
-//     .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-//       display: none !important;
-//     }
-
-//     .mat-tab-label {
-//       padding: 0 16px !important;
-//     }
-//   }
-
-//   .individual-income {
-//     .incomeSourcesBox {
-//       display: block !important;
-//       margin: 0 auto !important;
-//     }
-
-//     .ws-nowrap {
-//       white-space: inherit !important;
-//     }
-
-//     h5.text-custom {
-//       font-size: 14px;
-//     }
-
-//     .col-md-3.d-flex {
-//       display: block !important;
-
-//       .mr-28 {
-//         margin-right: 0px !important;
-//       }
-
-//       .ml-12 {
-//         margin-left: 0px !important;
-//       }
-//     }
-//   }
-
-//   .myfeedWrapper {
-//     width: 88%;
-//     margin: 40px;
-
-//     .md-myfeed-ml-0 {
-//       margin-left: 0px !important;
-//     }
-//   }
-// }
-
-// @media(max-width:1092px) {
-
-//   #ui-assets-account,
-//   #ui-liabilities,
-//   #ui-insurance #ui-profile-plan,
-//   #ui-overview-subscription,
-//   #ui-documents-overview,
-//   #ui-overview-profile,
-//   #ui-activity,
-//   #ui-overview-subscription {
-//     li {
-//       padding: 0 0px 0px 8px !important;
-//       font-size: 13px;
-//     }
-//   }
-
-//   .rs-pl-15 {
-//     padding-left: 15px !important;
-//   }
-
-//   .add-liabilities {
-//     .f-14 {
-//       font-size: 13px !important;
-//     }
-//   }
-
-//   .superannuation {
-//     #tbs .mat-sort-header-button {
-//       white-space: nowrap !important;
-//     }
-//   }
-
-//   .myfeedWrapper {
-//     .pl-30 {
-//       padding-left: 20px !important;
-//     }
-
-//     .md-pl-0 {
-//       padding-left: 0px !important;
-//     }
-
-//     .md-pr-12 {
-//       padding-right: 12px !important;
-//     }
-//   }
-// }
-
-// @media(max-width:1042px) {
-//   h5 {
-//     font-size: 15px;
-//   }
-
-//   h4 {
-//     font-size: 16px;
-//   }
-
-//   .fddate {
-//     .radioBtn .mat-radio-label {
-//       padding-left: 5px !important;
-//     }
-
-//     #mat-radio-5 {
-//       min-width: 130px !important;
-//     }
-
-//     #mat-radio-6 {
-//       min-width: 150px !important;
-//     }
-//   }
-// }
-
-// @media(max-width:1024px) {
-//   .radioBtn .mat-radio-label {
-//     min-width: 125px !important;
-//     height: 37px !important;
-//   }
-
-//   .popup-header-fix-60 {
-//     .f-17 {
-//       font-size: 16px !important;
-//     }
-//   }
-
-//   #ui-assets-account,
-//   #ui-profile-plan,
-//   #ui-liabilities,
-//   #investmentPlan,
-//   #ui-overview-subscription,
-//   #ui-documents-overview,
-//   #ui-overview-profile,
-//   #ui-activity {
-//     li {
-//       font-size: 13px !important;
-//     }
-//   }
-
-//   .tabView {
-
-//     .f-16,
-//     h5 {
-//       font-size: 14px !important;
-//     }
-//   }
-
-//   .myfeedWrapper {
-//     margin: 42px;
-
-//     .pl-40 {
-//       padding-left: 20px !important;
-//     }
-
-//     .pt-40 {
-//       padding-top: 20px !important;
-//     }
-
-
-//   }
-
-//   .borderChatBoxMutual,
-//   .borderChatBoxEmpty,
-//   .borderChatBox {
-//     height: auto !important;
-//     padding: 16px !important;
-//   }
-
-//   .pt-0-1024 {
-//     padding-top: 0px !important;
-//   }
-
-//   .boxTable,
-//   .feedInformation .vaultbBox {
-//     padding: 12px !important;
-//   }
-// }
-
-// @media(max-width:992px) {
-//   .myfeedWrapper {
-//     margin: 30px auto;
-//     margin-top: 40px;
-
-//     .md-pr-12 {
-//       padding-right: 0px !important;
-//     }
-//   }
-
-//   .ml-33-992 {
-//     margin-left: 33.333% !important;
-//   }
-
-//   .d-none-992 {
-//     display: none !important;
-//   }
-
-//   .pl-0-992 {
-//     padding-left: 0px !important;
-//   }
-
-//   .pr-0-992 {
-//     padding-right: 0px !important;
-//   }
-
-//   .pr-15-992 {
-//     padding-right: 15px !important;
-//   }
-
-//   .pl-15-992 {
-//     padding-left: 15px !important;
-//   }
-
-//   .md-text-center {
-//     text-align: center !important;
-//   }
-
-//   .w-auto-992 {
-//     width: auto !important;
-//   }
-
-//   .borderChatBoxEmpty,
-//   .fd-col-reverse-992 {
-//     .row {
-//       flex-direction: column-reverse;
-//     }
-//   }
-
-//   .md-pt-16 {
-//     padding-top: 16px !important;
-//   }
-
-//   .borderChatBox {
-//     .mr-20 {
-//       margin-right: 0px !important;
-//     }
-
-//     .height220 {
-//       margin: 0 auto !important;
-//     }
-//   }
-
-
-
-// }
-
-// @media(max-width:991px) {
-//   .pl-0-991 {
-//     padding-left: 0px !important;
-//   }
-
-//   #ui-overview-profile {
-
-
-
-//     .detailContainer {
-//       .br-primitive:nth-child(1) {
-//         border-right: 0px !important;
-
-//       }
-
-//       .bb-primitive-992 {
-
-//         border-bottom: 1px solid #83959D !important;
-//       }
-//     }
-//   }
-
-// }
-
-// @media(max-width:954px) {
-
-//   #ui-assets-account,
-//   #ui-liabilities,
-//   #ui-insurance,
-//   #ui-profile-plan,
-//   #investmentPlan,
-//   #ui-overview-subscription,
-//   #ui-documents-overview,
-//   #ui-overview-profile,
-//   #ui-activity {
-
-//     .vertical-menu {
-//       width: 20vw !important;
-//     }
-
-//     .mat-drawer-side {
-//       max-width: 20vw;
-//     }
-//   }
-
-//   .responsive-left-side {
-//     width: 18vw !important;
-//   }
-
-
-
-//   .f-14-954 {
-//     font-size: 14px !important;
-//   }
-
-//   .responsive-left-side-top {
-//     max-width: 20vw !important;
-//   }
-
-
-
-//   .responsive-right-side-top {
-//     max-width: 80vw !important;
-//   }
-
-//   .myfeedWrapper {
-//     margin: 20px auto;
-//     margin-top: 40px;
-
-//   }
-
-//   #ui-overview-profile {
-//     .p-20 {
-
-//       padding-right: 12px !important;
-//     }
-//   }
-
-//   #question-risk-profile {
-//     h3 {
-//       font-size: 18px;
-//     }
-//   }
-
-//   .flex-auto-954 {
-//     flex: auto !important;
-//   }
-
-//   .invoice-accounts,
-//   .document-accounts {
-//     #table-low .mat-sort-header-button {
-//       white-space: nowrap !important;
-//     }
-
-//     td.mat-cell:first-of-type,
-//     th.mat-header-cell:first-of-type {
-//       left: -2px !important;
-//     }
-//   }
-
-//   .overflow-y-auto-954 {
-//     overflow: inherit !important;
-//     overflow-y: auto !important;
-
-//   }
-
-//   #ui-overview-subscription {
-//     .responsive-right-side-top {
-//       max-width: 79vw !important;
-//     }
-//   }
-
-//   .settings-account {
-//     .wrapper-20 {
-//       padding: 16px !important;
-//     }
-//   }
-
-//   .pl-0-954 {
-//     padding-left: 0px !important;
-//   }
-// }
-
-// @media(max-width:860px) {
-
-//   #ui-assets-account,
-//   #ui-liabilities,
-//   #ui-insurance,
-//   #ui-profile-plan,
-//   #investmentPlan,
-//   #ui-overview-subscription,
-//   #ui-documents-overview,
-//   #ui-overview-profile,
-//   #ui-activity {
-
-//     .vertical-menu {
-//       width: 22vw !important;
-//     }
-
-//     .mat-drawer-side {
-//       max-width: 22vw;
-//     }
-//   }
-
-//   .responsive-left-side {
-//     width: 18vw !important;
-//   }
-
-
-//   .responsive-left-side-top {
-//     max-width: 22vw !important;
-//   }
-
-
-
-//   .responsive-right-side-top {
-//     max-width: 78vw !important;
-//   }
-
-//   #overview-secondhead,
-//   #ui-customer-secondhead {
-//     .advisorHomeBtn {
-//       font-size: 13px;
-
-//       .material-icons {
-//         line-height: .9;
-//       }
-//     }
-
-//     .mat-tab-link {
-//       padding: 0px 15px !important;
-//       font-size: 13px;
-//     }
-//   }
-
-//   #ui-overview-subscription {
-//     .responsive-right-side-top {
-//       max-width: 77vw !important;
-//     }
-//   }
-// }
-
-// @media(max-width:782px) {
-
-//   #ui-assets-account,
-//   #ui-liabilities,
-//   #ui-insurance,
-//   #ui-profile-plan,
-//   #investmentPlan,
-//   #ui-overview-subscription,
-//   #ui-documents-overview,
-//   #ui-overview-profile,
-//   #ui-activity {
-
-//     .vertical-menu {
-//       width: 23vw !important;
-//     }
-
-//     .mat-drawer-side {
-//       max-width: 23vw;
-//     }
-//   }
-
-//   .responsive-left-side {
-//     width: 23vw !important;
-//   }
-
-
-//   .responsive-left-side-top {
-//     max-width: 23vw !important;
-//   }
-
-
-
-//   .responsive-right-side-top {
-//     max-width: 77vw !important;
-//   }
-
-//   #ui-overview-subscription {
-//     .responsive-right-side-top {
-//       max-width: 76vw !important;
-//     }
-//   }
-// }
+@media(max-width:1172px) {
+  #ui-overview-subscription .vertical-menu {
+    width: 16.45% !important;
+  }
+
+}
+
+@media(max-width:1142px) {
+
+
+  .overflow-y-auto-1142 {
+    overflow: unset !important;
+    overflow-y: auto !important;
+  }
+
+  #ui-insurance {
+    li {
+      padding: 10px !important;
+    }
+  }
+
+  .client-upper-subscription {
+    #table-low {
+      .mat-sort-header-button {
+        white-space: nowrap !important;
+      }
+
+      th {
+        z-index: 100 !important;
+      }
+
+      th.mat-header-cell:first-of-type {
+        z-index: 101 !important;
+
+      }
+
+      td.mat-cell:first-of-type,
+      th.mat-header-cell:first-of-type {
+        left: -2px !important;
+      }
+    }
+  }
+
+  .future-contribution {
+    .f-14 {
+      font-size: 13px !important;
+    }
+
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+
+  .tabView {
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+      display: none !important;
+    }
+
+    .mat-tab-label {
+      padding: 0 16px !important;
+    }
+  }
+
+  .individual-income {
+    .incomeSourcesBox {
+      display: block !important;
+      margin: 0 auto !important;
+    }
+
+    .ws-nowrap {
+      white-space: inherit !important;
+    }
+
+    h5.text-custom {
+      font-size: 14px;
+    }
+
+    .col-md-3.d-flex {
+      display: block !important;
+
+      .mr-28 {
+        margin-right: 0px !important;
+      }
+
+      .ml-12 {
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  .myfeedWrapper {
+    width: 88%;
+    margin: 40px;
+
+    .md-myfeed-ml-0 {
+      margin-left: 0px !important;
+    }
+  }
+}
+
+@media(max-width:1092px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance #ui-profile-plan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity,
+  #ui-overview-subscription {
+    li {
+      padding: 0 0px 0px 8px !important;
+      font-size: 13px;
+    }
+  }
+
+  .rs-pl-15 {
+    padding-left: 15px !important;
+  }
+
+  .add-liabilities {
+    .f-14 {
+      font-size: 13px !important;
+    }
+  }
+
+  .superannuation {
+    #tbs .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+  }
+
+  .myfeedWrapper {
+    .pl-30 {
+      padding-left: 20px !important;
+    }
+
+    .md-pl-0 {
+      padding-left: 0px !important;
+    }
+
+    .md-pr-12 {
+      padding-right: 12px !important;
+    }
+  }
+}
+
+@media(max-width:1042px) {
+  h5 {
+    font-size: 15px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .fddate {
+    .radioBtn .mat-radio-label {
+      padding-left: 5px !important;
+    }
+
+    #mat-radio-5 {
+      min-width: 130px !important;
+    }
+
+    #mat-radio-6 {
+      min-width: 150px !important;
+    }
+  }
+}
+
+@media(max-width:1024px) {
+  .radioBtn .mat-radio-label {
+    min-width: 125px !important;
+    height: 37px !important;
+  }
+
+  .popup-header-fix-60 {
+    .f-17 {
+      font-size: 16px !important;
+    }
+  }
+
+  #ui-assets-account,
+  #ui-profile-plan,
+  #ui-liabilities,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+    li {
+      font-size: 13px !important;
+    }
+  }
+
+  .tabView {
+
+    .f-16,
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+
+  .myfeedWrapper {
+    margin: 42px;
+
+    .pl-40 {
+      padding-left: 20px !important;
+    }
+
+    .pt-40 {
+      padding-top: 20px !important;
+    }
+
+
+  }
+
+  .borderChatBoxMutual,
+  .borderChatBoxEmpty,
+  .borderChatBox {
+    height: auto !important;
+    padding: 16px !important;
+  }
+
+  .pt-0-1024 {
+    padding-top: 0px !important;
+  }
+
+  .boxTable,
+  .feedInformation .vaultbBox {
+    padding: 12px !important;
+  }
+}
+
+@media(max-width:992px) {
+  .myfeedWrapper {
+    margin: 30px auto;
+    margin-top: 40px;
+
+    .md-pr-12 {
+      padding-right: 0px !important;
+    }
+  }
+
+  .ml-33-992 {
+    margin-left: 33.333% !important;
+  }
+
+  .d-none-992 {
+    display: none !important;
+  }
+
+  .pl-0-992 {
+    padding-left: 0px !important;
+  }
+
+  .pr-0-992 {
+    padding-right: 0px !important;
+  }
+
+  .pr-15-992 {
+    padding-right: 15px !important;
+  }
+
+  .pl-15-992 {
+    padding-left: 15px !important;
+  }
+
+  .md-text-center {
+    text-align: center !important;
+  }
+
+  .w-auto-992 {
+    width: auto !important;
+  }
+
+  .borderChatBoxEmpty,
+  .fd-col-reverse-992 {
+    .row {
+      flex-direction: column-reverse;
+    }
+  }
+
+  .md-pt-16 {
+    padding-top: 16px !important;
+  }
+
+  .borderChatBox {
+    .mr-20 {
+      margin-right: 0px !important;
+    }
+
+    .height220 {
+      margin: 0 auto !important;
+    }
+  }
+
+
+
+}
+
+
+
+@media(max-width:991px) {
+  .pl-0-991 {
+    padding-left: 0px !important;
+  }
+
+  #ui-overview-profile {
+
+
+
+    .detailContainer {
+      .br-primitive:nth-child(1) {
+        border-right: 0px !important;
+
+      }
+
+      .bb-primitive-992 {
+
+        border-bottom: 1px solid #83959D !important;
+      }
+    }
+  }
+
+}
+
+@media(max-width:954px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 20vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 20vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 18vw !important;
+  }
+
+
+
+  .f-14-954 {
+    font-size: 14px !important;
+  }
+
+  .responsive-left-side-top {
+    max-width: 20vw !important;
+  }
+
+
+
+  .responsive-right-side-top {
+    max-width: 80vw !important;
+  }
+
+  .myfeedWrapper {
+    margin: 20px auto;
+    margin-top: 40px;
+
+  }
+
+  #ui-overview-profile {
+    .p-20 {
+
+      padding-right: 12px !important;
+    }
+  }
+
+  #question-risk-profile {
+    h3 {
+      font-size: 18px;
+    }
+  }
+
+  .flex-auto-954 {
+    flex: auto !important;
+  }
+
+  .invoice-accounts,
+  .document-accounts {
+    #table-low .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+
+    td.mat-cell:first-of-type,
+    th.mat-header-cell:first-of-type {
+      left: -2px !important;
+    }
+  }
+
+  .overflow-y-auto-954 {
+    overflow: inherit !important;
+    overflow-y: auto !important;
+
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 79vw !important;
+    }
+  }
+
+  .settings-account {
+    .wrapper-20 {
+      padding: 16px !important;
+    }
+  }
+
+  .pl-0-954 {
+    padding-left: 0px !important;
+  }
+}
+
+@media(max-width:860px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 22vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 22vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 18vw !important;
+  }
+
+
+  .responsive-left-side-top {
+    max-width: 22vw !important;
+  }
+
+
+
+  .responsive-right-side-top {
+    max-width: 78vw !important;
+  }
+
+  #overview-secondhead,
+  #ui-customer-secondhead,
+  #ui-activity-secondhead {
+    .advisorHomeBtn {
+      font-size: 13px;
+
+      .material-icons {
+        line-height: .9;
+      }
+    }
+
+    .mat-tab-link {
+      padding: 0px 15px !important;
+      font-size: 13px;
+    }
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 77vw !important;
+    }
+  }
+}
+
+@media(max-width:782px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 23vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 23vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 23vw !important;
+  }
+
+
+  .responsive-left-side-top {
+    max-width: 23vw !important;
+  }
+
+
+
+  .responsive-right-side-top {
+    max-width: 77vw !important;
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 76vw !important;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .advisorHomeBtn .tabDisplay {
+    display: none !important;
+  }
+}

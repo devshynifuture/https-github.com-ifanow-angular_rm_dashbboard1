@@ -348,7 +348,8 @@ export class SipApplicantWiseComponent implements OnInit {
         field7: new Date(element.toDate),
         field8: element.triggerDay,
         field9: element.frequency,
-        field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        // field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        field10: element.amount,
         field11: element.weightInPerc,
       });
     });
@@ -365,7 +366,8 @@ export class SipApplicantWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.name,
-        sipAmount: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // sipAmount: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        sipAmount: element.sipAmount,
         weightInPerc: element.weightInPercentage,
         investorList: [],
       };
@@ -397,7 +399,8 @@ export class SipApplicantWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+            // amount: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+            amount: element.amount,
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });

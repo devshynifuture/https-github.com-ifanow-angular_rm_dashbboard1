@@ -101,7 +101,7 @@ export class AllInsurancelistComponent implements OnInit {
   getInsurancePlaningListRes(data) {
     this.isLoadingPlan = false;
     this.loader(-1);
-    if(data.length > 0){
+    if(data){
       console.log('incurance list', data)
       this.dataSource = data
       this.dataSource.forEach(element => {

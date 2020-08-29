@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -7,10 +10,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddRecommendationsInsuComponent implements OnInit {
   displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice', 'empty'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  dataSource : any;
+  inputData: any;
+  isLoading:any;
+  constructor(private planService : PlanService,private eventService:EventService,private subInjectService : SubscriptionInject) { }
+  @Input()
+  set data(data) {
+    this.isLoading = true;
+    this.inputData = data;
+    this.getRecommendations();
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
+  }
+  getRecommendations(){
+    this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
+      data => {
+        this.dataSource = data
+        this.isLoading = false;
+        console.log(data)
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

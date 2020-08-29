@@ -345,8 +345,10 @@ export class ApplicantWiseComponent implements OnInit {
         field1: element.index,
         field2: element.name,
         field3: element.folioNumber,
-        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-        field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: element.totalAum,
+        // field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        field5: element.balanceUnit,
         field6: element.weightInPerc
       });
     });
@@ -380,7 +382,8 @@ export class ApplicantWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.name,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         categoryList: []
       });
@@ -408,14 +411,15 @@ export class ApplicantWiseComponent implements OnInit {
           this.arrayOfExcelData[index].categoryList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             subCategoryList: []
           });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.catWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
+        this.catWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'sub-category':
         // sub categories
@@ -423,14 +427,15 @@ export class ApplicantWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedApplicant].categoryList[index].subCategoryList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeList: []
           });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.subCatWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
+        this.subCatWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'schemes':
         iterable.forEach((element, index1) => {
@@ -439,14 +444,15 @@ export class ApplicantWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.schemeName,
             folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.subCatSchemeWiseTotal = ['Total', '', '', sumAumTotal, sumWeightInPercTotal];
+        this.subCatSchemeWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'scheme-folio':
         iterable.forEach((element, index1) => {
@@ -455,14 +461,16 @@ export class ApplicantWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.schemeName,
             folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
+            // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            balanceUnit: element.balanceUnit,
             weightInPerc: element.weightInPercentage
           });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.schemeWiseTotal = ['Total', '', '', sumAumTotal, '', sumWeightInPercTotal];
+        this.schemeWiseTotal = ['Total', '', '', sumAumTotal, '', Math.round(sumWeightInPercTotal)];
         break;
     }
   }

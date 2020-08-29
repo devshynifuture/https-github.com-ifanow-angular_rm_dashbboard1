@@ -1,6 +1,12 @@
 <div class="row pb-12 insuFixedHeader pt-28 bb-grey">
-    <div class="col-md-10 p-0">
-        <h3 class="m-0">{{getData ? getData.heading : ''}} - {{inputData ? inputData.holderName : ''}}</h3>
+    <div class="col-md-10 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+        <h3 class="m-0" *ngIf="!isLoadingPlan">{{getData ? getData.heading : ''}} -
+            {{inputData ? inputData.holderName : ''}}</h3>
+        <div class="relClass  m-0" [hidden]="!isLoadingPlan">
+            <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
+
+            </div>
+        </div>
     </div>
     <div class="col-md-2 pr-0 right text-right" (click)="deleteInsurance()">
         <img src="/assets/images/svg/insurance-delect-icon.svg">
@@ -9,19 +15,34 @@
 
 <div class="mt-70">
     <div class="row">
-        <div class="col-width-69 ">
+        <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
             <div class="row pt-28">
                 <div class="col-md-3 p-0">
                     <p class="f-12 m-0 text-primitive">ACTUAL</p>
-                    <h3 class="m-0">₹<span>{{(insuranceDetails)?insuranceDetails.actual:0}}</span></h3>
+                    <div class="relClass">
+                        <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
+                            <h3 class="m-0  ">
+                                <span [hidden]="isLoadingPlan">&#8377;</span>
+                                <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                            </h3>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3 p-0">
                     <p class="f-12 m-0 text-primitive">ADVICE</p>
-                    <h3 class="m-0">₹<span>{{(insuranceDetails)?insuranceDetails.advice:0}}</span></h3>
+                    <div class="relClass">
+                        <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
+                            <h3 class="m-0  ">
+                                <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
+                                    [value]="insuranceDetails?.advice"></span>
+                            </h3>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 m-0">STATUS</p>
-                    <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails.status : 0" class="h-30 bg-primary " placeholder="32%">
+                    <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails.status : 0"
+                        class="h-30 bg-primary " placeholder="32%">
                         32%
                     </mat-progress-bar>
                 </div>
@@ -30,10 +51,17 @@
             <div class="row pt-20">
                 <div class="col-md-12 p-0">
                     <h5 class="roboto f-500">Planner notes</h5>
-                    <div class="ba-light p-8">
+                    <div class="ba-light p-8" *ngIf="!isLoadingPlan">
                         <p class="m-0 f-14 l-18">
-                           {{(insuranceDetails)?insuranceDetails.needAnalysis.plannerNotes:'-'}}
+                            {{(insuranceDetails)?insuranceDetails.needAnalysis.plannerNotes:'-'}}
                         </p>
+                    </div>
+                    <div *ngIf="isLoadingPlan">
+                        <div class="relClass  p-8">
+                            <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,42 +71,73 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
+                    <table mat-table
+                    [dataSource]="dataSouce3" multiTemplateDataRows
+                    class="mat-elevation-z8" id="table-low" appSkeletonLoading
+                    [appSkeletonLoading]="isLoadingPlan" class="mt-8 skeletonAnimation">
+              
+               <ng-container matColumnDef="name">
+                <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar">{{element?.insurance?.policyName}} </div>
+                </td>
+            </ng-container>
 
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
-                            </td>
-                        </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="sum">
+                <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                <td mat-cell *matCellDef="let element" class="text-right  amt">
+                    <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                            {{element?.insurance?.sumAssured}} </span></div>
+                </td>
+            </ng-container>
 
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
-                            </td>
-                        </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="premium">
+                <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                <td mat-cell class="text-right amt" *matCellDef="let element">
+                    <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                            {{element?.insurance?.premiumAmount}} </span></div>
+                </td>
+            </ng-container>
 
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="returns">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
-                            </td>
-                        </ng-container>
 
-                        <ng-container matColumnDef="advice">
-                            <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                    </table>
-
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Advice </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        <span *ngIf="isLoadingPlan">{{element.advice}} </span>
+                        <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
+                            keyboard_arrow_down
+                        </span>
+                        <span class="material-icons" *ngIf="!isLoadingPlan && !element.expanded">
+                            keyboard_arrow_up
+                        </span>
+                    </div>
+                </td>
+            </ng-container>
+               <ng-container matColumnDef="expandedDetail">
+                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length">
+                   <div class="example-element-detail"
+                        [@detailExpand]="element.expanded == true ? 'expanded' : 'collapsed'">
+                     <div class="example-element-description">
+                       {{element?.insurance?.policyName +' -'+element.description}}
+                     </div>
+                   </div>
+                 </td>
+               </ng-container>
+             
+               <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+               <tr mat-row *matRowDef="let element; columns: displayedColumns3;"
+                   class="example-element-row"
+                   [class.example-expanded-row]="expandedElement === element"
+                   (click)="element.expanded = element.expanded === true ? true : false;getDataInv(element)">
+               </tr>
+               <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+             </table>
+                    <div class="text-center" *ngIf="!isLoadingPlan && dataSouce3?.length == 0">
+                        <span class="align-items-center">No data found</span>
+                    </div>
                 </div>
             </div>
 
@@ -88,50 +147,68 @@
 
                     <h5 class="roboto f-500">Recommendations on current policies</h5>
 
-                    <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+                    <table mat-table *ngIf="dataSource1?.length > 0" [dataSource]="dataSource1" appSkeletonLoading
+                        [appSkeletonLoading]="isLoadingPlan" class="mt-8 skeletonAnimation" id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar">{{element?.insurance?.policyName}} </div>
+
+                            </td>
                         </ng-container>
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt"> {{element.sum}}
-                            </td>
+                            <td mat-cell *matCellDef="let element" class="text-right  amt">
+                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                                        {{element?.insurance?.sumAssured}} </span></div>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.premium}}
+                            <td mat-cell class="text-right amt" *matCellDef="let element">
+                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                                        {{element?.insurance?.premiumAmount}} </span></div>
                             </td>
                         </ng-container>
 
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="returns">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element"> {{element.returns}}
+                            <td mat-cell class="text-right amt" *matCellDef="let element">
+                                <div class="bar">{{element.returns}} </div>
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element"> {{element.advice}} </td>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.advice}} </div>
+                            </td>
                         </ng-container>
+
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                     </table>
-
+                    <div class=" text-center" *ngIf="!isLoadingPlan && dataSource1?.length == 0">
+                        <span class="align-items-center">No data found</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-width-31 text-right">
-            <div class="fix-sticky">
-                <img class="mt-20" src={{logo}}>
-                <div class="d-flex mt-20 align-items-center justify-content-between">
+            <div class="fix-sticky skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                <img class="mt-20" src={{logo}} [hidden]="isLoadingPlan">
+                <div class="relClass" [hidden]="!isLoadingPlan">
+                    <div class="bar289" [ngClass]="{'height289': isLoadingPlan}">
+
+                    </div>
+                </div>
+                <div class="d-flex mt-20 align-items-center justify-content-between" *ngIf="!isLoadingPlan">
                     <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
                     </button>
@@ -140,11 +217,24 @@
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
                     </button>
                 </div>
+                <div class="relClass d-flex mt-20 align-items-center justify-content-between" [hidden]="!isLoadingPlan">
+                    <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
+                    </div>
 
-                <div class="d-flex mt-20 align-items-center">
-                    <button (click)="recommendationsPolicy(null)" mat-stroked-button class="w-100 p-0 text-primary br-2 recommendations">
+                    <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
+                    </div>
+                </div>
+                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan">
+                    <button (click)="recommendationsPolicy(null)" mat-stroked-button
+                        class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
                     </button>
+                </div>
+                <div class="relClass d-flex mt-20 align-items-center" [hidden]="!isLoadingPlan">
+                    <div class="w-100 p-0 text-primary br-2 recommendations bar">
+                        <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
+                        </div>
+                    </div>
                 </div>
 
             </div>

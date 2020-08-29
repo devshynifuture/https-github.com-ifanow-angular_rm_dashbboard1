@@ -98,6 +98,7 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioGroupHeadList(obj).subscribe(
         data => {
+          console.log(data);
           this.dataList = data;
         }
       )
@@ -110,6 +111,7 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioApplicantList(obj).subscribe(
         data => {
+          console.log(data);
           this.folioList = data;
         }
       )
@@ -131,6 +133,7 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
+              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -142,7 +145,7 @@ export class FoliosComponent implements OnInit {
       } else {
         const obj = {
           advisorId: this.advisorId,
-          arnRiaDetailId: -1,
+          arnRiaDetailsId: -1,
           parentId: -1,
           familyMemberName: data
         }
@@ -150,6 +153,7 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
+              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -176,6 +180,7 @@ export class FoliosComponent implements OnInit {
         this.backoffice.folioSearchByPan(obj).subscribe(
           data => {
             this.isLoading = false;
+            console.log(data);
             if (data) {
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;

@@ -17,6 +17,7 @@ export class AdviceActivityComponent implements OnInit {
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService) { }
   selected;
+  selectedTab = "ALL PORTFOLIO";
   leftSidebarList = [
     { name: "Stock", count: 1, urlPath: '/customer/detail/activity/advice/stocks' },
     { name: "Fixed income", count: 1, urlPath: '/customer/detail/activity/advice/fixedIncome' },

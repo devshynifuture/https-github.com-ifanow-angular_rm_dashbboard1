@@ -1403,15 +1403,19 @@
                     <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
                     <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
                   </div>
-                  <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
-                    #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
-                  <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
-                    done
-                  </span>
-                  <span *ngIf="showInput" class="material-icons f-20 c-p pl-8"
-                    (click)="showInput=false;todoDescription=''">
-                    clear
-                  </span>
+                  <div class="todo-wrraper">
+                    <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
+                      #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+                    <div class="todo-btn">
+                      <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
+                        done
+                      </span>
+                      <span *ngIf="showInput" class="material-icons f-20 c-p pl-8"
+                        (click)="showInput=false;todoDescription=''">
+                        clear
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -1430,7 +1434,7 @@
                     </div>
                     <div class="col-md-7 pl-0">
                       <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
-                        class="c-p f-14">{{singleNote.activityName}}</span>
+                        class="text-break c-p f-14">{{singleNote.activityName}}</span>
                       <div class="pb-8 pt-8">
                         <input *ngIf="singleNote.update" matInput class="form-control" [formControl]="updateNote"
                           autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
@@ -1468,14 +1472,19 @@
                 <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
                 <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
               </div>
-              <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus #inputValue
-                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
-              <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
-                done
-              </span>
-              <span *ngIf="showInput" class="material-icons f-20 c-p pl-8" (click)="showInput=false;todoDescription=''">
-                clear
-              </span>
+              <div class="todo-wrraper">
+                <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
+                  #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+                <div class="todo-btn">
+                  <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
+                    done
+                  </span>
+                  <span *ngIf="showInput" class="material-icons f-20 c-p pl-8"
+                    (click)="showInput=false;todoDescription=''">
+                    clear
+                  </span>
+                </div>
+              </div>
             </div>
 
             <img class="mt-20" src="assets/images/svg/to-do-emptyimg.svg">

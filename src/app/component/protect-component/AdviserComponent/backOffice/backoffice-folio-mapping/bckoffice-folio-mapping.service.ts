@@ -24,7 +24,7 @@ export class BackofficeFolioMappingService {
   }
 
   putMutualFundInvestorDetail(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE, data)
+    return this.http.putWithStatusCode(apiConfig.MAIN_URL + appConfig.PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE, data)
   }
 
 }
