@@ -429,7 +429,8 @@ export class SipSchemeWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.investorName,
-            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            sipAmount: element.sipAmount,
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
             schemeList: []
@@ -451,7 +452,8 @@ export class SipSchemeWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             toTriggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            amount: element.sipAmount,
             weightInPerc: element.weightInPercentage,
           });
           sumAmtTotal += element.sipAmount;
@@ -536,7 +538,8 @@ export class SipSchemeWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.schemeName,
-        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        sipAmount: element.sipAmount,
         sipCount: element.sipCount,
         weightInPerc: element.weightInPercentage,
         subCatList: [],
@@ -608,7 +611,8 @@ export class SipSchemeWiseComponent implements OnInit {
         field7: new Date(element.toDate),
         field8: element.toTriggerDay,
         field9: element.frequency,
-        field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        // field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        field10: element.amount,
         field11: element.weightInPerc,
       });
     });

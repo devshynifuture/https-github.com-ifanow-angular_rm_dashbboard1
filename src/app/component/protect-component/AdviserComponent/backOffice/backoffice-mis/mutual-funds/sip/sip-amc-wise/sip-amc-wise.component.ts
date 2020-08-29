@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Component({
   selector: 'app-sip-amc-wise',
@@ -449,9 +450,11 @@ export class SipAmcWiseComponent implements OnInit {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            sipAmount: element.sipAmount,
             sipCount: element.sipCount,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             investorList: []
           });
@@ -467,7 +470,8 @@ export class SipAmcWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList.push({
             index: index1 + 1,
             name: element.investorName,
-            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            sipAmount: element.sipAmount,
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
             applicantList: []
@@ -491,7 +495,8 @@ export class SipAmcWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            amount: element.sipAmount,
             weightInPerc: element.weightInPercentage
           });
           sumSipAmount += element.sipAmount;
@@ -510,9 +515,11 @@ export class SipAmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.amcName,
-        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        sipAmount: element.sipAmount,
         sipCount: element.sipCount,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });
@@ -762,7 +769,8 @@ export class SipAmcWiseComponent implements OnInit {
         field7: new Date(element.toDate),
         field8: element.triggerDay,
         field9: element.frequency,
-        field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        // field10: this.mfService.mutualFundRoundAndFormat(element.amount, 0),
+        field10: element.amount,
         field11: element.weightInPerc
       });
       sumSipAmtTotal += element.amount;

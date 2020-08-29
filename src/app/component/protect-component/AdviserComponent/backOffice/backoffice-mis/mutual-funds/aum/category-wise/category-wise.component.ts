@@ -425,7 +425,8 @@ export class CategoryWiseComponent implements OnInit {
       dataValue = {
         index: index1 + 1,
         categoryName: element.name,
-        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         subCatList: []
       };
@@ -456,7 +457,8 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
@@ -474,7 +476,8 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             applicantList: [],
           });
@@ -491,9 +494,11 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
               name: element.name,
-              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              balanceUnit: element.balanceUnit,
               folioNumber: element.folioNumber,
-              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              totalAum: element.totalAum,
               weightInPerc: element.weightInPercentage,
             });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
@@ -544,9 +549,11 @@ export class CategoryWiseComponent implements OnInit {
     applicantList.forEach(element => {
       newarr.push({
         field1: element.name,
-        field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        // field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+        field2: element.balanceUnit,
         field3: element.folioNumber,
-        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: element.totalAum,
         field5: element.weightInPerc,
       });
     });
