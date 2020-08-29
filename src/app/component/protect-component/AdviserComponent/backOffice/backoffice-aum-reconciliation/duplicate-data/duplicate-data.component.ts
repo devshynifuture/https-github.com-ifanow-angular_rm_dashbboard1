@@ -17,6 +17,7 @@ export class DuplicateDataComponent implements OnInit {
   rtId: any;
   mutualFundTransactions: any;
   adminAdvisorIds: any[] = [];
+  aumDate: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -34,10 +35,34 @@ export class DuplicateDataComponent implements OnInit {
   isLoading: boolean = false;
   aumList: [] = [];
   duplicateDataList: DuplicateI[] = [];
+  isRmLogin = AuthService.getUserInfo().isRmLogin;
+  rtaList = [];
 
   ngOnInit() {
-    this.teamMemberListGet();
+    this.getRtaList();
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
+  }
+
+  getRtaList() {
+    this.isLoading = true;
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res && res.length !== 0) {
+          res.forEach(element => {
+            if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+              this.rtaList.push({
+                name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+                value: element.id,
+                type: 'rta'
+              });
+            }
+          });
+
+          this.teamMemberListGet()
+        } else {
+          this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
+        }
+      });
   }
 
   teamMemberListGet() {
@@ -55,14 +80,45 @@ export class DuplicateDataComponent implements OnInit {
       });
   }
 
+  getRtNameFromRtId(id){
+    return this.rtaList.find(c=> c.id === id).name;
+  }
+
   openReconciliationDetails(value, data, tableType) {
     let tableData = [];
     if (this.mutualFundTransactions) {
       tableData = this.mutualFundTransactions;
     }
+
+    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+
+    // needed
+
+    let aumDateObj = new Date(this.aumDate);
+    let aumDateFormated = aumDateObj.getFullYear() + '-'
+      + `${(aumDateObj.getMonth() + 1) < 10 ? '0' : ''}`
+      + (aumDateObj.getMonth() + 1) + '-'
+      + `${aumDateObj.getDate() < 10 ? '0' : ''}`
+      + aumDateObj.getDate();
+
     const fragmentData = {
       flag: value,
-      data: {...data, tableType, brokerId: this.brokerId, tableData},
+      data: {
+        ...data, 
+        dataForDuplicateTransactionCall: {
+          advisorIds: [...this.adminAdvisorIds],
+          isParent,
+          parentId: this.parentId,
+          aumDate: aumDateFormated,
+        },
+        rtId: this.rtId,
+        freezeDate: data.freezeDate,
+        fromAllFolioOrDuplicateTab: 2,
+        arnRiaCode: data.arnRiaNumber,
+        tableType, 
+        brokerId: this.brokerId, 
+        tableData
+      },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -93,12 +149,14 @@ export class DuplicateDataComponent implements OnInit {
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
+          
           res.forEach(item => {
+            this.aumDate = item.aumDate;
             this.brokerId = item.brokerId;
             this.mutualFundTransactions = item.mutualFundTransactions;
 
             this.duplicateDataList.push({
-              arnRia: item.brokerCode,
+              arnRia: item.arnRiaNumber,
               name: item.schemeName,
               folioNumber: item.folioNumber,
               unitsIfanow: item.balanceUnit,
@@ -106,6 +164,8 @@ export class DuplicateDataComponent implements OnInit {
               difference: String(parseInt(item.balanceUnit.toFixed(3)) - parseInt(item.aumUnits.toFixed(3))),
               transactions: '',
               date: item.aumDate,
+              mutualFundId: item.id,
+              freezeDate: item.freezeDate
             });
           });
           this.dataSource.data = this.duplicateDataList;
@@ -129,10 +189,12 @@ export interface DuplicateI {
   difference: string;
   transactions: string;
   date: string;
+  mutualFundId: string;
+  freezeDate: string;
 }
 
 export const ELEMENT_DATA: DuplicateI[] = [
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
 ];

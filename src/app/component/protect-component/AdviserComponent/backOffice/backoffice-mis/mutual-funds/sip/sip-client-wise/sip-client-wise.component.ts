@@ -227,7 +227,8 @@ export class SipClientWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.investorName,
-        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        // sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        sipAmount: element.sipAmount,
         weightInPerc: element.weightInPercentage,
         investorList: [],
       };
@@ -362,7 +363,8 @@ export class SipClientWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            // amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            amount: element.sipAmount,
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
@@ -377,7 +379,8 @@ export class SipClientWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
