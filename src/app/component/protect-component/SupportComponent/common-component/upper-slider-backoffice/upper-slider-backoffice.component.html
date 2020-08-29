@@ -1,6 +1,6 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
-        <div class="col-md-2 border-right-1 p-0">
+        <div class="col-md-2 border-right-1 p-0 full-center">
             <img class="imgLogoCLass"
                 src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="row pt-90 pb-48">
-    <div class="col-md-8">
+    <div class="col-xl-8 col-lg-10 col-md-12">
         <mat-tab-group id="ui-backoffice-tabs" (selectedTabChange)="onMainTabChanged($event)">
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -231,7 +231,7 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                             </table>
                             <div class="col-md-12 p-0" *ngIf="dataSource1.data === null">
-                                <h4 class="d-flex justify-content-center p-44 b-a">
+                                <h4 class="d-flex justify-content-center p-44 b-a bt-0">
                                     No Data Found
                                 </h4>
                             </div>
@@ -294,7 +294,7 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                             </table>
                             <div class="col-md-12 p-0" *ngIf="dataSource2.data === null">
-                                <h4 class="d-flex justify-content-center p-44 b-a">
+                                <h4 class="d-flex justify-content-center p-44 b-a bt-0">
                                     No Data Found
                                 </h4>
                             </div>
@@ -305,7 +305,8 @@
 
             <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button or its a Franklin RTA" [matTooltipDisabled]="!isTabDisabled">
+                    <div matTooltip="Kindly, click on export button or its a Franklin RTA"
+                        [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
@@ -318,7 +319,8 @@
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
                     <!-- <mat-radio-button [disabled]="true" value="1" class="example-radio-button d-block mb-5 f-14"
                         (click)="openDeleteDialog()"> -->
-                    <mat-radio-button [disabled]="!isFranklinTab" value="1" class="example-radio-button d-block mb-5 f-14" (click)="openDeleteDialog($event)">
+                    <mat-radio-button [disabled]="!isFranklinTab" value="1"
+                        class="example-radio-button d-block mb-5 f-14" (click)="openDeleteDialog($event)">
                         Delete unmatched folios
                         <!-- <p class="text-primitive ws-normal">
                             This will simply delete the unmatched folios. Ensure that you reorder the folio wise data at the earliest. Also, ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup
@@ -438,7 +440,7 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                         </table>
                         <div *ngIf="dataSource3.data === null">
-                            <h4 class="b-a p-44 d-flex justify-content-center">
+                            <h4 class="b-a p-44 d-flex justify-content-center bt-0">
                                 No Data Found
                             </h4>
                         </div>
