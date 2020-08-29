@@ -419,7 +419,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.catWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
+        this.catWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'sub-category':
         // sub categories
@@ -435,7 +435,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.subCatWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
+        this.subCatWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'schemes':
         iterable.forEach((element, index1) => {
@@ -452,7 +452,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.subCatSchemeWiseTotal = ['Total', '', '', sumAumTotal, sumWeightInPercTotal];
+        this.subCatSchemeWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'scheme-folio':
         iterable.forEach((element, index1) => {
@@ -470,7 +470,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
-        this.schemeWiseTotal = ['Total', '', '', sumAumTotal, '', sumWeightInPercTotal];
+        this.schemeWiseTotal = ['Total', '', '', sumAumTotal, '', Math.round(sumWeightInPercTotal)];
         break;
     }
   }
