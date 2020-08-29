@@ -618,7 +618,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           "advisorId": this.advisorId,
           "advisorEmailCategoryId": data.emailTemplateId,
           "enableOrDisable": header == 'enable' ? 0 : 1,
-          advisorEmailPermissionId: data.advisorEmailPermissionId
+          id: data.advisorEmailPermissionId
         }
         this.orgSetting.enableDisableTemplate(obj).subscribe(
           data => {
