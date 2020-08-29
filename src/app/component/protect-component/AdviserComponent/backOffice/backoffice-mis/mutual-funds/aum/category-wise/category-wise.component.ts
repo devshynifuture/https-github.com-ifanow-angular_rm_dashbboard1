@@ -545,7 +545,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: false,
       schemeList: false,
       applicantList: false
-    }, this.subCategoryWiseTotalArr);
+    }, this.subCategoryWiseTotalArr, "Category: -" + this.selectedCategoryName);
   }
 
   applicantWiseExcelSheet(index) {
