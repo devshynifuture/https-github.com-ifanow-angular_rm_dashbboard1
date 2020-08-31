@@ -4,6 +4,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { PeopleService } from '../../PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
+import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-multiple-email-address',
@@ -19,7 +20,8 @@ export class MultipleEmailAddressComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private peopleService: PeopleService,
-    private eventService: EventService
+    private eventService: EventService,
+    private cancelFlagService: CancelFlagService
   ) { }
 
   ngOnInit() {
@@ -63,7 +65,7 @@ export class MultipleEmailAddressComponent implements OnInit {
       userId: [data.userId],
       userType: [data.userType],
       markAsPrimary: [data.defaultFlag ? data.defaultFlag : false],
-      emailAddress: [data.email],
+      emailAddress: [data.email ? data.email : ''],
       isLoading: [false]
     }));
     this.getEmailAddressFormList.controls.forEach(element => {
@@ -73,6 +75,10 @@ export class MultipleEmailAddressComponent implements OnInit {
   }
 
   removeEmail(index) {
+    if (this.getEmailAddressFormList.controls[index].get('markAsPrimary').value) {
+      this.eventService.openSnackBar("Primary email address cannot be deleted", "Dismiss");
+      return
+    }
     (this.emailFormGroup.controls.emailList.length == 1) ? '' : this.emailFormGroup.controls.emailList.removeAt(index);
   }
 
@@ -93,6 +99,10 @@ export class MultipleEmailAddressComponent implements OnInit {
 
 
   deleteEmail(index, data) {
+    if (data.get('markAsPrimary').value) {
+      this.eventService.openSnackBar("Primary email address cannot be deleted", "Dismiss");
+      return
+    }
     data.get('isLoading').setValue(true)
     const obj = {
       "userId": data.get('userId').value,
@@ -102,11 +112,11 @@ export class MultipleEmailAddressComponent implements OnInit {
     }
     this.peopleService.deleteEmail(obj).subscribe(
       res => {
-        data.get('isLoading').setValue(false)
-          (this.emailFormGroup.controls.emailList.length == 1) ? '' : this.emailFormGroup.controls.emailList.removeAt(index);
+        this.cancelFlagService.setCancelFlag(true);
+        (this.emailFormGroup.controls.emailList.length == 1) ? '' : this.emailFormGroup.controls.emailList.removeAt(index);
         this.eventService.openSnackBar("Email deleted sucessfully!", "Dismiss")
       }, err => {
-        data.get('isLoading').setValue(false)
+        this.getEmailAddressFormList.controls[index].get('isLoading').setValue(false)
         this.eventService.openSnackBar(err, "Dismiss")
       }
     )

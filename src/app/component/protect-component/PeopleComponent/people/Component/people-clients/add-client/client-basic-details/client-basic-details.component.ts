@@ -792,6 +792,26 @@ export class ClientBasicDetailsComponent implements OnInit {
     } else {
       gardianObj = null;
     }
+    let emailList = [];
+    let count = 0;
+    if (this.emailData.valid) {
+      this.emailData.controls.forEach(element => {
+        if (element.get('markAsPrimary').value) {
+          count++;
+        }
+        emailList.push({
+          email: element.get('emailAddress').value,
+          defaultFlag: element.get('markAsPrimary').value,
+          verificationStatus: 0
+        });
+      });
+      emailList = emailList.sort(function (a, b) { return b.defaultFlag - a.defaultFlag });
+    }
+
+    if (count == 0) {
+      this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
+      return
+    }
 
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     ;
@@ -824,23 +844,16 @@ export class ClientBasicDetailsComponent implements OnInit {
       gstin: (this.invTypeCategory == '3' || this.invTypeCategory == '4') ? this.nonIndividualForm.controls.gstinNum.value : null,
       companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null
     };
+
     if (this.invTypeCategory != 2) {
-      let emailList = [];
-      if (this.emailData.valid) {
-        this.emailData.controls.forEach(element => {
-          emailList.push({
-            email: element.get('emailAddress').value,
-            defaultFlag: element.get('markAsPrimary').value,
-            verificationStatus: 0
-          });
-        });
-        emailList = emailList.sort(function (a, b) { return b.defaultFlag - a.defaultFlag });
-        obj.emailList = emailList
-      }
+      obj.emailList = emailList
     }
+
     else {
       delete obj['emailList']
     }
+
+
     obj.bio = this.basicDetailsData.bio;
     obj.remarks = this.basicDetailsData.remarks;
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
