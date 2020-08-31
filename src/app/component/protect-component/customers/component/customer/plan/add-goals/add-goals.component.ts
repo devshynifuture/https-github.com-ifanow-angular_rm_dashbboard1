@@ -120,15 +120,15 @@ export class AddGoalsComponent implements OnInit {
             maxAgeFromPresent: 60,
             minCostReduction: 100,
             maxCostReduction: -100,
-            minCost: 500000,
-            maxCost: 100000000,
+            minCost: 10000,
+            maxCost: 5000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             ageIncreament: 5,
             minReduction: -20,
-            cost: 7500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;

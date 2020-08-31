@@ -290,7 +290,6 @@ export class SingleGoalYearComponent implements OnInit {
       goalMember: ['', [Validators.required]], // who the goal is for
       age: ['', [Validators.required]], // age or time
       cost: [this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
-      lifeExpectancy: [70, [Validators.min(this.singleYearGoalForm.get('age').value)]],
       goalName: ['', Validators.required], // goal name
       goalDescription: [''],  // goal description
       logo: [''],
