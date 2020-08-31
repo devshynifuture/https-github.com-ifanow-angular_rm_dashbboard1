@@ -322,7 +322,7 @@
 
             <div *ngIf="finalTotal>0" class="row">
               <div class="col-md-12 p-0">
-                <div class="highcharts-figure" id="container">
+                <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
                 </div>
                 <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
                 <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">

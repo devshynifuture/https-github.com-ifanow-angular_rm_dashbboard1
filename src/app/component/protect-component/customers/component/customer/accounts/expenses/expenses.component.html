@@ -516,9 +516,17 @@
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
                                             <td mat-cell *matCellDef="let element" class="br">
                                                 <div [ngClass]="{'bar': isLoading}">
-                                                    <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
-                                                        value="40"></mat-progress-bar>
-                                                    <span *ngIf="isLoading">{{''}}</span>
+                                                    <div class="row">
+                                                        <mat-progress-bar *ngIf="isLoading==false"
+                                                        [matTooltip]="element.spentPerOther+'%'" mode="determinate"
+                                                        [value]="element.spentPerOther"  [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}">
+                                                    </mat-progress-bar>
+                                                    <mat-progress-bar  *ngIf="isLoading==false && element.progressPercentOther > 100 "
+                                                        [matTooltip]="element.budgetPerOther+'%'" mode="determinate"
+                                                        [value]="100" class="w-50 style1">
+                                                    </mat-progress-bar>
+                                                </div>
+                                                <span *ngIf="isLoading">{{''}}</span>
 
                                                 </div>
                                             </td>

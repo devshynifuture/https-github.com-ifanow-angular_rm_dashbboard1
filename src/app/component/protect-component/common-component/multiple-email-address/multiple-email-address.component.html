@@ -1,0 +1,43 @@
+<div *ngIf="getEmailAddressFormList.length>0" [formGroup]=" emailFormGroup">
+    <div *ngFor="let emailForm of getEmailAddressFormList.controls;index as i" [formGroup]="emailForm"
+        class="row pt-40 pb-20">
+        <div class="col-md-4  d-flex align-items-center justify-content-end">
+            <h5 class="m-0">Email <span *ngIf="getEmailAddressFormList.length>1">{{i+1}}</span></h5>
+        </div>
+        <div class="col-md-5 removeEerrorPadding p-0 mob-pl-10 mob-pr-10">
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <app-email-domain-auto-suggest (keyup)="checkUniqueEmail(emailForm.get('emailAddress'))"
+                        formControlName="emailAddress" placeholder="Enter email">
+                    </app-email-domain-auto-suggest>
+                    <mat-error *ngIf="emailForm.get('emailAddress').errors?.pattern">Email is not valid</mat-error>
+                        <mat-error *ngIf="emailForm.get('emailAddress').errors?.required">This field is required
+                    </mat-error>
+                    <mat-error *ngIf="emailForm.get('emailAddress').errors?.notUnique">Email must be unique
+                    </mat-error>
+                    <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
+
+                    <mat-checkbox class="f-12 f-400 text-primitive" (change)="changePrimaryEmail(i)"
+                        *ngIf="getEmailAddressFormList.length>1 && emailForm.get('emailAddress').valid && emailForm.get('emailAddress').value!=''"
+                        formControlName="markAsPrimary">Marked as primary
+                    </mat-checkbox>
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            <i *ngIf="i+1==getEmailAddressFormList.length && i<2" (click)="addEmail(null)"
+                class="material-icons c-p f-20">
+                add </i>
+
+            <i *ngIf="i+1!=getEmailAddressFormList.length || i==2"
+                (click)="emailForm.get('id').value==undefined?removeEmail(i):deleteEmail(i,emailForm)"
+                class="material-icons c-p f-20">
+                remove </i>
+
+        </div>
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            <mat-spinner *ngIf="emailForm.get('isLoading').value==true" [diameter]="30"></mat-spinner>
+        </div>
+    </div>
+</div>

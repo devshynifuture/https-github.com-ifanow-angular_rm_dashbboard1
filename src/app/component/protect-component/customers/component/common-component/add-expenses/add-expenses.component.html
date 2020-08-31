@@ -37,7 +37,7 @@
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
-                            <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
+                            <mat-option *ngFor="let choice of expenseList"  (click)="selectCategory($event)" [value]="choice.clientExpenseTypeMasterId">
                                 {{choice.expenseType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -259,7 +259,7 @@
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
-                            <mat-option *ngFor="let choice of expenseList" [value]="choice.clientExpenseTypeMasterId">
+                            <mat-option *ngFor="let choice of expenseList" (click)="selectCategory($event)" [value]="choice.clientExpenseTypeMasterId">
                                 {{choice.expenseType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -304,7 +304,7 @@
                 <h5 class="m-0 pt-8">Description</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" maxlength="20" formControlName="description">
+                        <input matInput class="form-control br-0" maxlength="60" formControlName="description">
                         <mat-hint>Optional</mat-hint>
                         <!-- <mat-error class="f-12 pt-4">
                             This field is required

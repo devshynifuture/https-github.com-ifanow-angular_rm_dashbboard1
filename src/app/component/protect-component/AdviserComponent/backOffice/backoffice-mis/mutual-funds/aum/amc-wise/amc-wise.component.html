@@ -45,7 +45,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='name' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th class="c-p f-500 w-14" (click)="sortBy(amcList,'totalAum')">
+                                <th class="c-p f-500 w-20" (click)="sortBy(amcList,'totalAum')">
                                     <span class="d-flex justify-content-end align-items-center"> Current Value
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && !reverse">
@@ -117,9 +117,8 @@
                                                             *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="c-p w-14 f-500 text-right" (click)="sortByScheme(amc.schemes,'totalAum')">
-                                                    <span class="d-flex align-items-center justify-content-end"> Current
-                                                        Value
+                                                <th class="c-p w-20 f-500 text-right" (click)="sortByScheme(amc.schemes,'totalAum')">
+                                                    <span class="d-flex align-items-center justify-content-end"> Current Value
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='totalAum' && !reverse2">
                                                             arrow_upward </i>
@@ -140,7 +139,7 @@
                                                 <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="false"></span></td>
                                                 <td class="text-right">
                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
-                                                <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex)">
+                                                <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex, amc.name)">
                                                     <i *ngIf="scheme.showScheme==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="scheme.showScheme==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
@@ -162,9 +161,8 @@
                                                     <table id="table-low" class="skeletonAnimation  mt-16 mb-20 table95" appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" *ngIf="scheme.showScheme == false && scheme.applicantList?.length > 0">
                                                         <thead>
                                                             <tr class="h-40">
-                                                                <th class="w-40 f-500 c-p" (click)="sortByApplicant(scheme.applicantList,'investorName')">
-                                                                    <span class="d-flex align-items-center"> Applicant
-                                                                        Name
+                                                                <th class="w-35 f-500 c-p" (click)="sortByApplicant(scheme.applicantList,'investorName')">
+                                                                    <span class="d-flex align-items-center"> Applicant Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='investorName' && !reverse3">
                                                                             arrow_upward </i>
@@ -172,7 +170,7 @@
                                                                             *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p f-500 w-15" (click)="sortByApplicant(scheme.applicantList,'balanceUit')">
+                                                                <th class="c-p text-right f-500 w-15" (click)="sortByApplicant(scheme.applicantList,'balanceUit')">
                                                                     <span class="d-flex justify-content-end align-items-center">
                                                                         Balance Unit
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -191,10 +189,9 @@
                                                                             *ngIf="propertyName3=='folioNumber' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p f-500 w-15" (click)="sortByApplicant(scheme.applicantList,'totalAum')">
+                                                                <th class="c-p f-500 w-20" (click)="sortByApplicant(scheme.applicantList,'totalAum')">
                                                                     <span class="d-flex justify-content-end align-items-center">
-                                                                        Current
-                                                                        Value
+                                                                        Current Value
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='totalAum' && !reverse3">
                                                                             arrow_upward </i>

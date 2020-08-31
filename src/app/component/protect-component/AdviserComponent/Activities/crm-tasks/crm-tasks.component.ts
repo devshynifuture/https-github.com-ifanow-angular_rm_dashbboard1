@@ -1,7 +1,7 @@
 import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
 import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddTasksComponent } from './add-tasks/add-tasks.component';
@@ -32,6 +32,10 @@ export class CrmTasksComponent implements OnInit {
   filterValueId: any;
   customDateFilter: boolean = false;
   customFromToDate: any;
+
+  @HostListener('scroll', ['$event']) windowScroll(event: any){
+    this.onTableScroll(event);
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,

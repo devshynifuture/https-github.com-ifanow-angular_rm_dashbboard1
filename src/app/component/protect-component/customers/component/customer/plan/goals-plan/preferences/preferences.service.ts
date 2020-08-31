@@ -70,6 +70,7 @@ export class PreferencesService {
 
     const remainingData = oldGoalObj.remainingData;
     let gstartDate = goalForm.goalStartDateYear + '-' + goalForm.goalStartDateMonth + '-01';
+    let gendtDate = goalForm.goalEndDateYear + '-' + goalForm.goalEndDateMonth + '-01';
     let sStartDate = goalForm.savingStartDateYear + '-' + goalForm.savingStartDateMonth + '-01';
     let sEndtDate = goalForm.savingEndDateYear + '-' + goalForm.savingEndDateMonth + '-01';
 
@@ -86,6 +87,7 @@ export class PreferencesService {
       savingStatus:goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
+      goalEndDate:gendtDate,
       savingType: goalForm.savingStatus,
     }
     switch (oldGoalObj.goalType) {
