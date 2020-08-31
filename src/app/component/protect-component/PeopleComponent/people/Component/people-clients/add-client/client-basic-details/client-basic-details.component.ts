@@ -750,7 +750,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.markAllAsTouched();
       return;
     }
-    if (this.emailData.invalid) {
+    if (this.emailData && this.emailData.invalid) {
       this.emailData.markAllAsTouched();
       return;
     }
