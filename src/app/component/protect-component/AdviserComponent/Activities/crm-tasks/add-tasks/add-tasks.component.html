@@ -74,6 +74,7 @@
             <div class="col-md-7 pl-0 arn-ria" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group">
                     <mat-select formControlName="searchTemplateList" class="form-control">
+                        <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
                             {{ item.taskDescription }}
@@ -113,11 +114,11 @@
 
         <div class="row pt-16" *ngIf="isRecurringTaskForm">
             <div class="col-md-4 text-right pt-10">
-                <h5 class="m-0 f-14 pt-12">Recurring</h5>
+                <h5 class="m-0 f-14">Recurring</h5>
             </div>
 
             <div class="col-md-4 pl-0">
-                <mat-form-field float="never" appearance="standard" class="form-group">
+                <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                     <mat-select class="form-control" formControlName="frequency">
                         <mat-option None>
                             Select Frequency
@@ -203,7 +204,7 @@
             <div class="col-md-4 form-group pl-0 mb-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="familyMemberId">
-                        <mat-option None> Select family member</mat-option>
+                        <mat-option value='' disabled> Select family member</mat-option>
                         <mat-option [value]="item.familyMemberId" *ngFor="let item of familyMemberList">
                             {{ item.displayName }}
                         </mat-option>
@@ -228,7 +229,7 @@
             <div class="col-md-4 form-group pl-0 mb-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="assignedTo">
-                        <mat-option None> Team Member</mat-option>
+                        <mat-option value='' disabled> Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
                             {{ item.fullName }}

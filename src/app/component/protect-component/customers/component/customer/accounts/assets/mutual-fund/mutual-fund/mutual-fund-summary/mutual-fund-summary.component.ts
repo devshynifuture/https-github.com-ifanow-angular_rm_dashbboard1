@@ -482,7 +482,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'Current value', 'index': ind, isCheked: true,
         style: {
-          'width': '7%',
+          'width': '9%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -530,7 +530,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'Unrealized profit', 'index': ind, isCheked: true,
         style: {
-          'width': '8%',
+          'width': '9%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -626,7 +626,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'XIRR', 'index': ind, isCheked: true,
         style: {
-          'width': '4%',
+          'width': '5%',
           'text-align': 'right',
           'font-size': '13px',
           'padding': '8px',
@@ -818,7 +818,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'NAV/Date', 'index': ind, isCheked: true,
         style: {
-          'width': '11%',
+          'width': '7%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
@@ -866,7 +866,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'SIP amount', 'index': ind, isCheked: true,
         style: {
-          'width': '5%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
@@ -1620,7 +1620,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        element.navDate = (element.nav + ' | ' +element.navDate);
+        element.navDate = (element.nav + '$NEXTLINE ' +element.navDate);
         console.log(element.navDate)
       }
     });
@@ -1937,7 +1937,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
-          element.navDate = element.nav + ' | \n' + element.navDate
+          element.navDate = (element.nav + ' $NEXTLINE ' +element.navDate);
         }
       }
     });

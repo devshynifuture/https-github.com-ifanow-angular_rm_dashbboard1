@@ -65,7 +65,7 @@ export class AllInsurancelistComponent implements OnInit {
   }
 
   isLoading = true;
-  isLoadingPlan = false;
+  isLoadingPlan = true;
   ngOnInit() {
     // this.detailsInsurance = {}
     this.getInsuranceList()
@@ -99,7 +99,6 @@ export class AllInsurancelistComponent implements OnInit {
     }
   }
   getInsurancePlaningListRes(data) {
-    this.isLoadingPlan = false;
     this.loader(-1);
     if(data){
       console.log('incurance list', data)
@@ -220,13 +219,20 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          if(upperSliderData['data'] == true ){
+            this.getInsuranceList();
+          }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
       }
     );
   }
-
+  stopLoader(value){
+    if(value){
+      this.isLoadingPlan = false;
+    }
+  }
   opensuggestpolicy(data) {
     this.isLoading = true;
     const fragmentData = {

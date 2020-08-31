@@ -6,6 +6,8 @@ import { PlanService } from '../../plan.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { iif } from 'rxjs';
+import { ConstantsService } from 'src/app/constants/constants.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-planinsurance',
@@ -20,11 +22,14 @@ export class AddPlaninsuranceComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['details', 'amount', 'consider', 'edit'];
   dataSource2 = ELEMENT_DATA2;
+  years;
   advisorId: any;
   clientId: any;
   isLoading: boolean;
   counter: any;
   manualForm: any;
+  selectedExpectancy='';
+  selectedFamily='';
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'ADD TO PLAN',
@@ -68,9 +73,10 @@ export class AddPlaninsuranceComponent implements OnInit {
   needBase: any;
   id: any;
   insuranceData: any;
+  familyList: any;
   constructor(private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
-    private planService: PlanService) {
+    private planService: PlanService,private constantService: ConstantsService,private peopleService:PeopleService) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -81,8 +87,11 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getListFamilyMem()
+    this.years = this.constantService.yearsMap;
     this.getdataForm(null)
     this.getAnalysis()
+    this.getNeedBasedAnalysis();
   }
 
   panelOpenState;
@@ -93,8 +102,37 @@ export class AddPlaninsuranceComponent implements OnInit {
       insuranceAmount: [(!data) ? '' : data.adviceAmount, [Validators.required]],
     });
   }
+  getListFamilyMem() {
+
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+       this.familyList =data;
+      }
+    );
+  }
   getFormControl(): any {
     return this.manualForm.controls;
+  }
+  getNeedBasedAnalysis(){
+    let obj = {
+      id: this.insuranceData.id,
+      clientId: this.clientId,
+      familyMemberId: this.insuranceData.familyMemberId,
+      lifeExpectancy:0
+    }
+    this.loader(1);
+    this.planService.getNeedBasedAnalysis(obj).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.loader(-1);
+      }
+    );
   }
   getAnalysis() {
 

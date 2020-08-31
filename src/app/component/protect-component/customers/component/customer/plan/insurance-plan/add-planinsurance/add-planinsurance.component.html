@@ -32,6 +32,32 @@
     <mat-tab-group class="tabView" (selectedTabChange)="tabChanged($event)">
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
+            <div class="row">
+                    <span class="col-md-3 f-14 f-500">Select main dependent</span>
+                    <i class="material-icons" matTooltip="The dependant should ideally be the spouse or parents of the person whose insurance is being planned. While kids are dependants too, but they are typically dependant on the main earning member only untill they start earning or get married. Hence making them dependants will inflate the insurance requirement as their living years will be greater than the spouse’s or the parent’s living years.">
+                        info
+                    </i>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select [(value)]="selectedFamily">
+                                <mat-option value=''>Select one</mat-option>
+                                <mat-option [value]="option.name" *ngFor="let option of familyList">{{ option.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-select [(value)]="selectedExpectancy">
+                                <mat-option value=''>Life expectancy</mat-option>
+                                <mat-option [value]="option.value" *ngFor="let option of years">{{ option.value }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+            </div>
             <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb">
                 <div class="col-md-6 f-14 f-500">Particulars</div>
                 <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>
