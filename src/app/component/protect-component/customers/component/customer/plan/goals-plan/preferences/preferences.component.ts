@@ -49,6 +49,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   };
   obj: any;
 
+
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -63,6 +64,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     if (this.data.singleOrMulti == 1) {
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     } else {
+      this.years = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+    }
+    if(this.data.goalType == 1){
       this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     this.setForms();
@@ -100,7 +104,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalStartDateMonth: [('0' + (new Date(this.data.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       goalEndDateMonth:[('0' + (new Date(this.data.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
       goalEndDateYear:[(new Date(this.data.goalEndDate).getFullYear()), [Validators.required]],
-      savingStatus: [remainingData.savingType, [Validators.required]],
+      savingStatus: [remainingData.savingStatus, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
@@ -124,7 +128,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           }
         })
       )
-    } else {
+    }
+    if(this.data.goalType ==1 || this.data.singleOrMulti == 2) {
       this.subscription.add(
         this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
@@ -217,6 +222,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
     observer.subscribe(res => {
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.close()
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {

@@ -13,7 +13,7 @@ export class PreferencesService {
     switch (oldGoalObj.singleOrMulti) {
       case 1:
         return this.createSingleYearObj(oldGoalObj, goalForm);
-    
+
       case 2:
         return this.createMultiYearEditObj(oldGoalObj, goalForm);
     }
@@ -21,7 +21,7 @@ export class PreferencesService {
   }
 
 
-  createMultiYearEditObj(oldGoalObj, goalForm){
+  createMultiYearEditObj(oldGoalObj, goalForm) {
 
     const remainingData = oldGoalObj.remainingData;
     let gstartDate = goalForm.goalStartDateYear + '-' + goalForm.goalStartDateMonth + '-01';
@@ -29,7 +29,7 @@ export class PreferencesService {
     let sStartDate = goalForm.savingStartDateYear + '-' + goalForm.savingStartDateMonth + '-01';
     let sEndtDate = goalForm.savingEndDateYear + '-' + goalForm.savingEndDateMonth + '-01';
 
-    let obj:any = {
+    let obj: any = {
       id: remainingData.id,
       goalType: oldGoalObj.goalType,
       clientId: remainingData.clientId,
@@ -47,7 +47,7 @@ export class PreferencesService {
       savingType: goalForm.savingStatus,
     }
 
-    if(obj.isFreezed) {
+    if (obj.isFreezed) {
       obj.lastFreezedDate = this.datePipe.transform(new Date(), AppConstants.DATE_FORMAT_DASHED);
     }
 
@@ -70,10 +70,11 @@ export class PreferencesService {
 
     const remainingData = oldGoalObj.remainingData;
     let gstartDate = goalForm.goalStartDateYear + '-' + goalForm.goalStartDateMonth + '-01';
+    let gendtDate = goalForm.goalEndDateYear + '-' + goalForm.goalEndDateMonth + '-01';
     let sStartDate = goalForm.savingStartDateYear + '-' + goalForm.savingStartDateMonth + '-01';
     let sEndtDate = goalForm.savingEndDateYear + '-' + goalForm.savingEndDateMonth + '-01';
 
-    let obj:any = {
+    let obj: any = {
       id: remainingData.id,
       goalType: oldGoalObj.goalType,
       clientId: remainingData.clientId,
@@ -83,8 +84,10 @@ export class PreferencesService {
       archivedValue: (goalForm.archiveGoal ? 1 : 0),
       isFreezed: (goalForm.freezeCalculation ? 1 : 0),
       goalStartDate: gstartDate,
+      savingStatus:goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
+      goalEndDate:gendtDate,
       savingType: goalForm.savingStatus,
     }
     switch (oldGoalObj.goalType) {
@@ -99,12 +102,15 @@ export class PreferencesService {
       case AppConstants.EMERGENCY_GOAL:
         obj['goalFV'] = goalForm.goalValue;
         break;
+      case AppConstants.RETIREMENT_GOAL:
+        obj['goalPresentValue'] = goalForm.goalValue;
+        break;
       default:
         console.error('Invalid goal type found', oldGoalObj.goalType);
         return 0;
     }
 
-    if(obj.isFreezed) {
+    if (obj.isFreezed) {
       obj.lastFreezedDate = this.datePipe.transform(new Date(), AppConstants.DATE_FORMAT_DASHED);
     }
 
@@ -113,13 +119,13 @@ export class PreferencesService {
 
 
   getGoalValueForForm(data) {
-    if(data.singleOrMulti == 2) {
-      if(data.remainingData.futureValue){
+    if (data.singleOrMulti == 2) {
+      if (data.remainingData.futureValue) {
         return data.remainingData.futureValue
-      }else{
+      } else {
         return data.remainingData.goalFV;
       }
-      
+
     } else {
       switch (data.goalType) {
         case AppConstants.CAR_GOAL:
@@ -134,8 +140,8 @@ export class PreferencesService {
         case AppConstants.WEALTH_CREATION_GOAL:
         case AppConstants.EMERGENCY_GOAL:
           return data.remainingData.goalFV;
-          case AppConstants.RETIREMENT_GOAL:
-            return data.remainingData.goalPresentValue;
+        case AppConstants.RETIREMENT_GOAL:
+          return data.remainingData.goalPresentValue;
         default:
           console.error('Invalid goal type found', data.goalType);
           return 0;

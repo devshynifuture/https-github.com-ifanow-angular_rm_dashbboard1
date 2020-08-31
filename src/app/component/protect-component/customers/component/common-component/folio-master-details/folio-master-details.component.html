@@ -163,7 +163,9 @@
                             <p class="m-0 roboto">Account type</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.accountType)?item.accountType:'N.A.'}}</p>
+                            <p class="m-0 roboto">
+                                {{(item.accountType == '1') ? 'Saving A/c' : (item.accountType == '2') ? 'Current A/c' : (item.accountType == '3') ? 'NRE' : (item.accountType == '4') ? 'NRO' : (item.accountType == '5')  ? 'Cash credit A/c' : (item.accountType == '6') ? 'SNRR A/c' : 'Other A/c'}}
+                            </p>
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -175,7 +177,7 @@
                         </div>
                     </div>
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
+                        <div class="col-md-4 p-0">item
                             <p class="m-0 roboto">IFSC code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">

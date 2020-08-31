@@ -795,6 +795,7 @@ export const appConfig = {
   DELETE_EMAIL: 'user/using-user-and-email-data/email/delete',
   // GET_BANK_LIST: 'user/bank/list/get',
   GET_BANK_LIST: 'user/multiple-user/bank/list/get',
+  GET_BANK_SINGLE_JOIN: 'user/bank/list/based-on-holder/get',
   GET_CLIENT_FEMILY_BANK_LIST: 'user/bank/list/all/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',
