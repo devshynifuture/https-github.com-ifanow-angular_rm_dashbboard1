@@ -108,7 +108,7 @@ export class AddGoalsComponent implements OnInit {
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'Age you want to retire?',
-            Q7: 'Your life expentancy?',
+            Q7: 'Your life expectancy?',
             Q2: 'Your current monthly expenses?',
             Q5: "At retirement, by what % will the expenses change?",
             Q6: "Milestones you'd also like to plan for (optional)",
