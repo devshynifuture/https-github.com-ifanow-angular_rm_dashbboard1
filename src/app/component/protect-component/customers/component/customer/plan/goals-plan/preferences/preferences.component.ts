@@ -100,7 +100,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalStartDateMonth: [('0' + (new Date(this.data.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       goalEndDateMonth:[('0' + (new Date(this.data.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
       goalEndDateYear:[(new Date(this.data.goalEndDate).getFullYear()), [Validators.required]],
-      savingStatus: [remainingData.savingType, [Validators.required]],
+      savingStatus: [remainingData.savingStatus, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
