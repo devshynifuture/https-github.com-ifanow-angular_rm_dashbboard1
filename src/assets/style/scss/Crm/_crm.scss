@@ -14,6 +14,25 @@
   }
 }
 
+#ui-crm-task {
+  .header-crm {
+    padding-top: 64px;
+    position: fixed;
+    z-index: 9;
+    background: #fff !important;
+    float: right;
+    width: 100%;
+    padding-right: 0px;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12),
+      0px 3px 3px rgba(0, 0, 0, 0.14);
+  }
+}
+
+.crm-task-scroll {
+  overflow-y: auto !important;
+  height: calc(100vh - 225px);
+}
+
 #ui-calculators {
   .mat-tab-body-content {
     overflow: hidden !important;

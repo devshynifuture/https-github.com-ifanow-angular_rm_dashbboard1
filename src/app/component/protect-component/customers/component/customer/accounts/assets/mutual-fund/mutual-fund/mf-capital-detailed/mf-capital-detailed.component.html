@@ -1067,7 +1067,7 @@
 
                 <td
                     style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                    <b> Purchase rate ST </b> </td>
+                    <b> Purchase rate  </b> </td>
 
                 <td
                     style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
@@ -1102,15 +1102,14 @@
 
                 <td colspan="18">
                     <table style="width: 100%">
-                        <tr>
+                        <tr   *ngIf="element.schemeName || element.folioNumber || element.ownerName">
                             <td colspan="16"
-                                style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
-                                *ngIf="element.schemeName || element.folioNumber || element.ownerName">
+                                style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;">
                                 {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
                             </td>
                         </tr>
 
-                        <tr>
+                        <tr *ngIf="element.transactionDate">
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span *ngIf="element.redeemTransactionDate">
@@ -1232,7 +1231,7 @@
             
                             <td valign="top"
                                 style=" width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.totalAmount">
+                                *ngIf="element.totalAmount" appFormatNumber>
                                 {{((element.totalAmount) ? element.totalAmount : '0')}}
                             </td>
             
@@ -1256,7 +1255,7 @@
             
                             <td valign="top"
                                 style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0" appFormatNumber>
                                 {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
                             </td>
                             <td valign="top"
@@ -1464,7 +1463,7 @@
 
                 <td
                     style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                    <b> Purchase rate ST </b> </td>
+                    <b> Purchase rate  </b> </td>
 
                 <td
                     style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
@@ -1507,7 +1506,7 @@
                             </td>
                         </tr>
 
-                        <tr>
+                        <tr  *ngIf="element.transactionDate">
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span *ngIf="element.redeemTransactionDate">
@@ -1629,7 +1628,7 @@
             
                             <td valign="top"
                                 style=" width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.totalAmount">
+                                *ngIf="element.totalAmount" appFormatNumber>
                                 {{((element.totalAmount) ? element.totalAmount : '0')}}
                             </td>
             
@@ -1653,7 +1652,7 @@
             
                             <td valign="top"
                                 style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0" appFormatNumber>
                                 {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
                             </td>
                             <td valign="top"

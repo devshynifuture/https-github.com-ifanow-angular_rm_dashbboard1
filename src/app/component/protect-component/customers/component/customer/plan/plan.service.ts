@@ -249,4 +249,7 @@ export class PlanService {
   getSuggestPolicy(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SUGGEST_POLICY_GET, data)
   }
+  getNeedBasedAnalysis(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.NEED_BASED_ANALYSIS, data)
+  }
 }
