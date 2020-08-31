@@ -77,6 +77,8 @@
                                                 class="form-control br-0 rupess"
                                                 [disabled]="singleYearGoalForm.value.lifeExpectancy">
                                             <mat-error class="f-12">This field is required</mat-error>
+                                            <mat-error *ngIf="singleYearGoalForm.get('lifeExpectancy').errors?.min">
+                                                Life expectancy must be greater than retirement age</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>

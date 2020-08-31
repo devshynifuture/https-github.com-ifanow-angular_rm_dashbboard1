@@ -296,7 +296,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
-      mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
+      if(goalSubData.goalType == 1){
+        mapData.goalEndDate = goalSubData.goalEndDate; // because start hote hi khatam ho gaya
+      }else{
+        mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
+      }
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,

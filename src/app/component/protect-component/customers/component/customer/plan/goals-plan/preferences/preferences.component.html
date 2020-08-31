@@ -13,7 +13,10 @@
             <mat-tab label="Key parameters">
                 <div class="wrapper-28" [formGroup]="goalDetailsFG">
                     <div class="row pb-20">
-                        <div class="col-md-4 d-flex align-items-center justify-content-end">
+                        <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="data.goalType == 1">
+                            <p class="roboto mb-0 ">Monthly expense</p>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="data.goalType != 1">
                             <p class="roboto mb-0 ">Goal amount</p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -99,6 +102,11 @@
                     <div class="row pt-20 pb-20 btl-1">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0  ">Goal start date
+                                <img src="/assets/images/svg/info.svg">
+                            </p>
+                        </div>
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="go">
+                            <p class="roboto mb-0  ">Retirement age
                                 <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
@@ -188,8 +196,8 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0" formControlName="savingStatus">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Breakup</mat-option>
-                                        <mat-option value="2">No Breakup</mat-option>
+                                        <mat-option [value]="1">Breakup</mat-option>
+                                        <mat-option [value]="2">No Breakup</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
