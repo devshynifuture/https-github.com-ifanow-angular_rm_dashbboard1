@@ -217,6 +217,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
     observer.subscribe(res => {
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.close()
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {

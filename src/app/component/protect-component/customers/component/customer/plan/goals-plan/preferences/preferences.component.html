@@ -13,7 +13,10 @@
             <mat-tab label="Key parameters">
                 <div class="wrapper-28" [formGroup]="goalDetailsFG">
                     <div class="row pb-20">
-                        <div class="col-md-4 d-flex align-items-center justify-content-end">
+                        <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="data.goalType == 1">
+                            <p class="roboto mb-0 ">Monthly expense</p>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="data.goalType != 1">
                             <p class="roboto mb-0 ">Goal amount</p>
                         </div>
                         <div class="col-md-4 p-0">
