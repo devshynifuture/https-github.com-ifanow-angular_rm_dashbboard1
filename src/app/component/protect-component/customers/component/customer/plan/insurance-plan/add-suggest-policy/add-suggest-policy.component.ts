@@ -30,7 +30,11 @@ export class AddSuggestPolicyComponent implements OnInit {
   ngOnInit() {
   }
   close() {
-    
+
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
+  saveSuggestPolicy() {
+
   }
 }
