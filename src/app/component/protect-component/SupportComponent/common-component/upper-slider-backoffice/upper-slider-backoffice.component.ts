@@ -142,7 +142,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.dataSource3.data = null;
 
     } else if (this.data.startRecon === false) {
-      this.arnRiaCode = this.data.arnRiaNumber;
+      this.arnRiaCode = this.data.arnRiaCode;
       this.rtId = this.data.rtId;
       this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
       if(this.isFranklinTab){

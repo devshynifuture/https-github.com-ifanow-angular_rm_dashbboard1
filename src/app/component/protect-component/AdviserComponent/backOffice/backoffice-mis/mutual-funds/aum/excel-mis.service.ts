@@ -443,7 +443,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((amcElement, index1) => {
                 if (!excluded.amcList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -535,7 +534,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((clientElement, index1) => {
                 if (!excluded.clientList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -757,7 +755,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((applicantElement, index1) => {
                 if (!excluded.applicantList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1163,7 +1160,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((schemeElement, index1) => {
                 if (!excluded.schemeList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1230,7 +1226,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((investorElement, index1) => {
                 if (!excluded.investorList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1329,7 +1324,6 @@ export class ExcelMisService {
         if (choice === 'applicant-wise-aum-mis') {
             arrayOfExcelData.forEach((categoryElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1532,7 +1526,6 @@ export class ExcelMisService {
         if (choice === 'applicant-wise-aum-mis') {
             arrayOfExcelData.forEach((subCatElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1600,7 +1593,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((schemeElement, index1) => {
 
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);

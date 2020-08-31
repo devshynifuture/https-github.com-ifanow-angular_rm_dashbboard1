@@ -81,8 +81,13 @@ export class ReconFranklinComponent implements OnInit {
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
-          this.isLoading = false;
-          this.dataSource.data = res;
+          if(res){
+            console.log(res);
+            this.isLoading = false;
+            this.dataSource.data = res;
+          } else {
+            this.eventService.openSnackBar("No Data Found!", "DISMISS");
+          }
         })
     }
   }

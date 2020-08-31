@@ -161,7 +161,7 @@
                                                             {{isLoadingCategory ? '' : category.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
                                                         </div>
                                                     </td>
-                                                    <td (click)="subCategory(category, catIndex ,applicantIndex)">
+                                                    <td (click)="subCategory(category, catIndex ,applicantIndex, name.name)">
                                                         <div class="bar text-center">
                                                             <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="category.showCategory && !isLoadingCategory">add</i>
                                                             <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!category.showCategory && !isLoadingCategory">
@@ -229,7 +229,7 @@
                                                                             {{isLoadingSubCategory ? '' : sub.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
                                                                         </div>
                                                                     </td>
-                                                                    <td (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex)">
+                                                                    <td (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex, category.name, name.name)">
                                                                         <div class="bar text-center">
                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory && !isLoadingSubCategory">add</i>
                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory && !isLoadingSubCategory">
@@ -319,7 +319,7 @@
                                                                                         </div>
                                                                                     </td>
                                                                                    
-                                                                                    <td (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex)">
+                                                                                    <td (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex, sub.name, category.name, name.name)">
                                                                                         <div class="bar text-center">
                                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="client.showFolio && !isLoadingScheme">add</i>
                                                                                             <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!client.showFolio && !isLoadingScheme">

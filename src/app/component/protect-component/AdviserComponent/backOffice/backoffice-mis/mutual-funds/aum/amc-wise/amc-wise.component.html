@@ -140,7 +140,7 @@
                                                 <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="false"></span></td>
                                                 <td class="text-right">
                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
-                                                <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex)">
+                                                <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex, amc.name)">
                                                     <i *ngIf="scheme.showScheme==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="scheme.showScheme==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>

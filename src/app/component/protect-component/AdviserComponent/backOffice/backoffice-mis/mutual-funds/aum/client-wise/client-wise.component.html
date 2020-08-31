@@ -8,13 +8,14 @@
                 <div class="col-md-12 pr-0 mb-10">
                     <div class="right text-right">
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
-              {{viewMode}}
-              <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
-              </mat-icon>
-            </button>
+                            {{viewMode}}
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                            </mat-icon>
+                        </button>
                         <mat-menu #menu="matMenu">
                             <div *ngFor="let item of arnRiaList">
-                                <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+                                <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                    [value]="item.value">{{item.number}}</button>
                             </div>
                         </mat-menu>
                     </div>
@@ -27,8 +28,10 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button *ngIf="!isLoading && clientList.length!=0" (click)="exportToExcelSheet('client-wise', null, null ,null)" class="btn-default addon" mat-stroked-button><i class="material-icons">add</i>XLS
-            </button>
+                        <button *ngIf="!isLoading && clientList.length!=0"
+                            (click)="exportToExcelSheet('client-wise', null, null ,null)" class="btn-default addon"
+                            mat-stroked-button><i class="material-icons">add</i>XLS
+                        </button>
                         <button (click)="aumReport()" class="btn-success ml-8 addon" mat-stroked-button>Back</button>
                     </div>
                 </div>
@@ -36,25 +39,28 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cli-wise overflow-hidden">
-                    <table *ngIf="clientList.length>0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation mt-16" id="table-low">
+                    <table *ngIf="clientList.length>0" [appSkeletonLoading]="isLoading" appSkeletonLoading
+                        class="skeletonAnimation mt-16" id="table-low">
                         <thead class="text-dark">
                             <tr class="h-40">
                                 <th class="w-10 f-500 ">Sr No.</th>
                                 <th (click)="sortBy(clientList,'name')" class="w-40 f-500 c-p">
                                     <span class="d-flex align-items-center"> Client Name
-                    <i class="material-icons ml-4 f-14 text-primitive" *ngIf="propertyName=='name' && !reverse">
-                      arrow_upward </i>
-                    <i class="material-icons ml-4 f-14 text-primitive"
-                      *ngIf="propertyName=='name' && reverse">arrow_downward</i>
-                  </span>
+                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                            *ngIf="propertyName=='name' && !reverse">
+                                            arrow_upward </i>
+                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                            *ngIf="propertyName=='name' && reverse">arrow_downward</i>
+                                    </span>
                                 </th>
                                 <th (click)="sortBy(clientList,'totalAum')" class="c-p f-500 w-14">
                                     <span class="d-flex justify-content-end align-items-center"> Current Value
-                    <i class="material-icons ml-4 f-14 text-primitive" *ngIf="propertyName=='totalAum' && !reverse">
-                      arrow_upward </i>
-                    <i class="material-icons ml-4 f-14 text-primitive"
-                      *ngIf="propertyName=='totalAum' && reverse">arrow_downward</i>
-                  </span>
+                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                            *ngIf="propertyName=='totalAum' && !reverse">
+                                            arrow_upward </i>
+                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                            *ngIf="propertyName=='totalAum' && reverse">arrow_downward</i>
+                                    </span>
                                 </th>
                                 <th class="w-14  f-500 text-right">% Weight</th>
                                 <th> </th>
@@ -76,27 +82,31 @@
 
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="name.totalAum" [shouldRoundOff]="false"></span>
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
+                                            [value]="name.totalAum" [shouldRoundOff]="false"></span>
                                     </div>
                                 </td>
 
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{(isLoading) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoading ? '' : '%')}}</div>
+                                        {{(isLoading) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoading ? '' : '%')}}
+                                    </div>
                                 </td>
 
                                 <td (click)="getInvestorName(name, clientIndex)">
                                     <div class="bar text-center">
                                         <i *ngIf="name.show" class="material-icons  b-a f-14 mt-4 c-p"> add </i>
                                         <i *ngIf="name.show==false" class="material-icons  b-a f-14 mt-4 c-p">
-                      remove
-                    </i>
+                                            remove
+                                        </i>
                                     </div>
                                 </td>
 
                                 <td>
                                     <div *ngIf="name.show==false" class="d-block text-right">
-                                        <img (click)="exportToExcelSheet('investor-wise', clientIndex, null,null)" *ngIf="!isLoading  && name.investorList?.length > 0"  class="c-p" src="assets/images/svg/download-bordered.svg"> 
+                                        <img (click)="exportToExcelSheet('investor-wise', clientIndex, null,null)"
+                                            *ngIf="!isLoading  && name.investorList?.length > 0" class="c-p"
+                                            src="assets/images/svg/download-bordered.svg">
                                     </div>
                                 </td>
 
@@ -112,28 +122,33 @@
                       </mat-icon>
                     </button>
                   </div> -->
-                                    <table *ngIf="name.show==false && name.investorList?.length > 0" class="skeletonAnimation mt-16 table98 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingInvestor" id="table-low">
+                                    <table *ngIf="name.show==false && name.investorList?.length > 0"
+                                        class="skeletonAnimation mt-16 table98 mb-8" appSkeletonLoading
+                                        [appSkeletonLoading]="isLoadingInvestor" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10 f-500">Sr No.</th>
-                                                <th (click)="sortByInvestor(name.investorList,'investorName')" class="w-40 f-500 c-p">
+                                                <th (click)="sortByInvestor(name.investorList,'investorName')"
+                                                    class="w-40 f-500 c-p">
                                                     <span class="d-flex align-items-center">
-                            Investor Name
-                            <i class="material-icons ml-4 f-14 text-primitive"
-                              *ngIf="propertyName2=='investorName' && !reverse2">
-                              arrow_upward </i>
-                            <i class="material-icons ml-4 f-14 text-primitive"
-                              *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
-                          </span>
+                                                        Investor Name
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                                            *ngIf="propertyName2=='investorName' && !reverse2">
+                                                            arrow_upward </i>
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                                            *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
+                                                    </span>
                                                 </th>
-                                                <th (click)="sortByInvestor(name.investorList,'totalAum')" class="c-p f-500 w-14 text-right">
-                                                    <span class="d-flex justify-content-end align-items-center"> Current Value
-                            <i class="material-icons ml-4 f-14 text-primitive"
-                              *ngIf="propertyName2=='totalAum' && !reverse2">
-                              arrow_upward </i>
-                            <i class="material-icons ml-4 f-14 text-primitive"
-                              *ngIf="propertyName2=='totalAum' && reverse2">arrow_downward</i>
-                          </span>
+                                                <th (click)="sortByInvestor(name.investorList,'totalAum')"
+                                                    class="c-p f-500 w-14 text-right">
+                                                    <span class="d-flex justify-content-end align-items-center"> Current
+                                                        Value
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                                            *ngIf="propertyName2=='totalAum' && !reverse2">
+                                                            arrow_upward </i>
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
+                                                            *ngIf="propertyName2=='totalAum' && reverse2">arrow_downward</i>
+                                                    </span>
                                                 </th>
                                                 <th class="w-14 f-500 text-right">% Weight</th>
                                                 <th> </th>
@@ -157,7 +172,9 @@
 
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingInvestor}">
-                                                        {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingInvestor" [shouldRoundOff]="false" [value]="investor.totalAum"></span>
+                                                        {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
+                                                            *ngIf="!isLoadingInvestor" [shouldRoundOff]="false"
+                                                            [value]="investor.totalAum"></span>
                                                     </div>
                                                 </td>
 
@@ -167,19 +184,24 @@
                                                     </div>
                                                 </td>
 
-                                                <td (click)="getSchemeName(investor, investorIndex, clientIndex)">
+                                                <td
+                                                    (click)="getSchemeName(investor, investorIndex, clientIndex, name.name)">
                                                     <div class="bar text-center">
-                                                        <i *ngIf="investor.showInvestor && !isLoadingInvestor" class="material-icons  b-a f-14 mt-4 c-p">add</i>
-                                                        <i *ngIf="!investor.showInvestor && !isLoadingInvestor" class="material-icons  b-a f-14 mt-4 c-p">remove </i>
+                                                        <i *ngIf="investor.showInvestor && !isLoadingInvestor"
+                                                            class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                                                        <i *ngIf="!investor.showInvestor && !isLoadingInvestor"
+                                                            class="material-icons  b-a f-14 mt-4 c-p">remove </i>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div *ngIf="!investor.showInvestor" class="d-block text-right">
-                                                       
-                                                        <img (click)="exportToExcelSheet('scheme1-wise',clientIndex, investorIndex, null)" *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0" class="c-p" src="assets/images/svg/download-bordered.svg"> 
-                                                          
-                             
+
+                                                        <img (click)="exportToExcelSheet('scheme1-wise',clientIndex, investorIndex, null)"
+                                                            *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0"
+                                                            class="c-p" src="assets/images/svg/download-bordered.svg">
+
+
                                                     </div>
                                                 </td>
 
@@ -187,36 +209,44 @@
                                             <tr style="border: transparent !important">
                                                 <td class="innerTd two" colspan="6">
 
-                                                    <table *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0" class="skeletonAnimation table96 mt-16 mb-20" appSkeletonLoading [appSkeletonLoading]="isLoadingScheme" id="table-low">
+                                                    <table
+                                                        *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0"
+                                                        class="skeletonAnimation table96 mt-16 mb-20" appSkeletonLoading
+                                                        [appSkeletonLoading]="isLoadingScheme" id="table-low">
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-10 f-500">Sr No.</th>
-                                                                <th (click)="sortByScheme(investor.schemeList,'schemeName')" class="w-40 f-500 c-p">
+                                                                <th (click)="sortByScheme(investor.schemeList,'schemeName')"
+                                                                    class="w-40 f-500 c-p">
                                                                     <span class="d-flex align-items-center"> Scheme Name
-                                    <i *ngIf="propertyName3=='schemeName' && !reverse3"
-                                      class="material-icons ml-4 f-14 text-primitive">
-                                      arrow_upward </i>
-                                    <i *ngIf="propertyName3=='schemeName' && reverse3"
-                                      class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                  </span>
+                                                                        <i *ngIf="propertyName3=='schemeName' && !reverse3"
+                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                            arrow_upward </i>
+                                                                        <i *ngIf="propertyName3=='schemeName' && reverse3"
+                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                    </span>
                                                                 </th>
-                                                                <th (click)="sortByScheme(investor.schemeList,'totalAum')" class="c-p f-500 w-14 text-right">
-                                                                    <span class="d-flex align-items-center justify-content-end"> Current
-                                    Value
-                                    <i *ngIf="propertyName3=='totalAum' && !reverse3"
-                                      class="material-icons ml-4 f-14 text-primitive">
-                                      arrow_upward </i>
-                                    <i *ngIf="propertyName3=='totalAum' && reverse3"
-                                      class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                  </span>
+                                                                <th (click)="sortByScheme(investor.schemeList,'totalAum')"
+                                                                    class="c-p f-500 w-14 text-right">
+                                                                    <span
+                                                                        class="d-flex align-items-center justify-content-end">
+                                                                        Current
+                                                                        Value
+                                                                        <i *ngIf="propertyName3=='totalAum' && !reverse3"
+                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                            arrow_upward </i>
+                                                                        <i *ngIf="propertyName3=='totalAum' && reverse3"
+                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                    </span>
                                                                 </th>
                                                                 <th class="w-14 f-500 text-right">% Weight</th>
-                                                <th></th>
-                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody *ngFor="let scheme of investor.schemeList; index as schemeIndex">
+                                                        <tbody
+                                                            *ngFor="let scheme of investor.schemeList; index as schemeIndex">
                                                             <tr>
                                                                 <td>
                                                                     <div [ngClass]="{'bar': isLoadingScheme}">
@@ -231,7 +261,10 @@
 
                                                                 <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingScheme}">
-                                                                        {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme" [value]="scheme.totalAum" [shouldRoundOff]="false"></span>
+                                                                        {{isLoadingScheme ? ' ' : '₹ '}}<span
+                                                                            appFormatNumber *ngIf="!isLoadingScheme"
+                                                                            [value]="scheme.totalAum"
+                                                                            [shouldRoundOff]="false"></span>
                                                                     </div>
                                                                 </td>
 
@@ -240,97 +273,128 @@
                                                                         {{(isLoadingScheme) ? '' : (scheme.weightInPercentage | number:'1.2-2')}}
                                                                     </div>
                                                                 </td>
-                                                                <td (click)="getFolio(scheme, schemeIndex, investorIndex, clientIndex)" class="text-center">
+                                                                <td (click)="getFolio(scheme, schemeIndex, investorIndex, clientIndex, investor.investorName, name.name)"
+                                                                    class="text-center">
                                                                     <div class="bar text-center">
-                                                                        <i *ngIf="scheme.showScheme && !isLoadingScheme" class="material-icons  b-a f-14 mt-4 c-p">add</i>
-                                                                        <i *ngIf="scheme.showScheme==false && !isLoadingScheme" class="material-icons  b-a f-14 mt-4 c-p"> remove
-                                    </i>
+                                                                        <i *ngIf="scheme.showScheme && !isLoadingScheme"
+                                                                            class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                                                                        <i *ngIf="scheme.showScheme==false && !isLoadingScheme"
+                                                                            class="material-icons  b-a f-14 mt-4 c-p">
+                                                                            remove
+                                                                        </i>
                                                                     </div>
                                                                 </td>
 
                                                                 <td>
-                                                                    <div class="d-block text-right" *ngIf="!scheme.showScheme">
-                                                                       <img src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('scheme2-wise',clientIndex, investorIndex, schemeIndex)"  *ngIf="!isLoadingScheme && scheme.folioList?.length > 0"> 
+                                                                    <div class="d-block text-right"
+                                                                        *ngIf="!scheme.showScheme">
+                                                                        <img src="assets/images/svg/download-bordered.svg"
+                                                                            (click)="exportToExcelSheet('scheme2-wise',clientIndex, investorIndex, schemeIndex)"
+                                                                            *ngIf="!isLoadingScheme && scheme.folioList?.length > 0">
                                                                     </div>
                                                                 </td>
 
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td class="innerTd four" colspan="6">
-                                                                   
-                                                                    <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0" class="skeletonAnimation mt-16 table95 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingFolio" id="table-low">
+
+                                                                    <table
+                                                                        *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0"
+                                                                        class="skeletonAnimation mt-16 table95 mb-8"
+                                                                        appSkeletonLoading
+                                                                        [appSkeletonLoading]="isLoadingFolio"
+                                                                        id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-10 f-500">Sr No.</th>
-                                                                                <th (click)="sortByFolio(scheme.folioList,'schemeName')" class="w-30 f-500 c-p">
-                                                                                    <span class="d-flex align-items-center">
-                                            Scheme Name
-                                            <i *ngIf="propertyName4=='schemeName' && !reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">
-                                              arrow_upward </i>
-                                            <i *ngIf="propertyName4=='schemeName' && reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                          </span>
+                                                                                <th (click)="sortByFolio(scheme.folioList,'schemeName')"
+                                                                                    class="w-30 f-500 c-p">
+                                                                                    <span
+                                                                                        class="d-flex align-items-center">
+                                                                                        Scheme Name
+                                                                                        <i *ngIf="propertyName4=='schemeName' && !reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                                            arrow_upward </i>
+                                                                                        <i *ngIf="propertyName4=='schemeName' && reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                    </span>
                                                                                 </th>
-                                                                                <th (click)="sortByFolio(scheme.folioList,'folioNumber')" class="w-15 f-500 c-p">
-                                                                                    <span class="d-flex align-items-center  ">
-                                            Folio Number
-                                            <i *ngIf="propertyName4=='folioNumber' && !reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">
-                                              arrow_upward </i>
-                                            <i *ngIf="propertyName4=='folioNumber' && reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                          </span>
-                                                                                </th>
-
-                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')" class="c-p w-16">
-                                                                                    <span class="d-flex justify-content-end align-items-center">
-                                            Balance Unit
-                                            <i *ngIf="propertyName4=='totalAum' && !reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">
-                                              arrow_upward </i>
-                                            <i *ngIf="propertyName4=='totalAum' && reverse4"
-                                              class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                          </span>
+                                                                                <th (click)="sortByFolio(scheme.folioList,'folioNumber')"
+                                                                                    class="w-15 f-500 c-p">
+                                                                                    <span
+                                                                                        class="d-flex align-items-center  ">
+                                                                                        Folio Number
+                                                                                        <i *ngIf="propertyName4=='folioNumber' && !reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                                            arrow_upward </i>
+                                                                                        <i *ngIf="propertyName4=='folioNumber' && reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                    </span>
                                                                                 </th>
 
-                                                                                <th class="w-15 f-500 text-right">% Weight</th>
+                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')"
+                                                                                    class="c-p w-16">
+                                                                                    <span
+                                                                                        class="d-flex justify-content-end align-items-center">
+                                                                                        Balance Unit
+                                                                                        <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                                            arrow_upward </i>
+                                                                                        <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                    </span>
+                                                                                </th>
+
+                                                                                <th class="w-15 f-500 text-right">%
+                                                                                    Weight</th>
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody *ngFor="let folio of scheme.folioList;index as i">
+                                                                        <tbody
+                                                                            *ngFor="let folio of scheme.folioList;index as i">
                                                                             <tr>
                                                                                 <td>
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{(isLoadingFolio) ? '' : (i + 1)}}
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{(isLoadingFolio) ? '' : folio.schemeName}}
                                                                                     </div>
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{(isLoadingFolio) ? '' : folio.folioNumber}}
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-right">
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
-                                                                                        {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio" [shouldRoundOff]="false" [value]="folio.totalAum"></span>
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
+                                                                                        {{isLoadingFolio ? ' ' : '₹ '}}<span
+                                                                                            appFormatNumber
+                                                                                            *ngIf="!isLoadingFolio"
+                                                                                            [shouldRoundOff]="false"
+                                                                                            [value]="folio.totalAum"></span>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-right">
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
                                                                                         <!--                                            {{isLoadingFolio ? ' ' : '₹ '}}-->
-                                                                                        <span appFormatNumber *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
+                                                                                        <span appFormatNumber
+                                                                                            *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
                                                                                     </div>
                                                                                 </td>
 
                                                                                 <td class="text-right">
 
-                                                                                    <div [ngClass]="{'bar': isLoadingFolio}">
+                                                                                    <div
+                                                                                        [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{(isLoadingFolio) ? '' : (folio.weightInPercentage | number:'1.2-2')}}
                                                                                     </div>
 
@@ -339,8 +403,10 @@
                                                                         </tbody>
 
                                                                     </table>
-                                                                    <div *ngIf="!isLoadingFolio && scheme.showScheme == false && scheme.folioList?.length == 0">
-                                                                        <div class="d-flex flex-column align-items-center">
+                                                                    <div
+                                                                        *ngIf="!isLoadingFolio && scheme.showScheme == false && scheme.folioList?.length == 0">
+                                                                        <div
+                                                                            class="d-flex flex-column align-items-center">
                                                                             <h4 class="text-center pt-12">No data found
                                                                             </h4>
                                                                         </div>
@@ -351,8 +417,10 @@
                                                         </tbody>
 
                                                     </table>
-                                                    <div *ngIf="!isLoadingScheme && investor.showInvestor == false && investor.schemeList?.length == 0">
-                                                        <div *ngIf="scheme1ListArr.length == 0" class="d-flex flex-column align-items-center">
+                                                    <div
+                                                        *ngIf="!isLoadingScheme && investor.showInvestor == false && investor.schemeList?.length == 0">
+                                                        <div *ngIf="scheme1ListArr.length == 0"
+                                                            class="d-flex flex-column align-items-center">
                                                             <h4 class="text-center pt-12">No data found
                                                             </h4>
                                                         </div>
@@ -362,7 +430,8 @@
                                         </tbody>
                                     </table>
                                     <div *ngIf="!isLoadingInvestor && name.show == false ">
-                                        <div *ngIf="investorList.length == 0  && name.investorList?.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="investorList.length == 0  && name.investorList?.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <h4 class="text-center pt-12">No data found
                                             </h4>
                                         </div>
@@ -374,9 +443,11 @@
                             <tr *ngIf="!isLoading && clientList.length>0">
                                 <td class="p-table  "><strong>Total</strong></td>
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="false"></span></strong>
+                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
+                                            [shouldRoundOff]="false"></span></strong>
                                 </td>
-                                <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong></td>
+                                <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
+                                </td>
                                 <td></td>
                             </tr>
                         </tbody>
