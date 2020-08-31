@@ -91,7 +91,8 @@
                                         <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
                                             <h3 class="m-0  ">
                                                 <span [hidden]="loaderFn.loading">&#8377;</span>
-                                                <span appFormatNumber [value]="selectedGoal?.dashboardData?.futureValue"></span>
+                                                <span appFormatNumber
+                                                    [value]="selectedGoal?.dashboardData?.futureValue"></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 p-0 pt-20">
+                        <div class="col-md-6 p-0 pt-20" *ngIf="selectedGoal?.remainingData?.savingStatus == 1">
                             <div class="row bg-grey lter b-a">
                                 <div class="col-md-6 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 br bb">Additional required</p>
@@ -157,6 +158,38 @@
                                     <p class="m-0 text-black relClass roboto p-12 bg-white">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-0 pt-20" *ngIf="selectedGoal?.remainingData?.savingStatus == 2">
+                            <div class="row bg-grey lter b-a">
+                                <div class="col-md-6 p-0">
+                                    <p class="m-0 text-black roboto p-12 f-500 br bb">Additional required</p>
+                                    <p class="m-0 text-black roboto p-12 br bb">Total(Equity+Debt)</p>
+                                </div>
+                                <div class="col-md-3  p-0">
+                                    <p class="m-0 text-black roboto p-12 f-500  bb">Monthly</p>
+                                    <p class="m-0 relClass text-black roboto p-12 bg-white  bb">
+                                        <span appFormatNumber
+                                            [value]="(selectedGoal?.dashboardData?.equity_monthly)+(selectedGoal?.dashboardData?.debt_monthly)">
+                                        </span>
+
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-3   p-0">
+                                    <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
+                                    <p class="m-0 text-black relClass roboto p-12 bg-white bb">
+                                        <span class="bar" appFormatNumber
+                                            [value]="(selectedGoal?.dashboardData?.lump_equity)+(selectedGoal?.dashboardData?.lump_debt)">
+                                        </span>
+
                                         <span class="bar height24" style="display: inline-block;"
                                             *ngIf="loaderFn.loading">
                                         </span>
@@ -216,7 +249,7 @@
                                     <div class="col-md-3 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">
-                                                <p class="mb-0 roboto">  {{allocation.assetName}}</p>
+                                                <p class="mb-0 roboto"> {{allocation.assetName}}</p>
                                             </div>
                                         </div>
 
@@ -241,7 +274,8 @@
                                     <div class="col-md-3  relClass d-flex align-items-center justify-content-between ">
 
                                         <div class="bar">
-                                            <p class="m-0 roboto" appFormatNumber [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
+                                            <p class="m-0 roboto" appFormatNumber
+                                                [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
                                             </p>
                                         </div>
 
@@ -264,7 +298,8 @@
 
                             <div class="row height40 bl-1 bb-1 br bg-white text-center"
                                 *ngIf="!loaderFn.loading && allocatedList.length == 0">
-                                <span class="pl-10 d-flex align-items-center" *ngIf="!assetError">No asset allocated</span>
+                                <span class="pl-10 d-flex align-items-center" *ngIf="!assetError">No asset
+                                    allocated</span>
                                 <span *ngIf="assetError">Unable to load asset data</span>
                             </div>
                         </div>
@@ -302,7 +337,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="goalFvAllocated">
-                                <th mat-header-cell *matHeaderCellDef class="br"> 
+                                <th mat-header-cell *matHeaderCellDef class="br">
                                     FV of assets allocated
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br">
