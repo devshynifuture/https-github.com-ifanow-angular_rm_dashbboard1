@@ -16,13 +16,14 @@
                     <mat-error *ngIf="emailForm.get('emailAddress').errors?.notUnique">Email must be unique
                     </mat-error>
                     <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
-                    
-                    <mat-checkbox class="f-12 f-400 text-primitive" (change)="changePrimaryEmail(i)" *ngIf="getEmailAddressFormList.length>1"
+
+                    <mat-checkbox class="f-12 f-400 text-primitive" (change)="changePrimaryEmail(i)"
+                        *ngIf="getEmailAddressFormList.length>1 && emailForm.get('emailAddress').valid && emailForm.get('emailAddress').value!=''"
                         formControlName="markAsPrimary">Marked as primary
                     </mat-checkbox>
                 </mat-form-field>
             </div>
-          
+
         </div>
         <div class="col-md-1 d-flex align-items-center justify-content-center">
             <i *ngIf="i+1==getEmailAddressFormList.length && i<2" (click)="addEmail(null)"
@@ -33,7 +34,7 @@
                 (click)="emailForm.get('id').value==undefined?removeEmail(i):deleteEmail(i,emailForm)"
                 class="material-icons c-p f-20">
                 remove </i>
-           
+
         </div>
         <div class="col-md-1 d-flex align-items-center justify-content-center">
             <mat-spinner *ngIf="emailForm.get('isLoading').value==true" [diameter]="30"></mat-spinner>

@@ -108,10 +108,10 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    // if (data.isPrimary == true) {
-    //   this.eventService.openSnackBar("You cannot delete primary client profile", "Dismiss")
-    //   return;
-    // }
+    if (data.isPrimary == true) {
+      this.eventService.openSnackBar("You cannot delete primary client profile", "Dismiss")
+      return;
+    }
     const dialogData = {
       data: value,
       header: 'DELETE',
