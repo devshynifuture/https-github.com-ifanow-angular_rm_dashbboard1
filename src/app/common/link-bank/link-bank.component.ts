@@ -55,7 +55,9 @@ export class LinkBankComponent implements OnInit {
   clientName: any;
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   ownerData: any;
+  ownerList: any;
   nomineesListFM: any = [];
+  
   constructor(private cusService: CustomerService, private eventService: EventService,
     public dialogRef: MatDialogRef<LinkBankComponent>,
     private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
@@ -63,6 +65,7 @@ export class LinkBankComponent implements OnInit {
     private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.bankList = data.bankList;
     this.userInfo = data.userInfo;
+    this.ownerList = data.ownerList.value;
     console.log(this.bankList, this.userInfo, 'this.bankList 123');
   }
 
@@ -125,9 +128,16 @@ export class LinkBankComponent implements OnInit {
       })]),
     });
 
-    if (data.holderNameList) {
+    // if (data.holderNameList) {
+    //   this.getNominee.removeAt(0);
+    //   data.holderNameList.forEach(element => {
+    //     this.addNewNominee(element);
+    //   });
+    // }
+
+    if (this.ownerList) {
       this.getNominee.removeAt(0);
-      data.holderNameList.forEach(element => {
+      this.ownerList.forEach(element => {
         this.addNewNominee(element);
       });
     }
@@ -286,9 +296,13 @@ export class LinkBankComponent implements OnInit {
         bankId: null,
         addressId: null
       };
-      if (this.userInfo) {
-        obj.userId = this.enumDataService.userData[0].id == 0 ? this.enumDataService.userData[0].clientId : this.enumDataService.userData[0].id;
-        obj.userType = this.enumDataService.userData[0].userType;
+      if (this.ownerList) {
+        this.ownerList.forEach(o => {
+          if(o.name != ''){
+            obj.userId = o.familyMemberId;
+            obj.userType = o.isClient == 1 ? 2 : 3;
+          }
+        });
       }
 
       this.peopleService.addEditClientBankDetails(obj).subscribe(

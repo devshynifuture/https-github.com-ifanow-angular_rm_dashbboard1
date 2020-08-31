@@ -270,9 +270,9 @@ export class SingleGoalYearComponent implements OnInit {
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value) {
 
-    if (this.goalTypeData.validations.showAge) {
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
+    if (this.goalTypeData.validations.showAge && value) {
+      this.minAgeYear = ((this.goalTypeData.validations.minAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
+      this.maxAgeYear = ((this.goalTypeData.validations.maxAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
@@ -298,7 +298,7 @@ export class SingleGoalYearComponent implements OnInit {
     // if goal is retirement
     if (this.goalTypeData.id === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
-      this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, []));
+      this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70,[Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());

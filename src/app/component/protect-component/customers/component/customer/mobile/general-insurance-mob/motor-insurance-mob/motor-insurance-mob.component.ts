@@ -501,7 +501,7 @@ export class MotorInsuranceMobComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true} 
+      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
     });
 
     dialogRef.afterClosed().subscribe(result => {

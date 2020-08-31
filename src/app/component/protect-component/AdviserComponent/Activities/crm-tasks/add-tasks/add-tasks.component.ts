@@ -673,7 +673,7 @@ export class AddTasksComponent implements OnInit {
         this.prefillValue = res;
         if(res.hasOwnProperty('subTaskList')){
           const { subTaskList } = res;
-          if(res.subTaskList.length !==0){
+          if(res.subTaskList && res.subTaskList.length !==0){
             subTaskList.forEach(element => {
               this.subTaskList.push(element);
             });

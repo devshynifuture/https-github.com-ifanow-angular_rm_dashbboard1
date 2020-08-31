@@ -133,7 +133,8 @@ getAll:boolean;
         self.custumService.getBankList(obj).subscribe(
           (data) => {
             self.bankList = data;
-            resolve(data);
+            // self.getJointAccounts(obj)
+            resolve(self.bankList);
             self.enumService.addBank(self.bankList);
           },
           (err) => {
@@ -144,6 +145,20 @@ getAll:boolean;
     });
   }
 
+  // getJointAccounts(obj){
+  //   this.custumService.getJointBankList(obj).subscribe(
+  //     (data) => {
+  //       data.forEach(b => {
+  //         this.bankList.push(b);
+  //       });
+        // resolve(data);
+        // self.enumService.addBank(self.bankList);
+  //     },
+  //     (err) => {
+  //       // reject('failed');
+  //     }
+  //   );
+  // }
   getclientFamilybankList() {
     const self = this;
     this.clientData = AuthService.getClientData();

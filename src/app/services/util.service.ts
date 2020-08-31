@@ -237,7 +237,7 @@ export class UtilService {
       strNumber =
         this.mutualFundRoundAndFormat(numberValue / 100000.0, 2) + ' Lacs';
     } else if (numberValue > 1000) {
-      strNumber = this.mutualFundRoundAndFormat(numberValue / 1000.0, 2) + ' K';
+      strNumber = this.mutualFundRoundAndFormat(numberValue / 1000.0, 2) + 'K';
     } else {
       strNumber = numberValue.toString();
     }
@@ -572,7 +572,7 @@ export class UtilService {
       htmlInput: inputData,
       header: header,
       name: pdfName,
-      showMfFooter:true,
+      showMfFooter: true,
       landscape,
       key,
       svg,
@@ -611,7 +611,7 @@ export class UtilService {
       header: data.header,
       fromEmail: data.fromEmail,
       landscape: data.landscape,
-      showMfFooter:true,
+      showMfFooter: true,
       toEmail: data.toEmail,
       clientId: data.clientId,
       advisorId: data.advisorId,
