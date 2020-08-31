@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import {ColorString} from 'highcharts';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../customer.service';
 import {DatePipe} from '@angular/common';
@@ -11,6 +10,7 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {UtilService} from 'src/app/services/util.service';
 import {Chart} from 'angular-highcharts';
 import {AppConstants} from 'src/app/services/app-constants';
+import {ColorString} from "highcharts";
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -47,10 +47,12 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     }
   };
   assetAllocationPieConfig: Chart;
+  portfolioGraph: Chart;
+
   chartTotal = 100;
   chartData: any[];
   portFolioData: any[] = [];
-  hasError: boolean = false;
+  hasError = false;
   clientData = AuthService.getClientData();
   outflowFlag;
   mutualFundValue: any = {
@@ -121,7 +123,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.initializePieChart();
+    this.initializePortfolioChart();
     this.calculateTotalSummaryValues();
+    this.getAumGraphData();
     this.getAssetAllocationSummary();
     this.subscribeToCashflowChanges();
     this.cashFlowDescNaming = this.enumService.getAssetNamings();
@@ -134,7 +138,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   initializePieChart() {
-    let chartConfig: any = {
+    const chartConfig: any = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -176,8 +180,79 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         innerSize: '60%',
         data: this.chartData
       }]
-    }
+    };
     this.assetAllocationPieConfig = new Chart(chartConfig);
+  }
+
+  initializePortfolioChart() {
+    const chartConfig: any = {
+      chart: {
+        zoomType: 'x'
+      },
+      xAxis: {
+        type: 'datetime',
+        showEmpty: true
+      },
+      yAxis: {
+        title: {
+          text: ''
+        }
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+          '' : ''
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1
+            }, stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
+            ]
+          },
+          /*fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1
+            },
+            stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              // [1,  Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+              [1, Highcharts.getOptions().colors[0]],
+            ]
+          },*/
+          marker: {
+            radius: 2
+          },
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          threshold: null
+        }
+      },
+
+      series: [{
+        type: 'area',
+        data: this.graphList
+      }]
+    };
+    this.portfolioGraph = new Chart(chartConfig);
   }
 
   calculateTotalSummaryValues() {
@@ -243,7 +318,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.totalAssetsWithoutLiability = 0;
       }
     );
-    this.getSummaryList(obj);
+    // this.getSummaryList(obj);
     this.getCashFlowList(obj);
   }
 
@@ -272,17 +347,17 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
           let chartData = [];
           let counter = 0;
-          let othersData = {
+          const othersData = {
             y: 0,
             name: 'Others',
             color: AppConstants.DONUT_CHART_COLORS[4],
             dataLabels: {
               enabled: false
             }
-          }
+          };
           let chartTotal = 1;
           let hasNoDataCounter = res.length;
-          let pieChartData = res;
+          const pieChartData = res;
           // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
           pieChartData.forEach(element => {
             if (element.currentValue > 0) {
@@ -295,7 +370,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
                   dataLabels: {
                     enabled: false
                   }
-                })
+                });
               } else {
                 othersData.y += element.currentValue;
               }
@@ -310,13 +385,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
             chartData = this.sorting(chartData, 'name');
             chartData.forEach((element, ind) => {
               if (element.name == 'Others') {
-                index = ind
+                index = ind;
               }
             });
             if (index) {
               obj = chartData.splice(index, 1);
-              let outputObj = obj[0]
-              chartData.push(outputObj)
+              const outputObj = obj[0];
+              chartData.push(outputObj);
             }
           }
           chartTotal -= 1;
@@ -340,7 +415,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.hasError = true;
         this.assetAllocationRes = false;
         this.tabsLoaded.portfolioData.isLoading = false;
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
@@ -353,26 +428,32 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     }
 
 
-    return data
+    return data;
   }
 
-  getSummaryList(obj) {
+  getAumGraphData() {
     this.summaryFlag = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      targetDate: this.asOnDate
+    };
     this.cusService.getAumGraphData(obj).subscribe(
       data => {
-        console.log('getSummaryList getAumGraphData data', data);
+        console.log('getAumGraphData data', data);
         this.summaryFlag = false;
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
-        sortedDateList.sort(function (a, b) {
+        sortedDateList.sort((a, b) => {
           return a.targetDate - b.targetDate;
         });
         this.calculate1DayAnd90Days(sortedDateList);
         for (const singleData of sortedDateList) {
           this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
         }
-        this.lineChart('container');
+        this.setPortfolioGraphData(this.graphList);
+        // this.lineChart('container-hc-figure');
       },
       err => {
         this.finalTotal = 0;
@@ -387,7 +468,15 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       name: 'Asset allocation',
       animation: false,
       innerSize: '60%',
-      data: data,
+      data,
+    }, true, true);
+  }
+
+  setPortfolioGraphData(data) {
+    this.portfolioGraph.removeSeries(0);
+    this.portfolioGraph.addSeries({
+      type: 'area',
+      data: this.graphList
     }, true, true);
   }
 
@@ -558,6 +647,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   dateChange(event) {
     this.asOnDate = new Date(event.value).getTime();
+    this.getAumGraphData();
     this.calculateTotalSummaryValues();
     this.getAssetAllocationSummary();
   }
@@ -620,73 +710,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   lineChart(id) {
-    const chart1 = new Highcharts.Chart('container', {
-      chart: {
-        zoomType: 'x'
-      },
-      xAxis: {
-        type: 'datetime',
-        showEmpty: true
-      },
-      yAxis: {
-        title: {
-          text: ''
-        }
-      },
-      title: {
-        text: ''
-      },
-      subtitle: {
-        text: document.ontouchstart === undefined ?
-          '' : ''
-      },
-      legend: {
-        enabled: false
-      },
-      plotOptions: {
-        area: {
-          fillColor: {
-            linearGradient: {
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1
-            }, stops: [
-              [0, Highcharts.getOptions().colors[0]],
-              [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
-            ]
-          },
-          /*fillColor: {
-            linearGradient: {
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1
-            },
-            stops: [
-              [0, Highcharts.getOptions().colors[0]],
-              // [1,  Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              [1, Highcharts.getOptions().colors[0]],
-            ]
-          },*/
-          marker: {
-            radius: 2
-          },
-          lineWidth: 1,
-          states: {
-            hover: {
-              lineWidth: 1
-            }
-          },
-          threshold: null
-        }
-      },
-
-      series: [{
-        type: 'area',
-        data: this.graphList
-      }]
-    });
+    // const chart1 = new Highcharts.Chart(id, );
   }
 
   pieChart(id, data) {
