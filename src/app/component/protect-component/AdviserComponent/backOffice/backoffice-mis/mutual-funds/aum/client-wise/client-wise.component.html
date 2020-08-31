@@ -283,9 +283,9 @@
                                           </span>
                                                                                 </th>
 
-                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')" class="c-p w-20">
+                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')" class="c-p f-500 w-20">
                                                                                     <span class="d-flex justify-content-end align-items-center">
-                                            Balance Unit
+                                            Current Value
                                             <i *ngIf="propertyName4=='totalAum' && !reverse4"
                                               class="material-icons ml-4 f-14 text-primitive">
                                               arrow_upward </i>
@@ -294,8 +294,8 @@
                                           </span>
                                                                                 </th>
 
-                                                                                <th class="w-15 f-500 text-right">% Weight</th>
-                                                                                <th></th>
+                                                                                <th class="w-15 f-500 text-right"> Balance Unit </th>
+                                                                                <th class="f-500 text-right">% Weight</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody *ngFor="let folio of scheme.folioList;index as i">
