@@ -726,6 +726,15 @@ export class ExpensesComponent implements OnInit {
     }
     if (data) {
       data.forEach(singleExpense => {
+        singleExpense.progressPercentOther = 0;
+        singleExpense.progressPercentOther += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercentOther = Math.round(singleExpense.progressPercentOther);
+        if (singleExpense.progressPercentOther > 100) {
+          singleExpense.spentPerOther = 100;
+          singleExpense.budgetPerOther = singleExpense.progressPercentOther - 100;
+        } else {
+          singleExpense.spentPerOther = singleExpense.progressPercentOther;
+        }
         const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
         if (singleExpenseCategory) {
           singleExpense.expenseType = singleExpenseCategory.expenseType;
