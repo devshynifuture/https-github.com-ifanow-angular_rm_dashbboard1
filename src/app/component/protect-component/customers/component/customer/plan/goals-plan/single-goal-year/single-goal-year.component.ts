@@ -272,14 +272,16 @@ export class SingleGoalYearComponent implements OnInit {
 
     if (this.goalTypeData.validations.showAge && value) {
       this.minAgeYear = ((this.goalTypeData.validations.minAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
-      this.maxAgeYear = ((this.goalTypeData.validations.maxAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
+      this.maxAgeYear = 100;
+     // ((this.goalTypeData.validations.maxAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
     if (value) {
       if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
-        this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
+        this.minAgeYear = 100;
+        //value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
       }
     }
 
