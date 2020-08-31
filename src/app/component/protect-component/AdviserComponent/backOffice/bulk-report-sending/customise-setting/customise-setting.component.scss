@@ -1,0 +1,13 @@
+.tableScrollBox {
+    height: auto;
+    overflow: auto !important;
+    max-height: 400px;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+
+    .tableScrollBox {
+        max-height: initial;
+    }
+ }

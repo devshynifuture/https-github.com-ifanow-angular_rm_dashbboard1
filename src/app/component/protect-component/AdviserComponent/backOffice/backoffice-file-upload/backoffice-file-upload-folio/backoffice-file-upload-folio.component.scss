@@ -3,3 +3,22 @@
     width: 270px;
     word-break: break-all;
 }
+
+
+
+.tableScroll {
+    height: auto;
+    overflow: auto !important;
+     
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) { 
+    .wordBreak {
+        margin: 0px;
+        width: 160px; 
+        display: inline-block;
+        word-break: break-all;
+    }
+
+}

@@ -11,7 +11,7 @@
                         formControlName="emailAddress" placeholder="Enter email">
                     </app-email-domain-auto-suggest>
                     <mat-error *ngIf="emailForm.get('emailAddress').errors?.pattern">Email is not valid</mat-error>
-                    <mat-error *ngIf="emailForm.get('emailAddress').errors?.required">This field is required
+                        <mat-error *ngIf="emailForm.get('emailAddress').errors?.required">This field is required
                     </mat-error>
                     <mat-error *ngIf="emailForm.get('emailAddress').errors?.notUnique">Email must be unique
                     </mat-error>
