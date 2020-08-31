@@ -281,7 +281,8 @@
 
 #email-left-sidebar {
   // width: 13.8%;
-  position: fixed;
+  position: sticky;
+  top: 63px;
 
 
 
@@ -301,5 +302,33 @@
 #email-froala {
   .fr-box.fr-basic .fr-wrapper {
     margin-bottom: 0px !important;
+  }
+}
+
+@media(max-width:1250px) {
+  .crm-task {
+    #tbs {
+      .mat-table-sticky:first-child {
+        border-right: 0px !important;
+      }
+
+      .mat-table-sticky:last-child {
+        border-left: 0px !important;
+      }
+    }
+  }
+
+  .crm-task-scroll {
+    height: auto;
+  }
+}
+
+@media(max-width:992px) {
+  .crm-task {
+
+    #tbs th,
+    tbody td {
+      white-space: nowrap;
+    }
   }
 }
