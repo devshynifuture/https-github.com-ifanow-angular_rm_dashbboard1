@@ -8,6 +8,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { iif } from 'rxjs';
 import { ConstantsService } from 'src/app/constants/constants.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { MatDialog } from '@angular/material';
+import { EditPercentComponent } from '../edit-percent/edit-percent.component';
 
 @Component({
   selector: 'app-add-planinsurance',
@@ -16,7 +18,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 })
 export class AddPlaninsuranceComponent implements OnInit {
   _inputData: any;
-  displayedColumns: string[] = ['position', 'details', 'outstanding'];
+  displayedColumns: string[] = ['details', 'outstanding', 'consider', 'edit'];
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['details', 'amount', 'consider', 'edit'];
   dataSource1 = ELEMENT_DATA1;
@@ -28,8 +30,9 @@ export class AddPlaninsuranceComponent implements OnInit {
   isLoading: boolean;
   counter: any;
   manualForm: any;
-  selectedExpectancy='';
-  selectedFamily='';
+  selectedExpectancy = '';
+  selectedFamily = '';
+  livingExpense: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'ADD TO PLAN',
@@ -74,9 +77,14 @@ export class AddPlaninsuranceComponent implements OnInit {
   id: any;
   insuranceData: any;
   familyList: any;
-  constructor(private subInjectService: SubscriptionInject,
+  needAnalysis: any;
+  plannerObj = {
+    existingAsset: 0, liabilities: 0, lifeInsurancePremiums: 0, livingExpense: 0, dependantNeeds: 0, goalsMeet: 0, GrossLifeinsurance: 0, incomeSource: 0,
+    existingLifeInsurance: 0, additionalLifeIns: 0
+  }
+  constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
-    private planService: PlanService,private constantService: ConstantsService,private peopleService:PeopleService) {
+    private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -95,7 +103,22 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
 
   panelOpenState;
-
+  formatNumber(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
+    return data;
+  }
   getdataForm(data) {
     this.manualForm = this.fb.group({
       plannerNote: [(!data) ? '' : (data.plannerNotes) + '', [Validators.required]],
@@ -109,23 +132,31 @@ export class AddPlaninsuranceComponent implements OnInit {
     };
     this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => {
-       this.familyList =data;
+        this.familyList = data;
       }
     );
   }
   getFormControl(): any {
     return this.manualForm.controls;
   }
-  getNeedBasedAnalysis(){
+  getNeedBasedAnalysis() {
     let obj = {
       id: this.insuranceData.id,
       clientId: this.clientId,
       familyMemberId: this.insuranceData.familyMemberId,
-      lifeExpectancy:0
+      lifeExpectancy: 0
     }
     this.loader(1);
     this.planService.getNeedBasedAnalysis(obj).subscribe(
       data => {
+        this.needAnalysis = data;
+        this.dataSource = this.getDataForTable(this.needAnalysis.liabilities, 'total_loan_outstanding');
+        this.dataSource2 = this.getDataForTable(this.needAnalysis.assets, 'currentValue');
+        if (this.needAnalysis.livingExpenses) {
+          this.plannerObj.livingExpense = this.needAnalysis.livingExpenses.livingExpense
+        }
+        this.plannerObj.lifeInsurancePremiums = this.needAnalysis.lifeInsurancePremiums
+        this.plannerObj.GrossLifeinsurance = this.plannerObj.liabilities + this.plannerObj.dependantNeeds + this.plannerObj.goalsMeet
         console.log(data);
       },
       err => {
@@ -133,6 +164,53 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.loader(-1);
       }
     );
+  }
+  getDataForTable(array, value) {
+    if (array && array.length > 0) {
+      array.forEach(element => {
+        element.currentValueDupl = element[value];
+        element.selected = false;
+        element.percent = 100;
+      });
+    } else {
+      array = [];
+    }
+
+    return array;
+  }
+  changeValue(data, value, array, storeObjName) {
+    data.selected = !value;
+    this.plannerObj[storeObjName] = 0;
+    array.forEach(element => {
+      if (element.selected) {
+        this.plannerObj[storeObjName] += element.currentValueDupl
+      }
+    });
+  }
+  changePercentage(data, array, storeObjName, cv) {
+    const dialogData = {
+      percent: data.percent
+    }
+    const dialogRef = this.dialog.open(EditPercentComponent, {
+      width: '300px',
+      data: dialogData,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.plannerObj[storeObjName] = 0;
+          data.currentValueDupl = (data[cv] * result) / 100;
+          array.forEach(element => {
+            if (element.selected) {
+              this.plannerObj[storeObjName] += element.currentValueDupl
+            }
+          });
+          data.percent = result;
+
+        }
+      });
   }
   getAnalysis() {
 

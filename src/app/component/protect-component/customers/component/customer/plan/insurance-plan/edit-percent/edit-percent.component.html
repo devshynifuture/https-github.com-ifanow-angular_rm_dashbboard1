@@ -1,0 +1,22 @@
+<div class="row p-20">
+  <div class="col-md-12 p-0">
+    <h4>
+      Change percentage
+    </h4>
+  </div>
+  <div class="col-md-12 p-0">
+    <div [formGroup]="percentageForm">
+      <div class="">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input #percent (keyup)="onChange(percentageForm,'percent',$event)" [maxLength]="3" appInputValueValidation autocomplete="off" class="form-control rupess br-0" formControlName="percent" matInput type="number">
+        </mat-form-field>
+        </div>
+      </div>
+      <span class="d-flex justify-content-end mt-10">
+        <button mat-button (click)="dialogClose(false)" class="   lh-18 text-primary mr-4">Save</button>
+        <button mat-button (click)="dialogClose(true)" class="    lh-18">Cancel</button>
+      </span>
+    </div>
+  </div>
+</div>
