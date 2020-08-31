@@ -41,11 +41,11 @@ export class EmailListingComponent implements OnInit {
   advisorEmail;
   isCustomerEmail: boolean;
   unreadCount: any;
-  prevImpCount: any;
-  prevSentCount: any;
-  prevDraftCount: any;
-  prevTrashCount: any;
-  prevStarredCount: any;
+  prevImpCount: any = 0;
+  prevSentCount: any = 0;
+  prevDraftCount: any = 0;
+  prevTrashCount: any = 0;
+  prevStarredCount: any = 0;
 
   constructor(
     private emailService: EmailServiceService,
@@ -64,7 +64,7 @@ export class EmailListingComponent implements OnInit {
   gmailThreads: [];
   nextPageToken = null;
   messageDetailArray: GmailInboxResponseI[];
-  messageListArray;
+  messageListArray = [];
   dataSource = null;
   selectedThreadsArray: ExtractedGmailDataI[] = [];
   listSubscription = null;

@@ -88,6 +88,8 @@ export class AmcWiseComponent implements OnInit {
   viewMode;
   arnRiaValue;
   arnRiaList = [];
+  selectedAmcName: any;
+  selectedSchemeName: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService) {
   }
@@ -232,7 +234,8 @@ export class AmcWiseComponent implements OnInit {
       });
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'MIS Report - AMC wise AUM', this.applicantWiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'MIS Report - AMC wise AUM', this.applicantWiseTotal,
+    [["Selected Amc Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]);
   }
 
   schemeWiseExcelReport(index) {
@@ -255,7 +258,9 @@ export class AmcWiseComponent implements OnInit {
       amcList: true,
       schemeList: false,
       applicantList: false
-    }, this.schemeWiseTotal);
+    }, this.schemeWiseTotal,
+    [["Selected Amc Name", this.selectedAmcName]]
+    );
   }
 
   amcWiseExcelReport() {
@@ -371,6 +376,7 @@ export class AmcWiseComponent implements OnInit {
 
   showScheme(amcData, amcIndex) {
     this.selectedAmc = amcIndex;
+    this.selectedAmcName = amcData.name;
     amcData.showAmc = !amcData.showAmc;
     amcData.schemes.forEach(o => {
       o.showScheme = true;
@@ -389,9 +395,12 @@ export class AmcWiseComponent implements OnInit {
     }
   }
 
-  showApplicant(schemeData, index, amcIndex) {
+  showApplicant(schemeData, index, amcIndex, amcName) {
     this.schemeIndex = index;
     this.selectedAmc = amcIndex;
+    this.selectedSchemeName = schemeData.schemeName;
+    this.selectedAmcName = amcName;
+
     schemeData.showScheme = !schemeData.showScheme;
     if (schemeData.showScheme == false) {
       this.isLoadingApplicant = true;

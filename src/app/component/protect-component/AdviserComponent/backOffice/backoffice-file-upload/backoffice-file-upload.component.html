@@ -1,16 +1,16 @@
 <div class="wrapper" id="ui-wrap">
 
     <div class="row main-header pt-60">
-        <div class="col-md-3  p-0 br">
+        <div class="col-md-4 col-lg-3 p-0 br">
             <h3 class="m-0 p-20">MF Feed Upload</h3>
         </div>
-        <div class="col-md-9  p-0">
+        <div class="col-md-8 col-lg-9 p-0">
             <h3 class="m-0 p-20">Upload History</h3>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-2  p-0 br upload-box">
+        <div class="col-md-3 col-lg-2 p-0 br upload-box">
 
             <div class="row ">
                 <div class="col-md-12 pr-0">
@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 pr-0 pt-10">
-                    <h5 class="mb-4  f-14">Please Select ARN/RIA</h5>
+                    <h5 class="mb-4 f-14">Please Select ARN/RIA</h5>
                 </div>
                 <div class="col-md-12 form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
@@ -91,9 +91,9 @@
             </div>
 
         </div>
-        <div class="col-md-10 p-0 history-box">
+        <div class="col-md-9 col-lg-10 p-0 history-box">
             <div class="row pt-24">
-                <div class="col-md-6">
+                <div class="col-md-12 col-lg-6 mb-10">
                     <div class="row">
                         <div class="col-md-6 p-0 pr-8 left">
                             <mat-form-field *ngIf="filterList">
@@ -123,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 right classToggleBtn">
+                <div class="col-md-12 col-lg-6 right classToggleBtn">
                     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
                         <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction" [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
                             Transactions</mat-button-toggle>

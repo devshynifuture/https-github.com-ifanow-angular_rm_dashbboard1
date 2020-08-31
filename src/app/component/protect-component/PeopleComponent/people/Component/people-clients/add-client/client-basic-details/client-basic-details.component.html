@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="row pt-40 pb-10">
+            <!-- <div class="row pt-40 pb-10">
                 <div class="col-md-4  d-flex align-items-center justify-content-end">
                     <h5 class="m-0  ">Email</h5>
                 </div>
@@ -114,7 +114,10 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <app-multiple-email-address (emailFireEvent)="getEmailDetails($event)"
+                [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+            </app-multiple-email-address>
             <!-- [userData]="basicDetailsData" -->
             <app-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
                 [isResidential]="invTaxStatus" [numberList]=" basicDetailsData.mobileList">
@@ -758,15 +761,13 @@
             </div>
         </div>
 
-        <div *ngIf="invTypeCategory=='4'" class="row pt-28">
+        <!-- <div *ngIf="invTypeCategory=='4'" class="row pt-28">
             <div class="col-md-4 text-right full-end">
                 <h5 class="m-0"> Email</h5>
             </div>
             <div class="col-md-5 p-0">
                 <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <!-- <input matInput placeholder="Enter company email" formControlName="comEmail"
-                  class="form-control"> -->
                         <app-email-domain-auto-suggest [disabled]="!!this.basicDetailsData.userId"
                             formControlName="comEmail" placeholder="Enter email">
                         </app-email-domain-auto-suggest>
@@ -777,7 +778,11 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <app-multiple-email-address *ngIf="invTypeCategory=='4'" (emailFireEvent)="getEmailDetails($event)"
+            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='4'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
             [isResidential]="invTaxStatus" [numberList]="basicDetailsData.mobileList"></app-add-number>
@@ -872,15 +877,13 @@
             </div>
         </div>
 
-        <div *ngIf="invTypeCategory=='3'" class="row pt-28">
+        <!-- <div *ngIf="invTypeCategory=='3'" class="row pt-28">
             <div class="col-md-4 text-right full-end">
                 <h5 class="m-0">Company email</h5>
             </div>
             <div class="col-md-5 p-0">
                 <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <!-- <input matInput placeholder="Enter company email" formControlName="comEmail"
-                  class="form-control"> -->
                         <app-email-domain-auto-suggest [disabled]="!!this.basicDetailsData.userId"
                             formControlName="comEmail" placeholder="Enter email">
                         </app-email-domain-auto-suggest>
@@ -891,7 +894,11 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <app-multiple-email-address *ngIf="invTypeCategory=='3'" (emailFireEvent)="getEmailDetails($event)"
+            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='3'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
             [isResidential]="invTaxStatus" [numberList]="basicDetailsData.mobileList"></app-add-number>
