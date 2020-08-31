@@ -159,36 +159,112 @@ export class AddExpensesComponent implements OnInit {
   getListOfFamilyByClientRes(data) {
     this.familyMember = data;
   }
-
-  selectClient(event, selected) {
+  selectCategory(value){
+    let isCheck;
     if(this.isRecuring ==true && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
-        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
+        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
+           isCheck =true;
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
+        }
+      });
+    }else if(this.isRecuring == false && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& this.familyMemberId == element.familyMemberId){
+          isCheck =true;
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
+        }
+      });
+    }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
+          isCheck =true;
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
+        }
+      });
+    }else if(this.isRecuring == false && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& this.familyMemberId == element.familyMemberId){
+          isCheck =true;
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
+        }
+      });
+    }else{
+      this.expenses.get('ownerName').setErrors(null);
+    }
+  }
+  selectClient(event, selected) {
+    let isCheck;
+    if(this.isRecuring ==true && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
+          isCheck =true;
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
         }
       });
     }else if(this.isRecuring == false && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
         if(element.expenseCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
+          isCheck =true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
         }
       });
     }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
         if(element.expenseCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
+          isCheck =true;
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
         }
       });
-    }else{
+    }else if(this.isRecuring == false && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
         if(element.expenseCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
+          isCheck =true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }else{
+          if(!isCheck){
+            this.expenses.get('ownerName').setErrors(null);
+          }
         }
       });
+    }else{
+      this.expenses.get('ownerName').setErrors(null);
     }
     this.familyMemberId = selected.id
   }

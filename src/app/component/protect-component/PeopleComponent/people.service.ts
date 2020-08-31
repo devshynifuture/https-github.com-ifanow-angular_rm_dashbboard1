@@ -163,4 +163,8 @@ export class PeopleService {
   resetClientPassword(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.RESET_CLIENT_PASSWORD, data);
   }
+
+  deleteEmail(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_EMAIL, data);
+  }
 }
