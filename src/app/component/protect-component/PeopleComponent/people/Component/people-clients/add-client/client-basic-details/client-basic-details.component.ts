@@ -802,7 +802,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         emailList.push({
           email: element.get('emailAddress').value,
           defaultFlag: element.get('markAsPrimary').value,
-          verificationStatus: 0
+          verificationStatus: 0,
+          id: element.get('id').value
         });
       });
       emailList = emailList.sort(function (a, b) { return b.defaultFlag - a.defaultFlag });
