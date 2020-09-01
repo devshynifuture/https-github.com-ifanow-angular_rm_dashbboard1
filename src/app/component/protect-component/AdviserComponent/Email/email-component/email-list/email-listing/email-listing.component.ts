@@ -37,7 +37,7 @@ export class EmailListingComponent implements OnInit {
   draftCount: any = 0;
   trashCount: any = 0;
   showOptions: boolean = false;
-  starredCount: any;
+  starredCount: any = 0;
   advisorEmail;
   isCustomerEmail: boolean;
   unreadCount: any;
@@ -311,6 +311,9 @@ export class EmailListingComponent implements OnInit {
           case 'starred':
             if (this.starredCount === this.prevStarredCount) {
               bringNewThreads = false;
+            }
+            else if (this.starredCount > this.prevStarredCount) {
+              bringNewThreads = true;
             }
             break;
           default: bringNewThreads = false;
