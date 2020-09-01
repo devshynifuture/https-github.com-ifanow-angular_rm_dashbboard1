@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { HttpService } from 'src/app/http-service/http-service';
+const Buffer = require('buffer/').Buffer;
 
 @Component({
   selector: 'app-set-new-password',
@@ -29,7 +31,13 @@ export class SetNewPasswordComponent implements OnInit {
     { name: "VERIFY MOBILE", flag: true },
     { name: "SET PASSWORD", flag: false }
   ]
-  constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) {
+  constructor(private authService: AuthService,
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private eventService: EventService,
+    private httpService: HttpService,
+    private route: ActivatedRoute) {
   }
 
   setNewPasswordForm;
@@ -51,12 +59,35 @@ export class SetNewPasswordComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.userData = window.history.state.userData;
+    this.userData = { buttonFlag: false };
+    if (window.history.state.userData) {
+      this.userData = window.history.state.userData
+    } else {
+      this.route.queryParams.subscribe((params) => {
+        if (params.userName) {
+          const datavalue = (Buffer.from(params.userName, 'base64').toString('utf-8'));
+          this.getClientDetails(datavalue)
+        }
+      });
+      // this.getClientDetails(this.httpService.changeBase64ToString(window.history.state.userName));
+    }
     (this.userData.buttonFlag) ? this.barButtonOptions.text = 'Reset Password' : this.barButtonOptions.text = 'Set Password';
     this.setNewPasswordForm = this.fb.group({
       newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
     });
+  }
+
+  getClientDetails(data) {
+
+    this.loginService.getCLientDetails(data).subscribe(
+      res => {
+        if (res) {
+          this.userData = res;
+          this.eventService.openSnackBar(`Your username is ${data}`, "Dismiss")
+        }
+      }
+    )
   }
 
   setNewPassword() {

@@ -793,6 +793,7 @@ export const appConfig = {
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   DELETE_EMAIL: 'user/using-user-and-email-data/email/delete',
+  GET_CLIENT_INFO_BASED_ON_USERNAME: 'user/client/detail-using-username/get',
   // GET_BANK_LIST: 'user/bank/list/get',
   GET_BANK_LIST: 'user/multiple-user/bank/list/get',
   GET_BANK_SINGLE_JOIN: 'user/bank/list/based-on-holder/get',
