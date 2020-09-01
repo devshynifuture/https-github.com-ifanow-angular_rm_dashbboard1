@@ -123,6 +123,7 @@ export class LifeInsuranceComponent implements OnInit {
         this.planService.deleteInsurancePlanning(this.inputData.id).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
           this.outputChange.emit(true);
+          this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
@@ -196,8 +197,12 @@ export class LifeInsuranceComponent implements OnInit {
   }
   getDetailsInsuranceRes(data){
     console.log('getDetailsInsuranceRes res',data)
-    this.insuranceDetails = data
-    this.dataSource1 = ELEMENT_DATA1;
+    if(data){
+      this.insuranceDetails = data
+      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace( /(<([^>]+)>)/ig, '') : '-'; 
+      this.dataSource1 = ELEMENT_DATA1;
+    }
+
 
   }
   loader(increamenter) {
@@ -224,6 +229,9 @@ export class LifeInsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if(sideBarData.data){
+            this.getDetailsInsurance()
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
