@@ -329,11 +329,11 @@
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="7" class="innerTd three">
 
+                                                                    <div class="tableScrollSip" *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0"> 
                                                                     <table class="skeletonAnimation mt-16 mb-8"
                                                                         appSkeletonLoading
                                                                         [appSkeletonLoading]="isLoadingApplicant"
-                                                                        id="table-low"
-                                                                        *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0">
+                                                                        id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-12 f-500 c-p"
@@ -534,8 +534,9 @@
                                                                         </tbody>
 
                                                                     </table>
-                                                                    <div
-                                                                        *ngIf="!isLoadingApplicant && inv.showInvestor==false">
+                                                                    </div>
+
+                                                                    <div *ngIf="!isLoadingApplicant && inv.showInvestor==false">
                                                                         <div *ngIf="inv.applicantList?.length == 0 || applicantList.length == 0"
                                                                             class="d-flex flex-column align-items-center">
                                                                             <h4 class="text-center pt-12">No data found

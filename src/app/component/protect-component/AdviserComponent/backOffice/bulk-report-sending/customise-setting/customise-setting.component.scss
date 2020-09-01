@@ -3,6 +3,9 @@
     overflow: auto !important;
     max-height: 400px;
 }
+.z100 {
+    z-index: 105;
+}
 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
