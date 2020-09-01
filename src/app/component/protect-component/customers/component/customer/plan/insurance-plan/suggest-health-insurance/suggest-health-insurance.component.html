@@ -108,7 +108,7 @@
     </div>
     <div class="row pt-32">
         <div class="col-md-12 p-0">
-            <mat-checkbox (click)="showRecommendation = true">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
+            <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
             <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
         </div>
     </div>
