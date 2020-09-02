@@ -795,6 +795,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     let emailList = [];
     let count = 0;
     if (this.emailData.valid) {
+      if (this.emailData.length == 1) {
+        this.emailData.controls[0].get('markAsPrimary').setValue(true);
+      }
       this.emailData.controls.forEach(element => {
         if (element.get('markAsPrimary').value) {
           count++;
