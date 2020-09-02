@@ -96,8 +96,6 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   createKeyParamsForm(remainingData) {
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
-      postequityAllocation: [remainingData.postRetirementEquityAssetAllocation, [Validators.required]],
-      postdebtAllocation: [remainingData.postRetirementDebtAssetAllocation, [Validators.required]],
       savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [(new Date(remainingData.savingEndDate).getFullYear()), [Validators.required]],
@@ -111,12 +109,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
-      stepUp: [(remainingData.stepUp) ? remainingData.stepUp : '', [Validators.required]]
+      stepUp: [(remainingData.stepUp) ? remainingData.stepUp : 0,]
     })
 
     if (!remainingData.goalEndDate && this.data.singleOrMulti == 2) {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
+    }
+    if(this.data.goalType ==1){
+      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
+      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
     }
   }
   setKeyParamFormListeners() {
