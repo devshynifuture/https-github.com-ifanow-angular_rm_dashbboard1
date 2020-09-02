@@ -55,7 +55,7 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
-    this.registerForPushNotification();
+    // this.registerForPushNotification();
   }
 
   registerForPushNotification() {
