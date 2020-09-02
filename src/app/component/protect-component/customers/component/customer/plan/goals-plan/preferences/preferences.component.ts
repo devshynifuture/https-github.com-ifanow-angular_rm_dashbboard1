@@ -96,8 +96,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   createKeyParamsForm(remainingData) {
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
-      postequityAllocation: [remainingData.postRetirementEquityAssetAllocation, [Validators.required]],
-      postdebtAllocation: [remainingData.postRetirementDebtAssetAllocation, [Validators.required]],
+      postequityAllocation: [remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]],
+      postdebtAllocation: [remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]],
       savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [(new Date(remainingData.savingEndDate).getFullYear()), [Validators.required]],
