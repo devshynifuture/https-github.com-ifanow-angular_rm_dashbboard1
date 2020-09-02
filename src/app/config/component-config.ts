@@ -85,6 +85,7 @@ export const appConfig = {
   REFRESH_COUNT: 'mutual-fund/report/bulk-order/refresh',
   GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
+  SAVE_SETTING_ALL: 'mutual-fund/report/all-client/reportwise/customize',
   GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/unmap/folio/scheme-name/list/get',
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',

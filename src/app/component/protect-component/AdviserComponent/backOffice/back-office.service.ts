@@ -360,7 +360,9 @@ export class BackOfficeService {
   saveSetting(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING, data);
   }
-
+  saveSettingAll(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING_ALL, data);
+  }
   getSipCleanUpListData(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SIP_CLEANUP_LIST, data);
   }
