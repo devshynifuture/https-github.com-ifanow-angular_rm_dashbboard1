@@ -14,6 +14,12 @@
   }
 }
 
+// .calender-h-100vh {
+
+//   height: calc(100vh - 107px);
+// }
+
+
 #ui-crm-task {
   .header-crm {
     padding-top: 64px;
@@ -281,7 +287,8 @@
 
 #email-left-sidebar {
   // width: 13.8%;
-  position: fixed;
+  position: sticky;
+  top: 63px;
 
 
 
@@ -301,5 +308,103 @@
 #email-froala {
   .fr-box.fr-basic .fr-wrapper {
     margin-bottom: 0px !important;
+  }
+}
+
+@media(max-width:1250px) {
+  .crm-task {
+    #tbs {
+      .mat-table-sticky:first-child {
+        border-right: 0px !important;
+      }
+
+      .mat-table-sticky:last-child {
+        border-left: 0px !important;
+      }
+    }
+  }
+
+  .crm-task-scroll {
+    height: auto;
+  }
+}
+
+.position-email-view {
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+}
+
+.left-side-emails {
+  height: calc(100vh - 64px);
+}
+
+.img-size-icons {
+  img {
+    max-width: initial;
+  }
+}
+
+@media(max-width:992px) {
+  .crm-task {
+
+    #tbs th,
+    tbody td {
+      white-space: nowrap;
+    }
+  }
+}
+
+// .email-view-scroll {
+//   height: calc(100vh - 400px);
+//   overflow-y: auto;
+// }
+
+@media(max-width:1124px) {
+  .table-deatils-email-list {
+    overflow: auto;
+    width: 1100px;
+  }
+}
+
+@media (max-width: 1142px) {
+  .overflow-y-calender-auto-1142 {
+    overflow: unset !important;
+    overflow-y: auto !important;
+    height: calc(100vh - 132px);
+  }
+}
+
+@media(max-width:992px) {
+  #ui-calendar {
+    .main-header {
+      button {
+        padding: 0 10px !important;
+      }
+
+      .col-md-5 {
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .calender-overflow {
+    // overflow: auto;
+    min-width: 1200px;
+  }
+}
+
+@media(max-width:842px) {
+  .userOne {
+    width: 90% !important;
+  }
+
+  .email-crm {
+    .chatBox {
+      padding-left: 20px;
+    }
   }
 }

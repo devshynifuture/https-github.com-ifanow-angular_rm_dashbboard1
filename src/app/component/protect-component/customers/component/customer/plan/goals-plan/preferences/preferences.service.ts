@@ -73,6 +73,10 @@ export class PreferencesService {
     let gendtDate = goalForm.goalEndDateYear + '-' + goalForm.goalEndDateMonth + '-01';
     let sStartDate = goalForm.savingStartDateYear + '-' + goalForm.savingStartDateMonth + '-01';
     let sEndtDate = goalForm.savingEndDateYear + '-' + goalForm.savingEndDateMonth + '-01';
+    if(goalForm.goalType == 1){
+      let postRetirementDebtAssetAllocation = goalForm.postdebtAllocation
+      let postRetirementEquityAssetAllocation = goalForm.postequityAllocation
+    }
 
     let obj: any = {
       id: remainingData.id,
@@ -88,6 +92,8 @@ export class PreferencesService {
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
       goalEndDate:gendtDate,
+      postRetirementDebtAssetAllocation: parseInt(goalForm.postdebtAllocation),
+      postRetirementEquityAssetAllocation: parseInt(goalForm.postequityAllocation),
       savingType: goalForm.savingStatus,
     }
     switch (oldGoalObj.goalType) {
