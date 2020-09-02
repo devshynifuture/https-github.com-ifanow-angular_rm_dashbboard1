@@ -126,10 +126,14 @@ export class PreferencesService {
 
   getGoalValueForForm(data) {
     if (data.singleOrMulti == 2) {
-      if (data.remainingData.futureValue) {
-        return data.remainingData.futureValue
-      } else {
-        return data.remainingData.goalFV;
+      switch (data.goalType) {
+        case AppConstants.VACATION_GOAL:
+          return data.remainingData.presentValue;
+        case AppConstants.EDUCATION_GOAL:
+          return data.remainingData.presentValue;
+        default:
+          console.error('Invalid goal type found', data.goalType);
+          return 0;
       }
 
     } else {
