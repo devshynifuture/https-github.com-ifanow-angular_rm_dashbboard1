@@ -66,7 +66,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     } else {
       this.years = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
-    if(this.data.goalType == 1){
+    if (this.data.goalType == 1) {
       this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     this.setForms();
@@ -96,20 +96,22 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   createKeyParamsForm(remainingData) {
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
+      postequityAllocation: [remainingData.postRetirementEquityAssetAllocation, [Validators.required]],
+      postdebtAllocation: [remainingData.postRetirementDebtAssetAllocation, [Validators.required]],
       savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [(new Date(remainingData.savingEndDate).getFullYear()), [Validators.required]],
       savingEndDateMonth: [('0' + (new Date(remainingData.savingEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
       goalStartDateYear: [(new Date(this.data.goalStartDate).getFullYear()), [Validators.required]],
       goalStartDateMonth: [('0' + (new Date(this.data.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
-      goalEndDateMonth:[('0' + (new Date(this.data.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
-      goalEndDateYear:[(new Date(this.data.goalEndDate).getFullYear()), [Validators.required]],
+      goalEndDateMonth: [('0' + (new Date(this.data.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
+      goalEndDateYear: [(new Date(this.data.goalEndDate).getFullYear()), [Validators.required]],
       savingStatus: [remainingData.savingStatus, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
-      stepUp: [(remainingData.stepUp)?remainingData.stepUp:'', [Validators.required]]
+      stepUp: [(remainingData.stepUp) ? remainingData.stepUp : '', [Validators.required]]
     })
 
     if (!remainingData.goalEndDate && this.data.singleOrMulti == 2) {
@@ -129,39 +131,45 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         })
       )
     }
-    if(this.data.goalType ==1 || this.data.singleOrMulti == 2) {
+    if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
       this.subscription.add(
         this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
           if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+            if(this.data.goalType == 1 ){
+              this.goalDetailsFG.controls.postequityAllocation.enable();
+              this.goalDetailsFG.controls.postdebtAllocation.enable();
+              this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementEquityAssetAllocation);
+              this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementDebtAssetAllocation);
+            }
           }
         })
       )
     }
   }
   setInflamationReturns() {
-      this.dataSource.forEach(element => {
-        if (element.position == 'Debt asset class') {
-          element.name = (this.data.remainingData.returnsAssumptions.debt_return)+"%"
-        } else if (element.position == 'Equity asset class') {
-          element.name = this.data.remainingData.returnsAssumptions.equity_return+"%"
-        } else if (element.position == 'Debt funds') {
-          element.name = this.data.remainingData.returnsAssumptions.debt_fund_returns+"%"
-        } else if (element.position == 'Equity funds') {
-          element.name = this.data.remainingData.returnsAssumptions.equity_fund_returns+"%"
-        } else if (element.position == 'Balanced funds') {
-          element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns+"%"
-        } else if (element.position == 'Stocks') {
-          element.name = this.data.remainingData.returnsAssumptions.stock_returns+"%"
-        }
-      });
-      this.dataSource1.forEach(element => {
-        if (element.position == 'Inflation rate') {
-          element.name = this.data.remainingData.inflationRateYearly+"%"
-        }
-      });
+    this.dataSource.forEach(element => {
+      if (element.position == 'Debt asset class') {
+        element.name = (this.data.remainingData.returnsAssumptions.debt_return) + "%"
+      } else if (element.position == 'Equity asset class') {
+        element.name = this.data.remainingData.returnsAssumptions.equity_return + "%"
+      } else if (element.position == 'Debt funds') {
+        element.name = this.data.remainingData.returnsAssumptions.debt_fund_returns + "%"
+      } else if (element.position == 'Equity funds') {
+        element.name = this.data.remainingData.returnsAssumptions.equity_fund_returns + "%"
+      } else if (element.position == 'Balanced funds') {
+        element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns + "%"
+      } else if (element.position == 'Stocks') {
+        element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }
+    });
+    this.dataSource1.forEach(element => {
+      if (element.position == 'Inflation rate') {
+        element.name = this.data.remainingData.inflationRateYearly + "%"
+      }
+    });
   }
   validateGoalDates() {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
