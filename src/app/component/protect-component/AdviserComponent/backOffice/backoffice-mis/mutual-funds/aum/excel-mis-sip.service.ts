@@ -100,7 +100,7 @@ export class ExcelMisSipService {
         saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
     }
 
-    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
+    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -128,24 +128,32 @@ export class ExcelMisSipService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
 
-        const head = ws.getRow(5);
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
+        } else {
+            ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+            initialRowCount = 5;
+        }
+
+        const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
-
-
-
         // get a1
-
-
-        let currentRowPos = 5;
+        let currentRowPos = initialRowCount;
         let headCell;
 
         if (choice === 'category-wise-aum-mis') {
             arrayOfExcelData.forEach((catElement, index1) => {
                 if (!excluded.clientList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1007,7 +1015,7 @@ export class ExcelMisSipService {
 
     }
 
-    static async exportExcel3(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
+    static async exportExcel3(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?,arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -1035,18 +1043,31 @@ export class ExcelMisSipService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
+        } else {
+            ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+            initialRowCount = 5;
+        }
 
         const head = ws.getRow(5);
         head.font = { bold: true };
 
-        let currentRowPos = 5;
+        let currentRowPos = initialRowCount;
         let headCell;
 
         if (choice === 'category-wise-aum-mis') {
             arrayOfExcelData.forEach((subCatElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1310,7 +1331,7 @@ export class ExcelMisSipService {
         saveAs(new Blob([buf]), metaData + '-' + new Date().getDate() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() + '.xlsx');
     }
     
-    static async exportExcel4(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
+    static async exportExcel4(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -1338,12 +1359,26 @@ export class ExcelMisSipService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
 
-        const head = ws.getRow(5);
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
+        } else {
+            ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+            initialRowCount = 5;
+        }
+
+        const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
 
-        let currentRowPos = 5;
+        let currentRowPos = initialRowCount;
         let headCell;
 
         if (choice === 'amc-wise-aum-mis') {

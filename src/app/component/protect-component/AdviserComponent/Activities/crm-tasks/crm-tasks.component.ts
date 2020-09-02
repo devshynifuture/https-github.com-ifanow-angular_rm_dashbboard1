@@ -33,10 +33,6 @@ export class CrmTasksComponent implements OnInit {
   customDateFilter: boolean = false;
   customFromToDate: any;
 
-  @HostListener('scroll', ['$event']) windowScroll(event: any){
-    this.onTableScroll(event);
-  }
-
   constructor(
     private subInjectService: SubscriptionInject,
     private crmTaskService: CrmTaskService,
@@ -51,7 +47,6 @@ export class CrmTasksComponent implements OnInit {
 
   initPoint() {
     this.isLoading = true;
-    this.infiniteScrollingFlag = true;
     this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
@@ -112,10 +107,10 @@ export class CrmTasksComponent implements OnInit {
     const data = {
       advisorId: this.advisorId,
       offset,
-      limit: 5
+      limit: 20
     }
     if (this.isFilterSet) {
-      data['dateFilter'] = this.filterValueId
+      data['dateFilter'] = this.filterValueId;
       if (this.customDateFilter) {
         data['fromDate'] = this.customFromToDate.fromDate;
         data['toDate'] = this.customFromToDate.toDate;
@@ -219,6 +214,7 @@ export class CrmTasksComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.finalTaskList = [];
             this.initPoint();
           }
           rightSideDataSub.unsubscribe();

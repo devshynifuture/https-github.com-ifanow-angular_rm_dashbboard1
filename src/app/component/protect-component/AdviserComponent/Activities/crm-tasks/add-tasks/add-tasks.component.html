@@ -68,8 +68,8 @@
         </div>
 
         <div class="row pt-16">
-            <div class="w-18 text-right">
-                <h5 class="m-0 pt-12 ws-nowrap">Task Description</h5>
+            <div class="w-18 pl-16">
+                <h5 class="m-0 pt-12 ws-nowrap text-left">Task Description</h5>
             </div>
             <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group mb-0">
@@ -96,14 +96,14 @@
             </div>
         </div>
         <div class="row pt-5">
-            <div class="col-md-4">
+            <div class="w-20">
             </div>
-            <div class="col-md-5 pl-0 f-14 text-custom roboto f-400">
+            <div class="w-41 f-14 text-custom roboto f-400">
                 <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
 
             </div>
-            <div class="col-md-3 f-14 text-custom roboto f-400" *ngIf="showManualToggle">
+            <div class="w-38 f-14 text-custom roboto f-400" *ngIf="showManualToggle">
                 <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add Manually
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
 
@@ -284,7 +284,7 @@
         </div>
 
 
-        <div class="row pt-28" *ngIf="data !== null">
+        <div class="row pt-28" *ngIf="showSubTaskHeading">
             <div class="col-md-12 pl-16">
                 <h5 class="f-500 m-0 pb-10"> Sub-tasks </h5>
             </div>
@@ -308,7 +308,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-5 pb-5" *ngIf="data !== null && subTaskList.length === 0">
+        <div class="row pt-5 pb-5" *ngIf="showNoSubTaskFoundError">
             <h5 class="text-center col-md-12 b-a p-20">
                 No Sub tasks found, Try adding some
             </h5>
@@ -365,7 +365,7 @@
         </div>
 
         <div class="row pt-14">
-            <div class="col-md-12 text-primitive f-14 pl-30 c-p" (click)="addSubTask(null)">
+            <div class="col-md-12 text-primitive f-14 pl-16 c-p" (click)="addSubTask(null)">
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
         </div>
@@ -424,7 +424,7 @@
 
             <div class="row pb-10" *ngFor="let item of commentList; index as i">
                 <div class="col-md-1 text-center p-0 pl-30">
-                    <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+                    <img [src]="item.profilePicUrl" class="c-p imgComment">
                 </div>
                 <div class="col-md-11 pl-20 pr-20">
                     <div class="row">
@@ -605,7 +605,7 @@
 
             <div class="row pb-10" *ngFor="let item of subTaskCommentList; index as i">
                 <div class="col-md-1 text-center p-0 pl-30">
-                    <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+                    <img [src]="item.profilePicUrl" class="c-p imgComment">
                 </div>
                 <div class="col-md-11 pl-20 pr-20">
                     <div class="row">
@@ -645,16 +645,16 @@
         </div>
     </div>
 
-    <!-- next pade ends -->
+    <!-- next page ends -->
 
-    <div class="bottomCommentBox bg-grey lter">
+    <div class="bottomCommentBox bg-grey lter" *ngIf="data!==null">
         <div class="row pt-16">
             <div class="col-md-1 pl-30">
                 <img src="assets/images/svg/Mask.svg" class="c-p avatarImg">
             </div>
             <div class="col-md-11">
                 <mat-form-field>
-                    <span matTooltip="Cannot Add Comment while creating task" [matTooltipDisabled]="data!==null">
+                    <span>
                         <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
                             [disabled]="data===null"
                             (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
@@ -662,7 +662,7 @@
                 </mat-form-field>
 
                 <div class="row pt-10">
-                    <div class="col-md-12 f-14 p-0 pb-16" *ngIf="data!==null">
+                    <div class="col-md-12 f-14 p-0 pb-16">
                         Collaborators
                         <span *ngFor="let item of collaboratorList">
                             <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
