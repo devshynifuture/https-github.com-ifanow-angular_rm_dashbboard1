@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row day-schedule">
-      <div class="col-md-1 pl-10 br">
+      <div class="col-md-1 pl-10 br pl-0-992">
 
         <ul class="d-block" *ngFor='let time of timeArry'>
           <li>{{time}}</li>
@@ -58,9 +58,10 @@
               <p class="m-0 f-12 roboto f-400 text-primary">{{event.startTime}}- {{event.endTime}}</p>
             </div> -->
 
-            <div  
+            <div
               *ngIf="formateDate(event.date) == formateDate(viewDate) && formateMonth(event.date) == formateMonth(viewDate) && formateYear(event.date) == formateYear(viewDate)">
-              <div class="day-clicks boxWidth pl-4" *ngFor="let dayEvent of event.events" [hidden]="returnNumber(dayEvent.startTime) != time" (click)="editEvent(dayEvent)">
+              <div class="day-clicks boxWidth pl-4" *ngFor="let dayEvent of event.events"
+                [hidden]="returnNumber(dayEvent.startTime) != time" (click)="editEvent(dayEvent)">
                 <p class="m-0 f-12 roboto f-400 text-primary">{{dayEvent.summary}}</p>
                 <p class="m-0 f-12 roboto f-400 text-primary">{{dayEvent.startTime}}- {{dayEvent.endTime}}</p>
               </div>

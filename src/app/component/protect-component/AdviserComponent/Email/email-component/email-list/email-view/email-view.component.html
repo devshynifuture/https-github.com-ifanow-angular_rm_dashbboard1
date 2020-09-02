@@ -3,7 +3,7 @@
 <!-- <button mat-button (click)="openComposeEmail(null)">Compose</button> -->
 <!-- <button mat-raised-button (click)="openBottomSheet()">Reply</button> -->
 
-<div class="row pt-10">
+<div class="row pt-16 pb-16 bb position-email-view">
     <div class="col-md-4 d-flex align-items-center">
         <img class="c-p mr-28" (click)="goBack()" src="/assets/images/svg/left-arrows.svg">
         <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
@@ -12,9 +12,9 @@
     </div>
 </div>
 
-<div class="chatBox">
-    <h4 class="f-22 pt-12 pb-12 bb">{{ subject }}</h4>
-    <div *ngIf="isAttachmentBasedEmail" class="pl-10">
+<div class="chatBox pt-80 pl-36">
+    <h4 class="f-22 pt-12 pb-12 pr-32 pl-52">{{ subject }}</h4>
+    <div *ngIf="isAttachmentBasedEmail" class="pl-10 email-view-scroll">
         <div class="messengerDiv" *ngFor="let part of decodedPartsDetail; let i=index">
             <div class="d-flex" [ngClass]="i % 2 == 0 ? 'userOne': 'userTwo'" *ngIf="part.item">
                 <div class="avatar">
@@ -34,17 +34,17 @@
         </div>
     </div>
 </div>
-<div class="row" *ngIf="attachmentArrayDetail.length!==0">
+<div class="row pl-36 pr-36" *ngIf="attachmentArrayDetail.length!==0">
     <h4 class="p-12">
         Attachments:
     </h4>
     <mat-action-list class="p-12 w-100">
         <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail"
             (click)="attachmentDownload(attachment)">
-            <div class="col-md-11 text-primary">
+            <div class="col-md-10 text-primary">
                 {{ attachment.filename }}
             </div>
-            <div class="col-md-1 float-right text-primary">
+            <div class="col-md-2 text-right text-primary">
                 <mat-icon>
                     arrow_downward
                 </mat-icon>
