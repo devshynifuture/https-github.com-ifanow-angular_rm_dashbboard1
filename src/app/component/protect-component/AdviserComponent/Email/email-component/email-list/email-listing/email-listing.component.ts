@@ -311,6 +311,8 @@ export class EmailListingComponent implements OnInit {
           case 'starred':
             if (this.starredCount === this.prevStarredCount) {
               bringNewThreads = false;
+            } else if(this.starredCount > this.prevStarredCount){
+              bringNewThreads = true;
             }
             else if (this.starredCount > this.prevStarredCount) {
               bringNewThreads = true;

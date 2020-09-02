@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-7 p-0">
-            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - Rahul Jain </h3>
+            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - {{insuranceData.holderName}} </h3>
         </div>
         <div class="col-md-5 text-right">
             <div class="wrapper-20">
@@ -60,9 +60,11 @@
     </div>
     <div class="row pt-32">
         <div class="col-md-12 p-0">
-            <h5 class="m-0 text-black">Policy details (info, features etc,)</h5>
+            <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
+            <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
         </div>
     </div>
+    <app-froala *ngIf="showRecommendation" (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

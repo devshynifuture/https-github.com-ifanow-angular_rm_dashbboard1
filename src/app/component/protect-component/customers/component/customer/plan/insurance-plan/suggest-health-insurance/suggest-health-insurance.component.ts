@@ -53,6 +53,13 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   saveData(data) {
 
   }
+  checkRecommendation(value){
+    if(!value){
+      this.showRecommendation = true;
+    }else{
+      this.showRecommendation = false
+    }
+  }
   saveSuggested() {
 
     if (this.suggestPolicy.get('planType').invalid) {

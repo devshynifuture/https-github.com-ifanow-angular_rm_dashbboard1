@@ -36,13 +36,25 @@ export class ReconFranklinComponent implements OnInit {
 
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
-  @Input() rtId;
+  rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
 
   ngOnInit() {
+    this.isLoading = true;
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
-    this.getBrokerList();
-    this.teamMemberListGet();
+    this.getRTList();
+  }
+
+  getRTList() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        res.forEach(element => {
+          if (element.name === 'FRANKLIN_TEMPLETON') {
+            this.rtId = element.id;
+          }
+        });
+        this.teamMemberListGet();
+      });
   }
 
   teamMemberListGet() {
@@ -52,6 +64,7 @@ export class ReconFranklinComponent implements OnInit {
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
+          this.getBrokerList();
         } else {
           this.adminAdvisorIds = [...this.advisorId];
           this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
@@ -62,7 +75,13 @@ export class ReconFranklinComponent implements OnInit {
   getBrokerList() {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
-        this.brokerList = res;
+        if(res){
+          this.brokerList = res;
+          this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
+          this.getAumReconHistoryData();
+        } else {
+          this.eventService.openSnackBar("No Arn Ria Data Found","DISMISS");
+        }
       });
   }
 
@@ -88,6 +107,11 @@ export class ReconFranklinComponent implements OnInit {
           } else {
             this.eventService.openSnackBar("No Data Found!", "DISMISS");
           }
+        }, err => {
+          this.isLoading = false;
+          this.dataSource.data = null;
+          this.eventService.openSnackBar("No Data Found!", "DISMISS");
+          console.error(err);
         })
     }
   }
