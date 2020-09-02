@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
@@ -43,6 +43,8 @@ export class ClientAddressComponent implements OnInit {
   maxLength: number;
   proofTypeData: any;
   firstTimeEditFlag = false;
+  valueChanges: boolean;
+  valueChangeFlag: any;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
@@ -50,11 +52,12 @@ export class ClientAddressComponent implements OnInit {
     private utilService: UtilService, public dialog: MatDialog) {
   }
 
-  addressForm;
+  addressForm: FormGroup;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
+  @Output() tabDisableFlag = new EventEmitter();
   @Input() fieldFlag;
 
   @Input() set data(data) {
@@ -104,7 +107,11 @@ export class ClientAddressComponent implements OnInit {
     } else {
       this.maxLength = undefined;
     }
-    // this.changeAddrProofNumber({ value: String(data.proofType) });
+    this.addressForm.valueChanges.subscribe(data => {
+      if (this.valueChangeFlag) {
+        this.tabDisableFlag.emit(true);
+      }
+    })
   }
 
   changeAddrProofNumber(data) {
@@ -134,13 +141,6 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.get('proofIdNum').setValue(this.proofTypeData ? this.proofTypeData.proofIdNumber : '');
     }
     this.addressForm.get('proofIdNum').setValidators([(regexPattern) ? Validators.pattern(regexPattern) : null]);
-    // if (this.userMappingIdFlag == false) {
-    //   this.addressForm.get('proofIdNum').setValue(undefined);
-    //   this.addressForm.get('addProofType').setValue('');
-    //   this.maxLength = undefined;
-    //   this.firstTimeEditFlag = true;
-    // }
-    // this.userMappingIdFlag = true;
     this.addressForm.get('proofIdNum').updateValueAndValidity();
 
   }
@@ -187,9 +187,11 @@ export class ClientAddressComponent implements OnInit {
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
+        this.valueChangeFlag = true
         if (data && data.length > 0) {
           this.userMappingIdFlag = true;
           this.addressList = data[0];
+          this.valueChanges = true
           this.createAddressForm(this.addressList);
         } else {
           if (this.fieldFlag == 'familyMember') {
@@ -199,9 +201,11 @@ export class ClientAddressComponent implements OnInit {
             };
             this.cusService.getAddressList(obj).subscribe(
               data => {
+                this.valueChangeFlag = true
                 if (data && data.length > 0) {
                   this.userMappingIdFlag = false;
                   this.addressList = data[0];
+                  this.valueChanges = true;
                   this.createAddressForm(this.addressList);
                 }
               }
@@ -247,6 +251,8 @@ export class ClientAddressComponent implements OnInit {
         data => {
           this.disableBtn = false;
           console.log(data);
+          this.tabDisableFlag.emit(false);
+          this.valueChangeFlag = true
           this.barButtonOptions.active = false;
           if (flag == 'Next') {
             this.saveNextData.emit(true);

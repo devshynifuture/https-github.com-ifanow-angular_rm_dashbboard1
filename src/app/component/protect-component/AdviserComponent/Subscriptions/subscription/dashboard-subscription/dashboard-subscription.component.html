@@ -1,12 +1,12 @@
-<div *ngIf="showSubStep==false" class="full-lights pb-36 pt-180" id="ui-dashboard">
+<div *ngIf="showSubStep==false" class="full-lights responsive-subscription pb-36 pt-180" id="ui-dashboard">
     <div class="wrapper-20">
         <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
 
         <div class="row bg-red mt-20 mb-36">
-            <div class="col-md-5">
+            <div class="col-lg-5 col-md-12 d-none-992">
                 <img class="dashboard-img" src="/assets/images/svg/Dashboard.svg">
             </div>
-            <div class=" col-md-7">
+            <div class=" col-lg-7 col-md-12 text-center-992">
                 <h1>Hi {{advisorName}}, {{greeting}}</h1>
 
                 <div *ngIf="showLetsBegin">
@@ -16,81 +16,101 @@
 
                 <p class="mt-10" *ngIf="!showLetsBegin && !isLoading"> Welcome back !! </p>
 
-                <button *ngIf="showLetsBegin" (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
+                <button *ngIf="showLetsBegin" (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16"
+                    mat-flat-button>Let's begin
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
         <div class=" subscription-summary pt-40">
             <div class="row">
-                <div class="col-md-4 pl-0 relClass">
-                    <div class="bar">
-                        <div *ngIf="dataSourceClientWithSub != undefined" class="bg-white pt-20 pb-16 text-center">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <circle-progress [animationDuration]="1000" [animation]="true" [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10" [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100" [responsive]="true"
-                                            [showSubtitle]="false" [space]="-10" [startFromZero]="false" [titleFontSize]="35" [unitsFontSize]="35" class="progress">
-                                        </circle-progress>
+                <div class="col-lg-4 col-md-12 pl-0 pr-0-992 relClass">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 p-0">
+                            <div class="bar">
+                                <div *ngIf="dataSourceClientWithSub != undefined"
+                                    class="bg-white pt-20 pb-16 text-center">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <circle-progress [animationDuration]="1000" [animation]="true"
+                                                    [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
+                                                    [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10"
+                                                    [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100"
+                                                    [responsive]="true" [showSubtitle]="false" [space]="-10"
+                                                    [startFromZero]="false" [titleFontSize]="35" [unitsFontSize]="35"
+                                                    class="progress">
+                                                </circle-progress>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center f-300 pt-12 pb-24 f-18 mb-0">Clients with subscription</p>
+                                    <div class="btl-1">
+                                        <p class="text-center pt-16 f-300 f-18 mb-0">Subscription summary</p>
+                                        <div class="row pt-16 pb-8">
+                                            <div class="col-md-3 c-p">
+                                                <p class="f-300 f-18">Total</p>
+                                                <h4 class="text-center ">{{dataSourceClientWithSub.activeClient}}</h4>
+                                            </div>
+                                            <div class="col-md-6 c-p">
+                                                <p class="f-300 f-18">This month</p>
+                                                <h4 class="text-center ">{{dataSourceClientWithSub.monthSubscription}}
+                                                </h4>
+                                            </div>
+                                            <div class="col-md-3 c-p">
+                                                <p class="f-300 f-18"> Today</p>
+                                                <h4 class="text-center ">{{dataSourceClientWithSub.todayActive}}</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-center f-300 pt-12 pb-24 f-18 mb-0">Clients with subscription</p>
-                            <div class="btl-1">
-                                <p class="text-center pt-16 f-300 f-18 mb-0">Subscription summary</p>
-                                <div class="row pt-16 pb-8">
-                                    <div class="col-md-3 c-p">
-                                        <p class="f-300 f-18">Total</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.activeClient}}</h4>
+                        </div>
+                        <div class="col-lg-12 col-md-6 p-0 pl-20-992">
+                            <div class="col-md-12 p-0 mt-28 mt-0-992">
+                                <div class="row bg-white  ">
+                                    <!-- <div class="dash-info-header">
+                                        <div class="dash-info-menu-ho">
+                                            <i class="material-icons text-right right text-custom f-28 c-p">
+                                                more_vert
+                                            </i>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-12 p-0 b-b">
+                                        <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                                     </div>
-                                    <div class="col-md-6 c-p">
-                                        <p class="f-300 f-18">This month</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.monthSubscription}}</h4>
+                                    <div *ngIf="manualInvoice.length == 0  || !manualInvoice" class="noDataFound">
+                                        <i class="material-icons font100">receipt</i>
+                                        <p class="m-0"> No Data Found </p>
                                     </div>
-                                    <div class="col-md-3 c-p">
-                                        <p class="f-300 f-18"> Today</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.todayActive}}</h4>
+                                    <div class="row h-290" *ngIf="manualInvoice">
+                                        <div *ngFor="let invoice of manualInvoice" class="col-md-12 ">
+
+                                            <div class="row pt-16 b-b" *ngIf="invoice.auto == false">
+                                                <div class="col-md-8 pl-8">
+                                                    <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                        class="f-15 mb-28 c-p">{{invoice.clientName}}</p>
+                                                    <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                        class="f-13 mb-12 c-p">{{invoice.invoiceNumber}}</p>
+                                                </div>
+                                                <div class="col-md-4 p-0">
+                                                    <p class="f-15 mb-28">₹<span [value]="invoice.finalAmount"
+                                                            appFormatNumber>{{invoice.finalAmount}}</span></p>
+                                                    <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12 p-0 mt-28">
-                        <div class="row bg-white  ">
-                            <!-- <div class="dash-info-header">
-                                <div class="dash-info-menu-ho">
-                                    <i class="material-icons text-right right text-custom f-28 c-p">
-                                        more_vert
-                                    </i>
-                                </div>
-                            </div> -->
-                            <div class="col-md-12 p-0 b-b">
-                                <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
-                            </div>
-                            <div *ngIf="manualInvoice.length == 0  || !manualInvoice" class="noDataFound">
-                                <i class="material-icons font100">receipt</i>
-                                <p class="m-0"> No Data Found </p>
-                            </div>
-                            <div class="row h-290" *ngIf="manualInvoice">
-                                <div *ngFor="let invoice of manualInvoice" class="col-md-12 ">
-
-                                    <div class="row pt-16 b-b" *ngIf="invoice.auto == false">
-                                        <div class="col-md-8 pl-8">
-                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')" class="f-15 mb-28 c-p">{{invoice.clientName}}</p>
-                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')" class="f-13 mb-12 c-p">{{invoice.invoiceNumber}}</p>
-                                        </div>
-                                        <div class="col-md-4 p-0">
-                                            <p class="f-15 mb-28">₹<span [value]="invoice.finalAmount" appFormatNumber>{{invoice.finalAmount}}</span></p>
-                                            <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
 
-                        </div>
-                    </div>
                     <div *ngIf="manualInvoice.length>0" class="bg-white col-md-12 text-right pt-8 pb-8">
                         <div (click)="changeParentsTab(5)" class="c-p">View all
                         </div>
@@ -98,9 +118,9 @@
                     </div>
 
                 </div>
-                <div class="col-md-8 pr-0">
+                <div class="col-lg-8 col-md-12 pr-0 pt-20-992 pl-0-992 pr-0-992">
                     <div class="row">
-                        <div class="col-md-6 pl-0">
+                        <div class="col-md-6 pl-0 pr-0-992">
                             <div class="row bg-white h-121">
                                 <div class="dash-info-header">
                                     <div class="dash-info-p">
@@ -112,22 +132,26 @@
                                         </i>
                                     </div> -->
                                 </div>
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                                    class="col-md-6 skeletonAnimation">
 
                                     <p class="f-300 f-18 pt-28 text-center mb-0">Total sales</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" [value]="totalSales" class="bar" appFormatNumber>
+                                        <div [ngClass]="{'height23': isLoading}" [value]="totalSales" class="bar"
+                                            appFormatNumber>
                                             {{totalSales}} </div>
                                         <!-- <div *ngIf="isLoading" class="bar h-30"></div>
                                             <div *ngIf="!isLoading" [value]="totalSales" appFormatNumber>  </div> -->
                                     </h2>
 
                                 </div>
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                                    class="col-md-6 p-0 skeletonAnimation pr-0-992">
 
                                     <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved" appFormatNumber>
+                                        <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved"
+                                            appFormatNumber>
                                             {{feeRecieved}} </div>
 
                                         <!-- <div *ngIf="isLoading" class="bar h-30"></div>
@@ -137,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 pr-0">
+                        <div class="col-md-6 pr-0 pl-20-992">
                             <div class="row bg-white h-121">
                                 <!-- <div class="dash-info-header">
                                     <div class="dash-info-menu-ho">
@@ -146,25 +170,31 @@
                                         </i>
                                     </div>
                                 </div> -->
-                                <div [appSkeletonLoading]="isLoadingDocsSent" appSkeletonLoading class="col-md-6 skeletonAnimation">
+                                <div [appSkeletonLoading]="isLoadingDocsSent" appSkeletonLoading
+                                    class="col-md-6 skeletonAnimation">
                                     <div class="c-p">
                                         <p class="f-300 f-18 pt-28 text-center mb-0">Docs sent </p>
                                         <h2 class="f-26 text-primary mb-0 text-center pb-28 pt-8 relClass">
-                                            <div *ngIf="dataSourceSingCount != undefined" [ngClass]="{'height23': isLoading}" class="bar">
+                                            <div *ngIf="dataSourceSingCount != undefined"
+                                                [ngClass]="{'height23': isLoading}" class="bar">
                                                 {{dataSourceSingCount.sentCount}} </div>
-                                            <div *ngIf="dataSourceSingCount == undefined" [ngClass]="{'height23': isLoading}" class="bar">
+                                            <div *ngIf="dataSourceSingCount == undefined"
+                                                [ngClass]="{'height23': isLoading}" class="bar">
                                                 {{isLoading ? '' : '0' }}
                                             </div>
                                         </h2>
                                     </div>
                                 </div>
-                                <div [appSkeletonLoading]="isLoadingDocsSent" appSkeletonLoading class="col-md-6 pr-0 skeletonAnimation">
+                                <div [appSkeletonLoading]="isLoadingDocsSent" appSkeletonLoading
+                                    class="col-md-6 pr-0 skeletonAnimation">
                                     <div class="c-p">
                                         <p class="f-300 f-18 text-center pt-28 mb-0">Docs signed </p>
                                         <h2 class="f-26 text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                            <div *ngIf="dataSourceSingCount != undefined" [ngClass]="{'height23': isLoading}" class="bar">
+                                            <div *ngIf="dataSourceSingCount != undefined"
+                                                [ngClass]="{'height23': isLoading}" class="bar">
                                                 {{dataSourceSingCount.signedCount}} </div>
-                                            <div *ngIf="dataSourceSingCount == undefined" [ngClass]="{'height23': isLoading}" class="bar">
+                                            <div *ngIf="dataSourceSingCount == undefined"
+                                                [ngClass]="{'height23': isLoading}" class="bar">
                                                 {{isLoading ? '' : '0' }}
                                             </div>
                                         </h2>
@@ -183,27 +213,32 @@
                             </div>
                         </div> -->
                         <div class="wrapper-16 pt-24 bg-white mt-12 pb-20 h-625">
-                            <div class="pl-20 pr-2">
+                            <div class="pl-20 pr-2 pl-0-992">
                                 <div class="row">
                                     <div class="col-md-6 pl-0">
                                         <h4 class="f-300 mb-0 roboto pt-8">Subscription summary</h4>
                                     </div>
                                     <div class="col-md-6 right text-right p-0">
-                                        <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary" id="custom-toggle" multiple=false>
+                                        <mat-button-toggle-group (change)="getSummaryDataDashboard()"
+                                            [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary"
+                                            id="custom-toggle" multiple=false>
                                             <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
                                             <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
                                         </mat-button-toggle-group>
 
                                     </div>
                                 </div>
-                                <div *ngIf="dataSource.length >0" [ngClass]="{'ox-hide': isLoadingSubSummary}" class="overflow-hidden h-513 mt-12">
+                                <div *ngIf="dataSource.length >0" [ngClass]="{'ox-hide': isLoadingSubSummary}"
+                                    class="overflow-hidden h-513 mt-12">
 
 
-                                    <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation" id="table-low" mat-table>
+                                    <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource"
+                                        appSkeletonLoading class=" skeletonAnimation" id="table-low" mat-table>
                                         <tbody>
                                             <ng-container matColumnDef="name">
                                                 <th *matHeaderCellDef mat-header-cell> Client name</th>
-                                                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p" mat-cell>
+                                                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
+                                                    *matCellDef="let element" class="c-p" mat-cell>
                                                     <div class="bar"> {{element.clientName}} </div>
                                                 </td>
                                             </ng-container>
@@ -215,17 +250,23 @@
                                             </ng-container>
                                             <ng-container matColumnDef="amt">
                                                 <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
-                                                <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
+                                                <td (click)="Open(element)" *matCellDef="let element" class="c-p"
+                                                    mat-cell>
                                                     <!-- <div class="bar text-primary text-underline">
                                                         {{isLoadingSubSummary ? ' ' : 'View details'}}
                                                     </div> -->
                                                     <div class="bar" *ngIf="isLoadingSubSummary">
                                                     </div>
-                                                    <div class="bar text-primary text-underline c-p" (click)="Open(element)" *ngIf="element.startsOn==undefined && element.feeTypeId==1">
+                                                    <div class="bar text-primary text-underline c-p"
+                                                        (click)="Open(element)"
+                                                        *ngIf="element.startsOn==undefined && element.feeTypeId==1">
                                                         {{isLoadingSubSummary ? ' ' : 'View details'}} </div>
-                                                    <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==1">
+                                                    <div appFormatNumber
+                                                        *ngIf="element.startsOn && element.feeTypeId==1">
                                                         ₹ {{element.pricing}}</div>
-                                                    <div appFormatNumber (click)="Open(element)" *ngIf="element.feeTypeId==2" class="text-primary text-underline c-p">
+                                                    <div appFormatNumber (click)="Open(element)"
+                                                        *ngIf="element.feeTypeId==2"
+                                                        class="text-primary text-underline c-p">
                                                         View details</div>
                                                 </td>
                                             </ng-container>
@@ -245,18 +286,22 @@
                                                 </th>
                                                 <td *matCellDef="let element" mat-cell style="width: 2%">
                                                     <div class="bar">
-                                                        <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                                        <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu"
+                                                            class="material-icons c-p iconscolors">
                                                             more_vert
                                                         </i>
                                                     </div>
                                                     <mat-menu #menu="matMenu">
                                                         <a (click)="Open(element)" mat-menu-item>View fee
                                                             structure</a>
-                                                        <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                                                        <a (click)="openPlanSlider('billerSettings','open',element)"
+                                                            class="bt-1" mat-menu-item>Change
                                                             biller</a>
-                                                        <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                                                        <a (click)="openPlanSlider('changePayee','open',element)"
+                                                            mat-menu-item>Change
                                                             payee</a>
-                                                        <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                                                        <a (click)="delete('cancelSubscription')" class="bt-1"
+                                                            mat-menu-item>Cancel
                                                             subscription</a>
                                                         <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
                                                             subscription</a>
