@@ -42,6 +42,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   @Output() tabChange = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
+  @Output() tabDisableFlag = new EventEmitter();
 
   companyIndividualData: any;
   maxDate = new Date();
@@ -172,6 +173,7 @@ export class CompanyMoreInfoComponent implements OnInit {
           console.log(data);
           if (data) {
             if (flag == 'Next') {
+              this.tabDisableFlag.emit(false);
               this.saveNextData.emit(true);
               this.tabChange.emit(1)
             }
@@ -192,6 +194,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
+          this.tabDisableFlag.emit(false);
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
