@@ -17,7 +17,7 @@ export class ExcelMisSipService {
         this.client = AuthService.getClientData();
     }
 
-    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, totalArray?) {
+    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -45,18 +45,31 @@ export class ExcelMisSipService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
 
-        const head = ws.getRow(5);
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
+        } else {
+            ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+            initialRowCount = 5;
+        }
+
+        const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
 
-        ws.getRow(5).values = header;
+        ws.getRow(initialRowCount).values = header;
         // ws.columns[0].style.alignment = {horizontal: 'left'};
         ws.columns = headerData;
 
         if (excelData && excelData.length !== 0) {
             excelData.forEach(element => {
-
                 ws.addRow([
                     element.field1,
                     element.field2,

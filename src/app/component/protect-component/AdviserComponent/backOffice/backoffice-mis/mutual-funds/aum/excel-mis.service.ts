@@ -10,7 +10,7 @@ export class ExcelMisService {
     
     constructor() { }
     // single array excel 
-    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, totalArray?, parentTableName?) {
+    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -38,22 +38,27 @@ export class ExcelMisService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        let initialRowCount;
-        if(parentTableName){
-            ws.getCell('A3').value = parentTableName;
-            ws.getCell('A4').value = 'Report as on - ' + curDateFormat;
-            initialRowCount = 6;
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
         }
 
-        const head = ws.getRow(initialRowCount);
-        head.font = { bold: true };
-
+        
         ws.getRow(initialRowCount).values = header;
+        ws.getRow(initialRowCount).font = { bold: true };
         // ws.columns[0].style.alignment = {horizontal: 'left'};
         ws.columns = headerData;
+        
 
         if (excelData && excelData.length !== 0) {
             excelData.forEach(element => {
@@ -80,7 +85,7 @@ export class ExcelMisService {
         saveAs(new Blob([buf]), name + '-' + metaData + '.xlsx');
     }
     // main excel 
-    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, parentTableName?) {
+    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -109,22 +114,24 @@ export class ExcelMisService {
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
 
-        let initialRowCount;
-        if(parentTableName){
-            ws.getCell('A3').value = parentTableName;
-            ws.getCell('A4').value = 'Report as on - ' + curDateFormat;
-            initialRowCount = 6;
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
         }
 
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
-
         const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
         // get a1
-
 
         let currentRowPos = initialRowCount;
         let headCell;
@@ -436,7 +443,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((amcElement, index1) => {
                 if (!excluded.amcList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -528,7 +534,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((clientElement, index1) => {
                 if (!excluded.clientList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -750,7 +755,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((applicantElement, index1) => {
                 if (!excluded.applicantList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1036,7 +1040,7 @@ export class ExcelMisService {
     }
 
     // depth level 2 array excel
-    static async exportExcel3(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, parentTableName?) {
+    static async exportExcel3(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -1065,20 +1069,24 @@ export class ExcelMisService {
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
         
-        let initialRowCount;
-        if(parentTableName){
-            ws.getCell('A3').value = parentTableName;
-            ws.getCell('A4').value = 'Report as on - ' + curDateFormat;
-            initialRowCount = 6;
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
         }
 
-        const head = ws.getRow(5);
+        const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
         // get a1
-
 
         let currentRowPos = initialRowCount;
         let headCell;
@@ -1152,7 +1160,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((schemeElement, index1) => {
                 if (!excluded.schemeList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1219,7 +1226,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((investorElement, index1) => {
                 if (!excluded.investorList) {
                     if (index1 == 0) {
-                        currentRowPos = 5;
                         ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
@@ -1318,7 +1324,6 @@ export class ExcelMisService {
         if (choice === 'applicant-wise-aum-mis') {
             arrayOfExcelData.forEach((categoryElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1418,7 +1423,7 @@ export class ExcelMisService {
     }
 
     // depth level 3 array excel
-    static async exportExcel4(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, parentTableName?) {
+    static async exportExcel4(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
 
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
@@ -1448,16 +1453,20 @@ export class ExcelMisService {
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
 
-        let initialRowCount;
-        if(parentTableName){
-            ws.getCell('A3').value = parentTableName;
-            ws.getCell('A4').value = 'Report as on - ' + curDateFormat;
-            initialRowCount = 6;
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
         }
-
 
         const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
@@ -1517,7 +1526,6 @@ export class ExcelMisService {
         if (choice === 'applicant-wise-aum-mis') {
             arrayOfExcelData.forEach((subCatElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1585,7 +1593,6 @@ export class ExcelMisService {
             arrayOfExcelData.forEach((schemeElement, index1) => {
 
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);
@@ -1647,7 +1654,7 @@ export class ExcelMisService {
 
     }
 
-    static async exportExcel5(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
+    static async exportExcel5(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?, arrOfParentTableNames?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -1677,20 +1684,33 @@ export class ExcelMisService {
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
 
-        ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+        let initialRowCount = 3;
+        if(arrOfParentTableNames && arrOfParentTableNames.length!==0){
+            arrOfParentTableNames.forEach(element => {
+                let row = ws.getRow(initialRowCount);
+                row.values = element;
+                row.font = { bold: true };
+                initialRowCount += 1;
+            });
+            ws.addRow(['','','','']);
+            initialRowCount += 1;
+        } else {
+            ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
+            initialRowCount = 5;
+        }
 
-        const head = ws.getRow(5);
+
+        const head = ws.getRow(initialRowCount);
         head.font = { bold: true };
         // get a1
 
 
-        let currentRowPos = 5;
+        let currentRowPos = initialRowCount;
         let headCell;
 
         if (choice === 'applicant-wise-aum-mis') {
             arrayOfExcelData.forEach((schemeElement, index1) => {
                 if (index1 == 0) {
-                    currentRowPos = 5;
                     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                     ws.columns = arrayOfHeaderStyle[0];
                     headCell = ws.getRow(currentRowPos);

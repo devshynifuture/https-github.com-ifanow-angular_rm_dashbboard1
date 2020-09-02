@@ -152,7 +152,7 @@
                                                 </td>
                                                 <td class="text-right">
                                                     {{subcategory.weightInPercentage | number :'1.2-2'}}%</td>
-                                                <td class="text-center" (click)="showSchemeName(subcategory, subCatIndex, categoryIndex)">
+                                                <td class="text-center" (click)="showSchemeName(subcategory, subCatIndex, categoryIndex, category.name)">
                                                     <i *ngIf="subcategory.showSubCategory==true" class="material-icons  b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false" class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
@@ -204,7 +204,7 @@
                                                                 <td class="text-right">
                                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}
                                                                 </td>
-                                                                <td class="text-center" (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex)">
+                                                                <td class="text-center" (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex, subcategory.name, category.name)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
                                                                     <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!scheme.showScheme">
                                                                         remove

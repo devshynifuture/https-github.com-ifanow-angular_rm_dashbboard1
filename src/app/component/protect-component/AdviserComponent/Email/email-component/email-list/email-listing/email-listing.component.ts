@@ -37,15 +37,15 @@ export class EmailListingComponent implements OnInit {
   draftCount: any = 0;
   trashCount: any = 0;
   showOptions: boolean = false;
-  starredCount: any;
+  starredCount: any = 0;
   advisorEmail;
   isCustomerEmail: boolean;
   unreadCount: any;
-  prevImpCount: any;
-  prevSentCount: any;
-  prevDraftCount: any;
-  prevTrashCount: any;
-  prevStarredCount: any;
+  prevImpCount: any = 0;
+  prevSentCount: any = 0;
+  prevDraftCount: any = 0;
+  prevTrashCount: any = 0;
+  prevStarredCount: any = 0;
 
   constructor(
     private emailService: EmailServiceService,
@@ -64,7 +64,7 @@ export class EmailListingComponent implements OnInit {
   gmailThreads: [];
   nextPageToken = null;
   messageDetailArray: GmailInboxResponseI[];
-  messageListArray;
+  messageListArray = [];
   dataSource = null;
   selectedThreadsArray: ExtractedGmailDataI[] = [];
   listSubscription = null;
@@ -311,6 +311,8 @@ export class EmailListingComponent implements OnInit {
           case 'starred':
             if(this.starredCount === this.prevStarredCount){
               bringNewThreads = false;
+            } else if(this.starredCount > this.prevStarredCount){
+              bringNewThreads = true;
             }
             break;
           default: bringNewThreads = false;

@@ -671,15 +671,20 @@ export class AddTasksComponent implements OnInit {
         this.isPrefilled = true;
         console.log("individual task name:::", res);
         this.prefillValue = res;
-        const { subTaskList } = res;
-        subTaskList.forEach(element => {
-          this.subTaskList.push(element);
-        });
-
-        this.subTaskList.map(item => {
-          item.comments = [];
-          item.attachments = [];
-        })
+        if(res.hasOwnProperty('subTaskList')){
+          const { subTaskList } = res;
+          if(res.subTaskList && res.subTaskList.length !==0){
+            subTaskList.forEach(element => {
+              this.subTaskList.push(element);
+            });
+          }
+        }
+        if(this.subTaskList.length!==0){
+          this.subTaskList.map(item => {
+            item.comments = [];
+            item.attachments = [];
+          })
+        }
         console.log('this is subtask List::: ')
         if (res.assignedTo) {
           this.addTaskForm.patchValue({ assignedTo: res.assignedTo, taskDescription: item.taskDescription });

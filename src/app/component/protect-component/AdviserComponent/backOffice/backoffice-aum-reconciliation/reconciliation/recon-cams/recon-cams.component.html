@@ -26,8 +26,7 @@
         </div>
     </div>
 </div>
-<div class="row pb-12 "
-    *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched">
+<div class="row pb-12">
     <div class="col-md-12 data-operations">
         <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide recon-cams responsive-table-port">
             <table mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -131,13 +130,14 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
+                <h4 class="d-flex justify-content-center b-a p-44">
+                    No Data Found
+                </h4>
+            </div>
         </div>
     </div>
-    <div class="col-md-12" *ngIf="dataSource.data === null">
-        <h4 class="d-flex justify-content-center b-a p-44">
-            No Data Found
-        </h4>
-    </div>
+    
 </div>
 <div class="row text-center pt-0 p-16"
     *ngIf="selectBrokerForm.get('selectBrokerId').invalid && selectBrokerForm.get('selectBrokerId').untouched">

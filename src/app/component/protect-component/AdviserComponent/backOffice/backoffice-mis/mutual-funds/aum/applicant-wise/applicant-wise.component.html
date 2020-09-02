@@ -161,7 +161,7 @@
                                                             {{isLoadingCategory ? '' : category.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
                                                         </div>
                                                     </td>
-                                                    <td (click)="subCategory(category, catIndex ,applicantIndex)">
+                                                    <td (click)="subCategory(category, catIndex ,applicantIndex, name.name)">
                                                         <div class="bar text-center">
                                                             <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="category.showCategory && !isLoadingCategory">add</i>
                                                             <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!category.showCategory && !isLoadingCategory">
@@ -229,7 +229,7 @@
                                                                             {{isLoadingSubCategory ? '' : sub.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
                                                                         </div>
                                                                     </td>
-                                                                    <td (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex)">
+                                                                    <td (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex, category.name, name.name)">
                                                                         <div class="bar text-center">
                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory && !isLoadingSubCategory">add</i>
                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory && !isLoadingSubCategory">
@@ -319,7 +319,7 @@
                                                                                         </div>
                                                                                     </td>
                                                                                    
-                                                                                    <td (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex)">
+                                                                                    <td (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex, sub.name, category.name, name.name)">
                                                                                         <div class="bar text-center">
                                                                                             <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="client.showFolio && !isLoadingScheme">add</i>
                                                                                             <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!client.showFolio && !isLoadingScheme">
@@ -329,20 +329,17 @@
                                                                                     </td>
 
                                                                                     <td>
-                                                                                            <div class="d-block text-right" *ngIf="!client.showFolio && !isLoadingScheme && sub.schemeList?.length > 0">
-                                                                                               
-                                                                                                <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('scheme-wise', applicantIndex, catIndex, subCatIndex, schemeIndex)">
-                                                                                                
-                                                                                            </div>
+                                                                                        <div class="d-block text-right" *ngIf="!client.showFolio && !isLoadingScheme && client.schemeList?.length > 0">   
+                                                                                            <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('scheme-wise', applicantIndex, catIndex, subCatIndex, schemeIndex)">       
+                                                                                        </div>
                                                                                     </td>
-
                                                                                 </tr>
 
                                                                                 <tr style="border: transparent !important">
                                                                                     <td class="innerTd four" colspan="7">
                                                                                         
                                                                                         <!-- [appSkeletonLoading]="isLoadingApplicant" prod build -->
-                                                                                        <table *ngIf="client.showFolio == false && sub.schemeList?.length > 0" class="skeletonAnimation table95 mt-16 mb-8" appSkeletonLoading id="table-low">
+                                                                                        <table *ngIf="client.showFolio == false && client.schemeList?.length > 0" class="skeletonAnimation table95 mt-16 mb-8" appSkeletonLoading id="table-low">
                                                                                             <thead>
                                                                                                 <tr class="h-40">
                                                                                                     <th class="w-10 f-500">
@@ -440,8 +437,8 @@
                                                                                         </table>
                                                                                         <!-- !isLoadingApplicant && brod build -->
                                                                                         <!-- *ngIf="subCatList.length == 0" brod build -->
-                                                                                        <div *ngIf="client.showFolio == false">
-                                                                                            <div class="d-flex flex-column align-items-center" *ngIf="sub.schemeList?.length == 0">
+                                                                                        <div *ngIf="client.showFolio == false && client.schemeList === null ||client.showFolio == false && client.schemeList?.length == 0">
+                                                                                            <div class="d-flex flex-column align-items-center" >
                                                                                                 <h4 class="text-center pt-12">
                                                                                                     No data found
                                                                                                 </h4>

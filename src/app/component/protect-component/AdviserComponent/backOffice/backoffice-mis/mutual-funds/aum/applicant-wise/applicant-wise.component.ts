@@ -45,6 +45,11 @@ export class ApplicantWiseComponent implements OnInit {
   clientIdToPass;
   arnRiaList = [];
   arnRiaValue;
+  selectedApplicantName: any;
+  selectedSubCategory: any;
+  selectedSchemeName: any;
+  selectedSubCatName: any;
+  selectedSchemeFolioName: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) {
   }
@@ -269,7 +274,9 @@ export class ApplicantWiseComponent implements OnInit {
       subCategoryList: false,
       schemeList: false,
       schemeFolioList: false
-    }, this.catWiseTotal);
+    }, this.catWiseTotal,
+    [['Selected Appnicant Name: ', this.selectedApplicantName]]
+    );
   }
 
   subCategoryWiseExcelSheet(applicantIndex, catIndex, subCatIndex) {
@@ -299,7 +306,9 @@ export class ApplicantWiseComponent implements OnInit {
       subCategoryList: false,
       schemeList: false,
       schemeFolioList: false
-    }, this.subCatWiseTotal);
+    }, this.subCatWiseTotal,
+    [['Selected Applicant name: ', this.selectedApplicantName], ["Selected Sub category name: ", this.selectedSubCatName]]
+    );
   }
 
   subCatSchemeWiseExcelSheet(applicantIndex, catIndex, subCatIndex, schemeIndex) {
@@ -334,7 +343,9 @@ export class ApplicantWiseComponent implements OnInit {
       subCategoryList: true,
       schemeList: false,
       schemeFolioList: false
-    }, this.subCatSchemeWiseTotal);
+    }, this.subCatSchemeWiseTotal,
+    [['Selected Applicant name: ', this.selectedApplicantName], ["Selected Sub category name: ", this.selectedSubCatName], ["Selected Scheme name: ", this.selectedSchemeName]]
+    );
   }
 
   schemeWiseExcelSheet() {
@@ -352,7 +363,13 @@ export class ApplicantWiseComponent implements OnInit {
         field6: element.weightInPerc
       });
     });
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], newarr, [], 'MIS Report - Applicant wise AUM', this.schemeWiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], newarr, [], 'MIS Report - Applicant wise AUM', this.schemeWiseTotal,
+    [
+      ['Selected Applicant name: ', this.selectedApplicantName], 
+      ["Selected Sub category name: ", this.selectedSubCatName], 
+      ["Selected Scheme name: ", this.selectedSchemeName], 
+      ["Selected Scheme Folio name: ", this.selectedSchemeFolioName]
+    ]);
   }
 
   exportToExcelSheet(choice, applicantIndex, catIndex, subCatIndex, schemeIndex) {
@@ -554,6 +571,8 @@ export class ApplicantWiseComponent implements OnInit {
     this.clientIdToPass = applicantData.clientId;
 
     this.selectedApplicant = index;
+
+    this.selectedApplicantName = applicantData.name;
     applicantData.show = !applicantData.show;
 
     if (applicantData.show == false) {
@@ -622,10 +641,13 @@ export class ApplicantWiseComponent implements OnInit {
 
   }
 
-  subCategory(catData, index, applicantIndex) {
+  subCategory(catData, index, applicantIndex, catName) {
 
     this.selectedCat = index;
     this.selectedApplicant = applicantIndex;
+
+    this.selectedSubCategory = catData.name;
+    this.selectedApplicantName = catName;
     catData.showCategory = !catData.showCategory;
 
     if (catData.showCategory == false) {
@@ -690,10 +712,14 @@ export class ApplicantWiseComponent implements OnInit {
     category.subCategoryList = data;
   }
 
-  getScheme(subCatData, index, catIndex, applicantIndex) {
+  getScheme(subCatData, index, catIndex, applicantIndex, subCatName, catName) {
     this.selectedScheme = index;
     this.selectedCat = catIndex;
     this.selectedApplicant = applicantIndex;
+
+    this.selectedSchemeName = subCatData.name;
+    this.selectedSubCatName = subCatName;
+    this.selectedApplicantName = catName;
 
     subCatData.showSubCategory = !subCatData.showSubCategory;
 
@@ -715,6 +741,7 @@ export class ApplicantWiseComponent implements OnInit {
         data => {
           this.isLoadingScheme = false;
           if (data) {
+            console.log(data);
             data.forEach(element => {
               element.showFolio = true;
             });
@@ -746,12 +773,17 @@ export class ApplicantWiseComponent implements OnInit {
     }
   }
 
-  getSchemeFolio(schemeData, index, schemeIndex, catIndex, applicantIndex) {
+  getSchemeFolio(schemeData, index, schemeIndex, catIndex, applicantIndex, schemeName, subCatName, catName) {
 
     this.selectedApplicant = applicantIndex;
     this.selectedClient = index;
     this.selectedScheme = schemeIndex;
     this.selectedCat = catIndex;
+    this.selectedSchemeFolioName = schemeData.schemeName;
+
+    this.selectedSchemeName = schemeName;
+    this.selectedSubCatName = subCatName;
+    this.selectedApplicantName = catName;
 
 
     schemeData.showFolio = !schemeData.showFolio;
