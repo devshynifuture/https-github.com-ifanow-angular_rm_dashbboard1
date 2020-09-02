@@ -240,21 +240,24 @@
                     class="br-2 ba-black text-black mr-12 d-none-992">Schedule</button>
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="d-none-992">
                     <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day"
-                        routerLinkActive="btn-primary" (click)="checkConnectGoogle()">Day
+                        routerLinkActive="btn-primary" (click)="checkConnectGoogle();selectedZone='Day'">Day
                     </mat-button-toggle>
                     <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week"
-                        routerLinkActive="btn-primary" (click)="checkConnectGoogle()">
+                        routerLinkActive="btn-primary" (click)="checkConnectGoogle();selectedZone='Week'">
                         Week
                     </mat-button-toggle>
                     <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month"
-                        (click)="checkConnectGoogle()" routerLinkActive="btn-primary">
+                        (click)="checkConnectGoogle();selectedZone='Month'" routerLinkActive="btn-primary">
                         Month</mat-button-toggle>
                 </mat-button-toggle-group>
                 <mat-form-field class="d-lg-none">
-                    <mat-select class="form-control">
-                        <mat-option>
-                            test
-                        </mat-option>
+                    <mat-select [(ngModel)]="selectedZone" class="form-control">
+                        <mat-option (click)="checkConnectGoogle()" routerLink="/admin/activies/calendar/day"
+                            value="Day">Day</mat-option>
+                        <mat-option (click)="checkConnectGoogle()" routerLink="/admin/activies/calendar/week"
+                            value='Week'>Week</mat-option>
+                        <mat-option (click)="checkConnectGoogle()" routerLink="/admin/activies/calendar/month"
+                            value='Month'>Month</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
