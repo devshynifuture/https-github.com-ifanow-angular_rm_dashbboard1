@@ -14,14 +14,17 @@ export class CustomiseSettingComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   @ViewChild('tableEl', { static: false }) tableEl;
   dataSource = new MatTableDataSource(this.data);
-  isLoading: boolean=false;
+  isLoading: boolean = false;
   saveSettingMfClients: any;
   hasEndReached: boolean = false;
   infiniteScrollingFlag: boolean;
+  advisorId: any;
   constructor(
     private eventService: EventService,
     private backOffice: BackOfficeService
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.isLoading = false
@@ -41,6 +44,14 @@ export class CustomiseSettingComponent implements OnInit {
 
     }
   }
+  selectReportAll(event, reportType) {
+    console.log(event)
+    let obj = {
+      advisorId: this.advisorId,
+      reportTypeId: reportType,
+      selected: event.checked
+    }
+  }
   close() {
     const fragmentData = {
       direction: 'top',
@@ -49,8 +60,8 @@ export class CustomiseSettingComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
-  selectReport(event,element) {
-   
+  selectReport(event, element) {
+
     console.log('element', element)
     this.saveSettingMfClients.push(element)
 
@@ -59,13 +70,13 @@ export class CustomiseSettingComponent implements OnInit {
       data => this.saveSettingRes(data)
     );
   }
-  searchClient(event){
-    console.log('keypress',event)
-    if(event.length >= 3){
+  searchClient(event) {
+    console.log('keypress', event)
+    if (event.length >= 3) {
       const obj = {
         advisorId: AuthService.getAdvisorId(),
-        search:true,
-        searchName : event
+        search: true,
+        searchName: event
       };
       this.backOffice.getMutualFundClientList(obj).subscribe(
         data => this.getMutualFundClientListRes(data)
@@ -91,10 +102,10 @@ export class CustomiseSettingComponent implements OnInit {
     this.hasEndReached = false;
   }
   saveSetting() {
-    
-   
+
+
   }
-  saveSettingRes(data){
+  saveSettingRes(data) {
 
   }
 }
