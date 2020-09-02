@@ -148,6 +148,7 @@ export class PreferencesService {
         case AppConstants.MARRIAGE_GOAL:
           return data.remainingData.goalPresentValue;
         case AppConstants.WEALTH_CREATION_GOAL:
+          return data.remainingData.goalFV;
         case AppConstants.EMERGENCY_GOAL:
           return data.remainingData.goalFV;
         case AppConstants.RETIREMENT_GOAL:
