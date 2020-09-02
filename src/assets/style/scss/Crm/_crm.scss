@@ -14,6 +14,10 @@
   }
 }
 
+// .calender-h-100vh {
+
+//   height: calc(100vh - 107px);
+// }
 
 
 #ui-crm-task {
@@ -361,6 +365,35 @@
   .table-deatils-email-list {
     overflow: auto;
     width: 1100px;
+  }
+}
+
+@media (max-width: 1142px) {
+  .overflow-y-calender-auto-1142 {
+    overflow: unset !important;
+    overflow-y: auto !important;
+    height: calc(100vh - 132px);
+  }
+}
+
+@media(max-width:992px) {
+  #ui-calendar {
+    .main-header {
+      button {
+        padding: 0 10px !important;
+      }
+
+      .col-md-5 {
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .calender-overflow {
+    // overflow: auto;
+    min-width: 1200px;
   }
 }
 

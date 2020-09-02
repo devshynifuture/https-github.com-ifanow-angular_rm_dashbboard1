@@ -216,44 +216,54 @@
     <app-google-connect (googleConnected)="mailConnect($event)" *ngIf="!excessAllow"></app-google-connect>
     <div *ngIf="excessAllow">
         <div class="row main-header p-12">
-            <div class="col-md-8 p-0">
+            <div class="col-xl-7 col-lg-7 col-md-9 p-0">
                 <div class="row">
                     <div class="col-md-3 p-0">
                         <h3 class="m-0 pt-8">Calendar</h3>
 
                     </div>
-                    <div class="col-md-1 p-0">
+                    <div class="col-md-2 p-0">
                         <button mat-stroked-button (click)="persentMonth()"
                             class="br-2 ba-black text-black">Today</button>
                     </div>
-                    <div class="col-md-2 p-0 pt-8 pl-28 pr-0">
+                    <div class="col-md-2 p-0 pt-8 pl-12 pr-0 d-flex">
                         <img src="/assets/images/svg/arrowright-black.svg" (click)="lastMonth()" class="mr-24 c-p">
                         <img src="/assets/images/svg/arrowleft-black.svg" (click)="nextMonth()" class="c-p">
                     </div>
-                    <div class="col-md-4 p-0">
+                    <div class="col-md-5 p-0 text-center-954">
                         <h3 class="m-0 pt-8">{{viewDate | date: 'MMMM y'}}</h3>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 p-0 right">
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                    <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day" routerLinkActive="btn-primary" (click)="checkConnectGoogle()">Day
+            <div class="col-xl-5 col-lg-5 col-md-3 p-0 text-right">
+                <button mat-stroked-button routerLink="/admin/activies/calendar/schedule" routerLinkActive="btn-primary"
+                    class="br-2 ba-black text-black mr-12 d-none-992">Schedule</button>
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="d-none-992">
+                    <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day"
+                        routerLinkActive="btn-primary" (click)="checkConnectGoogle()">Day
                     </mat-button-toggle>
-                    <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week" routerLinkActive="btn-primary" (click)="checkConnectGoogle()">
+                    <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week"
+                        routerLinkActive="btn-primary" (click)="checkConnectGoogle()">
                         Week
                     </mat-button-toggle>
-                    <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month" (click)="checkConnectGoogle()"
-                        routerLinkActive="btn-primary">
+                    <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month"
+                        (click)="checkConnectGoogle()" routerLinkActive="btn-primary">
                         Month</mat-button-toggle>
                 </mat-button-toggle-group>
-                <button mat-stroked-button routerLink="/admin/activies/calendar/schedule" routerLinkActive="btn-primary" class="br-2 ba-black text-black right mr-16">Schedule</button>
+                <mat-form-field class="d-lg-none">
+                    <mat-select class="form-control">
+                        <mat-option>
+                            test
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </div>
 
         <!--  -->
         <!--  -->
-        <div class="row h-100vh pt-68">
-            <div class="col-md-2 p-0 bg-grey lter">
+        <div class="row calender-h-100vh pt-68">
+            <div class="col-xl-2 col-lg-3 col-md-4 p-0 bg-grey lter">
                 <div class="p-12 text-right">
                     <button mat-stroked-button class="btn-primary br-0" (click)="addEvent(todaysDate,month+1,year)">ADD
                         NEW</button>
@@ -298,16 +308,19 @@
                 </div>
 
                 <div class="custom-grid pt-0">
-                    <div class="column" style="position: relative;" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
-                        <p  [class.sub-rounded-primary]="day == selectedDate && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
-                        [class.rounded-primary]="day == todaysDate && currentMonth == month && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
-
-                            
+                    <div class="column" style="position: relative;" *ngFor="let day of daysArr; let i = index"
+                        style="padding: 7px 0px;">
+                        <p [class.sub-rounded-primary]="day == selectedDate && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
+                            [class.rounded-primary]="day == todaysDate && currentMonth == month && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
                             [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"
-                            class="m-0 roboto f-11"  >{{day}}</p>
-                            <span (click)="viewDayWeek(day,month-1,year)" *ngIf="i < addLastMonthDays" style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
-                            <span (click)="viewDayWeek(day,month,year)" *ngIf="i >= addLastMonthDays && i <= numbersOfDays + addLastMonthDays - 1" style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
-                            <span (click)="viewDayWeek(day,month+1,year)" *ngIf="i > numbersOfDays + addLastMonthDays - 1" style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
+                            class="m-0 roboto f-11">{{day}}</p>
+                        <span (click)="viewDayWeek(day,month-1,year)" *ngIf="i < addLastMonthDays"
+                            style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
+                        <span (click)="viewDayWeek(day,month,year)"
+                            *ngIf="i >= addLastMonthDays && i <= numbersOfDays + addLastMonthDays - 1"
+                            style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
+                        <span (click)="viewDayWeek(day,month+1,year)" *ngIf="i > numbersOfDays + addLastMonthDays - 1"
+                            style=" position: absolute; height: 100%; width: 100%; top: 0px; left: 0px;"></span>
                     </div>
                 </div>
 
@@ -349,8 +362,10 @@
                     </mat-tab-group>
                 </div> -->
             </div>
-            <div class="col-md-10">
-                <router-outlet></router-outlet>
+            <div class="col-xl-10 col-lg-9 col-md-8 overflow-y-calender-auto-1142">
+                <div class="col-md-12 p-0 calender-overflow">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
     </div>
