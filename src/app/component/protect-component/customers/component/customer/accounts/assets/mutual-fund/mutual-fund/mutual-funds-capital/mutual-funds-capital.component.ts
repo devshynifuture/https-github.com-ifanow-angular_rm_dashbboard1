@@ -298,9 +298,9 @@ export class MutualFundsCapitalComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    let header = null
-   // const header = document.getElementById('templateHeader');
-    this.UtilService.htmlToPdf(header,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+   // let header = null
+    const header = document.getElementById('templateHeader');
+    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
   }
   calculateCapitalGain(data) {
     this.isLoading = false;
