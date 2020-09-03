@@ -88,6 +88,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   familyMemberId: number;
   familyList =[];
   mfBulkEmailRequestId: number;
+  criteriaDate: Date;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -297,9 +298,9 @@ export class MutualFundsCapitalComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    let header = null
-   // const header = document.getElementById('templateHeader');
-    this.UtilService.htmlToPdf(header,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+   // let header = null
+    const header = document.getElementById('templateHeader');
+    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
   }
   calculateCapitalGain(data) {
     this.isLoading = false;
@@ -368,8 +369,9 @@ export class MutualFundsCapitalComponent implements OnInit {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
       if(this.familyList.length > 0){
-        this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
+        mutualFund = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
+      mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
       mutualFund.forEach(element => {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -428,6 +430,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       if(this.familyList.length > 0){
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
+      this.mfList = this.MfServiceService.sorting(this.mfList, 'schemeName');
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {
@@ -435,6 +438,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             let trnDate = new Date(ele.transactionDate)
             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
               if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
+                this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
                 let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
 
                 // this.getFinalTotalValue(totalValue);
@@ -497,6 +501,12 @@ export class MutualFundsCapitalComponent implements OnInit {
     let indexLoss = 0;
 
     data.forEach(element => {
+      let purchaseTrnDate = new Date(element.transactionDate)
+      if(category == 'EQUITY' && this.criteriaDate >=  purchaseTrnDate){
+        gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
+      }else{
+        gainLossBasedOnGrandfathering = 'gainOrLossAmount'
+      }
       if (element.days < days) {
         stGain += ((element[gainLossBasedOnGrandfathering] >= 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
         stLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
@@ -583,13 +593,13 @@ export class MutualFundsCapitalComponent implements OnInit {
     setTimeout(() => {
 
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
-     // const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
-     let header = null
+     const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
+    // let header = null
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
         landscape: true,
-        header:header,
+        header:header.innerHTML,
         key: 'showPieChart',
         clientId : this.clientId,
         advisorId : this.advisorId,

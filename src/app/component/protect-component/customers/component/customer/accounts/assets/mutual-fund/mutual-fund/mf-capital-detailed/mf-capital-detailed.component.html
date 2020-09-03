@@ -220,7 +220,7 @@
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.stLoss || element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
                             <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
                                 class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
@@ -254,12 +254,12 @@
                         <div class="bar">
                             <span
                                 *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalLtLoss || element.totalLtLoss == 0"
+                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalLtLoss) ? (element.totalLtLoss | number:'1.2-2') : (element.totalLtLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                        {{(equityObj) ? ((equityObj.totalStLoss == 0 ) ? 0 : (equityObj.totalStLoss | number:'1.2-2')) : '0'}}
+                        {{(equityObj) ? ((equityObj.totalLtLoss == 0 ) ? 0 : (equityObj.totalLtLoss | number:'1.2-2')) : '0'}}
                     </td>
 
                 </ng-container>
@@ -556,7 +556,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.stLoss || element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
                             <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
                                 class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
@@ -590,12 +590,12 @@
                         <div class="bar">
                             <span
                                 *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalLtLoss || element.totalLtLoss == 0"
+                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalLtLoss) ? (element.totalLtLoss | number:'1.2-2') : (element.totalLtLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
-                        {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                        {{(debtObj) ? ((debtObj.totalLtLoss == 0 ) ? 0 : (debtObj.totalLtLoss | number:'1.2-2')) : '0'}}
                     </td>
 
                 </ng-container>
@@ -1182,7 +1182,7 @@
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                                    *ngIf="element.stLoss || element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
                             </td>
 
                             <td valign="top"
@@ -1286,8 +1286,8 @@
             
                             <td valign="top"
                                 style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
-                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                                *ngIf="element.totalLtLoss || element.totalLtLoss == 0">
+                                {{((element.totalLtLoss) ? (element.totalLtLoss | number:'1.2-2') : (element.totalLtLoss == 0) ? 0 : 0)}}
                             </td>
             
                             <td valign="top"
@@ -1373,7 +1373,7 @@
                 </td>
                 <td valign="top"
                     style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                    {{(equityObj) ? ((equityObj.totalStLoss == 0 ) ? 0 : (equityObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    {{(equityObj) ? ((equityObj.totalLtLoss == 0 ) ? 0 : (equityObj.totalLtLoss | number:'1.2-2')) : '0'}}
                 </td>
                 <td valign="top"
                     style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
@@ -1579,7 +1579,7 @@
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                                    *ngIf="element.stLoss || element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
                             </td>
 
                             <td valign="top"
@@ -1683,8 +1683,8 @@
             
                             <td valign="top"
                                 style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
-                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                                *ngIf="element.totalLtLoss || element.totalLtLoss == 0">
+                                {{((element.totalLtLoss) ? (element.totalLtLoss | number:'1.2-2') : (element.totalLtLoss == 0) ? 0 : 0)}}
                             </td>
             
                             <td valign="top"
@@ -1773,7 +1773,7 @@
                 </td>
                 <td valign="top"
                     style="text-align: right;width:10%;font-weight: 600; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                    {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    {{(debtObj) ? ((debtObj.totalLtLoss == 0 ) ? 0 : (debtObj.totalLtLoss | number:'1.2-2')) : '0'}}
                 </td>
                 <td valign="top"
                     style="text-align: right;width:10%;font-weight: 600; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">

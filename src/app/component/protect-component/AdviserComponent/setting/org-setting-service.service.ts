@@ -182,4 +182,8 @@ export class OrgSettingServiceService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.ENABLE_DISABLE_TEMPLATE, data);
   }
 
+  getDomainList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOMAIN_LIST, data);
+  }
+
 }

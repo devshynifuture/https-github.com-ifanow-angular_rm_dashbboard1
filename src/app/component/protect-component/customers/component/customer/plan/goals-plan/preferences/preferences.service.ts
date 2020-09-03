@@ -46,7 +46,7 @@ export class PreferencesService {
       stepUp: goalForm.stepUp,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
-      savingType: goalForm.savingStatus,
+      savingStatus: goalForm.savingStatus,
     }
 
     if (obj.isFreezed) {
@@ -92,6 +92,7 @@ export class PreferencesService {
       savingStatus:goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
+      goalStartDate: gstartDate,
       goalEndDate:gendtDate,
       postRetirementDebtAssetAllocation: parseInt(goalForm.postdebtAllocation),
       postRetirementEquityAssetAllocation: parseInt(goalForm.postequityAllocation),

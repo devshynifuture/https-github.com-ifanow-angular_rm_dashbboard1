@@ -213,7 +213,6 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.purchaseAmount = 0;
     this.redeemAmount = 0;
     this.total_stt = 0;
-    this.isLoading = false;
     this.changeInput.emit(false);
     if (data) {
       const myArray = data
@@ -228,6 +227,7 @@ export class MfCapitalDetailedComponent implements OnInit {
           // equityData = this.getFilterData(catObj[key], key);
         }
       });
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 = new MatTableDataSource(this.getFilterData(catObj['DEBT'], 'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
@@ -292,6 +292,10 @@ export class MfCapitalDetailedComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.rightFilterData = sideBarData.data;
+            this.dataSource = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource1 = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
+            this.isLoading = true;
             const obj = {
               data: this.rightFilterData.capitalGainData.responseData,
               summaryView: (this.rightFilterData.reportFormat[0].name == 'Detailed') ? false : true,
@@ -328,8 +332,9 @@ export class MfCapitalDetailedComponent implements OnInit {
         mfList = this.MfServiceService.filterArray(mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
       if(this.familyList.length > 0){
-        this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
+        mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
+      mfList= this.MfServiceService.sorting(mfList, 'schemeName');
       mfList.forEach(element => {
         const startObj = {
           schemeName: element.schemeName,
@@ -569,8 +574,9 @@ export class MfCapitalDetailedComponent implements OnInit {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
       if(this.familyList.length > 0){
-        this.mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
+        mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
       }
+      mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
       mutualFund.forEach(element => {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -620,9 +626,9 @@ export class MfCapitalDetailedComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    //const header = document.getElementById('templateHeader');
+   //const header = document.getElementById('templateHeader');
     let header = null
-    this.UtilService.htmlToPdf(header,para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
   }
   Excel(tableTitle) {
     this.showDownload = true

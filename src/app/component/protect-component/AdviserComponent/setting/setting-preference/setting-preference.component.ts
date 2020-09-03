@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
 import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -57,7 +59,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   appearanceFG: FormGroup;
   appearanceUpdateFlag: boolean;
   hasError: boolean = false;
-
+  domainName = new FormControl('', [Validators.required]);
+  copyUrl = new FormControl('')
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'BEGIN',
@@ -74,7 +77,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     // }
   };
 
-  constructor(private orgSetting: OrgSettingServiceService,
+  domainList = [];
+
+  constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, private peopleService: PeopleService) {
 
     this.advisorId = AuthService.getAdvisorId()
@@ -96,6 +101,27 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
       brandVisible: [(!data) ? '' : data.emailId, [Validators.required]]
     });
+  }
+
+  sanitizeUrl(url) {
+    url = url.replace('watch', 'embed');
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DomainSettingPopupComponent, {
+      height: '300px',
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  selectedURl(url) {
+    this.copyUrl.setValue(url)
   }
 
   getFormControl(): any {
@@ -127,6 +153,28 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
     this.domainS.controls.brandVisible.setValue(this.brandVisible)
+  }
+
+  getDoaminList() {
+    const obj = {}
+    this.orgSetting.getDomainList(obj).subscribe(data => {
+      if (data) {
+        // data.forEach((element, index) => {
+        //   if (index != 0) {
+        //     element.videoLink = element.videoLink.replace('?v=', '/');
+        //   }
+        // });
+        // data[1].videoLink = "https://www.youtube.com/embed/Boqh4MItf60"
+        this.domainList = data
+      }
+    })
+  }
+
+  copyInputMessage(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+    this.eventService.openSnackBar('Site url link is copied', "Dismiss")
   }
 
   updateDomainSetting(event, value) {

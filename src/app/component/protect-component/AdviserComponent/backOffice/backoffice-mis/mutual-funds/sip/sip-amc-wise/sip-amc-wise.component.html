@@ -210,7 +210,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center"
-                                                    (click)="showSchemeName(subCatIndex,subcategory.showSubCategory,subcategory)">
+                                                    (click)="showSchemeName(subCatIndex,subcategory.showSubCategory,subcategory, category.amcName)">
                                                     <i *ngIf="subcategory.showSubCategory==true"
                                                         class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false"
@@ -308,7 +308,7 @@
                                                                 </td>
 
                                                                 <td class="text-center"
-                                                                    (click)="showApplicantName(investorIndex,inv.showInvestor,inv)">
+                                                                    (click)="showApplicantName(investorIndex,inv.showInvestor,inv, subcategory.schemeName, category.amcName)">
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
                                                                         *ngIf="inv.showInvestor==true">add</i>
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
@@ -329,11 +329,11 @@
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="7" class="innerTd three">
 
+                                                                    <div class="tableScrollSip" *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0"> 
                                                                     <table class="skeletonAnimation mt-16 mb-8"
                                                                         appSkeletonLoading
                                                                         [appSkeletonLoading]="isLoadingApplicant"
-                                                                        id="table-low"
-                                                                        *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0">
+                                                                        id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-12 f-500 c-p"
@@ -534,8 +534,9 @@
                                                                         </tbody>
 
                                                                     </table>
-                                                                    <div
-                                                                        *ngIf="!isLoadingApplicant && inv.showInvestor==false">
+                                                                    </div>
+
+                                                                    <div *ngIf="!isLoadingApplicant && inv.showInvestor==false">
                                                                         <div *ngIf="inv.applicantList?.length == 0 || applicantList.length == 0"
                                                                             class="d-flex flex-column align-items-center">
                                                                             <h4 class="text-center pt-12">No data found

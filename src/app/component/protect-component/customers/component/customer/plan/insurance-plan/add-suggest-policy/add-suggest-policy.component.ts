@@ -27,20 +27,20 @@ export class AddSuggestPolicyComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
   @Input() set data(data) {
     this.insuranceData = data;
-    console.log(data)
+    console.log(data);
   }
 
   ngOnInit() {
-    this.storeData ='Here you can write recommendations';
+    this.storeData = 'Here you can write recommendations';
   }
   saveData(data) {
 
   }
-  checkRecommendation(value){
-    if(!value){
+  checkRecommendation(value) {
+    if (!value) {
       this.showRecommendation = true;
-    }else{
-      this.showRecommendation = false
+    } else {
+      this.showRecommendation = false;
     }
   }
   close() {

@@ -234,9 +234,10 @@
                                             <tr style="border: transparent !important">
                                                 <td colspan="7" class="innerTd two">
 
+                                                   <div *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0" class="tableScrollSip"> 
                                                     <table class="mb-8 mt-16 skeletonAnimation" appSkeletonLoading
                                                         [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
-                                                        *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0">
+                                                        >
                                                         <thead>
                                                             <tr class="h-40 ">
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'investorName')"
@@ -422,6 +423,7 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                   </div>
                                                     <div
                                                         *ngIf="!isLoadingSubCategory && subInvList.showSubCategory==false">
                                                         <div *ngIf="subInvList.applicantList?.length == 0 && applicantListArr.length == 0"

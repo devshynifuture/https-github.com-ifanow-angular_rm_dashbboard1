@@ -53,7 +53,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='name' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p f-500 w-14">
+                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p f-500 text-right w-14">
                                     <span class="d-flex align-items-center justify-content-end">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && !reverse">
@@ -107,8 +107,8 @@
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
 
-                                    <table *ngIf="data.showScheme == false && data.schemeList?.length > 0"
-                                        class="skeletonAnimation mt-16 mb-8" appSkeletonLoading
+                                    <div *ngIf="data.showScheme == false && data.schemeList?.length > 0" class="tableScrollSip"> 
+                                    <table class="skeletonAnimation mt-16 mb-8" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
@@ -280,6 +280,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    </div>
+
                                     <div *ngIf="!isLoadingApplicant && data.showScheme == false">
                                         <div *ngIf="data.schemeList?.length == 0 "
                                             class="d-flex flex-column align-items-center">

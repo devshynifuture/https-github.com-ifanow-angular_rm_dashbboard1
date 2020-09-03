@@ -2,6 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {UserTimingService} from "./user-timing.service";
+import {EnumDataService} from "./enum-data.service";
 
 // declare gives Angular app access to ga function
 declare let gtag: Function;
@@ -11,7 +12,7 @@ declare let gtag: Function;
 })
 export class RoutingState {
 
-  constructor(private ngZone: NgZone) {
+  constructor(private ngZone: NgZone, private enumDataService: EnumDataService) {
 
   }
 
@@ -45,9 +46,11 @@ export class RoutingState {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(({urlAfterRedirects}: NavigationEnd) => {
-        this.history = [...this.history, urlAfterRedirects];
-        gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
-        UserTimingService.eventEmitter();
+        if (this.enumDataService.PRODUCTION) {
+          this.history = [...this.history, urlAfterRedirects];
+          gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
+          UserTimingService.eventEmitter();
+        }
         // if (this.getMainRouter())
 
       });
