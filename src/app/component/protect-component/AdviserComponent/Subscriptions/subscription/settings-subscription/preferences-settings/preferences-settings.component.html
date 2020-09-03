@@ -2,7 +2,7 @@
     <div class="wrapper-20">
 
         <div class="row">
-            <div class="col-md-2 p-0 pt-1 preferencesMenuList">
+            <div class="col-lg-2 col-md-12 p-0 pt-1 preferencesMenuList">
                 <ul class="vertical-menu">
                     <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}"
                         class="c-p">
@@ -20,14 +20,10 @@
                         [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-<!--                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"-->
-<!--                        class=" c-p">-->
-<!--                        Email settings-->
-<!--                    </li>-->
                 </ul>
 
             </div>
-            <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+            <div class="col-lg-10 col-md-12 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div class="row pt-20 pr-16" *ngIf="billerProfileData">
                     <div class="col-md-12 right text-right pr-0">
                         <button *ngIf="viewMode =='tab1'" (click)="Open('Add','addbillerProfile')" mat-stroked-button
@@ -70,7 +66,7 @@
                             </div>
                             <div class="b-a bt-none">
                                 <div class="row">
-                                    <div class="col-md-6 p-0">
+                                    <div class="col-lg-6 col-md-12 p-0">
                                         <div class="wrapper-16 relClass">
                                             <p class="f-12">GST</p>
                                             <div class="bar">
@@ -151,7 +147,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 p-0 bl-1">
+                                    <div class="col-lg-6 col-md-12 p-0 bl-1">
                                         <div class="wrapper-16  widthwebLogo">
                                             <p class="f-12 text-uppercase pb-16 ">YOUR LOGO</p>
                                             <div class="text-center containerOne">
@@ -167,12 +163,14 @@
                                             <p class="f-12 text-uppercase">Footnote description</p>
                                             <div class="bar">
                                                 <h5>
-                                                    <span *ngIf="!isLoading">{{singleBillerProfile.footnote?singleBillerProfile.footnote:'N/A'}}</span>
+                                                    <span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.footnote?singleBillerProfile.footnote:'N/A'}}</span>
                                                 </h5>
                                             </div>
                                             <p class="pt-32 text-uppercase f-12">Terms & Conditions</p>
                                             <div class="bar">
-                                                <h5><span *ngIf="!isLoading">{{singleBillerProfile.terms?singleBillerProfile.terms:'N/A'}}</span>
+                                                <h5><span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.terms?singleBillerProfile.terms:'N/A'}}</span>
                                                 </h5>
                                             </div>
                                         </div>

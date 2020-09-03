@@ -3,10 +3,10 @@
     <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
         <div [ngClass]="{'event-none': isLoading}" class="row">
 
-            <div class="col-md-1 p-0">
+            <div class="col-lg-1 col-md-2 p-0">
                 <h4 class="pt-8 mb-0">Invoices</h4>
             </div>
-            <div class="col-md-5 p-0">
+            <div class="col-lg-5 col-md-3 p-0">
                 <div class="row">
                     <div class="col-md-3 p-0">
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 right text-right p-0">
+            <div class="col-lg-6 col-md-7 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>
@@ -60,7 +60,7 @@
     <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
 
-    <div class="wrapper-20 pt-8 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
+    <div class="wrapper-20 pt-8 bg-white invoice-subcriptions" id="wrapper" *ngIf="dataSource.data.length > 0">
         <div [ngClass]="{'table-scroll':isLoading==false }">
             <table class="mt-8" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                 class=" skeletonAnimation" id="tbs" mat-table matSort>
@@ -132,12 +132,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="finalAmount">
+                    <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell
+                        mat-sort-header="finalAmount">
                         Billed amount
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
                         class="c-p text-right tdPadding-20 amt" mat-cell>
-                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"  > {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span>
+                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"> {{isLoading ? '' : '₹' }} <span
+                                appFormatNumber>{{element.finalAmount}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -148,7 +150,8 @@
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
                         class="text-right tdPadding-20 amt c-p" mat-cell>
-                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"> {{isLoading ? '' : '₹' }}<span appFormatNumber>
+                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"> {{isLoading ? '' : '₹' }}<span
+                                appFormatNumber>
                                 {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>
                 </ng-container>

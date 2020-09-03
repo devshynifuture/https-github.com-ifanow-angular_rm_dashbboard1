@@ -3,12 +3,12 @@
         <!-- (scroll)="scrollCall(true)" -->
         <div [ngClass]="{'event-none': isLoading}" class="p-20 pb-0 filterBox">
             <div class="row">
-                <div class="col-md-1 p-0">
+                <div class="col-lg-1 col-md-2 p-0">
                     <h4 class="pt-8 mb-0">Quotations</h4>
                 </div>
-                <div class="col-md-5 pl-0">
+                <div class="col-lg-5 col-md-3 pl-0">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 pl-0-992">
                             <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
                                     class="material-icons text-custom">
                                     arrow_drop_down
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 right text-right p-0">
+                <div class="col-lg-6 col-md-7 right text-right p-0">
                     <i class="material-icons mr-12 icon-light c-p v-sub">
                         search
                     </i>
@@ -53,7 +53,8 @@
     </div>
     <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
-    <div class="pt-8 pl-20 pr-20 pb-44 bg-white" id="wrapper" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+    <div class="pt-8 pl-20 pr-20 pb-44 bg-white quotations-subscriptions" id="wrapper"
+        [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
 
         <div [ngClass]="isLoading ? '': 'table-scroll'">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
