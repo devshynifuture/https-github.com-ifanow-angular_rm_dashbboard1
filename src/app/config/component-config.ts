@@ -85,6 +85,7 @@ export const appConfig = {
   REFRESH_COUNT: 'mutual-fund/report/bulk-order/refresh',
   GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
+  SAVE_SETTING_ALL: 'mutual-fund/report/all-client/reportwise/customize',
   GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/unmap/folio/scheme-name/list/get',
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
@@ -744,6 +745,7 @@ export const appConfig = {
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
+  DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -792,6 +794,8 @@ export const appConfig = {
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
+  DELETE_EMAIL: 'user/using-user-and-email-data/email/delete',
+  GET_CLIENT_INFO_BASED_ON_USERNAME: 'user/client/detail-using-username/get',
   // GET_BANK_LIST: 'user/bank/list/get',
   GET_BANK_LIST: 'user/multiple-user/bank/list/get',
   GET_BANK_SINGLE_JOIN: 'user/bank/list/based-on-holder/get',

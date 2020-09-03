@@ -39,6 +39,7 @@ export class ClientMoreInfoComponent implements OnInit {
   moreInfoForm;
   occupationList = [];
   disableBtn = false;
+  valueChangeFlag: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
@@ -50,11 +51,13 @@ export class ClientMoreInfoComponent implements OnInit {
   @Output() clientData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
+  @Output() tabDisableFlag = new EventEmitter();
   date = new Date();
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
+    this.valueChangeFlag = true
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
       this.occupationList = [
@@ -116,6 +119,11 @@ export class ClientMoreInfoComponent implements OnInit {
       gender: ['1'],
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '', Validators.pattern(this.validatorType.ADHAAR)]
     });
+    this.moreInfoForm.valueChanges.subscribe(data => {
+      if (this.valueChangeFlag) {
+        this.tabDisableFlag.emit(true)
+      }
+    })
   }
 
   ngOnInit() {
@@ -187,6 +195,8 @@ export class ClientMoreInfoComponent implements OnInit {
       };
       this.peopleService.editClient(obj).subscribe(
         data => {
+          this.tabDisableFlag.emit(false);
+          this.valueChangeFlag = true
           this.disableBtn = false;
           this.barButtonOptions.active = false;
           console.log(data);
@@ -246,28 +256,11 @@ export class ClientMoreInfoComponent implements OnInit {
       anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate == undefined) ? null : this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy'),
       // guardianData: this.moreInfoData.guardianData,
       guardianData: this.moreInfoData.guardianData
-      //  {
-      //   name: this.moreInfoData.guardianData.name,
-      //   birthDate: this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy'),
-      //   pan: 'pan',
-      //   genderId: this.moreInfoData.guardianData.genderId,
-      //   relationshipId: 1,
-      //   aadhaarNumber: this.moreInfoForm.value.adhharGuardian,
-      //   occupationId: 1,
-      //   martialStatusId: 1,
-      //   anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
-      //   mobileList: this.moreInfoData.guardianData.mobileList,
-      //   emailList: [
-      //     {
-      //       email: (this.moreInfoData.guardianData.emailList) ? this.moreInfoData.guardianData.emailList.email : '',
-      //       userType: 4,
-      //       verificationStatus: 0
-      //     }
-      //   ]
-      // }
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.tabDisableFlag.emit(false);
+        this.valueChangeFlag = true
         this.disableBtn = false;
         console.log(data);
         this.clientData.emit(data);

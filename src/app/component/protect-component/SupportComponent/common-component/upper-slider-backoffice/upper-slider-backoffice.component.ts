@@ -142,7 +142,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.dataSource3.data = null;
 
     } else if (this.data.startRecon === false) {
-      this.arnRiaCode = this.data.arnRiaNumber;
+      this.arnRiaCode = this.data.arnRiaCode;
       this.rtId = this.data.rtId;
       this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
       if(this.isFranklinTab){
@@ -189,8 +189,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
       after_recon: this.data.unmatchedCountAfterRecon
     }];
 
-    console.log(objArr);
-    this.dataSource.data = objArr;
+    if(this.data.unmatchedCountBeforeRecon  === 0 && this.data.unmatchedCountAfterRecon === 0){
+      this.canExportExcelSheet = 'false';
+      this.dataSource1.data = null;
+      objArr = null;
+      this.dataSource.data = objArr;
+      this.eventService.openSnackBar("All folios are Matched", "DISMISS");
+      // this.showCelebrationGif = true;
+      this.errorMessage = "All Folios are Matched";
+    } else {
+    	console.log(objArr);
+    	this.dataSource.data = objArr;
+    }
 
   }
 
@@ -769,7 +779,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         const rtName = this.getRtName(this.data.rtId);
         let calculatedUnitsTotal = 0;
         let aumUnitsTotal = 0;
-        this.aumListReportValue.forEach(element => {
+        this.reportListWithIsMappedToMinusOne.forEach(element => {
           const data = [
             element.investorName ? element.investorName : '-',
             element.mutualFundId ? element.mutualFundId : '-',
@@ -788,7 +798,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
           calculatedUnitsTotal = calculatedUnitsTotal + parseFloat(element.calculatedUnits);
           aumUnitsTotal = aumUnitsTotal + parseFloat(element.aumUnits);
         });
-        let nameValue = + "-" + this.upperHeaderName;
         if(calculatedUnitsTotal !==0 && aumUnitsTotal !==0){
           ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
         } else {

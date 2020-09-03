@@ -1,9 +1,10 @@
 <!-- <mat-action-list class="p-2" *ngIf="navList != null && navList != 'undefined'"> -->
-<div id="email-left-sidebar" [ngClass]="isCustomerEmail ? 'w16-8':'w13-8'">
+<!-- [ngClass]="isCustomerEmail ? 'w16-8':'w13-8'" -->
+<div id="email-left-sidebar">
     <div class="p-16 pb-4">
         <button mat-stroked-button class="btn-primary br-0 w-100" (click)="openCompose()">Compose</button>
     </div>
-    <mat-action-list class="pt-0">
+    <mat-action-list class="pt-0 img-size-icons">
         <mat-list class="">
             <mat-list-item routerLink="inbox" #rlaInbox="routerLinkActive" routerLinkActive="text-primary"
                 class="row c-p">
@@ -134,10 +135,11 @@
                 <div class="col-md-12 d-flex align-items-center">
                     <img
                         [src]="rlaEmailSetting.isActive ? '/assets/images/svg/setting-active.svg': '/assets/images/svg/setting.svg'">
-                    <h5 mat-line class="mb-0 ml-28 f-14 ">Email Settings</h5>
+                    <h5 mat-line class="mb-0 ml-28 f-14  ml-16-992">Email Settings</h5>
                 </div>
             </mat-list-item>
         </mat-list>
 
     </mat-action-list>
+
 </div>

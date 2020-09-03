@@ -8,33 +8,12 @@ import { ReconciliationService } from './reconciliation.service';
 })
 export class ReconciliationComponent implements OnInit {
 
-  constructor(
-    private reconService: ReconciliationService
-  ) { }
+  constructor( ) { }
 
   camsId: number;
   karvyId: number;
   franklinId: number;
 
-  ngOnInit() {
-    this.getRTList();
-  }
-
-  getRTList() {
-    this.reconService.getRTListValues({})
-      .subscribe(res => {
-        res.forEach(element => {
-          if (element.name === "CAMS") {
-            this.camsId = element.id;
-          }
-          if (element.name === 'KARVY') {
-            this.karvyId = element.id;
-          }
-          if (element.name === 'FRANKLIN_TEMPLETON') {
-            this.franklinId = element.id;
-          }
-        });
-      });
-  }
+  ngOnInit() {}
 
 }

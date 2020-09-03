@@ -1,7 +1,7 @@
 import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
 import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddTasksComponent } from './add-tasks/add-tasks.component';
@@ -47,11 +47,10 @@ export class CrmTasksComponent implements OnInit {
 
   initPoint() {
     this.isLoading = true;
-    this.infiniteScrollingFlag = true;
     this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
-    this.registerForPushNotification();
+    // this.registerForPushNotification();
   }
 
   registerForPushNotification() {
@@ -108,10 +107,10 @@ export class CrmTasksComponent implements OnInit {
     const data = {
       advisorId: this.advisorId,
       offset,
-      limit: 5
+      limit: 20
     }
     if (this.isFilterSet) {
-      data['dateFilter'] = this.filterValueId
+      data['dateFilter'] = this.filterValueId;
       if (this.customDateFilter) {
         data['fromDate'] = this.customFromToDate.fromDate;
         data['toDate'] = this.customFromToDate.toDate;
@@ -215,6 +214,7 @@ export class CrmTasksComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.finalTaskList = [];
             this.initPoint();
           }
           rightSideDataSub.unsubscribe();

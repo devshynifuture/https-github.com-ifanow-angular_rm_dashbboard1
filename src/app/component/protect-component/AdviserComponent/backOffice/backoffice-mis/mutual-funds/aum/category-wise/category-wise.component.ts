@@ -326,7 +326,8 @@ export class CategoryWiseComponent implements OnInit {
 
   }
 
-  showSchemeName(subCategory, index, catIndex) {
+  showSchemeName(subCategory, index, catIndex, categoryName) {
+    this.selectedCategoryName = categoryName;
     this.selectedSubCategoryName = subCategory.name;
     this.selectedSubCategory = index;
     this.selectedCategory = catIndex;
@@ -392,11 +393,15 @@ export class CategoryWiseComponent implements OnInit {
     }
   }
 
-  showApplicantName(schemeData, index, subCatIndex, catIndex) {
-    this.selectedSchemeName = schemeData.name;
+  showApplicantName(schemeData, index, subCatIndex, catIndex, subCatName, catName) {
     this.selectedSubCategory = subCatIndex;
     this.selectedCategory = catIndex;
     this.selectedClientIndex = index;
+
+    this.selectedCategoryName = catName;
+    this.selectedSubCategoryName = subCatName;
+    this.selectedSchemeName = schemeData.schemeName;
+
     schemeData.showScheme = !schemeData.showScheme;
     if (!schemeData.showScheme) {
       this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes[this.selectedClientIndex].clientList, index, 'applicant');
@@ -545,7 +550,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: false,
       schemeList: false,
       applicantList: false
-    }, this.subCategoryWiseTotalArr, "Category: -" + this.selectedCategoryName);
+    }, this.subCategoryWiseTotalArr, [["Selected Category Name: -", this.selectedCategoryName]]);
   }
 
   applicantWiseExcelSheet(index) {
@@ -562,7 +567,9 @@ export class CategoryWiseComponent implements OnInit {
         field5: element.weightInPerc,
       });
     });
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Category Wise AUM', this.applicantWiseTotalArr);
+
+    let arrOfParentName = [["Selected Category name: ", this.selectedCategoryName], ["Selected Sub Category name: ", this.selectedSubCategoryName], ['Selected Scheme name', this.selectedSchemeName]];
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Category Wise AUM', this.applicantWiseTotalArr, arrOfParentName);
   }
 
   schemeWiseExcelSheet(catIndex, subCatIndex) {
@@ -586,13 +593,14 @@ export class CategoryWiseComponent implements OnInit {
     arrayOfExcelStyles.shift();
     arrayOfExcelHeaders.shift();
     arrayOfExcelHeaders.shift();
+    let arrOfParentName = [["Selected Category name: " + this.selectedCategoryName], ["Selected Sub Category name: ", this.selectedSubCategoryName]];
 
     ExcelMisService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[catIndex].subCatList[subCatIndex].schemeList, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: true,
       subCatList: true,
       schemeList: false,
       applicantList: false
-    }, this.schemeWiseTotalArr, "Category: " + this.selectedCategoryName);
+    }, this.schemeWiseTotalArr, arrOfParentName);
   }
 
   exportToExcelReport(choice, catIndex, subCatIndex, schemeIndex) {

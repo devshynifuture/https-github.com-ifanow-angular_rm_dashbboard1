@@ -53,7 +53,7 @@
                                             *ngIf="propertyName=='name' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th class="c-p f-500 w-14" (click)="sortBy(category,'totalAum')">
+                                <th class="c-p f-500 w-20" (click)="sortBy(category,'totalAum')">
                                     <span class="d-flex align-items-center justify-content-end">Current Value
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && !reverse">
@@ -125,7 +125,7 @@
                                                             *ngIf="propertyName2=='name' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="c-p w-14 f-500 text-right" (click)="sortBySubCat(category.subCategoryList,'totalAum')">
+                                                <th class="c-p w-20 f-500 text-right" (click)="sortBySubCat(category.subCategoryList,'totalAum')">
                                                     <span class="d-flex align-items-center justify-content-end"> Current
                                                         Value
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -152,7 +152,7 @@
                                                 </td>
                                                 <td class="text-right">
                                                     {{subcategory.weightInPercentage | number :'1.2-2'}}%</td>
-                                                <td class="text-center" (click)="showSchemeName(subcategory, subCatIndex, categoryIndex)">
+                                                <td class="text-center" (click)="showSchemeName(subcategory, subCatIndex, categoryIndex, category.name)">
                                                     <i *ngIf="subcategory.showSubCategory==true" class="material-icons  b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false" class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
@@ -178,7 +178,7 @@
                                                                             *ngIf="propertyName3=='schemeName' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p w-14 f-500" (click)="sortByScheme(subcategory.schemes,'totalAum')">
+                                                                <th class="c-p w-20 f-500" (click)="sortByScheme(subcategory.schemes,'totalAum')">
                                                                     <span class="d-flex align-items-center justify-content-end">
                                                                         Current Value
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -204,7 +204,7 @@
                                                                 <td class="text-right">
                                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}
                                                                 </td>
-                                                                <td class="text-center" (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex)">
+                                                                <td class="text-center" (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex, subcategory.name, category.name)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
                                                                     <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!scheme.showScheme">
                                                                         remove
@@ -224,7 +224,7 @@
                                                                     <table class=" mt-16 mb-20 table95 " id="table-low" *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
                                                                         <thead>
                                                                             <tr class="h-40">
-                                                                                <th class="w-40 f-500 c-p" (click)="sortByApplicant(scheme.clientList,'name')">
+                                                                                <th class="w-35 f-500 c-p" (click)="sortByApplicant(scheme.clientList,'name')">
                                                                                     <span class="d-flex align-items-center">
                                                                                         Applicant Name
                                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -234,7 +234,7 @@
                                                                                             *ngIf="propertyName4=='name' && reverse4">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
-                                                                                <th class="c-p f-500 w-15" (click)="sortByApplicant(scheme.clientList,'balanceUnit')">
+                                                                                <th class="c-p f-500 text-right w-15" (click)="sortByApplicant(scheme.clientList,'balanceUnit')">
                                                                                     <span class="d-flex justify-content-end align-items-center">
                                                                                         Balance Unit
                                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -254,7 +254,7 @@
                                                                                             *ngIf="propertyName4=='folioNumber' && reverse4">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
-                                                                                <th class="c-p f-500 w-15" (click)="sortByApplicant(scheme.clientList,'totalAum')">
+                                                                                <th class="c-p f-500 w-20" (click)="sortByApplicant(scheme.clientList,'totalAum')">
                                                                                     <span class="d-flex justify-content-end align-items-center">
                                                                                         Current Value
                                                                                         <i class="material-icons ml-4 f-14 text-primitive"

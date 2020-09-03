@@ -154,7 +154,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       this.addbarWidth(90);
       this.successFileUpload(this.selectedFileType, data.fileName);
     }, error => {
-
+      this.eventService.openSnackBar("Failed to upload file !", "DISMISS");
     });
   }
   num: any = 0;
@@ -217,6 +217,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       if(folioMasterFileTypeArr.some(item=> item.id === this.selectedFileType)){
         this.router.navigate(['folio'], { relativeTo: this.activatedRoute });
       }
+      this.num = 0;
 
       this.setFilter();
     });

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
@@ -51,7 +51,7 @@ export class ClientBankComponent implements OnInit {
     private enumDataservice: EnumDataService) {
   }
 
-  bankForm;
+  bankForm: FormGroup;
   isIfsc;
   isPostal;
   validatorType = ValidatorType;
@@ -94,10 +94,10 @@ export class ClientBankComponent implements OnInit {
   }
   getBankList(data) {
     let obj =
-    {
-      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    }
+      [{
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      }]
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
@@ -145,7 +145,10 @@ export class ClientBankComponent implements OnInit {
         this.addNewNominee(element);
       });
     }
-
+    this.bankForm.setValue(this.bankForm.value, { emitEvent: false })
+    this.bankForm.valueChanges.subscribe(data => {
+      console.log(data)
+    })
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bankForm };
 
   }

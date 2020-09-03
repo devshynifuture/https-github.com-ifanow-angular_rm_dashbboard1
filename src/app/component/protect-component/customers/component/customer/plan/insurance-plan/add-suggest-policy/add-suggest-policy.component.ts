@@ -22,15 +22,33 @@ export class AddSuggestPolicyComponent implements OnInit {
     fullWidth: false,
 
   };
+  storeData: string;
+  showRecommendation: boolean;
   constructor(private subInjectService: SubscriptionInject) { }
   @Input() set data(data) {
     this.insuranceData = data;
-    console.log(data)
+    console.log(data);
   }
+
   ngOnInit() {
+    this.storeData = 'Here you can write recommendations';
+  }
+  saveData(data) {
+
+  }
+  checkRecommendation(value) {
+    if (!value) {
+      this.showRecommendation = true;
+    } else {
+      this.showRecommendation = false;
+    }
   }
   close() {
-    
+
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
+  saveSuggestPolicy() {
+
   }
 }
