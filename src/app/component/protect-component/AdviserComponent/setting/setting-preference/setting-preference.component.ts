@@ -103,8 +103,13 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   sanitizeUrl(url) {
+    url = url.replace('watch', 'embed');
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
+  }
+
+  selectedURl(url) {
+    this.copyUrl.setValue(url)
   }
 
   getFormControl(): any {
@@ -142,9 +147,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const obj = {}
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
-        data.forEach(element => {
-          element.videoLink = element.videoLink.replace('watch', 'embed');
+        data.forEach((element, index) => {
+          if (index != 0) {
+            element.videoLink = element.videoLink.replace('?v=', '/');
+          }
         });
+        // data[1].videoLink = "https://www.youtube.com/embed/Boqh4MItf60"
         this.domainList = data
       }
     })
