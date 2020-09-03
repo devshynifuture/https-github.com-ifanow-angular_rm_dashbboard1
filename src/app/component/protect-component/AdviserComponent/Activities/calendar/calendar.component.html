@@ -236,7 +236,8 @@
                 </div>
             </div>
             <div class="col-xl-5 col-lg-5 col-md-3 p-0 text-right">
-                <button mat-stroked-button routerLink="/admin/activies/calendar/schedule" routerLinkActive="btn-primary"
+                <button (click)="selectedZone='Schedule'" mat-stroked-button
+                    routerLink="/admin/activies/calendar/schedule" routerLinkActive="btn-primary"
                     class="br-2 ba-black text-black mr-12 d-none-992">Schedule</button>
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="d-none-992">
                     <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day"
@@ -252,6 +253,8 @@
                 </mat-button-toggle-group>
                 <mat-form-field class="d-lg-none">
                     <mat-select [(ngModel)]="selectedZone" class="form-control">
+                        <mat-option routerLink="/admin/activies/calendar/schedule" value="Schedule">Schedule
+                        </mat-option>
                         <mat-option (click)="checkConnectGoogle()" routerLink="/admin/activies/calendar/day"
                             value="Day">Day</mat-option>
                         <mat-option (click)="checkConnectGoogle()" routerLink="/admin/activies/calendar/week"
