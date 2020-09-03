@@ -416,7 +416,8 @@
                                         <mat-form-field appearance="standard" floatLabel="never">
                                             <mat-select [formControl]="domainName" class="form-control">
                                                 <mat-option disabled value=''>Select domain</mat-option>
-                                                <mat-option *ngFor="let singleDomain of domainList"
+                                                <mat-option (click)="selectedURl(singleDomain.videoLink)"
+                                                    *ngFor="let singleDomain of domainList"
                                                     [value]="singleDomain.videoLink">
                                                     {{singleDomain.provider}}
                                                 </mat-option>
@@ -435,11 +436,9 @@
                                 <div *ngIf="domainName.valid" class="row">
                                     <div class="col-md-12 pt-18">
                                         <mat-form-field appearance="standard" floatLabel="never">
-                                            <!-- <input [formControl]="copyUrl" #copyText 
-                                            [(ngModel)]="domainName.value"
-                                                matInput> -->
+                                            <input [formControl]="copyUrl" #copyText readonly matInput>
 
-                                                <!-- build issue  above-->
+                                            <!-- build issue  above-->
                                         </mat-form-field>
                                         <button (click)="copyInputMessage(copyText)">Copy link</button>
                                     </div>
