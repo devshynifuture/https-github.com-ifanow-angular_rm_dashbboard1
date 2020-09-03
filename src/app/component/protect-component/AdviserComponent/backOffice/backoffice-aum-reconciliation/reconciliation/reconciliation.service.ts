@@ -31,10 +31,10 @@ export class ReconciliationService {
                             id,
                             brokerCode
                         });
-                        subject.next(brokerListArr);
                     });
+                    subject.next(brokerListArr);
                 } else {
-                    this.eventService.openSnackBar('No Broker LIst Found', "Dismiss");
+                    this.eventService.openSnackBar('No Broker List Found', "Dismiss");
                 }
             });
 
