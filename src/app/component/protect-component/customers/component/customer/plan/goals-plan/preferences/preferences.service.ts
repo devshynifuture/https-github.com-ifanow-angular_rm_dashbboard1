@@ -92,6 +92,7 @@ export class PreferencesService {
       savingStatus:goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
+      goalStartDate: gstartDate,
       goalEndDate:gendtDate,
       postRetirementDebtAssetAllocation: parseInt(goalForm.postdebtAllocation),
       postRetirementEquityAssetAllocation: parseInt(goalForm.postequityAllocation),
