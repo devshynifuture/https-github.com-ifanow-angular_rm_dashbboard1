@@ -298,9 +298,9 @@ export class MutualFundsCapitalComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    let header = null
-   // const header = document.getElementById('templateHeader');
-    this.UtilService.htmlToPdf(header,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+   // let header = null
+    const header = document.getElementById('templateHeader');
+    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
   }
   calculateCapitalGain(data) {
     this.isLoading = false;
@@ -593,13 +593,13 @@ export class MutualFundsCapitalComponent implements OnInit {
     setTimeout(() => {
 
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
-     // const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
-     let header = null
+     const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
+    // let header = null
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
         landscape: true,
-        header:header,
+        header:header.innerHTML,
         key: 'showPieChart',
         clientId : this.clientId,
         advisorId : this.advisorId,
