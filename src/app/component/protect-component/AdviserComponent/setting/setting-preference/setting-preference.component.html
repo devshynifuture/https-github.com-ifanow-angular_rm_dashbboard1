@@ -31,7 +31,7 @@
                     <!-- <li (click)="changeView('tab6')" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}" class=" c-p">
                         Color theme
                     </li> -->
-                    <li (click)="changeView('tab7');getDomain()"
+                    <li (click)="changeView('tab7');getDomain();getDoaminList()"
                         [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
                         Domain settings
                     </li>
@@ -400,7 +400,7 @@
                             <div class="col-md-5 bl-1">
                                 <div class="row">
                                     <div class="col-md-10 p-0">
-                                        <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
+                                        <p class="m-0 text-black roboto f-500">Site title</p>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
                                         <button mat-stroked-button class="btn-dark-outline xs"
@@ -409,6 +409,36 @@
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="editDomain(false,'brand',brandVisibility[0])">Update</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field appearance="standard" floatLabel="never">
+                                            <mat-select [formControl]="domainName" class="form-control">
+                                                <mat-option disabled value=''>Select domain</mat-option>
+                                                <mat-option *ngFor="let singleDomain of domainList"
+                                                    [value]="singleDomain.videoLink">
+                                                    {{singleDomain.provider}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error class="f-12">Please select a domain
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div *ngIf="domainName.valid" class="row">
+                                    <div class="col-md-12 pt-18">
+                                        <iframe width="300" height="200" [src]="sanitizeUrl(domainName.value)"
+                                            frameborder="0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <div *ngIf="domainName.valid" class="row">
+                                    <div class="col-md-12 pt-18">
+                                        <mat-form-field appearance="standard" floatLabel="never">
+                                            <input [formControl]="copyUrl" #copyText [(ngModel)]="domainName.value"
+                                                matInput readonly>
+                                        </mat-form-field>
+                                        <button (click)="copyInputMessage(copyText)">Copy link</button>
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
