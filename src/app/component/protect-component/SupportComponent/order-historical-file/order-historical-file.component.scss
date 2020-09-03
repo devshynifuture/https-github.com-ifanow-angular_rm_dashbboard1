@@ -16,9 +16,6 @@
   width: 1.5em !important;
 }
 
-::ng-deep .mat-form-field-suffix {
-  position: inherit !important;
-}
 
 .pb-100 {
   padding-bottom: 100px !important;
@@ -37,21 +34,22 @@
     }
   }
 }
-.pos-rel{
+
+.pos-rel {
   position: relative !important;
 }
 
-.middle-of-slider{
+.middle-of-slider {
   position: absolute !important;
-  top:50% !important;
-  left:50% !important;
+  top: 50% !important;
+  left: 50% !important;
 }
 
-.cur-wait{
+.cur-wait {
   cursor: wait !important;
   z-index: -1 !important;
 }
 
-.opacity-4{
+.opacity-4 {
   opacity: 0.4 !important;
 }

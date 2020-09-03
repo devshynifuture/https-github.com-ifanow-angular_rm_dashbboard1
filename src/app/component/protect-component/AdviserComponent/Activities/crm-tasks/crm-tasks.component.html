@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="wrapper-20 pt-0 crm-task">
-        <div [ngClass]="{'table-scroll':isLoading==false }"
+        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)"
             class="ox-hide crm-task-scroll" *ngIf="dataSource.data && dataSource.data.length>0">
             <table [dataSource]="dataSource" #tableEl id="tbs" mat-table [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="client">

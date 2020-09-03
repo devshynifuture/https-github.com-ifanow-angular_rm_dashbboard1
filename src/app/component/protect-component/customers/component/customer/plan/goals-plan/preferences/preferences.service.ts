@@ -36,6 +36,8 @@ export class PreferencesService {
       advisorId: remainingData.advisorId,
       name: goalForm.name,
       notes: goalForm.notes,
+      goalEndDate:gendtDate,
+      goalStartDate: gstartDate,
       frequency: goalForm.goalEndDateYear - goalForm.goalStartDateYear,
       futureValue: goalForm.goalValue,
       presentValue: goalForm.goalValue,
@@ -44,7 +46,7 @@ export class PreferencesService {
       stepUp: goalForm.stepUp,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
-      savingType: goalForm.savingStatus,
+      savingStatus: goalForm.savingStatus,
     }
 
     if (obj.isFreezed) {
@@ -87,10 +89,10 @@ export class PreferencesService {
       notes: goalForm.notes,
       archivedValue: (goalForm.archiveGoal ? 1 : 0),
       isFreezed: (goalForm.freezeCalculation ? 1 : 0),
-      goalStartDate: gstartDate,
       savingStatus:goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
+      goalStartDate: gstartDate,
       goalEndDate:gendtDate,
       postRetirementDebtAssetAllocation: parseInt(goalForm.postdebtAllocation),
       postRetirementEquityAssetAllocation: parseInt(goalForm.postequityAllocation),
@@ -126,10 +128,14 @@ export class PreferencesService {
 
   getGoalValueForForm(data) {
     if (data.singleOrMulti == 2) {
-      if (data.remainingData.futureValue) {
-        return data.remainingData.futureValue
-      } else {
-        return data.remainingData.goalFV;
+      switch (data.goalType) {
+        case AppConstants.VACATION_GOAL:
+          return data.remainingData.presentValue;
+        case AppConstants.EDUCATION_GOAL:
+          return data.remainingData.presentValue;
+        default:
+          console.error('Invalid goal type found', data.goalType);
+          return 0;
       }
 
     } else {
@@ -144,6 +150,7 @@ export class PreferencesService {
         case AppConstants.MARRIAGE_GOAL:
           return data.remainingData.goalPresentValue;
         case AppConstants.WEALTH_CREATION_GOAL:
+          return data.remainingData.goalFV;
         case AppConstants.EMERGENCY_GOAL:
           return data.remainingData.goalFV;
         case AppConstants.RETIREMENT_GOAL:

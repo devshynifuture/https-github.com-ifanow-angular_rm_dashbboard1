@@ -54,6 +54,8 @@ export class AddTasksComponent implements OnInit {
   commentTaskInput = '';
   commentSubTaskInput = '';
   taskCommentForm: FormGroup;
+  showSubTaskHeading = false;
+  showNoSubTaskFoundError = false;
 
   isMainLoading = false;
   dayOfWeek: any;
@@ -95,8 +97,14 @@ export class AddTasksComponent implements OnInit {
         element.editMode = false;
       });
       this.attachmentList = this.data.attachments;
-    }
+    }    
     this.formInit(this.data);
+
+    if(this.data !== null && this.subTaskList.length === 0){
+      this.showNoSubTaskFoundError = true;
+    } else {
+      this.showNoSubTaskFoundError = false;
+    }
     this.getTaskTemplateList();
     this.getTeamMemberList();
 
@@ -514,11 +522,19 @@ export class AddTasksComponent implements OnInit {
   }
 
   addSubTask(item) {
+    this.showSubTaskHeading = true;
+    this.showNoSubTaskFoundError = false;
     this.subTask.push(this.getSubTaskForm(item));
   }
 
   removeSubTask(index) {
     this.subTask.removeAt(index);
+    if(this.subTask.length ===0){
+      this.showSubTaskHeading = false;
+    }
+    if(this.subTaskList.length === 0){
+      this.showNoSubTaskFoundError = true;
+    }
   }
 
   downloadAttachment(item) {
@@ -539,7 +555,7 @@ export class AddTasksComponent implements OnInit {
     const obj = {
       attachmentName: fileData.name
     }
-    this.isLoading
+    this.isMainLoading = true; 
     this.crmTaskService.getAttachmentUploadUrlValue(obj)
       .subscribe(res => {
         if (res) {
@@ -565,9 +581,17 @@ export class AddTasksComponent implements OnInit {
                 }
               }
               this.uploadAttachmentToAws(obj, choice);
-            }, error => console.error(error));
+            }, error => {
+              this.isMainLoading = false;
+              this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+              console.error(error)
+            });
 
         }
+      }, err => {
+        this.isMainLoading = false;
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+        console.error(err)
       })
   }
 
@@ -577,7 +601,6 @@ export class AddTasksComponent implements OnInit {
       attachmentName: value.attachmentName,
       s3Uuid: value.s3Uuid
     }
-    this.isMainLoading = true;
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
         if (res) {
@@ -591,6 +614,10 @@ export class AddTasksComponent implements OnInit {
 
           this.eventService.openSnackBar("Successfuly Uploaded Attachment!", "DISMISS");
         }
+      }, err => {
+        this.isMainLoading = false;
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+        console.error(err)
       })
   }
 
@@ -625,9 +652,11 @@ export class AddTasksComponent implements OnInit {
         comments: [],
         attachments: [],
         status: 0
-      })
+      });
+      this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
+      this.removeSubTask(formGroupIndex);
     }
-    this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
+    
   }
 
   setRecurringFreq(item) {
@@ -729,7 +758,7 @@ export class AddTasksComponent implements OnInit {
       this.subTaskList.forEach(element => {
         subTaskArr.push({
           taskNumber: this.getSubTaskNumber(),
-          assignedTo: element.ownerId,
+          assignedTo: element.ownerId ? element.ownerId: element.assignedTo,
           description: element.description,
           turnAroundTime: element.turnAroundTime
         });
