@@ -358,7 +358,7 @@
                 <div class="col-md-12 p-0">
                     <div class="bg-white">
                         <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} |
-                            {{singlePortfolio.ownerList[0].name}}
+                            {{singlePortfolio.ownerList.length > 0?singlePortfolio.ownerList[0].name:''}}
                         </h5>
                     </div>
                 </div>
