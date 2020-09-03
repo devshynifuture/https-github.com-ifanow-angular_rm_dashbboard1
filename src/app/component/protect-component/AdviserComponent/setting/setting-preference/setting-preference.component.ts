@@ -15,6 +15,7 @@ import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -106,6 +107,17 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     url = url.replace('watch', 'embed');
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DomainSettingPopupComponent, {
+      height: '300px',
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   selectedURl(url) {

@@ -303,7 +303,7 @@
                             <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the
                                 link with which IFANOW is accessed by you, your team and your clients. You have an
                                 option to either Partially or Completely white label the URL. <span
-                                    class="text-primary text-underline c-p">Read more</span></p>
+                                    (click)="openDialog()" class="text-primary text-underline c-p">Read more</span></p>
                         </div>
                         <div class="row pt-28" [formGroup]="domainS">
                             <div class="col-md-7 pl-0">
@@ -401,19 +401,6 @@
                             </div>
                             <div class="col-md-5 bl-1">
                                 <div class="row">
-                                    <div class="col-md-10 p-0">
-                                        <p class="m-0 text-black roboto f-500">Site title</p>
-                                    </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs"
-                                            (click)="editDomain(true,'brand',brandVisibility[0])">Edit</button>
-                                    </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs"
-                                            (click)="editDomain(false,'brand',brandVisibility[0])">Update</button>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-12 pl-0">
                                         <div class="form-group">
                                             <mat-form-field appearance="standard" floatLabel="never">
@@ -452,11 +439,24 @@
 
                                     </div>
                                 </div>
+                                <div class="row  pt-18">
+                                    <div class="col-md-10 p-0">
+                                        <p class="m-0 text-black roboto f-500">Site title</p>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(true,'brand',brandVisibility[0])">Edit</button>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(false,'brand',brandVisibility[0])">Update</button>
+                                    </div>
+                                </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
                                 <div class="form-group mb-0 pt-20 ">
                                     <mat-form-field>
-                                        <input matInput class="form-control" formControlName="brandVisible"
-                                            brandVisible>
+                                        <input matInput autocomplete="off" class="form-control"
+                                            formControlName="brandVisible" [readonly]="!showUpdateBrand">
                                     </mat-form-field>
                                 </div>
                                 <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser bar.
