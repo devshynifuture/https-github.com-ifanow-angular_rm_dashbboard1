@@ -54,6 +54,9 @@ export class SipAmcWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
   ceasedDate: any = new Date();
+  selectedAmcName: any;
+  selectedSchemeName: any;
+  selectedInvestorName: any;
 
   constructor(
     private datePipe: DatePipe,
@@ -352,9 +355,9 @@ export class SipAmcWiseComponent implements OnInit {
   }
 
   showSubTableList(index, category, schemeData) {
-
     schemeData.showCategory = !schemeData.showCategory;
     if (schemeData.showCategory == false) {
+      this.selectedAmcName = schemeData.amcName;
       this.selectedCategory = index;
       this.isLoadingCategory = true;
       schemeData.schemeList = [];
@@ -530,11 +533,13 @@ export class SipAmcWiseComponent implements OnInit {
     this.amcWiseTotal = ['Total', '', sipAmountTotal, sipCountTotal, sumWeightInPercTotal];
   }
 
-  showSchemeName(index, subcashowSubcat, investorData) {
+  showSchemeName(index, subcashowSubcat, investorData, amcName) {
 
     this.selectedSubCategory = index;
     investorData.showSubCategory = !investorData.showSubCategory;
     if (investorData.showSubCategory == false) {
+      this.selectedAmcName = amcName;
+      this.selectedSchemeName = investorData.schemeName;
       this.selectedAmc = index;
       this.isLoadingSubCategory = true;
       this.subCategory = [];
@@ -586,11 +591,15 @@ export class SipAmcWiseComponent implements OnInit {
     e.preventDefault();
   }
 
-  showApplicantName(index, subcashowSubcat, applicantData) {
+  showApplicantName(index, subcashowSubcat, applicantData, schemeName, amcName) {
     this.selectedSubCategory = subcashowSubcat;
     applicantData.showInvestor = !applicantData.showInvestor;
 
     if (applicantData.showInvestor == false) {
+      this.selectedAmcName = amcName;
+      this.selectedSchemeName = schemeName;
+      this.selectedInvestorName = applicantData.investorName;
+      
       this.selectedClientIndex = index;
       this.isLoadingApplicant = true;
       applicantData.applicantList = [];
@@ -720,7 +729,9 @@ export class SipAmcWiseComponent implements OnInit {
       schemeList: false,
       investorList: false,
       applicantList: false
-    }, this.schemeWiseTotal);
+    }, this.schemeWiseTotal,
+    [["Selected AMC Name: ", this.selectedAmcName]]
+    );
   }
 
   investorWiseExcelSheet(catIndex, subCatIndex) {
@@ -750,7 +761,9 @@ export class SipAmcWiseComponent implements OnInit {
       schemeList: true,
       investorList: false,
       applicantList: false
-    }, this.investorWiseTotal);
+    }, this.investorWiseTotal,
+    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]
+    );
   }
 
   applicantWiseExcelReport(index) {
@@ -777,7 +790,8 @@ export class SipAmcWiseComponent implements OnInit {
       sumWeightInPercTotal += element.weightInPerc;
     });
     this.applicantWiseTotal = ['', '', '', '', '', '', '', '', 'Total', sumSipAmtTotal, sumWeightInPercTotal];
-    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS report - AMC wise SIP', this.applicantWiseTotal);
+    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS report - AMC wise SIP', this.applicantWiseTotal,
+    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName], ["Selected Investor Name: ", this.selectedInvestorName]]);
     // ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report', this.applicantWiseTotalArr);
   }
 }

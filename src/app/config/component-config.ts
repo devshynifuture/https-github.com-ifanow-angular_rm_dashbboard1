@@ -745,6 +745,7 @@ export const appConfig = {
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
+  DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
