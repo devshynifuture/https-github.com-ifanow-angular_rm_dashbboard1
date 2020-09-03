@@ -46,7 +46,7 @@ export class PreferencesService {
       stepUp: goalForm.stepUp,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
-      savingType: goalForm.savingStatus,
+      savingStatus: goalForm.savingStatus,
     }
 
     if (obj.isFreezed) {
