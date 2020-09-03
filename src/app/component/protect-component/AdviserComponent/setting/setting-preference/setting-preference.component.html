@@ -412,7 +412,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 pl-0">
+                                        <div class="form-group"> 
                                         <mat-form-field appearance="standard" floatLabel="never">
                                             <mat-select [formControl]="domainName" class="form-control">
                                                 <mat-option disabled value=''>Select domain</mat-option>
@@ -425,22 +426,26 @@
                                             <mat-error class="f-12">Please select a domain
                                             </mat-error>
                                         </mat-form-field>
+                                        </div>
                                     </div>
                                 </div>
-                                <div *ngIf="domainName.valid" class="row">
-                                    <div class="col-md-12 pt-18">
-                                        <iframe width="300" height="200" [src]="sanitizeUrl(domainName.value)"
+                                <div *ngIf="domainName.valid" class="row pt-18">
+                                    <div class="col-md-12 pl-0 ">
+                                        <iframe width="100%" height="200" [src]="sanitizeUrl(domainName.value)"
                                             frameborder="0" allowfullscreen></iframe>
                                     </div>
                                 </div>
-                                <div *ngIf="domainName.valid" class="row">
-                                    <div class="col-md-12 pt-18">
+                                <div *ngIf="domainName.valid" class="row pl-18">
+                                    <div class="col-md-12 pl-0 pr-10 remove-top d-flex">
                                         <mat-form-field appearance="standard" floatLabel="never">
-                                            <input [formControl]="copyUrl" #copyText readonly matInput>
+                                            <input class="form-control" [formControl]="copyUrl" #copyText readonly matInput>
 
                                             <!-- build issue  above-->
                                         </mat-form-field>
-                                        <button (click)="copyInputMessage(copyText)">Copy link</button>
+                                        <span (click)="copyInputMessage(copyText)" class="material-icons inputGroupText c-p f-20">
+                                            content_copy
+                                            </span>
+                                        
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
