@@ -330,8 +330,9 @@
                                                 <input matInput type="text" [readonly]="!showUpdate"
                                                     class="form-control b-0 w-60" formControlName="normalLable"
                                                     placeholder="example">
+                                                <mat-error>This field is required</mat-error>
                                                 <button mat-stroked-button
-                                                    class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
+                                                    class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.my-planner.in</button>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -362,6 +363,7 @@
                                                 <input matInput type="text" [readonly]="!showUpdateWhite"
                                                     class="form-control b-0 w-60" formControlName="whiteLable"
                                                     placeholder="www.example.com">
+                                                <mat-error>This field is required</mat-error>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -413,19 +415,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 pl-0">
-                                        <div class="form-group"> 
-                                        <mat-form-field appearance="standard" floatLabel="never">
-                                            <mat-select [formControl]="domainName" class="form-control">
-                                                <mat-option disabled value=''>Select domain</mat-option>
-                                                <mat-option (click)="selectedURl(singleDomain.videoLink)"
-                                                    *ngFor="let singleDomain of domainList"
-                                                    [value]="singleDomain.videoLink">
-                                                    {{singleDomain.provider}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-error class="f-12">Please select a domain
-                                            </mat-error>
-                                        </mat-form-field>
+                                        <div class="form-group">
+                                            <mat-form-field appearance="standard" floatLabel="never">
+                                                <mat-select [formControl]="domainName" class="form-control">
+                                                    <mat-option disabled value=''>Select domain</mat-option>
+                                                    <mat-option (click)="selectedURl(singleDomain.videoLink)"
+                                                        *ngFor="let singleDomain of domainList"
+                                                        [value]="singleDomain.videoLink">
+                                                        {{singleDomain.provider}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error class="f-12">Please select a domain
+                                                </mat-error>
+                                            </mat-form-field>
                                         </div>
                                     </div>
                                 </div>
@@ -438,14 +440,16 @@
                                 <div *ngIf="domainName.valid" class="row pl-18">
                                     <div class="col-md-12 pl-0 pr-10 remove-top d-flex">
                                         <mat-form-field appearance="standard" floatLabel="never">
-                                            <input class="form-control" [formControl]="copyUrl" #copyText readonly matInput>
+                                            <input class="form-control" [formControl]="copyUrl" #copyText readonly
+                                                matInput>
 
                                             <!-- build issue  above-->
                                         </mat-form-field>
-                                        <span (click)="copyInputMessage(copyText)" class="material-icons inputGroupText c-p f-20">
+                                        <span (click)="copyInputMessage(copyText)"
+                                            class="material-icons inputGroupText c-p f-20">
                                             content_copy
-                                            </span>
-                                        
+                                        </span>
+
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
