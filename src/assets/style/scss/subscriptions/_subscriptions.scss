@@ -252,3 +252,9 @@
     display: flex;
   }
 }
+
+@media(max-width:992px) {
+  .responsive-subscription.pt-180 {
+    padding-top: 120px !important;
+  }
+}

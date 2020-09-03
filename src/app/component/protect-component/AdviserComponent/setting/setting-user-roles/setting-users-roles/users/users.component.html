@@ -2,7 +2,7 @@
     <div class="col-md-6 pl-0">
         <h4 *ngIf="!hideLabel" class="m-0 text-black">Team members</h4>
     </div>
-    <div class="col-md-6 pr-0 text-right">
+    <div class="col-md-6 text-right">
         <button (click)="addEditTeamMember(null, true)" *ngIf="userList" class="btn-primary" mat-stroked-button>
             ADD NEW
         </button>
@@ -51,9 +51,8 @@
                     </div>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height_23': isLoading}">
-                                <!-- [routerLink]="['/admin/people/clients']"  c-p txt-underline hide routerLink-->
-                            <h3 *ngIf="!isLoading" 
-                                routerLinkActive="router-link-active"
+                            <!-- [routerLink]="['/admin/people/clients']"  c-p txt-underline hide routerLink-->
+                            <h3 *ngIf="!isLoading" routerLinkActive="router-link-active"
                                 class="m-0 f-400 text-primary f-18 pt-16">
                                 {{user.clientCount}}<span *ngIf="user.clientCount==0"> client</span> <span
                                     *ngIf="user.clientCount>1"> clients</span></h3>

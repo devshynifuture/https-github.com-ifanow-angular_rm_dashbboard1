@@ -61,7 +61,7 @@
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter account number" #accNum [maxLength]="18"
+                    <input autocomplete="off" placeholder="Enter account number" #accNum maxlength="18"
                         formControlName="accNumber" matInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end">{{accNum.value.length}} / 18</mat-hint>

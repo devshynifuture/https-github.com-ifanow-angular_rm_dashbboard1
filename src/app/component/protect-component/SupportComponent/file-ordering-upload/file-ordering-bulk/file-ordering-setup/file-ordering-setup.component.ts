@@ -177,7 +177,6 @@ export class FileOrderingSetupComponent implements OnInit {
             rmId: this.rmId,
             rtId: values.rtId.value,
             fileTypeId: values.fileTypeId,
-            fromDate: '',
             toDate: values.asOnDate._d.getFullYear() + "-" +
               this.utilService.addZeroBeforeNumber((values.asOnDate._d.getMonth() + 1), 2) + '-' +
               this.utilService.addZeroBeforeNumber((values.asOnDate._d.getDate()), 2),

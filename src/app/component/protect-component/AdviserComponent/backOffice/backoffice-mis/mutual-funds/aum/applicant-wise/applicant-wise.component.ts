@@ -741,6 +741,7 @@ export class ApplicantWiseComponent implements OnInit {
         data => {
           this.isLoadingScheme = false;
           if (data) {
+            console.log(data);
             data.forEach(element => {
               element.showFolio = true;
             });

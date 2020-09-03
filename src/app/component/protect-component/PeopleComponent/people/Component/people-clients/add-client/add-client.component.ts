@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PeopleService } from '../../../../people.service';
 import { CancelFlagService } from '../../people-service/cancel-flag.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTabGroup } from '@angular/material';
 
 @Component({
   selector: 'app-add-client',
@@ -19,8 +19,14 @@ export class AddClientComponent implements OnInit {
   matTabGroupFlag: boolean;
   hideDematFlag: any;
   refreshBankFlag: any;
+  @ViewChild('tabGroup', { static: false }) tabGroup: any;
+  valueChangesFlag: any;
 
-  constructor(private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private cancelFlagService: CancelFlagService, public dialog: MatDialog) { }
+  constructor(private cusService: CustomerService,
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject,
+    private cancelFlagService: CancelFlagService,
+    public dialog: MatDialog) { }
   ngOnInit() {
   }
   @Input() set data(data) {
@@ -51,6 +57,19 @@ export class AddClientComponent implements OnInit {
       this.refreshBankFlag = flag
     }
   }
+  tabChangeFun(eventData) {
+    console.log(this.tabGroup)
+    if (this.valueChangesFlag) {
+      this.eventService.openSnackBar("Please click on save & next before proceeding.", "Dismiss")
+    }
+    else[
+    ]
+  }
+
+  popupMsgFlag(flag) {
+    this.valueChangesFlag = flag
+  }
+
   deleteModal(value) {
     const dialogData = {
       data: value,

@@ -31,6 +31,34 @@
                         </div>
                     </div>
 
+                    <div class="row pt-20 btl-1" *ngIf="data.goalType == 1">
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
+                            <p class="roboto mb-0 ">Post retirement asset allocation
+                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                                    aria-label="Button that displays a tooltip when focused or hovered over">
+                            </p>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <p class="m-0 roboto text-black">Equity bifurcation</p>
+                            <div class="form-group mb-0">
+                                <mat-form-field class="w-100">
+                                    <input matInput formControlName="postequityAllocation" type="text"
+                                        class="form-control br-0"
+                                        (change)="setOtherBifurcation(goalDetailsFG.get('postequityAllocation'), goalDetailsFG.get('postdebtAllocation'))">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <p class="m-0 roboto text-black">Debt bifurcation</p>
+                            <div class="form-group mb-0">
+                                <mat-form-field class="w-100">
+                                    <input matInput formControlName="postdebtAllocation" type="text"
+                                        class="form-control br-0"
+                                        (change)="setOtherBifurcation(goalDetailsFG.get('postdebtAllocation'), goalDetailsFG.get('postequityAllocation'))">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row pt-20 btl-1">
                         <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
                             <p class="roboto mb-0 ">Savings start date
@@ -102,12 +130,14 @@
                         </div>
                     </div>
                     <div class="row pt-20 pb-20 btl-1">
-                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="data.goalType!=1">
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
+                            *ngIf="data.goalType!=1">
                             <p class="roboto mb-0  ">Goal start date
                                 <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
-                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="data.goalType==1">
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
+                            *ngIf="data.goalType==1">
                             <p class="roboto mb-0  ">Retirement age
                                 <img src="/assets/images/svg/info.svg">
                             </p>
@@ -141,12 +171,14 @@
                         </div>
                     </div>
                     <div class="row pt-20 pb-20 btl-1" *ngIf="data.singleOrMulti == 2 || data.goalType == 1">
-                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="data.goalType != 1">
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
+                            *ngIf="data.goalType != 1">
                             <p class="roboto mb-0 ">Goal end date
                                 <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
-                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="data.goalType == 1">
+                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
+                            *ngIf="data.goalType == 1">
                             <p class="roboto mb-0 ">Life expectancy
                                 <img src="/assets/images/svg/info.svg">
                             </p>
@@ -212,7 +244,7 @@
                         </div>
 
                     </div>
-                    <div class="row pt-10 pb-10">
+                    <!-- <div class="row pt-10 pb-10">
                         <div class="col-md-4 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0  ">
                                 Step up
@@ -254,7 +286,7 @@
                             <p class="m-0 text-primitive mt-4">Last Freeze date:
                                 {{data.remainingData.lastFreezedDate | date: 'dd/MM/yyyy'}}</p>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="row pt-20 btl-1 pb-20">

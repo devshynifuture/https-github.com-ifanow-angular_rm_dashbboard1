@@ -45,8 +45,9 @@ export class CalendarComponent implements OnInit {
   userInfo: any;
   currentYear: any;
   excessAllow: any;
+  selectedZone: string = "Month";
   constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router, private emailService: EmailServiceService) {
-    
+
   }
 
   ngOnInit() {
@@ -59,7 +60,6 @@ export class CalendarComponent implements OnInit {
     // this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     console.log(this.router.url, "router test");
-
     // if(localStorage.getItem('successStoringToken')){
     //   this.mailConnect(true);
     // }
@@ -67,26 +67,26 @@ export class CalendarComponent implements OnInit {
     //   this.mailConnect(false);
     // }
     this.excessAllow = localStorage.getItem('successStoringToken')
-    if(this.excessAllow){
+    if (this.excessAllow) {
       this.checkConnectGoogle();
     }
   }
 
   checkConnectGoogle() {
-    
+
     this.emailService.getProfile().subscribe(res => {
-      if(res){
+      if (res) {
         this.excessAllow = true;
       }
     },
-    err=>{
-      this.excessAllow = false;
-      localStorage.removeItem('googleOAuthToken');
-      localStorage.removeItem('successStoringToken');
-      localStorage.removeItem('associatedGoogleEmailId');
-      console.log("error call");
-      
-    })
+      err => {
+        this.excessAllow = false;
+        localStorage.removeItem('googleOAuthToken');
+        localStorage.removeItem('successStoringToken');
+        localStorage.removeItem('associatedGoogleEmailId');
+        console.log("error call");
+
+      })
   }
 
   // getEvent() {
@@ -104,7 +104,7 @@ export class CalendarComponent implements OnInit {
   //   })
   // }
 
-  mailConnect(done){
+  mailConnect(done) {
     this.excessAllow = done;
   }
   // getEvent() {
@@ -209,8 +209,8 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  viewDayWeek(day,month,year){
-    this.viewDate = new Date(year,month,day);
+  viewDayWeek(day, month, year) {
+    this.viewDate = new Date(year, month, day);
     this.daysArr = [];
     this.updatecalendar();
   }

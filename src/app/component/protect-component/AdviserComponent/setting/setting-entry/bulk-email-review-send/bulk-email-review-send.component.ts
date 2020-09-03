@@ -75,7 +75,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
           Your USERNAME is: $username</p>
       <p style='font-family: "Noto Sans", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 23px; margin-top: 16px;   color: rgb(33, 33, 33); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;'>
           PASSWORD is: $password</p>
-          <a href="http://beta.my-planner.in/"
+          <a href="https://beta.my-planner.in/login/setpassword?$hidden_username"
       style="background-color:#008FFF; font-family: 'Noto Sans', Helvetica, Arial, sans-serif;  border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;">
       Go to account
     </a>

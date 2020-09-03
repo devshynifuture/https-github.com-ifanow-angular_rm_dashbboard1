@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {AuthService} from '../../../auth-service/authService';
-import {Router} from '@angular/router';
-import {HttpParams} from '@angular/common/http';
-import {RoleService} from "../../../auth-service/role.service";
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { AuthService } from '../../../auth-service/authService';
+import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { RoleService } from "../../../auth-service/role.service";
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +82,10 @@ export class LoginService {
       router.navigate(['customer', 'detail', 'overview', 'myfeed']);
     }
     // when changing routers, make changes to authservice gohome() method
+  }
+
+  getCLientDetails(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_INFO_BASED_ON_USERNAME, data, 1);
   }
 }
 
