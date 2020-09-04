@@ -113,6 +113,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
       brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
+      feviconUrl: []
     });
   }
 
@@ -160,9 +161,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getDomainSettingRes(data) {
     // this.loader(-1);
     this.domainSetting = data
-    this.domainS.controls.normalLable.setValue('')
-    this.domainS.controls.whiteLable.setValue('')
-    this.domainS.controls.brandVisible.setValue('')
+    this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
+    this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '')
+    this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '')
+    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl)
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
     this.domainS.controls.brandVisible.disable();
@@ -194,7 +196,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     {
       advisorId: this.advisorId,
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
-      feviconUrl: '',
+      feviconUrl: this.domainS.controls.feviconUrl.value,
       partialWhiteLabel: this.domainS.controls.normalLable.value,
       siteTitle: this.domainS.controls.brandVisible.value
     }
