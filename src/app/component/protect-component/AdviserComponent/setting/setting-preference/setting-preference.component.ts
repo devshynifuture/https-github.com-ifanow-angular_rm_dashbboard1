@@ -15,6 +15,7 @@ import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -103,8 +104,24 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   sanitizeUrl(url) {
+    url = url.replace('watch', 'embed');
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DomainSettingPopupComponent, {
+      height: '300px',
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  selectedURl(url) {
+    this.copyUrl.setValue(url)
   }
 
   getFormControl(): any {
@@ -142,9 +159,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const obj = {}
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
-        data.forEach(element => {
-          element.videoLink = element.videoLink.replace('watch', 'embed');
-        });
+        // data.forEach((element, index) => {
+        //   if (index != 0) {
+        //     element.videoLink = element.videoLink.replace('?v=', '/');
+        //   }
+        // });
+        // data[1].videoLink = "https://www.youtube.com/embed/Boqh4MItf60"
         this.domainList = data
       }
     })

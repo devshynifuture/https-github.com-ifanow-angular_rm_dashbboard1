@@ -78,7 +78,10 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "ngsw-config.json",
+              "scripts": [
+                "google-analytics.js"
+              ]
             },
             "devifanow": {
               "fileReplacements": [
@@ -150,6 +153,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "8mb"
                 }
+              ],
+              "scripts": [
+                "google-analytics.js"
               ]
             }
           }
@@ -166,6 +172,11 @@
             },
             "production": {
               "browserTarget": "myplanner:build:production"
+            },
+            "dev": {
+              "scripts": [
+                "google-analytics.js"
+              ]
             }
           },
           "polyfills": "src/polyfills.ts",
