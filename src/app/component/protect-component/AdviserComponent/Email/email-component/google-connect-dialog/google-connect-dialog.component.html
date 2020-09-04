@@ -9,8 +9,10 @@
             </p>
             <div class="form-group" [formGroup]="redirectForm">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput class="form-control" placeholder="Add Gmail account"
-                        formControlName="googleConnectEmail">
+                    <!-- <input matInput class="form-control" placeholder="Add Gmail account"
+                        formControlName="googleConnectEmail"> -->
+                    <app-email-domain-auto-suggest [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL"
+                        formControlName="googleConnectEmail" class="br-0"></app-email-domain-auto-suggest>
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -18,8 +20,8 @@
             </div>
         </div>
         <div class="col-md-12 text-right p-0 pt-12">
-            
-                <mat-spinner style="margin-bottom: -30px;" *ngIf="connecting" [diameter]="30"></mat-spinner>
+
+            <mat-spinner style="margin-bottom: -30px;" *ngIf="connecting" [diameter]="30"></mat-spinner>
 
             <button mat-button class="text-custom" (click)="onNoClick()">CANCEL</button>
             <button mat-button class="text-primary" (click)="gmailRedirectUrlCreation()">PROCEED</button>

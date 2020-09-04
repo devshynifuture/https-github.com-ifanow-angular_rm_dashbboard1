@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventService } from '../../../../../../Data-service/event.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-google-connect-dialog',
@@ -12,8 +13,10 @@ import { EventService } from '../../../../../../Data-service/event.service';
   styleUrls: ['./google-connect-dialog.component.scss']
 })
 export class GoogleConnectDialogComponent {
-  connect:any;
-  connecting:boolean = false;
+  connect: any;
+  connecting: boolean = false;
+  formPlaceHolders = AppConstants.formPlaceHolders;
+
   constructor(
     public dialogRef: MatDialogRef<GoogleConnectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -21,7 +24,7 @@ export class GoogleConnectDialogComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private eventService: EventService
-  ) { 
+  ) {
     this.connect = data;
   }
 
@@ -35,13 +38,13 @@ export class GoogleConnectDialogComponent {
       localStorage.removeItem('successStoringToken');
       localStorage.removeItem('associatedGoogleEmailId');
     } else {
-      if(this.connect == 'dash'){
+      if (this.connect == 'dash') {
         this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
       }
-      else if(this.connect == 'calendar'){
+      else if (this.connect == 'calendar') {
         this.router.navigate(['/admin/activies/calendar/month'], { relativeTo: this.activatedRoute });
       }
-      else{
+      else {
         this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
       }
     }
@@ -64,13 +67,13 @@ export class GoogleConnectDialogComponent {
           clearInterval(lookForSuccessToken);
           redirectWindow.close();
           this.onNoClick();
-          if(this.connect == 'dash'){
+          if (this.connect == 'dash') {
             this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
           }
-          else if(this.connect == 'calendar'){
+          else if (this.connect == 'calendar') {
             this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
           }
-          else{
+          else {
             this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
           }
         }
