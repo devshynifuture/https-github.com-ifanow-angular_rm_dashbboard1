@@ -16,6 +16,7 @@ import { PeopleService } from '../../../PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -81,7 +82,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   isLoader: boolean;
 
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, private peopleService: PeopleService) {
+    public subInjectService: SubscriptionInject,
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private peopleService: PeopleService, private settingsService: SettingsService) {
 
     this.advisorId = AuthService.getAdvisorId()
     this.userId = AuthService.getUserId()
@@ -135,32 +140,29 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getFormControl(): any {
     return this.domainS.controls;
   }
-  getDomain() {
-    this.loader(1);
-    let obj = {
-      advisorId: this.advisorId
-    }
-    this.orgSetting.getDomainSetting(obj).subscribe(
-      data => this.getDomainSettingRes(data),
+  getOrgProfiles() {
+    // this.utilService.loader(1)
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        if (data) {
+          this.getDomainSettingRes(data)
+        }
+      },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.hasError = true;
-        this.loader(-1);
+        // this.eventService.openSnackBar(err, 'Dismiss');
+        // this.utilService.loader(-1);
       }
     );
   }
   getDomainSettingRes(data) {
-    this.loader(-1);
+    // this.loader(-1);
     this.domainSetting = data
-    this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
-    this.whiteLabledDomain = this.domainSetting.filter(element => element.domainOptionId == 2)
-    this.brandVisibility = this.domainSetting.filter(element => element.domainOptionId == 3)
-    // this.normalLable = this.normalDomain[0].optionValue
-    // this.whiteLable = this.whiteLabledDomain[0].optionValue
-    // this.brandVisible = (this.brandVisibility[0].optionValue == null) ? '' : this.brandVisibility[0].optionValue
-    this.domainS.controls.normalLable.setValue(this.normalLable)
-    this.domainS.controls.whiteLable.setValue(this.whiteLable)
-    this.domainS.controls.brandVisible.setValue(this.brandVisible)
+    this.domainS.controls.normalLable.setValue('')
+    this.domainS.controls.whiteLable.setValue('')
+    this.domainS.controls.brandVisible.setValue('')
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
     this.domainS.controls.brandVisible.disable();
@@ -182,7 +184,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.eventService.openSnackBar('Site url link is copied', "Dismiss")
   }
 
-  updateDomainSetting(flag, event, value, controlName, index) {
+  updateDomainSetting(flag, event, controlName, index) {
     if (controlName.invalid) {
       controlName.markAsTouched();
       return
@@ -197,19 +199,19 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       siteTitle: this.domainS.controls.brandVisible.value
     }
     this.orgSetting.updateDomainSetting(obj).subscribe(
-      data => this.updateDomainSettingRes(flag, event, value, data, index),
+      data => this.updateDomainSettingRes(flag, event, data, index),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
 
-  updateDomainSettingRes(flag, event, value, data, index) {
+  updateDomainSettingRes(flag, event, data, index) {
     this.loaderArray[index].isLoader = false;
     this.updateDomain = data
     // this.getDomain();
-    this.editDomain(flag, event, value)
+    this.editDomain(flag, event)
   }
 
-  editDomain(flag, event, value) {
+  editDomain(flag, event) {
     if (flag == true) {
       if (event == 'white') {
         this.showUpdateWhite = true;
@@ -567,7 +569,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       //   break;
 
       case 'tab7':
-        this.getDomain();
+        this.getOrgProfiles();
         break;
 
       // case 'tab8': 
