@@ -47,7 +47,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   normalLable;
   whiteLable;
   domain: any;
-  domainS: any;
+  domainS: FormGroup;
   clientData
   userId: any;
   showUpdateWhite = false;
@@ -78,6 +78,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   };
 
   domainList = [];
+  isLoader: boolean;
 
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, private peopleService: PeopleService) {
@@ -95,11 +96,18 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.createAppearanceForm();
     this.addAppearanceFormListener();
   }
+
+  loaderArray = [
+    { isLoader: false },
+    { isLoader: false },
+    { isLoader: false }
+  ]
+
   getdataForm(data) {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
-      brandVisible: [(!data) ? '' : data.emailId, [Validators.required]]
+      brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
     });
   }
 
@@ -147,24 +155,21 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
     this.whiteLabledDomain = this.domainSetting.filter(element => element.domainOptionId == 2)
     this.brandVisibility = this.domainSetting.filter(element => element.domainOptionId == 3)
-    this.normalLable = this.normalDomain[0].optionValue
-    this.whiteLable = this.whiteLabledDomain[0].optionValue
-    this.brandVisible = (this.brandVisibility[0].optionValue == null) ? '' : this.brandVisibility[0].optionValue
+    // this.normalLable = this.normalDomain[0].optionValue
+    // this.whiteLable = this.whiteLabledDomain[0].optionValue
+    // this.brandVisible = (this.brandVisibility[0].optionValue == null) ? '' : this.brandVisibility[0].optionValue
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
     this.domainS.controls.brandVisible.setValue(this.brandVisible)
+    this.domainS.controls.normalLable.disable();
+    this.domainS.controls.whiteLable.disable();
+    this.domainS.controls.brandVisible.disable();
   }
 
   getDoaminList() {
     const obj = {}
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
-        // data.forEach((element, index) => {
-        //   if (index != 0) {
-        //     element.videoLink = element.videoLink.replace('?v=', '/');
-        //   }
-        // });
-        // data[1].videoLink = "https://www.youtube.com/embed/Boqh4MItf60"
         this.domainList = data
       }
     })
@@ -177,49 +182,58 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.eventService.openSnackBar('Site url link is copied', "Dismiss")
   }
 
-  updateDomainSetting(event, value) {
-    this.domainSetting.forEach(element => {
-      if (element.domainOptionId == value.domainOptionId) {
-        if (value.domainOptionId == 1) {
-          element.optionValue = this.domainS.controls.normalLable.value;
-        } else if (value.domainOptionId == 2) {
-          element.optionValue = this.domainS.controls.whiteLable.value;
-        } else {
-          element.optionValue = this.domainS.controls.brandVisible.value;
-        }
-      }
-      element.advisorId = this.advisorId;
-    });
-    this.orgSetting.updateDomainSetting(this.domainSetting).subscribe(
-      data => this.updateDomainSettingRes(data),
+  updateDomainSetting(flag, event, value, controlName, index) {
+    if (controlName.invalid) {
+      controlName.markAsTouched();
+      return
+    }
+    this.loaderArray[index].isLoader = true;
+    const obj =
+    {
+      advisorId: this.advisorId,
+      completeWhiteLabel: this.domainS.controls.whiteLable.value,
+      feviconUrl: '',
+      partialWhiteLabel: this.domainS.controls.normalLable.value,
+      siteTitle: this.domainS.controls.brandVisible.value
+    }
+    this.orgSetting.updateDomainSetting(obj).subscribe(
+      data => this.updateDomainSettingRes(flag, event, value, data, index),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
 
-  updateDomainSettingRes(data) {
+  updateDomainSettingRes(flag, event, value, data, index) {
+    this.loaderArray[index].isLoader = false;
     this.updateDomain = data
-    this.getDomain()
+    // this.getDomain();
+    this.editDomain(flag, event, value)
   }
 
   editDomain(flag, event, value) {
     if (flag == true) {
       if (event == 'white') {
-        this.showUpdateWhite = true
+        this.showUpdateWhite = true;
+        this.domainS.controls.whiteLable.enable();
       } else if (event == 'normal') {
-        this.showUpdate = true
+        this.showUpdate = true;
+        this.domainS.controls.normalLable.enable();
       } else {
+        this.domainS.controls.brandVisible.enable();
         this.showUpdateBrand = true
       }
 
     } else {
       if (event == 'white') {
         this.showUpdateWhite = false
+        this.domainS.controls.whiteLable.disable();
       } else if (event == 'normal') {
         this.showUpdate = false
+        this.domainS.controls.normalLable.disable();
       } else {
+        this.domainS.controls.brandVisible.disable();
         this.showUpdateBrand = false
       }
-      this.updateDomainSetting(event, value)
+      // this.updateDomainSetting(event, value)
     }
   }
 
