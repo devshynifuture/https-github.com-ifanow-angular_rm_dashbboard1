@@ -137,8 +137,7 @@
 
                                     <p class="f-300 f-18 pt-28 text-center mb-0">Total sales</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" [value]="totalSales" class="bar"
-                                            appFormatNumber>
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
                                             {{totalSales}} </div>
                                         <!-- <div *ngIf="isLoading" class="bar h-30"></div>
                                             <div *ngIf="!isLoading" [value]="totalSales" appFormatNumber>  </div> -->
@@ -150,8 +149,7 @@
 
                                     <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved"
-                                            appFormatNumber>
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
                                             {{feeRecieved}} </div>
 
                                         <!-- <div *ngIf="isLoading" class="bar h-30"></div>

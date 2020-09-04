@@ -25,10 +25,14 @@
                 </nav>
                 <div class="d-lg-none pt-10-992 pr-15-992">
                     <mat-form-field class="w-350-992">
-                        <mat-select class="form-control">
-                            <mat-option>
-
-                            </mat-option>
+                        <mat-select [(ngModel)]="_value" class="form-control">
+                            <mat-option [routerLink]="'./dashboard'" [value]=1>DASHBOARD</mat-option>
+                            <mat-option [routerLink]="'./clients'" [value]=2>CLIENTS</mat-option>
+                            <mat-option [routerLink]="'./subscriptions'" [value]=3>SUBSCRIPTIONS</mat-option>
+                            <mat-option [routerLink]="'./quotations'" [value]=4>QUOTATIONS</mat-option>
+                            <mat-option [routerLink]="'./invoices'" [value]=5>INVOICES</mat-option>
+                            <mat-option [routerLink]="'./documents'" [value]=6>DOCUMENTS</mat-option>
+                            <mat-option [routerLink]="  ['./settings',label]" [value]=7>SETTINGS</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
