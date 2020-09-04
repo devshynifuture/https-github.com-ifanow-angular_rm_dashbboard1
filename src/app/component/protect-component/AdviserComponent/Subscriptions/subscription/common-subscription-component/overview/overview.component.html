@@ -24,7 +24,7 @@
               </div>
               <div class="col-md-2">
                 <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-                   class="material-icons text-right right text-custom f-28 pt-12 c-p">
+                  class="material-icons text-right right text-custom f-28 pt-12 c-p">
                   more_vert
                 </i>
                 <mat-menu #menu="matMenu">
@@ -58,21 +58,21 @@
   </div>
 
   <div class="row text-center">
-    <div class="col-md-1"></div>
-    <div (click)="openForm('','addEditDocument','blank')" class="col-md-2 c-p">
+    <div class="col-lg-1 col-md-1 d-none-992"></div>
+    <div (click)="openForm('','addEditDocument','blank')" class="col-lg-2 col-md-3 c-p">
       <div class="boxes hoverable">
 
       </div>
       <h5 class="pt-8">Blank</h5>
     </div>
-    <div class="col-md-2">
+    <div class="col-lg-2 col-md-3">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <!-- <button mat-stroked-button class="btn-sm btn-primary br-0 ml-24 mr-20 f-14"
         (click)="changeDisplay()">VIEW
 </button> -->
           <button (click)="openForm('1','addEditDocument',letterOfEngagement)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
           <!-- <button mat-stroked-button class="btn-sm btn-success br-0 f-14"
 (click)="openForm('','Terms of Agreement')">USE
@@ -83,33 +83,33 @@
       </div>
       <h5 class="pt-8">Letter of engagement</h5>
     </div>
-    <div class="col-md-2">
+    <div class="col-lg-2 col-md-3">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('2','addEditDocument',detailsOfClientTemplate)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <div class="detailsFont" [innerHTML]="detailsOfClientTemplate"></div>
       </div>
       <h5 class="pt-8">Details of client</h5>
     </div>
-    <div class="col-md-2 c-p">
+    <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('4','quotations',redressalofGrievance)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <div class="detailsFont" [innerHTML]="quotationTemplate"></div>
       </div>
       <h5 class="pt-8">Redressal of grievance</h5>
     </div>
-    <div class="col-md-2 c-p">
+    <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('7','quotations',quotationTemplate)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <div class="detailsFont" [innerHTML]="redressalofGrievance"></div>
@@ -117,17 +117,17 @@
       <h5 class="pt-8">Quotation</h5>
     </div>
 
-    <div class="col-md-1"></div>
+    <div class="col-lg-1 col-md-1 d-none-992"></div>
 
   </div>
 
   <div class="row text-center">
-    <div class="col-md-1"></div>
-    <div class="col-md-2 c-p">
+    <div class="col-lg-1 col-md-1 d-none-992"></div>
+    <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('5','quotations',scopeofService)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <div class="detailsFont" [innerHTML]="scopeofService"></div>
@@ -180,5 +180,5 @@
 </div>
 <div>
   <app-terms-agreement *ngIf="overviewDesign=='false'" [componentFlag]="componentFlag=='planOverview'"
-                       [upperData]="upperData"></app-terms-agreement>
+    [upperData]="upperData"></app-terms-agreement>
 </div>

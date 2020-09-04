@@ -277,12 +277,23 @@
     padding-top: 120px !important;
   }
 
+  #ui-documents-overview {
+    button.btn-sm {
+      min-width: 64px !important;
+      padding: 0 15px !important;
+    }
+  }
+
   .invoice-subcriptions-responsive {
     .sticky-top {
       position: initial !important;
       top: inherit !important;
       z-index: inherit !important;
     }
+  }
+
+  .overview-subs .w-50 {
+    width: 80% !important;
   }
 
   .content-center {
@@ -294,6 +305,11 @@
       display: flex !important;
       height: auto !important;
     }
+  }
+
+  .wrapper-44 {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
   }
 
   .b-outline {

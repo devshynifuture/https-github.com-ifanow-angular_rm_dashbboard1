@@ -114,3 +114,9 @@ h5 {
     text-align: left;
   }
 }
+
+@media(max-width:992px) {
+  .align-center {
+    margin: 25% 0;
+  }
+}
