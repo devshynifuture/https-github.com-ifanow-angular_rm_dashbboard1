@@ -16,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { SupportManagementComponent } from './support-management/support-management.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SupportManagementComponent } from './support-management/support-managem
     CustomDirectiveModule,
     SupportEntryModule,
     HighchartsChartModule,
+    CustomCommonModule
   ],
   entryComponents: [],
   providers: [DynamicComponentService]

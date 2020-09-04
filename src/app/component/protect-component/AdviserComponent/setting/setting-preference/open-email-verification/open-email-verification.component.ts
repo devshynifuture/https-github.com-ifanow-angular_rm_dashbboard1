@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from '../../../Activities/calendar/calendar.component';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-open-email-verification',
@@ -24,6 +25,8 @@ export class OpenEmailVerificationComponent implements OnInit {
 
   isLoading = false
   dataS = []
+  formPlaceHolders = AppConstants.formPlaceHolders;
+
   ngOnInit() {
     this.getdataForm('')
     const ELEMENT_DATA = this.dataS;
@@ -44,15 +47,15 @@ export class OpenEmailVerificationComponent implements OnInit {
     this.email = email
   }
   onNoClick(): void {
-    if(this.emailVierify.invalid) {
+    if (this.emailVierify.invalid) {
       this.emailVierify.markAllAsTouched();
       return;
     }
     let obj = {
-      emailAddress : this.emailVierify.controls.emailId.value,
-      id : this.emailDetails.id
+      emailAddress: this.emailVierify.controls.emailId.value,
+      id: this.emailDetails.id
     }
-    if(obj.emailAddress == undefined){
+    if (obj.emailAddress == undefined) {
       obj = undefined
     }
     this.dialogRef.close(obj);
