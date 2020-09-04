@@ -217,8 +217,8 @@ export class DashboardSubscriptionComponent implements OnInit {
   getTotalRecivedRes(data) {
     this.isLoading = false;
     this.totalSaleReceived = data;
-    this.totalSales = data != undefined ? data.totalSales : '0';
-    this.feeRecieved = data != undefined ? data.feeRecieved : '0';
+    this.totalSales = data != undefined ? UtilService.getNumberToWord(data.totalSales) : '0';
+    this.feeRecieved = data != undefined ? UtilService.getNumberToWord(data.feeRecieved) : '0';
   }
 
   showSubscriptionSteps() {
