@@ -130,11 +130,28 @@ export class MultiYearGoalComponent implements OnInit {
         break;
 
       case AppConstants.EDUCATION_GOAL:
+        const currentDate = new Date();
+        let startAge = 0;
+        let endAge = 0
+        let birth = new Date(currentDate);
+        let futureDate = new Date(currentDate);
+        let birth2 = new Date(currentDate);
         obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.relationshipId === 0 ? 1 : 0;
         obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
         obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
         obj['presentValue'] = this.detailedSpendingFormArray[0].value;
-        obj["presentAge"] = this.multiYearGoalForm.get('field1').value.familyMemberAge
+        obj["presentAge"] = this.multiYearGoalForm.get('field1').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        obj["savingStartDate"] = this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
+        birth.setFullYear(birth.getFullYear() - this.multiYearGoalForm.get('field1').value.familyMemberAge);
+        birth2.setFullYear(birth2.getFullYear() - this.multiYearGoalForm.get('field1').value.familyMemberAge);
+        startAge =  this.multiYearGoalForm.get('field2').value[0];
+        endAge = this.multiYearGoalForm.get('field2').value[1];
+        birth.setFullYear(birth.getFullYear() + startAge);
+        obj['goalStartDate'] = this.datePipe.transform(birth, 'yyyy-MM-dd');
+        birth2.setFullYear(birth2.getFullYear() + endAge);
+        obj['goalEndDate'] = this.datePipe.transform(birth2, 'yyyy-MM-dd');
+        obj['savingEndDate'] = obj['goalStartDate']
 
         break;
     }
