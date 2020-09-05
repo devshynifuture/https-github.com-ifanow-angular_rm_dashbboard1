@@ -1,9 +1,9 @@
 <div *ngIf="singleSubscriptionData.isCreateSub" class="row bb-1 popup-header-fix-60">
-    <div class="col-md-8 p-0">
+    <div class="col-md-7 p-0">
         <h4 class="wrapper-20 m-0">{{!isSave?'EDIT':''}} Fixed fee structure</h4>
     </div>
 
-    <div class="col-md-4 text-right" *ngIf="subData.status == 1">
+    <div class="col-md-5 text-right" *ngIf="subData.status == 1">
         <div class="wrapper-12 pb-10" *ngIf="subData.isAdvisor">
             <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20"
                 (click)="enableForm()">

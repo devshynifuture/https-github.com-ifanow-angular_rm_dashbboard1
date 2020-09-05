@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import {
   Event,
   NavigationCancel,
@@ -9,27 +9,63 @@ import {
   Router,
   RouterOutlet
 } from '@angular/router';
-import {EventService} from './Data-service/event.service';
-import {RoutingState} from './services/routing-state.service';
-import {PlatformLocation} from '@angular/common';
-import {ConnectionService} from 'ng-connection-service'
-import {interval} from 'rxjs';
+import { EventService } from './Data-service/event.service';
+import { RoutingState } from './services/routing-state.service';
+import { DOCUMENT, PlatformLocation } from '@angular/common';
+import { ConnectionService } from 'ng-connection-service';
+import { interval } from 'rxjs';
+import { OnInit } from "@angular/core/src/metadata/*";
+import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('mainrouter', {
     static: true
   }) mainrouter;
-  isConnected: boolean = true;
+  isConnected = true;
   onlineStatus: boolean;
   timeLeft: any;
-  intervallTimer: any;
-  showTimeRemaing: number;
+  intervalTimer: any;
+  showTimeRemaining: number;
   setNewTime: any;
+
+  ngOnInit() {
+
+    const domainData = {
+      faviconUrl: 'https://www.google.com/favicon.ico',
+      appTitle: 'This is a tribute'
+    };
+    // this.setValuesAsPerDomain(domainData);
+  }
+
+  getDoaminData(data) {
+    const obj = {
+      hostName: data
+    }
+    this.settingService.getDomainData(obj).subscribe(data => {
+      if (data) {
+        this.setValuesAsPerDomain(data)
+      }
+    },
+      err => {
+        console.log(err)
+      })
+  }
+
+  setValuesAsPerDomain(data) {
+    this.document.getElementById('appAppleTouchIcon').setAttribute('href', data.faviconUrl);
+    this.document.getElementById('appIcon32').setAttribute('href', data.faviconUrl);
+    this.document.getElementById('appIcon').setAttribute('href', data.faviconUrl);
+    // console.log('titleElement', this.document.getElementById('appTitle'));
+    this.document.title = data.appTitle;
+    // this.document.getElementById('appTitle').setAttribute('title', data.appTitle);
+
+    // appTitle
+  }
 
   ngAfterViewInit(): void {
     this.routingState.setMainRouter(this.mainrouter);
@@ -41,42 +77,48 @@ export class AppComponent implements AfterViewInit {
     private _router: Router, private eventService: EventService,
     private routingState: RoutingState,
     private location: PlatformLocation,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private settingService: SettingsService,
+    @Inject(DOCUMENT) private document
   ) {
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
         this.onlineStatus = true;
-        this.showTimeRemaing = 5
-        this.intervallTimer.unsubscribe();
-      }
-      else {
+        this.showTimeRemaining = 5;
+        this.intervalTimer.unsubscribe();
+      } else {
         this.onlineStatus = false;
         this.countDown(5);
       }
-    })
+    });
     // routingState.changeDetector = changeDetector;
     routingState.router = _router;
     routingState.loadRouting();
     this._router.events.subscribe((event: Event) => {
       this.loadingBarInterceptor(event);
     });
-
+    console.log('document.location', document.location);
+    console.log('document : ', document);
+    // document.location.host
+    this.getDoaminData(document.location.host)
   }
+
   countDown(timer) {
     this.timeLeft = timer;
     this.setNewTime = timer;
-    this.intervallTimer = interval(1000).subscribe(
+    this.intervalTimer = interval(1000).subscribe(
       data => {
         if (this.timeLeft == 0) {
           timer = 2 * timer;
-          this.timeLeft = 2 * timer
+          this.timeLeft = 2 * timer;
         } else {
-          this.showTimeRemaing = this.timeLeft--;
+          this.showTimeRemaining = this.timeLeft--;
         }
       }
-    )
+    );
   }
+
   private loadingBarInterceptor(event: Event) {
     if (event instanceof NavigationStart) {
       this.lBar.start();

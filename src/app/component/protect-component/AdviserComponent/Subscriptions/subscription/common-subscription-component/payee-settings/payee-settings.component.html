@@ -12,7 +12,7 @@
             <h5 class="m-0">Customer name</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
                 <mat-select formControlName="customerName" class="form-control br-0">
                     <mat-option disabled value=''>Search family members</mat-option>
                     <mat-option [disabled]="f.disableFlag" *ngFor="let f of family" [value]="f.name"
@@ -37,9 +37,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <mat-form-field class="w-100">
-                    <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
-                        type="text">
+                <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                    <input placeholder="Enter display name" #displayName class="form-control br-0"
+                        formControlName="displayName" matInput maxlength="40" type="text">
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
@@ -53,7 +53,7 @@
             <h5 class="m-0">Customer type</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
                 <mat-select formControlName="customerType" class="form-control br-0" id="sel1">
                     <mat-option value=''>Select option</mat-option>
                     <mat-option [value]=1>Individual</mat-option>
@@ -74,9 +74,9 @@
             <h5 class="m-0">Company name</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #companyName class="form-control br-0" formControlName="companyName" matInput maxlength="50"
-                    type="text">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter company name" #companyName class="form-control br-0"
+                    formControlName="companyName" matInput maxlength="50" type="text">
                 <!-- <mat-error class="f-12">
                     This field is required
                 </mat-error> -->
@@ -90,15 +90,18 @@
             <h5 class="m-0">Email Id</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #emailId class="form-control br-0" formControlName="emailId" matInput maxlength="40" type="text">
+            <mat-form-field appearance="standard" floatLabel="never" appearance="standard" floatLabel="never"
+                class="w-100">
+                <app-email-domain-auto-suggest #emailId formControlName="emailId" placeholder="Enter email">
+                </app-email-domain-auto-suggest>
+                <!-- <input  class="form-control br-0" formControlName="emailId" matInput maxlength="40" type="text"> -->
                 <mat-error class="f-12" *ngIf="payeeSettingsForm.get('emailId').errors?.required">
                     This field is required
                 </mat-error>
                 <mat-error class="f-12" *ngIf="payeeSettingsForm.get('emailId').errors?.pattern">
                     Enter valid email id
                 </mat-error>
-                <mat-hint align="end" class="f-12">{{emailId.value.length}}/40</mat-hint>
+                <!-- <mat-hint align="end" class="f-12">{{emailId.value.length}}/40</mat-hint> -->
             </mat-form-field>
         </div>
     </div>
@@ -107,10 +110,10 @@
             <h5 class="m-0">Mobile no.</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #primaryContact class="form-control br-0" formControlName="primaryContact"
-                    appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput maxlength="10"
-                    type="text">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter mobile number" #primaryContact class="form-control br-0"
+                    formControlName="primaryContact" appInputValueValidation
+                    [inputValidator]="validatorType.NUMBER_ONLY" matInput maxlength="10" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -125,9 +128,9 @@
             </p>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input (input)="toUpperCase(payeeSettingsForm.get('pan'),$event)" #pan class="form-control br-0"
-                    formControlName="pan" matInput maxlength="10" type="text">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter pan " (input)="toUpperCase(payeeSettingsForm.get('pan'),$event)" #pan
+                    class="form-control br-0" formControlName="pan" matInput maxlength="10" type="text">
                 <mat-error *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched"
                     class="f-12">
                     This field is required
@@ -144,7 +147,7 @@
             <h5 class="m-0">GST treatment</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
                 <mat-select formControlName="gstTreatment" (ngModelChange)="gstTreatmentRemove($event)"
                     class="form-control br-0" id="sel1">
                     <mat-option value=''>Select option</mat-option>
@@ -164,8 +167,8 @@
             <h5 class="m-0">GSTIN</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #gstIn class="form-control br-0" appInputValueValidation
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter gstin number" #gstIn class="form-control br-0" appInputValueValidation
                     [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="gstIn" matInput maxlength="16"
                     type="text">
                 <mat-error class="f-12" *ngIf="payeeSettingsForm.get('gstIn').errors?.required">
@@ -185,8 +188,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <mat-form-field class="w-100">
-                    <textarea matInput class="form-control" formControlName="billingAddress" rows="5"
+                <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                    <textarea placeholder="Enter billing address " matInput class="form-control"
+                        formControlName="billingAddress" rows="5"
                         maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
                     <mat-error class="f-12">
                         This field is required
@@ -200,9 +204,9 @@
             <h5 class="m-0">Pin code</h5>
         </div>
         <div class="col-md-4">
-            <mat-form-field>
-                <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                    (focusout)="getPostalPin($event.target.value)" appInputValueValidation
+            <mat-form-field appearance="standard" floatLabel="never">
+                <input placeholder="Enter pincode " #pincode [inputValidator]="validatorType.NUMBER_ONLY"
+                    [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                     class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text">
                 <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
@@ -217,8 +221,8 @@
             <h5 class="m-0">City</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #city class="form-control br-0" appInputValueValidation
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter city" #city class="form-control br-0" appInputValueValidation
                     [inputValidator]="validatorType.TEXT_ONLY" formControlName="city" matInput maxlength="30"
                     type="text">
                 <mat-error class="f-12">
@@ -233,8 +237,8 @@
             <h5 class="m-0">State</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #state class="form-control br-0" appInputValueValidation
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter state" #state class="form-control br-0" appInputValueValidation
                     [inputValidator]="validatorType.TEXT_ONLY" formControlName="state" matInput maxlength="30"
                     type="text">
                 <mat-error class="f-12">
@@ -249,8 +253,8 @@
             <h5 class="m-0">Country</h5>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #country class="form-control br-0" appInputValueValidation
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+                <input placeholder="Enter country " #country class="form-control br-0" appInputValueValidation
                     [inputValidator]="validatorType.TEXT_ONLY" formControlName="country" matInput maxlength="30"
                     type="text">
                 <mat-error class="f-12">

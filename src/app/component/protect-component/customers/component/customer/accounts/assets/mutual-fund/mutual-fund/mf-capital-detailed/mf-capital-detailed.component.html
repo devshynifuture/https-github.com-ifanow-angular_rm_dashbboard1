@@ -37,7 +37,7 @@
                 </h5>
             </div>
 
-
+            <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
             <table mat-table [dataSource]="dataSource" id="table-low"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
                 *ngIf="dataSource.data.length>0">
@@ -341,12 +341,13 @@
                 <tr mat-header-row
                     *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
                 </tr>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
             </table>
+            </div>
             <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
                 class="w-100 d-flex flex-column align-items-center ">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
@@ -363,6 +364,7 @@
                     DEBT
                 </h5>
             </div>
+            <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
             <table mat-table [dataSource]="dataSource1" id="table-low"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
                 *ngIf="dataSource1.data.length>0">
@@ -675,11 +677,12 @@
                 <tr mat-header-row
                     *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
                 </tr>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
             </table>
+            </div>
             <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
                 class="w-100 d-flex flex-column align-items-center">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
@@ -853,6 +856,7 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
+                <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
                 <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
                     class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
@@ -922,10 +926,11 @@
 
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2;sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: false" [hidden]="isLoading"></tr>
                 </table>
+                </div>
                 <div *ngIf="dataSource2.data.length == 0"
                     [ngClass]="{'account-empty-state': dataSource2.data.length == 0}"
                     class="w-100 d-flex flex-column align-items-center">

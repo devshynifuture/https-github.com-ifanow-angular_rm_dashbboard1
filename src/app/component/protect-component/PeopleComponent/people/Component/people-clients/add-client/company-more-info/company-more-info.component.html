@@ -48,8 +48,10 @@
         <div class="col-md-6 p-0">
             <div class="form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" formControlName="email" matInput placeholder="Enter email"
-                        class="form-control">
+                    <!-- <input autocomplete="off" formControlName="email" matInput placeholder="Enter email"
+                        class="form-control"> -->
+                    <app-email-domain-auto-suggest formControlName="email"
+                        [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
                     <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('email').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>

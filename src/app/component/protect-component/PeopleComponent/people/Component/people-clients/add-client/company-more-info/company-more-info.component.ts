@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { EventEmitter, Output } from '@angular/core/src/metadata/*';
 import { AuthService } from '../../../../../../../../auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-company-more-info',
@@ -37,6 +38,8 @@ export class CompanyMoreInfoComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  formPlaceHolders = AppConstants.formPlaceHolders;
+
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();

@@ -15,10 +15,10 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-3 pr-0">
+        <div class="col-lg-3 col-md-3 pr-0">
             <h5 class="m-0 text-right pt-20">Display name</h5>
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-9">
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12 p-0">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="row pt-10">
-                <div class="col-md-6 pl-0">
+                <div class="col-lg-6 col-md-12 pl-0">
                     <p class="m-0 text-custom f-12">Biller address</p>
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">
                         {{getFormControlEdit().billerAddress.value}}
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 pl-0">
+                <div class="col-lg-6 col-md-12 pl-0 pt-15-992">
                     <p class="m-0 text-custom f-12">Payee address </p>
                     <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
                         {{storeData.billingAddress}}
@@ -88,12 +88,12 @@
     <div class="wrapper-20 pb-0">
         <div class="bt-grey">
             <div class="row pt-28">
-                <div class="col-md-4 p-0">
+                <div class="col-lg-4 col-md-12 p-0">
                     <div class="row">
-                        <div class="col-md-5 pl-0 pt-8">
+                        <div class="col-lg-5 col-md-3 pl-0 pt-8">
                             <h5 class="m-0 text-right">Invoice no.</h5>
                         </div>
-                        <div class="col-md-7 p-0">
+                        <div class="col-lg-7 col-md-9 p-0">
                             <mat-form-field>
                                 <div class="form-group mb-0">
 
@@ -112,12 +112,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 p-0">
-                    <div class="row">
-                        <div class="col-md-6">
+                <div class="col-lg-4 col-md-12 p-0">
+                    <div class="row pt-30-922">
+                        <div class="col-lg-6 col-md-3">
                             <h5 class="m-0 pt-8 text-right">Invoice date</h5>
                         </div>
-                        <div class="col-md-6 p-0">
+                        <div class="col-lg-6 col-md-9 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="ba-date">
                                     <input (click)="picker.open()" (dateChange)="checkDateDiff($event)"
@@ -133,12 +133,12 @@
                         <div class="col-md-6"></div>
                     </div>
                 </div>
-                <div class="col-md-4 p-0">
-                    <div class="row">
-                        <div class="col-md-6">
+                <div class="col-lg-4 col-md-12 p-0">
+                    <div class="row pt-30-922">
+                        <div class="col-lg-6 col-md-3">
                             <h5 class="m-0 pt-8 text-right">Due date</h5>
                         </div>
-                        <div class="col-md-6 p-0">
+                        <div class="col-lg-6 col-md-9 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="ba-date">
                                     <input (click)="dueDatePicker.open()" (dateChange)="checkDateDiff($event)"
@@ -215,10 +215,12 @@
                     <div class="col-md-2 pl-0">
                         <mat-form-field>
                             <!--            (change)="changeTaxStatus($event.target.value)"-->
-                            <mat-select class="form-control" #taxValue formControlName="taxStatus" id="serviceName" (selectionChange)="changeSelection(taxValue.value)">
+                            <mat-select class="form-control" #taxValue formControlName="taxStatus" id="serviceName"
+                                (selectionChange)="changeSelection(taxValue.value)">
                                 <!-- <option value="select">Select tax type</option> -->
                                 <mat-option value="IGST(18%)" [disabled]="editFlag">IGST(18%)</mat-option>
-                                <mat-option value="SGST(9%)|CGST(9%)" [disabled]="editFlag">SGST(9%) | CGST(9%)</mat-option>
+                                <mat-option value="SGST(9%)|CGST(9%)" [disabled]="editFlag">SGST(9%) | CGST(9%)
+                                </mat-option>
                             </mat-select>
                             <div class="col-md-8">
                                 <mat-error
@@ -308,7 +310,7 @@
     </div>
     <div class="bg-grey lter wrapper-28">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-12 pr-0-992">
                 <div class="row">
                     <div class="col-md-3 pl-0">
                         <h5 class="m-0 pt-24 text-black text-right">Footnote description</h5>
@@ -332,8 +334,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 pr-0">
-                <div class="row">
+            <div class="col-lg-6 col-md-12 pr-0">
+                <div class="row pt-15-992">
                     <div class="col-md-3 pl-0">
                         <h5 class="m-0 text-black pt-24 text-right">Terms & Conditions</h5>
                     </div>

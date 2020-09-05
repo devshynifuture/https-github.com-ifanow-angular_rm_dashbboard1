@@ -44,7 +44,8 @@
   max-height: 507px;
 }
 
-#ui-search-client-add-quotation {
+#ui-search-client-add-quotation,
+.top-checkbox-align {
   .mat-checkbox-layout {
     vertical-align: top;
   }
@@ -243,6 +244,24 @@
   }
 }
 
+@media(max-width:1250px) {
+
+  .subs-subs-table,
+  .quotations-subscriptions,
+  .invoice-subcriptions,
+  .subs-documents {
+    #tbs {
+      .mat-table-sticky:first-child {
+        border-right: 0px !important;
+      }
+
+      .mat-table-sticky:last-child {
+        border-left: 0px !important;
+      }
+    }
+  }
+}
+
 @media(max-width:1042px) {
   // .mat-radio-label {
   //   width: 128px !important;
@@ -256,5 +275,49 @@
 @media(max-width:992px) {
   .responsive-subscription.pt-180 {
     padding-top: 120px !important;
+  }
+
+  #ui-documents-overview {
+    button.btn-sm {
+      min-width: 64px !important;
+      padding: 0 15px !important;
+    }
+  }
+
+  .invoice-subcriptions-responsive {
+    .sticky-top {
+      position: initial !important;
+      top: inherit !important;
+      z-index: inherit !important;
+    }
+  }
+
+  .overview-subs .w-50 {
+    width: 80% !important;
+  }
+
+  .content-center {
+    width: 90% !important;
+  }
+
+  #ui-perferences {
+    .vertical-menu {
+      display: flex !important;
+      height: auto !important;
+    }
+  }
+
+  .wrapper-44 {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .b-outline {
+    position: inherit !important;
+  }
+
+  .bl-1 {
+    border-left: 0px !important;
+    border-top: 1px solid #ddd !important;
   }
 }

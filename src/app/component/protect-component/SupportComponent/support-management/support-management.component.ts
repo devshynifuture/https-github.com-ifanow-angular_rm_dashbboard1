@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReplaceUserComponent } from '../../common-component/replace-user/replace-user.component';
 import { AdminDetailsComponent } from '../ifa-onboarding/admin-details/admin-details.component';
 import { Subscription } from 'rxjs';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-support-management',
@@ -25,7 +26,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) { }
-
+  formPlaceHolders = AppConstants.formPlaceHolders;
   dataSource = new MatTableDataSource([{}, {}, {}]);
   displayedColumns = ['adminName', 'email', 'mobile', 'plan', 'nextBilling', 'menu']
   rmList: any[] = [];
