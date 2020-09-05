@@ -333,7 +333,8 @@
                                                 [floatLabel]="'never'">
                                                 <button mat-stroked-button
                                                     class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input autocomplete="off" matInput type="text"
+                                                <input [inputValidator]="validatorType.TEXT_ONLY"
+                                                    appInputValueValidation autocomplete="off" matInput type="text"
                                                     class="form-control b-0 w-60" formControlName="normalLable"
                                                     placeholder="example">
                                                 <mat-error class="pl-90">This field is required</mat-error>
