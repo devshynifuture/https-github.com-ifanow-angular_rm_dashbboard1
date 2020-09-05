@@ -16,7 +16,6 @@ export class BackofficeFileUploadAumComponent implements OnInit {
     "rt",
     "arnRiaNumber",
     "uploadDate",
-    "uploadedBy",
     "status",
     "download",
   ];

@@ -10,7 +10,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-lg-2 p-0 br upload-box">
+        <div class="col-md-3 col-lg-3 p-0 br upload-box">
 
             <div class="row ">
                 <div class="col-md-12 pr-0">
@@ -91,7 +91,7 @@
             </div>
 
         </div>
-        <div class="col-md-9 col-lg-10 p-0 history-box">
+        <div class="col-md-9 col-lg-9 p-0 history-box">
             <div class="row pt-24">
                 <div class="col-md-12 col-lg-6 mb-10">
                     <div class="row">
@@ -123,8 +123,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-12 col-lg-6 right classToggleBtn">
-                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right matButtonWidth">
                         <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction" [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
                             Transactions</mat-button-toggle>
                         <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp" [state]="filter" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>

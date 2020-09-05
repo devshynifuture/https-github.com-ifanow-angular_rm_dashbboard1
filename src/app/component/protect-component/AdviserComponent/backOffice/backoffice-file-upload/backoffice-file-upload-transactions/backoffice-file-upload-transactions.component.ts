@@ -16,7 +16,7 @@ export interface PeriodicElement {
   download: string;
   added: Date;
   txnFile: string;
-  uploadedBy: string;
+   
 }
 
 @Component({
@@ -26,7 +26,7 @@ export interface PeriodicElement {
 })
 
 export class BackofficeFileUploadTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'range', 'added', 'txnFile', 'uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'range', 'added', 'txnFile', 'status', 'download'];
   advisorId: any;
   isLoading = false;
   listData: any = [];
