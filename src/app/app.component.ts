@@ -61,7 +61,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.document.getElementById('appIcon32').setAttribute('href', data.faviconUrl);
     this.document.getElementById('appIcon').setAttribute('href', data.faviconUrl);
     // console.log('titleElement', this.document.getElementById('appTitle'));
-    this.document.title = data.appTitle;
+    this.document.title = data.siteTitle;
     // this.document.getElementById('appTitle').setAttribute('title', data.appTitle);
 
     // appTitle
