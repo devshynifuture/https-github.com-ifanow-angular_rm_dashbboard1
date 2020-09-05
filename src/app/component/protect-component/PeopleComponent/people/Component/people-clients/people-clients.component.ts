@@ -86,14 +86,7 @@ export class PeopleClientsComponent implements OnInit {
         (this.finalClientList.length > 0) ? '' : this.isLoading = false;
         this.isLoading = false;
         if (data && data.length > 0) {
-          data.forEach((singleData) => {
-            if (singleData.mobileList && singleData.mobileList.length > 0) {
-              singleData.mobileNo = singleData.mobileList[0].mobileNo;
-            }
-            if (singleData.emailList && singleData.emailList.length > 0) {
-              singleData.email = singleData.emailList[0].email;
-            }
-          });
+          data = this.formatEmailAndMobile(data)
           this.finalClientList = this.finalClientList.concat(data);
           this.clientDatasource.data = this.finalClientList;
           this.clientDatasource.sort = this.clientTableSort;
@@ -112,6 +105,18 @@ export class PeopleClientsComponent implements OnInit {
     );
 
     // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
+  }
+
+  formatEmailAndMobile(data) {
+    data.forEach((singleData) => {
+      if (singleData.mobileList && singleData.mobileList.length > 0) {
+        singleData.mobileNo = singleData.mobileList[0].mobileNo;
+      }
+      if (singleData.emailList && singleData.emailList.length > 0) {
+        singleData.email = singleData.emailList[0].email;
+      }
+    });
+    return data
   }
 
   Excel(tableTitle) {
@@ -281,6 +286,7 @@ export class PeopleClientsComponent implements OnInit {
         data => {
           this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
+              responseArray = this.formatEmailAndMobile(responseArray)
               responseArray = responseArray.filter(element => element.userType == 2);
               this.finalClientList = responseArray
               this.clientDatasource.data = responseArray;
