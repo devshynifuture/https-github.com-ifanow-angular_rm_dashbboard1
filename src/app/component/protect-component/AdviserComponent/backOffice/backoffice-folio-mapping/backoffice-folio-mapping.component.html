@@ -28,7 +28,7 @@
 
   <div class="row pt-10">
     <div class="col-md-12">
-      <div class="example-container" [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)">
+      <div class=" mb-20 "   (scroll)="onWindowScroll($event)">
         <table #tableEl matSort #unmappedTableSort="matSort" mat-table [dataSource]="unmappedDataSource" id="tbs"
           class="mt-8" [appSkeletonLoading]="isLoading">
 
