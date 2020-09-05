@@ -73,7 +73,7 @@
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
 
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span appFormatNumber *ngIf="!isLoading" [value]="amc.totalAum" [shouldRoundOff]="false"></span>
+                                        <span appFormatNumber *ngIf="!isLoading" [value]="amc.totalAum" [shouldRoundOff]="true"></span>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -136,7 +136,7 @@
                                             <tr>
                                                 <td>{{ schemeIndex+1}}</td>
                                                 <td>{{scheme.schemeName}}</td>
-                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="false"></span></td>
+                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="true"></span></td>
                                                 <td class="text-right">
                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
                                                 <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex, amc.name)">
@@ -213,7 +213,7 @@
                                                                 <td class="text-right">
                                                                     <div class="bar">
                                                                         <!--                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}-->
-                                                                        <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="applicant.balanceUnit" [shouldRoundOff]="false">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
+                                                                        <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="applicant.balanceUnit" [shouldRoundOff]="true">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td style="padding-left: 20px !important;">
@@ -223,7 +223,7 @@
                                                                 </td>
                                                                 <td class="text-right">
                                                                     <div class="bar">
-                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingApplicant" [value]=" applicant.totalAum" [shouldRoundOff]="false"></span>
+                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingApplicant" [value]=" applicant.totalAum" [shouldRoundOff]="true"></span>
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-right">

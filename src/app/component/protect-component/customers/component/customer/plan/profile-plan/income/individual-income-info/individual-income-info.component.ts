@@ -122,12 +122,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
   getAccountList(userData) {
     const self = this;
     return new Promise(function(resolve, reject) {
-        
+        let array = [];
         const obj = {
           userId:self.singleIndividualIncome.familyMemberId == 0 ? self.singleIndividualIncome.clientId : self.singleIndividualIncome.id,
           userType: self.singleIndividualIncome.familyMemberId == 0 ? 2 : 3 
         };
-        self.custumService.getBankList(obj).subscribe(
+        array.push(obj);
+        self.custumService.getBankList(array).subscribe(
           (data) => {
             if(data){
               self.bankList = data;
