@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
     MaterialModule,
     CustomDirectiveModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonComponentModule
   ],
   entryComponents: [AgePopupComponent],
   providers: [
