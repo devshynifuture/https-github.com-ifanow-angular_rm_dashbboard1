@@ -83,7 +83,7 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
-                                            [value]="name.totalAum" [shouldRoundOff]="false"></span>
+                                            [value]="name.totalAum" [shouldRoundOff]="true"></span>
                                     </div>
                                 </td>
 
@@ -173,7 +173,7 @@
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingInvestor}">
                                                         {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
-                                                            *ngIf="!isLoadingInvestor" [shouldRoundOff]="false"
+                                                            *ngIf="!isLoadingInvestor" [shouldRoundOff]="true"
                                                             [value]="investor.totalAum"></span>
                                                     </div>
                                                 </td>
@@ -264,7 +264,7 @@
                                                                         {{isLoadingScheme ? ' ' : '₹ '}}<span
                                                                             appFormatNumber *ngIf="!isLoadingScheme"
                                                                             [value]="scheme.totalAum"
-                                                                            [shouldRoundOff]="false"></span>
+                                                                            [shouldRoundOff]="true"></span>
                                                                     </div>
                                                                 </td>
 
@@ -372,16 +372,16 @@
                                                                                         {{(isLoadingFolio) ? '' : folio.folioNumber}}
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-right">
+                                                                                <!-- <td class="text-right">
                                                                                     <div
                                                                                         [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{isLoadingFolio ? ' ' : '₹ '}}<span
                                                                                             appFormatNumber
                                                                                             *ngIf="!isLoadingFolio"
-                                                                                            [shouldRoundOff]="false"
+                                                                                            [shouldRoundOff]="true"
                                                                                             [value]="folio.totalAum"></span>
                                                                                     </div>
-                                                                                </td>
+                                                                                </td> -->
                                                                                 <td class="text-right">
                                                                                     <div
                                                                                         [ngClass]="{'bar': isLoadingFolio}">
@@ -444,7 +444,7 @@
                                 <td class="p-table  "><strong>Total</strong></td>
                                 <td class="p-table  ">&nbsp;</td>
                                 <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
-                                            [shouldRoundOff]="false"></span></strong>
+                                            [shouldRoundOff]="true"></span></strong>
                                 </td>
                                 <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
                                 </td>
