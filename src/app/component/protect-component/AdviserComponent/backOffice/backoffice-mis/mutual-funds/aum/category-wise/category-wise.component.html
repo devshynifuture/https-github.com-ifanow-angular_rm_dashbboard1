@@ -310,8 +310,9 @@
                         </tbody>
                         <tbody *ngIf="!isLoading && category.length>0">
                             <tr>
-                                <td class="p-table"><strong>Total</strong></td>
+                               
                                 <td class="p-table">&nbsp;</td>
+                                <td class="p-table text-right"><strong>Total</strong></td>
                                 <td class="p-table f-600 text-right">
 
                                     {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="true"></span>

@@ -11,7 +11,7 @@ export interface PeriodicElement {
   uploadDate: Date;
   status: string;
   download: string;
-  uploadedBy: string;
+   
 }
 
 
@@ -21,7 +21,7 @@ export interface PeriodicElement {
   styleUrls: ['./backoffice-file-upload-sip-stp.component.scss']
 })
 export class BackofficeFileUploadSipStpComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'status', 'download'];
   advisorId: any;
   isLoading = false;
   listData: any = [];

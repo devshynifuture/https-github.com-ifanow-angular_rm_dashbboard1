@@ -32,8 +32,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div [ngClass]="{'tableScrollBox':isLoading==false }" (scroll)="onWindowScroll($event)"
-                class="ox-hide people-clients-scroll">
+            <div  (scroll)="onWindowScroll($event)"
+                class="people-table-scroll">
                 <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class="mt-8">
                     <ng-container matColumnDef="name">

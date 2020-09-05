@@ -306,7 +306,7 @@
                                                                         id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
-                                                                                <th class="w-10 f-500">Sr No.</th>
+                                                                                <th class="w-8 f-500">Sr No.</th>
                                                                                 <th (click)="sortByFolio(scheme.folioList,'schemeName')"
                                                                                     class="w-30 f-500 c-p">
                                                                                     <span
@@ -332,7 +332,7 @@
                                                                                     </span>
                                                                                 </th>
                                                                                 <th (click)="sortByFolio(scheme.folioList,'totalAum')"
-                                                                                class="c-p f-500 w-20">
+                                                                                class="c-p f-500 w-17">
                                                                                 <span
                                                                                     class="d-flex justify-content-end align-items-center">
                                                                                     Current value
@@ -359,7 +359,7 @@
 
                                                                                 <th class="w-15 f-500 text-right">%
                                                                                     Weight</th>
-                                                                                <th></th>
+                                                                                 
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody
@@ -411,6 +411,7 @@
                                                                                     </div>
 
                                                                                 </td>
+                                                                                
                                                                             </tr>
                                                                         </tbody>
 
@@ -453,13 +454,15 @@
                         </tbody>
                         <tbody>
                             <tr *ngIf="!isLoading && clientList.length>0">
-                                <td class="p-table  "><strong>Total</strong></td>
+                               
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
+                                <td class="p-table  text-right"><strong>Total</strong></td>
+                                <td class="p-table text-right "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
                                             [shouldRoundOff]="true"></span></strong>
                                 </td>
-                                <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
+                                <td class="p-table text-right"><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
                                 </td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
