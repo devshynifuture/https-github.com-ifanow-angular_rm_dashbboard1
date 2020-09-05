@@ -876,7 +876,7 @@ export const appConfig = {
   REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
   GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
-
+  GET_DOMAIN_DATA: '/setting/organisation/domain/data/get',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 

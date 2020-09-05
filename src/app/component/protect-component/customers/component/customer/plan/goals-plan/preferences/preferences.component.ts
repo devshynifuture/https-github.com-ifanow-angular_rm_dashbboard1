@@ -120,6 +120,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
       this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
     }
+    if(this.data.goalType == 5){
+      this.goalDetailsFG.addControl('frequency', this.fb.control(remainingData.frequency, [Validators.required]));
+      
+    }
   }
   setKeyParamFormListeners() {
     if (this.data.singleOrMulti == 1) {

@@ -308,18 +308,23 @@
                         <div class="row pt-28" [formGroup]="domainS">
                             <div class="col-md-7 pl-0">
                                 <div class="row">
-                                    <div class="col-md-10 p-0">
+                                    <div class="col-md-8 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
+                                    <div class="col-md-1 pr-0 text-right ">
+                                        <mat-spinner *ngIf="loaderArray[0].isLoader" [diameter]="20"></mat-spinner>
+                                    </div>
+                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdate == false">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="editDomain(true,'normal')">Edit</button>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
+
+                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdate == true">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="updateDomainSetting(false,'normal',domainS.get('normalLable'),0)">Update</button>
-                                        <mat-spinner *ngIf="loaderArray[0].isLoader" [diameter]="20"></mat-spinner>
+
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-11 p-0 pt-6">
@@ -328,7 +333,8 @@
                                                 [floatLabel]="'never'">
                                                 <button mat-stroked-button
                                                     class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input autocomplete="off" matInput type="text"
+                                                <input [inputValidator]="validatorType.TEXT_ONLY"
+                                                    appInputValueValidation autocomplete="off" matInput type="text"
                                                     class="form-control b-0 w-60" formControlName="normalLable"
                                                     placeholder="example">
                                                 <mat-error class="pl-90">This field is required</mat-error>
@@ -340,19 +346,22 @@
                                 </div>
 
                                 <div class="row pt-60">
-                                    <div class="col-md-10 p-0">
+                                    <div class="col-md-8 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span
                                                 class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
                                         </p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == false">
+                                    <div class="col-md-1 pr-0 text-right">
+                                        <mat-spinner *ngIf="loaderArray[1].isLoader" [diameter]="20"></mat-spinner>
+                                    </div>
+                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == false">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="editDomain(true,'white')">Edit</button>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == true">
+                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == true">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="updateDomainSetting(false,'white',domainS.get('whiteLable'),1)">Update</button>
-                                        <mat-spinner *ngIf="loaderArray[1].isLoader" [diameter]="20"></mat-spinner>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -441,17 +450,20 @@
                                     </div>
                                 </div>
                                 <div class="row  pt-18">
-                                    <div class="col-md-10 p-0">
+                                    <div class="col-md-7 p-0">
                                         <p class="m-0 text-black roboto f-500">Site title</p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
+                                    <div class="col-md-1 pr-0 text-right">
+                                        <mat-spinner *ngIf="loaderArray[2].isLoader" [diameter]="20"></mat-spinner>
+                                    </div>
+                                    <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == false">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="editDomain(true,'brand')">Edit</button>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
+                                    <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == true">
                                         <button mat-stroked-button class="btn-dark-outline xs"
                                             (click)="updateDomainSetting(false,'brand',domainS.get('brandVisible'),2)">Update</button>
-                                        <mat-spinner *ngIf="loaderArray[2].isLoader" [diameter]="20"></mat-spinner>
+
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">

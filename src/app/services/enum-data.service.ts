@@ -130,7 +130,7 @@ getAll:boolean;
           obj.push(user);
         });
         
-        self.custumService.getBankList(obj).subscribe(
+        self.custumService.getJointBankList(obj).subscribe(
           (data) => {
             self.bankList = data;
             // self.getJointAccounts(obj)
