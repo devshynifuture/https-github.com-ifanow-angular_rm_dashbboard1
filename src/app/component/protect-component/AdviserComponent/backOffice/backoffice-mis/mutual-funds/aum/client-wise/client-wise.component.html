@@ -441,12 +441,12 @@
                         </tbody>
                         <tbody>
                             <tr *ngIf="!isLoading && clientList.length>0">
-                                <td class="p-table  "><strong>Total</strong></td>
-                                <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
+                                <td class="p-table  "></td>
+                                <td class="p-table text-right "><strong>Total</strong></td>
+                                <td class="p-table text-right "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
                                             [shouldRoundOff]="false"></span></strong>
                                 </td>
-                                <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
+                                <td class="p-table text-right"><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
                                 </td>
                                 <td></td>
                                 <td></td>

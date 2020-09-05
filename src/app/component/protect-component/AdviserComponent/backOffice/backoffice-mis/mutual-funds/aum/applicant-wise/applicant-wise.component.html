@@ -479,11 +479,12 @@
                             </tbody>
                             <tbody *ngIf="!isLoading && applicantName.length>0">
                                 <tr>
-                                    <td class="p-table"><strong>Total</strong></td>
-                                    <td class="p-table">&nbsp;</td>
-                                    <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [shouldRoundOff]="false"
+                                    <td class="p-table"><strong> </strong></td>
+                                    <td class="p-table text-right"><strong>Total</strong></td>
+                                    <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber [shouldRoundOff]="false"
                                                 [value]="totalCurrentValue"></span></strong></td>
-                                    <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                    <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                             </tbody>
