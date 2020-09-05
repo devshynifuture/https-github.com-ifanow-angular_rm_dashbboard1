@@ -1,9 +1,15 @@
 <div [ngClass]="{'pe-none': isLoading}" (window:resize)="onResize()" class="row pt-150">
-    <div class="col-md-4 d-flex align-items-center">
+    <div class="col-md-5 d-flex align-items-center">
         <!-- <h4 class="m-0">Clients</h4> -->
     </div>
+    <div class="col-md-4 d-flex align-items-center justify-content-end pb-10">
+        <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
+            <input autocomplete="off" #inputSearch (input)="searchClientFamilyMember(inputSearch.value)"
+                class="form-control br-0 pt-8 mb-0" matInput placeholder="Type to filter data">
+        </mat-form-field>
+    </div>
     <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
-        class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+        class="col-md-3 d-flex align-items-center justify-content-end pb-10">
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
         </a>

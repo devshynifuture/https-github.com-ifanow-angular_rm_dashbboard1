@@ -14,6 +14,9 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
+import { Subscription, Observable } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs/operators';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-people-clients',
@@ -33,6 +36,8 @@ export class PeopleClientsComponent implements OnInit {
   infiniteScrollingFlag;
   hasEndReached = false;
   finalClientList = [];
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
@@ -242,5 +247,46 @@ export class PeopleClientsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      // this.showDefaultDropDownOnSearch = false;
+      // this.isLoding = false;
+      // this.clientList = undefined;
+      return;
+    }
+    // if (!this.clientList) {
+    //   this.showDefaultDropDownOnSearch = true;
+    //   this.isLoding = true;
+    // }
+    this.hasEndReached = true;
+    this.clientDatasource.data = [{}, {}, {}];
+    this.isLoading = true;
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: value
+    };
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(700)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              responseArray = responseArray.filter(element => element.userType == 2);
+              this.finalClientList = responseArray
+              this.clientDatasource.data = responseArray;
+              this.hasEndReached = false;
+              this.infiniteScrollingFlag = false;
+              this.isLoading = false
+            } else {
+            }
+          }, error => {
+            console.log('getFamilyMemberListRes error : ', error);
+          });
+        }
+      );
   }
 }
