@@ -28,9 +28,9 @@
 
   <div class="row pt-10">
     <div class="col-md-12">
-      <div class=" mb-20 "   (scroll)="onWindowScroll($event)">
+      <div class=" mb-20 mt-8 people-table-scroll" (scroll)="onWindowScroll($event)">
         <table #tableEl matSort #unmappedTableSort="matSort" mat-table [dataSource]="unmappedDataSource" id="tbs"
-          class="mt-8" [appSkeletonLoading]="isLoading">
+           [appSkeletonLoading]="isLoading">
 
           <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
@@ -95,7 +95,7 @@
           <!-- Symbol Column -->
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
