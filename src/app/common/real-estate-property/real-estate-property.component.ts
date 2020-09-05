@@ -464,7 +464,7 @@ export class RealEstatePropertyComponent implements OnInit {
         this.getCoOwner.controls['0'].get('share').setValue('100');
       }
 
-      if (data.ownerList && data.ownerList > 0) {
+      if (data.ownerList && data.ownerList.length > 0) {
         this.getCoOwner.removeAt(0);
         data.ownerList.forEach(element => {
           this.addNewCoOwner(element);
