@@ -279,7 +279,7 @@ export class PeopleClientsComponent implements OnInit {
     this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
       debounceTime(700)).subscribe(
         data => {
-          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+          this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
               responseArray = responseArray.filter(element => element.userType == 2);
               this.finalClientList = responseArray
@@ -293,6 +293,7 @@ export class PeopleClientsComponent implements OnInit {
               this.clientDatasource.data = [];
             }
           }, error => {
+            this.eventService.openSnackBar(error, "Dimiss")
             console.log('getFamilyMemberListRes error : ', error);
           });
         }
