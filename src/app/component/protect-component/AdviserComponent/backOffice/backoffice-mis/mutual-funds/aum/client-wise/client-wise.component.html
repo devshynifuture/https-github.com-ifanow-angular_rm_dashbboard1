@@ -331,16 +331,28 @@
                                                                                             class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
-
                                                                                 <th (click)="sortByFolio(scheme.folioList,'totalAum')"
-                                                                                    class="c-p w-20">
+                                                                                class="c-p f-500 w-20">
+                                                                                <span
+                                                                                    class="d-flex justify-content-end align-items-center">
+                                                                                    Current value
+                                                                                    <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                        class="material-icons ml-4 f-14 text-primitive">
+                                                                                        arrow_upward </i>
+                                                                                    <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                        class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                </span>
+                                                                            </th>
+
+                                                                                <th (click)="sortByFolio(scheme.folioList,'balanceUnit')"
+                                                                                    class="c-p f-500 w-20">
                                                                                     <span
                                                                                         class="d-flex justify-content-end align-items-center">
                                                                                         Balance Unit
-                                                                                        <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                        <i *ngIf="propertyName4=='balanceUnit' && !reverse4"
                                                                                             class="material-icons ml-4 f-14 text-primitive">
                                                                                             arrow_upward </i>
-                                                                                        <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                        <i *ngIf="propertyName4=='balanceUnit' && reverse4"
                                                                                             class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
@@ -372,7 +384,7 @@
                                                                                         {{(isLoadingFolio) ? '' : folio.folioNumber}}
                                                                                     </div>
                                                                                 </td>
-                                                                                <!-- <td class="text-right">
+                                                                                <td class="text-right">
                                                                                     <div
                                                                                         [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{isLoadingFolio ? ' ' : '₹ '}}<span
@@ -381,7 +393,7 @@
                                                                                             [shouldRoundOff]="true"
                                                                                             [value]="folio.totalAum"></span>
                                                                                     </div>
-                                                                                </td> -->
+                                                                                </td>
                                                                                 <td class="text-right">
                                                                                     <div
                                                                                         [ngClass]="{'bar': isLoadingFolio}">
