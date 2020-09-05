@@ -213,7 +213,7 @@
                                                                 <td class="text-right">
                                                                     <div class="bar">
                                                                         <!--                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}-->
-                                                                        <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="applicant.balanceUnit" [shouldRoundOff]="true">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
+                                                                        <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="applicant.balanceUnit" [shouldRoundOff]="false">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td style="padding-left: 20px !important;">
@@ -256,7 +256,10 @@
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table text-right"> <strong>Total</strong></td>
-                                <td class="p-table text-right"><strong>{{'₹ '}} {{ totalCurrentValue }}</strong>
+                                <td class="p-table f-600 text-right">
+
+                                    {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="true"></span>
+
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.0-0'}}%</strong></td>
                                 <td></td>

@@ -85,7 +85,7 @@
 
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="false" [value]="category.totalAum"></span>
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="category.totalAum"></span>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -148,7 +148,7 @@
                                                     {{subcategory.name}}
                                                 </td>
                                                 <td class="text-right">
-                                                    {{'₹ '}}<span appFormatNumber [value]="subcategory.totalAum" [shouldRoundOff]="false"></span>
+                                                    {{'₹ '}}<span appFormatNumber [value]="subcategory.totalAum" [shouldRoundOff]="true"></span>
                                                 </td>
                                                 <td class="text-right">
                                                     {{subcategory.weightInPercentage | number :'1.2-2'}}%</td>
@@ -199,7 +199,7 @@
                                                                 <td>{{scheme.schemeName}}
 
                                                                 </td>
-                                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="false"></span>
+                                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="true"></span>
                                                                 </td>
                                                                 <td class="text-right">
                                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}
@@ -276,7 +276,7 @@
                                                                                 </td>
                                                                                 <td style="padding-left: 20px !important;">
                                                                                     {{applicant.folioNumber}} </td>
-                                                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="applicant.totalAum" [shouldRoundOff]="false"></span>
+                                                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="applicant.totalAum" [shouldRoundOff]="true"></span>
                                                                                 </td>
                                                                                 <td class="text-right">
                                                                                     {{applicant.weightInPercentage | number:'1.2-2'}}{{'%'}}
@@ -314,7 +314,7 @@
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table f-600 text-right">
 
-                                    {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="false"></span>
+                                    {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="true"></span>
 
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
