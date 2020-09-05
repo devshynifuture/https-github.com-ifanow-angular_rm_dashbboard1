@@ -82,8 +82,9 @@
                         <span *ngIf="!isLoading && element.status == 'Success'" class="text-success">{{element.status}}</span>
                         <span *ngIf="!isLoading && element.status == 'Pending'" class="text-primary">{{element.status}}</span>
                         <span *ngIf="!isLoading && element.status == 'Duplicate'" class="text-warning">{{element.status}}</span>
-                        <span *ngIf="!isLoading && element.status == 'Failure'" class="text-danger">{{element.status}}</span>
+                        <span *ngIf="!isLoading && element.status == 'Failed'" class="text-danger">{{element.status}}</span>
                         <span *ngIf="!isLoading && element.status == 'All'" class="">{{element.status}}</span>
+                        <!-- <span *ngIf="!isLoading">{{element.status}}</span> -->
 
                       
 
