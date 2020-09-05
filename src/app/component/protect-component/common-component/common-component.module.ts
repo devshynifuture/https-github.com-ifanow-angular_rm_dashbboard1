@@ -22,11 +22,12 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-view-add-number.component';
 import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-button/delete-progress-button.component';
 import { MultipleEmailAddressComponent } from './multiple-email-address/multiple-email-address.component';
+import { ResetClientPasswordComponent } from '../PeopleComponent/people/Component/people-clients/add-client/reset-client-password/reset-client-password.component';
 
 @NgModule({
-  declarations: [DeleteProgressButtonComponent,
+  declarations: [DeleteProgressButtonComponent, ResetClientPasswordComponent,
     FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -42,7 +43,7 @@ import { MultipleEmailAddressComponent } from './multiple-email-address/multiple
 
     // AppModule
   ],
-  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent]
+  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent]
 })
 export class CommonComponentModule {
 }
