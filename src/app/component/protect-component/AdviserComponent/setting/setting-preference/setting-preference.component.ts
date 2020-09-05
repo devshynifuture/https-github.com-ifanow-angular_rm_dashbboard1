@@ -207,6 +207,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   updateDomainSettingRes(flag, event, data, index) {
+    this.eventService.openSnackBar("Updated sucessfully", "Dismiss")
     this.loaderArray[index].isLoader = false;
     this.updateDomain = data
     // this.getDomain();

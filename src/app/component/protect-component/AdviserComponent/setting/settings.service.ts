@@ -171,4 +171,9 @@ export class SettingsService {
     const httpParams = new HttpParams().set('id', data.id);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_OR_ADVISOR_ROLES, httpParams);
   }
+
+  getDomainData(data) {
+    const httpParams = new HttpParams().set('hostName', data.hostName);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOMAIN_DATA, httpParams);
+  }
 }
