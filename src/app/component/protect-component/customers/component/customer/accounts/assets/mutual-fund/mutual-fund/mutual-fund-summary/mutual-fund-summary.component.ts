@@ -1965,8 +1965,8 @@ export class MutualFundSummaryComponent implements OnInit {
         toEmail: this.clientData.email,
         mfBulkEmailRequestId: this.mfBulkEmailRequestId,
       }
-      // let response = this.utilService.bulkHtmlToPdf(obj)
-      // console.log('********', response)
+      let response = this.utilService.bulkHtmlToPdf(obj)
+      console.log('********', response)
       //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
