@@ -79,9 +79,14 @@
 
                     </div>
                     <div class="col-md-2 text-right">
-                        <img class="emailIcon" src="/assets/images/svg/email-icon.svg">
-                        <img class="menu-myProfileIcon" src="/assets/images/svg/menu-myProfile-icon.svg">
-
+                        <img *ngIf="!letsideBarLoader" class="emailIcon" src="/assets/images/svg/email-icon.svg">
+                        <img *ngIf="!letsideBarLoader" class=" c-p" [matMenuTriggerFor]="menu"
+                            src="/assets/images/svg/menu-myProfile-icon.svg">
+                        <mat-menu #menu="matMenu">
+                            <button (click)="resetPassword('',clientOverviewData)" mat-menu-item>
+                                <span>Reset password</span>
+                            </button>
+                        </mat-menu>
                     </div>
                 </div>
                 <!-- *ngIf="clientOverviewData" -->
@@ -127,11 +132,12 @@
                                         src="/assets/images/svg/father-profile.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)"
                                         *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==8 || singleMembers.relationshipId==9 || singleMembers.relationshipId==11 || singleMembers.relationshipId==12 || singleMembers.relationshipId==15 || singleMembers.relationshipId==16|| singleMembers.relationshipId==18 || singleMembers.relationshipId==19 || singleMembers.relationshipId==17"
-                                        style="margin-right: 9px; margin-left: 2px;"
-                                        src="/assets/images/svg/others.svg" width="48px">
+                                        style="margin-right: 9px; margin-left: 2px;" src="/assets/images/svg/others.svg"
+                                        width="48px">
                                     <div (click)="open('edit',singleMembers)" class="familyList">
                                         <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
-                                            <span matTooltip="{{singleMembers.name}}" *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span>
+                                            <span matTooltip="{{singleMembers.name}}"
+                                                *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span>
                                             <span *ngIf="singleMembers.shortName" matTooltip="{{singleMembers.name}}">
                                                 {{singleMembers.shortName}} ...</span>
                                         </h4>

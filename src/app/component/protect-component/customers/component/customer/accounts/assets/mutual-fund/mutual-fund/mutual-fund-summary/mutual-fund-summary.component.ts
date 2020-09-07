@@ -129,6 +129,7 @@ export class MutualFundSummaryComponent implements OnInit {
   cashFlowObj: any;
   cashFlowXirr: any;
   msg: string;
+  copyOfData: any;
   // setTrueKey = false;
 
 
@@ -1104,6 +1105,7 @@ export class MutualFundSummaryComponent implements OnInit {
           console.log(data);
           this.isBulkDataResponse = true;
           let response = this.mfService.doFiltering(data)
+          this.mfData = response;
           Object.assign(response.mutualFundList, { flag: true });
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
@@ -1363,9 +1365,26 @@ export class MutualFundSummaryComponent implements OnInit {
       // You should add a fallback so that your program still executes correctly.
     }
   }
-
+  removeFromString(arr, str) {
+    let regex = new RegExp("\\b" + arr.join('|') + "\\b", "gi")
+    return str.replace(regex, '')
+  }
   Excel(tableTitle) {
     this.showDownload = true
+    this.customDataSource.data = this.copyOfData
+    this.customDataSource.data.forEach(element => {
+      var test = element.navDate.includes('$NEXTLINE')
+      console.log('includes', test)
+      if (test == true) {
+        element.navDate = element.navDate.replace("$NEXTLINE",' | ')
+       
+      }else{
+        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        var type = typeof element.navDate == "boolean" ? element.navDate : false;
+        element.navDate = (element.nav + element.navDate);
+        console.log(element.navDate)
+      }
+    });
     setTimeout(() => {
       var blob = new Blob([document.getElementById('template').innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -1616,11 +1635,14 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
     this.customDataSource.data.array3 = []
+    this.copyOfData = this.customDataSource.data
     this.customDataSource.data.forEach(element => {
-      if (element.folioNumber) {
+      var test = element.navDate.includes('$NEXTLINE')
+      console.log('includes', test)
+      if (element.folioNumber && test == false) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        element.navDate = (element.nav + '$NEXTLINE ' +element.navDate);
+        element.navDate = (element.nav + '$NEXTLINE ' + element.navDate);
         console.log(element.navDate)
       }
     });
@@ -1937,7 +1959,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
-          element.navDate = (element.nav + ' $NEXTLINE ' +element.navDate);
+          element.navDate = (element.nav + ' $NEXTLINE ' + element.navDate);
         }
       }
     });

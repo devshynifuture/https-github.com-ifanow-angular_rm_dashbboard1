@@ -123,6 +123,7 @@ export class ExpensesComponent implements OnInit {
   expenseGraph: void;
   familyList: any;
   clientDob:any;
+  billsAndUtilities: any;
 
   // periodSelection: any;
 
@@ -209,6 +210,7 @@ export class ExpensesComponent implements OnInit {
           this.entertainmentAmount = data.Entertainment;
           this.educationAmount = data.Education;
           // this.miscellaneousAmount = data.Billes_&_Utilies;
+          this.billsAndUtilities = data.billsAndUtilities;
           this.transportAmount = data.Transport;
           this.housingAmount = data.Housing;
           this.spent = data.total;
@@ -568,7 +570,7 @@ export class ExpensesComponent implements OnInit {
             }
           }, {
             name: 'Bills & Utilities',
-            y: 13,
+            y: this.billsAndUtilities,
             color: "#1F78B4",
             dataLabels: {
               enabled: false

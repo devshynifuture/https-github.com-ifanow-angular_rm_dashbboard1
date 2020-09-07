@@ -11,7 +11,7 @@ export interface PeriodicElement {
   uploadDate: Date;
   status: string;
   download: string;
-  uploadedBy: string;
+  // uploadedBy: string;
 }
 
 @Component({
@@ -20,7 +20,7 @@ export interface PeriodicElement {
   styleUrls: ['./backoffice-file-upload-folio.component.scss']
 })
 export class BackofficeFileUploadFolioComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'status', 'download'];
   advisorId: any;
   isLoading = false;
   listData: any = [];

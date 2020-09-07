@@ -13,10 +13,10 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
-import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
 import { Subscription, Observable } from 'rxjs';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { element } from 'protractor';
+import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
 
 @Component({
   selector: 'app-people-clients',
@@ -84,16 +84,9 @@ export class PeopleClientsComponent implements OnInit {
     this.peopleService.getClientList(obj).subscribe(
       data => {
         (this.finalClientList.length > 0) ? '' : this.isLoading = false;
-        // this.isLoading = false;
+        this.isLoading = false;
         if (data && data.length > 0) {
-          data.forEach((singleData) => {
-            if (singleData.mobileList && singleData.mobileList.length > 0) {
-              singleData.mobileNo = singleData.mobileList[0].mobileNo;
-            }
-            if (singleData.emailList && singleData.emailList.length > 0) {
-              singleData.email = singleData.emailList[0].email;
-            }
-          });
+          data = this.formatEmailAndMobile(data)
           this.finalClientList = this.finalClientList.concat(data);
           this.clientDatasource.data = this.finalClientList;
           this.clientDatasource.sort = this.clientTableSort;
@@ -112,6 +105,18 @@ export class PeopleClientsComponent implements OnInit {
     );
 
     // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
+  }
+
+  formatEmailAndMobile(data) {
+    data.forEach((singleData) => {
+      if (singleData.mobileList && singleData.mobileList.length > 0) {
+        singleData.mobileNo = singleData.mobileList[0].mobileNo;
+      }
+      if (singleData.emailList && singleData.emailList.length > 0) {
+        singleData.email = singleData.emailList[0].email;
+      }
+    });
+    return data
   }
 
   Excel(tableTitle) {
@@ -250,6 +255,12 @@ export class PeopleClientsComponent implements OnInit {
   }
 
   searchClientFamilyMember(value) {
+    if (value.length == 0) {
+      this.hasEndReached = true;
+      this.clientDatasource.data = [{}, {}, {}];
+      this.isLoading = true;
+      this.getClientList(0)
+    }
     if (value.length <= 2) {
       // this.showDefaultDropDownOnSearch = false;
       // this.isLoding = false;
@@ -273,8 +284,9 @@ export class PeopleClientsComponent implements OnInit {
     this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
       debounceTime(700)).subscribe(
         data => {
-          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+          this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
+              responseArray = this.formatEmailAndMobile(responseArray)
               responseArray = responseArray.filter(element => element.userType == 2);
               this.finalClientList = responseArray
               this.clientDatasource.data = responseArray;
@@ -282,8 +294,12 @@ export class PeopleClientsComponent implements OnInit {
               this.infiniteScrollingFlag = false;
               this.isLoading = false
             } else {
+              this.isLoading = false;
+              this.infiniteScrollingFlag = false;
+              this.clientDatasource.data = [];
             }
           }, error => {
+            this.eventService.openSnackBar(error, "Dimiss")
             console.log('getFamilyMemberListRes error : ', error);
           });
         }
