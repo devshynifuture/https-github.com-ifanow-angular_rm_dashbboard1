@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {startWith} from 'rxjs/internal/operators/startWith';
-import {map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../../../subscription.service';
-import {CommonFroalaComponent} from '../../common-subscription-component/common-froala/common-froala.component';
-import {UtilService} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {SettingsService} from '../../../../setting/settings.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { startWith } from 'rxjs/internal/operators/startWith';
+import { map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
+import { CommonFroalaComponent } from '../../common-subscription-component/common-froala/common-froala.component';
+import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { SettingsService } from '../../../../setting/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',
@@ -47,10 +47,10 @@ export class SearchClientAddQuotationComponent implements OnInit {
   orgDetails: any;
 
   constructor(public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService,
-              private eventService: EventService,
-              private router: Router,
-              private settingsService: SettingsService) {
+    private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private settingsService: SettingsService) {
   }
 
 
@@ -71,7 +71,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
             const filterValue = state.toLowerCase();
             const list = this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
-              this.stateCtrl.setErrors({invalid: true});
+              this.stateCtrl.setErrors({ invalid: true });
               this.stateCtrl.markAsTouched();
             }
             return this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
@@ -129,7 +129,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   createSubscription(value, data) {
     if (!data.quotation) {
       this.eventService.openSnackBar('Please map quotation to plan', 'Dismiss');
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: false});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false });
       this.router.navigate(['/admin/subscription/settings/documents']);
       return;
     }
@@ -293,6 +293,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   openFroala(data, value) {
+    data['ptFlag'] = true;
     data.isAdvisor = true;
     const fragmentData = {
       flag: value,
@@ -312,6 +313,6 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
