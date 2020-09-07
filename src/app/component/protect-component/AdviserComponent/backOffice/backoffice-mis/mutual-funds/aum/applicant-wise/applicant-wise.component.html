@@ -80,7 +80,7 @@
                                     
                                     <td class="text-right">
                                             <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                            {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="false" [value]="name.totalAum" *ngIf="!isLoading" [shouldRoundOff]="false"></span>
+                                            {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="name.totalAum" *ngIf="!isLoading" ></span>
                                         </div>
                                     </td>
 
@@ -153,7 +153,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                         <div [ngClass]="{'bar': isLoadingCategory}">
-                                                            {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber [shouldRoundOff]="false" [value]="category.totalAum" *ngIf="!isLoadingCategory"></span>
+                                                            {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber [shouldRoundOff]="true" [value]="category.totalAum" *ngIf="!isLoadingCategory"></span>
                                                         </div>
                                                     </td>
                                                     <td class="text-right">
@@ -221,7 +221,7 @@
                                                                     </td>
                                                                     <td class="text-right">
                                                                         <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                            {{isLoadingSubCategory ? ' ' : '₹ '}}<span appFormatNumber [value]="sub.totalAum" [shouldRoundOff]="false" *ngIf="!isLoadingSubCategory"></span>
+                                                                            {{isLoadingSubCategory ? ' ' : '₹ '}}<span appFormatNumber [value]="sub.totalAum" [shouldRoundOff]="true" *ngIf="!isLoadingSubCategory"></span>
                                                                         </div>
                                                                     </td>
                                                                     <td class="text-right">
@@ -309,7 +309,7 @@
                                                                                    
                                                                                     <td class="text-right">
                                                                                         <div [ngClass]="{'bar': isLoadingScheme}">
-                                                                                            {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="false" [value]="client.totalAum" *ngIf="!isLoadingScheme"></span>
+                                                                                            {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="client.totalAum" *ngIf="!isLoadingScheme"></span>
                                                                                         </div>
                                                                                     </td>
                                                                                    
@@ -415,7 +415,7 @@
                                                                                                     </td>
                                                                                                     <td class="text-right">
                                                                                                         <div class="bar">
-                                                                                                            {{'₹ '}}<span appFormatNumber [shouldRoundOff]="false" [value]="client.totalAum"></span>
+                                                                                                            {{'₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="client.totalAum"></span>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
@@ -479,11 +479,13 @@
                             </tbody>
                             <tbody *ngIf="!isLoading && applicantName.length>0">
                                 <tr>
-                                    <td class="p-table"><strong>Total</strong></td>
+                                    
                                     <td class="p-table">&nbsp;</td>
-                                    <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [shouldRoundOff]="false"
+                                    <td class="p-table text-right"><strong>Total</strong></td>
+                                    <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber [shouldRoundOff]="true"
                                                 [value]="totalCurrentValue"></span></strong></td>
-                                    <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                    <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                    <td></td>
                                     <td></td>
                                 </tr>
                             </tbody>

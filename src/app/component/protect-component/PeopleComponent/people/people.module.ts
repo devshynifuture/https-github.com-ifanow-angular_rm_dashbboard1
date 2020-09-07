@@ -13,15 +13,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { SettingModule } from '../../AdviserComponent/setting/setting.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
-import { ResetClientPasswordComponent } from './Component/people-clients/add-client/reset-client-password/reset-client-password.component';
 import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-button/delete-progress-button.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 // import { LeadsClientsComponent } from './Component/people-leads/leads-clients/leads-clients.component';
 
 
 @NgModule({
   declarations: [PeopleComponent, PeopleClientsComponent, PeopleLeadsComponent,
-    PeopleTeamMembersComponent, PeopleSubBrokersComponent, ResetClientPasswordComponent],
+    PeopleTeamMembersComponent, PeopleSubBrokersComponent],
   imports: [
     CommonModule,
     PeopleRoutingModule,
@@ -31,9 +31,10 @@ import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-bu
     PeopleEntryModule,
     CustomDirectiveModule,
     SettingModule,
-    CustomCommonModule
+    CustomCommonModule,
+    CommonComponentModule
   ],
-  entryComponents: [ResetClientPasswordComponent, DeleteProgressButtonComponent]
+  entryComponents: [DeleteProgressButtonComponent]
 })
 
 export class PeopleModule {

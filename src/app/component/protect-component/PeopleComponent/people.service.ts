@@ -124,6 +124,10 @@ export class PeopleService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST, data, 1);
   }
 
+  getClientsSearchList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_SEARCH_LIST, data, 1);
+  }
+
   getClientSearch(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.CLIENT_SEARCH, data, 1);
   }

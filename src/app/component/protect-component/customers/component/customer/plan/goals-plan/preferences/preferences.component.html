@@ -30,7 +30,33 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row pt-20 btl-1" *ngIf="data.goalType == 5">
+                        <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
+                            <p class="roboto mb-0 ">Frequency
+                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                                    aria-label="Button that displays a tooltip when focused or hovered over">
+                            </p>
+                        </div>
+                        <div class="col-md-8 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-form-field>
+                                        <mat-select matInput class="form-control br-0" formControlName="frequency">
+                                            <mat-option value="" disabled>Select option</mat-option> 
+                                              <mat-option value="0">0.6</mat-option>
+                                              <mat-option value="1">1</mat-option>
+                                              <mat-option value="2">2</mat-option>
+                                              <mat-option value="3">3</mat-option>
+                                              <mat-option value="4">4</mat-option>
+                                              <mat-option value="4">5</mat-option>
+                                          </mat-select>
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row pt-20 btl-1" *ngIf="data.goalType == 1">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 ">Post retirement asset allocation

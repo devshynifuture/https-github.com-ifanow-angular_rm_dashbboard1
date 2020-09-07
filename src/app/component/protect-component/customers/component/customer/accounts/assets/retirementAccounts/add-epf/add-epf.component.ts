@@ -142,7 +142,7 @@ disabledMember(value, type) {
   }
 
   setTimeout(() => {
-    this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.epf.value.getCoOwnerName[0].familyMemberId)
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.epf.value.getCoOwnerName[0].familyMemberId || (m.clientId == this.epf.value.getCoOwnerName[0].familyMemberId && this.epf.value.getCoOwnerName[0].isClient == 1))
   }, 1000);
 }
 
@@ -312,7 +312,7 @@ addNewNominee(data) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
   }
 
-  if (data.ownerList && data.ownerList > 0) {
+  if (data.ownerList && data.ownerList.length > 0) {
     this.getCoOwner.removeAt(0);
     data.ownerList.forEach(element => {
       this.addNewCoOwner(element);

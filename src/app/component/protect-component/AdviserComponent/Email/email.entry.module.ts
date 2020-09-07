@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleConnectDialogComponent } from './email-component/google-connect-dialog/google-connect-dialog.component';
 import { EmailFaqAndSecurityComponent } from './email-component/email-faq-and-security/email-faq-and-security.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [
   EmailAddTaskComponent,
@@ -22,7 +23,8 @@ export const componentList = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonComponentModule
+    CommonComponentModule,
+    CustomCommonModule
   ],
   entryComponents: [componentList]
 })

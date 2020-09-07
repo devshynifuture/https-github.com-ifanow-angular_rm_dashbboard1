@@ -702,7 +702,7 @@ export const appConfig = {
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
   PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
   DOMAIN_GET: 'setting/preferences/domain/get',
-  UPDATE_DOMAIN: 'setting/preferences/domain/update',
+  UPDATE_DOMAIN: 'setting/profile/organisation/url/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   RESET_ORG_PROFILE_LOGO: 'setting/organisation/logo/delete',
@@ -746,7 +746,6 @@ export const appConfig = {
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
-
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -805,6 +804,7 @@ export const appConfig = {
   GET_ISD_CODES: 'user/isd-code/list/get',
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
+  GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
   // CLIENT_SEARCH: 'user/client/all/names/get',
@@ -877,7 +877,7 @@ export const appConfig = {
   REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
   GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
-
+  GET_DOMAIN_DATA: 'setting/organisation/domain/data/get',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 

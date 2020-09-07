@@ -50,7 +50,7 @@
                 <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
                 <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTask(null)"
                     class="c-p ml-12">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -63,7 +63,7 @@
                     <button mat-menu-item>
                         View activity log
                     </button>
-                </mat-menu>
+                </mat-menu> -->
             </div>
         </div>
 
@@ -120,7 +120,7 @@
             <div class="w-41 pr-15 pl-15 remove-top">
                 <mat-form-field float="never" appearance="standard">
                     <mat-select class="form-control" formControlName="frequency">
-                        <mat-option None>
+                        <mat-option value="" disabled>
                             Select Frequency
                         </mat-option>
                         <mat-option *ngFor="let item of recurringTaskFrequencyList" [value]="item.id">
@@ -136,7 +136,7 @@
             <div class="w-41 pr-24 pl-15">
                 <mat-form-field class="ba-date">
                     <input class="form-control br-0 b-0" formControlName="continuesTill"
-                        (input)="preventDefault($event)" (focus)="picker2.open()" matInput [matDatepicker]="picker2">
+                        (input)="preventDefault($event)" (focus)="picker2.open()" matInput [matDatepicker]="picker2" placeholder="Continuous till">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error>
@@ -153,7 +153,7 @@
             <div class="w-41 pl-15 pr-15">
                 <mat-form-field float="never" appearance="standard" class="form-group">
                     <mat-select formControlName="every" class="form-control">
-                        <mat-option None>
+                        <mat-option value="" disabled>
                             Select Day
                         </mat-option>
                         <mat-option *ngFor="let item of dayOfWeek" [value]="item.id">
@@ -174,26 +174,37 @@
 
             <div class="w-41  pl-15 pr-15 form-group pl-0 mb-0 arn-ria">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input class="form-control br-0" formControlName="searchClientList" matInput placeholder="Search"
+                    <input class="form-control br-0" formControlName="searchClientList" (input)="searchClientFamilyMember(inputSearch.value)" #inputSearch matInput placeholder="Start typing to search client"
                         aria-label="State" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let singleClient of clientList | async" (click)="selectClient(singleClient)"
+                        <mat-option *ngFor="let singleClient of clientList" (onSelectionChange)="selectClient(singleClient)"
                             [value]="singleClient.clientId">
                             {{singleClient.displayName}}
                         </mat-option>
-                        <mat-option></mat-option>
-
                         <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoading">
                             <p class="t-left m-0"> No Client Found</p>
                         </mat-option>
 
                         <!-- empty state -->
-
+<!-- 
                         <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
                             <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                                 <div class="bar height24"> </div>
                             </div>
+                        </mat-option> -->
+
+                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
+                            <div class="skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
+                              <div class="row height24">
+                                <div class="col-md-12 p-0">
+                                  <div class="relClass">
+                                    <div class="bar height24"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         </mat-option>
+
                     </mat-autocomplete>
                     <mat-error>
                         This field is required
@@ -229,7 +240,7 @@
             <div class="w-41 form-group pl-0 mb-0 pl-15 pr-15">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="assignedTo">
-                        <mat-option value='' disabled> Team Member</mat-option>
+                        <mat-option value='' disabled>Select Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
                             {{ item.fullName }}
@@ -250,7 +261,7 @@
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0">
                 <mat-form-field class="ba-date">
                     <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                        (focus)="picker.open()" matInput [matDatepicker]="picker">
+                        (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="Select Due Date">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>
@@ -272,6 +283,7 @@
             <div class="w-41 form-group pl-15 pr-15 mb-0">
                 <mat-form-field>
                     <mat-select formControlName="taskTurnAroundTime" class="form-control">
+                        <mat-option value="" disabled>Select Turn around time</mat-option>
                         <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                             {{ 'T + ' + item }}
                         </mat-option>
@@ -318,7 +330,7 @@
             <div class="row pb-16 pt-24 align-items-center" [formGroupName]="i">
                 <div class="col-md-4 pl-30">
                     <mat-form-field>
-                        <input class="form-control br-0 text-left" matInput type="text" formControlName="description">
+                        <input class="form-control br-0 text-left" matInput type="text" formControlName="description" placeholder="Enter your Sub task description">
                         <mat-error>
                             This field is required
                         </mat-error>
@@ -329,10 +341,14 @@
 
                     <mat-form-field appearance="standard" class="arrowRemoveBox " floatLabel="never">
                         <mat-select class="form-control" formControlName="turnAroundTime">
+                            <mat-option value="" disabled>Select turn around time</mat-option>
                             <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                                 {{ 'T + ' + item }}
                             </mat-option>
                         </mat-select>
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
 
                 </div>
@@ -342,13 +358,16 @@
                     <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
                         <mat-select class="form-control" formControlName="assignedTo">
-                            <mat-option None>
+                            <mat-option value="" disabled>
                                 Select Team Member
                             </mat-option>
                             <mat-option *ngFor="let item of teamMemberList" [value]="item.userId">
                                 {{ item.fullName }}
                             </mat-option>
                         </mat-select>
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
 
                 </div>
@@ -437,7 +456,7 @@
                         <div class="col-md-4 editDelectText text-right">
                             <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
                             <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
-                                (click)="saveEditedComment(item, 'task', i)">Save</a>
+                                (click)="saveEditedComment(item, 'task', i, $event)">Save</a>
                             <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
                         </div>
                     </div>
@@ -470,10 +489,10 @@
                 <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
-                <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
+                <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
                 <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteSubTask()"
                     class="c-p ml-12">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -486,7 +505,7 @@
                     <button mat-menu-item>
                         View activity log
                     </button>
-                </mat-menu>
+                </mat-menu> -->
             </div>
         </div>
 
@@ -514,7 +533,7 @@
             <div class="w-41 form-group mb-0 pr-15 pl-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="assignedTo">
-                        <mat-option None> Team Member</mat-option>
+                        <mat-option value="" disabled> Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
                             {{ item.fullName }}
@@ -535,7 +554,7 @@
             <div class="w-30 pl-0 pr-15 form-group mb-0">
                 <mat-form-field class="ba-date">
                     <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                        (focus)="picker3.open()" matInput [matDatepicker]="picker3">
+                        (focus)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="Select Due Date">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-error>
@@ -621,7 +640,7 @@
                             <a class="f-12 c-p" *ngIf="!item.editMode"
                                 (click)="toggleEditMode(item, 'subTask')">Edit</a>
                             <a class="f-12 c-p" *ngIf="item.editMode"
-                                (click)="saveEditedComment(item, 'subTask',i)">Save</a>
+                                (click)="saveEditedComment(item, 'subTask',i, $event)">Save</a>
                             <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
                         </div>
                     </div>
@@ -650,14 +669,14 @@
     <div class="bottomCommentBox bg-grey lter" *ngIf="data!==null">
         <div class="row pt-16">
             <div class="col-md-1 pl-30">
-                <img src="assets/images/svg/Mask.svg" class="c-p avatarImg">
+                <img [src]='userProfilePicUrl' class="c-p avatarImg">
             </div>
             <div class="col-md-11">
                 <mat-form-field>
                     <span>
                         <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
                             [disabled]="data===null"
-                            (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
+                            (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''" placeholder="Type your comment here and press enter">
                     </span>
                 </mat-form-field>
 
@@ -678,8 +697,16 @@
 
                         <span *ngIf="data">
                             <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12"
-                                (click)="onAddingCollaborator(null)">
+                                 [matMenuTriggerFor]="menu2">
+                                 <!-- (click)="onAddingCollaborator(null)" -->
+                            <mat-menu #menu2="matMenu">
+                                <button mat-menu-item *ngFor="let item of teamMemberList" (click)="onAddingCollaborator(item)">
+                                    {{ item.fullName }}
+                                </button>
+                            </mat-menu>
                         </span>
+
+                        
                     </div>
                 </div>
 
@@ -698,12 +725,21 @@
             </div>
             <div class="col-md-4 text-right" *ngIf="tabState === 1">
                 <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
-                    [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>Create</button>
+                    [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>
+                    <span *ngIf="data!==null" >  
+                        Save Changes
+                    </span>
+                    <span *ngIf="data===null">
+                        Create
+                    </span>
+                </button>
             </div>
             <div class="col-md-4 text-right" *ngIf="tabState === 2" matTooltip="You must create Task First"
                 [matTooltipDisabled]="data!==null">
                 <button mat-stroked-button [disabled]="data===null" class="btn-primary text-white c-p"
-                    (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
+                    (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                    Save Changes
+                </button>
             </div>
         </div>
     </div>

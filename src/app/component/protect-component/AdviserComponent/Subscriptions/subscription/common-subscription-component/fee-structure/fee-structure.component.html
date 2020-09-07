@@ -11,7 +11,7 @@
                     (click)="openPlanSliderFee('','fixedFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right"
+                            <mat-checkbox class="right text-right top-checkbox-align"
                                 [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}"
                                 *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Fixed fee</h4>
@@ -30,7 +30,7 @@
                     (click)="openPlanSliderFee('','varibleFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right"
+                            <mat-checkbox class="right text-right top-checkbox-align"
                                 [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}"
                                 *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Variable fee</h4>
@@ -51,8 +51,8 @@
 </div>
 <div *ngIf="_upperData" class="wrapper-44 pt-180 pb-100">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-lg-2 col-md-12 d-none-992"></div>
+        <div class="col-lg-8 col-md-12">
             <div class="example-card">
                 <mat-card class="p-0 b-a">
                     <div class="row bg-grey lter">
@@ -195,7 +195,7 @@
                 </mat-card>
             </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-lg-2 col-md-12 d-none-992"></div>
     </div>
 </div>
 <div *ngIf="_upperData=='' || _upperData" class="bottom-fixed wrapper-16 w-100">

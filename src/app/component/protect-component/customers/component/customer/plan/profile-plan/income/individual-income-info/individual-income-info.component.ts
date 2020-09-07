@@ -122,12 +122,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
   getAccountList(userData) {
     const self = this;
     return new Promise(function(resolve, reject) {
-        
+        let array = [];
         const obj = {
           userId:self.singleIndividualIncome.familyMemberId == 0 ? self.singleIndividualIncome.clientId : self.singleIndividualIncome.id,
           userType: self.singleIndividualIncome.familyMemberId == 0 ? 2 : 3 
         };
-        self.custumService.getBankList(obj).subscribe(
+        array.push(obj);
+        self.custumService.getBankList(array).subscribe(
           (data) => {
             if(data){
               self.bankList = data;
@@ -643,9 +644,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   }
   chngIncomeOption(data) {
-    this.incomeOption = data.value;
+	this.incomeOption = data.value;
+	this.resetFeild();
     this.addMoreFlag = false;
-    this.incomeNetForm.controls.continousTill.setValue('1');
+	this.incomeNetForm.controls.continousTill.setValue('1');
+	this.incomeNetForm.controls.incomeOption.setValue(this.incomeOption)
+
+
+
     // let value = parseInt(data.value)
     // this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
 
@@ -1037,22 +1043,25 @@ export class IndividualIncomeInfoComponent implements OnInit {
   submitIncomeFormRes(data) {
     this.incomePosition++;
     if (this.incomePosition < this.finalIncomeAddList.length) {
-      this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
-      this.incomeNetForm.reset();
-      this.incomeNetForm.controls.incomeStyle.setValue('1');
-      this.isStatic = true;
-      this.incomeNetForm.controls.incomeOption.setValue('2')
-      this.incomeOption = '2';
-      this.nullAllObj();
-      this.disabledAllObj();
-      this.emptyControlsAtMostOn();
-      this.getAccountList('');
-      this.getExpectedBonusForm.bonusList.reset();
+	  this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
+	  this.resetFeild();
+	  this.incomeNetForm.controls.incomeOption.setValue('2')
+	  this.incomeOption = '2';
     }
     else {
       (this.editApiData) ? this.eventService.openSnackBar("Income is edited") : this.eventService.openSnackBar("Income is added")
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
     }
+  }
+  resetFeild(){
+	this.incomeNetForm.reset();
+	this.incomeNetForm.controls.incomeStyle.setValue('1');
+	this.isStatic = true;
+	this.nullAllObj();
+	this.disabledAllObj();
+	this.emptyControlsAtMostOn();
+	this.getAccountList('');
+	this.getExpectedBonusForm.bonusList.reset();
   }
   //  expected bonus array logic
   nullAllObj() {

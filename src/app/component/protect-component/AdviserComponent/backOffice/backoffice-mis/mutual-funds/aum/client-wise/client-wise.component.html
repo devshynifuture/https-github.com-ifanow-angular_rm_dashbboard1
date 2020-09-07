@@ -83,7 +83,7 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
-                                            [value]="name.totalAum" [shouldRoundOff]="false"></span>
+                                            [value]="name.totalAum" [shouldRoundOff]="true"></span>
                                     </div>
                                 </td>
 
@@ -173,7 +173,7 @@
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingInvestor}">
                                                         {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
-                                                            *ngIf="!isLoadingInvestor" [shouldRoundOff]="false"
+                                                            *ngIf="!isLoadingInvestor" [shouldRoundOff]="true"
                                                             [value]="investor.totalAum"></span>
                                                     </div>
                                                 </td>
@@ -264,7 +264,7 @@
                                                                         {{isLoadingScheme ? ' ' : '₹ '}}<span
                                                                             appFormatNumber *ngIf="!isLoadingScheme"
                                                                             [value]="scheme.totalAum"
-                                                                            [shouldRoundOff]="false"></span>
+                                                                            [shouldRoundOff]="true"></span>
                                                                     </div>
                                                                 </td>
 
@@ -306,7 +306,7 @@
                                                                         id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
-                                                                                <th class="w-10 f-500">Sr No.</th>
+                                                                                <th class="w-8 f-500">Sr No.</th>
                                                                                 <th (click)="sortByFolio(scheme.folioList,'schemeName')"
                                                                                     class="w-30 f-500 c-p">
                                                                                     <span
@@ -331,23 +331,35 @@
                                                                                             class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
-
                                                                                 <th (click)="sortByFolio(scheme.folioList,'totalAum')"
-                                                                                    class="c-p w-20">
+                                                                                class="c-p f-500 w-17">
+                                                                                <span
+                                                                                    class="d-flex justify-content-end align-items-center">
+                                                                                    Current value
+                                                                                    <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                        class="material-icons ml-4 f-14 text-primitive">
+                                                                                        arrow_upward </i>
+                                                                                    <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                        class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                </span>
+                                                                            </th>
+
+                                                                                <th (click)="sortByFolio(scheme.folioList,'balanceUnit')"
+                                                                                    class="c-p f-500 w-20">
                                                                                     <span
                                                                                         class="d-flex justify-content-end align-items-center">
                                                                                         Balance Unit
-                                                                                        <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                        <i *ngIf="propertyName4=='balanceUnit' && !reverse4"
                                                                                             class="material-icons ml-4 f-14 text-primitive">
                                                                                             arrow_upward </i>
-                                                                                        <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                        <i *ngIf="propertyName4=='balanceUnit' && reverse4"
                                                                                             class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                                                                     </span>
                                                                                 </th>
 
                                                                                 <th class="w-15 f-500 text-right">%
                                                                                     Weight</th>
-                                                                                <th></th>
+                                                                                 
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody
@@ -378,7 +390,7 @@
                                                                                         {{isLoadingFolio ? ' ' : '₹ '}}<span
                                                                                             appFormatNumber
                                                                                             *ngIf="!isLoadingFolio"
-                                                                                            [shouldRoundOff]="false"
+                                                                                            [shouldRoundOff]="true"
                                                                                             [value]="folio.totalAum"></span>
                                                                                     </div>
                                                                                 </td>
@@ -399,6 +411,7 @@
                                                                                     </div>
 
                                                                                 </td>
+                                                                                
                                                                             </tr>
                                                                         </tbody>
 
@@ -441,13 +454,15 @@
                         </tbody>
                         <tbody>
                             <tr *ngIf="!isLoading && clientList.length>0">
-                                <td class="p-table  "><strong>Total</strong></td>
+                               
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
-                                            [shouldRoundOff]="false"></span></strong>
+                                <td class="p-table  text-right"><strong>Total</strong></td>
+                                <td class="p-table text-right "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
+                                            [shouldRoundOff]="true"></span></strong>
                                 </td>
-                                <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
+                                <td class="p-table text-right"><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
                                 </td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
