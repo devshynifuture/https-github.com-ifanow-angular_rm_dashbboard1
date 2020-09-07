@@ -283,8 +283,8 @@ export class SearchClientAddQuotationComponent implements OnInit {
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_state'), 'g'), this.orgDetails.state);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_city'), 'g'), this.orgDetails.city);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_pincode'), 'g'), this.orgDetails.zipCode);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_address'), 'g'), this.orgDetails.billerAddress);
-
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_address'), 'g'), this.orgDetails.billerAddress); ``
+          quotationData.documentText = quotationData.documentText.replace('$organization_logo', this.orgDetails.logoUrl);
           //
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
