@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {
   Event,
   NavigationCancel,
@@ -9,14 +9,15 @@ import {
   Router,
   RouterOutlet
 } from '@angular/router';
-import { EventService } from './Data-service/event.service';
-import { RoutingState } from './services/routing-state.service';
-import { DOCUMENT, PlatformLocation } from '@angular/common';
-import { ConnectionService } from 'ng-connection-service';
-import { interval } from 'rxjs';
-import { OnInit } from "@angular/core/src/metadata/*";
-import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
-import { AuthService } from './auth-service/authService';
+import {EventService} from './Data-service/event.service';
+import {RoutingState} from './services/routing-state.service';
+import {DOCUMENT, PlatformLocation} from '@angular/common';
+import {ConnectionService} from 'ng-connection-service';
+import {interval} from 'rxjs';
+import {OnInit} from "@angular/core/src/metadata/*";
+import {SettingsService} from './component/protect-component/AdviserComponent/setting/settings.service';
+import {AuthService} from './auth-service/authService';
+import {EnumDataService} from "./services/enum-data.service";
 
 @Component({
   selector: 'app-root',
@@ -48,11 +49,11 @@ export class AppComponent implements AfterViewInit, OnInit {
       hostName: data
     }
     this.settingService.getDomainData(obj).subscribe(data => {
-      if (data) {
-        AuthService.setDomainDetails(data)
-        this.setValuesAsPerDomain(data)
-      }
-    },
+        if (data) {
+          AuthService.setDomainDetails(data)
+          this.setValuesAsPerDomain(data)
+        }
+      },
       err => {
         console.log(err)
       })
@@ -81,6 +82,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     private location: PlatformLocation,
     private connectionService: ConnectionService,
     private settingService: SettingsService,
+    private enumDataService: EnumDataService,
     @Inject(DOCUMENT) private document
   ) {
     this.connectionService.monitor().subscribe(isConnected => {

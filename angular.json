@@ -80,7 +80,6 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json",
               "scripts": [
-                "src/google-analytics.js"
               ]
             },
             "devifanow": {
@@ -155,7 +154,6 @@
                 }
               ],
               "scripts": [
-                "src/google-analytics.js"
               ]
             }
           }
