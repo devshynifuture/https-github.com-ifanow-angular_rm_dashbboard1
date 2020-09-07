@@ -60,12 +60,6 @@ export class OverviewComponent implements OnInit {
     // this.overviewDesign = 'true';
     this.advisorId = AuthService.getAdvisorId();
     // this.openForm('','addPlanDetails','open');
-    this.organizationData = AuthService.getOrgDetails();
-    this.quotationTemplate = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);
-    this.detailsOfClientTemplate = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
-    this.redressalofGrievance = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
-    this.letterOfEngagement = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
-    this.scopeofService = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
   }
 
   dialogClose() {
