@@ -41,9 +41,9 @@ export class HttpService {
    * @description - This method will send back payload/response or throw error as per the status received 
    * @param res - the response object received from the api calls
    */
-  sendSuccessResponse(res){
+  sendSuccessResponse(res) {
     if (res.status === 200 || res.status === 201) {
-      if(res.payLoad) {
+      if (res.payLoad) {
         const resData = this.changeBase64ToString(res);
         return resData;
       } else {
@@ -177,7 +177,7 @@ export class HttpService {
       });
   }
 
-  putWithStatusCode(url: string, body, options?){
+  putWithStatusCode(url: string, body, options?) {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
         .set('Content-Type', 'application/json')
@@ -187,23 +187,23 @@ export class HttpService {
     }
 
     return this._http
-    .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
-    .map((res: any) => {
-      if (res == null) {
-        return res;
-      } else if (res.status === 200) {
-        const resData = this.changeBase64ToString(res);
-        return { res: resData, statusCode: res.status } ;
-      } else {
-        const err = new Error(res.message);
-        throwError(err);
-        // this._router.navigate(['login']);
-      }
-    });
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
+      .map((res: any) => {
+        if (res == null) {
+          return res;
+        } else if (res.status === 200) {
+          const resData = this.changeBase64ToString(res);
+          return { res: resData, statusCode: res.status };
+        } else {
+          const err = new Error(res.message);
+          throwError(err);
+          // this._router.navigate(['login']);
+        }
+      });
   }
 
-  percentDone:any;
-  callEvent:any = 'events'
+  percentDone: any;
+  callEvent: any = 'events'
   putExternal(url: string, body, options?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -213,8 +213,8 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-console.log(HttpEventType.UploadProgress,"HttpEventType.UploadProgress");
-    
+    console.log(HttpEventType.UploadProgress, "HttpEventType.UploadProgress");
+
     return this._http
       .put<any>(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
   }
@@ -335,6 +335,47 @@ console.log(HttpEventType.UploadProgress,"HttpEventType.UploadProgress");
       });
   }
 
+  getWithoutAuth(url: string, params, requestAge: number): Observable<any> {
+    if (!requestAge) {
+      requestAge = DEFAULT_AGE;
+    }
+    // const objJson64 = this.changeBase64Data(params);
+    const entry = this.cacheMap.get(url);
+    if (entry) {
+      const isExpired = entry.exitTime < Date.now();
+      if (isExpired) {
+        this.deleteExpiredCache();
+      } else if (entry.request === params) {
+        return Observable.of((entry.response));
+      }
+    }
+    let httpParams = params;
+    // httpParams = httpParams.append('query', params);
+    let httpHeader: HttpHeaders;
+    if (this._userService.getToken()) {
+      httpHeader = new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json');
+    } else {
+      httpHeader = new HttpHeaders().set('Content-Type', 'application/json');
+    }
+    const httpOptions = {
+      headers: httpHeader,
+      params: httpParams
+    };
+    url = url.trim();
+    return this._http
+      .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
+      .map((res: any) => {
+        if ([200].includes(res.status)) {
+          const resData = this.changeBase64ToString(res);
+          return resData;
+        } else {
+          // this._router.navigate(['login']);
+          // throw new Error(res.message);
+        }
+      });
+  }
+
 
   // getMethod(url: string, params): Observable<any> {
   //   let httpParams = new HttpParams();
@@ -366,17 +407,17 @@ console.log(HttpEventType.UploadProgress,"HttpEventType.UploadProgress");
     };
     url = url.trim();
     return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
-    .map((res: any) => {
-      if (res.status === 200) {
-        const resData = this.changeBase64ToString(res);
-        return resData;
-      } else if (res.status === 204) {
-        return null;
-      } else {
-        // this._router.navigate(['login']);
-        throw new Error(res.message);
-      }
-    });
+      .map((res: any) => {
+        if (res.status === 200) {
+          const resData = this.changeBase64ToString(res);
+          return resData;
+        } else if (res.status === 204) {
+          return null;
+        } else {
+          // this._router.navigate(['login']);
+          throw new Error(res.message);
+        }
+      });
   }
 
   getHttpClient(url, httpOptions?) {
