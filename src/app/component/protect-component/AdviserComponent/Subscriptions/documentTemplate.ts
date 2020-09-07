@@ -63,18 +63,18 @@ export const redressalofGrievance = `
 
 export const letterOfEngagement = `
 
-
-<div style="display: inline-block">
-<img src="http://res.cloudinary.com/futurewise/image/upload/v1598449065/biller_profile_logo/uzimrzdtywuziwfdaxsu.png">
+<div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
+<div style="width: 100px;">
+<img style="max-width: 100% !important;" src="http://res.cloudinary.com/futurewise/image/upload/v1598449065/biller_profile_logo/uzimrzdtywuziwfdaxsu.png">
 </div>
 
-<div style="text-align:right; display: inline-block">
-	<h4 style="font-size: 16px; margin: 0px;"> Company name </h4>
-	<p>Address line 1</p>
-	<p>Address line 1</p>
-	<p>Mumbai – Maharashtra - 400001</p>
+<div style="text-align:right;">
+	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> Company name </h4>
+	<p style="margin: 0px; color: #83959D;"> Address line 1</p>
+	<p style="margin: 0px; color: #83959D;"> Address line 1</p>
+	<p style="margin: 0px; color: #83959D;">Mumbai – Maharashtra - 400001</p>
 </div>
-
+</div>
  
  
 
