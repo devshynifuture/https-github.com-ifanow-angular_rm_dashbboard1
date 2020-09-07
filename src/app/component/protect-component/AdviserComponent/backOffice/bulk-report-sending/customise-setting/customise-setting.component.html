@@ -35,7 +35,7 @@
             <div  (scroll)="onWindowScroll($event)"
                 class="people-table-scroll">
                 <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation"
-                    [appSkeletonLoading]="isLoading" id="tbs" class="mt-8">
+                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                         <td class="br" mat-cell *matCellDef="let element">
