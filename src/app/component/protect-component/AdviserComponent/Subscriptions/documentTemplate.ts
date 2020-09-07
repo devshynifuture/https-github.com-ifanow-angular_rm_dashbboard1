@@ -1,6 +1,6 @@
 export const quotationTemplate = ` 
 <div >
-<div style="padding: 25px; clear: both; border-top: 1px solid #dddddd;">
+<div style="padding: 0px 25px 25px 25px; clear: both;">
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Quotation for $plan_name</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Date: ___________</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Dear $client_name,</span></p>

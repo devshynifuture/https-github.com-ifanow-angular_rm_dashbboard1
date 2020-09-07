@@ -238,7 +238,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
   headerTemplate = `
   <div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-  <div style="width: 100px;">
+  <div style="width: 200px;">
   <img style="max-width: 100% !important;" src="$organization_logo">
   </div>
   <div style="text-align:right;">

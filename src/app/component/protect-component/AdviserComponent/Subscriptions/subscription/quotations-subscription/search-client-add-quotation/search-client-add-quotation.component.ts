@@ -248,6 +248,18 @@ export class SearchClientAddQuotationComponent implements OnInit {
     this.getOrgProfiles(quotationData);
   }
 
+  headerTemplate = `
+  <div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
+  <div style="width: 200px;">
+  <img style="max-width: 100% !important;" src="$organization_logo">
+  </div>
+  <div style="text-align:right;">
+    <h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
+    <p style="margin: 0px; color: #83959D;"> $organization_address</p>
+    <p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
+  </div>
+  </div>`
+
   getOrgProfiles(quotationData) {
 
     const obj = {
@@ -263,10 +275,16 @@ export class SearchClientAddQuotationComponent implements OnInit {
             const imageUrlViewer = '<img src=\'' + this.orgDetails.reportLogoUrl + '\'>';
             quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_logo_for_reports'), 'g'), imageUrlViewer);
           }
+          quotationData.documentText = this.headerTemplate + '' + quotationData.documentText
+
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_name'), 'g'), this.orgDetails.companyName);
-
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_state'), 'g'), this.orgDetails.state);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_city'), 'g'), this.orgDetails.city);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_pincode'), 'g'), this.orgDetails.zipCode);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_address'), 'g'), this.orgDetails.billerAddress); ``
+          quotationData.documentText = quotationData.documentText.replace('$organization_logo', this.orgDetails.logoUrl);
           //
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
