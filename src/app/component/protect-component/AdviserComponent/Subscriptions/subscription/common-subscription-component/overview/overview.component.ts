@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../../../subscription.service';
-import {AddPlanDetailComponent} from '../add-structure/add-plan-detail.component';
-import {AddEditDocumentComponent} from '../add-edit-document/add-edit-document.component';
-import {Router} from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
+import { AddPlanDetailComponent } from '../add-structure/add-plan-detail.component';
+import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
+import { Router } from '@angular/router';
 import {
   detailsOfClientTemplate,
   letterOfEngagement,
@@ -26,10 +26,11 @@ export class OverviewComponent implements OnInit {
   overviewDesign: any = 'true';
   advisorId: any;
   @Output() changePlanData = new EventEmitter();
+  organizationData: any;
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService, private router: Router,
-              private eventService: EventService,
-              private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
+    private eventService: EventService,
+    private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
 
   quotationTemplate = quotationTemplate;
@@ -59,10 +60,16 @@ export class OverviewComponent implements OnInit {
     // this.overviewDesign = 'true';
     this.advisorId = AuthService.getAdvisorId();
     // this.openForm('','addPlanDetails','open');
+    this.organizationData = AuthService.getOrgDetails();
+    this.quotationTemplate = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);
+    this.detailsOfClientTemplate = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
+    this.redressalofGrievance = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
+    this.letterOfEngagement = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
+    this.scopeofService = this.quotationTemplate.replace('$organization_logo', this.organizationData.logoUrl);;
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   changeDisplay() {
@@ -140,7 +147,7 @@ export class OverviewComponent implements OnInit {
     if (data == true) {
       // this.upperData = "plan";
       this.router.navigate(['/admin/subscription/settings', 'plans']);
-      this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
