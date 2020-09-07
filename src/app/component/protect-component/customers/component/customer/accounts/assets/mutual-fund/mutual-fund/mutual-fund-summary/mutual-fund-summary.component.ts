@@ -1104,6 +1104,7 @@ export class MutualFundSummaryComponent implements OnInit {
           console.log(data);
           this.isBulkDataResponse = true;
           let response = this.mfService.doFiltering(data)
+          this.mfData = response;
           Object.assign(response.mutualFundList, { flag: true });
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
@@ -1964,8 +1965,8 @@ export class MutualFundSummaryComponent implements OnInit {
         toEmail: this.clientData.email,
         mfBulkEmailRequestId: this.mfBulkEmailRequestId,
       }
-      let response = this.utilService.bulkHtmlToPdf(obj)
-      console.log('********', response)
+      // let response = this.utilService.bulkHtmlToPdf(obj)
+      // console.log('********', response)
       //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
