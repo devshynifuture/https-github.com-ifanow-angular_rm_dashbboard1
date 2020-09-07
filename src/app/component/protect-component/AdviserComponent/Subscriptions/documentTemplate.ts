@@ -1,17 +1,4 @@
 export const quotationTemplate = ` 
-<div  style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div   style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
-
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>
-
-
 <div >
 <div style="padding: 0px 25px 25px 25px; clear: both;">
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Quotation for $plan_name</span></p>
@@ -34,18 +21,6 @@ export const quotationTemplate = `
 
 
 export const detailsOfClientTemplate = `
-<div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
-
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>
-	
 <p>DETAILS OF CLIENT</p>
 <p>Full Name : $client_name</p>
 <p>Residential address : $client_address</p>
@@ -56,19 +31,6 @@ export const detailsOfClientTemplate = `
 
 
 export const redressalofGrievance = `
-<div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
-
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>
-
-
 <p>REDRESSAL OF GRIEVANCE</p>
 <p>We welcome your feedback, as it helps us improve our products and services for our clients.&nbsp;</p>
 <p>1. &nbsp; &nbsp;You can contact us in person, in writing, by email or by telephone at the following:&nbsp;</p>
@@ -100,19 +62,7 @@ export const redressalofGrievance = `
 
 export const letterOfEngagement = `
 
-<div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
 
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>
- 
- 
 
 <p>SCOPE OF SERVICES</p>
 <p>
@@ -171,19 +121,6 @@ export const letterOfEngagement = `
 <p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p> 
 `
 export const scopeofService = `
-<div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
-
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>
-
-
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>

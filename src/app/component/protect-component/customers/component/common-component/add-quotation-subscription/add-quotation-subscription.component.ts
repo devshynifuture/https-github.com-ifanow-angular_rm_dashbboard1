@@ -145,7 +145,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   createFeeStructureForFroala(responseData, quotationData) {
     let servicesName = '';
     responseData.forEach(element => {
-      const feeStructureTable = `<div class="hide">
+      const feeStructureTable = `
+      <div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
@@ -234,6 +235,18 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
   }
 
+  headerTemplate = `
+  <div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
+  <div style="width: 100px;">
+  <img style="max-width: 100% !important;" src="$organization_logo">
+  </div>
+  <div style="text-align:right;">
+    <h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
+    <p style="margin: 0px; color: #83959D;"> $organization_address</p>
+    <p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
+  </div>
+  </div>`
+
   getOrgProfiles(quotationData) {
 
     const obj = {
@@ -243,6 +256,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       data => {
         if (data) {
           this.orgDetails = data;
+          quotationData.documentText = this.headerTemplate + '' + quotationData.documentText
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_name'), 'g'), (this.orgDetails.companyName) ? this.orgDetails.companyName : AuthService.getUserInfo().name);
@@ -250,6 +264,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_city'), 'g'), this.orgDetails.city);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_pincode'), 'g'), this.orgDetails.zipCode);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_address'), 'g'), this.orgDetails.billerAddress);
+          quotationData.documentText = quotationData.documentText.replace('$organization_logo', this.orgDetails.logoUrl);
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
         }
