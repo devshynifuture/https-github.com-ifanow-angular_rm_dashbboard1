@@ -174,6 +174,6 @@ export class SettingsService {
 
   getDomainData(data) {
     const httpParams = new HttpParams().set('hostName', data.hostName);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOMAIN_DATA, httpParams);
+    return this.http.getWithoutAuth(apiConfig.MAIN_URL + appConfig.GET_DOMAIN_DATA, httpParams, 1);
   }
 }
