@@ -1,5 +1,6 @@
-export const quotationTemplate = ` <div >
-<div style="padding: 25px; clear: both; border-top: 1px solid #dddddd;">
+export const quotationTemplate = ` 
+<div >
+<div style="padding: 0px 25px 25px 25px; clear: both;">
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Quotation for $plan_name</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Date: ___________</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;">Dear $client_name,</span></p>
@@ -20,7 +21,6 @@ export const quotationTemplate = ` <div >
 
 
 export const detailsOfClientTemplate = `
-	
 <p>DETAILS OF CLIENT</p>
 <p>Full Name : $client_name</p>
 <p>Residential address : $client_address</p>
@@ -31,7 +31,6 @@ export const detailsOfClientTemplate = `
 
 
 export const redressalofGrievance = `
-
 <p>REDRESSAL OF GRIEVANCE</p>
 <p>We welcome your feedback, as it helps us improve our products and services for our clients.&nbsp;</p>
 <p>1. &nbsp; &nbsp;You can contact us in person, in writing, by email or by telephone at the following:&nbsp;</p>
@@ -62,6 +61,8 @@ export const redressalofGrievance = `
 
 
 export const letterOfEngagement = `
+
+
 
 <p>SCOPE OF SERVICES</p>
 <p>
@@ -120,7 +121,6 @@ export const letterOfEngagement = `
 <p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p> 
 `
 export const scopeofService = `
-
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>
