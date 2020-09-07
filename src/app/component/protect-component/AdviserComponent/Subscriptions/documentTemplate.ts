@@ -63,6 +63,21 @@ export const redressalofGrievance = `
 
 export const letterOfEngagement = `
 
+
+<div style="display: inline-block">
+<img src="http://res.cloudinary.com/futurewise/image/upload/v1598449065/biller_profile_logo/uzimrzdtywuziwfdaxsu.png">
+</div>
+
+<div style="text-align:right; display: inline-block">
+	<h4 style="font-size: 16px; margin: 0px;"> Company name </h4>
+	<p>Address line 1</p>
+	<p>Address line 1</p>
+	<p>Mumbai – Maharashtra - 400001</p>
+</div>
+
+ 
+ 
+
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>
