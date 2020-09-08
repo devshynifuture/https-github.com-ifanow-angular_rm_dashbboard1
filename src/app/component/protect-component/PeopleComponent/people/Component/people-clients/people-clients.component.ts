@@ -9,7 +9,6 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
@@ -17,6 +16,7 @@ import { Subscription, Observable } from 'rxjs';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { element } from 'protractor';
 import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
+import { ExcelClientListService } from 'src/app/services/excel-client-list.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -41,7 +41,7 @@ export class PeopleClientsComponent implements OnInit {
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
   ) {
   }
 
@@ -119,14 +119,41 @@ export class PeopleClientsComponent implements OnInit {
     return data
   }
 
-  Excel(tableTitle) {
-    const rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle);
+  Excel(title, flag) {
+    // const rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle);
+    this.getFullClientList(title, flag);
   }
 
   pdf(tableTitle) {
     const rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
+  }
+
+  getFullClientList(title, flag) {
+    const obj = {
+      advisorId: this.advisorId,
+      status: 1,
+      limit: 0,
+      offset: -1
+    };
+
+    this.peopleService.getClientList(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          data = this.formatEmailAndMobile(data);
+          let tableData = [];
+          data.forEach(element => {
+            element.mobileNo = element.mobileNo == 0 ? 'N/A' : element.mobileNo;
+            tableData.push([element.name, String(element.mobileNo), element.email, element.pan, element.count, element.ownerName, element.lastLoginString, element.status]);
+          });
+          const header = ["Group head name", "Registered mobile", "Registered email", "PAN", "Members", "Client owner", "Last login", "Status"];
+          (flag == 'EXCEL') ? this.excel.generateExcel(title, header, tableData) : '';
+        }
+      },
+      err => {
+      }
+    );
   }
 
   addClient(data) {

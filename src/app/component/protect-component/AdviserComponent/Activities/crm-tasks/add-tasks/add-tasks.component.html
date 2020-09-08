@@ -674,11 +674,11 @@
     <!-- next page ends -->
 
     <div class="bottomCommentBox bg-grey lter" *ngIf="data!==null">
-        <div class="row pt-16">
+        <div class="row pt-16 align-items-center">
             <div class="col-md-1 pl-30">
                 <img [src]='userProfilePicUrl' class="c-p avatarImg">
             </div>
-            <div class="col-md-11">
+            <div class="col-md-9 remove-top pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <span>
                         <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
@@ -687,36 +687,40 @@
                     </span>
                 </mat-form-field>
 
-                <div class="row pt-10">
-                    <div class="col-md-12 f-14 p-0 pb-16">
-                        Collaborators
-                        <span *ngFor="let item of collaboratorList">
-                            <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
-                                [matMenuTriggerFor]="menu1">
-                            <mat-menu #menu1="matMenu">
-                                <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)"
-                                    [disabled]="item.default" matTooltip="Can't remove default Collaborator"
-                                    [matTooltipDisabled]="!item.default">
-                                    Remove
-                                </button>
-                            </mat-menu>
-                        </span>
-
-                        <span *ngIf="data">
-                            <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" [matMenuTriggerFor]="menu2">
-                            <!-- (click)="onAddingCollaborator(null)" -->
-                            <mat-menu #menu2="matMenu">
-                                <button mat-menu-item *ngFor="let item of teamMemberList"
-                                    (click)="onAddingCollaborator(item)">
-                                    {{ item.fullName }}
-                                </button>
-                            </mat-menu>
-                        </span>
 
 
-                    </div>
+            </div>
+            <div class="col-md-2">
+                <button mat-stroked-button class="btn-primary">save</button>
+            </div>
+            <div class="row pt-10">
+                <div class="col-md-12 f-14 p-0 pb-16">
+                    Collaborators
+                    <span *ngFor="let item of collaboratorList">
+                        <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
+                            [matMenuTriggerFor]="menu1">
+                        <mat-menu #menu1="matMenu">
+                            <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)"
+                                [disabled]="item.default" matTooltip="Can't remove default Collaborator"
+                                [matTooltipDisabled]="!item.default">
+                                Remove
+                            </button>
+                        </mat-menu>
+                    </span>
+
+                    <span *ngIf="data">
+                        <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" [matMenuTriggerFor]="menu2">
+                        <!-- (click)="onAddingCollaborator(null)" -->
+                        <mat-menu #menu2="matMenu">
+                            <button mat-menu-item *ngFor="let item of teamMemberList"
+                                (click)="onAddingCollaborator(item)">
+                                {{ item.fullName }}
+                            </button>
+                        </mat-menu>
+                    </span>
+
+
                 </div>
-
             </div>
         </div>
 
