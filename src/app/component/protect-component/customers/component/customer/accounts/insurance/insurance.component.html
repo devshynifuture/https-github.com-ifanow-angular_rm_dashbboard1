@@ -428,7 +428,7 @@
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">
-                                            {{(element.policyType) ? (element.policyType) : element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ? ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (element.geographyId
+                                            {{(element.insuranceSubTypeId == 5) ? ((element.policyFeatureId == 0) ? 'Standard, ' : (element.policyFeatureId == 1) ? 'Top up, ' : (element.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(element.policyType) ? (element.policyType) : element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ? ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (element.geographyId
                                             == 3) ? ' - Asia' : '') : ''}}
                                         </div>
                                     </td>
