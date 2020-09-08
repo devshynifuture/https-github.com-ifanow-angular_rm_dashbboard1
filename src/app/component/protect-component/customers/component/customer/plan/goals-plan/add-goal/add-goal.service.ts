@@ -78,7 +78,7 @@ export class AddGoalService {
       assetType: 5,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
-     // percentAllocated: 100,
+      percentAllocated: 0,
       isMutualFund: 1
     }
   }
