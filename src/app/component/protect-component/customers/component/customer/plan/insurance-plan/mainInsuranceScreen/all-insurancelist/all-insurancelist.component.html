@@ -27,7 +27,8 @@
                                         <img src={{insurance.logo}}>
                                     </div>
                                     <div class="col-md-9 pl-10 pr-0">
-                                        <p class="m-0 text-black roboto">{{insurance.holderName}}</p>
+                                        <p class="m-0 text-black roboto" *ngFor="let item of insurance?.owners">
+                                            <span>{{item.holderName}}</span></p>
                                         <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> {{insurance.adviceAmount}}
                                         </p>
                                     </div>
