@@ -98,11 +98,11 @@
         <div class="row pt-5">
             <div class="w-20">
             </div>
-            <div class="w-41 f-14 text-custom roboto f-400">
+            <!-- <div class="w-41 f-14 text-custom roboto f-400">
                 <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
 
-            </div>
+            </div> -->
             <div class="w-38 f-14 text-custom roboto f-400" *ngIf="showManualToggle">
                 <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add Manually
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
@@ -257,7 +257,7 @@
             <div class="w-18 pl-16">
                 <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
             </div>
-
+            
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0">
                 <mat-form-field class="ba-date">
                     <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
@@ -272,6 +272,13 @@
             </div>
             <div class="w-20">
                 <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="w-18"></div>
+            <div class="w-41 f-14 pl-15 pr-15 text-custom roboto f-400">
+                <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
+                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
             </div>
         </div>
 
@@ -302,7 +309,7 @@
             </div>
         </div>
 
-        <div class="row c-p" *ngFor="let item of subTaskList; index as i">
+        <div class="row pt-24 c-p" *ngFor="let item of subTaskList; index as i">
             <div class="col-md-12 pl-20">
                 <div class="row pt-5 bt-1" [ngClass]="{'bb': i==(subTaskList.length-1)}">
                     <div class="col-md-1 pl-10">
@@ -675,7 +682,6 @@
                 <mat-form-field>
                     <span>
                         <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
-                            [disabled]="data===null"
                             (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''" placeholder="Type your comment here and press enter">
                     </span>
                 </mat-form-field>

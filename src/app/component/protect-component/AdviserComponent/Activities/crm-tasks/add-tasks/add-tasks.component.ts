@@ -321,9 +321,9 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           console.log("this is edit comment rees:", res);
           switch (choice) {
-            case 'task': this.commentList[index].commentMsg = this.commentTaskFC.value;
+            case 'task': this.commentList[index].commentMsg = value;
               break;
-            case 'subTask': this.subTaskCommentList[index].commentMsg = this.commentSubTaskFC.value;
+            case 'subTask': this.subTaskCommentList[index].commentMsg = value;
               break;
           }
           item.editMode = false;
