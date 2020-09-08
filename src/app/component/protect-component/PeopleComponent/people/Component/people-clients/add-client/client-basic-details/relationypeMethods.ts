@@ -6,6 +6,10 @@ export function relationListFilterOnID(clientType) {
         { name: 'Sister', value: 9 },
         { name: 'Daughter_In_Law', value: 11 },
         { name: 'Sister_In_Law', value: 12 },
+        { name: 'Son', value: 4 },
+        { name: 'Daughter', value: 5 },
+        { name: 'Wife', value: 3 },
+        { name: 'Husband', value: 2 },
         //     ];
         // }
         // if (clientType == 2) {

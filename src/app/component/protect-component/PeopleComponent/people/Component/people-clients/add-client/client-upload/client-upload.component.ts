@@ -318,9 +318,12 @@ export class ClientUploadComponent implements OnInit {
         this.viewFront = true;
         this.fileComPanImg.view = data.pan[data.pan.length - 1];
         this.filePerPanImg.view = data.aadhaar[data.aadhaar.length - 1];
-        this.fileProof1Img.view = data.address[data.address.length - 1];
-        this.fileProof2Img.view = data.bankaccount[data.bankaccount.length - 1];
-
+        this.fileProof1Img.view = data.bankaccount[data.bankaccount.length - 1];
+        this.fileProof2Img.view = data.address[data.address.length > 1 ? 0 : data.address.length - 1];
+        (data.address.length > 1)
+        {
+          this.fileProof2BackImg.view = data.address[1];
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -340,12 +343,12 @@ export class ClientUploadComponent implements OnInit {
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'proof-type1':
-        this.deleteImg(this.fileComPanImg.store.id);
+        this.deleteImg(this.fileProof1Img.store.id);
         this.fileProof1Img = { view: '', store: '' };
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'proof-type2':
-        this.deleteImg(this.fileComPanImg.store.id);
+        this.deleteImg(this.fileProof2Img.store.id);
         this.fileProof2Img = { view: '', store: '' };
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
