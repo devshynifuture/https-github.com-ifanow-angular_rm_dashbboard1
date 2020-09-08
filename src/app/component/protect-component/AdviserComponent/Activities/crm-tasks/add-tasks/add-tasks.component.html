@@ -98,12 +98,9 @@
         <div class="row pt-5">
             <div class="w-20">
             </div>
-            <!-- <div class="w-41 f-14 text-custom roboto f-400">
-                <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
-                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-
-            </div> -->
-            <div class="w-38 f-14 text-custom roboto f-400" *ngIf="showManualToggle">
+            <div class="w-41">
+            </div>
+            <div class="w-38 f-14 text-custom roboto f-400 text-right" *ngIf="showManualToggle">
                 <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add Manually
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
 
@@ -274,7 +271,7 @@
                 <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row pb-24">
             <div class="w-18"></div>
             <div class="w-41 f-14 pl-15 pr-15 text-custom roboto f-400">
                 <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
