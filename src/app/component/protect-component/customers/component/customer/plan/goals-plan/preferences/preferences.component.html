@@ -499,8 +499,7 @@
                             <ng-container matColumnDef="name">
                                 <th class="text-center" mat-header-cell *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center" *matCellDef="let element">
-                                    <input matInput type="number" class="form-control br-0" 
-                                    (input)="restrictFrom100($event)"[(ngModel)]="element.name">
+                                    <input matInput type="text" class="form-control br-0" [(ngModel)]="element.name">
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
@@ -523,8 +522,7 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell class="text-center br" *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center br" *matCellDef="let element">
-                                    <input matInput type="number" class="form-control br-0"
-                                    (input)="restrictFrom100($event)" [(ngModel)]="element.name">
+                                    <input matInput type="text" class="form-control br-0" [(ngModel)]="element.name">
                                 </td>
                             </ng-container>
 
