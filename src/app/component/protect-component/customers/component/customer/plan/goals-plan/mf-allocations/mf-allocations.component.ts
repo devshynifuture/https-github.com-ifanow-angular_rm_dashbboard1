@@ -7,7 +7,7 @@ import { PlanService } from '../../plan.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { UtilService, LoaderFunction } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction, ValidatorType } from 'src/app/services/util.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
 import { Subscriber } from 'rxjs';
@@ -23,7 +23,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
-  displayedColumns1 = ['scheme', 'value', 'goal','icons'];
+  displayedColumns1 = ['scheme', 'value', 'value1','value2','goal','icons'];
   dataSource1 = new MatTableDataSource([]);
 
   @Input() data:any = {};
@@ -44,7 +44,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
   isFamilyObj = (index, item) => item.isFamily;
   selectedAllocation: any;
-
+  validatorType = ValidatorType;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -190,6 +190,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
 
     this.dataSource1.data = tableSource;
+    console.log('this.dataSource1.data',this.dataSource1.data)
   }
 
   filterByFolio(mfList:Array<any>){
@@ -231,12 +232,18 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       advisorId: this.advisorId,
       clientId: this.clientId,
       goalId: this.data.remainingData.id,
-      mfId: data.id
+      mfId: data.id,
+      sipPercent:data.sipPercent,
+      lumpsumPercent:data.lumpsumPercent,
     }
     this.allocationService.allocateMFToGoal(data, {advisorId: this.advisorId, clientId: this.clientId}, this.data);
     
   }
-
+  restrictFrom100(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = 100;
+    }
+  }
 
   removeAllocation(allocation,allocatedGoal) {
     const dialogData = {

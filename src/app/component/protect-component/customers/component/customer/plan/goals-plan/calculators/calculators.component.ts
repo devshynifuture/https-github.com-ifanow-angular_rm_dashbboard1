@@ -124,7 +124,7 @@ export class CalculatorsComponent implements OnInit {
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.gv
+        goalAmount: this.data.goalFV
       }
 
       this.barButtonOptions.active = true;

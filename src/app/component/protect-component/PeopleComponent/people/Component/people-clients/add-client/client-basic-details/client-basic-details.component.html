@@ -461,7 +461,7 @@
                 </div>
             </div>
 
-            <div *ngIf="fieldFlag=='familyMember' && invTypeCategory=='1'" class="row pt-28">
+            <div *ngIf="fieldFlag=='familyMember' " class="row pt-28">
                 <div class="col-md-4 text-right full-end">
                     <h5 class="m-0"> Relation</h5>
                 </div>
@@ -820,11 +820,10 @@
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
                             class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is required
-                        </mat-error>
                         <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
                             GSTIN number invalid
                         </mat-error>
+                        <mat-hint>Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                     </mat-form-field>
                 </div>
@@ -955,11 +954,10 @@
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
                             class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is required
-                        </mat-error>
                         <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
                             GSTIN number invalid
                         </mat-error>
+                        <mat-hint>Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                     </mat-form-field>
                 </div>
