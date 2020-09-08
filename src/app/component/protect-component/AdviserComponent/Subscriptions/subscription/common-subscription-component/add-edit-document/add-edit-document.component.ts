@@ -45,29 +45,15 @@ export class AddEditDocumentComponent implements OnInit {
   @Output() changeDocumentData = new EventEmitter();
   addTemplate: any;
   blankDocumentProperties: FormGroup;
-  headerTemaplate = `
-  <div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
-<div style="width: 100px;">
-<img style="max-width: 100% !important;" src="$organization_logo">
-</div>
-
-<div style="text-align:right;">
-	<h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
-	<p style="margin: 0px; color: #83959D;"> $organization_address</p>
-	<p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
-</div>
-</div>`;
 
 
   organizationData: any;
   @Input()
   set data(inputData) {
-    this.organizationData = AuthService.getOrgDetails();
-    this.headerTemaplate = this.headerTemaplate.replace('$organization_logo', this.organizationData.logoUrl)
     // this._inputData = inputData.value;
     this.documentType;
     if (inputData.template) {
-      this.addTemplate = this.headerTemaplate + '' + inputData.template;
+      this.addTemplate = inputData.template;
       inputData['addFlag'] = true;
       this._inputData = inputData;
       this.setFormData({ documentTypeId: inputData.value });
