@@ -19,6 +19,7 @@ import { UpdateClientProfileComponent } from './update-client-profile/update-cli
 import { AgePopupComponent } from './age-popup/age-popup.component';
 import { element } from 'protractor';
 import { ClientSggestionListService } from './client-sggestion-list.service';
+import { ResetClientPasswordComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/reset-client-password/reset-client-password.component';
 
 @Component({
   selector: 'app-overview-profile',
@@ -498,5 +499,45 @@ export class OverviewProfileComponent implements OnInit {
       }
     );
   }
+
+  resetPassword(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'RESET PASSWORD',
+      body: 'Are you sure you want to reset password?',
+      body2: 'An email will be sent to the client to reset password',
+      btnYes: 'CANCEL',
+      btnNo: 'RESET',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: data.advisorId,
+          clientId: data.clientId
+        };
+        this.peopleService.resetClientPassword(obj).subscribe(
+          responseData => {
+            this.eventService.openSnackBar('Email sent successfully!', 'Dismiss');
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ResetClientPasswordComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
 
 }

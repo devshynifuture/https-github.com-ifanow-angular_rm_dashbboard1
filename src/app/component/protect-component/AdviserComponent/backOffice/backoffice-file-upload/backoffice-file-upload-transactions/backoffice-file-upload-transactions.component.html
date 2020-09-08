@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h5 class="m-0 pt-28 text-black">Transactions</h5>
         <div class="tableScroll"> 
-        <table mat-table matSort [dataSource]="dataSource" id="tbs" class="mt-8 mb-12 " [appSkeletonLoading]="isLoading">
+        <table mat-table matSort [dataSource]="dataSource" id="tbs" class="mt-8 mb-20 " [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br ">Name</th>
                 <td mat-cell *matCellDef="let element" class="br ">
@@ -25,7 +25,7 @@
                 <th mat-header-cell *matHeaderCellDef class="br">ARN/RIA No.</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                         {{element.arnRiaNumber ? element.arnRiaNumber : '-'}} 
+                         {{isLoading ? '' : (element.arnRiaNumber ? element.arnRiaNumber : '-')}} 
                     </div>
                 </td>
             </ng-container>
@@ -43,18 +43,18 @@
             <ng-container matColumnDef="range">
                 <th mat-header-cell *matHeaderCellDef class="br">Txn Range</th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.transactionRange}}</div>
+                    <div class="bar">{{element.transactionRange }}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="added">
-                <th mat-header-cell *matHeaderCellDef class="br">Txn Added</th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <th mat-header-cell *matHeaderCellDef class="br text-right">Txn Added</th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
                     <div class="bar">{{element.transactionAdded}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="txnFile">
-                <th mat-header-cell *matHeaderCellDef class="br">Txn In File</th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <th mat-header-cell *matHeaderCellDef class="br text-right">Txn In File</th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
                     <div class="bar">
                         
                             {{element.totalTransactions}}
@@ -63,8 +63,8 @@
                 </td>
             </ng-container>
 
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="uploadedBy">
+            
+            <!-- <ng-container matColumnDef="uploadedBy">
                 <th   class="text-left" mat-header-cell *matHeaderCellDef class="br">
                     Uploaded By</th>
                 <td mat-cell *matCellDef="let element" class="br">
@@ -72,12 +72,16 @@
                         {{element.uploadedBy}}
                     </div>
                 </td>
-            </ng-container>
+            </ng-container> -->
+
+
             <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef class="br">Status</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        <span *ngIf="!isLoading">{{element.status}}</span>
+                        <span *ngIf="!isLoading"  [ngClass]="{'text-success': element.status == 'Success','text-primary': element.status == 'Pending' || element.status=='In Progress','text-warning': element.status == 'Duplicate','text-danger':element.status == 'Wrong ARN Number' || element.status == 'Failed' || element.status == 'Recent File - Skipped' || element.status == 'Backdated - skipped'}">
+                            {{element.status == 'Success' ? 'Success': element.status == 'Pending' ? 'Pending': element.status == 'Duplicate' ? 'Duplicate': element.status == 'Failed' ? 'Failure':  element.status}}</span>
+                      
                     </div>
                 </td>
             </ng-container>
@@ -85,7 +89,8 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> </th>
                 <td mat-cell *matCellDef="let element" class="br  text-center">
                     <!-- (click)="downloadDocumentAsPDF()" prod build -->
-                    <a title="Download" class="c-p" [href]="element.fileUrl">
+                    <div class="bar"></div>
+                    <a *ngIf="!isLoading" title="Download" class="c-p" [href]="element.fileUrl">
                         <img src="assets/images/svg/download-bordered.svg">
                     </a>
 

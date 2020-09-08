@@ -6,7 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
 import { MatDialog } from '@angular/material';
 import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
@@ -80,6 +80,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   domainList = [];
   isLoader: boolean;
+  validatorType = ValidatorType;
 
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
@@ -160,7 +161,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getDomainSettingRes(data) {
     // this.loader(-1);
-    this.domainSetting = data
+    this.domainSetting = data;
+    data.partialWhiteLabel = data.partialWhiteLabel.replace('.my-planner.in', '')
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
     this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '')
     this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '')
@@ -197,7 +199,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       advisorId: this.advisorId,
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
       feviconUrl: this.domainS.controls.feviconUrl.value,
-      partialWhiteLabel: this.domainS.controls.normalLable.value,
+      partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
       siteTitle: this.domainS.controls.brandVisible.value
     }
     this.orgSetting.updateDomainSetting(obj).subscribe(
@@ -207,6 +209,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   updateDomainSettingRes(flag, event, data, index) {
+    this.eventService.openSnackBar("Updated sucessfully", "Dismiss")
     this.loaderArray[index].isLoader = false;
     this.updateDomain = data
     // this.getDomain();

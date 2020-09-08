@@ -48,3 +48,9 @@
       position: relative;
       left: 40%;
   }
+
+  .people-table-scroll {
+    max-height: 650px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

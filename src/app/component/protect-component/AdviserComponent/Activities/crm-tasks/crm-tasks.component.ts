@@ -1,6 +1,6 @@
 import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
 import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,6 +9,7 @@ import { CrmTaskService } from './crm-task.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-crm-tasks',
@@ -26,7 +27,9 @@ export class CrmTasksComponent implements OnInit {
   finalTaskList = [];
   hasEndReached = false;
   infiniteScrollingFlag = false;
-  filterFormControl = new FormControl();
+  filterFormControl = new FormControl('');
+
+  @ViewChild(MatSort, { static:false }) sort: MatSort;
 
   @ViewChild('tableEl', { static: false }) tableEl;
   filterValueId: any;
@@ -48,6 +51,7 @@ export class CrmTasksComponent implements OnInit {
   initPoint() {
     this.isLoading = true;
     this.dataSource.data = ELEMENT_DATA;
+    this.dataSource.sort = this.sort;
     console.log("iniitialized");
     this.getTaskStatus();
     // this.registerForPushNotification();
@@ -101,6 +105,12 @@ export class CrmTasksComponent implements OnInit {
 
   getTaskNameFromTaskStatusList(taskStatus) {
     return this.taskStatus.find(item => item.id === taskStatus).name;
+  }
+
+  setFilterToDefault(){
+    this.filterFormControl.patchValue(''); 
+    this.isFilterSet = false;
+    this.initPoint();
   }
 
   getAllTaskList(offset) {
@@ -161,16 +171,21 @@ export class CrmTasksComponent implements OnInit {
           });
           this.finalTaskList = this.finalTaskList.concat(dataArray);
           this.dataSource.data = this.finalTaskList;
+          this.dataSource.sort = this.sort;
           this.hasEndReached = false;
           this.infiniteScrollingFlag = false;
         } else {
+
           this.dataSource.data = (this.finalTaskList.length > 0) ? this.finalTaskList : null;
+          this.dataSource.sort = (this.finalTaskList.length > 0) ? this.sort: null;
+
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
           if (this.finalTaskList.length > 0) {
             this.eventService.openSnackBar("No more Task Found", "DISMISS");
           } else {
             this.dataSource.data = null;
+            this.dataSource.sort = null;
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
@@ -215,7 +230,7 @@ export class CrmTasksComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.finalTaskList = [];
-            this.initPoint();
+            this.setFilterToDefault();
           }
           rightSideDataSub.unsubscribe();
         }

@@ -16,8 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class BackofficeFileUploadComponent implements OnInit {
 
   selectedFileType: any = '';
-  filterRTA: any = 0;
-  filterStatus: any = 2;
+  filterRTA = '';
+  filterStatus= '';
   filter: any = {
     rt: 0,
     status: 2
@@ -226,12 +226,12 @@ export class BackofficeFileUploadComponent implements OnInit {
   setFilter() {
     // this.barWidth = "0%";
     // this.num = 0; 
-    if (this.filterStatus === undefined) {
-      this.filterStatus = 2;
-    }
-    if (this.filterRTA === undefined) {
-      this.filterRTA = 0;
-    }
+    // if (this.filterStatus === undefined) { //initially we need to show selectRTA and select Status in dropdown
+    //   this.filterStatus = 2;
+    // }
+    // if (this.filterRTA === undefined) {
+    //   this.filterRTA = 0;
+    // }
     this.filter.status = this.filterStatus;
     this.filter.rt = this.filterRTA;
     this.BackOffice.addFilterData(this.filter);

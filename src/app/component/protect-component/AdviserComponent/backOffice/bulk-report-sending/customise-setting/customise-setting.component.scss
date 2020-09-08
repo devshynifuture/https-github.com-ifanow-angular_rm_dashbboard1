@@ -1,16 +1,20 @@
-.tableScrollBox {
-    height: auto;
-    overflow: auto !important;
-    max-height: 400px;
+.people-table-scroll {
+    max-height: 700px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .z105 {
     z-index: 105;
 }
 
 
+
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
 
-    .tableScrollBox {
-        max-height: initial;
-    }
+    // .people-table-scroll {
+    //     max-height: 700px;
+    //     overflow-y: scroll;
+    //     overflow-x: hidden;
+    // }
  }

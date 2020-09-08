@@ -5,11 +5,9 @@
 }
 
 
-
 .tableScroll {
     height: auto;
-    overflow: auto !important;
-     
+    overflow: hidden;
 }
 
 
@@ -19,6 +17,11 @@
         width: 160px; 
         display: inline-block;
         word-break: break-all;
+    }
+
+    .tableScroll {
+        height: auto;
+        overflow: auto;
     }
 
 }

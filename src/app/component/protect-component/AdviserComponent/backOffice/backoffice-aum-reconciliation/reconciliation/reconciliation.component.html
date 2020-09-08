@@ -1,6 +1,6 @@
 <div class="bg-white" id="ui-settingsHeaders">
-    <div class="bg-white mx-2">
-        <mat-tab-group class="bg-white mt-120 text-right" mat-align-tabs="end" animationDuration="0ms"
+    <div class="bg-white my-2 mt-120 text-right">
+        <!-- <mat-tab-group class="bg-white mt-120 text-right" mat-align-tabs="end" animationDuration="0ms"
             id="ui-settings-subs">
             <mat-tab label="CAMS">
                 <ng-template matTabContent>
@@ -17,6 +17,20 @@
                     <app-recon-franklin></app-recon-franklin>
                 </ng-template>
             </mat-tab>
-        </mat-tab-group>
+        </mat-tab-group> -->
+        <div class="pt-30">
+            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['cams']">
+                CAMS
+            </button>
+            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['karvy']">
+                KARVY
+            </button>
+            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['franklin']">
+                FRANKLIN
+            </button>
+        </div>
+        <router-outlet></router-outlet>
     </div>
 </div>
+
+

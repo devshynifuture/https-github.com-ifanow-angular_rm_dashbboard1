@@ -92,7 +92,7 @@
                 <ng-container matColumnDef="deleted">
                     <th mat-header-cell *matHeaderCellDef class="text-left" sticky> Delete </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
-                        <div class="bar">
+                        <div class="bar" *ngIf="!isLoading">
                             {{ element.deleted ? 'Yes' : 'No'}}
                         </div>
                     </td>
@@ -101,7 +101,7 @@
                 <ng-container matColumnDef="reordered">
                     <th mat-header-cell *matHeaderCellDef class="text-left br" sticky> Re ordered </th>
                     <td mat-cell *matCellDef="let element" class="text-left br">
-                        <div class="bar">
+                        <div class="bar" *ngIf="!isLoading">
                             {{ element.reordered ? 'Yes': 'No'}}
                         </div>
                     </td>
@@ -128,7 +128,8 @@
                 <ng-container matColumnDef="action" sticky>
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-stroked-button class="btn-primary report-franklin" color="primary"
+                        <div class="bar"></div>
+                        <button  *ngIf="!isLoading" mat-stroked-button class="btn-primary report-franklin" color="primary"
                             (click)="openAumReconciliation('report',element)">
                             Report
                         </button>
