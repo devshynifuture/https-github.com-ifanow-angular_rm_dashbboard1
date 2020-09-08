@@ -500,8 +500,7 @@
                                 <th class="text-center" mat-header-cell *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center" *matCellDef="let element">
                                     <input matInput type="number" class="form-control br-0" 
-                                    [inputValidator]="validatorType.NUMBER_ONLY"
-                                    (input)="restrictFrom100($event)" appInputValueValidation[(ngModel)]="element.name">
+                                    (input)="restrictFrom100($event)"[(ngModel)]="element.name">
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
@@ -525,8 +524,7 @@
                                 <th mat-header-cell class="text-center br" *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center br" *matCellDef="let element">
                                     <input matInput type="number" class="form-control br-0"
-                                    [inputValidator]="validatorType.NUMBER_ONLY"
-                                    (input)="restrictFrom100($event)" appInputValueValidation [(ngModel)]="element.name">
+                                    (input)="restrictFrom100($event)" [(ngModel)]="element.name">
                                 </td>
                             </ng-container>
 
