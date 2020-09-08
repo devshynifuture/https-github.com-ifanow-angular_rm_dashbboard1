@@ -499,8 +499,8 @@
                             <ng-container matColumnDef="name">
                                 <th class="text-center" mat-header-cell *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center" *matCellDef="let element">
-                                    <input matInput type="text" class="form-control br-0" 
-                                    inputValidator]="validatorType.NUMBER_ONLY"
+                                    <input matInput type="number" class="form-control br-0" 
+                                    [inputValidator]="validatorType.NUMBER_ONLY"
                                     (input)="restrictFrom100($event)" appInputValueValidation[(ngModel)]="element.name">
                                 </td>
                             </ng-container>
@@ -524,8 +524,8 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell class="text-center br" *matHeaderCellDef> Assumption </th>
                                 <td mat-cell class="text-center br" *matCellDef="let element">
-                                    <input matInput type="text" class="form-control br-0"
-                                    inputValidator]="validatorType.NUMBER_ONLY"
+                                    <input matInput type="number" class="form-control br-0"
+                                    [inputValidator]="validatorType.NUMBER_ONLY"
                                     (input)="restrictFrom100($event)" appInputValueValidation [(ngModel)]="element.name">
                                 </td>
                             </ng-container>
