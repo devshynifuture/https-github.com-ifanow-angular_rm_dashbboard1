@@ -820,11 +820,10 @@
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
                             class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is required
-                        </mat-error>
                         <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
                             GSTIN number invalid
                         </mat-error>
+                        <mat-hint>Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                     </mat-form-field>
                 </div>
@@ -955,11 +954,10 @@
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
                             class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is required
-                        </mat-error>
                         <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
                             GSTIN number invalid
                         </mat-error>
+                        <mat-hint>Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                     </mat-form-field>
                 </div>
