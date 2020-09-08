@@ -721,7 +721,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     let emailList = [];
     let count = 0;
-    if (this.emailData.valid) {
+    if (this.emailData && this.emailData.valid) {
       if (this.emailData.length == 1) {
         this.emailData.controls[0].get('markAsPrimary').setValue(true);
       }
@@ -737,12 +737,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         });
       });
       emailList = emailList.sort(function (a, b) { return b.defaultFlag - a.defaultFlag });
+      if (count == 0) {
+        this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
+        return
+      }
     }
 
-    if (count == 0) {
-      this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
-      return
-    }
 
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     ;
