@@ -319,7 +319,11 @@ export class ClientUploadComponent implements OnInit {
         this.fileComPanImg.view = data.pan[data.pan.length - 1];
         this.filePerPanImg.view = data.aadhaar[data.aadhaar.length - 1];
         this.fileProof1Img.view = data.bankaccount[data.bankaccount.length - 1];
-        this.fileProof2Img.view = data.address[data.address.length - 1];
+        this.fileProof2Img.view = data.address[data.address.length > 1 ? 0 : data.address.length - 1];
+        (data.address.length > 1)
+        {
+          this.fileProof2BackImg.view = data.address[1];
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
