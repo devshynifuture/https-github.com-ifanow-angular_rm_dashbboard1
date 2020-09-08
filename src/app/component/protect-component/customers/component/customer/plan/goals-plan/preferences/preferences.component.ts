@@ -125,6 +125,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       
     }
   }
+  restrictFrom100(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = 100;
+    }
+  }
   setKeyParamFormListeners() {
     if (this.data.singleOrMulti == 1) {
       this.subscription.add(
