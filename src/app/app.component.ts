@@ -16,6 +16,8 @@ import { ConnectionService } from 'ng-connection-service';
 import { interval } from 'rxjs';
 import { OnInit } from "@angular/core/src/metadata/*";
 import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
+import { AuthService } from './auth-service/authService';
+import { EnumDataService } from "./services/enum-data.service";
 
 @Component({
   selector: 'app-root',
@@ -34,7 +36,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   setNewTime: any;
 
   ngOnInit() {
-
+    this.getDoaminData(document.location.host)
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'
@@ -48,6 +50,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
     this.settingService.getDomainData(obj).subscribe(data => {
       if (data) {
+        AuthService.setDomainDetails(data)
         this.setValuesAsPerDomain(data)
       }
     },
@@ -57,9 +60,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   setValuesAsPerDomain(data) {
-    this.document.getElementById('appAppleTouchIcon').setAttribute('href', data.faviconUrl);
-    this.document.getElementById('appIcon32').setAttribute('href', data.faviconUrl);
-    this.document.getElementById('appIcon').setAttribute('href', data.faviconUrl);
+    this.document.getElementById('appAppleTouchIcon').setAttribute('href', data.feviconUrl);
+    this.document.getElementById('appIcon32').setAttribute('href', data.feviconUrl);
+    this.document.getElementById('appIcon').setAttribute('href', data.feviconUrl);
     // console.log('titleElement', this.document.getElementById('appTitle'));
     this.document.title = data.siteTitle;
     // this.document.getElementById('appTitle').setAttribute('title', data.appTitle);
@@ -79,6 +82,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     private location: PlatformLocation,
     private connectionService: ConnectionService,
     private settingService: SettingsService,
+    public enumDataService: EnumDataService,
     @Inject(DOCUMENT) private document
   ) {
     this.connectionService.monitor().subscribe(isConnected => {
@@ -101,7 +105,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     console.log('document.location', document.location);
     console.log('document : ', document);
     // document.location.host
-    this.getDoaminData(document.location.host)
   }
 
   countDown(timer) {

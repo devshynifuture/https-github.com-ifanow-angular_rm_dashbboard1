@@ -59,6 +59,7 @@ export class ClientBankComponent implements OnInit {
   @Output() saveNextData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Output() refreshClientUploadBankDetails = new EventEmitter();
+  @Output() tabDisableFlag = new EventEmitter();
 
   @Input() fieldFlag;
 
@@ -329,6 +330,7 @@ export class ClientBankComponent implements OnInit {
         data => {
           console.log(data);
           this.disableBtn = false;
+          this.tabDisableFlag.emit(false);
           this.barButtonOptions.active = false;
           if (flag == 'Next') {
             this.tabChange.emit(1);

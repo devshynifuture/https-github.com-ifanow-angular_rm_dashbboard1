@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {startWith} from 'rxjs/internal/operators/startWith';
-import {map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../../../subscription.service';
-import {CommonFroalaComponent} from '../../common-subscription-component/common-froala/common-froala.component';
-import {UtilService} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {SettingsService} from '../../../../setting/settings.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { startWith } from 'rxjs/internal/operators/startWith';
+import { map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
+import { CommonFroalaComponent } from '../../common-subscription-component/common-froala/common-froala.component';
+import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { SettingsService } from '../../../../setting/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',
@@ -47,10 +47,10 @@ export class SearchClientAddQuotationComponent implements OnInit {
   orgDetails: any;
 
   constructor(public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService,
-              private eventService: EventService,
-              private router: Router,
-              private settingsService: SettingsService) {
+    private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private settingsService: SettingsService) {
   }
 
 
@@ -71,7 +71,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
             const filterValue = state.toLowerCase();
             const list = this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
-              this.stateCtrl.setErrors({invalid: true});
+              this.stateCtrl.setErrors({ invalid: true });
               this.stateCtrl.markAsTouched();
             }
             return this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
@@ -129,7 +129,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   createSubscription(value, data) {
     if (!data.quotation) {
       this.eventService.openSnackBar('Please map quotation to plan', 'Dismiss');
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: false});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false });
       this.router.navigate(['/admin/subscription/settings/documents']);
       return;
     }
@@ -248,6 +248,18 @@ export class SearchClientAddQuotationComponent implements OnInit {
     this.getOrgProfiles(quotationData);
   }
 
+  headerTemplate = `
+  <div style="display: flex; width: 100%; margin-bottom: 20px; padding-bottom:20px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);  align-items: center; justify-content: space-between;">
+  <div style="width: 200px;">
+  <img style="max-width: 100% !important;" src="$organization_logo">
+  </div>
+  <div style="text-align:right;">
+    <h4 style="font-size: 16px; font-weight:600; margin: 0px;"> $company_name </h4>
+    <p style="margin: 0px; color: #83959D;"> $organization_address</p>
+    <p style="margin: 0px; color: #83959D;">$organization_city – $organization_state - $organization_pincode</p>
+  </div>
+  </div>`
+
   getOrgProfiles(quotationData) {
 
     const obj = {
@@ -263,10 +275,16 @@ export class SearchClientAddQuotationComponent implements OnInit {
             const imageUrlViewer = '<img src=\'' + this.orgDetails.reportLogoUrl + '\'>';
             quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_logo_for_reports'), 'g'), imageUrlViewer);
           }
+          quotationData.documentText = this.headerTemplate + '' + quotationData.documentText
+
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_name'), 'g'), this.orgDetails.companyName);
-
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_state'), 'g'), this.orgDetails.state);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_city'), 'g'), this.orgDetails.city);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_pincode'), 'g'), this.orgDetails.zipCode);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_address'), 'g'), this.orgDetails.billerAddress); ``
+          quotationData.documentText = quotationData.documentText.replace('$organization_logo', this.orgDetails.logoUrl);
           //
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
@@ -293,6 +311,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   openFroala(data, value) {
+    data['ptFlag'] = true;
     data.isAdvisor = true;
     const fragmentData = {
       flag: value,
@@ -312,6 +331,6 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

@@ -45,6 +45,9 @@ export class AddEditDocumentComponent implements OnInit {
   @Output() changeDocumentData = new EventEmitter();
   addTemplate: any;
   blankDocumentProperties: FormGroup;
+
+
+  organizationData: any;
   @Input()
   set data(inputData) {
     // this._inputData = inputData.value;

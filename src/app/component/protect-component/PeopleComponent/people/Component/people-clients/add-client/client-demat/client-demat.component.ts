@@ -57,6 +57,8 @@ export class ClientDematComponent implements OnInit {
   @Output() saveNextData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Input() fieldFlag;
+  @Output() tabDisableFlag = new EventEmitter();
+
   idData;
   @Input() set data(data) {
     this.userData = data;
@@ -416,6 +418,7 @@ export class ClientDematComponent implements OnInit {
           console.log(data);
           this.disableBtn = false;
           this.barButtonOptions.active = false;
+          this.tabDisableFlag.emit(false);
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);

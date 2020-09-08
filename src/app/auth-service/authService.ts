@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 // import {Router} from '@angular/router';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -118,6 +118,10 @@ export class AuthService {
     localStorage.setItem('advisorDetail', JSON.stringify(data));
   }
 
+  static setDomainDetails(data) {
+    localStorage.setItem('doaminDetalis', JSON.stringify(data));
+  }
+
   static getAdvisorDetails() {
     const advisorDetail = localStorage.getItem('advisorDetail');
     return advisorDetail ? JSON.parse(advisorDetail) : '';
@@ -150,6 +154,11 @@ export class AuthService {
 
   static getTeamMemberRoles(data) {
     return localStorage.getItem('teamMemberRoles');
+
+  }
+
+  static getDomainDetails(data) {
+    return localStorage.getItem('doaminDetalis');
 
   }
 

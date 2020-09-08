@@ -9,11 +9,6 @@ import { ReconciliationService } from './reconciliation.service';
 export class ReconciliationComponent implements OnInit {
 
   constructor( ) { }
-
-  camsId: number;
-  karvyId: number;
-  franklinId: number;
-
   ngOnInit() {}
 
 }
