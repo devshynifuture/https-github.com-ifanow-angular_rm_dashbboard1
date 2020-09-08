@@ -378,7 +378,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.loaderFn.decreaseCounter();
         this.tabsLoaded.customerProfile.dataLoaded = true;
       }, err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar(err, 'Dismiss');
         this.tabsLoaded.customerProfile.dataLoaded = false;
         this.loaderFn.decreaseCounter();
       }
@@ -416,7 +416,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation;
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
       }
     );
@@ -556,7 +556,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.portfolioData.isLoading = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -649,7 +649,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.hasError = true;
       this.isLoadingAssetAllocation = false;
       this.isAssetAllocationDataLoaded = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
     });
   }
 
@@ -685,7 +685,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.rtaFeeds.isLoading = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -716,7 +716,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.documentsVault.isLoading = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -743,7 +743,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -763,7 +763,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.hasError = true;
       this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.tabsLoaded.globalRiskProfile.dataLoaded = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -791,7 +791,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.hasError = true;
       this.tabsLoaded.recentTransactions.dataLoaded = false;
       this.tabsLoaded.recentTransactions.isLoading = false;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -817,7 +817,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.goalsData.hasData = false;
         this.tabsLoaded.goalsData.dataLoaded = true;
         this.tabsLoaded.goalsData.isLoading = false;
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar(err, 'Dismiss');
         this.loaderFn.decreaseCounter();
         this.hasError = true;
       });
@@ -854,7 +854,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.tabsLoaded.cashflowData.dataLoaded = false;
       this.tabsLoaded.cashflowData.isLoading = false;
       this.hasError = true;
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
   }
@@ -1031,7 +1031,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
-          this.eventService.openSnackBar(error, 'DISMISS');
+          // this.eventService.openSnackBar(error, 'DISMISS');
           this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
           this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         }
@@ -1054,7 +1054,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       err => {
         this.tabsLoaded.familyMembers.dataLoaded = false;
         this.tabsLoaded.familyMembers.isLoading = false;
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar(err, 'Dismiss');
         console.error(err);
       }
     );
