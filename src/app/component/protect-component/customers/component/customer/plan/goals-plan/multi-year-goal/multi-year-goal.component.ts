@@ -109,8 +109,8 @@ export class MultiYearGoalComponent implements OnInit {
         obj['planningforGroupHead'] = 1;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
         obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1] + monthAndDayString;
-        obj['goalEndDate'] == this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
-        obj['goalStartDate'] = this.multiYearGoalForm.get('field2').value[1] + monthAndDayString;
+        obj['goalEndDate'] = obj['vacationEndYr']
+        obj['goalStartDate'] = obj['vacationStartYr']
         obj["savingStartDate"] = this.datePipe.transform(date, 'yyyy-MM-dd');
         obj['savingEndDate'] = obj['goalStartDate']
         if (obj['frequency'] == "") {
