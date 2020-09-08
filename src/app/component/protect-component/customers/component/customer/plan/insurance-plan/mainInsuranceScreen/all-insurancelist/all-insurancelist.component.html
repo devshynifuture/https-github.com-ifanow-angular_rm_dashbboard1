@@ -53,7 +53,7 @@
 
         <!-- Life insurance - Rahul Jain -->
         
-            <app-life-insurance class="col-width-79 pb-44" [data]='detailsInsurance' (stopLoaderWhenReponse)="stopLoader($event)" (outputChange)="getOutput($event)"></app-life-insurance>
+            <app-life-insurance class="col-width-79 pb-44"  [isLoaders]="isLoadingInInsurance" [data]='detailsInsurance' (stopLoaderWhenReponse)="stopLoader($event)" (outputChange)="getOutput($event)"></app-life-insurance>
         
     </div>
     <div *ngIf="!showIsurance" class="row pt-70">

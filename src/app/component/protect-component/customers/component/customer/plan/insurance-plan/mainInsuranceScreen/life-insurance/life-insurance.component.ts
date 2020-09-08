@@ -76,6 +76,7 @@ export class LifeInsuranceComponent implements OnInit {
   isLoadingPlan = true;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
+  inputReceive: any;
 
   constructor(private subInjectService: SubscriptionInject, 
     private custumService: CustomerService, 
@@ -96,6 +97,19 @@ export class LifeInsuranceComponent implements OnInit {
 
   get data() {
     return this.inputData;
+  }
+  @Input()
+  set isLoaders(data) {
+    this.dataSource1 =[{},{},{}];
+    this.dataSouce3=[{},{},{}];
+    this.insuranceDetails = '';
+    this.loader(1);
+    this.isLoadingPlan = true;
+    console.log(data)
+  }
+
+  get isLoaders() {
+    return this.inputReceive;
   }
   ngOnInit() {
     console.log('inputData', this.inputData)
@@ -123,7 +137,7 @@ export class LifeInsuranceComponent implements OnInit {
         this.planService.deleteInsurancePlanning(this.inputData.id).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
           this.outputChange.emit(true);
-          this.getDetailsInsurance()
+          // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
