@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit, Input } from '@angular/core';
 import { ReconciliationService } from '../reconciliation.service';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { timeout, catchError, finalize } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-recon-cams',
@@ -52,6 +54,7 @@ export class ReconCamsComponent implements OnInit {
             this.rtId = element.id;
           }
         });
+
         this.teamMemberListGet();
       });
   }
@@ -59,6 +62,7 @@ export class ReconCamsComponent implements OnInit {
   teamMemberListGet() {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
+        console.log("this is team member list");
         if (data && data.length !== 0) {
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
@@ -73,8 +77,9 @@ export class ReconCamsComponent implements OnInit {
 
   getBrokerList() {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
-      .subscribe(res => {
+    .subscribe(res => {
         if (res) {
+          console.log("this is broker list must be called 1 time ",res);
           this.brokerList = res;
           this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
           this.getAumReconHistoryData();
@@ -101,6 +106,7 @@ export class ReconCamsComponent implements OnInit {
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
           this.isLoading = false;
+          console.log("call this once")
           if(res){
             this.dataSource.data = res;
           } else {
