@@ -60,8 +60,9 @@
                         <div class="bar">
                             {{element.des}}
                             <span *ngIf="!isLoading" class="f-14 pl-12 text-primitive">
-                                {{ element.subTaskCompleted }}/{{ element.totalSubTasks }}
-                                {{ element.commentsCount }}
+                                <span class="pr-12">{{ element.subTaskCompleted }}/{{ element.totalSubTasks }}</span>
+                                <span class="pr-2">{{ element.commentsCount }}</span>
+
                                 <img class="c-p" src="assets/images/svg/msg-chart.svg">
                             </span>
                         </div>
