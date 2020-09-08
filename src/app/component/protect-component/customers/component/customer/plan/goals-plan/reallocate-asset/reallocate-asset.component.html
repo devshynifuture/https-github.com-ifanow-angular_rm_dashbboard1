@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="row pb-10 align-items-center">
+        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName != 'MUTUAL_FUNDS'">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation to this goal (editable) </p>
@@ -50,7 +50,42 @@
             </div>
 
         </div>
+        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
 
+            <div class="col-md-6 p-0">
+                <p class="text-black mb-8"> b) Allocation of SIP percentage (editable) </p>
+            </div>
+            <div class="col-md-6">
+                <div class="editable_textBox" [formGroup]="reallocationFG">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input type="text" formControlName="sipPercent" appInputValueValidation [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
+                        <mat-error *ngIf="reallocationFG.get('sipPercent').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="reallocationFG.get('sipPercent').errors?.min || reallocationFG.get('lumpsumPercent').errors?.max">
+                            Please enter valid number</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
+
+            <div class="col-md-7 p-0">
+                <p class="text-black mb-8"> b) Allocation of lumpsum percentage (editable) </p>
+            </div>
+            <div class="col-md-5">
+                <div class="editable_textBox" [formGroup]="reallocationFG">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input type="text" formControlName="lumpsumPercent" appInputValueValidation [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
+                        <mat-error *ngIf="reallocationFG.get('lumpsumPercent').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="reallocationFG.get('lumpsumPercent').errors?.min || reallocationFG.get('lumpsumPercent').errors?.max">
+                            Please enter valid number</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
         <div class="row">
 
             <div class="col-md-6 p-0">
