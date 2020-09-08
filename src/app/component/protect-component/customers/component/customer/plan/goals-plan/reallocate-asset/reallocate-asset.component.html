@@ -53,7 +53,7 @@
         <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
 
             <div class="col-md-6 p-0">
-                <p class="text-black mb-8"> b) Allocation of SIP percentage (editable) </p>
+                <p class="text-black mb-8"> c) Allocation of SIP % (editable) </p>
             </div>
             <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
@@ -70,10 +70,10 @@
         </div>
         <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
 
-            <div class="col-md-7 p-0">
-                <p class="text-black mb-8"> b) Allocation of lumpsum percentage (editable) </p>
+            <div class="col-md-6 p-0">
+                <p class="text-black mb-8"> b) Allocation of lumpsum % (editable) </p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input type="text" formControlName="lumpsumPercent" appInputValueValidation [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
@@ -86,7 +86,7 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row"  *ngIf="allocationData.assetName != 'MUTUAL_FUNDS'">
 
             <div class="col-md-6 p-0">
                 <p class="mb-0 text-black">c) Net allocation available</p>
