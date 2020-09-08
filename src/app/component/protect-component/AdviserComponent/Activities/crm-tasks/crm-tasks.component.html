@@ -11,7 +11,7 @@
         <div class="col-xl-6 col-lg-8 col-md-10 crm-task-selects p-0">
             <div class="row w-100 text-right align-items-center">
                 <div class="col-md-4"></div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                         <mat-select class="form-control" [formControl]="filterFormControl">
                             <mat-option value="" disabled>Filter</mat-option>
@@ -23,7 +23,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-2 pl-0">
                     <button (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
                         ADD NEW
                     </button>
@@ -34,7 +34,7 @@
 
         </div>
     </div>
-    <div class="wrapper-20 pt-0 crm-task">
+    <div class="wrapper-16 pt-0 crm-task">
         <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)"
             class="ox-hide crm-task-scroll" *ngIf="dataSource.data && dataSource.data.length>0">
             <table [dataSource]="dataSource" matSort #tableEl id="tbs" mat-table [appSkeletonLoading]="isLoading">

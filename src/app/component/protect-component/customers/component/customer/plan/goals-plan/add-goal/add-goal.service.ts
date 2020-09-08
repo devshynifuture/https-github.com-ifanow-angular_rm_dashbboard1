@@ -45,12 +45,14 @@ export class AddGoalService {
     } else {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
       if (mfAsset.absAllocation < 100) {
-        mfAsset.goalAssetMapping.forEach(element => {
-          obj.percentAllocated = 100 - element.percentAllocated
-        });
+        // mfAsset.goalAssetMapping.forEach(element => {
+        //   obj.percentAllocated = 100 - element.percentAllocated
+        // });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
         obj.currentValue = mfAsset.currentValue
+        obj.sipPercent = parseInt(mfAsset.sipPercent)
+        obj.lumpsumPercent = parseInt(mfAsset.lumpsumPercent)
         this.allocateAsset(obj);
       } else {
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
@@ -76,7 +78,7 @@ export class AddGoalService {
       assetType: 5,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
-      percentAllocated: 100,
+     // percentAllocated: 100,
       isMutualFund: 1
     }
   }
