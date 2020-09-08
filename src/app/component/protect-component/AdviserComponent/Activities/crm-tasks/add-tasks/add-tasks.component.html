@@ -47,7 +47,7 @@
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
 
-                <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
+                <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
                 <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTask(null)"
                     class="c-p ml-12">
                 <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -115,7 +115,7 @@
             </div>
 
             <div class="w-41 pr-15 pl-15 remove-top">
-                <mat-form-field float="never" appearance="standard">
+                <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="frequency">
                         <mat-option value="" disabled>
                             Select Frequency
@@ -131,7 +131,7 @@
             </div>
 
             <div class="w-41 pr-24 pl-15 remove-top">
-                <mat-form-field float="never" appearance="standard" class="ba-date ">
+                <mat-form-field floatLabel="never" appearance="standard" class="ba-date ">
                     <input class="form-control br-0 b-0" formControlName="continuesTill"
                         (input)="preventDefault($event)" (focus)="picker2.open()" matInput [matDatepicker]="picker2"
                         placeholder="Continuous till">
@@ -334,7 +334,7 @@
 
         <div formArrayName="subTask" *ngFor="let item of subTask.controls; index as i">
             <div class="row pb-16 pt-24 align-items-center" [formGroupName]="i">
-                <div class="col-md-4 pl-30">
+                <div class="col-md-4 pl-30 remove-top">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input class="form-control br-0 text-left" matInput type="text" formControlName="description"
                             placeholder="Enter your Sub task description">
