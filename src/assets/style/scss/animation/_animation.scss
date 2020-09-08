@@ -302,3 +302,58 @@
     animation: fadeInOut 8s 40s ease-in infinite;
   }
 }
+
+
+// rocket animations
+.rocket-animations-mail {
+  .st0 {
+    fill: #EFC75E;
+  }
+
+  .st1 {
+    fill: #E2574C;
+  }
+
+  .st2 {
+    fill: #CF5349;
+  }
+
+  .st3 {
+    fill: #D7B354;
+  }
+
+  .st4 {
+    fill: #EBEBEB;
+  }
+
+  .st5 {
+    fill: #324D5B;
+  }
+
+  .st6 {
+    fill: #CCD0D2;
+  }
+
+  .rocket {
+    animation: moveRocket 1s infinite;
+    animation-timing-function: linear;
+  }
+
+  .progress {
+    animation: progressBar 3s;
+  }
+
+  @keyframes moveRocket {
+    0% {
+      transform: translate(0px, 0);
+    }
+
+    100% {
+      transform: translate(450px, 0);
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+}
