@@ -143,14 +143,18 @@ export class LifeInsuranceComponent implements OnInit {
     this.insuranceDetails = '';
     let obj = {
       clientId: this.clientId,
-      familyMemberId : this.inputData.familyMemberId,
+      familyMemberId : [],
       id:this.inputData.id,
     }
     let obj2 = {
       clientId: this.clientId,
-      familyMemberId : this.inputData.familyMemberId,
+      familyMemberId : [],
       advisorId:this.advisorId,
     }
+    this.inputData.owners.forEach(element => {
+      obj.familyMemberId.push(element.ownerId);
+      obj2.familyMemberId.push(element.ownerId);
+    });
     this.loader(1);
     this.isLoadingPlan = true;
     // this.planService.getDetailsInsurance(obj).subscribe(
@@ -179,7 +183,7 @@ export class LifeInsuranceComponent implements OnInit {
       if(result[2]){
         this.dataSource1=result[2];
       }else{
-        this.dataSouce3=[]
+        this.dataSource1=[];
       }
       this.stopLoaderWhenReponse.emit(true);
       this.isLoadingPlan = false;
@@ -204,6 +208,14 @@ export class LifeInsuranceComponent implements OnInit {
     }
 
 
+  }
+  changeValue(array,ele){
+    ele.expanded = true;
+    array.forEach(element => {
+      if(element.insurance.id != ele.insurance.id){
+        element.expanded = false
+      }
+    });
   }
   loader(increamenter) {
     this.counter += increamenter;
