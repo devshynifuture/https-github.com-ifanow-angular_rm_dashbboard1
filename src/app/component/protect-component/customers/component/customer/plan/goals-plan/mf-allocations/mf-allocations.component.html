@@ -215,14 +215,14 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
                         <th class="w-20" mat-header-cell *matHeaderCellDef> Value | Units</th>
-                        <td *matCellDef="let element" class="text-right w-17" mat-cell>
+                        <td *matCellDef="let element" class="text-left w-20" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span></td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
-                        <th mat-header-cell *matHeaderCellDef> Goal </th>
-                        <td *matCellDef="let element" mat-cell>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef> Goal </th>
+                        <td class="w-15" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                             </div>
@@ -233,22 +233,28 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="value1">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef>SIP</th>
-                        <td *matCellDef="let element" class="text-right w-17" mat-cell>
-                            <mat-form-field class="w-100">
-                                <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                    (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
-                                    class="form-control br-0" [(ngModel)]="element.sipPercent">
-                            </mat-form-field>
+                        <th class="w-10" mat-header-cell *matHeaderCellDef>SIP</th>
+                        <td *matCellDef="let element" class="text-right w-10" mat-cell>
+                            <div class="d-flex align-items-center"
+                                *ngFor="let allocatedGoal of element.goalAssetMapping">
+                                <mat-form-field class="w-100 iconPetage">
+                                    <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                        (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
+                                        class="form-control br-0 percentage" [(ngModel)]="allocatedGoal.sipPercent">
+                                </mat-form-field>
+                            </div>
                     </ng-container>
                     <ng-container matColumnDef="value2">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef>Lumpsum</th>
-                        <td *matCellDef="let element" class="text-right w-17" mat-cell>
-                            <mat-form-field class="w-100">
-                                <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                    (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
-                                    class="form-control br-0" [(ngModel)]="element.lumpsumPercent">
-                            </mat-form-field>
+                        <th class="w-10" mat-header-cell *matHeaderCellDef>Lumpsum</th>
+                        <td *matCellDef="let element" class="text-right w-10" mat-cell>
+                            <div class="d-flex align-items-center"
+                                *ngFor="let allocatedGoal of element.goalAssetMapping">
+                                <mat-form-field class="w-100 iconPetage" >
+                                    <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
+                                        (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
+                                        class="form-control br-0 percentage" [(ngModel)]="allocatedGoal.lumpsumPercent">
+                                </mat-form-field>
+                            </div>
                         </td>
                     </ng-container>
 
@@ -262,8 +268,8 @@
                                 <div class="d-flex align-items-center"
                                     *ngFor="let allocatedGoal of element.goalAssetMapping">
 
-                                    <span appFormatNumber
-                                        [value]="allocatedGoal.percentAllocated ? allocatedGoal.percentAllocated : 100"></span>
+                                    <!-- <span appFormatNumber
+                                        [value]="allocatedGoal.percentAllocated ? allocatedGoal.percentAllocated : 100"></span> -->
 
                                     <div class="d-flex" *ngIf="element.absAllocation == 100">
                                         <button class="unallcoateBtn ml-10 text-danger"
