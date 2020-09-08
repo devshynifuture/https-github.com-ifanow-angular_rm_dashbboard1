@@ -1,3 +1,4 @@
+import { ReconFranklinComponent } from './recon-franklin/recon-franklin.component';
 import { ReconKarvyComponent } from './recon-karvy/recon-karvy.component';
 import { ReconCamsComponent } from './recon-cams/recon-cams.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,11 @@ const routes: Routes = [
   {
     path: '',
     component: ReconciliationComponent,
+    children: [
+      { path: 'cams', component: ReconCamsComponent },
+      { path: 'karvy', component: ReconKarvyComponent },
+      { path: 'franklin', component: ReconFranklinComponent },
+    ]
   }
 ];
 
