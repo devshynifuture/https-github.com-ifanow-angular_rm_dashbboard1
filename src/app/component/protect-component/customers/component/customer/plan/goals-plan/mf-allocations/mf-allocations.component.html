@@ -215,7 +215,7 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
                         <th class="w-20" mat-header-cell *matHeaderCellDef> Value | Units</th>
-                        <td *matCellDef="let element" class="text-center w-20" mat-cell>
+                        <td *matCellDef="let element" class="text-left w-20" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span></td>
                     </ng-container>
