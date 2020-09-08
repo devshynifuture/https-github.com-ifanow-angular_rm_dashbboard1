@@ -62,6 +62,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   policyFeature: any;
   id: any;
   options: any;
+  planFeatureList=[{name:'Building',value:'39'},{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -353,6 +354,16 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   }
   ngOnInit() {
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  selectPlanType(value){
+    if(value == '13'){
+      this.planFeatureList=[{name:'Building',value:'39'}];
+    }else if(value == '14'){
+      this.planFeatureList=[{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
+    }else{
+      this.planFeatureList=[{name:'Building',value:'39'},{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
+
+    }
   }
   dateChange(value, form, formValue) {
     if (form == 'policyExpiryDate' && formValue) {
