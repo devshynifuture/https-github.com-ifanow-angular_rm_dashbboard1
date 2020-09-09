@@ -44,8 +44,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
   isFamilyObj = (index, item) => item.isFamily;
   selectedAllocation: any;
-  refreshObservable = new Subject();
-  refreshAssetList = new Subject();
+  // refreshObservable = new Subject();
+  // refreshAssetList = new Subject();
   validatorType = ValidatorType;
   constructor(
     private subInjectService: SubscriptionInject,
@@ -64,6 +64,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
+  refreshObservable = new Subject();
+  refreshAssetList = new Subject();
 
   ngOnInit() {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
@@ -271,7 +273,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           percentAllocated: 0
         }
         this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          this.allocateOtherAssetService.refreshAssetList.next();
+          this.refreshObservable.next();
+          this.planService.assetSubject.next(res);
+          this.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
