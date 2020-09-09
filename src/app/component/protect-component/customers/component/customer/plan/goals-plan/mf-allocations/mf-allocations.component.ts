@@ -273,6 +273,12 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           percentAllocated: 0
         }
         this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
+          this.loadMFData();
+          this.subscriber.add(
+            this.allocationService.refreshObservable.subscribe(() => {
+              this.loadMFData();
+            })
+          );
           this.refreshObservable.next();
           this.planService.assetSubject.next(res);
           this.refreshAssetList.next();
