@@ -166,6 +166,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     nextAppraisal: [],
     description: [],
     monthlyNetIncome:[, [Validators.required]],
+    othersIncome:[, [Validators.required]],
     monthlyIncomeForm: this.fb.array([this.fb.group({
       monthlyIncType: ['', [Validators.required]],
       monthlyIncAmt: [null, [Validators.required]],
@@ -258,6 +259,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       // this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
       this.incomeNetForm.controls.incomeOption.setValue((data.incomeOption) ? String(data.incomeOption) : '2');
       this.incomeNetForm.controls.monthlyNetIncome.setValue(data.monthlyIncome ? data.monthlyIncome : '');
+      this.incomeNetForm.controls.othersIncome.setValue(data.other ? data.other : '');
       this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId + '');
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
       this.incomeNetForm.controls.incomeGrowthRate.setValue(data.growthRate);
@@ -600,7 +602,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: { bankList: this.bankList, userInfo: true }
+      data: {bankList: this.bankList, userInfo: true,  ownerList : this.singleIndividualIncome.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -909,7 +911,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.incomeNetForm.get('monthlyAmount').setErrors(null);
     // }
     if (this.incomeNetForm.get('incomeOption').value == '2') {
-      if(this.singleIndividualIncome.finalIncomeList.incomeTypeList==2 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==3 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==4){
+      if(this.singleIndividualIncome.finalIncomeList.incomeTypeList==1 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==2 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==3 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==4){
         let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
       monthlyInc.controls.forEach(element => {
         element.get('monthlyIncType').setErrors(null);
@@ -948,13 +950,18 @@ export class IndividualIncomeInfoComponent implements OnInit {
         element.get('othersType').setErrors(null);
         element.get('othersAmt').setErrors(null);
       })
-
+      this.incomeNetForm.get('othersIncome').setErrors(null);
     } else {
       this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
       let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
       monthlyInc.controls.forEach(element => {
         element.get('monthlyIncType').setErrors(null);
         element.get('monthlyIncAmt').setErrors(null);
+      })
+      let others = this.incomeNetForm.get('othersForm') as FormArray
+      others.controls.forEach(element => {
+        element.get('othersType').setErrors(null);
+        element.get('othersAmt').setErrors(null);
       })
     }
     if (this.incomeNetForm.invalid) {
@@ -970,6 +977,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         "familyMemberId": this.singleIndividualIncome.id,
         "ownerName": this.singleIndividualIncome.name,
         "monthlyIncome": this.incomeNetForm.get('monthlyNetIncome').value ? this.incomeNetForm.get('monthlyNetIncome').value : null,
+        "other": this.incomeNetForm.get('othersIncome').value ? this.incomeNetForm.get('othersIncome').value : null,
         "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
         "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
         "incomeEndMonth": new Date(this.incomeNetForm.get('incomeEndDate').value).getMonth(),
@@ -1028,7 +1036,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         obj.monthlyDistributionList = null;
       }
       obj['bonusOrInflowList'] = obj.monthlyDistributionList;
-
+      
       console.log(obj)
       if (this.editApiData) {
         obj['id'] = this.editApiData.id;

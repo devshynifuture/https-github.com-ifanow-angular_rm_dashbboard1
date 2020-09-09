@@ -10,7 +10,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { UtilService, LoaderFunction, ValidatorType } from 'src/app/services/util.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
-import { Subscriber } from 'rxjs';
+import { Subscriber, Subject } from 'rxjs';
 import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
@@ -23,15 +23,15 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
-  displayedColumns1 = ['scheme', 'value', 'value1','value2','goal','icons'];
+  displayedColumns1 = ['scheme', 'value', 'value1', 'value2', 'goal', 'icons'];
   dataSource1 = new MatTableDataSource([]);
 
-  @Input() data:any = {};
+  @Input() data: any = {};
   advisorId;
   clientId;
-  mfList:any[] = [];
-  familyList:any[] = [];
-  
+  mfList: any[] = [];
+  familyList: any[] = [];
+
   schemeFilterValue = 'all';
   folioFilterValue = 'all';
   assetFilterValue = 'all';
@@ -44,6 +44,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
   isFamilyObj = (index, item) => item.isFamily;
   selectedAllocation: any;
+  // refreshObservable = new Subject();
+  // refreshAssetList = new Subject();
   validatorType = ValidatorType;
   constructor(
     private subInjectService: SubscriptionInject,
@@ -62,6 +64,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
+  refreshObservable = new Subject();
+  refreshAssetList = new Subject();
 
   ngOnInit() {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
@@ -69,13 +73,13 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.getFamilyMembersList();
     this.loadMFData();
     this.subscriber.add(
-      this.allocationService.refreshObservable.subscribe(()=>{
+      this.allocationService.refreshObservable.subscribe(() => {
         this.loadMFData();
       })
     );
   }
 
-  initializeRequiredTable(){
+  initializeRequiredTable() {
     let required = this.data.dashboardData;
     let tableSource = [];
     // logic for saving status
@@ -126,17 +130,17 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       }
     );
   }
-  reallocateAsset(allocation){
+  reallocateAsset(allocation) {
     this.data.goalAssetAllocation.forEach(element => {
       allocation.goalAssetMapping.forEach(element1 => {
-        if(element.id == element1.id){
+        if (element.id == element1.id) {
           this.selectedAllocation = element
         }
       });
     });
     const dialogData = {
       goalData: this.data,
-      allocationData:  this.selectedAllocation,
+      allocationData: this.selectedAllocation,
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
@@ -145,18 +149,18 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-  loadMFData(){
+  loadMFData() {
     this.loaderFn.increaseCounter();
-    this.planService.getMFList({advisorId: this.advisorId, clientId: this.clientId}).subscribe(res => {
+    this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       this.mfList = res;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
-        if(mf.goalAssetMapping.length > 0) {
+        if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
           });
         }
-        return {absAllocation, ...mf};
+        return { absAllocation, ...mf };
       })
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -164,14 +168,14 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.loaderFn.decreaseCounter();
     })
   }
-  
-  filterAssets(){
+
+  filterAssets() {
     let tableSource = [];
     let family = [];
-    if(this.selectedFamFilter =="'all'"){
+    if (this.selectedFamFilter == "'all'") {
       this.selectedFamFilter = 'all'
     }
-    if(this.selectedFamFilter == 'all') {
+    if (this.selectedFamFilter == 'all') {
       family = this.familyList;
     } else {
       family = this.familyList.filter(fam => fam.id == this.selectedFamFilter);
@@ -182,20 +186,20 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     mfList = this.filterByScheme(mfList);
     mfList = this.filterByAssetType(mfList);
 
-    if(family.length > 0 && mfList.length > 0) {
+    if (family.length > 0 && mfList.length > 0) {
       family.forEach(fam => {
-        tableSource.push({isFamily: true, ...fam});
-        tableSource.push(mfList.filter(mf => mf.familyMemberId == fam.familyMemberId).map(mf => {return {isFamily: false, ...mf}}));
+        tableSource.push({ isFamily: true, ...fam });
+        tableSource.push(mfList.filter(mf => mf.familyMemberId == fam.familyMemberId).map(mf => { return { isFamily: false, ...mf } }));
       })
       tableSource = tableSource.flat();
     }
 
     this.dataSource1.data = tableSource;
-    console.log('this.dataSource1.data',this.dataSource1.data)
+    console.log('this.dataSource1.data', this.dataSource1.data)
   }
 
-  filterByFolio(mfList:Array<any>){
-    switch(this.folioFilterValue) {
+  filterByFolio(mfList: Array<any>) {
+    switch (this.folioFilterValue) {
       case 'all':
         return mfList;
       case 'zero':
@@ -205,8 +209,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterByScheme(mfList:Array<any>){
-    switch(this.schemeFilterValue) {
+  filterByScheme(mfList: Array<any>) {
+    switch (this.schemeFilterValue) {
       case 'all':
         return mfList;
       case 'unallocated':
@@ -216,8 +220,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterByAssetType(mfList:Array<any>){
-    switch(this.assetFilterValue) {
+  filterByAssetType(mfList: Array<any>) {
+    switch (this.assetFilterValue) {
       case 'all':
         return mfList;
       case 'equity':
@@ -228,17 +232,17 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  allocateAssetToGoal(data){
+  allocateAssetToGoal(data) {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       goalId: this.data.remainingData.id,
       mfId: data.id,
-      sipPercent:data.sipPercent,
-      lumpsumPercent:data.lumpsumPercent,
+      sipPercent: data.sipPercent,
+      lumpsumPercent: data.lumpsumPercent,
     }
-    this.allocationService.allocateMFToGoal(data, {advisorId: this.advisorId, clientId: this.clientId}, this.data);
-    
+    this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
+
   }
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
@@ -246,8 +250,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeAllocation(allocation,allocatedGoal) {
-    if(!allocatedGoal.dashboardData){
+  removeAllocation(allocation, allocatedGoal) {
+    if (!allocatedGoal.dashboardData) {
       allocatedGoal.dashboardData = {}
       allocatedGoal.dashboardData = this.data.dashboardData;
 
@@ -261,7 +265,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
-          id: allocation.id,
+          id: allocatedGoal.id,
           assetId: allocatedGoal.assetId,
           assetType: allocatedGoal.assetType,
           goalId: this.data.remainingData.id,
@@ -269,10 +273,15 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           percentAllocated: 0
         }
         this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          const assetIndex = this.dataSource1.data.findIndex((asset) => asset.assetId == allocation.assetId);
-          this.dataSource1.data.splice(assetIndex, 1);
-          // update asset list if user deletes goal and the list is still open
-          this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadMFData();
+          this.subscriber.add(
+            this.allocationService.refreshObservable.subscribe(() => {
+              this.loadMFData();
+            })
+          );
+          this.refreshObservable.next();
+          this.planService.assetSubject.next(res);
+          this.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
@@ -289,10 +298,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriber.unsubscribe();
   }
 }

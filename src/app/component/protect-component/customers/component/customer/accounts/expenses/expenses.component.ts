@@ -206,14 +206,14 @@ export class ExpensesComponent implements OnInit {
 
           this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
           this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-          this.miscellaneousAmount = data.Miscellaneous;
-          this.entertainmentAmount = data.Entertainment;
-          this.educationAmount = data.Education;
+          this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
+          this.entertainmentAmount = data.Entertainment ? data.Entertainment : 0;
+          this.educationAmount = data.Education ? data.Education : 0;
           // this.miscellaneousAmount = data.Billes_&_Utilies;
-          this.billsAndUtilities = data.billsAndUtilities;
-          this.transportAmount = data.Transport;
-          this.housingAmount = data.Housing;
-          this.spent = data.total;
+          this.billsAndUtilities = data.billsAndUtilities ? data.billsAndUtilities : 0;
+          this.transportAmount = data.Transport ? data.Transport : 0;
+          this.housingAmount = data.Housing ? data.Housing : 0;
+          this.spent = data.total ? data.total :0;
           this.cashFlow('piechartExpense')
         } else {
           this.cashFlow('piechartExpense')
@@ -262,6 +262,7 @@ export class ExpensesComponent implements OnInit {
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
+          this.isLoading = false;
           this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
           console.log('All expense data', data);
@@ -322,13 +323,13 @@ export class ExpensesComponent implements OnInit {
 
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-    this.miscellaneousAmount = data.Miscellaneous;
-    this.entertainmentAmount = data.Entertainment;
-    this.educationAmount = data.Education;
+    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
+    this.entertainmentAmount = data.Entertainment ? data.Entertainment :0;
+    this.educationAmount = data.Education ? data.Education : 0;
     // this.miscellaneousAmount = data.Billes_&_Utilies;
-    this.transportAmount = data.Transport;
-    this.housingAmount = data.Housing;
-    this.spent = data.total;
+    this.transportAmount = data.Transport ? data.Transport :0;
+    this.housingAmount = data.Housing ? data.Housing :0;;
+    this.spent = data.total ? data.total : 0;
     this.cashFlow('piechartExpense')
   }
   getBudgetGraphValues() {
@@ -760,9 +761,10 @@ export class ExpensesComponent implements OnInit {
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
-    this.getAllExpense();
+    
     this.getBudgetList();
     this.getBugetRecurring();
+    this.getAllExpense();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
   }
   getRecuringTransactions() {
