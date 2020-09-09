@@ -416,7 +416,7 @@
                                                     <div class="row">
                                                             <mat-progress-bar *ngIf="isLoading==false"
                                                             [matTooltip]="element.spentPer+'%'" mode="determinate"
-                                                            [value]="element.spentPer"  [ngClass]="{'w-50': element.progressPercent > 100,'w-100': element.progressPercent < 100}">
+                                                            [value]="element.spentPer"  [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }">
                                                         </mat-progress-bar>
                                                         <mat-progress-bar  *ngIf="isLoading==false && element.progressPercent > 100 "
                                                             [matTooltip]="element.budgetPer+'%'" mode="determinate"
@@ -519,7 +519,8 @@
                                                     <div class="row">
                                                         <mat-progress-bar *ngIf="isLoading==false"
                                                         [matTooltip]="element.spentPerOther+'%'" mode="determinate"
-                                                        [value]="element.spentPerOther"  [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}">
+                                                        [value]="element.spentPerOther" [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }" >
+                                                        <!-- [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}" -->
                                                     </mat-progress-bar>
                                                     <mat-progress-bar  *ngIf="isLoading==false && element.progressPercentOther > 100 "
                                                         [matTooltip]="element.budgetPerOther+'%'" mode="determinate"

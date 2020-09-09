@@ -206,14 +206,14 @@ export class ExpensesComponent implements OnInit {
 
           this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
           this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-          this.miscellaneousAmount = data.Miscellaneous;
-          this.entertainmentAmount = data.Entertainment;
-          this.educationAmount = data.Education;
+          this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
+          this.entertainmentAmount = data.Entertainment ? data.Entertainment : 0;
+          this.educationAmount = data.Education ? data.Education : 0;
           // this.miscellaneousAmount = data.Billes_&_Utilies;
-          this.billsAndUtilities = data.billsAndUtilities;
-          this.transportAmount = data.Transport;
-          this.housingAmount = data.Housing;
-          this.spent = data.total;
+          this.billsAndUtilities = data.billsAndUtilities ? data.billsAndUtilities : 0;
+          this.transportAmount = data.Transport ? data.Transport : 0;
+          this.housingAmount = data.Housing ? data.Housing : 0;
+          this.spent = data.total ? data.total :0;
           this.cashFlow('piechartExpense')
         } else {
           this.cashFlow('piechartExpense')
@@ -228,9 +228,9 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getAllExpense() {
-    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.dataSource1.data = [{}, {}, {}];
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -240,6 +240,7 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAllExpense(obj).subscribe(
       data => {
         if (data) {
+          this.isLoading = true;
           this.expenseList = data.expenseList;
           this.recurringTrnList = data.recurringExpenseList;
           this.expenseList.forEach(singleExpense => {
@@ -261,12 +262,16 @@ export class ExpensesComponent implements OnInit {
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
+          this.isLoading = false;
           this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
           console.log('All expense data', data);
         }
         this.isLoading = false;
       }, (error) => {
+        this.dataSource.data=[];
+        this.dataSource1.data=[];
+        this.isLoading = false;
         this.eventService.showErrorMessage(error);
       }
     );
@@ -318,13 +323,13 @@ export class ExpensesComponent implements OnInit {
 
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-    this.miscellaneousAmount = data.Miscellaneous;
-    this.entertainmentAmount = data.Entertainment;
-    this.educationAmount = data.Education;
+    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
+    this.entertainmentAmount = data.Entertainment ? data.Entertainment :0;
+    this.educationAmount = data.Education ? data.Education : 0;
     // this.miscellaneousAmount = data.Billes_&_Utilies;
-    this.transportAmount = data.Transport;
-    this.housingAmount = data.Housing;
-    this.spent = data.total;
+    this.transportAmount = data.Transport ? data.Transport :0;
+    this.housingAmount = data.Housing ? data.Housing :0;;
+    this.spent = data.total ? data.total : 0;
     this.cashFlow('piechartExpense')
   }
   getBudgetGraphValues() {
@@ -564,14 +569,14 @@ export class ExpensesComponent implements OnInit {
           {
             name: 'Basic',
             y: this.basicAmountPercent,
-            color: "#A6CEE3",
+            color: "#1F78B4",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Bills & Utilities',
             y: this.billsAndUtilities,
-            color: "#1F78B4",
+            color: "#A6CEE3",
             dataLabels: {
               enabled: false
             }
@@ -756,8 +761,10 @@ export class ExpensesComponent implements OnInit {
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
+    
     this.getBudgetList();
     this.getBugetRecurring();
+    this.getAllExpense();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
   }
   getRecuringTransactions() {
