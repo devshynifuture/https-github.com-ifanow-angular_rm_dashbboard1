@@ -58,9 +58,17 @@ export class AddLifeInsuranceComponent implements OnInit {
     element.selected = event.checked
     if (event.checked == true) {
       this.addplan = false;
-      this.familyMemberSend.push(element);
+      const obj={
+        advisorId:this.advisorId,
+        clientId:this.clientId,
+        insuranceType:1,
+        owners:[{
+          'ownerId':element.familyMemberId
+        }]
+      }
+      this.familyMemberSend.push(obj);
     } else {
-      this.familyMemberSend.pop(element);
+      this.familyMemberSend.pop();
     }
     console.log('shgshgjhkf', this.familyMemberSend)
   }

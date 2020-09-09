@@ -322,14 +322,16 @@ export class AddPlaninsuranceComponent implements OnInit {
         lifeInsurancePlanningId: this.needBase.lifeInsurancePlanningId,
         needTypeId: this.needBase.needTypeId,
         adviceAmount: this.needBase.adviceAmount,
-        plannerNotes: this.needBase.plannerNotes
+        plannerNotes: this.needBase.plannerNotes,
+
       }
     } else {
       this.sendObj = {
         lifeInsurancePlanningId: this.manualObj.lifeInsurancePlanningId,
         needTypeId: this.manualObj.needTypeId,
         adviceAmount: this.manualObj.adviceAmount,
-        plannerNotes: this.manualObj.plannerNotes
+        plannerNotes: this.manualObj.plannerNotes,
+        id: this.manualObj.id
       }
     }
     this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(

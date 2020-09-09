@@ -57,6 +57,7 @@ export class AllInsurancelistComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   // showIsurance: boolean = false;
   showIsurance: boolean = true; //page initial loads blank ..
+  isLoadingInInsurance: any;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private eventService: EventService,) {
@@ -76,6 +77,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.showIsurance = true
   }
   getInsuranceList() {
+    this.isLoadingInInsurance={isLoading:true};
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
