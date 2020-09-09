@@ -54,6 +54,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     private utilService: UtilService,
     public loaderFn: LoaderFunction,
     private allocationService: AddGoalService,
+    private allocateOtherAssetService: AddGoalService,
     private dialog: MatDialog
   ) {
     this.advisorId = AuthService.getAdvisorId();
@@ -246,6 +247,11 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   }
 
   removeAllocation(allocation,allocatedGoal) {
+    if(!allocatedGoal.dashboardData){
+      allocatedGoal.dashboardData = {}
+      allocatedGoal.dashboardData = this.data.dashboardData;
+
+    }
     const dialogData = {
       header: 'UNALLOCATE MF',
       body: 'Are you sure you want to remove allocation?',
@@ -255,22 +261,23 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
-          id: allocatedGoal.id,
-          assetId: allocation.id,
-          goalId: allocatedGoal.goalId,
+          id: allocation.id,
+          assetId: allocatedGoal.assetId,
+          assetType: allocatedGoal.assetType,
+          goalId: this.data.remainingData.id,
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.allocationService.allocateMFToGoal(allocation,{advisorId: this.advisorId, clientId: this.clientId}, allocatedGoal)
+        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
+          const assetIndex = this.dataSource1.data.findIndex((asset) => asset.assetId == allocation.assetId);
+          this.dataSource1.data.splice(assetIndex, 1);
           // update asset list if user deletes goal and the list is still open
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(()=>{
-              this.loadMFData();
-            })
-          );
-          this.allocationService.refreshAssetList.next();
+          this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

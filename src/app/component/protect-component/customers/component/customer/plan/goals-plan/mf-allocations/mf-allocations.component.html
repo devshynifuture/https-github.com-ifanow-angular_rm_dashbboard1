@@ -202,8 +202,8 @@
 
                     <!-- Position Column -->
                     <ng-container matColumnDef="scheme">
-                        <th class="w-40" mat-header-cell *matHeaderCellDef> Scheme </th>
-                        <td class="w-40" mat-cell *matCellDef="let element">
+                        <th class="w-35" mat-header-cell *matHeaderCellDef> Scheme </th>
+                        <td class="w-35" mat-cell *matCellDef="let element">
                             {{element.schemeName}}<span class="text-success pl-8">[SIP]</span>
                         </td>
                     </ng-container>
@@ -233,8 +233,8 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="value1">
-                        <th class="w-10" mat-header-cell *matHeaderCellDef>SIP</th>
-                        <td *matCellDef="let element" class="text-right w-10" mat-cell>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef>SIP</th>
+                        <td *matCellDef="let element" class="text-right w-15" mat-cell>
                             <div class="d-flex align-items-center"
                                 *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <mat-form-field class="w-100 iconPetage">
