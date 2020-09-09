@@ -66,7 +66,7 @@ export class ExcelClientListService {
     // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
     worksheet.addRow(['Advisor', this.advisor.name]);
-    worksheet.addRow(['Client', this.client ? this.client.name : '']);
+    // worksheet.addRow(['Client', this.client ? this.client.name : '']);
 
     // Add Image
     // let logo = workbook.addImage({
