@@ -76,6 +76,7 @@ export class LifeInsuranceComponent implements OnInit {
   isLoadingPlan = true;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
+  inputReceive: any;
 
   constructor(private subInjectService: SubscriptionInject, 
     private custumService: CustomerService, 
@@ -96,6 +97,19 @@ export class LifeInsuranceComponent implements OnInit {
 
   get data() {
     return this.inputData;
+  }
+  @Input()
+  set isLoaders(data) {
+    this.dataSource1 =[{},{},{}];
+    this.dataSouce3=[{},{},{}];
+    this.insuranceDetails = '';
+    this.loader(1);
+    this.isLoadingPlan = true;
+    console.log(data)
+  }
+
+  get isLoaders() {
+    return this.inputReceive;
   }
   ngOnInit() {
     console.log('inputData', this.inputData)
@@ -123,7 +137,7 @@ export class LifeInsuranceComponent implements OnInit {
         this.planService.deleteInsurancePlanning(this.inputData.id).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
           this.outputChange.emit(true);
-          this.getDetailsInsurance()
+          // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
@@ -143,14 +157,18 @@ export class LifeInsuranceComponent implements OnInit {
     this.insuranceDetails = '';
     let obj = {
       clientId: this.clientId,
-      familyMemberId : this.inputData.familyMemberId,
+      familyMemberId : [],
       id:this.inputData.id,
     }
     let obj2 = {
       clientId: this.clientId,
-      familyMemberId : this.inputData.familyMemberId,
+      familyMemberId : [],
       advisorId:this.advisorId,
     }
+    this.inputData.owners.forEach(element => {
+      obj.familyMemberId.push(element.ownerId);
+      obj2.familyMemberId.push(element.ownerId);
+    });
     this.loader(1);
     this.isLoadingPlan = true;
     // this.planService.getDetailsInsurance(obj).subscribe(
@@ -179,7 +197,7 @@ export class LifeInsuranceComponent implements OnInit {
       if(result[2]){
         this.dataSource1=result[2];
       }else{
-        this.dataSouce3=[]
+        this.dataSource1=[];
       }
       this.stopLoaderWhenReponse.emit(true);
       this.isLoadingPlan = false;
@@ -204,6 +222,14 @@ export class LifeInsuranceComponent implements OnInit {
     }
 
 
+  }
+  changeValue(array,ele){
+    ele.expanded = true;
+    array.forEach(element => {
+      if(element.insurance.id != ele.insurance.id){
+        element.expanded = false
+      }
+    });
   }
   loader(increamenter) {
     this.counter += increamenter;

@@ -394,7 +394,8 @@ export class EmailOnlyComponent implements OnInit {
         toEmail: this.emailIdList,
         documentList: this._inputData.documentList,
         document_id: this._inputData.documentList[0].id,
-        attachmentName: this._inputData.documentList[0].documentName
+        attachmentName: this._inputData.documentList[0].documentName,
+        subscriptionFooter: true
       };
       if (this._inputData.templateType == 2) {
         emailRequestData.quotation = true;

@@ -383,7 +383,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         value: data.pan,
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      gstinNum: [data.gstin, [Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]],
+      gstinNum: [data.gstin, [Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]],
       // taxStatus: [data.taxStatusId ? String(data.taxStatusId) : '', [Validators.required]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
       username: [{ value: data.userName, disabled: true }],
@@ -721,7 +721,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     let emailList = [];
     let count = 0;
-    if (this.emailData.valid) {
+    if (this.emailData && this.emailData.valid) {
       if (this.emailData.length == 1) {
         this.emailData.controls[0].get('markAsPrimary').setValue(true);
       }
@@ -737,12 +737,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         });
       });
       emailList = emailList.sort(function (a, b) { return b.defaultFlag - a.defaultFlag });
+      if (count == 0) {
+        this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
+        return
+      }
     }
 
-    if (count == 0) {
-      this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
-      return
-    }
 
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     ;

@@ -60,6 +60,10 @@ export class ReallocateAssetComponent implements OnInit {
     this.reallocationFG = this.fb.group({
       allocatedPercentage: [this.allocationData.percentAllocated, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });
+    if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
+      this.reallocationFG.addControl('sipPercent', this.fb.control(this.allocationData.sipPercent, [Validators.required]))
+      this.reallocationFG.addControl('lumpsumPercent', this.fb.control(this.allocationData.lumpsumPercent, [Validators.required]))
+    }
 
     this.subscriber.add(
       this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
@@ -70,7 +74,6 @@ export class ReallocateAssetComponent implements OnInit {
         }
       })
     )
-
   }
 
   reallocate(){
@@ -86,6 +89,8 @@ export class ReallocateAssetComponent implements OnInit {
       assetId: this.allocationData.assetId,
       assetType: this.allocationData.assetType,
       goalId: this.goalData.remainingData.id,
+      lumpsumPercent: parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2)),
+      sipPercent: parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2)),
       allocateOrEdit : 2,
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
