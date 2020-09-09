@@ -272,7 +272,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result.refresh) {
+      if (result && result.hasOwnProperty('refresh') && result.refresh) {
         this.showMappingBtn = false;
         this.selection.clear();
         this.selectedFolioCount = 0;
