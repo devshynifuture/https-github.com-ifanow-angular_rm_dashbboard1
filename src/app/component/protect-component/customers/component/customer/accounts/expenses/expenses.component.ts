@@ -124,6 +124,7 @@ export class ExpensesComponent implements OnInit {
   familyList: any;
   clientDob:any;
   billsAndUtilities: any;
+  isLoadingBudget=false;
 
   // periodSelection: any;
 
@@ -208,7 +209,6 @@ export class ExpensesComponent implements OnInit {
           this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
           this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
           this.entertainmentAmount = data.Entertainment ? data.Entertainment : 0;
-          this.educationAmount = data.Education ? data.Education : 0;
           // this.miscellaneousAmount = data.Billes_&_Utilies;
           this.billsAndUtilities = data.billsAndUtilities ? data.billsAndUtilities : 0;
           this.transportAmount = data.Transport ? data.Transport : 0;
@@ -262,12 +262,13 @@ export class ExpensesComponent implements OnInit {
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
+          this.getAssetData(data);
           this.isLoading = false;
           this.getExpenseGraphValueNew(this.expenseGraph);
-          this.getAssetData(data);
           console.log('All expense data', data);
+          
         }
-        this.isLoading = false;
+        // this.isLoading = true;
       }, (error) => {
         this.dataSource.data=[];
         this.dataSource1.data=[];
@@ -316,19 +317,19 @@ export class ExpensesComponent implements OnInit {
   }
   getExpenseGraphValueNew(data) {
     this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
+    this.billsAndUtilities = data.Bills_Utilities ? data.Bills_Utilities.categoryWisePercentage : 0;     
+    this.educationAmount = data.Education ? data.Education.categoryWisePercentage : 0;
+    this.entertainmentAmount = data.Entertainment ? data.Entertainment.categoryWisePercentage :0;
+    this.housingAmount = data.Housing ? data.Housing.categoryWisePercentage :0;
+    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous.categoryWisePercentage : 0;
+    this.transportAmount = data.Transport ? data.Transport.categoryWisePercentage :0;
     this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
     this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
     this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
     this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
-
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
-    this.entertainmentAmount = data.Entertainment ? data.Entertainment :0;
-    this.educationAmount = data.Education ? data.Education : 0;
     // this.miscellaneousAmount = data.Billes_&_Utilies;
-    this.transportAmount = data.Transport ? data.Transport :0;
-    this.housingAmount = data.Housing ? data.Housing :0;;
     this.spent = data.total ? data.total : 0;
     this.cashFlow('piechartExpense')
   }
@@ -654,7 +655,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
   getBudgetList() {
-    this.isLoading = true;
+    this.isLoadingBudget = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -671,7 +672,7 @@ export class ExpensesComponent implements OnInit {
         this.eventService.showErrorMessage(error);
         this.dataSource4.data = [];
         this.noData = 'No data found';
-        this.isLoading = false;
+        this.isLoadingBudget = false;
       }
     );
   }
@@ -699,11 +700,11 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.data = data;
       this.dataSource4.sort = this.BudgetSort;
     }
-    this.isLoading = false;
+    this.isLoadingBudget = false;
     console.log('getBudgetRes', data)
   }
   getBugetRecurring() {
-    this.isLoading = true;
+    this.isLoadingBudget = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -722,7 +723,7 @@ export class ExpensesComponent implements OnInit {
         this.eventService.showErrorMessage(error);
         this.dataSource5.data = [];
         this.noData = 'No data found';
-        this.isLoading = false;
+        this.isLoadingBudget = false;
       }
     );
   }
@@ -753,7 +754,7 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource5.data = [];
     }
-    this.isLoading = false;
+    this.isLoadingBudget = false;
     console.log('otherCommitmentsGetRes', data)
   }
   addFilterPeriod(value) {
@@ -761,10 +762,9 @@ export class ExpensesComponent implements OnInit {
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
-    
+    this.getAllExpense();
     this.getBudgetList();
     this.getBugetRecurring();
-    this.getAllExpense();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
   }
   getRecuringTransactions() {
@@ -835,7 +835,7 @@ export class ExpensesComponent implements OnInit {
       familyMemberId: 0,
     };
     this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+    // this.dataSource.data = [{}, {}, {}];
     this.planService.getTransactionExpense(obj).subscribe(
       data => this.getTransactionExpenseRes(data), (error) => {
         this.getRecuringTransactions();
@@ -881,7 +881,7 @@ export class ExpensesComponent implements OnInit {
       startDate: this.startDate,
     };
     this.isLoading = true;
-    this.dataSource1.data = [{}, {}, {}];
+    // this.dataSource1.data = [{}, {}, {}];
     this.planService.getAssetsOfExpense(obj).subscribe(
       data => {
         if (data) {

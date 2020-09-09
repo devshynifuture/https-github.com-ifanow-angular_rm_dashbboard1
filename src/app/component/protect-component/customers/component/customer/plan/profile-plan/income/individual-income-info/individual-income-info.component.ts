@@ -197,11 +197,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       retiralsAmt: [null, [Validators.required]],
       id: null,
     })]),
-    othersForm: this.fb.array([this.fb.group({
-      othersType: ['', [Validators.required]],
-      othersAmt: [null, [Validators.required]],
-      id: null,
-    })])
+    // othersForm: this.fb.array([this.fb.group({
+    //   othersType: ['', [Validators.required]],
+    //   othersAmt: [null, [Validators.required]],
+    //   id: null,
+    // })])
   })
   @Output() previousStep = new EventEmitter();
   @Input() set FinalIncomeList(data) {
@@ -370,23 +370,23 @@ export class IndividualIncomeInfoComponent implements OnInit {
           }
         });
       }
-      if (Object.keys(data.incomeOthers).length > 0) {
-        let id = data.incomeOthers.id;
-        if (id) {
-          this.others.removeAt(0);
-        }
-        Object.entries(data.incomeOthers).forEach(([key, value]) => {
-          let valueOfincome = key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
-          if (value && key != 'id') {
-            this.othersArr.forEach(ele => {
-              if (valueOfincome == ele.value) {
-                ele.disabled = true;
-              }
-            })
-            this.addOthers(key, value, id);
-          }
-        });
-      }
+      // if (Object.keys(data.incomeOthers).length > 0) {
+      //   let id = data.incomeOthers.id;
+      //   if (id) {
+      //     this.others.removeAt(0);
+      //   }
+      //   Object.entries(data.incomeOthers).forEach(([key, value]) => {
+      //     let valueOfincome = key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
+      //     if (value && key != 'id') {
+      //       this.othersArr.forEach(ele => {
+      //         if (valueOfincome == ele.value) {
+      //           ele.disabled = true;
+      //         }
+      //       })
+      //       this.addOthers(key, value, id);
+      //     }
+      //   });
+      // }
       this.expectedBonusForm = this.fb.group({
         bonusList: new FormArray([])
       })
@@ -569,32 +569,32 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.retirals.removeAt(item);
     // }
   }
-  addOthers(key, value, id) {
-    this.others.push(this.fb.group({
-      othersType: [key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '', [Validators.required]],
-      othersAmt: [(key == 'bonus' || key == 'performancePay') ? value : '', [Validators.required]],
-      id: [id]
-    }));
-  }
-  removeOthers(val, item) {
-    this.othersArr.forEach(element => {
-      if (val.value.othersType == element.value) {
-        element.disabled = false;
-      }
-    })
-    let data = this.incomeNetForm.get('othersForm') as FormArray
-    if (data.length > 1) {
-      this.others.removeAt(item);
-    }
-    // if(val.value.id){
-    //   let id = val.value.id
-    //   this.planService.deleteOtherIncome(id).subscribe(
-    //     data => {
-    //     }
-    //   );
-    //   this.others.removeAt(item);
-    // }
-  }
+  // addOthers(key, value, id) {
+  //   this.others.push(this.fb.group({
+  //     othersType: [key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '', [Validators.required]],
+  //     othersAmt: [(key == 'bonus' || key == 'performancePay') ? value : '', [Validators.required]],
+  //     id: [id]
+  //   }));
+  // }
+  // removeOthers(val, item) {
+  //   this.othersArr.forEach(element => {
+  //     if (val.value.othersType == element.value) {
+  //       element.disabled = false;
+  //     }
+  //   })
+  //   let data = this.incomeNetForm.get('othersForm') as FormArray
+  //   if (data.length > 1) {
+  //     this.others.removeAt(item);
+  //   }
+  //   // if(val.value.id){
+  //   //   let id = val.value.id
+  //   //   this.planService.deleteOtherIncome(id).subscribe(
+  //   //     data => {
+  //   //     }
+  //   //   );
+  //   //   this.others.removeAt(item);
+  //   // }
+  // }
   preventDefault(e) {
     e.preventDefault();
 }
@@ -884,19 +884,19 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.retiralsObj.incomeId = (this.retiralsObj.incomeId) ? this.retiralsObj.incomeId : element.get('id').value
       this.retiralsObj.id = (this.retiralsObj.id) ? this.retiralsObj.id : element.get('id').value
     })
-    let others = this.incomeNetForm.get('othersForm') as FormArray
-    others.controls.forEach(element => {
-      switch (element.get('othersType').value) {
-        case '1':
-          this.othersObj.bonus = element.get('othersAmt').value
-          break;
-        case '2':
-          this.othersObj.performancePay = element.get('othersAmt').value
-          break;
-      }
-      this.othersObj.incomeId = (this.othersObj.incomeId) ? this.othersObj.incomeId : element.get('id').value
-      this.othersObj.id = (this.othersObj.id) ? this.othersObj.id : element.get('id').value
-    })
+    // let others = this.incomeNetForm.get('othersForm') as FormArray
+    // others.controls.forEach(element => {
+    //   switch (element.get('othersType').value) {
+    //     case '1':
+    //       this.othersObj.bonus = element.get('othersAmt').value
+    //       break;
+    //     case '2':
+    //       this.othersObj.performancePay = element.get('othersAmt').value
+    //       break;
+    //   }
+    //   this.othersObj.incomeId = (this.othersObj.incomeId) ? this.othersObj.incomeId : element.get('id').value
+    //   this.othersObj.id = (this.othersObj.id) ? this.othersObj.id : element.get('id').value
+    // })
     if (this.showDateError) {
       return
     }
@@ -945,11 +945,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
         element.get('retiralsType').setErrors(null);
         element.get('retiralsAmt').setErrors(null);
       })
-      let others = this.incomeNetForm.get('othersForm') as FormArray
-      others.controls.forEach(element => {
-        element.get('othersType').setErrors(null);
-        element.get('othersAmt').setErrors(null);
-      })
+      // let others = this.incomeNetForm.get('othersForm') as FormArray
+      // others.controls.forEach(element => {
+      //   element.get('othersType').setErrors(null);
+      //   element.get('othersAmt').setErrors(null);
+      // })
       this.incomeNetForm.get('othersIncome').setErrors(null);
     } else {
       this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
@@ -958,11 +958,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
         element.get('monthlyIncType').setErrors(null);
         element.get('monthlyIncAmt').setErrors(null);
       })
-      let others = this.incomeNetForm.get('othersForm') as FormArray
-      others.controls.forEach(element => {
-        element.get('othersType').setErrors(null);
-        element.get('othersAmt').setErrors(null);
-      })
+      // let others = this.incomeNetForm.get('othersForm') as FormArray
+      // others.controls.forEach(element => {
+      //   element.get('othersType').setErrors(null);
+      //   element.get('othersAmt').setErrors(null);
+      // })
     }
     if (this.incomeNetForm.invalid) {
 
@@ -998,7 +998,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         'incomePerquisites': this.perquisitesObj,
         'incomeReimbursement': this.reimbursementsObj,
         'incomeRetirals': this.retiralsObj,
-        'incomeOthers': this.othersObj,
+        // 'incomeOthers': this.othersObj,
         "monthlyIncomeOptionList": this.montlyIncomeObj,
         "description": this.incomeNetForm.get('description').value,
         "monthlyDistributionList": [],
@@ -1115,8 +1115,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.addReimbursements(undefined,undefined,undefined);
     (this.incomeNetForm.get('retiralsForm') as FormArray).clear();
     this.addRetirals(undefined,undefined,undefined);
-    (this.incomeNetForm.get('othersForm') as FormArray).clear();
-    this.addOthers(undefined,undefined,undefined);
+    // (this.incomeNetForm.get('othersForm') as FormArray).clear();
+    // this.addOthers(undefined,undefined,undefined);
   }
   disabledAll(obj, val) {
     Object.entries(obj).forEach(([key, value]) => {
@@ -1150,9 +1150,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
   get retirals() {
     return this.incomeNetForm.get('retiralsForm') as FormArray;
   }
-  get others() {
-    return this.incomeNetForm.get('othersForm') as FormArray;
-  }
+  // get others() {
+  //   return this.incomeNetForm.get('othersForm') as FormArray;
+  // }
   addExpectedBonus() {
     this.getBonusList.push(this.fb.group({
       id: [, [Validators.required]],

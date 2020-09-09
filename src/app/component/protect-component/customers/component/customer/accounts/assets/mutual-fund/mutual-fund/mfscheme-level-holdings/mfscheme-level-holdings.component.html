@@ -40,7 +40,7 @@
         <div class="form-group widthBig">
           <mat-form-field floatLabel="never" appearance="standard">
             <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
-              (keyup)="checkValidation($event.value)" aria-label="schemeName" [matAutocomplete]="auto"
+              (keyup)="checkValidation($event.value);setValueChangeForScheme()" aria-label="schemeName" [matAutocomplete]="auto"
               [formControl]="schemeNameControl">
 
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

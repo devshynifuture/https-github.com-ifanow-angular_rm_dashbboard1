@@ -252,9 +252,9 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                                         <div [ngClass]="{'bar': isLoading}">
-                                                            {{!isLoading && element.monthlyContribution? "₹" : ""}}<span
+                                                            {{!isLoading && element.total? "₹" : ""}}<span
                                                                 appFormatNumber
-                                                                *ngIf="!isLoading">{{element.monthlyContribution ? element.monthlyContribution :'-'}}</span>
+                                                                *ngIf="!isLoading">{{element.total ? element.total :'-'}}</span>
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -381,19 +381,19 @@
                                 <div class="example-container  mb-24 fixed-DEPOSIT">
                                     <table matSort #Budget="matSort" *ngIf="dataSource4.filteredData.length > 0"
                                         mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
-                                        appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                        appSkeletonLoading [appSkeletonLoading]="isLoadingBudget">
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                                             <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
-                                                <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }} </div>
+                                                <div [ngClass]="{'bar': isLoadingBudget}"> {{isLoadingBudget ? '' : i + 1 }} </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
                                             <th mat-sort-header="expenseType" mat-sort-header="expenseType"
                                                 mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{isLoading ? '' : element.expenseType}}
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{isLoadingBudget ? '' : element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -403,22 +403,22 @@
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{!isLoading && element.amount? "₹" : ""}}<span
-                                                        appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-') }}</span>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{!isLoadingBudget && element.amount? "₹" : ""}}<span
+                                                        appFormatNumber>{{(isLoadingBudget) ? '' :  (element.amount ? element.amount : '-') }}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
                                             <td mat-cell *matCellDef="let element" class="br">
-                                                <div [ngClass]="{'bar': isLoading}">
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <div class="row">
-                                                            <mat-progress-bar *ngIf="isLoading==false"
+                                                            <mat-progress-bar *ngIf="isLoadingBudget==false"
                                                             [matTooltip]="element.spentPer+'%'" mode="determinate"
                                                             [value]="element.spentPer"  [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }">
                                                         </mat-progress-bar>
-                                                        <mat-progress-bar  *ngIf="isLoading==false && element.progressPercent > 100 "
+                                                        <mat-progress-bar  *ngIf="isLoadingBudget==false && element.progressPercent > 100 "
                                                             [matTooltip]="element.budgetPer+'%'" mode="determinate"
                                                             [value]="100" class="w-50 style1">
                                                         </mat-progress-bar>
@@ -432,7 +432,7 @@
                                                         <div fxFlex="15" class="div1"></div>
                                                         <div fxFlex="30" class="div2"></div>
                                                       </div> -->
-                                                    <span *ngIf="isLoading">{{''}}</span>
+                                                    <span *ngIf="isLoadingBudget">{{''}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -441,9 +441,9 @@
                                                 class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{!isLoading && element.spent ? "₹" : ""}}<span
-                                                        appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent  : '-')}}</span>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{!isLoadingBudget && element.spent ? "₹" : ""}}<span
+                                                        appFormatNumber>{{isLoadingBudget ? '' : (element.spent ? element.spent  : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -452,11 +452,11 @@
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
                                                 class="c-p text-center">
-                                                <div [ngClass]="{'bar': isLoading}">
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <!-- <i *ngIf="isLoading==false"
                                                         class="material-icons c-p text-black"
                                                         [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                    <img *ngIf="!isLoading" class="c-p"
+                                                    <img *ngIf="!isLoadingBudget" class="c-p"
                                                         src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
@@ -484,11 +484,11 @@
                                     <table matSort #recurringBudget="matSort"
                                         *ngIf="dataSource5.filteredData.length > 0" mat-table [dataSource]="dataSource5"
                                         id="table-low" class="skeletonAnimation" appSkeletonLoading
-                                        [appSkeletonLoading]="isLoading">
+                                        [appSkeletonLoading]="isLoadingBudget">
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                                             <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
-                                                <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }} </div>
+                                                <div [ngClass]="{'bar': isLoadingBudget}"> {{isLoadingBudget ? '' : i + 1 }} </div>
 
                                             </td>
                                         </ng-container>
@@ -496,8 +496,8 @@
                                             <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
                                                 class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{isLoading ? '' : element.expenseType}}
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{isLoadingBudget ? '' : element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -506,28 +506,28 @@
                                                 class="br t-10 text-right"> Budget
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{!isLoading && element.amount? "₹" : ""}}<span appFormatNumber
-                                                        *ngIf="!isLoading">{{element.amount ? element.amount : '-'}}</span>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{!isLoadingBudget && element.amount? "₹" : ""}}<span appFormatNumber
+                                                        *ngIf="!isLoadingBudget">{{element.amount ? element.amount : '-'}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
                                             <td mat-cell *matCellDef="let element" class="br">
-                                                <div [ngClass]="{'bar': isLoading}">
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <div class="row">
-                                                        <mat-progress-bar *ngIf="isLoading==false"
+                                                        <mat-progress-bar *ngIf="isLoadingBudget==false"
                                                         [matTooltip]="element.spentPerOther+'%'" mode="determinate"
                                                         [value]="element.spentPerOther" [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }" >
                                                         <!-- [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}" -->
                                                     </mat-progress-bar>
-                                                    <mat-progress-bar  *ngIf="isLoading==false && element.progressPercentOther > 100 "
+                                                    <mat-progress-bar  *ngIf="isLoadingBudget==false && element.progressPercentOther > 100 "
                                                         [matTooltip]="element.budgetPerOther+'%'" mode="determinate"
                                                         [value]="100" class="w-50 style1">
                                                     </mat-progress-bar>
                                                 </div>
-                                                <span *ngIf="isLoading">{{''}}</span>
+                                                <span *ngIf="isLoadingBudget">{{''}}</span>
 
                                                 </div>
                                             </td>
@@ -537,9 +537,9 @@
                                                 class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">
-                                                    {{!isLoading && element.spent ? "₹" : ""}}<span
-                                                        appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent : '-')}}</span>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{!isLoadingBudget && element.spent ? "₹" : ""}}<span
+                                                        appFormatNumber>{{isLoadingBudget ? '' : (element.spent ? element.spent : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -548,11 +548,11 @@
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
                                                 class="c-p text-center">
-                                                <div [ngClass]="{'bar': isLoading}">
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <!-- <i *ngIf="isLoading==false"
                                                         class="material-icons c-p text-black"
                                                         [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                    <img *ngIf="!isLoading" class="c-p"
+                                                    <img *ngIf="!isLoadingBudget" class="c-p"
                                                         src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
