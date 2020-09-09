@@ -257,7 +257,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeOption = String(data.incomeOption);
       // this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
       this.incomeNetForm.controls.incomeOption.setValue((data.incomeOption) ? String(data.incomeOption) : '2');
-      // this.incomeNetForm.controls.monthlyAmount.setValue(data.monthlyIncome);
+      this.incomeNetForm.controls.monthlyNetIncome.setValue(data.monthlyIncome ? data.monthlyIncome : '');
       this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId + '');
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
       this.incomeNetForm.controls.incomeGrowthRate.setValue(data.growthRate);
