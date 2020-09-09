@@ -165,6 +165,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // expectingBonusValue: [, [Validators.required]],
     nextAppraisal: [],
     description: [],
+    monthlyNetIncome:[, [Validators.required]],
     monthlyIncomeForm: this.fb.array([this.fb.group({
       monthlyIncType: ['', [Validators.required]],
       monthlyIncAmt: [null, [Validators.required]],
@@ -908,6 +909,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.incomeNetForm.get('monthlyAmount').setErrors(null);
     // }
     if (this.incomeNetForm.get('incomeOption').value == '2') {
+      if(this.singleIndividualIncome.finalIncomeList.incomeTypeList==2 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==3 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==4){
+        let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
+      monthlyInc.controls.forEach(element => {
+        element.get('monthlyIncType').setErrors(null);
+        element.get('monthlyIncAmt').setErrors(null);
+      })
+      }else{
+        this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
+      }
       let basicSal = this.incomeNetForm.get('basicSalaryForm') as FormArray
       basicSal.controls.forEach(element => {
         element.get('salaryType').setErrors(null);
@@ -940,6 +950,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       })
 
     } else {
+      this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
       let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
       monthlyInc.controls.forEach(element => {
         element.get('monthlyIncType').setErrors(null);
@@ -958,7 +969,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         "advisorId": this.advisorId,
         "familyMemberId": this.singleIndividualIncome.id,
         "ownerName": this.singleIndividualIncome.name,
-        // "monthlyIncome": this.incomeNetForm.get('monthlyAmount').value,
+        "monthlyIncome": this.incomeNetForm.get('monthlyNetIncome').value ? this.incomeNetForm.get('monthlyNetIncome').value : null,
         "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
         "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
         "incomeEndMonth": new Date(this.incomeNetForm.get('incomeEndDate').value).getMonth(),
