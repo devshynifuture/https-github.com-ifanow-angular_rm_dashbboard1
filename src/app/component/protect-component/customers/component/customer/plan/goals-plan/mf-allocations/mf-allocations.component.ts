@@ -10,7 +10,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { UtilService, LoaderFunction, ValidatorType } from 'src/app/services/util.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
-import { Subscriber } from 'rxjs';
+import { Subscriber, Subject } from 'rxjs';
 import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
@@ -44,6 +44,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
   isFamilyObj = (index, item) => item.isFamily;
   selectedAllocation: any;
+  refreshObservable = new Subject();
+  refreshAssetList = new Subject();
   validatorType = ValidatorType;
   constructor(
     private subInjectService: SubscriptionInject,
@@ -67,7 +69,12 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
     this.initializeRequiredTable();
     this.getFamilyMembersList();
-
+    this.loadMFData();
+    this.subscriber.add(
+      this.allocationService.refreshObservable.subscribe(() => {
+        this.loadMFData();
+      })
+    );
   }
 
   initializeRequiredTable() {
@@ -264,15 +271,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           percentAllocated: 0
         }
         this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-
-          // update asset list if user deletes goal and the list is still open
           this.allocateOtherAssetService.refreshAssetList.next();
-          this.loadMFData();
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(() => {
-              this.loadMFData();
-            })
-          );
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
