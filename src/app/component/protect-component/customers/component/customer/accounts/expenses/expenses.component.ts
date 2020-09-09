@@ -228,9 +228,9 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getAllExpense() {
-    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.dataSource1.data = [{}, {}, {}];
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -240,6 +240,7 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAllExpense(obj).subscribe(
       data => {
         if (data) {
+          this.isLoading = true;
           this.expenseList = data.expenseList;
           this.recurringTrnList = data.recurringExpenseList;
           this.expenseList.forEach(singleExpense => {
@@ -267,6 +268,9 @@ export class ExpensesComponent implements OnInit {
         }
         this.isLoading = false;
       }, (error) => {
+        this.dataSource.data=[];
+        this.dataSource1.data=[];
+        this.isLoading = false;
         this.eventService.showErrorMessage(error);
       }
     );
@@ -564,14 +568,14 @@ export class ExpensesComponent implements OnInit {
           {
             name: 'Basic',
             y: this.basicAmountPercent,
-            color: "#A6CEE3",
+            color: "#1F78B4",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Bills & Utilities',
             y: this.billsAndUtilities,
-            color: "#1F78B4",
+            color: "#A6CEE3",
             dataLabels: {
               enabled: false
             }
@@ -756,6 +760,7 @@ export class ExpensesComponent implements OnInit {
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
+    this.getAllExpense();
     this.getBudgetList();
     this.getBugetRecurring();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
