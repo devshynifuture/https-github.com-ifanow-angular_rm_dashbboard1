@@ -108,7 +108,7 @@
       </div>
 
       <div *ngIf="step==12  && getArnRiaFormList.length>1" class="row">
-        <div class="col-md-12 d-flex align-items-center justify-content-end">
+        <!-- <div class="col-md-12 d-flex align-items-center justify-content-end">
           <mat-form-field class="w-30">
             <mat-select [(ngModel)]="selectedArnRIa" class="form-control ">
               <mat-option (onSelectionChange)="chooseArnRiaForm(i)" [value]="singleArnRia"
@@ -117,7 +117,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -278,7 +278,8 @@
       <div class="row">
         <div class="col-md-12 d-flex">
           <div (click)="selectPractice(singleMfPractice)" *ngFor="let singleMfPractice of mutualFundPractices">
-            <div [ngClass]="{'select-active-border': singleMfPractice.selected}" class="box-1 c-p boxDescribes p-20 mr-20">
+            <div [ngClass]="{'select-active-border': singleMfPractice.selected}"
+              class="box-1 c-p boxDescribes p-20 mr-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
               </h5>
               <div class="hw-40 bg-grey lt br-2 bottomPost ">
@@ -316,7 +317,8 @@
       <div class="row">
         <div class=" col-md-8 d-flex">
           <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
-            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
+            <div
+              [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
               class=" mr-20 c-p topClickRadius boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff"> {{singleORTeam.name}} </h5>
               <div class="hw-40 bg-grey bottomPost lt br-2">
@@ -465,27 +467,28 @@
           </div>
         </div>
       </div>
-      <div *ngIf="!showEditOption" class="row pt-20">
-        <div class="col-md-12">
-          <div  (click)="editImage()" class="editDasImg">
-            <img class="c-p" [src]="imgURL">
+      <div *ngIf="!showEditOption">
+        <div class="row pt-20">
+          <div class="col-md-12">
+            <div (click)="editImage()" class="editDasImg">
+              <img class="c-p" [src]="imgURL">
+              <div class="avisor-caption">
+                <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+              </div>
+            </div>
+
             <div class="avisor-caption">
               <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
             </div>
-          </div>
-          
-          <div class="avisor-caption">
-            <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
-          </div>
 
+          </div>
+        </div>
+        <div class="row pt-10">
+          <div class="col-md-12">
+            <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
+          </div>
         </div>
       </div>
-      <div *ngIf="!showEditOption" class="row pt-10">
-        <div class="col-md-12">
-          <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
-        </div>
-      </div>
-
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">

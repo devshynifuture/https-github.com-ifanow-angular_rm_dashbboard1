@@ -81,6 +81,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   domainList = [];
   isLoader: boolean;
   validatorType = ValidatorType;
+  youtbeLink: SafeResourceUrl;
 
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
@@ -136,7 +137,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   selectedURl(url) {
-    this.copyUrl.setValue(url)
+    this.copyUrl.setValue(url);
+    this.youtbeLink = this.sanitizeUrl(url)
   }
 
   getFormControl(): any {
