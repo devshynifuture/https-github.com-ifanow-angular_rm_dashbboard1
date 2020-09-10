@@ -27,24 +27,24 @@
                         Income option
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(income.incomeTypeId == 1) ? 'With breakup' : 'Net(In hand)'}}
+                        {{(income.incomeOption == 1) ? 'With breakup' : 'Net(In hand)'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 2">
+                <div class="row bb p-8 b-l br" *ngIf="income.incomeOption == 2 && incomeType!=5">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly amount
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.monthlyIncome? "₹" : ""}}{{income.monthlyIncome ? income.monthlyIncome : '-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{data.monthlyIncome? "₹" : ""}}<span appFormatNumber>{{income.monthlyIncome ? income.monthlyIncome : '-'}}</span>
                     </div>
                 </div>
 
-                <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
+                <div class="row bb p-8 b-l br" *ngIf="income.incomeOption == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Basic Income
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.basicIncome? "₹" : ""}}{{income.basicIncome ? income.basicIncome : '-'}}
+                        {{data.basicIncome? "₹" : ""}}<span appFormatNumber>{{income.basicIncome ? income.basicIncome : '-'}}</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
@@ -110,7 +110,7 @@
                                 Bonus/inflow date {{i + 1}}
                             </div>
                             <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                                {{ (data.date) ? (data.date  | date:'dd/MM/yyyy' ) : '-' }}
+                                {{ (data.date) ? (data.date  | date:'MMM-yyyy' ) : '-' }}
                             </div>
                         </div>
 
@@ -118,10 +118,18 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Bonus/inflow amount {{i + 1}}
                             </div>
-                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                                {{ (data.amount) ? data.amount : '-' }}
+                            <div  class="col-md-4 text-right f-14 roboto p-0">
+                                {{data.amount? "₹" : ""}}<span appFormatNumber> {{ (data.amount) ? data.amount : '-' }}</span> 
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="income.incomeOption == 1">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Others
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{income.other? "₹" : ""}}<span appFormatNumber>{{income.other ? income.other : '-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -155,8 +163,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 
@@ -173,8 +181,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 
@@ -191,8 +199,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 
@@ -209,8 +217,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 
@@ -227,8 +235,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 
@@ -237,7 +245,7 @@
             </div>
         </div>
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <!-- <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Others</h4>
                 <div class="insurance-ui bt">
@@ -253,9 +261,9 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 2">
+        <div class="row pt-20" *ngIf="income.incomeOption == 2 && incomeType==5">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Monthly income</h4>
                 <div class="insurance-ui bt">
@@ -263,8 +271,8 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             {{data.name}}
                         </div>
-                        <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                            {{ (data.value) ? data.value : '-' }}
+                        <div  class="col-md-4 text-right f-14 roboto p-0">
+                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
                         </div>
                     </div>
 

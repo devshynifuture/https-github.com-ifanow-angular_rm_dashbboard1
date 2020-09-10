@@ -24,6 +24,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   OthersArr=[];
   monthlyIncomeArr=[];
   bankList=[];                                                                                                                                  
+  incomeType: any;
 
   constructor(private custumService:CustomerService,public utils: UtilService,private subInjectService: SubscriptionInject,private enumService :EnumServiceService) { }
 
@@ -35,6 +36,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.incomeType = this.inputData.incomeTypeId ? this.inputData.incomeTypeId : ''
     this.getArrays(this.inputData );
     this.monthlyContribution = [];
     let monthlyData = this.inputData.bonusOrInflowList
@@ -92,12 +94,13 @@ export class IncomeDetailedViewComponent implements OnInit {
     });
   }
   bankAccountList() {
-          
+          let array = [];
           const obj = {
             userId: this.income.familyMemberId == 0 ?this.income.clientId : this.income.id,
             userType: this.income.familyMemberId == 0 ? 2 : 3 
           };
-          this.custumService.getBankList(obj).subscribe(
+          array.push(obj);
+          this.custumService.getBankList(array).subscribe(
             (data) => {
               this.bankList = data;
               this.bankList.forEach(element => {
