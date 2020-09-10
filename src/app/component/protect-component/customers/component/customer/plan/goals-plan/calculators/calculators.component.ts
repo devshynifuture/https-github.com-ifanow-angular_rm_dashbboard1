@@ -124,7 +124,7 @@ export class CalculatorsComponent implements OnInit {
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.goalFV
+        goalAmount: this.data.remainingData.futureValue
       }
 
       this.barButtonOptions.active = true;
@@ -134,6 +134,9 @@ export class CalculatorsComponent implements OnInit {
           ...res,
           ...emiObj
         };
+        setTimeout(() => {
+          this.pieChart('')
+        }, 300);
         this.barButtonOptions.active = false;
         this.barButtonOptions1.active = false;
         this.subInjectService.setRefreshRequired();
@@ -146,7 +149,7 @@ export class CalculatorsComponent implements OnInit {
   }
   pieChart(id) {
 
-    this.downPayPer = (this.calculatedEMI.downPayment * 100) / this.loanFG.controls.loanAmt.value
+    this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
     this.perLoanAmt = 100 - this.downPayPer
     console.log('LA',this.perLoanAmt);
     console.log('DP',this.downPayPer)
