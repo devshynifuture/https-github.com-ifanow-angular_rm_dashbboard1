@@ -137,6 +137,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
     this.styleElement = document.createElement('style');
@@ -325,8 +326,8 @@ export class ExpensesComponent implements OnInit {
     this.transportAmount = data.Transport ? data.Transport.categoryWisePercentage :0;
     this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
     this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
-    this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
-    this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
+    this.commitedInvestment = data.committedInvestment ? data.committedInvestment.categoryWisePercentage : 0
+    this.expenditure = data.committedExpenditure ? data.committedExpenditure.categoryWisePercentage : 0
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
     // this.miscellaneousAmount = data.Billes_&_Utilies;
@@ -950,7 +951,8 @@ export class ExpensesComponent implements OnInit {
             data => {
               this.eventService.openSnackBar('Buget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getRecuringTransactions();
+              this.getBudgetList();
+              this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -959,7 +961,8 @@ export class ExpensesComponent implements OnInit {
             data => {
               this.eventService.openSnackBar('Recurring budget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getRecuringTransactions();
+              this.getBudgetList();
+              this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );

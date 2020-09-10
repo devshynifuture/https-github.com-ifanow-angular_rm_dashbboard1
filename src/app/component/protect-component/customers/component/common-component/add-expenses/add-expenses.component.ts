@@ -241,7 +241,7 @@ export class AddExpensesComponent implements OnInit {
         }
       });
     }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
-      let List = this.inputData.getData.budgetList
+      let List = this.inputData.getData.otherCommitments
       List.forEach(element => {
         if(element.budgetCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
           isCheck =true;
