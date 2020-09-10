@@ -152,7 +152,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   // load all goals created for the client and select the first goal
   loadAllGoals() {
-    ``
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};

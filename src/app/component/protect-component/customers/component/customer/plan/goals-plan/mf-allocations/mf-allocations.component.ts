@@ -279,6 +279,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
               this.loadMFData();
             })
           );
+          this.allocateOtherAssetService.refreshAssetList.next();
           this.refreshObservable.next();
           this.planService.assetSubject.next(res);
           this.refreshAssetList.next();
@@ -297,8 +298,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   }
 
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' , refreshRequired: flag});
   }
 
   ngOnDestroy() {
