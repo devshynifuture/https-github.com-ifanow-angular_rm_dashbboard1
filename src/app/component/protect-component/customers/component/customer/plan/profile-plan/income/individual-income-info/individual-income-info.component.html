@@ -146,7 +146,7 @@
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="basicSalaryForm" >
+                    <div class="col-md-7 pl-0" formArrayName="basicSalaryForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"  *ngFor="let obj of basicSalary.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -197,7 +197,7 @@
 
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="allowancesForm" >
+                    <div class="col-md-7 pl-0" formArrayName="allowancesForm" >
                         <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of allowances.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -248,7 +248,7 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
-                    <div class="col-md-7" formArrayName="perquisitesForm" >
+                    <div class="col-md-7 pl-0" formArrayName="perquisitesForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of perquisites.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -299,7 +299,7 @@
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="reimbursementsForm" >
+                    <div class="col-md-7 pl-0" formArrayName="reimbursementsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of reimbursements.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -348,7 +348,7 @@
                         <h5 class="m-0 pt-8">Retirals</h5>
                     </div>
                     <!-- build error removed controls -->
-                    <div class="col-md-7" formArrayName="retiralsForm" >
+                    <div class="col-md-7 pl-0" formArrayName="retiralsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of retirals.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
