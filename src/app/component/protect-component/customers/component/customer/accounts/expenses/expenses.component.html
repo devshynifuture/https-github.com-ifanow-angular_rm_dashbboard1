@@ -385,7 +385,8 @@
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                                             <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
-                                                <div [ngClass]="{'bar': isLoadingBudget}"> {{isLoadingBudget ? '' : i + 1 }} </div>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{isLoadingBudget ? '' : i + 1 }} </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
@@ -414,16 +415,18 @@
                                             <td mat-cell *matCellDef="let element" class="br">
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <div class="row">
-                                                            <mat-progress-bar *ngIf="isLoadingBudget==false"
+                                                        <mat-progress-bar *ngIf="isLoadingBudget==false"
                                                             [matTooltip]="element.spentPer+'%'" mode="determinate"
-                                                            [value]="element.spentPer"  [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }">
+                                                            [value]="element.spentPer"
+                                                            [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }">
                                                         </mat-progress-bar>
-                                                        <mat-progress-bar  *ngIf="isLoadingBudget==false && element.progressPercent > 100 "
+                                                        <mat-progress-bar
+                                                            *ngIf="isLoadingBudget==false && element.progressPercent > 100 "
                                                             [matTooltip]="element.budgetPer+'%'" mode="determinate"
                                                             [value]="100" class="w-50 style1">
                                                         </mat-progress-bar>
                                                     </div>
-                                                   
+
                                                     <!-- <mat-progress-bar *ngIf="isLoading==false"
                                                         [matTooltip]="element.progressPercent > 100 ? ('Spent :'+element.spentPer+' % ' + ' Budget :'+element.budgetPer+' %') : ('Spent :'+element.spentPer+'%')" mode="determinate"
                                                         [value]="element.progressPercent" class="w-80">
@@ -488,7 +491,8 @@
                                         <ng-container matColumnDef="no">
                                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                                             <td mat-cell *matCellDef="let element;  let i = index;" class="br t-2">
-                                                <div [ngClass]="{'bar': isLoadingBudget}"> {{isLoadingBudget ? '' : i + 1 }} </div>
+                                                <div [ngClass]="{'bar': isLoadingBudget}">
+                                                    {{isLoadingBudget ? '' : i + 1 }} </div>
 
                                             </td>
                                         </ng-container>
@@ -507,7 +511,8 @@
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
-                                                    {{!isLoadingBudget && element.amount? "₹" : ""}}<span appFormatNumber
+                                                    {{!isLoadingBudget && element.amount? "₹" : ""}}<span
+                                                        appFormatNumber
                                                         *ngIf="!isLoadingBudget">{{element.amount ? element.amount : '-'}}</span>
                                                 </div>
                                             </td>
@@ -518,16 +523,18 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     <div class="row">
                                                         <mat-progress-bar *ngIf="isLoadingBudget==false"
-                                                        [matTooltip]="element.spentPerOther+'%'" mode="determinate"
-                                                        [value]="element.spentPerOther" [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }" >
-                                                        <!-- [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}" -->
-                                                    </mat-progress-bar>
-                                                    <mat-progress-bar  *ngIf="isLoadingBudget==false && element.progressPercentOther > 100 "
-                                                        [matTooltip]="element.budgetPerOther+'%'" mode="determinate"
-                                                        [value]="100" class="w-50 style1">
-                                                    </mat-progress-bar>
-                                                </div>
-                                                <span *ngIf="isLoadingBudget">{{''}}</span>
+                                                            [matTooltip]="element.spentPerOther+'%'" mode="determinate"
+                                                            [value]="element.spentPerOther"
+                                                            [ngStyle]="{'width':element.progressPercent > 100 ? '50%' : '100%' }">
+                                                            <!-- [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}" -->
+                                                        </mat-progress-bar>
+                                                        <mat-progress-bar
+                                                            *ngIf="isLoadingBudget==false && element.progressPercentOther > 100 "
+                                                            [matTooltip]="element.budgetPerOther+'%'" mode="determinate"
+                                                            [value]="100" class="w-50 style1">
+                                                        </mat-progress-bar>
+                                                    </div>
+                                                    <span *ngIf="isLoadingBudget">{{''}}</span>
 
                                                 </div>
                                             </td>
@@ -619,14 +626,14 @@
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
                                         <span style="font-weight: 500;"> Mobile no:</span>
-                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
                                     </td>
                                 </tr>
 
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
                                         <span style="font-weight: 500;">Email Id:</span>
-                                        {{(details) ? details.emailId : '-'}}
+                                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}
                                     </td>
                                 </tr>
 
@@ -788,7 +795,7 @@
 </div>
 <!-----------------------------------------BUDGETS AND OTHER COMMITMMENTS------------------------------------->
 
-<div #budgetPdf id="template2" class="hide" *ngIf="viewMode == 'Budget'">
+<div #budgetPdf id="template2" *ngIf="viewMode == 'Budget'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -887,12 +894,22 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.amount}}
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>
+                {{item.amount}}||{{item.spentPer}}{{item.budgetPer}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                <mat-progress-bar mode="determinate" value="40" class="w-80"></mat-progress-bar>
+                >
+            <progress *ngIf="isLoadingBudget==false"
+            [matTooltip]="item.spentPer+'%'" mode="determinate"
+            [value]="item.spentPer"
+            [ngStyle]="{'width':item.progressPercent > 100 ? '50%' : '100%' }">
+        </progress>
+        <progress
+            *ngIf="isLoadingBudget==false && item.progressPercent > 100 "
+            [matTooltip]="item.budgetPer+'%'" mode="determinate"
+            [value]="100" class="w-50 style1">
+        </progress>
+                
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber>{{item.spent}}</td>
@@ -947,12 +964,23 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>
                 {{item.amount}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                <mat-progress-bar mode="determinate" [value]="item.progressPercent" class="w-80"></mat-progress-bar>
+                >
+                <!-- <progress id="file" value="50" max="100"> 32% </progress> -->
+                <mat-progress-bar *ngIf="isLoadingBudget==false"
+                [matTooltip]="item.spentPerOther+'%'" mode="determinate"
+                [value]="item.spentPerOther"
+                [ngStyle]="{'width':item.progressPercent > 100 ? '50%' : '100%' }">
+                <!-- [ngClass]="{'w-50': element.progressPercentOther > 100,'w-100': element.progressPercentOther < 100}" -->
+            </mat-progress-bar>
+            <mat-progress-bar
+                *ngIf="isLoadingBudget==false && item.progressPercentOther > 100 "
+                [matTooltip]="item.budgetPerOther+'%'" mode="determinate"
+                [value]="100" class="w-50 style1">
+            </mat-progress-bar>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber>{{item.spent}}</td>
