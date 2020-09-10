@@ -223,7 +223,7 @@
                     <table style="width: 100%;">
                         <tr>
                             <td style="vertical-align: top;">
-                                <img style="width: 300px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                                <img style="width: 120px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                             </td>
                             <td>
                                 <table style="float: right;">
@@ -234,13 +234,13 @@
                                     </tr>
                                     <tr *ngIf="userInfo">
                                         <td style="font-size: 14px; text-align: right;">
-                                            <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                            <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
                                         </td>
                                     </tr>
     
                                     <tr *ngIf="userInfo">
                                         <td style="font-size: 14px; text-align: right;">
-                                            <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
+                                            <span style="font-weight: 500;">Email Id:</span>   {{getOrgData.email ? getOrgData.email  : userInfo.email}}
                                         </td>
                                     </tr>
     

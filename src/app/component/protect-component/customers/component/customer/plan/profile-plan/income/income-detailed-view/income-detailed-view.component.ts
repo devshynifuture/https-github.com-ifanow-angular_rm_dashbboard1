@@ -78,12 +78,12 @@ export class IncomeDetailedViewComponent implements OnInit {
         this.RetiralsArr.push({name:valueOfincome,value:value});
       }
     });
-    Object.entries(data.incomeOthers).forEach(([key, value]) => {
-      if (value && key != 'id') {
-        let valueOfincome =key ? (key == 'bonus' ? 'Bonus' : key == 'performancePay' ? 'Performance Pay' : '') : '';
-        this.OthersArr.push({name:valueOfincome,value:value});
-      }
-    });
+    // Object.entries(data.incomeOthers).forEach(([key, value]) => {
+    //   if (value && key != 'id') {
+    //     let valueOfincome =key ? (key == 'bonus' ? 'Bonus' : key == 'performancePay' ? 'Performance Pay' : '') : '';
+    //     this.OthersArr.push({name:valueOfincome,value:value});
+    //   }
+    // });
     Object.entries(data.monthlyIncomeOptionList).forEach(([key, value]) => {
       if (value && key != 'id') {
         let valueOfincome =key ? (key == 'interestIncome' ? 'Interest Income' : key == 'dividendIncome' ? 'Dividend Income' : key == 'royaltyIncome' ? 'Royalty Income' : key == 'annuityIncome' ? 'Annuity Income' : key == 'pension' ? 'Pension' : key == 'incomeFromNonProfessional' ? 'Income From Non Professional'  : key == 'incomeFromPartTimeJob' ? 'Income from part time job' : key == 'investIncome' ? 'Investment Income' : key == 'alimony' ? 'Alimony' : key == 'farmingOrFishingIncome' ? 'Farming /Fishing Income' : key == 'winningFromLottery' ? 'Winning from lottery ' : key == 'others' ? 'others' : '') : '';
