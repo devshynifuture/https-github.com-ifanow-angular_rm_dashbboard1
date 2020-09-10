@@ -184,6 +184,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   imgURL = '';
   cropImage: boolean;
   showEditOption: boolean = false;
+  hideWillDoLater: boolean;
 
 
   constructor(private fb: FormBuilder,
@@ -428,7 +429,8 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
         this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
         this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
-        this.selectedArnRIa = jsonObj;
+        this.selectedArnRIa = '';
+        this.ArnRiaIndex = index + 1;
       }
       else {
         this.getRtaDetails();
@@ -545,7 +547,14 @@ export class DashboardGuideDialogComponent implements OnInit {
       }
       else {
         this.selectedArmOrRiaIndex = index + 1
-        this.selctedArmOrRia = this.arnRtaData[index + 1]
+        this.selctedArmOrRia = this.arnRtaData[index + 1];
+        this.arnRtaData.forEach((element, index) => {
+          if (this.selectedArmOrRiaIndex == index) {
+            element.colorFlag = true;
+          } else {
+            element.colorFlag = false;
+          }
+        })
       }
       this.eventService.openSnackBar("Credentials added successfully");
     } else {
@@ -644,6 +653,7 @@ export class DashboardGuideDialogComponent implements OnInit {
             };
             this.settingService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.imgURL = jsonDataObj.profilePic;
+              this.hideWillDoLater = false;
               AuthService.setProfilePic(jsonDataObj.profilePic);
               this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
             });
@@ -664,6 +674,11 @@ export class DashboardGuideDialogComponent implements OnInit {
   getPersonalInfo() {
     this.settingService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
       this.imgURL = res.profilePic;
+      if (this.imgURL == "http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png") {
+        this.hideWillDoLater = true;
+      } else {
+        this.hideWillDoLater = false;
+      }
     });
   }
 

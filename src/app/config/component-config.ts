@@ -219,7 +219,7 @@ export const appConfig = {
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
   DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
   GET_CLIENT_PROOF: 'document/download/pre-signed-url/get',
-  GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
+  GET_CLIENT_UPLOAD_FILE: 'document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
   ADD_ASSET_STOCK: 'account/asset/stock/add',
