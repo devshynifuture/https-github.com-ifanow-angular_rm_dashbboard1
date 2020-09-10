@@ -117,14 +117,14 @@ export class CalculatorsComponent implements OnInit {
     } else {
 
       const emiObj = {
-        netSalary: this.incomeFG.controls.income.value,
-        loanTenure: this.loanFG.controls.loanTenure.value,
-        annualInterestRate: this.loanFG.controls.interestRate.value,
-        previousEMIs: this.incomeFG.controls.otherEMI.value,
-        incomeGrowthRate: this.incomeFG.controls.growthRate.value,
-        loanAmount: this.loanFG.controls.loanAmt.value,
+        netSalary: parseInt(this.incomeFG.controls.income.value),
+        loanTenure: parseInt(this.loanFG.controls.loanTenure.value),
+        annualInterestRate: parseInt(this.loanFG.controls.interestRate.value),
+        previousEMIs: parseInt(this.incomeFG.controls.otherEMI.value),
+        incomeGrowthRate: parseInt(this.incomeFG.controls.growthRate.value),
+        loanAmount: parseInt(this.loanFG.controls.loanAmt.value),
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.remainingData.futureValue
+        goalAmount: parseInt(this.data.remainingData.futureValue)
       }
 
       this.barButtonOptions.active = true;
