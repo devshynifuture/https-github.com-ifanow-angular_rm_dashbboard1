@@ -65,7 +65,7 @@
                     </app-client-bank>
                 </mat-tab>
                 <mat-tab *ngIf="hideDematFlag" [disabled]="tabData.userId==undefined" label=" Demat">
-                    <app-client-demat (keyup)="popupMsgFlag(true)" (tabDisableFlag)="tabChangeFun($event)"
+                    <app-client-demat (keyup)="popupMsgFlag(true)" (tabDisableFlag)="popupMsgFlag($event)"
                         (cancelTab)="close($event)" (tabChange)="changeTab($event)"
                         (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-demat>
