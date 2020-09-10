@@ -280,8 +280,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
             })
           );
           this.allocateOtherAssetService.refreshAssetList.next();
-          this.refreshObservable.next();
-          this.planService.assetSubject.next(res);
+          this.refreshObservable.next(true);
           this.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
