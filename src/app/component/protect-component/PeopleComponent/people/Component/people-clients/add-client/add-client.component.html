@@ -59,9 +59,10 @@
                     </app-client-address>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank (keyup)="popupMsgFlag(true)" (cancelTab)="close($event)"
-                        (refreshClientUploadBankDetails)="refreshBankUpload($event)" (tabChange)="changeTab($event)"
-                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-bank (keyup)="popupMsgFlag(true)" (tabDisableFlag)="popupMsgFlag($event)"
+                        (cancelTab)="close($event)" (refreshClientUploadBankDetails)="refreshBankUpload($event)"
+                        (tabChange)="changeTab($event)" (saveNextData)="refreshFlagData($event)" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag">
                     </app-client-bank>
                 </mat-tab>
                 <mat-tab *ngIf="hideDematFlag" [disabled]="tabData.userId==undefined" label=" Demat">
