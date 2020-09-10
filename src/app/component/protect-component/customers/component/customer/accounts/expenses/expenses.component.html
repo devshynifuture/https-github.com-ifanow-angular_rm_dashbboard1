@@ -784,11 +784,11 @@
                 No data found
             </td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
                 <div>showPieChart</div>
             </td>
-        </tr>
+        </tr> -->
     </table>
 
 
@@ -822,7 +822,7 @@
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
                                         <span style="font-weight: 500;">Email Id:</span>
-                                        {{(details) ? details.emailId : '-'}}
+                                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}
                                     </td>
                                 </tr>
 
@@ -901,10 +901,10 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 
                 <div   *ngIf="item.progressPercent > 100">
-                    <div style="background:#007bff ;height:5px;width: 70%; display: inline-block; float: left;">
+                    <div style="background:#007bff ;height:5px;width: 70%; display: inline-block;float: left;">
 
                     </div>
-                    <div style="background:#fd7e14 ;height:5px;width: 30%; display: inline-block; float: left;">
+                    <div style="background:#fd7e14 ;height:5px;width: 30%; display: inline-block;float: left;">
 
                     </div>
                 </div>
@@ -976,10 +976,10 @@
             <td style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <!-- <progress id="file" value="50" max="100"> 32% </progress> -->
                 <div *ngIf="item.budgetPerOther > 100 ">
-                    <div style="background:#007bff ;height:5px;width: 70%;">
+                    <div style="background:#007bff ;height:5px;width: 70%;display: inline-block;float: left;">
 
                     </div>
-                    <div style="background:#fd7e14 ;height:5px;width: 30%;">
+                    <div style="background:#fd7e14 ;height:5px;width: 30%;display: inline-block;float: left;">
 
                     </div>
                 </div>
@@ -1002,10 +1002,10 @@
                 No data found
             </td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
                 <div>showPieChart</div>
             </td>
-        </tr>
+        </tr> -->
     </table>
 </div>

@@ -637,13 +637,17 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.bonusList) {
       return;
     }
-    if (!this.editApiData) {
-      this.getBonusList.push(this.fb.group({
-        receivingDate: [, [Validators.required]],
-        amount: [, [Validators.required]],
-        id: []
-      }))
+    let data = this.expectedBonusForm.get('bonusList') as FormArray
+    if(data.length == 0){
+      this.addExpectedBonus();
     }
+    // if (!this.editApiData) {
+    //   this.getBonusList.push(this.fb.group({
+    //     receivingDate: [, [Validators.required]],
+    //     amount: [, [Validators.required]],
+    //     id: []
+    //   }))
+    // }
 
   }
   chngIncomeOption(data) {
@@ -1101,9 +1105,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.othersArr = this.disabledAll(this.othersArr, false);
   }
   emptyControlsAtMostOn() {
-    this.expectedBonusForm.controls.bonusList.clear();
-    this.addExpectedBonus();
-    (this.incomeNetForm.get('basicSalaryForm') as FormArray).clear()
+
+    (this.expectedBonusForm.get('bonusList') as FormArray).clear();
+    let data = this.expectedBonusForm.get('bonusList') as FormArray
+    if(data.length == 0){
+      this.addExpectedBonus();
+    }
+    // this.expectedBonusForm.controls.bonusList.clear();
+
+    (this.incomeNetForm.get('basicSalaryForm') as FormArray).clear();
     this.addSalary(undefined, undefined);
     (this.incomeNetForm.get('monthlyIncomeForm') as FormArray).clear();
     this.addMonthlyIncome(undefined,undefined,undefined);
