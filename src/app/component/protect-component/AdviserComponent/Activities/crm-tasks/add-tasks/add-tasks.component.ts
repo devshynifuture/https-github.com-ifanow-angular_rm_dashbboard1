@@ -54,7 +54,7 @@ export class AddTasksComponent implements OnInit {
   userId = AuthService.getUserId();
   commentTaskInput = '';
   commentSubTaskInput = '';
-  taskCommentForm: FormGroup;
+  taskCommentForm: FormControl= new FormControl('', Validators.required);
   showSubTaskHeading = false;
   showNoSubTaskFoundError = false;
   userProfilePicUrl = this.authService.profilePic;
@@ -69,6 +69,7 @@ export class AddTasksComponent implements OnInit {
   commentEditValue = '';
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
+  addTaskSubTaskChanges = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -111,8 +112,6 @@ export class AddTasksComponent implements OnInit {
     }
     this.getTaskTemplateList();
     this.getTeamMemberList();
-
-    this.addTaskForm.valueChanges.subscribe(res => console.log(this.addTaskForm, res));
 
     // this.clientList = this.addTaskForm.get('searchClientList').valueChanges
     //   .pipe(
@@ -319,6 +318,7 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.saveEditedCommentOnActivityTaskOrSubTask(data)
       .subscribe(res => {
         if (res) {
+          this.addTaskSubTaskChanges = true;
           console.log("this is edit comment rees:", res);
           switch (choice) {
             case 'task': this.commentList[index].commentMsg = value;
@@ -327,9 +327,9 @@ export class AddTasksComponent implements OnInit {
               break;
           }
           item.editMode = false;
-          this.eventService.openSnackBar('Successfully Edited comment', "DISMISS");
+          this.eventService.openSnackBar('Comment edited successfully', "DISMISS");
         } else {
-          this.eventService.openSnackBar('Editing comment failed', "DISMISS");
+          this.eventService.openSnackBar('Comment editing failed', "DISMISS");
         }
       }, err => console.error(err))
 
@@ -350,18 +350,20 @@ export class AddTasksComponent implements OnInit {
       }
 
       if (this.selectedSubTask.dueDate) {
-        let date = new Date(this.selectedSubTask.dueDate)
-        let dueDate = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+        let date = new Date(this.selectedSubTask.dueDate);
+        
+        let dueDate = date.getFullYear() + "-" + `${(date.getMonth() + 1) <= 9 ? '0' : ''}` + (date.getMonth() + 1) + '-' + `${(date.getDate()) <= 9 ? '0' : ''}` + date.getDate();
         data['dueDate'] = dueDate;
       }
 
       this.crmTaskService.saveEditedSubTaskValues(data)
         .subscribe(res => {
           if (res) {
+            this.addTaskSubTaskChanges = true;
             console.log("edited response:", res)
-            this.eventService.openSnackBar('Successfully Saved!', 'DISMISS');
+            this.eventService.openSnackBar('Sub task saved successfuly!', 'DISMISS');
           } else {
-            this.eventService.openSnackBar('Saving Failed!', 'DISMISS');
+            this.eventService.openSnackBar('Sub task saving failed!', 'DISMISS');
           }
         }, err => console.error(err));
     } else {
@@ -404,7 +406,7 @@ export class AddTasksComponent implements OnInit {
           console.log("this is task tempplate result::::", res);
         } else {
           this.isManual = true;
-          this.eventService.openSnackBar("No Task Template Found!!", "DISMISS");
+          this.eventService.openSnackBar("No task template found!!", "DISMISS");
         }
       })
   }
@@ -440,7 +442,7 @@ export class AddTasksComponent implements OnInit {
         if (data) {
           this.familyMemberList = data;
         } else {
-          this.eventService.openSnackBar("No Client Family Member Found!", "DISMISS");
+          this.eventService.openSnackBar("No client family member found!", "DISMISS");
         }
       }, err => console.error(err));
   }
@@ -452,7 +454,8 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.deleteActivityTask(id)
       .subscribe(res => {
         if (res) {
-          this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+          this.addTaskSubTaskChanges = true;
+          this.eventService.openSnackBar("Task deleted successfully!", "DISMISS");
           this.close(true);
         }
       })
@@ -469,14 +472,15 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.deleteAttachmentTaskSubTask(id)
       .subscribe(res => {
         if (res) {
-          this.eventService.openSnackBar('Attachment Deleted Successfully!', "DISMISS");
+          this.addTaskSubTaskChanges = true;
+          this.eventService.openSnackBar('Attachment deleted successfully!', "DISMISS");
           if (choice === 'task') {
             this.attachmentList.splice(index, 1);
           } else if (choice === 'subTask') {
             this.subTaskAttachmentList.splice(index, 1);
           }
         } else {
-          this.eventService.openSnackBar('Delete failed!', "DISMISS");
+          this.eventService.openSnackBar('Attachment deleting failed!', "DISMISS");
           console.log(res);
         }
       }, err => console.error(err))
@@ -486,15 +490,16 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.deleteCommentTaskSubTask(item.id)
       .subscribe(res => {
         if (res) {
+          this.addTaskSubTaskChanges = true;
           console.log("deleted comment", res);
           if (choice === 'task') {
             this.commentList.splice(index, 1);
           } else if (choice === 'subTask') {
             this.subTaskCommentList.splice(index, 1);
           }
-          this.eventService.openSnackBar('Comment Deleted Successfully!', "DISMISS");
+          this.eventService.openSnackBar('Comment deleted successfully!', "DISMISS");
         } else {
-          this.eventService.openSnackBar('Delete failed!', "DISMISS");
+          this.eventService.openSnackBar('Comment deleting failed!', "DISMISS");
           console.log(res);
         }
       }, err => console.error(err))
@@ -504,12 +509,13 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.deleteCollaboratorFromTask(id)
       .subscribe(res => {
         if (res) {
-          this.eventService.openSnackBar('Collaborator removed Successfully!', "DISMISS");
+          this.addTaskSubTaskChanges = true;
+          this.eventService.openSnackBar('Collaborator removed successfully!', "DISMISS");
           let item = this.collaboratorList.find(item => item.id == id);
           let index = this.collaboratorList.indexOf(item);
           this.collaboratorList.splice(index, 1);
         } else {
-          this.eventService.openSnackBar('Removing failed!', "DISMISS");
+          this.eventService.openSnackBar('Collaborator removing failed!', "DISMISS");
           console.log(res);
         }
       }, err => console.error(err))
@@ -540,13 +546,14 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.deleteSubTaskFromTask(data)
       .subscribe(res => {
         if (res) {
+          this.addTaskSubTaskChanges = true;
           this.tabState = 1;
-          this.eventService.openSnackBar('Subtask deleted Successfully!', "DISMISS");
+          this.eventService.openSnackBar('Sub task deleted successfully!', "DISMISS");
           let index = this.subTaskList.indexOf(this.selectedSubTask);
           this.removeSubTask(index);
           this.subTaskList.splice(index, 1);
         } else {
-          this.eventService.openSnackBar('Delete failed!', "DISMISS");
+          this.eventService.openSnackBar('Sub task deleting failed!', "DISMISS");
           console.log(res);
         }
       }, err => console.error(err))
@@ -570,8 +577,9 @@ export class AddTasksComponent implements OnInit {
 
     this.crmTaskService.markTaskOrSubTaskDone(data)
       .subscribe(res => {
+        let msg = choice == 'Task' ? '' : (choice === 'Sub task' ? '' : '');
         if (res) {
-          let msg = choice == 'Task' ? '' : (choice === 'SubTask' ? '' : '');
+          this.addTaskSubTaskChanges = true;
           this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
           if (choice === 'task') {
             this.close(true);
@@ -579,7 +587,7 @@ export class AddTasksComponent implements OnInit {
             this.tabState = 1;
           }
         } else {
-          this.eventService.openSnackBar('Marking Failed', 'DISMISS');
+          this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
         }
       }, err => console.log(err));
   }
@@ -608,7 +616,7 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           window.open(res);
         } else {
-          this.eventService.openSnackBar("Fetching attachment Failed !", "DISMISS");
+          this.eventService.openSnackBar("Attachment fetching failed !", "DISMISS");
           console.log("hopefully this is error", res);
         }
       }, err => console.error(err));
@@ -667,6 +675,7 @@ export class AddTasksComponent implements OnInit {
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
         if (res) {
+          this.addTaskSubTaskChanges = true;
           this.isMainLoading = false;
           console.log("attachment aws respo:", res);
           if (choice === 'task') {
@@ -675,7 +684,7 @@ export class AddTasksComponent implements OnInit {
             this.subTaskAttachmentList.push(res);
           }
 
-          this.eventService.openSnackBar("Successfuly Uploaded Attachment!", "DISMISS");
+          this.eventService.openSnackBar("Attachment uploaded successfully!", "DISMISS");
         }
       }, err => {
         this.isMainLoading = false;
@@ -697,12 +706,13 @@ export class AddTasksComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             console.log("sub taks appended successfully!", res);
+            this.addTaskSubTaskChanges = true;
             res.comments = [];
             res.attachments = [];
             res.status = 0;
             this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
-            this.eventService.openSnackBar("Successfully appended Subtask ", "DISMISS");
+            this.eventService.openSnackBar("Sub task added  Successfully", "DISMISS");
             this.removeSubTask(formGroupIndex);
           }
         });
@@ -742,13 +752,14 @@ export class AddTasksComponent implements OnInit {
         this.crmTaskService.addCollaboratorToTask(obj)
           .subscribe(res => {
             if (res) {
+              this.addTaskSubTaskChanges = true;
               console.log('this is added res of collaborator', res);
               this.collaboratorList.push(res);
-              this.eventService.openSnackBar("Successfully added Collaborator to the task");
+              this.eventService.openSnackBar("Collaborator added successfully");
             }
           })
       } else {
-        this.eventService.openSnackBar("Already exists!", "DISMISS");
+        this.eventService.openSnackBar("Collaborator already exists!", "DISMISS");
       }
     }
   }
@@ -768,7 +779,8 @@ export class AddTasksComponent implements OnInit {
         console.log("individual task name:::", res);
         this.prefillValue = res;
         if(res.hasOwnProperty('subTaskList')){
-          const { subTaskList } = res;
+          const { subTaskList } = res; 
+          this.subTaskList = [];
           if(res.subTaskList && res.subTaskList.length !==0){
             subTaskList.forEach(element => {
               this.subTaskList.push(element);
@@ -787,6 +799,14 @@ export class AddTasksComponent implements OnInit {
         }
       }
     });
+  }
+
+  removeItemFromSubTask(index){
+    this.subTaskList.removeAt(index);
+  }
+
+  isCollabotatorPresent(item){
+    return this.collaboratorList.some(c => c.userId === item.userId);
   }
 
   getSubTaskNumber() {
@@ -814,7 +834,7 @@ export class AddTasksComponent implements OnInit {
       this.onCreateTask();
     } else {
       this.addTaskForm.markAllAsTouched();
-      this.eventService.openSnackBar("Please Fill required Fields", "DISMISS");
+      this.eventService.openSnackBar("Please fill required fields", "DISMISS");
     }
   }
 
@@ -870,10 +890,10 @@ export class AddTasksComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             console.log(res);
-            this.eventService.openSnackBar("Successfully Saved!", "DISMISS");
+            this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
             this.close(true);
           } else {
-            this.eventService.openSnackBar("Editing Failed!", "DISMISS");
+            this.eventService.openSnackBar("Task editing failed!", "DISMISS");
           }
         })
       }
@@ -910,7 +930,7 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               console.log("response from add task", res);
-              this.eventService.openSnackBar('Task Added Successfully', "DISMISS");
+              this.eventService.openSnackBar('Task added successfully', "DISMISS");
               this.close(true)
             }
           })
@@ -943,39 +963,48 @@ export class AddTasksComponent implements OnInit {
         commentMsg: value
       }
     }
-
-    this.crmTaskService.addCommentOnActivityTaskOrSubTask(data)
-      .subscribe(res => {
-        if (res) {
-          console.log("this is what comment looks like", res);
-          // reset form
-          if (choice === 'task') {
-            this.commentList.push(res);
-          } else if (choice === 'subTask') {
-            this.subTaskCommentList.push(res);
+    if(value !== ''){
+      this.isMainLoading = true;
+      this.crmTaskService.addCommentOnActivityTaskOrSubTask(data)
+        .subscribe(res => {
+          if (res) {
+            this.addTaskSubTaskChanges = true;
+            this.isMainLoading = false;
+            console.log("this is what comment looks like", res);
+            // reset form
+            if (choice === 'task') {
+              this.commentList.push(res);
+            } else if (choice === 'subTask') {
+              this.subTaskCommentList.push(res);
+            }
+            this.taskCommentForm.patchValue('', {emitEvent: false});
+            this.eventService.openSnackBar("Comment added successfully", "DISMISS");
+          } else {
+            this.eventService.openSnackBar("Comment adding failed", "DISMISS");
           }
-          this.eventService.openSnackBar("Successfully Added Comment", "DISMISS");
-        } else {
-          this.eventService.openSnackBar("Failed to Added Comment", "DISMISS");
-        }
-      }, err => console.error(err));
+        }, err => {
+          this.isMainLoading = false;
+          console.error(err);
+        });
+    } else {
+      this.taskCommentForm.markAsTouched();
+    }
   }
 
-  close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  close(flag?) {
+    if(flag){
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    } else {
+      if(this.addTaskSubTaskChanges){
+        this.eventService.openSnackBar('Please Save changes!', "DISMISS");
+      } else{
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false }); 
+      }
+    }
   }
 
   toggleEditMode(item, choice) {
     item.editMode = true;
-    // switch (choice) {
-    //   case 'task': this.commentTaskInput = item.commentMsg;
-    //     // add dynamic form
-    //     break;
-    //   case 'subTask': this.commentSubTaskInput = item.commentMsg;
-    //     // add dynamic form
-    //     break;
-    // }
-
   }
 
   getFileData(fileList: FileList, choice) {
