@@ -453,6 +453,12 @@
                                     <div class="col-md-7 p-0">
                                         <p class="m-0 text-black roboto f-500">Site title</p>
                                     </div>
+
+                                </div>
+                                <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
+                                <div class="row pt-16">
+
+                                    <div class="col-md-8"></div>
                                     <div class="col-md-1 pr-0 text-right">
                                         <mat-spinner *ngIf="loaderArray[2].isLoader" [diameter]="20"></mat-spinner>
                                     </div>
@@ -465,9 +471,9 @@
                                             (click)="updateDomainSetting(false,'brand',domainS.get('brandVisible'),2)">Update</button>
 
                                     </div>
+
                                 </div>
-                                <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
-                                <div class="form-group mb-0 pt-20 ">
+                                <div class="form-group mb-0">
                                     <mat-form-field appearance="standard" floatLabel="never">
                                         <input matInput placeholder="Enter site title" autocomplete="off"
                                             class="form-control" formControlName="brandVisible">
