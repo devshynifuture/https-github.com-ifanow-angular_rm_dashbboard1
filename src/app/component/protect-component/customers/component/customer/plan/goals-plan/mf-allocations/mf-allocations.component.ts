@@ -64,8 +64,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
-  refreshObservable = new Subject();
-  refreshAssetList = new Subject();
+  
 
   ngOnInit() {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
@@ -280,8 +279,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
             })
           );
           this.allocateOtherAssetService.refreshAssetList.next();
-          this.refreshObservable.next(true);
-          this.refreshAssetList.next();
+          this.subInjectService.setRefreshRequired();
+        //  this.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
@@ -298,7 +297,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' , refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close'});
   }
 
   ngOnDestroy() {
