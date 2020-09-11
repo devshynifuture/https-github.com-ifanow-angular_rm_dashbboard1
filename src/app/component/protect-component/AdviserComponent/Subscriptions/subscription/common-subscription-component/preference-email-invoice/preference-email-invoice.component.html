@@ -1,25 +1,18 @@
-<div class="row bb-1 popup-header-fix-100">
-  <div class="col-md-2 border-right-1 p-0 full-center">
-    <img *ngIf="authService.appPic" [src]="authService.appPic" class="w-100">
-    <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
-    <!-- <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" > -->
-  </div>
-  <div class="col-md-8 p-0 full-center">
-    <p class="f-16 mb-0">Email settings</p>
-  </div>
-  <div class="col-md-2 full-end pr-20">
-    <i class="material-icons c-p" (click)="dialogClose()">
-      clear
-    </i>
+<div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
+      </div>
+    </div>
   </div>
 </div>
-<div class="wrapper-20 mt-60 bg-grey lter bb">
-  <h3 class="m-0 text-center head-common">{{heading}}</h3>
-</div>
-
 
 <div class="wrapper-100 pt-0">
-  <div class="row">
+  <div class="row pt-70">
     <div class="col-md-9">
       <div class="row pt-20">
         <div class="col-md-1 p-0">

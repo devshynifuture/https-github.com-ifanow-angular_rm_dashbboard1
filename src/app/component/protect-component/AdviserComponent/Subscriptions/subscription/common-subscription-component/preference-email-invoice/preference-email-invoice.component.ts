@@ -1,10 +1,10 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {FormControl, FormGroup} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -23,9 +23,9 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   });
   heading: string;
   fragmentData: any;
-
+  popupHeaderText;
   constructor(private eventService: EventService, public authService: AuthService,
-              public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
+    public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
 
   }
 
@@ -38,7 +38,8 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   }
 
   set data(data) {
-    this.fragmentData = {data};
+    this.fragmentData = { data };
+    this.popupHeaderText = data.title;
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
     this.storeData = this.fragmentData.data;
   }
@@ -77,7 +78,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   //   this.dialogRef.close();
   // }
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
     // this.dialogRef.close();
   }
 
