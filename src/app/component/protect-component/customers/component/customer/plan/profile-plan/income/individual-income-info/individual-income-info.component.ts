@@ -165,6 +165,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // expectingBonusValue: [, [Validators.required]],
     nextAppraisal: [],
     description: [],
+    monthlyNetIncome:[, [Validators.required]],
+    othersIncome:[, [Validators.required]],
     monthlyIncomeForm: this.fb.array([this.fb.group({
       monthlyIncType: ['', [Validators.required]],
       monthlyIncAmt: [null, [Validators.required]],
@@ -195,11 +197,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       retiralsAmt: [null, [Validators.required]],
       id: null,
     })]),
-    othersForm: this.fb.array([this.fb.group({
-      othersType: ['', [Validators.required]],
-      othersAmt: [null, [Validators.required]],
-      id: null,
-    })])
+    // othersForm: this.fb.array([this.fb.group({
+    //   othersType: ['', [Validators.required]],
+    //   othersAmt: [null, [Validators.required]],
+    //   id: null,
+    // })])
   })
   @Output() previousStep = new EventEmitter();
   @Input() set FinalIncomeList(data) {
@@ -256,7 +258,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeOption = String(data.incomeOption);
       // this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
       this.incomeNetForm.controls.incomeOption.setValue((data.incomeOption) ? String(data.incomeOption) : '2');
-      // this.incomeNetForm.controls.monthlyAmount.setValue(data.monthlyIncome);
+      this.incomeNetForm.controls.monthlyNetIncome.setValue(data.monthlyIncome ? data.monthlyIncome : '');
+      this.incomeNetForm.controls.othersIncome.setValue(data.other ? data.other : '');
       this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId + '');
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
       this.incomeNetForm.controls.incomeGrowthRate.setValue(data.growthRate);
@@ -367,23 +370,23 @@ export class IndividualIncomeInfoComponent implements OnInit {
           }
         });
       }
-      if (Object.keys(data.incomeOthers).length > 0) {
-        let id = data.incomeOthers.id;
-        if (id) {
-          this.others.removeAt(0);
-        }
-        Object.entries(data.incomeOthers).forEach(([key, value]) => {
-          let valueOfincome = key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
-          if (value && key != 'id') {
-            this.othersArr.forEach(ele => {
-              if (valueOfincome == ele.value) {
-                ele.disabled = true;
-              }
-            })
-            this.addOthers(key, value, id);
-          }
-        });
-      }
+      // if (Object.keys(data.incomeOthers).length > 0) {
+      //   let id = data.incomeOthers.id;
+      //   if (id) {
+      //     this.others.removeAt(0);
+      //   }
+      //   Object.entries(data.incomeOthers).forEach(([key, value]) => {
+      //     let valueOfincome = key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
+      //     if (value && key != 'id') {
+      //       this.othersArr.forEach(ele => {
+      //         if (valueOfincome == ele.value) {
+      //           ele.disabled = true;
+      //         }
+      //       })
+      //       this.addOthers(key, value, id);
+      //     }
+      //   });
+      // }
       this.expectedBonusForm = this.fb.group({
         bonusList: new FormArray([])
       })
@@ -566,32 +569,32 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.retirals.removeAt(item);
     // }
   }
-  addOthers(key, value, id) {
-    this.others.push(this.fb.group({
-      othersType: [key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '', [Validators.required]],
-      othersAmt: [(key == 'bonus' || key == 'performancePay') ? value : '', [Validators.required]],
-      id: [id]
-    }));
-  }
-  removeOthers(val, item) {
-    this.othersArr.forEach(element => {
-      if (val.value.othersType == element.value) {
-        element.disabled = false;
-      }
-    })
-    let data = this.incomeNetForm.get('othersForm') as FormArray
-    if (data.length > 1) {
-      this.others.removeAt(item);
-    }
-    // if(val.value.id){
-    //   let id = val.value.id
-    //   this.planService.deleteOtherIncome(id).subscribe(
-    //     data => {
-    //     }
-    //   );
-    //   this.others.removeAt(item);
-    // }
-  }
+  // addOthers(key, value, id) {
+  //   this.others.push(this.fb.group({
+  //     othersType: [key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '', [Validators.required]],
+  //     othersAmt: [(key == 'bonus' || key == 'performancePay') ? value : '', [Validators.required]],
+  //     id: [id]
+  //   }));
+  // }
+  // removeOthers(val, item) {
+  //   this.othersArr.forEach(element => {
+  //     if (val.value.othersType == element.value) {
+  //       element.disabled = false;
+  //     }
+  //   })
+  //   let data = this.incomeNetForm.get('othersForm') as FormArray
+  //   if (data.length > 1) {
+  //     this.others.removeAt(item);
+  //   }
+  //   // if(val.value.id){
+  //   //   let id = val.value.id
+  //   //   this.planService.deleteOtherIncome(id).subscribe(
+  //   //     data => {
+  //   //     }
+  //   //   );
+  //   //   this.others.removeAt(item);
+  //   // }
+  // }
   preventDefault(e) {
     e.preventDefault();
 }
@@ -599,7 +602,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: { bankList: this.bankList, userInfo: true }
+      data: {bankList: this.bankList, userInfo: true,  ownerList : this.singleIndividualIncome.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -634,13 +637,17 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.bonusList) {
       return;
     }
-    if (!this.editApiData) {
-      this.getBonusList.push(this.fb.group({
-        receivingDate: [, [Validators.required]],
-        amount: [, [Validators.required]],
-        id: []
-      }))
+    let data = this.expectedBonusForm.get('bonusList') as FormArray
+    if(data.length == 0){
+      this.addExpectedBonus();
     }
+    // if (!this.editApiData) {
+    //   this.getBonusList.push(this.fb.group({
+    //     receivingDate: [, [Validators.required]],
+    //     amount: [, [Validators.required]],
+    //     id: []
+    //   }))
+    // }
 
   }
   chngIncomeOption(data) {
@@ -881,19 +888,19 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.retiralsObj.incomeId = (this.retiralsObj.incomeId) ? this.retiralsObj.incomeId : element.get('id').value
       this.retiralsObj.id = (this.retiralsObj.id) ? this.retiralsObj.id : element.get('id').value
     })
-    let others = this.incomeNetForm.get('othersForm') as FormArray
-    others.controls.forEach(element => {
-      switch (element.get('othersType').value) {
-        case '1':
-          this.othersObj.bonus = element.get('othersAmt').value
-          break;
-        case '2':
-          this.othersObj.performancePay = element.get('othersAmt').value
-          break;
-      }
-      this.othersObj.incomeId = (this.othersObj.incomeId) ? this.othersObj.incomeId : element.get('id').value
-      this.othersObj.id = (this.othersObj.id) ? this.othersObj.id : element.get('id').value
-    })
+    // let others = this.incomeNetForm.get('othersForm') as FormArray
+    // others.controls.forEach(element => {
+    //   switch (element.get('othersType').value) {
+    //     case '1':
+    //       this.othersObj.bonus = element.get('othersAmt').value
+    //       break;
+    //     case '2':
+    //       this.othersObj.performancePay = element.get('othersAmt').value
+    //       break;
+    //   }
+    //   this.othersObj.incomeId = (this.othersObj.incomeId) ? this.othersObj.incomeId : element.get('id').value
+    //   this.othersObj.id = (this.othersObj.id) ? this.othersObj.id : element.get('id').value
+    // })
     if (this.showDateError) {
       return
     }
@@ -908,6 +915,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.incomeNetForm.get('monthlyAmount').setErrors(null);
     // }
     if (this.incomeNetForm.get('incomeOption').value == '2') {
+      if(this.singleIndividualIncome.finalIncomeList.incomeTypeList==1 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==2 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==3 || this.singleIndividualIncome.finalIncomeList.incomeTypeList==4){
+        let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
+      monthlyInc.controls.forEach(element => {
+        element.get('monthlyIncType').setErrors(null);
+        element.get('monthlyIncAmt').setErrors(null);
+      })
+      }else{
+        this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
+      }
       let basicSal = this.incomeNetForm.get('basicSalaryForm') as FormArray
       basicSal.controls.forEach(element => {
         element.get('salaryType').setErrors(null);
@@ -933,18 +949,24 @@ export class IndividualIncomeInfoComponent implements OnInit {
         element.get('retiralsType').setErrors(null);
         element.get('retiralsAmt').setErrors(null);
       })
-      let others = this.incomeNetForm.get('othersForm') as FormArray
-      others.controls.forEach(element => {
-        element.get('othersType').setErrors(null);
-        element.get('othersAmt').setErrors(null);
-      })
-
+      // let others = this.incomeNetForm.get('othersForm') as FormArray
+      // others.controls.forEach(element => {
+      //   element.get('othersType').setErrors(null);
+      //   element.get('othersAmt').setErrors(null);
+      // })
+      this.incomeNetForm.get('othersIncome').setErrors(null);
     } else {
+      this.incomeNetForm.get('monthlyNetIncome').setErrors(null);
       let monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
       monthlyInc.controls.forEach(element => {
         element.get('monthlyIncType').setErrors(null);
         element.get('monthlyIncAmt').setErrors(null);
       })
+      // let others = this.incomeNetForm.get('othersForm') as FormArray
+      // others.controls.forEach(element => {
+      //   element.get('othersType').setErrors(null);
+      //   element.get('othersAmt').setErrors(null);
+      // })
     }
     if (this.incomeNetForm.invalid) {
 
@@ -958,7 +980,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
         "advisorId": this.advisorId,
         "familyMemberId": this.singleIndividualIncome.id,
         "ownerName": this.singleIndividualIncome.name,
-        // "monthlyIncome": this.incomeNetForm.get('monthlyAmount').value,
+        "monthlyIncome": this.incomeNetForm.get('monthlyNetIncome').value ? this.incomeNetForm.get('monthlyNetIncome').value : null,
+        "other": this.incomeNetForm.get('othersIncome').value ? this.incomeNetForm.get('othersIncome').value : null,
         "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
         "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
         "incomeEndMonth": new Date(this.incomeNetForm.get('incomeEndDate').value).getMonth(),
@@ -979,7 +1002,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         'incomePerquisites': this.perquisitesObj,
         'incomeReimbursement': this.reimbursementsObj,
         'incomeRetirals': this.retiralsObj,
-        'incomeOthers': this.othersObj,
+        // 'incomeOthers': this.othersObj,
         "monthlyIncomeOptionList": this.montlyIncomeObj,
         "description": this.incomeNetForm.get('description').value,
         "monthlyDistributionList": [],
@@ -1017,7 +1040,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         obj.monthlyDistributionList = null;
       }
       obj['bonusOrInflowList'] = obj.monthlyDistributionList;
-
+      
       console.log(obj)
       if (this.editApiData) {
         obj['id'] = this.editApiData.id;
@@ -1082,9 +1105,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.othersArr = this.disabledAll(this.othersArr, false);
   }
   emptyControlsAtMostOn() {
-    this.expectedBonusForm.controls.bonusList.clear();
-    this.addExpectedBonus();
-    (this.incomeNetForm.get('basicSalaryForm') as FormArray).clear()
+
+    (this.expectedBonusForm.get('bonusList') as FormArray).clear();
+    let data = this.expectedBonusForm.get('bonusList') as FormArray
+    if(data.length == 0){
+      this.addExpectedBonus();
+    }
+    // this.expectedBonusForm.controls.bonusList.clear();
+
+    (this.incomeNetForm.get('basicSalaryForm') as FormArray).clear();
     this.addSalary(undefined, undefined);
     (this.incomeNetForm.get('monthlyIncomeForm') as FormArray).clear();
     this.addMonthlyIncome(undefined,undefined,undefined);
@@ -1096,8 +1125,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.addReimbursements(undefined,undefined,undefined);
     (this.incomeNetForm.get('retiralsForm') as FormArray).clear();
     this.addRetirals(undefined,undefined,undefined);
-    (this.incomeNetForm.get('othersForm') as FormArray).clear();
-    this.addOthers(undefined,undefined,undefined);
+    // (this.incomeNetForm.get('othersForm') as FormArray).clear();
+    // this.addOthers(undefined,undefined,undefined);
   }
   disabledAll(obj, val) {
     Object.entries(obj).forEach(([key, value]) => {
@@ -1131,9 +1160,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
   get retirals() {
     return this.incomeNetForm.get('retiralsForm') as FormArray;
   }
-  get others() {
-    return this.incomeNetForm.get('othersForm') as FormArray;
-  }
+  // get others() {
+  //   return this.incomeNetForm.get('othersForm') as FormArray;
+  // }
   addExpectedBonus() {
     this.getBonusList.push(this.fb.group({
       id: [, [Validators.required]],

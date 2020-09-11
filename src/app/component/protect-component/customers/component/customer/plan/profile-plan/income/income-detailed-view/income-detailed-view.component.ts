@@ -24,6 +24,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   OthersArr=[];
   monthlyIncomeArr=[];
   bankList=[];                                                                                                                                  
+  incomeType: any;
 
   constructor(private custumService:CustomerService,public utils: UtilService,private subInjectService: SubscriptionInject,private enumService :EnumServiceService) { }
 
@@ -35,6 +36,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.incomeType = this.inputData.incomeTypeId ? this.inputData.incomeTypeId : ''
     this.getArrays(this.inputData );
     this.monthlyContribution = [];
     let monthlyData = this.inputData.bonusOrInflowList
@@ -78,12 +80,12 @@ export class IncomeDetailedViewComponent implements OnInit {
         this.RetiralsArr.push({name:valueOfincome,value:value});
       }
     });
-    Object.entries(data.incomeOthers).forEach(([key, value]) => {
-      if (value && key != 'id') {
-        let valueOfincome =key ? (key == 'bonus' ? 'Bonus' : key == 'performancePay' ? 'Performance Pay' : '') : '';
-        this.OthersArr.push({name:valueOfincome,value:value});
-      }
-    });
+    // Object.entries(data.incomeOthers).forEach(([key, value]) => {
+    //   if (value && key != 'id') {
+    //     let valueOfincome =key ? (key == 'bonus' ? 'Bonus' : key == 'performancePay' ? 'Performance Pay' : '') : '';
+    //     this.OthersArr.push({name:valueOfincome,value:value});
+    //   }
+    // });
     Object.entries(data.monthlyIncomeOptionList).forEach(([key, value]) => {
       if (value && key != 'id') {
         let valueOfincome =key ? (key == 'interestIncome' ? 'Interest Income' : key == 'dividendIncome' ? 'Dividend Income' : key == 'royaltyIncome' ? 'Royalty Income' : key == 'annuityIncome' ? 'Annuity Income' : key == 'pension' ? 'Pension' : key == 'incomeFromNonProfessional' ? 'Income From Non Professional'  : key == 'incomeFromPartTimeJob' ? 'Income from part time job' : key == 'investIncome' ? 'Investment Income' : key == 'alimony' ? 'Alimony' : key == 'farmingOrFishingIncome' ? 'Farming /Fishing Income' : key == 'winningFromLottery' ? 'Winning from lottery ' : key == 'others' ? 'others' : '') : '';
@@ -92,12 +94,13 @@ export class IncomeDetailedViewComponent implements OnInit {
     });
   }
   bankAccountList() {
-          
+          let array = [];
           const obj = {
             userId: this.income.familyMemberId == 0 ?this.income.clientId : this.income.id,
             userType: this.income.familyMemberId == 0 ? 2 : 3 
           };
-          this.custumService.getBankList(obj).subscribe(
+          array.push(obj);
+          this.custumService.getBankList(array).subscribe(
             (data) => {
               this.bankList = data;
               this.bankList.forEach(element => {

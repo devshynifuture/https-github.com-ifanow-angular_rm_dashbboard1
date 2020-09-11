@@ -32,7 +32,7 @@ import { element } from 'protractor';
   providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
-  displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated', 'status'];
+  displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated'];
   clientFamily: any[];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
@@ -152,7 +152,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   // load all goals created for the client and select the first goal
   loadAllGoals() {
-    ``
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};

@@ -35,7 +35,7 @@ export class FileUploadServiceService {
     this.getUserInfo = AuthService.getUserInfo()
 
   }
-  fetchFileUploadData(value,myFiles) {
+  fetchFileUploadData(value, myFiles) {
     console.log('here its me', value)
     this.basicDetails = value
     this.familyMemberId = value.familyMemberId
@@ -45,7 +45,7 @@ export class FileUploadServiceService {
       familyMemberId: (value.familyMemberId) ? value.familyMemberId : 0,
       searchTerm: (value.asset) + '',
     };
-     this.custumService.fetchFileUpload(obj).subscribe(
+    this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
         this.folderId = data
@@ -54,7 +54,7 @@ export class FileUploadServiceService {
           this.filenm = fileName;
           this.uploadFile(this.filenm)
         });
-       
+
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -65,12 +65,12 @@ export class FileUploadServiceService {
   uploadFile(fileName) {
     this.fileUploadSuccsess = false
     this.countFile++;
-   
+
     const obj = {
       clientId: this.basicDetails.clientId,
       advisorId: this.basicDetails.advisorId,
-      familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
-      folderId:this.folderId,
+      familyMemberId: (this.familyMemberId) ? this.familyMemberId : 0,
+      folderId: this.folderId,
       fileName: fileName.name
     };
     this.custumService.uploadFile(obj).subscribe(
@@ -95,11 +95,11 @@ export class FileUploadServiceService {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
-    if(this.responseData == true){
+    if (this.responseData == true) {
       return this.responseData
     }
   }
-    // fileUploadClient(value) {
+  // fileUploadClient(value) {
   //   console.log('here its me', value)
   //   const obj = {
   //     advisorId: value.advisorId,

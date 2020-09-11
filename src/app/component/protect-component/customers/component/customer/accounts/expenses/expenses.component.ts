@@ -124,6 +124,7 @@ export class ExpensesComponent implements OnInit {
   familyList: any;
   clientDob:any;
   billsAndUtilities: any;
+  isLoadingBudget=false;
 
   // periodSelection: any;
 
@@ -136,6 +137,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
     this.styleElement = document.createElement('style');
@@ -206,14 +208,13 @@ export class ExpensesComponent implements OnInit {
 
           this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
           this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-          this.miscellaneousAmount = data.Miscellaneous;
-          this.entertainmentAmount = data.Entertainment;
-          this.educationAmount = data.Education;
+          this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous : 0;
+          this.entertainmentAmount = data.Entertainment ? data.Entertainment : 0;
           // this.miscellaneousAmount = data.Billes_&_Utilies;
-          this.billsAndUtilities = data.billsAndUtilities;
-          this.transportAmount = data.Transport;
-          this.housingAmount = data.Housing;
-          this.spent = data.total;
+          this.billsAndUtilities = data.billsAndUtilities ? data.billsAndUtilities : 0;
+          this.transportAmount = data.Transport ? data.Transport : 0;
+          this.housingAmount = data.Housing ? data.Housing : 0;
+          this.spent = data.total ? data.total :0;
           this.cashFlow('piechartExpense')
         } else {
           this.cashFlow('piechartExpense')
@@ -228,9 +229,9 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getAllExpense() {
-    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.dataSource1.data = [{}, {}, {}];
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -240,6 +241,7 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAllExpense(obj).subscribe(
       data => {
         if (data) {
+          this.isLoading = true;
           this.expenseList = data.expenseList;
           this.recurringTrnList = data.recurringExpenseList;
           this.expenseList.forEach(singleExpense => {
@@ -261,12 +263,17 @@ export class ExpensesComponent implements OnInit {
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
-          this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
+          this.isLoading = false;
+          this.getExpenseGraphValueNew(this.expenseGraph);
           console.log('All expense data', data);
+          
         }
-        this.isLoading = false;
+        // this.isLoading = true;
       }, (error) => {
+        this.dataSource.data=[];
+        this.dataSource1.data=[];
+        this.isLoading = false;
         this.eventService.showErrorMessage(error);
       }
     );
@@ -311,20 +318,20 @@ export class ExpensesComponent implements OnInit {
   }
   getExpenseGraphValueNew(data) {
     this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
+    this.billsAndUtilities = data.Bills_Utilities ? data.Bills_Utilities.categoryWisePercentage : 0;     
+    this.educationAmount = data.Education ? data.Education.categoryWisePercentage : 0;
+    this.entertainmentAmount = data.Entertainment ? data.Entertainment.categoryWisePercentage :0;
+    this.housingAmount = data.Housing ? data.Housing.categoryWisePercentage :0;
+    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous.categoryWisePercentage : 0;
+    this.transportAmount = data.Transport ? data.Transport.categoryWisePercentage :0;
     this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
     this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
-    this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
-    this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
-
+    this.commitedInvestment = data.committedInvestment ? data.committedInvestment.categoryWisePercentage : 0
+    this.expenditure = data.committedExpenditure ? data.committedExpenditure.categoryWisePercentage : 0
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-    this.miscellaneousAmount = data.Miscellaneous;
-    this.entertainmentAmount = data.Entertainment;
-    this.educationAmount = data.Education;
     // this.miscellaneousAmount = data.Billes_&_Utilies;
-    this.transportAmount = data.Transport;
-    this.housingAmount = data.Housing;
-    this.spent = data.total;
+    this.spent = data.total ? data.total : 0;
     this.cashFlow('piechartExpense')
   }
   getBudgetGraphValues() {
@@ -564,14 +571,14 @@ export class ExpensesComponent implements OnInit {
           {
             name: 'Basic',
             y: this.basicAmountPercent,
-            color: "#A6CEE3",
+            color: "#1F78B4",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Bills & Utilities',
             y: this.billsAndUtilities,
-            color: "#1F78B4",
+            color: "#A6CEE3",
             dataLabels: {
               enabled: false
             }
@@ -649,7 +656,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
   getBudgetList() {
-    this.isLoading = true;
+    this.isLoadingBudget = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -666,7 +673,7 @@ export class ExpensesComponent implements OnInit {
         this.eventService.showErrorMessage(error);
         this.dataSource4.data = [];
         this.noData = 'No data found';
-        this.isLoading = false;
+        this.isLoadingBudget = false;
       }
     );
   }
@@ -694,11 +701,11 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.data = data;
       this.dataSource4.sort = this.BudgetSort;
     }
-    this.isLoading = false;
+    this.isLoadingBudget = false;
     console.log('getBudgetRes', data)
   }
   getBugetRecurring() {
-    this.isLoading = true;
+    this.isLoadingBudget = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -717,7 +724,7 @@ export class ExpensesComponent implements OnInit {
         this.eventService.showErrorMessage(error);
         this.dataSource5.data = [];
         this.noData = 'No data found';
-        this.isLoading = false;
+        this.isLoadingBudget = false;
       }
     );
   }
@@ -748,7 +755,7 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource5.data = [];
     }
-    this.isLoading = false;
+    this.isLoadingBudget = false;
     console.log('otherCommitmentsGetRes', data)
   }
   addFilterPeriod(value) {
@@ -756,6 +763,7 @@ export class ExpensesComponent implements OnInit {
     this.getStartAndEndDate(val);
     // this.getTransaction();
     // this.getRecuringTransactions();
+    this.getAllExpense();
     this.getBudgetList();
     this.getBugetRecurring();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
@@ -828,7 +836,7 @@ export class ExpensesComponent implements OnInit {
       familyMemberId: 0,
     };
     this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+    // this.dataSource.data = [{}, {}, {}];
     this.planService.getTransactionExpense(obj).subscribe(
       data => this.getTransactionExpenseRes(data), (error) => {
         this.getRecuringTransactions();
@@ -874,7 +882,7 @@ export class ExpensesComponent implements OnInit {
       startDate: this.startDate,
     };
     this.isLoading = true;
-    this.dataSource1.data = [{}, {}, {}];
+    // this.dataSource1.data = [{}, {}, {}];
     this.planService.getAssetsOfExpense(obj).subscribe(
       data => {
         if (data) {
@@ -943,7 +951,8 @@ export class ExpensesComponent implements OnInit {
             data => {
               this.eventService.openSnackBar('Buget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getRecuringTransactions();
+              this.getBudgetList();
+              this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -952,7 +961,8 @@ export class ExpensesComponent implements OnInit {
             data => {
               this.eventService.openSnackBar('Recurring budget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getRecuringTransactions();
+              this.getBudgetList();
+              this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );

@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {UtilService} from "../../../../../services/util.service";
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { UtilService } from "../../../../../services/util.service";
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +103,7 @@ export class CustomerService {
   }
 
   geCalculatedEmi(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, {request: JSON.stringify(data)});
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, { request: JSON.stringify(data) });
   }
 
   addRecurringDeposit(data) {
@@ -445,7 +445,7 @@ export class CustomerService {
   }
 
   getCompanyNames(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET, {query: data});
+    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET, { query: data });
   }
 
 
@@ -626,7 +626,7 @@ export class CustomerService {
   }
 
   getClientUploadFile(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_UPLOAD_FILE, data, 1);
+    return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_CLIENT_UPLOAD_FILE, data, 1);
 
   }
 
@@ -695,7 +695,7 @@ export class CustomerService {
   }
 
   getReportWiseCalculations(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, {report: data.request});
+    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, { report: data.request });
   }
 
   getMfUnrealizedTransactions(data) {
@@ -707,7 +707,7 @@ export class CustomerService {
   }
 
   AddSaveFilters(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, {reportFilterConfigModelList: data.ReportFilterConfigModel});
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, { reportFilterConfigModelList: data.ReportFilterConfigModel });
   }
 
   getDatedReportWiseCalculations(data) {
@@ -898,7 +898,7 @@ export class CustomerService {
   }
 
   getJointBankList(data) {
-    console.log('limitedBanks',data);
+    console.log('limitedBanks', data);
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_SINGLE_JOIN, data, 1)
   }
 

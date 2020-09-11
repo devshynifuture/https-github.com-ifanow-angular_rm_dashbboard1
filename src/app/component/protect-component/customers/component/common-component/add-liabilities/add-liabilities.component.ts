@@ -83,6 +83,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   propertyList = [];
   propertyListDuplicate: any[];
   isBorrowerAdded = false;
+  sendData: any;
 
   // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -93,6 +94,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   set data(inputData) {
     this._data = inputData;
     this.showFilter = (inputData.showFilter) ? inputData.showFilter : inputData;
+    this.sendData = (inputData.showFilter) ? inputData.showFilter : inputData;
     if (this._data.id == undefined) {
       (inputData == 'tab1') ? this.loanTypeDetails = '' : this.loanTypeDetails = inputData;
     }
@@ -354,11 +356,11 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
-        const data = this.showFilter;
+        const data = this.sendData;
         // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
-        const data = this.showFilter;
+        const data = this.sendData;
         // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }

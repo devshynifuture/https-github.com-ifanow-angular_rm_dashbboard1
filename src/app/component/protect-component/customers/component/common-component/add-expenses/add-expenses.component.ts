@@ -7,6 +7,7 @@ import { ConstantsService } from "../../../../../../constants/constants.service"
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-expenses',
@@ -35,7 +36,7 @@ export class AddExpensesComponent implements OnInit {
   mytime: Date = new Date();
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private planService: PlanService, private constantService: ConstantsService) {
+    private planService: PlanService, private constantService: ConstantsService,private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {
@@ -241,7 +242,7 @@ export class AddExpensesComponent implements OnInit {
         }
       });
     }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
-      let List = this.inputData.getData.budgetList
+      let List = this.inputData.getData.otherCommitments
       List.forEach(element => {
         if(element.budgetCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
           isCheck =true;
@@ -350,7 +351,7 @@ export class AddExpensesComponent implements OnInit {
         repeatFrequency: this.recuring.controls.repeatFrequency.value,
         amount: this.recuring.controls.amount.value,
         paymentModeId: this.recuring.controls.paymentModeId.value,
-        startsFrom: this.recuring.controls.startsFrom.value,
+        startsFrom:this.datePipe.transform(this.recuring.controls.startsFrom.value, 'yyyy-MM-dd'), 
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
@@ -437,12 +438,12 @@ export class AddExpensesComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
+        expenseDoneOn:this.datePipe.transform( this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
         amount: this.expenses.controls.amount.value,
         // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
          time:this.expenses.controls.timeInMilliSec.value,
         timeInString:this.expenses.controls.timeInMilliSec.value,
-        startsFrom:this.expenses.controls.expenseDoneOn.value,
+        startsFrom:this.datePipe.transform( this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,
         budgetCategoryId: this.expenses.controls.category.value,

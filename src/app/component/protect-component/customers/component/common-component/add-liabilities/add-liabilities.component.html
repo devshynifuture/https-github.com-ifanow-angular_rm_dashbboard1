@@ -156,7 +156,7 @@
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY_WITHOUT_DOT"
-                        (keyup)="Validations($event.target.value,'loanTenure');calculateEmi()" [maxLength]="2"
+                        (keyup)="Validations($event.target.value,'loanTenure');calculateEmi()" [maxLength]="3"
                         formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
                     <mat-error class="f-12 pt-4" *ngIf="(addLiabilityForm.get('loanTenure').errors?.required)">
                         This field is required

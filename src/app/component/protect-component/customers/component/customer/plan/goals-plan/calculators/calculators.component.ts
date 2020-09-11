@@ -117,14 +117,14 @@ export class CalculatorsComponent implements OnInit {
     } else {
 
       const emiObj = {
-        netSalary: this.incomeFG.controls.income.value,
-        loanTenure: this.loanFG.controls.loanTenure.value,
-        annualInterestRate: this.loanFG.controls.interestRate.value,
-        previousEMIs: this.incomeFG.controls.otherEMI.value,
-        incomeGrowthRate: this.incomeFG.controls.growthRate.value,
-        loanAmount: this.loanFG.controls.loanAmt.value,
+        netSalary: parseInt(this.incomeFG.controls.income.value),
+        loanTenure: parseInt(this.loanFG.controls.loanTenure.value),
+        annualInterestRate: parseInt(this.loanFG.controls.interestRate.value),
+        previousEMIs: parseInt(this.incomeFG.controls.otherEMI.value),
+        incomeGrowthRate: parseInt(this.incomeFG.controls.growthRate.value),
+        loanAmount: parseInt(this.loanFG.controls.loanAmt.value),
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.goalFV
+        goalAmount: parseInt(this.data.remainingData.futureValue)
       }
 
       this.barButtonOptions.active = true;
@@ -134,6 +134,9 @@ export class CalculatorsComponent implements OnInit {
           ...res,
           ...emiObj
         };
+        setTimeout(() => {
+          this.pieChart('')
+        }, 300);
         this.barButtonOptions.active = false;
         this.barButtonOptions1.active = false;
         this.subInjectService.setRefreshRequired();
@@ -146,7 +149,7 @@ export class CalculatorsComponent implements OnInit {
   }
   pieChart(id) {
 
-    this.downPayPer = (this.calculatedEMI.downPayment * 100) / this.loanFG.controls.loanAmt.value
+    this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
     this.perLoanAmt = 100 - this.downPayPer
     console.log('LA',this.perLoanAmt);
     console.log('DP',this.downPayPer)

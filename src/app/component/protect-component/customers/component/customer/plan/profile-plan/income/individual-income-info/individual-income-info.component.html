@@ -73,9 +73,24 @@
                         </mat-radio-group>
                     </div>
                 </div>
-
+                <div class="row pt-40" *ngIf="incomeOption=='2' && (singleIndividualIncome.finalIncomeList.incomeTypeList==1 || singleIndividualIncome.finalIncomeList.incomeTypeList==2 || singleIndividualIncome.finalIncomeList.incomeTypeList==3 || singleIndividualIncome.finalIncomeList.incomeTypeList==4) ">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Monthly income</h5>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0 iconRupess">
+                            <mat-form-field>
+                                <input matInput type="number" autocomplete="off" #monthlyNetIncome [maxLength]="10" appInputValueValidation
+                                    [inputValidator]="validatorType.NUMBER_ONLY" formControlName="monthlyNetIncome"
+                                    class="form-control br-0 rupess">
+                                    <mat-hint align="end" class="f-12">{{monthlyNetIncome.value.length}}/10</mat-hint>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                  
-                <div class="row pt-40" [hidden]="incomeOption=='1'">
+                <div class="row pt-40" [hidden]="incomeOption=='1' || singleIndividualIncome.finalIncomeList.incomeTypeList==1 || singleIndividualIncome.finalIncomeList.incomeTypeList==2 || singleIndividualIncome.finalIncomeList.incomeTypeList==3 || singleIndividualIncome.finalIncomeList.incomeTypeList==4 ">
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Monthly income</h5>
                     </div>
@@ -131,7 +146,7 @@
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="basicSalaryForm" >
+                    <div class="col-md-7 pl-0" formArrayName="basicSalaryForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"  *ngFor="let obj of basicSalary.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -182,7 +197,7 @@
 
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="allowancesForm" >
+                    <div class="col-md-7 pl-0" formArrayName="allowancesForm" >
                         <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of allowances.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -233,7 +248,7 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
-                    <div class="col-md-7" formArrayName="perquisitesForm" >
+                    <div class="col-md-7 pl-0" formArrayName="perquisitesForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of perquisites.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -284,7 +299,7 @@
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div class="col-md-7" formArrayName="reimbursementsForm" >
+                    <div class="col-md-7 pl-0" formArrayName="reimbursementsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of reimbursements.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -333,7 +348,7 @@
                         <h5 class="m-0 pt-8">Retirals</h5>
                     </div>
                     <!-- build error removed controls -->
-                    <div class="col-md-7" formArrayName="retiralsForm" >
+                    <div class="col-md-7 pl-0" formArrayName="retiralsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of retirals.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -377,12 +392,26 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Others</h5>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0 iconRupess">
+                            <mat-form-field>
+                                <input matInput type="number" autocomplete="off" #othersIncome [maxLength]="10" appInputValueValidation
+                                    [inputValidator]="validatorType.NUMBER_ONLY" formControlName="othersIncome"
+                                    class="form-control br-0 rupess">
+                                    <mat-hint align="end" class="f-12">{{othersIncome.value.length}}/10</mat-hint>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>
                     </div>
-                    <!-- build error rmeoved controls -->
                     <div class="col-md-7" formArrayName="othersForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of others.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
@@ -414,7 +443,6 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
-                                <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.othersForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addOthers(undefined,undefined,undefined)">add</i>
@@ -426,7 +454,7 @@
                         </div>
                     </div>
                 </div>
-                
+                 -->
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income style</h5>
@@ -510,7 +538,7 @@
                             year’s
                         </p>
                     </div>
-                    <div class="col-md-7 pr-0">
+                    <div class="col-md-3 pr-0">
                         <div class="form-group mb-0 iconPetage">
                             <mat-form-field>
                                 <input matInput type="number" autocomplete="off" appInputValueValidation

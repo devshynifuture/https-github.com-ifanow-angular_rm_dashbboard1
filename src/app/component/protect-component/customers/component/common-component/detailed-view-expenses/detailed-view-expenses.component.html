@@ -52,7 +52,7 @@
                         Enter amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.amount}}
+                        {{expense.amount? "₹" : ""}}<span appFormatNumber>{{expense.amount}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">

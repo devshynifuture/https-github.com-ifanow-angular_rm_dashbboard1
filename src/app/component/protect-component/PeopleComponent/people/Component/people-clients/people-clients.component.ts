@@ -17,6 +17,7 @@ import { debounceTime, startWith } from 'rxjs/operators';
 import { element } from 'protractor';
 import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
 import { ExcelClientListService } from 'src/app/services/excel-client-list.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-people-clients',
@@ -38,6 +39,7 @@ export class PeopleClientsComponent implements OnInit {
   finalClientList = [];
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
+  downloadLoader: boolean = false;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
@@ -125,12 +127,15 @@ export class PeopleClientsComponent implements OnInit {
     this.getFullClientList(title, flag);
   }
 
-  pdf(tableTitle) {
-    const rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+  pdf(title, flag) {
+    // const rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.pdfGen.generatePdf(rows, tableTitle);
+    this.getFullClientList(title, flag);
   }
 
   getFullClientList(title, flag) {
+    this.eventService.openSnackBar(`Downloading ${flag} will take some time!`, "Dismiss");
+    this.downloadLoader = true
     const obj = {
       advisorId: this.advisorId,
       status: 1,
@@ -141,17 +146,20 @@ export class PeopleClientsComponent implements OnInit {
     this.peopleService.getClientList(obj).subscribe(
       data => {
         if (data && data.length > 0) {
+          this.downloadLoader = false
           data = this.formatEmailAndMobile(data);
           let tableData = [];
           data.forEach(element => {
             element.mobileNo = element.mobileNo == 0 ? 'N/A' : element.mobileNo;
-            tableData.push([element.name, String(element.mobileNo), element.email, element.pan, element.count, element.ownerName, element.lastLoginString, element.status]);
+            tableData.push([element.name, String(element.mobileNo), element.email, element.pan, String(element.count), element.ownerName, element.lastLoginString, String(element.status)]);
           });
           const header = ["Group head name", "Registered mobile", "Registered email", "PAN", "Members", "Client owner", "Last login", "Status"];
-          (flag == 'EXCEL') ? this.excel.generateExcel(title, header, tableData) : '';
+          (flag == 'excel') ? this.excel.generateExcel(title, header, tableData) : this.pdfGen.generatePdfWithoutHtml(title, header, tableData);;
         }
       },
       err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.downloadLoader = false
       }
     );
   }

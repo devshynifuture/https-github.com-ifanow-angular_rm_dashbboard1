@@ -81,6 +81,10 @@ export class ClientUploadComponent implements OnInit {
   file: any;
   clientData: any;
   isLoadingUpload: boolean = false;
+  urlResponse: boolean;
+  folderId: any;
+  fileuploadurl: any;
+  imageType: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
     private custumService: CustomerService, private enumService: EnumServiceService,
@@ -120,7 +124,6 @@ export class ClientUploadComponent implements OnInit {
 
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
-    this.getFileUploadDataClient('type')
   }
 
   saveClose() {
@@ -133,47 +136,34 @@ export class ClientUploadComponent implements OnInit {
 
   getUploadedImg(data) {
     data.forEach(imgData => {
-      // const obj = {
-      //   clientId: imgData.clientId,
-      //   advisorId: this.advisorId,
-      //   folderId: imgData.folderId,
-      //   fileName: imgData.fileName
-      // };
-      const obj = {
-        fileId: imgData.fileId
-      };
-      this.custumService.getClientProof(obj).subscribe(
-        (data) => {
-          if (imgData.proofType == 2 && imgData.documentId == 0) {
-            this.fileComPanImg.view = data.preSignedUrl;
-            this.fileComPanImg.store = imgData;
-          } else if (imgData.proofType == 1 && imgData.documentId == 0) {
-            this.filePerPanImg.view = data.preSignedUrl;
-            this.filePerPanImg.store = imgData;
-          } else if (imgData.documentId == 1) {
-            this.fileProof1Img.view = data.preSignedUrl;
-            this.fileProof1Img.store = imgData;
-            this.selectedBank = imgData.documentId;
-            this.bankProof = imgData.proofType;
-            this.errProof1 = false;
-          } else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
-            this.fileProof2Img.view = data.preSignedUrl;
-            this.fileProof2Img.store = imgData;
-            this.addressProof = imgData.proofType;
-            this.proofSubType = imgData.proofSubType;
-            this.errProof2 = false;
-          } else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
-            this.fileProof2BackImg.view = data.preSignedUrl;
-            this.fileProof2BackImg.store = imgData;
-            this.addressProof = imgData.proofType;
-            this.proofSubType = imgData.proofSubType;
-            this.errProof2 = false;
-          }
-          console.log(data, 'imge');
-        }
-      );
-    });
-    this.getFileUploadDataClient('type')
+      if (imgData.documentType == 1) {
+        this.fileComPanImg.view = imgData.imageUrl;
+        this.fileComPanImg.store = imgData;
+      } else if (imgData.documentType == 2) {
+        this.filePerPanImg.store = imgData;
+        this.filePerPanImg.view = imgData.imageUrl;
+      } else if (imgData.documentType == 3) {
+        this.fileProof1Img.view = imgData.imageUrl;
+        this.fileProof1Img.store = imgData;
+        this.selectedBank = imgData.documentId;
+        this.bankProof = imgData.proofType;
+        this.errProof1 = false;
+      } else if (imgData.documentType == 4 && imgData.proofSubType == 1) {
+        this.fileProof2Img.view = imgData.imageUrl;
+        this.fileProof2Img.store = imgData;
+        this.addressProof = imgData.proofType;
+        this.proofSubType = imgData.proofSubType;
+        this.errProof2 = false;
+      } else if (imgData.documentType == 4 && imgData.proofSubType == 2) {
+        this.fileProof2BackImg.view = imgData.imageUrl;
+        this.fileProof2BackImg.store = imgData;
+        this.addressProof = imgData.proofType;
+        this.proofSubType = imgData.proofSubType;
+        this.errProof2 = false;
+      }
+      console.log(data, 'imge');
+    }
+    );
   }
 
   getFile(e, type) {
@@ -188,6 +178,7 @@ export class ClientUploadComponent implements OnInit {
       proofSubType: 0,
       fileName: ''
     };
+    this.imageType = type;
     this.myFiles = [];
     const file = (e.target as HTMLInputElement).files[0];
     const reader = new FileReader();
@@ -258,28 +249,28 @@ export class ClientUploadComponent implements OnInit {
       case 'personal-pan':
         fileName = this.filePerPanImg.store;
         this.fetchData('Aadhaar', e)
-        this.addDocObj.proofType = 1;
+        // this.addDocObj.proofType = 1;
         break;
       case 'proof-type1':
         fileName = this.fileProof1Img.store;
         this.fetchData('Bank Account', e)
-        this.addDocObj.documentType = 1;
+        // this.addDocObj.documentType = 1;
         break;
       case 'proof-type2':
         fileName = this.fileProof2Img.store;
         this.fetchData('Address', e)
-        this.addDocObj.documentType = 2;
+        // this.addDocObj.documentType = 2;
         break;
     }
-    if (this.userData.userId) {
-      const obj = {
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-      };
-      this.custumService.clientUploadFile(obj).subscribe(
-        data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
-      );
-    }
+    // if (this.userData.userId) {
+    //   const obj = {
+    //     userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+    //     userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+    //   };
+    //   this.custumService.clientUploadFile(obj).subscribe(
+    //     data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
+    //   );
+    // }
   }
   fetchData(value, fileName) {
     this.isLoadingUpload = true
@@ -293,37 +284,65 @@ export class ClientUploadComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
-    if (this.fileUploadData) {
-      this.file = fileName
-      this.fileUpload.uploadFile(fileName)
-    }
+    this.fileUploadData = this.fetchFileUploadData(obj, this.myFiles);
+    // if (this.fileUploadData) {
+    //   this.file = fileName
+    //   this.urlResponse = this.fileUpload.uploadFile(fileName)
+    // }
     setTimeout(() => {
       this.isLoadingUpload = false
     }, 7000);
   }
-  getFileUploadDataClient(type) {
-    if (this.userData.userId == undefined) {
-      return;
-    }
-    let obj = {
-      advisorId: this.advisorId,
-      clientId: this.userData.clientId,
-      familyMemberId: (this.userData.familyMemberId) ? this.userData.familyMemberId : 0,
-    }
-    this.custumService.getFileUploadDataClient(obj).subscribe(
+
+  fetchFileUploadData(value, myFiles) {
+    const obj = {
+      advisorId: value.advisorId,
+      clientId: value.clientId,
+      familyMemberId: (value.familyMemberId) ? value.familyMemberId : 0,
+      searchTerm: (value.asset) + '',
+    };
+    this.custumService.fetchFileUpload(obj).subscribe(
       data => {
-        console.log('heyyy here all presign URLS ***** list =', data)
-        this.errProof2 = false;
-        this.viewFront = true;
-        this.fileComPanImg.view = data.pan[data.pan.length - 1];
-        this.filePerPanImg.view = data.aadhaar[data.aadhaar.length - 1];
-        this.fileProof1Img.view = data.bankaccount[data.bankaccount.length - 1];
-        this.fileProof2Img.view = data.address[data.address.length > 1 ? 0 : data.address.length - 1];
-        (data.address.length > 1)
-        {
-          this.fileProof2BackImg.view = data.address[1];
-        }
+        this.fileUploadData = data || [];
+        this.folderId = data
+        console.log('fileUploadData', this.fileUploadData);
+        myFiles.forEach(fileName => {
+          this.filenm = fileName;
+          this.uploadFileData(this.filenm, value)
+        });
+
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+
+  uploadFileData(fileName, value) {
+    this.countFile++;
+    const obj = {
+      clientId: value.clientId,
+      advisorId: value.advisorId,
+      familyMemberId: (value.familyMemberId) ? value.familyMemberId : 0,
+      folderId: this.folderId,
+      fileName: fileName.name
+    };
+    this.custumService.uploadFile(obj).subscribe(
+      data => {
+        const fileuploadurl = data;
+        this.fileuploadurl = data
+        const httpOptions = {
+          headers: new HttpHeaders()
+            .set('Content-Type', '')
+        };
+        this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
+          console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+          if (responseData == null) {
+            this.uploadFileRes(fileName, this.imageType, fileuploadurl)
+            // this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+            return responseData
+          }
+        });
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -384,46 +403,48 @@ export class ClientUploadComponent implements OnInit {
     });
   }
 
-  uploadFileRes(data, fileName, type) {
+  uploadFileRes(fileName, type, url) {
     this.addDocObj.fileName = fileName;
     switch (type) {
       case 'company-pan':
-        this.addDocObj.proofType = 2;
-
+        this.addDocObj.documentType = 1
         break;
       case 'personal-pan':
-        this.addDocObj.proofType = 1;
+        this.addDocObj.documentType = 2
         break;
       case 'proof-type1':
         this.addDocObj.proofType = this.bankProof;
-        this.addDocObj.documentType = 1;
+        this.addDocObj.documentType = 3;
         this.addDocObj.documentId = this.selectedBank;
         break;
       case 'proof-type2':
         this.addDocObj.proofType = this.addressProof;
-        this.addDocObj.documentType = 2;
+        this.addDocObj.documentType = 4;
         this.addDocObj.proofSubType = this.proofSubType;
         break;
     }
     this.countFile++;
+    url = url.substring(url.search('x-amz-meta-uuid'), url.length - 1);
+    url = url.substring(0, url.indexOf('&'))
+    const uuID = url.replace('x-amz-meta-uuid=', '');
+    this.addDocObj.fileName = uuID;
+    this.addDocumentUsers(this.addDocObj);
+    // const fileuploadurl = data;
+    // const httpOptions = {
+    //   headers: new HttpHeaders()
+    //     .set('Content-Type', '')
+    // };
+    // this.http.putExternal(data, fileName, httpOptions).subscribe((responseData) => {
+    //   console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+    //   this.addDocumentUsers(this.addDocObj);
+    // }, error => {
+    //   console.log('DocumentsComponent uploadFileRes error : ', error);
 
-    const fileuploadurl = data;
-    const httpOptions = {
-      headers: new HttpHeaders()
-        .set('Content-Type', '')
-    };
-    this.http.putExternal(data, fileName, httpOptions).subscribe((responseData) => {
-      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-      this.addDocumentUsers(this.addDocObj);
-    }, error => {
-      console.log('DocumentsComponent uploadFileRes error : ', error);
-
-    });
+    // });
   }
 
   addDocumentUsers(obj) {
     console.log(obj, 'save obj');
-
     this.custumService.saveClientUploadFile(obj).subscribe((data) => {
       console.log('added', data);
 
