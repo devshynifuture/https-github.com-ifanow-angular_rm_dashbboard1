@@ -85,15 +85,18 @@ export class IncomeComponent implements OnInit {
     )
 
   }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
-    this.myFiles = fileName.target.files[0]
+    this.myFiles = [];
+    for (let i = 0; i < fileName.target.files.length; i++) {
+      this.myFiles.push(fileName.target.files[i]);
+    }
     const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
       data: this.myFiles,
     });

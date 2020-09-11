@@ -154,27 +154,27 @@
                                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                             </div>
 
-                            <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                            <!-- <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
                                 <img src="assets/images/svg/up-down.svg">
-                            </a>
+                            </a> -->
 
 
                             <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
-                            <mat-menu #menu7="matMenu">
+                            <!-- <mat-menu #menu7="matMenu"> -->
                                 <!-- <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Liabilities',$event)" class="uploadInput" id="file-4"
                                         multiple type="file">
                                 </button> -->
-                            </mat-menu>
-                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
+                            <!-- </mat-menu> -->
+                            <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
                                 class="c-p mr-8">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Email report</button>
                                 <button mat-menu-item>Option 1</button>
                                 <button mat-menu-item>Option 2</button>
-                            </mat-menu>
+                            </mat-menu> -->
 
-                            <button mat-stroked-button class="btn-default addon mr-8 v-middle"
+                            <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"
                                 [matMenuTriggerFor]="liabilitiesMenu"><i class="material-icons">filter_list</i>FILTERS
                             </button>
                             <mat-menu #liabilitiesMenu>
