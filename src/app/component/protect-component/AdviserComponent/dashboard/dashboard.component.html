@@ -35,7 +35,9 @@
       <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
       <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
         class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-        <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8 bb-1-842">
+        <div [routerLink]="['/admin/backoffice-mis/mutual-funds']" [queryParams]="{ Tab: 0}"
+          [ngClass]="{'event-none': keyMatrixFlag}"
+          class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8 bb-1-842 c-p">
           <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
@@ -48,7 +50,9 @@
 
         </div>
 
-        <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half bb-1-842">
+        <div [routerLink]="['/admin/backoffice-mis/mutual-funds']" [queryParams]="{ Tab: 1}"
+          [ngClass]="{'event-none': keyMatrixFlag}"
+          class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half bb-1-842 c-p">
           <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
 
           <div class="relClass">
@@ -60,7 +64,8 @@
           </div>
         </div>
 
-        <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8 bb-1-842">
+        <div [routerLink]="['/admin/people/clients']" [ngClass]="{'event-none': keyMatrixFlag}"
+          class="col-md-6 overflow-hidden pt-24 pb-24 pl-8 bb-1-842 c-p">
           <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
