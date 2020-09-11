@@ -705,7 +705,7 @@
                 {{item.expenseType}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.commencementDate ?( item.startsFrom | date:'dd/MM/yyyy') : '-'}}
+                {{isLoading ? '' : (item.continueTill && item.continueTill ? (item.startsFrom | date:'dd/MM/yyyy') : (item.expenseDoneOn | date:'dd/MM/yyyy'))}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -765,7 +765,7 @@
                 {{item.name ? item.name : '-'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.expenseDoneOn | date:'dd/MM/yyyy'}}
+                {{item.expenseDoneOn ? (item.expenseDoneOn | date:'dd/MM/yyyy') : '-'}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
