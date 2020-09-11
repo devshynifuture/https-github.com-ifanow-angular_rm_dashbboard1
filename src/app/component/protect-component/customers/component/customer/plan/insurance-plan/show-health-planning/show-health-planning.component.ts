@@ -6,6 +6,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SuggestHealthInsuranceComponent } from '../suggest-health-insurance/suggest-health-insurance.component';
 import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
 import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance-upper.component';
+import { PlanService } from '../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -20,16 +22,21 @@ export class ShowHealthPlanningComponent implements OnInit {
 
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
+  clientId: any;
+  advisorId: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
     private utils: UtilService,
-    private eventService: EventService
+    private eventService: EventService,
+    private planService:PlanService
   ) { }
 
 
   @Input()
   set data(data) {
+    this.advisorId = AuthService.getAdvisorId()
+    this.clientId = AuthService.getClientId()
     this.inputData = data;
   }
 
@@ -39,6 +46,23 @@ export class ShowHealthPlanningComponent implements OnInit {
   ngOnInit() {
     console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
+    this.getStepOneAndTwoData();
+  }
+  getStepOneAndTwoData(){
+    let obj = {
+      id: this.inputData.id,
+      insuranceType:this.inputData.insuranceType
+    }
+    this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
+      data => {
+        if(data){
+          console.log(data);
+        }
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
   close(data) {
     const fragmentData = {

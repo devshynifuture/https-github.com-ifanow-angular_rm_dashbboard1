@@ -18,11 +18,15 @@
             <p class="m-0 roboto text-custom pt-20 pb-40">You can suggest individual plans or family floater plans in
                 the next step
             </p>
-            <mat-radio-group  [(ngModel)]="selectPolicy" aria-label="Select an option" id="addinsuranceradio">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': selectPolicy=='1','borderRadio':selectPolicy!='1','text-primary':selectPolicy=='1','text-custom':selectPolicy!='1'}" (click)="openExistingPolicy()">Review
+            <mat-radio-group [(ngModel)]="selectPolicy" aria-label="Select an option" id="addinsuranceradio">
+                <mat-radio-button value="1"
+                    [ngClass]="{'bu-primary': selectPolicy=='1','borderRadio':selectPolicy!='1','text-primary':selectPolicy=='1','text-custom':selectPolicy!='1'}"
+                    (click)="openExistingPolicy()">Review
                     existing policies
                     and suggest new</mat-radio-button>
-                <mat-radio-button [ngClass]="{'bu-primary': selectPolicy=='2','borderRadio':selectPolicy!='2','text-primary':selectPolicy=='2','text-custom':selectPolicy!='2'}"  value="2" >
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': selectPolicy=='2','borderRadio':selectPolicy!='2','text-primary':selectPolicy=='2','text-custom':selectPolicy!='2'}"
+                    value="2">
                     Suggest new insurance policies
                 </mat-radio-button>
             </mat-radio-group>
@@ -55,50 +59,60 @@
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="br"> </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <mat-checkbox  (change)="addPolicy($event,element)"></mat-checkbox>
+                        <mat-checkbox (change)="addPolicy($event,element)"></mat-checkbox>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef class="br"> Policy name </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element?.insurance?.insurerName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br"> Policy type </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.policyType ? element.policyType : '-'}}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef class="br"> Annual premium </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                    <td mat-cell *matCellDef="let element" class="br" appFormatNumber>
+                        {{element?.insurance?.premiumAmount}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="symbol">
                     <th mat-header-cell *matHeaderCellDef class="br"> Duration remaining </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element?.insurance?.durationRemaining}} </td>
                 </ng-container>
                 <ng-container matColumnDef="sum">
                     <th mat-header-cell *matHeaderCellDef class="br"> Sum insured </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.sum}}
-                        <span>4,00,000</span>
+                    <td mat-cell *matCellDef="let element" class="br">
+                            <span appFormatNumber>{{element.displayHolderSumInsured}}</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mname">
                     <th mat-header-cell *matHeaderCellDef class="br"> Member name </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.mname}} <span>Shilpa Jain</span> </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <span>{{element.displayHolderName}} </span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="advice">
                     <th mat-header-cell *matHeaderCellDef> Advice </th>
-                    <td mat-cell *matCellDef="let element" class="c-p"> <img *ngIf="element.advice == true"
-                            src="/assets/images/svg/plus-rounded.svg"
-                            (click)="openDialog(element,showInsurance)">{{element.adviceValue}} </td>
+                    <td mat-cell *matCellDef="let element" class="c-p"> 
+                        <span *ngIf="element.advice">
+                            {{element.advice}}
+                        </span>
+                        <span *ngIf="!element.advice">
+                                <img 
+                                src="/assets/images/svg/plus-rounded.svg" (click)="openDialog(element,showInsurance)">
+                        </span>
+                    </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
             <div>
                 <p class="text-danger" *ngIf="showError">Please select at least one policy</p>
-              </div>
+            </div>
         </div>
     </div>
 </div>
@@ -106,12 +120,12 @@
     <div class="row">
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16" >
+<div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">{{showExisting ? 'Previous' : 'Cancel'}}</h5>
         </div>
-        <div class="col-md-8 right text-right" *ngIf="showExisting == true"> 
+        <div class="col-md-8 right text-right" *ngIf="showExisting == true">
             <button mat-button class="btn-bottom br-0 text-inherit"
                 (click)="showHealthInsurance(showInsurance)">Procced</button>
         </div>
