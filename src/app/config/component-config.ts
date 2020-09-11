@@ -671,7 +671,7 @@ export const appConfig = {
   ACTIVITY_SUBTASK_EDIT: 'activity/task/sub-task/edit',
   ACTIVITY_ADD_COMMENT_TASK_SUBTASK: 'activity/task/sub-task/comment/add',
   ACTIVITY_EDIT_COMMENT_TASK_SUBTASK: 'activity/task/comment/edit',
-
+  ACTIVITY_ATTACHMENT_PREVIEW_LIST:'activity/task/attachment/list/get',
 
   GET_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
   EDIT_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',

@@ -71,13 +71,19 @@
             <div class="w-18 pl-16">
                 <h5 class="m-0 pt-12 ws-nowrap text-left">Task description</h5>
             </div>
-            <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="!isManual">
+            <div class="w-82 pl-15 pr-24 arn-ria align-items-center" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group mb-0">
-                    <mat-select formControlName="searchTemplateList" class="form-control">
+                    <mat-select formControlName="searchTemplateList" class="form-control" (selectionChange)="routeToTemplateAddition($event)">
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
                             {{ item.taskDescription }}
+                        </mat-option>
+                        <mat-option value="-1" class="d-flex align-items-center">
+                            <span class="d-flex align-items-center">
+                                <i class="material-icons">add</i> 
+                                Add task template
+                            </span>
                         </mat-option>
                     </mat-select>
                     <mat-error>
@@ -269,9 +275,9 @@
                 </mat-form-field>
 
             </div>
-            <div class="w-20">
+            <!-- <div class="w-20">
                 <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
-            </div>
+            </div> -->
         </div>
         <div class="row pb-24">
             <div class="w-18"></div>
@@ -336,7 +342,7 @@
                             </span>
 
                             <span>
-                                <img src="/assets/images/svg/delete.svg" alt="delete sub task" (click)="removeItemFromSubTask(i)">
+                                <img src="/assets/images/svg/delete.svg" alt="delete sub task" (click)="removeItemFromSubTask(item, i)">
                             </span>
                             {{ item.commentCount }} <img src="assets/images/svg/msg-chart.svg" class="pr-10 c-p">
                             <span class="material-icons c-p" (click)="changeTabState(item, 2)" *ngIf="item.status !== 1">
@@ -402,9 +408,9 @@
                 </div>
 
                 <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                    <i class="material-icons c-p mt-4 mr-3" (click)="appendSubTask(item, i)">
+                    <!-- <i class="material-icons c-p mt-4 mr-3" (click)="appendSubTask(item, i)">
                         add
-                    </i>
+                    </i> -->
                     <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
                         remove
                     </i>
@@ -413,9 +419,17 @@
         </div>
 
         <div class="row pt-14">
-            <div class="col-md-12 text-primitive f-14 pl-16 c-p" (click)="addSubTask(null)">
+            <div class="col-md-12 text-primitive f-14 pl-16 c-p" [matMenuTriggerFor]="menu3">
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
+            <mat-menu #menu3="matMenu" xPosition="after">
+                <button mat-menu-item (click)="getSubTaskFromTemplate()">
+                    Task Template
+                </button>
+                <button mat-menu-item (click)="addSubTask(null)" >
+                    Manual
+                </button>
+            </mat-menu>
         </div>
 
 
