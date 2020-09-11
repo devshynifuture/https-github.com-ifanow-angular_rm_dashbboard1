@@ -83,7 +83,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   isLoader: boolean;
   validatorType = ValidatorType;
   youtbeLink: SafeResourceUrl;
-
+  isDomain = new FormControl("1");
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -103,6 +103,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.emailTemplateList = []
     this.createAppearanceForm();
     this.addAppearanceFormListener();
+    this.getDoaminList();
   }
 
   loaderArray = [
@@ -179,7 +180,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const obj = {}
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
-        this.domainList = data
+        this.domainList = data;
+        this.youtbeLink = this.sanitizeUrl(data[0].videoLink);
+        this.domainName.setValue(data[0].videoLink);
+        this.copyUrl.setValue(data[0].videoLink);
       }
     })
   }
