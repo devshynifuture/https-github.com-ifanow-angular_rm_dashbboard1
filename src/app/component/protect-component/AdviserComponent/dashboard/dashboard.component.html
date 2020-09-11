@@ -175,7 +175,7 @@
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
                 <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
-                <span *ngIf="!subOverviewFlag" appFormatNumber [value]="totalSales">{{totalSales}}</span>
+                <span *ngIf="!subOverviewFlag">{{totalSales}}</span>
               </div>
             </div>
           </h3>
@@ -186,7 +186,7 @@
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
                 <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
-                <span appFormatNumber [value]="feeRecieved" *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
+                <span *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
               </div>
             </div>
           </h3>
