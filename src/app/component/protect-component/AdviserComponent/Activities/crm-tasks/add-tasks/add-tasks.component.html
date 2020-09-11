@@ -423,7 +423,7 @@
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
             <mat-menu #menu3="matMenu" xPosition="after">
-                <button mat-menu-item (click)="getSubTaskFromTemplate()">
+                <button mat-menu-item (click)="getSubTaskFromTemplate()" [disabled]="data===null">
                     Task Template
                 </button>
                 <button mat-menu-item (click)="addSubTask(null)" >
@@ -444,6 +444,7 @@
                     <div class="row">
                         <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
                             <div class="attachment-img">
+                                <img *ngIf="taskAttachmentPreviewList.length!==0" [src]="taskAttachmentPreviewList[i].attachmentUrl" alt="attachment preview" />
                             </div>
                         </div>
                         <mat-menu #menu2="matMenu">
@@ -624,6 +625,7 @@
                     <div class="row">
                         <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
                             <div class="attachment-img">
+                                <img *ngIf="subTaskAttachmentPreviewList.length!==0" [src]="subTaskAttachmentPreviewList[i].attachmentUrl" alt="sub task preview list" />
                             </div>
                         </div>
                         <mat-menu #menu2="matMenu">

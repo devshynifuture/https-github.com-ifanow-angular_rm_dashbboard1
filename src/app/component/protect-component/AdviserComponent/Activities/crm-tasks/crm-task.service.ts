@@ -38,6 +38,10 @@ export class CrmTaskService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ACTIVITY_GET_ATTACHMENT_DOWNLOAD_OF_TASK_SUBTASK, data);
   }
 
+  getAttachmentPreviewList(data){ 
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ACTIVITY_GET_ATTACHMENT_PREVIEW_LIST, data);
+  }
+
 
   // post calls
 
