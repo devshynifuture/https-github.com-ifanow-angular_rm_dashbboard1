@@ -327,24 +327,34 @@
                     <div class="col-md-6 text-right pr-0">
                         <div class="full-end">
 
-                            <span *ngIf="!!item.completionDate">
+                            <span *ngIf="!!item.completionDate" class="pr-10">
                                 {{ item.completionDate | date: 'dd MMM' }}
                             </span>
-                            <span *ngIf="!!item.profilePicUrl">
-                                <img [src]="item.profilePicUrl" alt="profilepic" class="pr-10 c-p">
-                            </span>
-                            <span *ngIf="!item.hasOwnProperty('profilePicUrl')">
-                                <img src="/assets/images/svg/men-2.svg" class="pr-10 c-p">
+                            <span *ngIf="!!item.profilePicUrl" class="pr-10">
+                                <img [src]="item.profilePicUrl" alt="profilepic" class="c-p">
                             </span>
 
-                            <span *ngIf="!item.hasOwnProperty('completionDate')">
-                                <img src="/assets/images/svg/cal1.svg" class="pr-10 c-p">
+                            <span *ngIf="item.hasOwnProperty('assignedToProfileUrl')" class="pr-10">
+                                <img [src]="item.assignedToProfileUrl" class="subTaskProfileAvatar" alt="subtask profile pic">
                             </span>
 
-                            <span>
+                            <span *ngIf="!item.hasOwnProperty('assignedToProfileUrl')" class="pr-10">
+                                <img src="/assets/images/svg/men-2.svg" class="c-p">
+                            </span>
+
+                            <span *ngIf="!item.hasOwnProperty('completionDate')" class="pr-10">
+                                <img src="/assets/images/svg/cal1.svg" class="c-p">
+                            </span>
+
+                            <span class="pr-10">
                                 <img src="/assets/images/svg/delete.svg" alt="delete sub task" (click)="removeItemFromSubTask(item, i)">
                             </span>
-                            {{ item.commentCount }} <img src="assets/images/svg/msg-chart.svg" class="pr-10 c-p">
+                            <span class="pr-10" *ngIf="item.commentsCount !== 0">
+                                {{ item.commentsCount }} 
+                            </span>
+                            <span class="pr-10">
+                                <img src="assets/images/svg/msg-chart.svg" class="c-p">
+                            </span>
                             <span class="material-icons c-p" (click)="changeTabState(item, 2)" *ngIf="item.status !== 1">
                                 keyboard_arrow_right
                             </span>
@@ -444,7 +454,7 @@
                     <div class="row">
                         <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
                             <div class="attachment-img">
-                                <img *ngIf="taskAttachmentPreviewList.length!==0" [src]="taskAttachmentPreviewList[i].attachmentUrl" alt="attachment preview" />
+                                <img *ngIf="taskAttachmentPreviewList.length!==0" [src]="taskAttachmentPreviewList ? taskAttachmentPreviewList[i].attachmentUrl : ''" alt="attachment preview" />
                             </div>
                         </div>
                         <mat-menu #menu2="matMenu">

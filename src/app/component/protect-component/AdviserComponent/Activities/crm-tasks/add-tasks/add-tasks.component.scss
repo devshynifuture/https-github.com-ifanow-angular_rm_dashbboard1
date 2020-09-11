@@ -48,11 +48,19 @@
   height: 62px;
   border: 1px solid #D9DEE1;
   text-align: center;
+  display: table-cell;
+  vertical-align: middle;
 
   img {
-    height: 64px;
-    width: auto;
+    height: auto;
+    width: 100%;
   }
+}
+
+.subTaskProfileAvatar{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 
 .uploadImgBox {
