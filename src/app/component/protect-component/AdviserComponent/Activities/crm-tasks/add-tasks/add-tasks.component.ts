@@ -99,8 +99,8 @@ export class AddTasksComponent implements OnInit {
 
   initPoint() {
     this.getTaskRecurringData()
-    this.getAttachmentPreviewList('task', this.data.id);
     if (this.data !== null) {
+      this.getAttachmentPreviewList('task', this.data.id);
       this.isManual = true;
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;

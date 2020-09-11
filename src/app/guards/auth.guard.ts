@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
       // if (state && state.url === '/login') {
       //   this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
       // }
-      if (state && state.url.includes('/login')) {
+      if (state && state.url.split('/').includes('login')) {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
           this.myRoute.navigate(['admin', 'dashboard']);
@@ -26,6 +26,14 @@ export class AuthGuard implements CanActivate {
           this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
         }
         return false;
+      } else if(state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')){
+        if(AuthService.getUserInfo().isRmLogin){
+          this.myRoute.navigate(['support', 'dashboard']);
+          return true;
+        } else {
+          this.myRoute.navigate(['/']);
+          return false;
+        }
       }
       // const user = this.authService.decode();
       //
@@ -39,7 +47,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
 
-      if (state && state.url.includes('/login')) {
+      if (state && state.url.split('/').includes('login')) {
         return true;
       }
       this.myRoute.navigate(['/login']);
