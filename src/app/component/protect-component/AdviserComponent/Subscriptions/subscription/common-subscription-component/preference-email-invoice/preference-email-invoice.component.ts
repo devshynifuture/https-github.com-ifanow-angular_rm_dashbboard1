@@ -5,6 +5,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
 import { AuthService } from "../../../../../../../auth-service/authService";
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -16,7 +18,21 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   storeData: any;
   logoText = '';
   advisorId;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   mailForm = new FormGroup({
     mail_body: new FormControl(''),
 
@@ -25,7 +41,8 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   fragmentData: any;
   popupHeaderText;
   constructor(private eventService: EventService, public authService: AuthService,
-    public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
+    public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2,
+    private subInjectService: SubscriptionInject) {
 
   }
 
@@ -77,9 +94,9 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   // dialogClose() {
   //   this.dialogRef.close();
   // }
-  dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
-    // this.dialogRef.close();
+
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 
@@ -89,24 +106,31 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
 
   save() {
     this.updateData(this.storeData);
-    this.dialogClose();
   }
 
   updateData(data) {
+    this.barButtonOptions.active = true;
     const obj = {
       subject: data.subject,
       body: data.body,
       advisorId: this.advisorId,
 
       // "advisorId":2727,
-      emailTemplateId: this.storeData.emailTemplateTypeId
+      emailTemplateId: this.storeData.emailTemplateId
     };
     this.subService.updateEmailTemplate(obj).subscribe(
-      data => this.getResponseData(data)
+      data => this.getResponseData(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.barButtonOptions.active = false;
+      }
     );
   }
 
   getResponseData(data) {
+    this.barButtonOptions.active = false;
+    this.eventService.openSnackBar("Updated sucessfully", "Dimiss")
+    this.close(true)
   }
 
   openDialog(data) {

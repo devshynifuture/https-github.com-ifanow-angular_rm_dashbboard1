@@ -468,7 +468,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getEmailTemplate();
-            this.getEmailTemplate()
           }
           rightSideDataSub.unsubscribe();
         }
