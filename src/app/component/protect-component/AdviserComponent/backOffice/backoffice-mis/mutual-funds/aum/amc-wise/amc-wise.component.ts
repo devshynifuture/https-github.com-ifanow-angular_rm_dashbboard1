@@ -300,6 +300,7 @@ export class AmcWiseComponent implements OnInit {
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.schemeWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'applicant':
@@ -317,6 +318,7 @@ export class AmcWiseComponent implements OnInit {
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.applicantWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
     }
@@ -342,6 +344,7 @@ export class AmcWiseComponent implements OnInit {
       sumAumTotal += element.totalAum;
       sumWeightInPercTotal += element.weightInPercentage;
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
 
     console.log('totalAumObj : ', totalAumObj);
     console.log('sumAumTotal : ', sumAumTotal);
