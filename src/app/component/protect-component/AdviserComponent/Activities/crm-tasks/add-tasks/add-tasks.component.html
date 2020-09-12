@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-2 full-center pr-0">
 
-            <i class="material-icons c-p" (click)="close()"> clear</i>
+            <i class="material-icons c-p" (click)="close(true)"> clear</i>
 
         </div>
     </div>
@@ -198,13 +198,11 @@
                             </div>
                         </mat-option> -->
 
-                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
+                        <mat-option *ngIf="showDefaultDropDownOnSearch && isLoading">
                             <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                                 <div class="row height24">
-                                    <div class="col-md-12 p-0">
-                                        <div class="relClass">
-                                            <div class="bar height24"></div>
-                                        </div>
+                                    <div class="col-md-12 p-0 relClass">
+                                        <div class="bar height24"></div>
                                     </div>
                                 </div>
                             </div>
@@ -275,17 +273,17 @@
                 </mat-form-field>
 
             </div>
-            <!-- <div class="w-20">
-                <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
-            </div> -->
-        </div>
-        <div class="row pb-24">
-            <div class="w-18"></div>
-            <div class="w-41 f-14 pl-15 pr-15 text-primitive roboto f-400">
-                <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this Recurring
-                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+            <div class="w-41 d-flex align-items-center">
+                <div class="f-14 text-primitive roboto f-400">
+                    <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this Recurring
+                    <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+                </div>
             </div>
         </div>
+        <!-- <div class="row pb-24">
+            <div class="w-18"></div>
+            
+        </div> -->
 
         <div class="row pt-40" *ngIf="isRecurringTaskForm">
             <div class="w-18 pl-15">
@@ -327,8 +325,8 @@
                     <div class="col-md-6 text-right pr-0">
                         <div class="full-end">
 
-                            <span *ngIf="!!item.completionDate" class="pr-10">
-                                {{ item.completionDate | date: 'dd MMM' }}
+                            <span *ngIf="!!item.dueDate" class="pr-10">
+                                {{ item.dueDate | date: 'dd MMM' }}
                             </span>
                             <span *ngIf="!!item.profilePicUrl" class="pr-10">
                                 <img [src]="item.profilePicUrl" alt="profilepic" class="c-p">
@@ -342,7 +340,7 @@
                                 <img src="/assets/images/svg/men-2.svg" class="c-p">
                             </span>
 
-                            <span *ngIf="!item.hasOwnProperty('completionDate')" class="pr-10">
+                            <span *ngIf="!item.hasOwnProperty('dueDate')" class="pr-10">
                                 <img src="/assets/images/svg/cal1.svg" class="c-p">
                             </span>
 
@@ -433,7 +431,7 @@
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
             <mat-menu #menu3="matMenu" xPosition="after">
-                <button mat-menu-item (click)="getSubTaskFromTemplate()" [disabled]="data===null">
+                <button mat-menu-item (click)="getSubTaskFromTemplate()" [disabled]="data===null || isManualOrTaskTemplate == 'manual'">
                     Task Template
                 </button>
                 <button mat-menu-item (click)="addSubTask(null)" >

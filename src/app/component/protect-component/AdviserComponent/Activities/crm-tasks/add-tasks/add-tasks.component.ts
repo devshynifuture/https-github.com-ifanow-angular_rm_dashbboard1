@@ -74,6 +74,8 @@ export class AddTasksComponent implements OnInit {
   addTaskFormSubscription: Subscription;
   taskAttachmentPreviewList: any = [];
   subTaskAttachmentPreviewList: any = [];
+  isManualOrTaskTemplate: any;
+  saveChangesSubTask: boolean;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -101,6 +103,11 @@ export class AddTasksComponent implements OnInit {
     this.getTaskRecurringData()
     if (this.data !== null) {
       this.getAttachmentPreviewList('task', this.data.id);
+      if(this.data.taskTemplateId ===0){
+        this.isManualOrTaskTemplate = 'manual';
+      } else {
+        this.isManualOrTaskTemplate = 'template';
+      }
       this.isManual = true;
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;
@@ -179,8 +186,6 @@ export class AddTasksComponent implements OnInit {
               this.subTaskAttachmentPreviewList = res;
               break;
           }
-        } else {
-          this.eventService.openSnackBar("No Data Found!", "DISMISS");
         }
       })
   }
@@ -255,7 +260,7 @@ export class AddTasksComponent implements OnInit {
         assignedTo: [data.assignedTo, Validators.required],
         taskDueDate: [moment(data.dueDateTimeStamp),],
         taskDescription: [data.des, Validators.required],
-        familyMemberId: [data.familyMemberId,],
+        familyMemberId: [data.familyMemberId, Validators.required],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -269,15 +274,17 @@ export class AddTasksComponent implements OnInit {
         assignedTo: ['', Validators.required],
         taskDueDate: ['', Validators.required],
       });
+
+      this.editSubTaskForm.valueChanges.subscribe(item=> this.saveChangesSubTask = true);
       this.selectClient(this.selectedClient);
     } else {
       this.addTaskForm = this.fb.group({
         searchTemplateList: ["",],
         searchClientList: ['', Validators.required],
         assignedTo: ["", Validators.required],
-        taskDueDate: ['',],
+        taskDueDate: ['', Validators.required],
         taskDescription: ['', Validators.required],
-        familyMemberId: ["",],
+        familyMemberId: ["", Validators.required],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -309,7 +316,19 @@ export class AddTasksComponent implements OnInit {
 
   makeTaskRecurring() {
     this.isRecurringTaskForm = !this.isRecurringTaskForm;
+    if(this.isRecurringTaskForm == true){
+      this.addTaskForm.get('continuesTill').setValidators(Validators.required);
+      this.addTaskForm.get('frequency').setValidators(Validators.required);
+      this.addTaskForm.get('taskTurnAroundTime').setValidators(Validators.required); 
+      this.addTaskForm.get('every').setValidators(Validators.required); 
+    } else {
+      this.addTaskForm.get('continuesTill').setErrors(null);
+      this.addTaskForm.get('frequency').setErrors(null);
+      this.addTaskForm.get('taskTurnAroundTime').setErrors(null);
+      this.addTaskForm.get('every').setErrors(null);
+    }
   }
+    
 
   changeTabState(subTaskItem, value) {
     if (value === 2) {
@@ -325,13 +344,13 @@ export class AddTasksComponent implements OnInit {
       if(this.subTaskAttachmentList.length!==0){
         this.getAttachmentPreviewList('subTask', subTaskItem.id);
       }
-      if (this.editSubTaskForm) {
+      if (this.editSubTaskForm !== undefined) {
         this.editSubTaskForm.patchValue({
           description: subTaskItem.description,
           turnAroundTime: subTaskItem.turnAroundTime,
           assignedTo: subTaskItem.assignedTo,
-          taskDueDate: moment(subTaskItem.taskDueDate)
-        })
+          taskDueDate: moment(subTaskItem.dueDate)
+        }, {emitEvent: false});
       } else {
         this.editSubTaskForm = this.fb.group({
           description: [subTaskItem.description, Validators.required],
@@ -341,8 +360,13 @@ export class AddTasksComponent implements OnInit {
         });
       }
 
+      this.tabState = value;
+
+    } else if(value === 1 && this.saveChangesSubTask === true){
+      this.eventService.openSnackBar("Please save changes!", "DISMISS");
+    } else {
+      this.tabState = value;
     }
-    this.tabState = value;
   }
 
   routeToTemplateAddition(event){
@@ -402,8 +426,8 @@ export class AddTasksComponent implements OnInit {
         id: this.selectedSubTask.id
       }
 
-      if (this.selectedSubTask.dueDate) {
-        let date = new Date(this.selectedSubTask.dueDate);
+      if (this.editSubTaskForm.get('taskDueDate').value) {
+        let date = new Date(this.editSubTaskForm.get('taskDueDate').value);
         
         let dueDate = date.getFullYear() + "-" + `${(date.getMonth() + 1) <= 9 ? '0' : ''}` + (date.getMonth() + 1) + '-' + `${(date.getDate()) <= 9 ? '0' : ''}` + date.getDate();
         data['dueDate'] = dueDate;
@@ -412,10 +436,18 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.saveEditedSubTaskValues(data)
         .subscribe(res => {
           if (res) {
-            console.log("edited response:", res)
-            this.eventService.openSnackBar('Sub task saved successfuly!', 'DISMISS');
+            console.log("edited response:", res);
+            if(this.subTaskList.length!==0){
+              this.subTaskList.map(c => {
+                if(c.id === this.selectedSubTask.id){
+                  c.dueDate = moment(this.editSubTaskForm.get('taskDueDate').value);
+                }
+              });
+            }
+            this.saveChangesSubTask = false;
+            this.eventService.openSnackBar('Sub-task saved successfully!', 'DISMISS');
           } else {
-            this.eventService.openSnackBar('Sub task saving failed!', 'DISMISS');
+            this.eventService.openSnackBar('Sub-task saving failed!', 'DISMISS');
           }
         }, err => console.error(err));
     } else {
@@ -858,7 +890,10 @@ export class AddTasksComponent implements OnInit {
   }
 
   getSubTaskFromTemplate(){
-    let subTaskFromPrefillList = this.prefillValue.subTaskList;
+    let subTaskFromPrefillList;
+    if(this.prefillValue){
+      subTaskFromPrefillList = this.prefillValue.subTaskList;
+    }
     if(subTaskFromPrefillList && subTaskFromPrefillList.length!==0){
       this.subTaskList = [];
       subTaskFromPrefillList.forEach(element => {
@@ -973,6 +1008,7 @@ export class AddTasksComponent implements OnInit {
           }
           arr.push(obj);
         });
+        this.isMainLoading = true;
         this.crmTaskService.addSubTaskActivity(arr)
             .subscribe(res => {
               if (res) {
@@ -981,6 +1017,7 @@ export class AddTasksComponent implements OnInit {
                   .subscribe(res => {
                     if (res) {
                       console.log(res);
+                      this.isMainLoading = false;
                       this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
                       this.close(true);
                     } else {
@@ -990,10 +1027,12 @@ export class AddTasksComponent implements OnInit {
               }
             });
       } else {
+        this.isMainLoading = true;
         this.crmTaskService.editActivityTask(editObj)
           .subscribe(res => {
             if (res) {
               console.log(res);
+              this.isMainLoading = false;
               this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
               this.close(true);
             } else {
@@ -1029,9 +1068,11 @@ export class AddTasksComponent implements OnInit {
         data['dueDate'] = this.addTaskForm.get('taskDueDate').value.format("YYYY-MM-DD");
       }
       console.log("this is add task create data", data);
+      this.isMainLoading = true;
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
+            this.isMainLoading = true;
             console.log("response from add task", res);
             this.eventService.openSnackBar('Task added successfully', "DISMISS");
             this.close(true)
