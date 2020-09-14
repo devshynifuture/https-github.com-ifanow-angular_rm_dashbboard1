@@ -24,22 +24,22 @@ export class OpenGalleryPlanComponent implements OnInit {
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
-  selectedTab:number = 0;
+  selectedTab: number = 0;
   showSpinner = false;
-  anyDetailsChanged:boolean; // check if any details have been updated
+  anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   sendToCopy: any;
-  constructor( public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
-    @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService,private event : EventService,
-    private subInjectService : SubscriptionInject,private orgSetting : OrgSettingServiceService,
-    private utilService: UtilService,) { 
-      this.advisorId = AuthService.getAdvisorId()
+  constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
+    private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
+    private utilService: UtilService, ) {
+    this.advisorId = AuthService.getAdvisorId()
     this.sendToCopy = this.dataGet.bank
-    }
+  }
 
   ngOnInit() {
-   //this.getdataForm('')
-   this.getPersonalInfo();
+    //this.getdataForm('')
+    this.getPersonalInfo();
   }
 
   getPersonalInfo() {
@@ -64,9 +64,9 @@ export class OpenGalleryPlanComponent implements OnInit {
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
               advisorId: this.advisorId,
-              goalName:this.sendToCopy.name,
-              imageURL: responseObject.url,
-              goalTypeId:this.sendToCopy.goalTypeId,
+              goalName: this.sendToCopy.name,
+              imageURL: responseObject.secure_url,
+              goalTypeId: this.sendToCopy.goalTypeId,
             }
             this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
@@ -93,19 +93,19 @@ export class OpenGalleryPlanComponent implements OnInit {
   }
 
   // save the changes of current page only
-  saveCurrentPage(){
+  saveCurrentPage() {
     // selected tab 1 - profile image
     // 2 - profile details
     if (this.selectedTab == 1) {
-     // this.saveImage();
+      // this.saveImage();
     } else {
-      
+
     }
   }
 
   // reset the variables when user changes tabs
   // make sure to reset to latest updates
-  resetPageVariables(){
+  resetPageVariables() {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';

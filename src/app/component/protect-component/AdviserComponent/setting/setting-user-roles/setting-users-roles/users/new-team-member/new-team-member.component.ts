@@ -148,7 +148,7 @@ export class NewTeamMemberComponent implements OnInit {
             if (status == 200) {
               this.imageLoader = false;
               const responseObject = JSON.parse(response);
-              this.logoImg = responseObject.url;
+              this.logoImg = responseObject.secure_url;
               // this.logUrl.controls.url.setValue(this.imageData);
               this.uploadedImage = JSON.stringify(responseObject);
               this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
