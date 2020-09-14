@@ -7,12 +7,12 @@ import { EmailListingComponent } from '../../../../../AdviserComponent/Email/ema
 const routes: Routes = [
   {
     path: '', component: OverviewEmailComponent,
-    children: [
-      { path: 'inbox', component: EmailListingComponent },
-      { path: 'sent', component: EmailListingComponent },
-      { path: 'draft', component: EmailListingComponent },
-      { path: 'trash', component: EmailListingComponent },
-    ]
+    // children: [
+    //   { path: 'inbox', component: EmailListingComponent },
+    //   { path: 'sent', component: EmailListingComponent },
+    //   { path: 'draft', component: EmailListingComponent },
+    //   { path: 'trash', component: EmailListingComponent },
+    // ]
   },
 ];
 

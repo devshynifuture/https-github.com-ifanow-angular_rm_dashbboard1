@@ -496,6 +496,7 @@ export class ClientWiseComponent implements OnInit {
       sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
       this.arrayOfExcelData.push(data);
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
@@ -525,6 +526,7 @@ export class ClientWiseComponent implements OnInit {
           sumWeightInPercTemp =
             sumWeightInPercTemp + element.weightInPercentage;
         });
+        sumWeightInPercTemp = Math.round(sumWeightInPercTemp);
         this.investorWiseTotal = [
           "Total",
           "",
@@ -549,6 +551,7 @@ export class ClientWiseComponent implements OnInit {
           sumWeightInPercTemp =
             sumWeightInPercTemp + element.weightInPercentage;
         });
+        sumWeightInPercTemp = Math.round(sumWeightInPercTemp);
         this.schemeWiseTotal = [
           "Total",
           "",
@@ -574,16 +577,17 @@ export class ClientWiseComponent implements OnInit {
           sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
           sumWeightInPercTemp =
             sumWeightInPercTemp + element.weightInPercentage;
-          this.scheme2WiseTotal = [
-            "Total",
-            "",
-            "",
-            sumAumTotalTemp,
-            "",
-            Math.round(sumWeightInPercTemp),
-          ];
         });
-        break;
+        sumWeightInPercTemp = Math.round(sumWeightInPercTemp);
+        this.scheme2WiseTotal = [
+          "Total",
+          "",
+          "",
+          sumAumTotalTemp,
+          "",
+          Math.round(sumWeightInPercTemp),
+        ];
+      break;
     }
   }
 

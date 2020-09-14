@@ -56,6 +56,8 @@ export class ExcelMisSipService {
             });
             ws.addRow(['','','','']);
             initialRowCount += 1;
+            ws.addRow(['Report as on - ', curDateFormat]);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
@@ -138,6 +140,8 @@ export class ExcelMisSipService {
                 initialRowCount += 1;
             });
             ws.addRow(['','','','']);
+            initialRowCount += 1;
+            ws.addRow(['Report as on - ', curDateFormat]);
             initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
@@ -1054,6 +1058,8 @@ export class ExcelMisSipService {
             });
             ws.addRow(['','','','']);
             initialRowCount += 1;
+            ws.addRow(['Report as on - ', curDateFormat]);
+            initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
             initialRowCount = 5;
@@ -1369,6 +1375,8 @@ export class ExcelMisSipService {
                 initialRowCount += 1;
             });
             ws.addRow(['','','','']);
+            initialRowCount += 1;
+            ws.addRow(['Report as on - ', curDateFormat]);
             initialRowCount += 1;
         } else {
             ws.getCell('A3').value = 'Report as on - ' + curDateFormat;
