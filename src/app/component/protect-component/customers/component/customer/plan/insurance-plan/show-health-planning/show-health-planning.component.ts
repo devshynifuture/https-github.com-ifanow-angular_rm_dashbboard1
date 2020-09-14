@@ -61,8 +61,8 @@ export class ShowHealthPlanningComponent implements OnInit {
             this.dataSource1 =this.getFilterData(data.suggested) ;
             console.log(data);
           }
-          this.dataSource = data.current;
-        }
+          this.dataSource = data.current;                                                                                                                                                                                                                                                                                                                                                                                                             
+        }                                                                                                                                                                                                                                                                                                                                                                                                             
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -154,6 +154,7 @@ export class ShowHealthPlanningComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getStepOneAndTwoData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
