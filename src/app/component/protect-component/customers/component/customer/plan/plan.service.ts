@@ -253,10 +253,10 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.NEED_BASED_ANALYSIS, data)
   }
   getGeneralInsuranceAdvice(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_ADVICE_GET, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_ADVICE_GET+ 'id=' + data, '')
   }
   getGeneralInsuranceSuggestPolicy(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_SUGGEST_POLICY, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_SUGGEST_POLICY+ 'id=' + data, '')
   }
   updateCurrentPolicyGeneralInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_CURRENT_POLICY_GI, data)

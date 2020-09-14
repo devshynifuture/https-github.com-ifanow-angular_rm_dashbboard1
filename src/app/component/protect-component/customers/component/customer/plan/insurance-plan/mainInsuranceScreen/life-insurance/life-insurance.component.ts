@@ -182,7 +182,7 @@ export class LifeInsuranceComponent implements OnInit {
     // );
     const detailofInsurance = this.planService.getDetailsInsurance(obj);
     const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
-    const recommndationGetGi = this.planService.getGeneralInsuranceNeedAnalysis(this.inputData.id);
+    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
     const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
     const recommndationGet = this.planService.getInsuranceAdvice(obj2);
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
