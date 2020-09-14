@@ -1,21 +1,21 @@
-<div class="p-44">
-    <h1 mat-dialog-title>Please Select your custom date For filtering</h1>
+<div class="p-24">
+    <h1 mat-dialog-title class="m-0">Please Select your custom date For filtering</h1>
     <div mat-dialog-content>
-        <div class="row p-20" [formGroup]="customDateForm">
-            <div class="col-md-12 form-group">
-                <mat-form-field>
-                    <mat-label>From Date</mat-label>
+        <div class="row pt-20 pb-8" [formGroup]="customDateForm">
+            <div class="col-md-12 form-group p-0">
+                <mat-form-field class="ba-date">
+
                     <input class="form-control b-0" [min]="minDate" [max]="maxDate" formControlName="fromDate"
-                        (click)="picker1.open()" matInput [matDatepicker]="picker1">
+                        (click)="picker1.open()" matInput [matDatepicker]="picker1" class="form-control b-0">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="col-md-12 form-group">
-                <mat-form-field>
-                    <mat-label>To Date</mat-label>
+            <div class="col-md-12 form-group p-0">
+                <mat-form-field class="ba-date">
+
                     <input class="form-control b-0" [min]="minDate" [max]="maxDate" formControlName="toDate"
-                        (click)="picker2.open()" matInput [matDatepicker]="picker2">
+                        (click)="picker2.open()" matInput [matDatepicker]="picker2" class="form-control b-0">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -23,9 +23,9 @@
         </div>
 
     </div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions class="pb-20">
         <button mat-button (click)="onNoClick()">Cancel</button>
-        <button mat-button mat-dialog-close cdkFocusInitial (click)="setDateValue()"
+        <button mat-button class="btn-primary" mat-dialog-close cdkFocusInitial (click)="setDateValue()"
             [disabled]="customDateForm.invalid">Set</button>
     </div>
 
