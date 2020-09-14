@@ -750,10 +750,22 @@ export class AddTasksComponent implements OnInit {
   }
 
   uploadAttachmentToAws(value, choice) {
-    const data = {
-      taskId: value.taskId,
-      attachmentName: value.attachmentName,
-      s3Uuid: value.s3Uuid
+    let data;
+    switch(choice){
+      case 'task':
+        data = {
+          taskId: value.taskId,
+          attachmentName: value.attachmentName,
+          s3Uuid: value.s3Uuid
+        }
+      break;
+      case 'subTask':
+        data = {
+          subTaskId: value.subTaskId,
+          attachmentName: value.attachmentName,
+          s3Uuid: value.s3Uuid
+        }
+      break;
     }
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
@@ -962,7 +974,11 @@ export class AddTasksComponent implements OnInit {
         });
       });
     }
-    taskNumberForSubTask = 1;
+    if(this.subTaskList.length !==0){
+      taskNumberForSubTask = this.getSubTaskNumber();
+    } else {
+      taskNumberForSubTask = 1;
+    }
     if((this.addTaskForm.get('subTask') as FormArray).value.length !==0){
       (this.addTaskForm.get('subTask') as FormArray).value.forEach(element => {
         subTaskArr.push({
@@ -970,7 +986,8 @@ export class AddTasksComponent implements OnInit {
           assignedTo: element.ownerId ? element.ownerId: element.assignedTo,   //(same as assignedTo above)
           description: element.description,
           turnAroundTime: element.turnAroundTime
-        })
+        });
+        taskNumberForSubTask+=1;
       });
     }
 
@@ -996,16 +1013,17 @@ export class AddTasksComponent implements OnInit {
 
       if(this.subTask.length!==0){
         let arr = [];
+        let subTaskTaskNumber = this.getSubTaskNumber();
         (this.subTask as FormArray).value.forEach((element, index) => {
           // this.appendSubTask(element, index);
-
           const obj = {
             taskId: this.data.id,
-            taskNumber: this.getSubTaskNumber(),
+            taskNumber: subTaskTaskNumber,
             assignedTo: element.assignedTo,
             description: element.description,
             turnAroundTime: element.turnAroundTime
           }
+          subTaskTaskNumber += 1;;
           arr.push(obj);
         });
         this.isMainLoading = true;
@@ -1072,7 +1090,7 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
-            this.isMainLoading = true;
+            this.isMainLoading = false;
             console.log("response from add task", res);
             this.eventService.openSnackBar('Task added successfully', "DISMISS");
             this.close(true)
