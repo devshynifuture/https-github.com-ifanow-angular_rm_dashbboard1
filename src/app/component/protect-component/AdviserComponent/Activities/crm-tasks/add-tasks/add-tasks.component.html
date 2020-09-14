@@ -263,7 +263,7 @@
 
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0 remove-top-flex">
                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
-                    <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" (input)="preventDefault($event)"
                         (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -416,7 +416,7 @@
                 </div>
 
                 <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                    <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3"*ngIf="i !== subTask.length-1">
+                    <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3" *ngIf="i === subTask.length-1">
                         add
                     </i>
                     <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
@@ -506,6 +506,7 @@
                             </h5>
                         </div>
                         <div class="col-md-4 editDelectText text-right">
+                            <a class="f-12 c-p" (click)="replyToComment(item, i)">Reply</a>
                             <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
                             <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
                                 (click)="saveEditedComment(item, 'task', i, $event)">Save</a>
@@ -605,7 +606,7 @@
 
             <div class="w-30 pl-0 pr-15 form-group mb-0 remove-top-flex">
                 <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
-                    <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" (input)="preventDefault($event)"
                         (focus)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>

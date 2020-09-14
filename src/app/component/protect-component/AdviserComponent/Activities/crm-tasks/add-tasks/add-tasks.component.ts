@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
@@ -13,6 +14,7 @@ import { SettingsService } from '../../../setting/settings.service';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/http-service/http-service';
 import { Subscription, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-tasks',
@@ -77,6 +79,7 @@ export class AddTasksComponent implements OnInit {
   isManualOrTaskTemplate: any;
   saveChangesSubTask: boolean;
   shouldShowAddSubTaskLabel: boolean = false;
+  dueDateMinDate = new Date();
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -89,7 +92,8 @@ export class AddTasksComponent implements OnInit {
     private eventService: EventService,
     private settingsService: SettingsService,
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
 
   ) { }
 
@@ -132,7 +136,7 @@ export class AddTasksComponent implements OnInit {
     } else if(this.data !== null && this.subTaskList.length ===0){
       this.shouldShowAddSubTaskLabel = true;
     } else if(this.data !== null && this.subTaskList.length !==0) {
-      this.shouldShowAddSubTaskLabel = false;
+      this.shouldShowAddSubTaskLabel = true;
     }
     this.getTaskTemplateList();
     this.getTeamMemberList();
@@ -199,6 +203,33 @@ export class AddTasksComponent implements OnInit {
           }
         }
       })
+  }
+
+  openConfirmDialog(){
+    const dialogData = {
+      header: "DISCARD CHANGES",
+      body: "Are you sure you want to discard changes you have made?",
+      body2: "This cannot be undone.",
+      btnNo: "DELETE",
+      btnYes: "CANCEL",
+      positiveMethod: () => {
+        this.close(true);
+      },
+      negativeMethod: () => {
+        dialogRef.close();
+      },
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: "400px",
+      data: dialogData,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => { });
+  }
+
+  replyToComment(item, index) {
+    
   }
 
   searchClientFamilyMember(value){
@@ -701,7 +732,7 @@ export class AddTasksComponent implements OnInit {
     if(this.subTaskList.length === 0 && this.data !==null){
       this.showNoSubTaskFoundError = true;
     }
-    if(this.subTaskList.length ===0){
+    if(this.subTask.length ===0){
       this.shouldShowAddSubTaskLabel = true;
     }
   }
@@ -870,6 +901,29 @@ export class AddTasksComponent implements OnInit {
       } else {
         this.eventService.openSnackBar("Collaborator already exists!", "DISMISS");
       }
+    }
+  }
+
+  onAddReplyOnCommentTaskSubTask(data, choice){
+    let obj;
+    switch(choice) {
+      case 'task':
+        obj = {
+          taskId:10618, //(for sub task comments subTaskId)
+          userId:103092,
+          commentMsg: "reply",
+          parentId:79 //(new param, id of comment to which its replying)
+        }
+        break;
+      case 'subTask':
+        obj = {
+          subTaskId:10618, //(for sub task comments subTaskId)
+          userId:103092,
+          commentMsg: "reply",
+          parentId:79 //(new param, id of comment to which its replying)
+        }
+        break;
+
     }
   }
 
