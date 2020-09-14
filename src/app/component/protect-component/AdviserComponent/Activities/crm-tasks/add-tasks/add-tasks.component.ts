@@ -76,6 +76,7 @@ export class AddTasksComponent implements OnInit {
   subTaskAttachmentPreviewList: any = [];
   isManualOrTaskTemplate: any;
   saveChangesSubTask: boolean;
+  shouldShowAddSubTaskLabel: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -122,6 +123,16 @@ export class AddTasksComponent implements OnInit {
       this.showNoSubTaskFoundError = true;
     } else {
       this.showNoSubTaskFoundError = false;
+    }
+
+    if(this.data === null && this.subTaskList.length == 0){
+      this.shouldShowAddSubTaskLabel = true;
+    } else if(this.data == null && this.subTaskList.length!==0){
+      this.shouldShowAddSubTaskLabel = false;
+    } else if(this.data !== null && this.subTaskList.length ===0){
+      this.shouldShowAddSubTaskLabel = true;
+    } else if(this.data !== null && this.subTaskList.length !==0) {
+      this.shouldShowAddSubTaskLabel = false;
     }
     this.getTaskTemplateList();
     this.getTeamMemberList();
@@ -678,6 +689,7 @@ export class AddTasksComponent implements OnInit {
   addSubTask(item) {
     this.showSubTaskHeading = true;
     this.showNoSubTaskFoundError = false;
+    this.shouldShowAddSubTaskLabel = false;
     this.subTask.push(this.getSubTaskForm(item));
   }
 
@@ -688,6 +700,9 @@ export class AddTasksComponent implements OnInit {
     }
     if(this.subTaskList.length === 0 && this.data !==null){
       this.showNoSubTaskFoundError = true;
+    }
+    if(this.subTaskList.length ===0){
+      this.shouldShowAddSubTaskLabel = true;
     }
   }
 
@@ -750,10 +765,22 @@ export class AddTasksComponent implements OnInit {
   }
 
   uploadAttachmentToAws(value, choice) {
-    const data = {
-      taskId: value.taskId,
-      attachmentName: value.attachmentName,
-      s3Uuid: value.s3Uuid
+    let data;
+    switch(choice){
+      case 'task':
+        data = {
+          taskId: value.taskId,
+          attachmentName: value.attachmentName,
+          s3Uuid: value.s3Uuid
+        }
+      break;
+      case 'subTask':
+        data = {
+          subTaskId: value.subTaskId,
+          attachmentName: value.attachmentName,
+          s3Uuid: value.s3Uuid
+        }
+      break;
     }
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
@@ -905,7 +932,13 @@ export class AddTasksComponent implements OnInit {
           this.subTaskList.push(element);
         }
       });
+      if(this.subTaskList.length ===0){
+        this.shouldShowAddSubTaskLabel = true;
+      } else {
+        this.shouldShowAddSubTaskLabel = false;
+      }
     } else {
+      this.shouldShowAddSubTaskLabel = false;
       this.eventService.openSnackBar('Subtask not present in task template', "DISMISS");
     }
   }
@@ -962,7 +995,11 @@ export class AddTasksComponent implements OnInit {
         });
       });
     }
-    taskNumberForSubTask = 1;
+    if(this.subTaskList.length !==0){
+      taskNumberForSubTask = this.getSubTaskNumber();
+    } else {
+      taskNumberForSubTask = 1;
+    }
     if((this.addTaskForm.get('subTask') as FormArray).value.length !==0){
       (this.addTaskForm.get('subTask') as FormArray).value.forEach(element => {
         subTaskArr.push({
@@ -970,7 +1007,8 @@ export class AddTasksComponent implements OnInit {
           assignedTo: element.ownerId ? element.ownerId: element.assignedTo,   //(same as assignedTo above)
           description: element.description,
           turnAroundTime: element.turnAroundTime
-        })
+        });
+        taskNumberForSubTask+=1;
       });
     }
 
@@ -996,16 +1034,17 @@ export class AddTasksComponent implements OnInit {
 
       if(this.subTask.length!==0){
         let arr = [];
+        let subTaskTaskNumber = this.getSubTaskNumber();
         (this.subTask as FormArray).value.forEach((element, index) => {
           // this.appendSubTask(element, index);
-
           const obj = {
             taskId: this.data.id,
-            taskNumber: this.getSubTaskNumber(),
+            taskNumber: subTaskTaskNumber,
             assignedTo: element.assignedTo,
             description: element.description,
             turnAroundTime: element.turnAroundTime
           }
+          subTaskTaskNumber += 1;;
           arr.push(obj);
         });
         this.isMainLoading = true;
@@ -1072,7 +1111,7 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
-            this.isMainLoading = true;
+            this.isMainLoading = false;
             console.log("response from add task", res);
             this.eventService.openSnackBar('Task added successfully', "DISMISS");
             this.close(true)

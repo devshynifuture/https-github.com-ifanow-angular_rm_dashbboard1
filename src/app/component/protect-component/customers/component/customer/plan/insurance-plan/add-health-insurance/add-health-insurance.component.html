@@ -54,7 +54,7 @@
                 to plan
                 for different health<br>
                 insurance policies separately then only select the relevant policies you wish to plan for. </p>
-            <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+            <table mat-table  *ngIf="dataSource2?.length > 0 " [dataSource]="dataSource2" class="mt-8" id="table-low">
 
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="br"> </th>
@@ -110,6 +110,10 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
+            <div *ngIf="dataSource2?.length == 0 " class="d-flex flex-column align-items-center">
+                    <img class="width400" src="assets/images/svg/clients-img.svg">
+                    <h4 class="text-center pt-12">No data found</h4>
+                </div>
             <div>
                 <p class="text-danger" *ngIf="showError">Please select at least one policy</p>
             </div>
@@ -123,11 +127,13 @@
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">{{showExisting ? 'Previous' : 'Cancel'}}</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">{{inputData?.flag == 'suggestExistingPolicy' ? 'Cancel' : showExisting ? 'Previous'  : 'Cancel'}}</h5>
         </div>
         <div class="col-md-8 right text-right" *ngIf="showExisting == true">
-            <button mat-button class="btn-bottom br-0 text-inherit"
+            <button *ngIf="inputData?.flag != 'suggestExistingPolicy'" mat-button class="btn-bottom br-0 text-inherit"
                 (click)="showHealthInsurance(showInsurance)">Procced</button>
+                <button mat-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" class="btn-bottom br-0 text-inherit"
+                (click)="showHealthInsurance(showInsurance)">Save</button>
         </div>
     </div>
 </div>

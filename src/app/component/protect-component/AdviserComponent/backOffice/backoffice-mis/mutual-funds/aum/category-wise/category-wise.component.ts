@@ -444,6 +444,7 @@ export class CategoryWiseComponent implements OnInit {
       sumAumTotal = sumAumTotal + element.totalAum;
       sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
@@ -475,6 +476,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
+        sumTotalWeightInPercTemp = Math.round(sumTotalWeightInPercTemp);
         this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'schemes':
@@ -494,6 +496,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
+        sumTotalWeightInPercTemp = Math.round(sumTotalWeightInPercTemp);
         this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
       case 'applicant':
@@ -514,6 +517,7 @@ export class CategoryWiseComponent implements OnInit {
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
+        sumTotalWeightInPercTemp = Math.round(sumTotalWeightInPercTemp);
         this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, Math.round(sumTotalWeightInPercTemp)];
         break;
     }

@@ -336,6 +336,7 @@ export const appConfig = {
   GI_NEED_ANALYSIS_GET:'insurance/planning/general/insurance/need/analysis/get?',
   GENERAL_INSURANCE_ADD:'insurance/planning/general/insurance/planning/add',
   GENERAL_INSURANCE_REVIEW_GET:'insurance/planning/general/insurance/review/get',
+  GENERAL_INSURANCE_CURRENT_POLICY_GET:'insurance/planning/general/insurance/current-policies/add/more/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -678,6 +679,7 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT_TASK_SUBTASK: 'activity/task/sub-task/comment/add',
   ACTIVITY_EDIT_COMMENT_TASK_SUBTASK: 'activity/task/comment/edit',
   ACTIVITY_GET_ATTACHMENT_PREVIEW_LIST:'activity/task/attachment/list/get',
+  ACTIVITY_POST_TASK_COMMENT_REPLIES: 'activity/task/sub-task/comment/add',
 
   GET_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
   EDIT_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
