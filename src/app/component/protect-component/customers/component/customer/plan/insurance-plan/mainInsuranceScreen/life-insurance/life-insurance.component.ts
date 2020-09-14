@@ -107,7 +107,7 @@ export class LifeInsuranceComponent implements OnInit {
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   inputReceive: any;
-  needAnalysisData: { heading: string; logo: string; value?: undefined; header?: undefined; smallHeading?: undefined; insuranceType?: undefined; subHeading?: undefined; } | { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
+  needAnalysisData: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -123,6 +123,7 @@ export class LifeInsuranceComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('this life insurance',data)
     this.setDetails(data)
   }
 
@@ -153,6 +154,9 @@ export class LifeInsuranceComponent implements OnInit {
         if (element.heading == data.heading) {
           this.logo = element.logo
           this.needAnalysisData = element
+          this.needAnalysisData.id = data.id
+         // Object.assign( this.needAnalysisData.id, {id: data.id});
+          //Object.assign( this.needAnalysisData, {id: data.id});
         }
       });
       this.getDetailsInsurance()
