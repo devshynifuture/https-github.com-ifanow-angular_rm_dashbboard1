@@ -336,6 +336,7 @@ export const appConfig = {
   GI_NEED_ANALYSIS_GET:'insurance/planning/general/insurance/need/analysis/get?',
   GENERAL_INSURANCE_ADD:'insurance/planning/general/insurance/planning/add',
   GENERAL_INSURANCE_REVIEW_GET:'insurance/planning/general/insurance/review/get',
+  GENERAL_INSURANCE_CURRENT_POLICY_GET:'insurance/planning/general/insurance/current-policies/add/more/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
