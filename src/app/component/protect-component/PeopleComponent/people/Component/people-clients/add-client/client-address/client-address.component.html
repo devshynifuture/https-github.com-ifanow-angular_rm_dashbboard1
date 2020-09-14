@@ -79,8 +79,8 @@
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
-                        formControlName="addressLine2" class="form-control">
+                    <input #placeSearch spellcheck="off" placeholder="Block/locality" autocomplete="off" #add2 matInput
+                        maxlength="100" formControlName="addressLine2" class="form-control">
                     <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>

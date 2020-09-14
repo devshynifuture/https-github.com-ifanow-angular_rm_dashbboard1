@@ -649,7 +649,7 @@ export class DashboardGuideDialogComponent implements OnInit {
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
               id: this.advisorId,
-              profilePic: responseObject.url
+              profilePic: responseObject.secure_url
             };
             this.settingService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.imgURL = jsonDataObj.profilePic;
