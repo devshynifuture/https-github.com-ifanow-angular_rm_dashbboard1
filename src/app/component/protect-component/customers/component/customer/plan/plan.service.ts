@@ -270,4 +270,7 @@ export class PlanService {
   getGeneralInsuranceReview(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_REVIEW_GET, data)
   }
+  getCurrentPolicyAddMore(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_CURRENT_POLICY_GET, data)
+  }
 }

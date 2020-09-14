@@ -56,13 +56,45 @@ export class ShowHealthPlanningComponent implements OnInit {
     this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
       data => {
         if(data){
-          console.log(data);
+          if (data) {
+            this.dataSource =this.getFilterData(data.current) ;
+            this.dataSource1 =this.getFilterData(data.suggested) ;
+            console.log(data);
+          }
+          this.dataSource = data.current;
         }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
+  }
+  getFilterData(array){
+    if(array){
+      array.forEach(singleInsuranceData => {
+        if (singleInsuranceData.insuranceDetails && singleInsuranceData.insuranceDetails.insuredMembers.length > 0) {
+          singleInsuranceData.displayHolderName = singleInsuranceData.insuranceDetails.insuredMembers[0].name;
+          singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured;
+          if (singleInsuranceData.insuranceDetails.insuredMembers.length > 1) {
+            for (let i = 1; i < singleInsuranceData.insuranceDetails.insuredMembers.length; i++) {
+              if (singleInsuranceData.insuranceDetails.insuredMembers[i].name) {
+                const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
+                singleInsuranceData.displayHolderName += ', ' + firstName;
+                const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
+                singleInsuranceData.displayHolderSumInsured += ', ' + firstSumInsured;
+              }
+            }
+          }
+        } else {
+          singleInsuranceData.displayHolderName = '';
+          singleInsuranceData.displayHolderSumInsured = '';
+        }
+      });
+    }else{
+      array=[]
+    }
+
+    return array;
   }
   close(data) {
     const fragmentData = {
@@ -110,8 +142,9 @@ export class ShowHealthPlanningComponent implements OnInit {
     } else {
       data.showExisting = true
     }
+    data.flag = "suggestExistingPolicy";
     const fragmentData = {
-      flag: 'opencurrentpolicies',
+      flag: 'suggestExistingPolicy',
       data,
       componentName: AddHealthInsuranceComponent,
       id: 1,
