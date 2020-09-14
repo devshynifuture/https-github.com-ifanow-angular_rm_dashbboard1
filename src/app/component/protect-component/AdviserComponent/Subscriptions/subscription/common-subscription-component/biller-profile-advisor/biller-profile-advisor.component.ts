@@ -155,7 +155,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
-            this.imgURL = responseObject.url;
+            this.imgURL = responseObject.secure_url;
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');

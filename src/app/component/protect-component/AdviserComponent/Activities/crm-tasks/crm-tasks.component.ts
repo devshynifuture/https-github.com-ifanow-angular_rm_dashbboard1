@@ -29,7 +29,7 @@ export class CrmTasksComponent implements OnInit {
   infiniteScrollingFlag = false;
   filterFormControl = new FormControl('');
 
-  @ViewChild(MatSort, { static:false }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   @ViewChild('tableEl', { static: false }) tableEl;
   filterValueId: any;
@@ -74,7 +74,7 @@ export class CrmTasksComponent implements OnInit {
 
   openDateDialog() {
     const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent, {
-      width: '663px',
+      width: '35%',
       data: ''
     })
 
@@ -107,13 +107,13 @@ export class CrmTasksComponent implements OnInit {
     return this.taskStatus.find(item => item.id === taskStatus).name;
   }
 
-  setFilterToDefault(){
-    this.filterFormControl.patchValue(''); 
+  setFilterToDefault() {
+    this.filterFormControl.patchValue('');
     this.isFilterSet = false;
     this.initPoint();
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
@@ -183,7 +183,7 @@ export class CrmTasksComponent implements OnInit {
         } else {
 
           this.dataSource.data = (this.finalTaskList.length > 0) ? this.finalTaskList : null;
-          this.dataSource.sort = (this.finalTaskList.length > 0) ? this.sort: null;
+          this.dataSource.sort = (this.finalTaskList.length > 0) ? this.sort : null;
 
           this.isLoading = false;
           this.infiniteScrollingFlag = false;

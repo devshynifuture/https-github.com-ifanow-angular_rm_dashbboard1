@@ -86,7 +86,7 @@ export class UpdateClientProfileComponent implements OnInit {
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
               clientId: this.clientId,
-              profilePicUrl: responseObject.url
+              profilePicUrl: responseObject.secure_url
             };
             this.cusService.updateClientProfilePic(jsonDataObj).subscribe((res) => {
               this.barButtonOptions.active = false;
