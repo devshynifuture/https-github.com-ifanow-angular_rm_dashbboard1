@@ -465,12 +465,29 @@
                         </div>
                         <mat-menu #menu2="matMenu">
                             <button mat-menu-item (click)="downloadAttachment(item)">
-                                <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
-                                Download
+                                <div class="row">
+                                    <div class="col-md-4 p-0">
+                                        <img src="/assets/images/svg/download-icon.svg" class="h-23"
+                                            alt="download attachment image">
+                                    </div>
+                                    <div class="col-md-8 p-0">
+                                        Download
+                                    </div>
+                                </div>
+
+
                             </button>
                             <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'task')">
-                                <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
-                                Remove
+                                <div class="row">
+                                    <div class="col-md-4 p-0">
+                                        <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
+                                    </div>
+                                    <div class="col-md-8 p-0">
+                                        Remove
+                                    </div>
+                                </div>
+
+
                             </button>
                         </mat-menu>
                         <div class="col-md-8 p-0">
