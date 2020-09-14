@@ -438,6 +438,7 @@ export class SipSchemeWiseComponent implements OnInit {
           sumAmtTotal += element.sipAmount;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.investorTotalList = ['Total', '', sumAmtTotal, '', sumWeightInPercTotal];
         break;
       case 'schemes':
@@ -459,6 +460,7 @@ export class SipSchemeWiseComponent implements OnInit {
           sumAmtTotal += element.sipAmount;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.schemeTotalList = ['Total', '', '', '', '', '', '', '', '', sumAmtTotal, sumWeightInPercTotal];
         break;
       // case 'applicant':
@@ -548,6 +550,7 @@ export class SipSchemeWiseComponent implements OnInit {
       sumAmtTotal += element.sipAmount;
       sumWeightInPercTotal += element.weightInPercentage;
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
     this.amcTotalList = ['Total', '', '', sumAmtTotal, sumWeightInPercTotal];
   }
 

@@ -113,6 +113,12 @@ export class CrmTasksComponent implements OnInit {
     this.initPoint();
   }
 
+  applyFilter(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
+
   getAllTaskList(offset) {
     const data = {
       advisorId: this.advisorId,

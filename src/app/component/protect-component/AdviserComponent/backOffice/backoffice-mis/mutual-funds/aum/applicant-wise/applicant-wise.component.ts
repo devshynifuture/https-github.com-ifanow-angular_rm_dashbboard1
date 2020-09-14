@@ -407,6 +407,7 @@ export class ApplicantWiseComponent implements OnInit {
       sumAumTotal = sumAumTotal + element.totalAum;
       sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
@@ -436,6 +437,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.catWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'sub-category':
@@ -452,6 +454,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.subCatWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'schemes':
@@ -469,6 +472,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.subCatSchemeWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'scheme-folio':
@@ -487,6 +491,7 @@ export class ApplicantWiseComponent implements OnInit {
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.schemeWiseTotal = ['Total', '', '', sumAumTotal, '', Math.round(sumWeightInPercTotal)];
         break;
     }

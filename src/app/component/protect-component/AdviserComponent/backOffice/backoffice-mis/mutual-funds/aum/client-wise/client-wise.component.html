@@ -332,17 +332,17 @@
                                                                                     </span>
                                                                                 </th>
                                                                                 <th (click)="sortByFolio(scheme.folioList,'totalAum')"
-                                                                                class="c-p f-500 w-17">
-                                                                                <span
-                                                                                    class="d-flex justify-content-end align-items-center">
-                                                                                    Current value
-                                                                                    <i *ngIf="propertyName4=='totalAum' && !reverse4"
-                                                                                        class="material-icons ml-4 f-14 text-primitive">
-                                                                                        arrow_upward </i>
-                                                                                    <i *ngIf="propertyName4=='totalAum' && reverse4"
-                                                                                        class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
-                                                                                </span>
-                                                                            </th>
+                                                                                    class="c-p f-500 w-17">
+                                                                                    <span
+                                                                                        class="d-flex justify-content-end align-items-center">
+                                                                                        Current value
+                                                                                        <i *ngIf="propertyName4=='totalAum' && !reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">
+                                                                                            arrow_upward </i>
+                                                                                        <i *ngIf="propertyName4=='totalAum' && reverse4"
+                                                                                            class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
+                                                                                    </span>
+                                                                                </th>
 
                                                                                 <th (click)="sortByFolio(scheme.folioList,'balanceUnit')"
                                                                                     class="c-p f-500 w-20">
@@ -359,7 +359,7 @@
 
                                                                                 <th class="w-15 f-500 text-right">%
                                                                                     Weight</th>
-                                                                                 
+
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody
@@ -399,7 +399,7 @@
                                                                                         [ngClass]="{'bar': isLoadingFolio}">
                                                                                         <!--                                            {{isLoadingFolio ? ' ' : '₹ '}}-->
                                                                                         <span appFormatNumber
-                                                                                            *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
+                                                                                            *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit )}}</span>
                                                                                     </div>
                                                                                 </td>
 
@@ -411,7 +411,7 @@
                                                                                     </div>
 
                                                                                 </td>
-                                                                                
+
                                                                             </tr>
                                                                         </tbody>
 
@@ -454,13 +454,14 @@
                         </tbody>
                         <tbody>
                             <tr *ngIf="!isLoading && clientList.length>0">
-                               
+
                                 <td class="p-table  ">&nbsp;</td>
                                 <td class="p-table  text-right"><strong>Total</strong></td>
-                                <td class="p-table text-right "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
-                                            [shouldRoundOff]="true"></span></strong>
+                                <td class="p-table text-right "><strong>{{'₹ '}}<span appFormatNumber
+                                            [value]="totalCurrentValue" [shouldRoundOff]="true"></span></strong>
                                 </td>
-                                <td class="p-table text-right"><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
+                                <td class="p-table text-right">
+                                    <strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong>
                                 </td>
                                 <td></td>
                                 <td></td>

@@ -15,7 +15,8 @@
                             </button>
                             <mat-menu #menu="matMenu">
                                 <div *ngFor="let item of arnRiaList">
-                                    <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+                                    <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                        [value]="item.value">{{item.number}}</button>
                                 </div>
                             </mat-menu>
                         </div>
@@ -28,8 +29,11 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button *ngIf="!isLoading && applicantName.length > 0" (click)="exportToExcelSheet('applicant-wise', null, null, null, null)" class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-                            <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+                            <button mat-stroked-button *ngIf="!isLoading && applicantName.length > 0"
+                                (click)="exportToExcelSheet('applicant-wise', null, null, null, null)"
+                                class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                            <button mat-stroked-button class="btn-success ml-8 addon"
+                                (click)="aumReport()">Back</button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +41,8 @@
                 <div class="row">
                     <div class="col-md-12 p-0 cli-wise overflow-hidden">
 
-                        <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="applicantName.length>0">
+                        <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                            id="table-low" *ngIf="applicantName.length>0">
                             <thead class="text-dark">
                                 <tr class="h-40">
                                     <th class="w-10 f-500 ">Sr No.</th>
@@ -77,15 +82,16 @@
                                         <div [ngClass]="{'bar': isLoading}">
                                             {{(isLoading) ? '' : ((name.name)?name.name:'-')}} </div>
                                     </td>
-                                    
+
                                     <td class="text-right">
-                                            <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                            {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="name.totalAum" *ngIf="!isLoading" ></span>
+                                        <div class="bar" [ngClass]="{'floatRight': isLoading}">
+                                            {{isLoading ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true"
+                                                [value]="name.totalAum" *ngIf="!isLoading"></span>
                                         </div>
                                     </td>
 
                                     <td class="text-right">
-                                            <div class="bar" [ngClass]="{'floatRight': isLoading}">
+                                        <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                             {{(isLoading) ? '' : name.weightInPercentage}}{{(isLoading?'':'%') }}
                                         </div>
                                     </td>
@@ -101,8 +107,11 @@
                                     </td>
 
                                     <td>
-                                        <div class="d-block text-right" *ngIf="!name.show && name.categoryList?.length > 0">
-                                            <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('category-wise', applicantIndex, null, null, null)" *ngIf="!isLoading" > 
+                                        <div class="d-block text-right"
+                                            *ngIf="!name.show && name.categoryList?.length > 0">
+                                            <img class="c-p" src="assets/images/svg/download-bordered.svg"
+                                                (click)="exportToExcelSheet('category-wise', applicantIndex, null, null, null)"
+                                                *ngIf="!isLoading">
                                         </div>
                                     </td>
 
@@ -110,12 +119,15 @@
 
                                 <tr style="border: transparent !important">
                                     <td class="innerTd one" colspan="6">
-                                        
-                                        <table *ngIf="name.show == false && name.categoryList?.length > 0" class="skeletonAnimation table98 mt-16 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingCategory" id="table-low">
+
+                                        <table *ngIf="name.show == false && name.categoryList?.length > 0"
+                                            class="skeletonAnimation table98 mt-16 mb-8" appSkeletonLoading
+                                            [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                             <thead class="bg-light text-dark">
                                                 <tr class="h-40">
                                                     <th class="w-10 f-500">Sr No.</th>
-                                                    <th class="w-40 f-500 c-p" (click)="sortByCat(name.categoryList,'name')">
+                                                    <th class="w-40 f-500 c-p"
+                                                        (click)="sortByCat(name.categoryList,'name')">
                                                         <span class="d-flex align-items-center">
                                                             Category Name
                                                             <i class="material-icons ml-4 f-14 text-primitive"
@@ -125,8 +137,10 @@
                                                                 *ngIf="propertyName2=='name' && reverse2">arrow_downward</i>
                                                         </span>
                                                     </th>
-                                                    <th class="c-p w-20 f-500 text-right" (click)="sortByCat(name.categoryList,'totalAum')">
-                                                        <span class="d-flex justify-content-end align-items-center"> Current Value
+                                                    <th class="c-p w-20 f-500 text-right"
+                                                        (click)="sortByCat(name.categoryList,'totalAum')">
+                                                        <span class="d-flex justify-content-end align-items-center">
+                                                            Current Value
                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                 *ngIf="propertyName2=='totalAum' && !reverse2">
                                                                 arrow_upward </i>
@@ -135,8 +149,8 @@
                                                         </span>
                                                     </th>
                                                     <th class="w-14 f-500 text-right">% Weight</th>
-                                                <th></th>
-                                                <th></th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngFor="let category of name.categoryList; index as catIndex">
@@ -153,7 +167,9 @@
                                                     </td>
                                                     <td class="text-right">
                                                         <div [ngClass]="{'bar': isLoadingCategory}">
-                                                            {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber [shouldRoundOff]="true" [value]="category.totalAum" *ngIf="!isLoadingCategory"></span>
+                                                            {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber
+                                                                [shouldRoundOff]="true" [value]="category.totalAum"
+                                                                *ngIf="!isLoadingCategory"></span>
                                                         </div>
                                                     </td>
                                                     <td class="text-right">
@@ -161,28 +177,40 @@
                                                             {{isLoadingCategory ? '' : category.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
                                                         </div>
                                                     </td>
-                                                    <td (click)="subCategory(category, catIndex ,applicantIndex, name.name)">
+                                                    <td
+                                                        (click)="subCategory(category, catIndex ,applicantIndex, name.name)">
                                                         <div class="bar text-center">
-                                                            <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="category.showCategory && !isLoadingCategory">add</i>
-                                                            <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!category.showCategory && !isLoadingCategory">
+                                                            <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                *ngIf="category.showCategory && !isLoadingCategory">add</i>
+                                                            <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                *ngIf="!category.showCategory && !isLoadingCategory">
                                                                 remove </i>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="d-block text-right" *ngIf="!category.showCategory && !isLoadingCategory && category.subCatList?.length > 0">
-                                                            <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('sub-category-wise', applicantIndex, catIndex, null, null)" *ngIf="!isLoadingCategory"> 
+                                                        <div class="d-block text-right"
+                                                            *ngIf="!category.showCategory && !isLoadingCategory && category.subCatList?.length > 0">
+                                                            <img class="c-p"
+                                                                src="assets/images/svg/download-bordered.svg"
+                                                                (click)="exportToExcelSheet('sub-category-wise', applicantIndex, catIndex, null, null)"
+                                                                *ngIf="!isLoadingCategory">
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr style="border: transparent !important">
                                                     <td class="innerTd two" colspan="6">
-                                                       
-                                                        <table *ngIf="category.showCategory == false && category.subCatList?.length > 0" class="skeletonAnimation mt-16 table96 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingSubCategory " id="table-low">
+
+                                                        <table
+                                                            *ngIf="category.showCategory == false && category.subCatList?.length > 0"
+                                                            class="skeletonAnimation mt-16 table96 mb-8"
+                                                            appSkeletonLoading
+                                                            [appSkeletonLoading]="isLoadingSubCategory " id="table-low">
                                                             <thead>
                                                                 <tr class="h-40">
                                                                     <th class="w-10 f-500">Sr No.</th>
-                                                                    <th class="w-40 c-p f-500" (click)="sortBySubCat(category.subCatList,'name')">
-                                                                        <span class="d-flex align-items-center"> 
+                                                                    <th class="w-40 c-p f-500"
+                                                                        (click)="sortBySubCat(category.subCatList,'name')">
+                                                                        <span class="d-flex align-items-center">
                                                                             Sub Category Name
                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                 *ngIf="propertyName3=='name' && !reverse3">
@@ -191,8 +219,11 @@
                                                                                 *ngIf="propertyName3=='name' && reverse3">arrow_downward</i>
                                                                         </span>
                                                                     </th>
-                                                                    <th class="c-p f-500 w-20" (click)="sortBySubCat(category.subCatList,'totalAum')">
-                                                                        <span class="d-flex justify-content-end align-items-center"> Current Value
+                                                                    <th class="c-p f-500 w-20"
+                                                                        (click)="sortBySubCat(category.subCatList,'totalAum')">
+                                                                        <span
+                                                                            class="d-flex justify-content-end align-items-center">
+                                                                            Current Value
                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                 *ngIf="propertyName3=='totalAum' && !reverse3">
                                                                                 arrow_upward </i>
@@ -203,11 +234,12 @@
                                                                     <th class=" w-20 f-500 text-right">% Weight</th>
                                                                     <th> </th>
                                                                     <th> </th>
-                                                                     
-                                                                     
+
+
                                                                 </tr>
                                                             </thead>
-                                                            <tbody *ngFor="let sub of category.subCatList; index as subCatIndex">
+                                                            <tbody
+                                                                *ngFor="let sub of category.subCatList; index as subCatIndex">
                                                                 <tr>
                                                                     <td>
                                                                         <div [ngClass]="{'bar': isLoadingSubCategory}">
@@ -221,7 +253,10 @@
                                                                     </td>
                                                                     <td class="text-right">
                                                                         <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                            {{isLoadingSubCategory ? ' ' : '₹ '}}<span appFormatNumber [value]="sub.totalAum" [shouldRoundOff]="true" *ngIf="!isLoadingSubCategory"></span>
+                                                                            {{isLoadingSubCategory ? ' ' : '₹ '}}<span
+                                                                                appFormatNumber [value]="sub.totalAum"
+                                                                                [shouldRoundOff]="true"
+                                                                                *ngIf="!isLoadingSubCategory"></span>
                                                                         </div>
                                                                     </td>
                                                                     <td class="text-right">
@@ -229,31 +264,46 @@
                                                                             {{isLoadingSubCategory ? '' : sub.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
                                                                         </div>
                                                                     </td>
-                                                                    <td (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex, category.name, name.name)">
+                                                                    <td
+                                                                        (click)="getScheme(sub, subCatIndex, catIndex, applicantIndex, category.name, name.name)">
                                                                         <div class="bar text-center">
-                                                                            <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory && !isLoadingSubCategory">add</i>
-                                                                            <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory && !isLoadingSubCategory">
+                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                *ngIf="sub.showSubCategory && !isLoadingSubCategory">add</i>
+                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                *ngIf="!sub.showSubCategory && !isLoadingSubCategory">
                                                                                 remove
                                                                             </i>
                                                                         </div>
                                                                     </td>
 
                                                                     <td>
-                                                                        <div class="d-block text-right" *ngIf="!sub.showSubCategory && sub.schemeList?.length > 0">  
-                                                                            <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex, catIndex, subCatIndex, null)" *ngIf="!isLoadingSubCategory">
+                                                                        <div class="d-block text-right"
+                                                                            *ngIf="!sub.showSubCategory && sub.schemeList?.length > 0">
+                                                                            <img class="c-p"
+                                                                                src="assets/images/svg/download-bordered.svg"
+                                                                                (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex, catIndex, subCatIndex, null)"
+                                                                                *ngIf="!isLoadingSubCategory">
                                                                         </div>
                                                                     </td>
 
                                                                 </tr>
-                                                                <tr *ngIf="!sub.showSubCategory" style="border: transparent !important">
+                                                                <tr *ngIf="!sub.showSubCategory"
+                                                                    style="border: transparent !important">
                                                                     <td class="innerTd three" colspan="6">
-                                                                        
-                                                                        <table *ngIf="sub.showSubCategory == false && sub.schemeList?.length > 0" class="skeletonAnimation table95 mt-16 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingScheme" id="table-low">
+
+                                                                        <table
+                                                                            *ngIf="sub.showSubCategory == false && sub.schemeList?.length > 0"
+                                                                            class="skeletonAnimation table95 mt-16 mb-8"
+                                                                            appSkeletonLoading
+                                                                            [appSkeletonLoading]="isLoadingScheme"
+                                                                            id="table-low">
                                                                             <thead>
                                                                                 <tr class="h-40">
                                                                                     <th class="w-10 f-500 ">Sr No.</th>
-                                                                                    <th class="w-35 f-500 c-p" (click)="sortByScheme(sub.schemeList,'schemeName')">
-                                                                                        <span class="d-flex align-items-center">
+                                                                                    <th class="w-35 f-500 c-p"
+                                                                                        (click)="sortByScheme(sub.schemeList,'schemeName')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
                                                                                             Scheme Name
                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                 *ngIf="propertyName4=='schemeName' && !reverse4">
@@ -262,8 +312,10 @@
                                                                                                 *ngIf="propertyName4=='schemeName' && reverse4">arrow_downward</i>
                                                                                         </span>
                                                                                     </th>
-                                                                                    <th class="w-15 f-500 c-p" (click)="sortByScheme(sub.schemeList,'folioNumber')">
-                                                                                        <span class="d-flex align-items-center">
+                                                                                    <th class="w-15 f-500 c-p"
+                                                                                        (click)="sortByScheme(sub.schemeList,'folioNumber')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
                                                                                             Folio No.
                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                 *ngIf="propertyName4=='folioNumber' && !reverse4">
@@ -272,8 +324,10 @@
                                                                                                 *ngIf="propertyName4=='folioNumber' && reverse4">arrow_downward</i>
                                                                                         </span>
                                                                                     </th>
-                                                                                    <th class="w-21 f-500  c-p" (click)="sortByScheme(sub.schemeList,'totalAum')">
-                                                                                        <span class="d-flex justify-content-end align-items-center">
+                                                                                    <th class="w-21 f-500  c-p"
+                                                                                        (click)="sortByScheme(sub.schemeList,'totalAum')">
+                                                                                        <span
+                                                                                            class="d-flex justify-content-end align-items-center">
                                                                                             Current Value
                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                 *ngIf="propertyName4=='totalAum' && !reverse4">
@@ -282,70 +336,96 @@
                                                                                                 *ngIf="propertyName4=='totalAum' && reverse4">arrow_downward</i>
                                                                                         </span>
                                                                                     </th>
-                                                                                    <th class="w-18 f-500  text-right">% Weight</th>
+                                                                                    <th class="w-18 f-500  text-right">%
+                                                                                        Weight</th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tbody *ngFor="let client of sub.schemeList; index as schemeIndex">
+                                                                            <tbody
+                                                                                *ngFor="let client of sub.schemeList; index as schemeIndex">
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingScheme}">
                                                                                             {{isLoadingScheme ? '' : schemeIndex+1}}
                                                                                         </div>
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingScheme}">
                                                                                             {{isLoadingScheme ? '' : client.schemeName}}
                                                                                         </div>
                                                                                     </td>
-                                                                                    
+
                                                                                     <td>
-                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingScheme}">
                                                                                             {{isLoadingScheme ? '' : client.folioNumber}}
                                                                                         </div>
                                                                                     </td>
-                                                                                   
+
                                                                                     <td class="text-right">
-                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
-                                                                                            {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="client.totalAum" *ngIf="!isLoadingScheme"></span>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingScheme}">
+                                                                                            {{isLoadingScheme ? ' ' : '₹ '}}<span
+                                                                                                appFormatNumber
+                                                                                                [shouldRoundOff]="true"
+                                                                                                [value]="client.totalAum"
+                                                                                                *ngIf="!isLoadingScheme"></span>
                                                                                         </div>
                                                                                     </td>
-                                                                                   
+
                                                                                     <td class="text-right">
-                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingScheme}">
                                                                                             {{isLoadingScheme ? '' : client.weightInPercentage}}{{(isLoadingScheme?'':'%') }}
                                                                                         </div>
                                                                                     </td>
-                                                                                   
-                                                                                    <td (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex, sub.name, category.name, name.name)">
+
+                                                                                    <td
+                                                                                        (click)="getSchemeFolio(client, schemeIndex, subCatIndex, catIndex, applicantIndex, sub.name, category.name, name.name)">
                                                                                         <div class="bar text-center">
-                                                                                            <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="client.showFolio && !isLoadingScheme">add</i>
-                                                                                            <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!client.showFolio && !isLoadingScheme">
+                                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                                *ngIf="client.showFolio && !isLoadingScheme">add</i>
+                                                                                            <i class="material-icons b-a f-14 mt-4 c-p"
+                                                                                                *ngIf="!client.showFolio && !isLoadingScheme">
                                                                                                 remove
                                                                                             </i>
                                                                                         </div>
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        <div class="d-block text-right" *ngIf="!client.showFolio && !isLoadingScheme && client.schemeList?.length > 0">   
-                                                                                            <img class="c-p" src="assets/images/svg/download-bordered.svg" (click)="exportToExcelSheet('scheme-wise', applicantIndex, catIndex, subCatIndex, schemeIndex)">       
+                                                                                        <div class="d-block text-right"
+                                                                                            *ngIf="!client.showFolio && !isLoadingScheme && client.schemeList?.length > 0">
+                                                                                            <img class="c-p"
+                                                                                                src="assets/images/svg/download-bordered.svg"
+                                                                                                (click)="exportToExcelSheet('scheme-wise', applicantIndex, catIndex, subCatIndex, schemeIndex)">
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr style="border: transparent !important">
-                                                                                    <td class="innerTd four" colspan="7">
-                                                                                        
+                                                                                <tr
+                                                                                    style="border: transparent !important">
+                                                                                    <td class="innerTd four"
+                                                                                        colspan="7">
+
                                                                                         <!-- [appSkeletonLoading]="isLoadingApplicant" prod build -->
-                                                                                        <table *ngIf="client.showFolio == false && client.schemeList?.length > 0" class="skeletonAnimation table95 mt-16 mb-8" appSkeletonLoading id="table-low">
+                                                                                        <table
+                                                                                            *ngIf="client.showFolio == false && client.schemeList?.length > 0"
+                                                                                            class="skeletonAnimation table95 mt-16 mb-8"
+                                                                                            appSkeletonLoading
+                                                                                            id="table-low">
                                                                                             <thead>
                                                                                                 <tr class="h-40">
-                                                                                                    <th class="w-10 f-500">
+                                                                                                    <th
+                                                                                                        class="w-10 f-500">
                                                                                                         Sr No.</th>
-                                                                                                    <th class="w-35 c-p f-500" (click)="sortByBalanceUnit(sub.schemeList,'schemeName')">
-                                                                                                        <span class="d-flex align-items-center">
+                                                                                                    <th class="w-35 c-p f-500"
+                                                                                                        (click)="sortByBalanceUnit(sub.schemeList,'schemeName')">
+                                                                                                        <span
+                                                                                                            class="d-flex align-items-center">
                                                                                                             Scheme Name
                                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                                 *ngIf="propertyName5=='schemeName' && !reverse5">
@@ -355,8 +435,10 @@
                                                                                                                 *ngIf="propertyName5=='schemeName' && reverse5">arrow_downward</i>
                                                                                                         </span>
                                                                                                     </th>
-                                                                                                    <th class="w-15 f-500 c-p" (click)="sortByBalanceUnit(sub.schemeList,'folioNumber')">
-                                                                                                        <span class="d-flex align-items-center">
+                                                                                                    <th class="w-15 f-500 c-p"
+                                                                                                        (click)="sortByBalanceUnit(sub.schemeList,'folioNumber')">
+                                                                                                        <span
+                                                                                                            class="d-flex align-items-center">
                                                                                                             Folio No.
                                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                                 *ngIf="propertyName5=='folioNumber' && !reverse5">
@@ -366,8 +448,10 @@
                                                                                                                 *ngIf="propertyName5=='folioNumber' && reverse5">arrow_downward</i>
                                                                                                         </span>
                                                                                                     </th>
-                                                                                                    <th class="w-15 f-500 c-p" (click)="sortByBalanceUnit(sub.schemeList,'totalAum')">
-                                                                                                        <span class="d-flex justify-content-end align-items-center">
+                                                                                                    <th class="w-15 f-500 c-p"
+                                                                                                        (click)="sortByBalanceUnit(sub.schemeList,'totalAum')">
+                                                                                                        <span
+                                                                                                            class="d-flex justify-content-end align-items-center">
                                                                                                             Current
                                                                                                             Value
                                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
@@ -378,8 +462,10 @@
                                                                                                                 *ngIf="propertyName5=='totalAum' && reverse5">arrow_downward</i>
                                                                                                         </span>
                                                                                                     </th>
-                                                                                                    <th class="w-15 f-500 c-p" (click)="sortByBalanceUnit(sub.schemeList,'balanceUnit')">
-                                                                                                        <span class="d-flex align-items-center">
+                                                                                                    <th class="w-15 f-500 c-p"
+                                                                                                        (click)="sortByBalanceUnit(sub.schemeList,'balanceUnit')">
+                                                                                                        <span
+                                                                                                            class="d-flex align-items-center">
                                                                                                             Balance unit
                                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                                 *ngIf="propertyName5=='balanceUnit' && !reverse5">
@@ -389,44 +475,58 @@
                                                                                                                 *ngIf="propertyName5=='balanceUnit' && reverse5">arrow_downward</i>
                                                                                                         </span>
                                                                                                     </th>
-                                                                                                    <th class="f-500 w-9">% Weight </th>
+                                                                                                    <th
+                                                                                                        class="f-500 w-9">
+                                                                                                        % Weight </th>
                                                                                                     <th></th>
                                                                                                     <th></th>
-                                                                                                    
+
                                                                                                 </tr>
                                                                                             </thead>
 
-                                                                                            <tbody *ngFor="let client of sub.schemeList; index as i">
+                                                                                            <tbody
+                                                                                                *ngFor="let client of sub.schemeList; index as i">
                                                                                                 <tr>
                                                                                                     <td>
-                                                                                                        <div class="bar">
+                                                                                                        <div
+                                                                                                            class="bar">
                                                                                                             {{i+1}}
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <div class="bar">
+                                                                                                        <div
+                                                                                                            class="bar">
                                                                                                             {{client.schemeName}}
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <div class="bar">
+                                                                                                        <div
+                                                                                                            class="bar">
                                                                                                             {{client.folioNumber}}
                                                                                                         </div>
                                                                                                     </td>
-                                                                                                    <td class="text-right">
-                                                                                                        <div class="bar">
-                                                                                                            {{'₹ '}}<span appFormatNumber [shouldRoundOff]="true" [value]="client.totalAum"></span>
+                                                                                                    <td
+                                                                                                        class="text-right">
+                                                                                                        <div
+                                                                                                            class="bar">
+                                                                                                            {{'₹ '}}<span
+                                                                                                                appFormatNumber
+                                                                                                                [shouldRoundOff]="true"
+                                                                                                                [value]="client.totalAum"></span>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <div class="bar">
+                                                                                                        <div
+                                                                                                            class="bar">
                                                                                                             <!--                                                                                                            {{'₹ '}}-->
                                                                                                             <span>
-                                                                                                                {{client.balanceUnit | number:'1.2-2'}}</span>
+                                                                                                                {{client.balanceUnit }}</span>
                                                                                                         </div>
                                                                                                     </td>
-                                                                                                    <td class="text-right">
-                                                                                                        <div class="bar">
+                                                                                                    <td
+                                                                                                        class="text-right">
+                                                                                                        <div
+                                                                                                            class="bar">
                                                                                                             {{client.weightInPercentage}}{{'%'}}
                                                                                                         </div>
                                                                                                     </td>
@@ -437,9 +537,12 @@
                                                                                         </table>
                                                                                         <!-- !isLoadingApplicant && brod build -->
                                                                                         <!-- *ngIf="subCatList.length == 0" brod build -->
-                                                                                        <div *ngIf="client.showFolio == false && client.schemeList === null ||client.showFolio == false && client.schemeList?.length == 0">
-                                                                                            <div class="d-flex flex-column align-items-center" >
-                                                                                                <h4 class="text-center pt-12">
+                                                                                        <div
+                                                                                            *ngIf="client.showFolio == false && client.schemeList === null ||client.showFolio == false && client.schemeList?.length == 0">
+                                                                                            <div
+                                                                                                class="d-flex flex-column align-items-center">
+                                                                                                <h4
+                                                                                                    class="text-center pt-12">
                                                                                                     No data found
                                                                                                 </h4>
                                                                                             </div>
@@ -448,9 +551,12 @@
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-                                                                        <div *ngIf="!isLoadingScheme && sub.showSubCategory == false">
-                                                                            <div *ngIf="sub.schemeList?.length == 0 && schemeListArr.length == 0" class="d-flex flex-column align-items-center">
-                                                                                <h4 class="text-center pt-12">No data Found
+                                                                        <div
+                                                                            *ngIf="!isLoadingScheme && sub.showSubCategory == false">
+                                                                            <div *ngIf="sub.schemeList?.length == 0 && schemeListArr.length == 0"
+                                                                                class="d-flex flex-column align-items-center">
+                                                                                <h4 class="text-center pt-12">No data
+                                                                                    Found
                                                                                 </h4>
                                                                             </div>
                                                                         </div>
@@ -458,8 +564,10 @@
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                        <div *ngIf="!isLoadingSubCategory && category.showCategory == false">
-                                                            <div *ngIf="category.subCatList?.length == 0 && subCategoryList.length == 0" class="d-flex flex-column align-items-center">
+                                                        <div
+                                                            *ngIf="!isLoadingSubCategory && category.showCategory == false">
+                                                            <div *ngIf="category.subCatList?.length == 0 && subCategoryList.length == 0"
+                                                                class="d-flex flex-column align-items-center">
                                                                 <h4 class="text-center pt-12">No data found
                                                                 </h4>
                                                             </div>
@@ -469,7 +577,8 @@
                                             </tbody>
                                         </table>
                                         <div *ngIf="!isLoadingCategory && name.show == false">
-                                            <div *ngIf="name.categoryList?.length == 0 && categoryList.length == 0" class="d-flex flex-column align-items-center">
+                                            <div *ngIf="name.categoryList?.length == 0 && categoryList.length == 0"
+                                                class="d-flex flex-column align-items-center">
                                                 <h4 class="text-center pt-12">No data found
                                                 </h4>
                                             </div>
@@ -479,12 +588,14 @@
                             </tbody>
                             <tbody *ngIf="!isLoading && applicantName.length>0">
                                 <tr>
-                                    
+
                                     <td class="p-table">&nbsp;</td>
                                     <td class="p-table text-right"><strong>Total</strong></td>
-                                    <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="totalCurrentValue"></span></strong></td>
-                                    <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                    <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
+                                                [shouldRoundOff]="true" [value]="totalCurrentValue"></span></strong>
+                                    </td>
+                                    <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong>
+                                    </td>
                                     <td></td>
                                     <td></td>
                                 </tr>

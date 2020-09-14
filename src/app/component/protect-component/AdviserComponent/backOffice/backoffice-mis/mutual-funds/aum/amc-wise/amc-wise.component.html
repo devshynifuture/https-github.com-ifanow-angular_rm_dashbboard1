@@ -11,7 +11,8 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <div *ngFor="let item of arnRiaList">
-                                <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+                                <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                    [value]="item.value">{{item.number}}</button>
                             </div>
                         </mat-menu>
                     </div>
@@ -24,7 +25,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button (click)="exportToExcelSheet('amc-wise', null, null)" class="btn-default addon" *ngIf="!isLoading && amcList.length != 0"><i
+                        <button mat-stroked-button (click)="exportToExcelSheet('amc-wise', null, null)"
+                            class="btn-default addon" *ngIf="!isLoading && amcList.length != 0"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -33,7 +35,8 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
-                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="amcList.length>0">
+                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading" *ngIf="amcList.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
                                 <th class="w-10 f-500">Sr No.</th>
@@ -73,7 +76,8 @@
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
 
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span appFormatNumber *ngIf="!isLoading" [value]="amc.totalAum" [shouldRoundOff]="true"></span>
+                                        <span appFormatNumber *ngIf="!isLoading" [value]="amc.totalAum"
+                                            [shouldRoundOff]="true"></span>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -89,9 +93,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-block text-right" *ngIf="!amc.showAmc && !isLoading && amc.schemes?.length > 0">
-                                        <img (click)="exportToExcelSheet('scheme-wise', amcIndex, null)" *ngIf="!isLoading"  class="c-p" src="assets/images/svg/download-bordered.svg">
-                                       
+                                    <div class="d-block text-right"
+                                        *ngIf="!amc.showAmc && !isLoading && amc.schemes?.length > 0">
+                                        <img (click)="exportToExcelSheet('scheme-wise', amcIndex, null)"
+                                            *ngIf="!isLoading" class="c-p"
+                                            src="assets/images/svg/download-bordered.svg">
+
                                     </div>
                                 </td>
                             </tr>
@@ -104,11 +111,13 @@
                                             </mat-icon>
                                         </button>
                                     </div> -->
-                                    <table *ngIf="amc.schemes?.length > 0 && amc.showAmc == false" class="skeletonAnimation mt-16 mb-8 table98" appSkeletonLoading id="table-low">
+                                    <table *ngIf="amc.schemes?.length > 0 && amc.showAmc == false"
+                                        class="skeletonAnimation mt-16 mb-8 table98" appSkeletonLoading id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10 f-500">Sr No.</th>
-                                                <th class="w-40 f-500 c-p" (click)="sortByScheme(amc.schemes,'schemeName')">
+                                                <th class="w-40 f-500 c-p"
+                                                    (click)="sortByScheme(amc.schemes,'schemeName')">
                                                     <span class="d-flex align-items-center"> Scheme Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='schemeName' && !reverse2">
@@ -117,8 +126,10 @@
                                                             *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="c-p w-20 f-500 text-right" (click)="sortByScheme(amc.schemes,'totalAum')">
-                                                    <span class="d-flex align-items-center justify-content-end"> Current Value
+                                                <th class="c-p w-20 f-500 text-right"
+                                                    (click)="sortByScheme(amc.schemes,'totalAum')">
+                                                    <span class="d-flex align-items-center justify-content-end"> Current
+                                                        Value
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='totalAum' && !reverse2">
                                                             arrow_upward </i>
@@ -136,16 +147,22 @@
                                             <tr>
                                                 <td>{{ schemeIndex+1}}</td>
                                                 <td>{{scheme.schemeName}}</td>
-                                                <td class="text-right">{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum" [shouldRoundOff]="true"></span></td>
+                                                <td class="text-right">{{'₹ '}}<span appFormatNumber
+                                                        [value]="scheme.totalAum" [shouldRoundOff]="true"></span></td>
                                                 <td class="text-right">
                                                     {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
-                                                <td class="text-center" (click)="showApplicant(scheme, schemeIndex, amcIndex, amc.name)">
-                                                    <i *ngIf="scheme.showScheme==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
-                                                    <i *ngIf="scheme.showScheme==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
+                                                <td class="text-center"
+                                                    (click)="showApplicant(scheme, schemeIndex, amcIndex, amc.name)">
+                                                    <i *ngIf="scheme.showScheme==true"
+                                                        class="material-icons b-a f-14 mt-4 c-p">add</i>
+                                                    <i *ngIf="scheme.showScheme==false"
+                                                        class="material-icons b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
                                                 <td>
                                                     <div class="d-block text-right" *ngIf="!scheme.showScheme">
-                                                        <img (click)="exportToExcelSheet('applicant-wise', amcIndex, schemeIndex)" *ngIf="!isLoading"  class="c-p" src="assets/images/svg/download-bordered.svg">
+                                                        <img (click)="exportToExcelSheet('applicant-wise', amcIndex, schemeIndex)"
+                                                            *ngIf="!isLoading" class="c-p"
+                                                            src="assets/images/svg/download-bordered.svg">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -158,11 +175,15 @@
                                                             </mat-icon>
                                                         </button>
                                                     </div> -->
-                                                    <table id="table-low" class="skeletonAnimation  mt-16 mb-20 table95" appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" *ngIf="scheme.showScheme == false && scheme.applicantList?.length > 0">
+                                                    <table id="table-low" class="skeletonAnimation  mt-16 mb-20 table95"
+                                                        appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant"
+                                                        *ngIf="scheme.showScheme == false && scheme.applicantList?.length > 0">
                                                         <thead>
                                                             <tr class="h-40">
-                                                                <th class="w-35 f-500 c-p" (click)="sortByApplicant(scheme.applicantList,'investorName')">
-                                                                    <span class="d-flex align-items-center"> Applicant Name
+                                                                <th class="w-35 f-500 c-p"
+                                                                    (click)="sortByApplicant(scheme.applicantList,'investorName')">
+                                                                    <span class="d-flex align-items-center"> Applicant
+                                                                        Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='investorName' && !reverse3">
                                                                             arrow_upward </i>
@@ -170,8 +191,10 @@
                                                                             *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p text-right f-500 w-15" (click)="sortByApplicant(scheme.applicantList,'balanceUit')">
-                                                                    <span class="d-flex justify-content-end align-items-center">
+                                                                <th class="c-p text-right f-500 w-15"
+                                                                    (click)="sortByApplicant(scheme.applicantList,'balanceUit')">
+                                                                    <span
+                                                                        class="d-flex justify-content-end align-items-center">
                                                                         Balance Unit
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='balanceUit' && !reverse3">
@@ -180,7 +203,9 @@
                                                                             *ngIf="propertyName3=='balanceUit' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p f-500 w-15" style="padding-left: 20px !important;" (click)="sortByApplicant(scheme.applicantList,'folioNumber')">
+                                                                <th class="c-p f-500 w-15"
+                                                                    style="padding-left: 20px !important;"
+                                                                    (click)="sortByApplicant(scheme.applicantList,'folioNumber')">
                                                                     <span class="d-flex   align-items-center"> Folio
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='folioNumber' && !reverse3">
@@ -189,8 +214,10 @@
                                                                             *ngIf="propertyName3=='folioNumber' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p f-500 w-20" (click)="sortByApplicant(scheme.applicantList,'totalAum')">
-                                                                    <span class="d-flex justify-content-end align-items-center">
+                                                                <th class="c-p f-500 w-20"
+                                                                    (click)="sortByApplicant(scheme.applicantList,'totalAum')">
+                                                                    <span
+                                                                        class="d-flex justify-content-end align-items-center">
                                                                         Current Value
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='totalAum' && !reverse3">
@@ -203,7 +230,8 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
+                                                        <tbody
+                                                            *ngFor="let applicant of scheme.applicantList;let i = index">
                                                             <tr>
                                                                 <td>
                                                                     <div class="bar">
@@ -213,7 +241,8 @@
                                                                 <td class="text-right">
                                                                     <div class="bar">
                                                                         <!--                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}-->
-                                                                        <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="applicant.balanceUnit" [shouldRoundOff]="false">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
+                                                                        <span
+                                                                            *ngIf="!isLoadingApplicant">{{isLoadingApplicant ? '' : applicant.balanceUnit }}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td style="padding-left: 20px !important;">
@@ -223,7 +252,10 @@
                                                                 </td>
                                                                 <td class="text-right">
                                                                     <div class="bar">
-                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingApplicant" [value]=" applicant.totalAum" [shouldRoundOff]="true"></span>
+                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span
+                                                                            appFormatNumber *ngIf="!isLoadingApplicant"
+                                                                            [value]=" applicant.totalAum"
+                                                                            [shouldRoundOff]="true"></span>
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-right">
@@ -236,7 +268,8 @@
                                                         </tbody>
                                                     </table>
                                                     <div *ngIf="!isLoadingApplicant && !scheme.showScheme">
-                                                        <div *ngIf="scheme.applicantList?.length == 0" class="d-flex flex-column align-items-center">
+                                                        <div *ngIf="scheme.applicantList?.length == 0"
+                                                            class="d-flex flex-column align-items-center">
                                                             <h4 class="text-center pt-12">No data found
                                                             </h4>
                                                         </div>
@@ -245,7 +278,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="amc.schemes?.length == 0 && amc.showAmc == false" class="d-flex flex-column align-items-center">
+                                    <div *ngIf="amc.schemes?.length == 0 && amc.showAmc == false"
+                                        class="d-flex flex-column align-items-center">
                                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                         <h4 class="text-center pt-12">No data found</h4>
                                     </div>
@@ -258,7 +292,8 @@
                                 <td class="p-table text-right"> <strong>Total</strong></td>
                                 <td class="p-table f-600 text-right">
 
-                                    {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue" [shouldRoundOff]="true"></span>
+                                    {{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"
+                                        [shouldRoundOff]="true"></span>
 
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.0-0'}}%</strong></td>

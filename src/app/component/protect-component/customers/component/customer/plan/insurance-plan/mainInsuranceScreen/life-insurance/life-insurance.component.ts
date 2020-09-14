@@ -40,33 +40,62 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   inputData: any;
+  
   setLogo = [{
     heading: 'Life insurance',
     logo: '/assets/images/svg/LIbig.svg',
+    
 
-  }, {
+  },{
+    value: '1',
+    header: 'Add Health Insurance',
+    smallHeading: 'health insurance',
+    insuranceType:5,
+    logo: '/assets/images/svg/helth-insurance.svg',
     heading: 'Health insurance',
-    logo: '/assets/images/svg/HIbig.svg',
-
+    subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
   }, {
+    value: '2',
+    logo: '/assets/images/svg/Criticalillness.svg',
+    header: 'Add Critical Illness',
+    smallHeading: 'critical illness',
+    insuranceType:6,
     heading: 'Critical illness',
-    logo: '/assets/images/svg/CIbig.svg',
-
+    subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
   }, {
+    value: '3',
+    logo: '/assets/images/svg/Cancercare.svg',
+    header: 'Add Cancer Care',
+    smallHeading: 'cancer care',
+    insuranceType:11,
     heading: 'Cancer care',
-    logo: '/assets/images/svg/CCbig.svg',
-
+    subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
   }, {
+    value: '4',
+    logo: '/assets/images/svg/Personalaccident.svg',
+    header: 'Add Personal Accident',
     heading: 'Personal accident',
-    logo: '/assets/images/svg/PAbig.svg',
-
+    smallHeading: 'personal accident',
+    insuranceType:7,
+    subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
   }, {
-    heading: 'Fire insurance',
-    logo: '/assets/images/svg/Fibig.svg',
-  }, {
+    value: '5',
+    logo: '/assets/images/svg/Householders.svg',
+    header: 'Add Householders',
+    smallHeading: 'householders',
+    insuranceType:9,
     heading: 'Householders',
-    logo: '/assets/images/svg/Hbig.svg'
-  }]
+    subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
+  }, {
+    value: '6',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Fire Insurance',
+    smallHeading: 'fire insurance',
+    insuranceType:10,
+    heading: 'Fire insurance',
+    subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
+  },]
+
   logo: any;
   getData: any;
   advisorId: any;
@@ -78,6 +107,7 @@ export class LifeInsuranceComponent implements OnInit {
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   inputReceive: any;
+  needAnalysisData: { heading: string; logo: string; value?: undefined; header?: undefined; smallHeading?: undefined; insuranceType?: undefined; subHeading?: undefined; } | { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -122,6 +152,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.setLogo.forEach(element => {
         if (element.heading == data.heading) {
           this.logo = element.logo
+          this.needAnalysisData = element
         }
       });
       this.getDetailsInsurance()
@@ -272,7 +303,7 @@ export class LifeInsuranceComponent implements OnInit {
       const fragmentData = {
         flag: 'app-customer',
         id: 1,
-        data,
+        data: this.needAnalysisData,
         direction: 'top',
         componentName: ShowHealthPlanningComponent,
         state: 'open'
