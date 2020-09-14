@@ -1,3 +1,4 @@
+import { UtilService } from './../../../../../../services/util.service';
 import { ConfirmDialogComponent } from './../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
@@ -80,6 +81,7 @@ export class AddTasksComponent implements OnInit {
   saveChangesSubTask: boolean;
   shouldShowAddSubTaskLabel: boolean = false;
   dueDateMinDate = new Date();
+  prevAddTaskFormValue: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -93,7 +95,8 @@ export class AddTasksComponent implements OnInit {
     private settingsService: SettingsService,
     private http: HttpService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private util: UtilService
 
   ) { }
 
@@ -205,15 +208,16 @@ export class AddTasksComponent implements OnInit {
       })
   }
 
-  openConfirmDialog(){
+  openCloseConfirmDialog(){
     const dialogData = {
       header: "DISCARD CHANGES",
       body: "Are you sure you want to discard changes you have made?",
       body2: "This cannot be undone.",
-      btnNo: "DELETE",
+      btnNo: "DISCARD",
       btnYes: "CANCEL",
       positiveMethod: () => {
         this.close(true);
+        dialogRef.close();
       },
       negativeMethod: () => {
         dialogRef.close();
@@ -229,7 +233,7 @@ export class AddTasksComponent implements OnInit {
   }
 
   replyToComment(item, index) {
-    
+
   }
 
   searchClientFamilyMember(value){
@@ -310,6 +314,17 @@ export class AddTasksComponent implements OnInit {
         frequency: ['',],
         every: ['',]
       });
+
+      this.prevAddTaskFormValue = {
+        ...this.addTaskForm.value
+      }
+
+      this.addTaskForm.valueChanges.subscribe(res=>{
+        if(!this.util.areTwoObjectsSame(this.prevAddTaskFormValue, res)){
+          this.addTaskSubTaskChanges = true;
+        }
+      });
+
       this.editSubTaskForm = this.fb.group({
         description: ['', Validators.required],
         turnAroundTime: ['', Validators.required],
@@ -333,6 +348,16 @@ export class AddTasksComponent implements OnInit {
         isRecurring: ['',],
         frequency: ['',],
         every: ['',]
+      });
+
+      this.prevAddTaskFormValue = {
+        ...this.addTaskForm.value
+      }
+
+      this.addTaskForm.valueChanges.subscribe(res=>{
+        if(!this.util.areTwoObjectsSame(this.prevAddTaskFormValue, res)){
+          this.addTaskSubTaskChanges = true;
+        }
       });
     }
   }
@@ -1233,7 +1258,7 @@ export class AddTasksComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
     } else {
       if(this.addTaskSubTaskChanges){
-        this.eventService.openSnackBar('Please Save changes!', "DISMISS");
+        this.openCloseConfirmDialog();
       } else{
         this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false }); 
       }
