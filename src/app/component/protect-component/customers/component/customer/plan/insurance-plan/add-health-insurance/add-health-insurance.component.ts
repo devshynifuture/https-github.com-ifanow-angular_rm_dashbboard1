@@ -185,12 +185,13 @@ export class AddHealthInsuranceComponent implements OnInit {
     if(this.isChecked){
       let obj = {
         "planningList":
-        {
+        JSON.stringify({
           "advisorId":this.advisorId,
           "clientId":this.clientId,
+          "insuranceType":this.insuranceType,
           "owners":this.ownerIds
-        },
-        "needAnalysis":this.needAnalysis
+        }),
+        "needAnalysis":JSON.stringify(this.needAnalysis)
       }
       
       this.planService.addGeneralInsurance(obj).subscribe(
