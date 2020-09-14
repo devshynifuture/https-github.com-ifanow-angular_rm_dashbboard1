@@ -76,6 +76,7 @@ export class AddTasksComponent implements OnInit {
   subTaskAttachmentPreviewList: any = [];
   isManualOrTaskTemplate: any;
   saveChangesSubTask: boolean;
+  shouldShowAddSubTaskLabel: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -122,6 +123,16 @@ export class AddTasksComponent implements OnInit {
       this.showNoSubTaskFoundError = true;
     } else {
       this.showNoSubTaskFoundError = false;
+    }
+
+    if(this.data === null && this.subTaskList.length == 0){
+      this.shouldShowAddSubTaskLabel = true;
+    } else if(this.data == null && this.subTaskList.length!==0){
+      this.shouldShowAddSubTaskLabel = false;
+    } else if(this.data !== null && this.subTaskList.length ===0){
+      this.shouldShowAddSubTaskLabel = true;
+    } else if(this.data !== null && this.subTaskList.length !==0) {
+      this.shouldShowAddSubTaskLabel = false;
     }
     this.getTaskTemplateList();
     this.getTeamMemberList();
@@ -678,6 +689,7 @@ export class AddTasksComponent implements OnInit {
   addSubTask(item) {
     this.showSubTaskHeading = true;
     this.showNoSubTaskFoundError = false;
+    this.shouldShowAddSubTaskLabel = false;
     this.subTask.push(this.getSubTaskForm(item));
   }
 
@@ -688,6 +700,9 @@ export class AddTasksComponent implements OnInit {
     }
     if(this.subTaskList.length === 0 && this.data !==null){
       this.showNoSubTaskFoundError = true;
+    }
+    if(this.subTaskList.length ===0){
+      this.shouldShowAddSubTaskLabel = true;
     }
   }
 
@@ -917,7 +932,13 @@ export class AddTasksComponent implements OnInit {
           this.subTaskList.push(element);
         }
       });
+      if(this.subTaskList.length ===0){
+        this.shouldShowAddSubTaskLabel = true;
+      } else {
+        this.shouldShowAddSubTaskLabel = false;
+      }
     } else {
+      this.shouldShowAddSubTaskLabel = false;
       this.eventService.openSnackBar('Subtask not present in task template', "DISMISS");
     }
   }

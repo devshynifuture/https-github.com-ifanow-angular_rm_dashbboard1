@@ -416,9 +416,9 @@
                 </div>
 
                 <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                    <!-- <i class="material-icons c-p mt-4 mr-3" (click)="appendSubTask(item, i)">
+                    <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3"*ngIf="i !== subTask.length-1">
                         add
-                    </i> -->
+                    </i>
                     <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
                         remove
                     </i>
@@ -427,7 +427,7 @@
         </div>
 
         <div class="row pt-14">
-            <div class="col-md-12 text-primitive f-14 pl-16 c-p" [matMenuTriggerFor]="menu3">
+            <div class="col-md-12 text-primitive f-14 pl-16 c-p" [matMenuTriggerFor]="menu3" *ngIf="shouldShowAddSubTaskLabel">
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
             <mat-menu #menu3="matMenu" xPosition="after">

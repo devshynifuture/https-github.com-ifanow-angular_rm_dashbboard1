@@ -10,7 +10,9 @@
         </div>
         <div class="col-xl-6 col-lg-8 col-md-10 crm-task-selects p-0">
             <div class="row w-100 text-right align-items-center">
-                <div class="col-md-4"></div>
+                <div class="col-md-4 pr-0">
+                    <input type="text" matInput placeholder="Search task" class="form-control text-left" (keyup)="applyFilter($event)">
+                </div>
                 <div class="col-md-6">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                         <mat-select class="form-control" [formControl]="filterFormControl">
