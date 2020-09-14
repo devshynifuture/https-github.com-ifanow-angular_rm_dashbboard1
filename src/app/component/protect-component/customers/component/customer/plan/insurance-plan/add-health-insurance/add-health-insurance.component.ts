@@ -44,7 +44,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
   // dataSource2 = ELEMENT_DATA2;
   showExisting = false;
-  selectPolicy = ''
+  selectPolicy='1'
   insuranceData = [{
     value: '1',
     header: 'Add Health Insurance',
