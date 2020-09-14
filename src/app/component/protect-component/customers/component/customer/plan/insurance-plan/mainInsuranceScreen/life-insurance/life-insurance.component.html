@@ -212,7 +212,7 @@
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
                     </button>
 
-                    <button mat-stroked-button class="btn140 text-primary br-2" *ngIf="inputData.insuranceType == 1" (click)="suggestPolicy(null)">
+                    <button mat-stroked-button class="btn140 text-primary br-2" (click)="suggestPolicy(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
                     </button>
                 </div>
@@ -223,7 +223,7 @@
                     <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
+                <div class="d-flex mt-20 align-items-center">
                     <button (click)="recommendationsPolicy(null)" mat-stroked-button
                         class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
