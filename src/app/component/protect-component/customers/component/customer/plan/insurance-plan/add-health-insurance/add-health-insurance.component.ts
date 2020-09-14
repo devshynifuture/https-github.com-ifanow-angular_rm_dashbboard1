@@ -273,6 +273,20 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.showError = true;
     }
   }
+  saveExistingPolicy(input){
+    const obj={
+    "id":this.inputData.id,
+    "insuranceIds": JSON.stringify(this.needAnalysis)
+    }
+    this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+      data => {
+          this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
 }
 
 
