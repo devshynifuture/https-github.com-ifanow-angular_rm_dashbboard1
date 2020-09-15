@@ -245,7 +245,7 @@
                                     <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
                                         (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
                                         class="form-control br-0 percentage"
-                                        [(ngModel)]="(100-element.absSIP == 100)?allocatedGoal.sipPercent:100-element.absSIP">
+                                        [(ngModel)]="allocatedGoal.remainSIP">
                                 </mat-form-field>
                             </div>
                     </ng-container>
@@ -258,7 +258,7 @@
                                     <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
                                         (input)="restrictFrom100($event)" appInputValueValidation [min]="0" [max]="100"
                                         class="form-control br-0 percentage"
-                                        [(ngModel)]="(100-element.absLumsum == 100)?allocatedGoal.lumpsumPercent:100-element.absLumsum">
+                                        [(ngModel)]="allocatedGoal.remainLumsum">
                                 </mat-form-field>
                             </div>
                         </td>
