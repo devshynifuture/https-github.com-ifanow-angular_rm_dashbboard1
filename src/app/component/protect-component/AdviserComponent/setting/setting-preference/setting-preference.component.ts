@@ -115,7 +115,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getdataForm(data) {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
-      whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
+      whiteLable: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(this.validatorType.DOMAIN)]],
       brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
       feviconUrl: []
     });
@@ -129,8 +129,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(DomainSettingPopupComponent, {
-      height: '300px',
-      width: '300px'
+      height: '500px',
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -165,12 +165,15 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getDomainSettingRes(data) {
     // this.loader(-1);
+    data.completeWhiteLabel = data.completeWhiteLabel == 'NA' ? '' : data.completeWhiteLabel;
+    data.siteTitle = data.siteTitle == 'NA' ? '' : data.siteTitle
     this.domainSetting = data;
     data.partialWhiteLabel = data.partialWhiteLabel.replace('.my-planner.in', '')
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
     this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '')
     this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '')
-    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl)
+    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl);
+    this.isDomain.setValue(data.hasDomain ? String(data.hasDomain) : '1')
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
     this.domainS.controls.brandVisible.disable();
@@ -207,7 +210,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
       feviconUrl: this.domainS.controls.feviconUrl.value,
       partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
-      siteTitle: this.domainS.controls.brandVisible.value
+      siteTitle: this.domainS.controls.brandVisible.value,
+      hasDomain: this.isDomain.value
     }
     this.orgSetting.updateDomainSetting(obj).subscribe(
       data => this.updateDomainSettingRes(flag, event, data, index),
@@ -221,6 +225,24 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.updateDomain = data
     // this.getDomain();
     this.editDomain(flag, event)
+  }
+
+  setDomainYesOrNO(value) {
+    const obj =
+    {
+      advisorId: this.advisorId,
+      completeWhiteLabel: this.domainS.controls.whiteLable.value,
+      feviconUrl: this.domainS.controls.feviconUrl.value,
+      partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
+      siteTitle: this.domainS.controls.brandVisible.value,
+      hasDomain: parseInt(this.isDomain.value)
+    }
+    this.orgSetting.updateDomainSetting(obj).subscribe(
+      data => {
+
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
   }
 
   editDomain(flag, event) {
