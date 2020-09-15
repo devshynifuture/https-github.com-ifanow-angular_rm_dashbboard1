@@ -47,7 +47,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   // refreshObservable = new Subject();
   // refreshAssetList = new Subject();
   validatorType = ValidatorType;
-  showEditMf: boolean =  false;
+  showEditMf: boolean = false;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -65,7 +65,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
-  
+
 
   ngOnInit() {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
@@ -135,7 +135,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
           this.selectedAllocation = element
-          this.showEditMf= true
+          this.showEditMf = true
         }
       });
     });
@@ -157,26 +157,36 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
         let absSIP = 0;
-        let remainSIP = 0;
         let absLumsum = 0;
-        let remainLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
             absSIP += element.sipPercent;
             absLumsum += element.lumpsumPercent
             element.remainSIP = 0
-            element.remainLumsum= 0
+            element.remainLumsum = 0
+          });
+          this.data.goalAssetAllocation.forEach(element => {
+            mf.goalAssetMapping.forEach(element1 => {
+              if (element.id == element1.id) {
+                element1.disable = false
+              } else if (element.remainLumsum == 0 || element.remainSIP) {
+                element1.disable = false
+              } else {
+                element1.disable = true
+              }
+            });
           });
         }
         return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
-      
+
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.loaderFn.decreaseCounter();
     })
+
   }
 
   filterAssets() {
@@ -254,10 +264,35 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
 
   }
-  restrictFrom100(event,ele) {
-    if ((event.target.value) > 100 - ele) {
-      event.target.value = 100 - ele;
+  restrictFrom100(event, ele, mf, flag) {
+    let add = 0
+    if (event.target.value == "") {
+      event.target.value = 0
     }
+    mf.forEach(element => {
+      if (flag == 'sip') {
+        add += element.sipPercent
+        if ((100 - add) >= parseInt(event.target.value)) {
+          return parseInt(event.target.value);
+        } else if ((100 - add) == 0) {
+          let temp = 100 - add
+          console.log('temp',temp)
+          return event.target.value = temp
+        } else {
+          return event.target.value = 100 - add;
+        }
+
+      } else if (flag == 'lumpsum') {
+        add += element.lumpsumPercent
+        if ((100 - add) >= parseInt(event.target.value)) {
+          return parseInt(event.target.value);
+        } else if ((100 - add)==0) {
+          return event.target.value = 0
+        } else {
+          return event.target.value = 100 - add;
+        }
+      }
+    });
   }
 
   removeAllocation(allocation, allocatedGoal) {
@@ -295,7 +330,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshObservable:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
   }
 
   ngOnDestroy() {
