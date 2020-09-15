@@ -10,15 +10,15 @@
         </div>
         <div class="col-xl-6 col-lg-8 col-md-10 crm-task-selects p-0">
             <div class="row w-100 text-right align-items-center">
-                <div class="col-md-4 pr-0">
+                <div class="col-md-4 pr-0" *ngIf="finalTaskList.length>0">
                     <input type="text" matInput placeholder="Search task" class="form-control text-left"
                         (keyup)="applyFilter($event)">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="finalTaskList.length>0">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                         <mat-select class="form-control" [formControl]="filterFormControl">
                             <mat-option value="" disabled>Filter</mat-option>
-                            <mat-option (click)="setFilterToDefault()">Default</mat-option>
+                            <mat-option (click)="setFilterToDefault()">All</mat-option>
                             <mat-option *ngFor="let item of dateFilterList" [value]="item.id"
                                 (click)="setFilterValue()">
                                 {{ item.name }}
@@ -26,7 +26,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2 pl-0">
+                <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'">
                     <button (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
                         ADD NEW
                     </button>
@@ -113,7 +113,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
-        <div class="pt-150" *ngIf="finalTaskList.length===0">
+        <div class="pt-150" *ngIf="dataSource.data===null">
             <div class="row align-items-center">
 
                 <div class="col-md-8 text-center">
