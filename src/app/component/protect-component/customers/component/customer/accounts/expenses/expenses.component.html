@@ -309,7 +309,7 @@
                                     <div *ngIf="dataSource.data.length == 0 "
                                         class="d-flex flex-column align-items-center">
                                         <img class="width400" src="assets/images/svg/clients-img.svg">
-                                        <h4 class="text-center pt-12">{{noData}}</h4>
+                                        <h4 class="text-center pt-12">No expense found</h4>
                                         <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
                                             (click)="openExpenses('addExpenses',null)"> ADD NEW
                                         </button>
@@ -602,7 +602,7 @@
                         <div *ngIf="dataSource4.filteredData.length == 0 && dataSource4.filteredData.length == 0"
                             class="d-flex flex-column align-items-center">
                             <img class="width400" src="assets/images/svg/clients-img.svg">
-                            <h4 class="text-center pt-12">{{noData}}</h4>
+                            <h4 class="text-center pt-12">No budget found</h4>
                             <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
                                 (click)="openExpenses('addBudget', null)"> ADD NEW
                             </button>
