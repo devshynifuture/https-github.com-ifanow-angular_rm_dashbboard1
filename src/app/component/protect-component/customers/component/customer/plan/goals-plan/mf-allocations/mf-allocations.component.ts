@@ -47,6 +47,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   // refreshObservable = new Subject();
   // refreshAssetList = new Subject();
   validatorType = ValidatorType;
+  showEditMf: boolean =  false;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -134,6 +135,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
           this.selectedAllocation = element
+          this.showEditMf= true
         }
       });
     });
@@ -155,16 +157,21 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
         let absSIP = 0;
+        let remainSIP = 0;
         let absLumsum = 0;
+        let remainLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
             absSIP += element.sipPercent;
             absLumsum += element.lumpsumPercent
+            remainSIP = 100 - absSIP
+            remainLumsum = 100 - absLumsum
           });
         }
         return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
+      
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
