@@ -102,6 +102,7 @@ export class AddPlaninsuranceComponent implements OnInit {
 
   @Input() set data(data) {
     this.insuranceData = data;
+    this.getHolderNames(this.insuranceData)
     console.log(data)
   }
 
@@ -114,7 +115,21 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.getAnalysis()
     this.getNeedBasedAnalysis(0,0);
   }
-
+  getHolderNames(obj){
+      if (obj.owners && obj.owners.length > 0) {
+        obj.displayHolderName = obj.owners[0].holderName;
+        if (obj.owners.length > 1) {
+          for (let i = 1; i < obj.owners.length; i++) {
+            if (obj.owners[i].holderName) {
+              const firstName = (obj.owners[i].holderName as string).split(' ')[0];
+              obj.displayHolderName += ', ' + firstName;
+            }
+          }
+        }
+      } else {
+        obj.displayHolderName = '';
+      }
+  }
   formatNumber(data, noOfPlaces: number = 0) {
     if (data) {
       data = parseFloat(data)

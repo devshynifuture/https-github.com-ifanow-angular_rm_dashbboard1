@@ -154,12 +154,16 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.mfList = res;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
+        let absSIP = 0;
+        let absLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
+            absSIP += element.sipPercent;
+            absLumsum += element.lumpsumPercent
           });
         }
-        return { absAllocation, ...mf };
+        return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -271,21 +275,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          this.loadMFData();
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(() => {
-              this.loadMFData();
-            })
-          );
-          this.allocateOtherAssetService.refreshAssetList.next();
-          this.subInjectService.setRefreshRequired();
-        //  this.refreshAssetList.next();
-          this.eventService.openSnackBar("Asset unallocated");
-          dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
+        this.allocationService.allocateOtherAssetToGoalRm(obj);
+        dialogRef.close()
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
