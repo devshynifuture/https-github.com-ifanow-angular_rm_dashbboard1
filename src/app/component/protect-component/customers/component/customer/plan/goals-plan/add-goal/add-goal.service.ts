@@ -44,10 +44,10 @@ export class AddGoalService {
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     } else {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
-      if (mfAsset.absAllocation < 100) {
+      if (mfAsset.absSIP <= 100 || mfAsset.absLumsum <= 100) {
         mfAsset.goalAssetMapping.forEach(element => {
-          obj.sipPercent = parseInt(element.sipPercent)
-          obj.lumpsumPercent = parseInt(element.lumpsumPercent)
+          obj.sipPercent = parseInt(element.remainSIP)
+          obj.lumpsumPercent = parseInt(element.remainLumsum)
         });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
@@ -88,6 +88,16 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
+  }
+  allocateOtherAssetToGoalRm(obj){
+    this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+      this.refreshObservable.next();
+      this.plansService.assetSubject.next(res);
+      this.refreshAssetList.next();
+      this.eventService.openSnackBar("Unallocated", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err);
     })

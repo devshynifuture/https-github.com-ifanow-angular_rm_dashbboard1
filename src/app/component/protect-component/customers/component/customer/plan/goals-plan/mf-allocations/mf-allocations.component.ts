@@ -47,6 +47,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   // refreshObservable = new Subject();
   // refreshAssetList = new Subject();
   validatorType = ValidatorType;
+  showEditMf: boolean =  false;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -134,6 +135,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
           this.selectedAllocation = element
+          this.showEditMf= true
         }
       });
     });
@@ -154,13 +156,22 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.mfList = res;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
+        let absSIP = 0;
+        let remainSIP = 0;
+        let absLumsum = 0;
+        let remainLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
+            absSIP += element.sipPercent;
+            absLumsum += element.lumpsumPercent
+            element.remainSIP = 0
+            element.remainLumsum= 0
           });
         }
-        return { absAllocation, ...mf };
+        return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
+      
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
@@ -271,21 +282,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          this.loadMFData();
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(() => {
-              this.loadMFData();
-            })
-          );
-          this.allocateOtherAssetService.refreshAssetList.next();
-          this.subInjectService.setRefreshRequired();
-        //  this.refreshAssetList.next();
-          this.eventService.openSnackBar("Asset unallocated");
-          dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
+        this.allocationService.allocateOtherAssetToGoalRm(obj);
+        dialogRef.close()
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
