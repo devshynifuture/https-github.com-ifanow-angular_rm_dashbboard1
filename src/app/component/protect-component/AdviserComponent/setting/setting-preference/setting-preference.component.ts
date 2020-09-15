@@ -165,6 +165,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getDomainSettingRes(data) {
     // this.loader(-1);
+    data.completeWhiteLabel = data.completeWhiteLabel == 'NA' ? '' : data.completeWhiteLabel;
+    data.siteTitle = data.siteTitle == 'NA' ? data.siteTitle : ''
     this.domainSetting = data;
     data.partialWhiteLabel = data.partialWhiteLabel.replace('.my-planner.in', '')
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
