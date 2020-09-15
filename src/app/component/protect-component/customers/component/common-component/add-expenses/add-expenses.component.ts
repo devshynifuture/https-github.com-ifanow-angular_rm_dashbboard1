@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-expenses',
@@ -15,6 +16,21 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./add-expenses.component.scss']
 })
 export class AddExpensesComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+};
   // expenseList: { "clientExpenseTypeMasterId": number; "expenseType": string; "label": string; }[];
   expenses: any;
   clientId: any;
@@ -22,7 +38,7 @@ export class AddExpensesComponent implements OnInit {
   familyMember: any;
   familyMemberId: any;
   ownerName: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   inputData: any;
   isViewInitCalled: any;
   expenseList: {};
@@ -35,8 +51,8 @@ export class AddExpensesComponent implements OnInit {
   budgetFlag: string;
   mytime: Date = new Date();
 
-  constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private planService: PlanService, private constantService: ConstantsService,private datePipe: DatePipe) {
+  constructor(private peopleService: PeopleService, private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
+    private planService: PlanService, private constantService: ConstantsService, private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {
@@ -44,7 +60,7 @@ export class AddExpensesComponent implements OnInit {
 
     if (this.isViewInitCalled) {
       if (data.isRecuring == false && data.continueTill && data.repeatFrequency) {
-        data.isRecuring=true;
+        data.isRecuring = true;
         this.getdataFormRec(data)
         this.isRecuring = true
       } else {
@@ -62,15 +78,17 @@ export class AddExpensesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem();
     if (this.inputData.continueTill && this.inputData.repeatFrequency) {
-      this.inputData.isRecuring=true;
+      this.inputData.isRecuring = true;
       this.getdataFormRec(this.inputData)
       this.isRecuring = true
+    } else if (this.inputData.flag == 'addBudget') {
+      this.getdataFormRec(this.inputData)
     } else {
       this.getdataForm(this.inputData);
       this.isRecuring = false
     }
-    this.trnFlag='Transaction';
-    this.budgetFlag='Budget';
+    this.trnFlag = 'Transaction';
+    this.budgetFlag = 'Budget';
   }
 
   display(value) {
@@ -87,7 +105,7 @@ export class AddExpensesComponent implements OnInit {
   }
 
   getdataForm(data) {
-    this.trnFlag='Transaction';
+    this.trnFlag = 'Transaction';
     this.getFlag = data.flag
 
     if (data == undefined) {
@@ -104,25 +122,25 @@ export class AddExpensesComponent implements OnInit {
       category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
-      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
+      familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false
     });
     this.expenseList = this.constantService.expenseList;
     this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
   getdataFormRec(data) {
-    this.trnFlag='Recurring transaction';
+    this.trnFlag = 'Recurring transaction';
     this.getFlag = data.flag
 
     if (data == undefined) {
       data = {};
-    } if (this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
+    } if (this.getFlag == 'addBudget' || this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
       this.isRecuring = true
     }
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency+'' , [Validators.required]],
+      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency + '', [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
       UntilDate: [(data == undefined) ? '' : new Date((data.UntilDate == undefined) ? data.startsFrom : data.UntilDate)],
@@ -132,9 +150,9 @@ export class AddExpensesComponent implements OnInit {
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
-      familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
+      familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
-    }); 
+    });
     this.expenseList = this.constantService.expenseList
     this.familyMemberId = this.recuring.controls.familyMemberId.value
   }
@@ -152,7 +170,7 @@ export class AddExpensesComponent implements OnInit {
     };
 
     // this.planService.getListOfFamilyByClient(obj).subscribe(
-      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
@@ -160,132 +178,132 @@ export class AddExpensesComponent implements OnInit {
   getListOfFamilyByClientRes(data) {
     this.familyMember = data;
   }
-  selectCategory(value){
+  selectCategory(value) {
     let isCheck;
-    if(this.isRecuring ==true && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+    if (this.isRecuring == true && (this.inputData.flag == 'editExpenses' || this.inputData.flag == 'addExpenses')) {
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
-        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
-           isCheck =true;
+        if (element.expenseCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
+          isCheck = true;
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
           }
         }
       });
-    }else if(this.isRecuring == false && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+    } else if (this.isRecuring == false && (this.inputData.flag == 'editExpenses' || this.inputData.flag == 'addExpenses')) {
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
-        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& this.familyMemberId == element.familyMemberId){
-          isCheck =true;
+        if (element.expenseCategoryId == (this.expenses.controls.category.value) && this.familyMemberId == element.familyMemberId) {
+          isCheck = true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
           }
         }
       });
-    }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
+    } else if (this.isRecuring == true && (this.inputData.flag == 'addBudget' || this.inputData.flag == 'editBudget')) {
       let List = this.inputData.getData.budgetList
       List.forEach(element => {
-        if(element.budgetCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
-          isCheck =true;
+        if (element.budgetCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
+          isCheck = true;
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
           }
         }
       });
-    }else if(this.isRecuring == false && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
+    } else if (this.isRecuring == false && (this.inputData.flag == 'addBudget' || this.inputData.flag == 'editBudget')) {
       let List = this.inputData.getData.budgetList
       List.forEach(element => {
-        if(element.budgetCategoryId == (this.expenses.controls.category.value)&& this.familyMemberId == element.familyMemberId){
-          isCheck =true;
+        if (element.budgetCategoryId == (this.expenses.controls.category.value) && this.familyMemberId == element.familyMemberId) {
+          isCheck = true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
           }
         }
       });
-    }else{
+    } else {
       this.expenses.get('ownerName').setErrors(null);
     }
   }
   selectClient(event, selected) {
     this.familyMemberId = selected.id
     let isCheck;
-    if(this.isRecuring ==true && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+    if (this.isRecuring == true && (this.inputData.flag == 'editExpenses' || this.inputData.flag == 'addExpenses')) {
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
-        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& this.familyMemberId == element.familyMemberId){
-          isCheck =true;
+        if (element.expenseCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
+          isCheck = true;
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
           }
         }
       });
-    }else if(this.isRecuring == false && (this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses')){
+    } else if (this.isRecuring == false && (this.inputData.flag == 'editExpenses' || this.inputData.flag == 'addExpenses')) {
       let List = this.inputData.getData.expenseList
       List.forEach(element => {
-        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
-          isCheck =true;
+        if (element.expenseCategoryId == (this.expenses.controls.category.value) && selected.id == element.familyMemberId) {
+          isCheck = true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
           }
         }
       });
-    }else if(this.isRecuring == true && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
-      let List =  this.inputData.getData.budgetList
-      List.forEach(element => {
-        if(element.budgetCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
-          isCheck =true;
-          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
-            this.recuring.get('ownerName').setErrors(null);
-          }
-        }
-      });
-    }else if(this.isRecuring == false && (this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget')){
+    } else if (this.isRecuring == true && (this.inputData.flag == 'addBudget' || this.inputData.flag == 'editBudget')) {
       let List = this.inputData.getData.budgetList
       List.forEach(element => {
-        if(element.budgetCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
-          isCheck =true;
+        if (element.budgetCategoryId == (this.recuring.controls.category.value) && selected.id == element.familyMemberId) {
+          isCheck = true;
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        } else {
+          if (!isCheck) {
+            this.recuring.get('ownerName').setErrors(null);
+          }
+        }
+      });
+    } else if (this.isRecuring == false && (this.inputData.flag == 'addBudget' || this.inputData.flag == 'editBudget')) {
+      let List = this.inputData.getData.budgetList
+      List.forEach(element => {
+        if (element.budgetCategoryId == (this.expenses.controls.category.value) && selected.id == element.familyMemberId) {
+          isCheck = true;
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
-        }else{
-          if(!isCheck){
+        } else {
+          if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
           }
         }
       });
-    }else{
+    } else {
       this.expenses.get('ownerName').setErrors(null);
     }
   }
   toggle(value) {
     this.isRecuring = value.checked;
-    if(value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+    if (value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')) {
       this.trnFlag = 'Recurring transaction';
       this.getdataFormRec(this.inputData)
-    }else if(value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')){
-      this.budgetFlag = 'Recurring Budget'
+    } else if (value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')) {
+      this.budgetFlag = 'Budget'
       this.getdataFormRec(this.inputData)
-    }else if(value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+    } else if (value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')) {
       this.trnFlag = 'Transaction';
-    }else{
+    } else {
       this.budgetFlag = 'Budget'
 
     }
-    
+
   }
-  changeSelection(){
+  changeSelection() {
 
   }
   continuesTill(value) {
@@ -294,13 +312,13 @@ export class AddExpensesComponent implements OnInit {
       this.recuring.get('numberOfYearOrNumberOfTime').setValidators([Validators.required]);
       this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
       this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors({ 'required': true });
-    } 
+    }
     // else if(this.recuring.get('continueTill').value == '5' ){
     //   this.recuring.get('UntilDate').setValidators([Validators.required]);
     //   this.recuring.get('UntilDate').updateValueAndValidity();
     //   this.recuring.controls['UntilDate'].setErrors({ 'required': true });
     // }
-    else{
+    else {
       this.recuring.get('numberOfYearOrNumberOfTime').setValidators(null);
       this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
       this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors(null);
@@ -315,35 +333,14 @@ export class AddExpensesComponent implements OnInit {
       form.get(value).setValue(event.target.value);
     }
   }
-  
+
 
   saveRecuringExpense() {
-    // if (this.recuring.get('repeatFrequency').invalid) {
-    //   this.recuring.get('repeatFrequency').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('amount').invalid) {
-    //   this.recuring.get('amount').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('category').invalid) {
-    //   this.recuring.get('category').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('startsFrom').invalid) {
-    //   this.recuring.get('startsFrom').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('paymentModeId').invalid) {
-    //   this.recuring.get('paymentModeId').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('continueTill').invalid) {
-    //   this.recuring.get('continueTill').markAsTouched();
-    //   return
-    // } else if (this.recuring.get('ownerName').invalid) {
-    //   this.recuring.get('ownerName').markAsTouched();
-    //   return
-    // } else {
-      if (this.recuring.invalid) {
+    if (this.recuring.invalid) {
 
-        this.recuring.markAllAsTouched();
-      } else{
+      this.recuring.markAllAsTouched();
+    } else {
+      this.barButtonOptions.active = true;
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -351,7 +348,7 @@ export class AddExpensesComponent implements OnInit {
         repeatFrequency: this.recuring.controls.repeatFrequency.value,
         amount: this.recuring.controls.amount.value,
         paymentModeId: this.recuring.controls.paymentModeId.value,
-        startsFrom:this.datePipe.transform(this.recuring.controls.startsFrom.value, 'yyyy-MM-dd'), 
+        startsFrom: this.datePipe.transform(this.recuring.controls.startsFrom.value, 'yyyy-MM-dd'),
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
@@ -393,57 +390,42 @@ export class AddExpensesComponent implements OnInit {
     }
   }
   otherCommitmentsEditRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addBudgetTrn' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'addBudgetTrn' })
   }
   otherCommitmentsAddRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editBudgetTrn' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'editBudgetTrn' })
   }
   addRecuringExpenseRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addRecurringTrn' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'addRecurringTrn' })
   }
 
   editRecuringExpenseRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editRecurringTrn' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'editRecurringTrn' })
   }
 
   saveExpenses() {
-    // if (this.expenses.get('expenseDoneOn').invalid) {
-    //   this.expenses.get('expenseDoneOn').markAsTouched();
-    //   return
-    // } else if (this.expenses.get('timeInMilliSec').invalid) {
-    //   this.expenses.get('timeInMilliSec').markAsTouched();
-    //   return
-    // } else if (this.expenses.get('amount').invalid) {
-    //   this.expenses.get('amount').markAsTouched();
-    //   return
-    // } else if (this.expenses.get('category').invalid) {
-    //   this.expenses.get('category').markAsTouched();
-    //   return
-    // } else if (this.expenses.get('paymentModeId').invalid) {
-    //   this.expenses.get('paymentModeId').markAsTouched();
-    //   return
-    // } else if (this.expenses.get('ownerName').invalid) {
-    //   this.expenses.get('ownerName').markAsTouched();
-    //   return
-    // } else {
-          if (this.expenses.invalid) {
-
-        this.expenses.markAllAsTouched();
-      }else{
+    if (this.expenses.invalid) {
+      this.expenses.markAllAsTouched();
+    } else {
+      this.barButtonOptions.active = true;
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        expenseDoneOn:this.datePipe.transform( this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
+        expenseDoneOn: this.datePipe.transform(this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
         amount: this.expenses.controls.amount.value,
         // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-         time:this.expenses.controls.timeInMilliSec.value,
-        timeInString:this.expenses.controls.timeInMilliSec.value,
-        startsFrom:this.datePipe.transform( this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
+        time: this.expenses.controls.timeInMilliSec.value,
+        timeInString: this.expenses.controls.timeInMilliSec.value,
+        startsFrom: this.datePipe.transform(this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,
         budgetCategoryId: this.expenses.controls.category.value,
@@ -458,16 +440,16 @@ export class AddExpensesComponent implements OnInit {
           this.planService.addExpense(obj).subscribe(
             data => this.addExpenseRes(data)
           );
-        } 
+        }
       } else if (this.getFlag == 'editExpenses') {
         //edit call
         delete obj.budgetCategoryId;
         delete obj.time
-        delete obj.startsFrom        
-          this.planService.editExpense(obj).subscribe(
+        delete obj.startsFrom
+        this.planService.editExpense(obj).subscribe(
           data => this.editExpenseRes(data)
         );
-      }else if (this.getFlag == 'addBudget') {
+      } else if (this.getFlag == 'addBudget') {
         if (this.expenses.controls.id.value == undefined) {
           delete obj.expenseCategoryId;
           delete obj.expenseDoneOn
@@ -490,21 +472,25 @@ export class AddExpensesComponent implements OnInit {
     }
   }
   addBudgetRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addBudget' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'addBudget' })
   }
   editBudgetRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editBudget' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'editBudget' })
   }
   addExpenseRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addExpense' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'addExpense' })
   }
 
   editExpenseRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editExpense' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true, value: 'editExpense' })
   }
 
   Close(flag) {

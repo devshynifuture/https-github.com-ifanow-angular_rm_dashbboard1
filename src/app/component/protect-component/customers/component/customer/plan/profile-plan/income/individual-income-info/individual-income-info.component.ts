@@ -166,7 +166,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     nextAppraisal: [],
     description: [],
     monthlyNetIncome:[, [Validators.required]],
-    othersIncome:[, [Validators.required]],
+    othersIncome:[],
     monthlyIncomeForm: this.fb.array([this.fb.group({
       monthlyIncType: ['', [Validators.required]],
       monthlyIncAmt: [null, [Validators.required]],
@@ -653,7 +653,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   chngIncomeOption(data) {
 	this.incomeOption = data.value;
 	this.resetFeild();
-    this.addMoreFlag = false;
+  this.addMoreFlag = false;
 	this.incomeNetForm.controls.continousTill.setValue('1');
 	this.incomeNetForm.controls.incomeOption.setValue(this.incomeOption)
 
@@ -1067,7 +1067,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomePosition++;
     if (this.incomePosition < this.finalIncomeAddList.length) {
 	  this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
-	  this.resetFeild();
+    this.resetFeild();
+    this.addMoreFlag = false;
 	  this.incomeNetForm.controls.incomeOption.setValue('2')
 	  this.incomeOption = '2';
     }

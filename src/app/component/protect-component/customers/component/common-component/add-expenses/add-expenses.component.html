@@ -23,7 +23,7 @@
 </div>
 <div *ngIf="isRecuring == true">
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
-        <div class="row">
+        <div class="row" *ngIf="getFlag == 'editExpenses' || getFlag == 'addExpenses'">
             <div class="col-md-12 p-0 text-right">
                 Add recuring
                 <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
@@ -162,6 +162,7 @@
                         <mat-select class="form-control br-0" formControlName="paymentModeId">
                             <mat-option value='1'> Credit card </mat-option>
                             <mat-option value='2'> Debit card </mat-option>
+                            <mat-option value='3'> Cash </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -202,7 +203,9 @@
             </div>
             <div class="col-md-8 text-right">
                 <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button>
+                <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button> -->
+                <app-progress-button (click)="saveRecuringExpense()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+                </app-progress-button>
             </div>
         </div>
     </div>
@@ -291,6 +294,7 @@
                             <mat-option disabled selected hidden> Credit card </mat-option>
                             <mat-option value="1"> Credit card </mat-option>
                             <mat-option value="2"> Debit card </mat-option>
+                            <mat-option value='3'> Cash </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -342,7 +346,9 @@
                 <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close(false)">Cancel</h5>
             </div>
             <div class="col-md-8  text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button>
+                <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button> -->
+                <app-progress-button (click)="saveExpenses()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+                </app-progress-button>
             </div>
         </div>
     </div>
