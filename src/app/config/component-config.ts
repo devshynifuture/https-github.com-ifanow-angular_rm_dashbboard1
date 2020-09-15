@@ -337,6 +337,9 @@ export const appConfig = {
   GENERAL_INSURANCE_ADD:'insurance/planning/general/insurance/planning/add',
   GENERAL_INSURANCE_REVIEW_GET:'insurance/planning/general/insurance/review/get',
   GENERAL_INSURANCE_CURRENT_POLICY_GET:'insurance/planning/general/insurance/current-policies/add/more/get',
+  LIFE_INSURANCE_NEED_BASED_DETAILS:'insurance/planning/life/insurance/need/based/details/saved/get?',
+  LIFE_INSURANCE_RECOMMENDATION_UPDATE:'insurance/planning/life/insurance/recommendation/status/update',
+  GEN_INSURANCE_RECOMMENDATION_UPDATE:'insurance/planning/gen/insurance/recommendation/status/update',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',

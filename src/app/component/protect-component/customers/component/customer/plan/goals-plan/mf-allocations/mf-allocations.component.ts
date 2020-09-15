@@ -254,9 +254,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
 
   }
-  restrictFrom100(event) {
-    if (parseInt(event.target.value) > 100) {
-      event.target.value = 100;
+  restrictFrom100(event,ele) {
+    if ((event.target.value) > 100 - ele) {
+      event.target.value = 100 - ele;
     }
   }
 

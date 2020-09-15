@@ -14,7 +14,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { CustomFormInputComponent } from './common/custom-form-input/custom-form-input.component';
 import { DialogComponent } from './component/dialog/dialog.component';
 
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BaseComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { CustomCommonModule } from './common/custom.common.module';
@@ -31,6 +31,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AgmCoreModule } from '@agm/core'
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -81,6 +82,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AppRoutingModule,
     CustomDirectiveModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyADyxccMFAm_qzOE6slO2jHrKjQPlN_KG4',
+      libraries: ['places']
+    })
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // AssetsModule,
 
