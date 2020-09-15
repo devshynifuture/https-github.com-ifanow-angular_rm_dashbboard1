@@ -31,7 +31,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AgmCoreModule } from '@agm/core'
+// import { AgmCoreModule } from '@agm/core'
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -82,10 +82,10 @@ import { AgmCoreModule } from '@agm/core'
     AppRoutingModule,
     CustomDirectiveModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyADyxccMFAm_qzOE6slO2jHrKjQPlN_KG4',
-      libraries: ['places']
-    })
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyADyxccMFAm_qzOE6slO2jHrKjQPlN_KG4',
+    //   libraries: ['places']
+    // })
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // AssetsModule,
 

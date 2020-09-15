@@ -9,8 +9,8 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-import { MapsAPILoader } from '@agm/core';
-// import { } from 'googlemaps'
+// import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps'
 import { from } from 'rxjs';
 @Component({
   selector: 'app-client-address',
@@ -47,11 +47,11 @@ export class ClientAddressComponent implements OnInit {
   firstTimeEditFlag = false;
   valueChanges: boolean;
   valueChangeFlag: any;
-  @ViewChild('placeSearch', { static: false }) placeSearch: ElementRef;
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
-    private utilService: UtilService, public dialog: MatDialog, private mapApiLoader: MapsAPILoader, private ngZone: NgZone) {
+    private utilService: UtilService, public dialog: MatDialog, private ngZone: NgZone) {
   }
 
   addressForm: FormGroup;
@@ -77,23 +77,23 @@ export class ClientAddressComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mapApiLoader.load().then(() => {
-      const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
-        types: [],
-        componentRestrictions: { 'country': 'IN' }
-      });
+    // this.mapApiLoader.load().then(() => {
+    const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
 
-      autoCompelete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-          // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
-          this.getPincode(place.formatted_address)
-          // console.log(place)
-        })
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.getPincode(place.formatted_address)
+        // console.log(place)
       })
+      // })
     })
   }
 
