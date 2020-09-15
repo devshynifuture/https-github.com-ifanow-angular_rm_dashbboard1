@@ -276,7 +276,7 @@
             </div>
             <div class="w-41 d-flex align-items-center">
                 <div class="f-14 text-primitive roboto f-400">
-                    <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this Recurring
+                    <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this recurring
                     <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
                 </div>
             </div>
@@ -294,7 +294,7 @@
             <div class="w-41 form-group pl-15 pr-15 mb-0">
                 <mat-form-field>
                     <mat-select formControlName="taskTurnAroundTime" class="form-control">
-                        <mat-option value="" disabled>Select Turnaround time</mat-option>
+                        <mat-option value="" disabled>Eg. T + 1</mat-option>
                         <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                             {{ 'T + ' + item }}
                         </mat-option>
@@ -388,7 +388,7 @@
 
                     <mat-form-field appearance="standard" class="arrowRemoveBox " floatLabel="never">
                         <mat-select class="form-control" formControlName="turnAroundTime">
-                            <mat-option value="" disabled>Select Turnaround time</mat-option>
+                            <mat-option value="" disabled>Eg. T + 1</mat-option>
                             <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                                 {{ 'T + ' + item }}
                             </mat-option>
@@ -406,7 +406,7 @@
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
                         <mat-select class="form-control" formControlName="assignedTo">
                             <mat-option value="" disabled>
-                                Select Team member
+                                Team member
                             </mat-option>
                             <mat-option *ngFor="let item of teamMemberList" [value]="item.userId">
                                 {{ item.fullName }}
@@ -438,7 +438,7 @@
             <mat-menu #menu3="matMenu" xPosition="after">
                 <button mat-menu-item (click)="getSubTaskFromTemplate()"
                     [disabled]="data===null || isManualOrTaskTemplate == 'manual'">
-                    Task Template
+                    Task template
                 </button>
                 <button mat-menu-item (click)="addSubTask(null)">
                     Manual
@@ -531,7 +531,7 @@
                             </h5>
                         </div>
                         <div class="col-md-4 editDelectText text-right">
-                            <a class="f-12 c-p" (click)="replyToComment(item, i)">Reply</a>
+                            <a class="f-12 c-p" (click)="openReplyInput(item, i)">Reply</a>
                             <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
                             <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
                                 (click)="saveEditedComment(item, 'task', i, $event)">Save</a>
@@ -543,28 +543,45 @@
                             <p class="f-14 m-0" *ngIf="!item.editMode">
                                 {{  item.commentMsg }}
                             </p>
-                            <div class="row w-100 pt-12">
-                                <div class="col-md-1">
-                                    <img class="imgComment"
-                                        src="http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png">
-                                </div>
-                                <div class="col-md-8">
-                                    <h5 class="f-500 roboto">
-                                        Rahul Jain
-                                        <span class="text-primitive f-12"> 1 hours ago</span>
-                                    </h5>
-                                    <p class="f-14 m-0">dummy text</p>
-                                </div>
-                                <div class="col-md-3 d-flex editDelectText">
-                                    <a class="f-12 c-p">Edit</a>
-                                    <a class="f-12 pl-5 c-p">Save</a>
-                                    <a class="f-12 pl-5 c-p">Delete</a>
-                                </div>
-                            </div>
                             <p class="f-14 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentTaskFC" class="form-control"
                                     [value]="item.commentMsg">
                             </p>
+                            <div class="row w-100 pt-12" *ngIf="item.showInputReply">
+                                <div class="col-md-10">
+                                    <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-stroked-button class="btn-primary" (click)="addReply(replyItem, item, rindex, 'task')">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row w-100 pt-12" *ngFor="let replyItem of item.replies; index as rindex">
+                                <div class="row w-100">
+                                    <div class="col-md-1">
+                                        <img class="imgComment"
+                                            [src]="replyItem.profilePicUrl" alt="reply profile image">
+                                    </div>
+                                    <div class="col-md-8" *ngIf="item.showReplyText">
+                                        <h5 class="f-500 roboto">
+                                            {{ replyItem.name }}
+                                            <span class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
+                                        </h5>
+                                        <p class="f-14 m-0" *ngIf="!replyItem.editMode">{{ replyItem.commentMsg }}</p>
+                                        <p class="f-14 form-group" *ngIf="replyItem.editMode">
+                                            <input type="text" [formControl]="editReplyFC" class="form-control"
+                                                [value]="replyItem.commentMsg">
+                                        </p>
+                                    </div>
+    
+                                    <div class="col-md-3 d-flex editDelectText">
+                                        <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode">Edit</a>
+                                        <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'task')">Save</a>
+                                        <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -659,9 +676,9 @@
                 </mat-form-field>
             </div>
 
-            <div class="w-20">
+            <!-- <div class="w-20">
                 <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
-            </div>
+            </div> -->
         </div>
 
 
@@ -735,6 +752,7 @@
                             </h5>
                         </div>
                         <div class="col-md-4 editDelectText text-right">
+                            <a class="f-12 c-p" (click)="openReplyInput(item, i)">Reply</a>
                             <a class="f-12 c-p" *ngIf="!item.editMode"
                                 (click)="toggleEditMode(item, 'subTask')">Edit</a>
                             <a class="f-12 c-p" *ngIf="item.editMode"
@@ -747,11 +765,45 @@
                             <p class="f-14 m-0" *ngIf="!item.editMode"> {{ item.commentMsg }}
                             </p>
 
-
                             <p class="f-12 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentSubTaskFC" class="form-control"
                                     [value]="item.commentMsg">
                             </p>
+                        </div>
+                    </div>
+                    <div class="row w-100 pt-12" *ngIf="item.showInputReply">
+                        <div class="col-md-10">
+                            <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-stroked-button class="btn-primary" (click)="addReply(replyItem, item, rindex, 'subTask')">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row w-100 pt-12" *ngFor="let replyItem of item.replies; index as rindex">
+                        <div class="row w-100">
+                            <div class="col-md-1">
+                                <img class="imgComment"
+                                    [src]="replyItem.profilePicUrl" alt="reply profile image">
+                            </div>
+                            <div class="col-md-8" *ngIf="item.showReplyText">
+                                <h5 class="f-500 roboto">
+                                    {{ replyItem.name }}
+                                    <span class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
+                                </h5>
+                                <p class="f-14 m-0" *ngIf="!replyItem.editMode">{{ replyItem.commentMsg }}</p>
+                                <p class="f-14 form-group" *ngIf="replyItem.editMode">
+                                    <input type="text" [formControl]="editReplyFC" class="form-control"
+                                        [value]="replyItem.commentMsg">
+                                </p>
+                            </div>
+
+                            <div class="col-md-3 d-flex editDelectText">
+                                <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode">Edit</a>
+                                <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'subTask')">Save</a>
+                                <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>

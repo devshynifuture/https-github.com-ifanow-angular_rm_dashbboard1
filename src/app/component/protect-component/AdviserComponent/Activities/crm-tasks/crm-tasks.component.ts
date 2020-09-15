@@ -195,6 +195,9 @@ export class CrmTasksComponent implements OnInit {
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
+      }, err=> {
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong!","DISMISS");
       })
   }
 
@@ -215,8 +218,13 @@ export class CrmTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+          this.finalTaskList = [];
+          
           this.initPoint();
         }
+      }, err=> {
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong!","DISMISS");
       })
   }
 
