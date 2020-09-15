@@ -84,6 +84,7 @@ export class AddTasksComponent implements OnInit {
   prevAddTaskFormValue: any;
   replyCommentFC = new  FormControl('', Validators.required);
   editReplyFC = new FormControl('', Validators.required);
+  prevSubTaskFormValues: {};
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -249,7 +250,7 @@ export class AddTasksComponent implements OnInit {
     item.showInputReply = !item.showInputReply;
   }
 
-  addReply(replyItem, commentItem, replyIndex, choice){
+  addReply(commentItem, choice){
     let data;
 
     if(this.replyCommentFC.value !== ''){
@@ -398,7 +399,14 @@ export class AddTasksComponent implements OnInit {
       // this.showManualToggle = false;
       // let tempClientList = this.enumDataService.getClientSearchData('');
       // this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
+      this.selectedClient = {
+        displayName: this.data.member,
+        clientId: this.data.clientId 
+      }
       // data.displayName = this.selectedClient.displayName;
+
+      data.displayName = this.data.client;
+      
       this.setTeamMember(data.assignedTo);
 
       this.addTaskForm = this.fb.group({
@@ -432,8 +440,15 @@ export class AddTasksComponent implements OnInit {
         assignedTo: ['', Validators.required],
         taskDueDate: ['', Validators.required],
       });
-
-      this.editSubTaskForm.valueChanges.subscribe(item=> this.saveChangesSubTask = true);
+      this.prevSubTaskFormValues = {
+        ...this.editSubTaskForm.value
+      }
+      this.editSubTaskForm.valueChanges.subscribe(item=> {
+        if(!this.util.areTwoObjectsSame(this.prevSubTaskFormValues, item)){
+          this.saveChangesSubTask = true;
+        }
+      });
+      
       this.selectClient(this.selectedClient);
     } else {
       this.addTaskForm = this.fb.group({
@@ -850,6 +865,12 @@ export class AddTasksComponent implements OnInit {
 
     }
 
+    if(choice === 'task'){
+      if(this.subTaskList.some(item => item.isCompleted === false)){
+
+      }
+    }
+
     this.crmTaskService.markTaskOrSubTaskDone(data)
       .subscribe(res => {
         let msg = choice == 'Task' ? '' : (choice === 'Sub task' ? '' : '');
@@ -1017,7 +1038,6 @@ export class AddTasksComponent implements OnInit {
     } else {
       if(this.addTaskForm.get(`subTask.${formGroupIndex}`).valid){
         this.subTaskList.push({
-          isCompleted: false,
           assignedTo: data.value.assignedTo,
           description: data.value.description,
           turnAroundTime: data.value.turnAroundTime,
