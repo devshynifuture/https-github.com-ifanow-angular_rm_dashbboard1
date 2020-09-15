@@ -129,8 +129,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(DomainSettingPopupComponent, {
-      height: '300px',
-      width: '300px'
+      height: '500px',
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

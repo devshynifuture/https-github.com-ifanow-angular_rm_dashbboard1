@@ -303,7 +303,7 @@
                             <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the
                                 link with which IFANOW is accessed by you, your team and your clients. You have an
                                 option to Completely white label the URL. <span (click)="openDialog()"
-                                    class="text-primary text-underline c-p">Read more</span></p>
+                                    class="text-primary text-underline c-p f-500">Read more</span></p>
                         </div>
                         <div class="row pt-28" [formGroup]="domainS">
                             <div class=" pl-0 br"
@@ -435,38 +435,8 @@
                                     </div>
 
                                 </div> -->
-                                    <div class="row pt-16">
 
-                                        <div class="col-md-8 pl-0">
-                                            <p class="m-0 text-black roboto f-500">Site title</p>
-                                        </div>
-                                        <div class="col-md-1 pr-0 text-right">
-                                            <mat-spinner *ngIf="loaderArray[2].isLoader" [diameter]="20"></mat-spinner>
-                                        </div>
-                                        <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == false">
-                                            <button mat-stroked-button class="btn-dark-outline xs"
-                                                (click)="editDomain(true,'brand')">Edit</button>
-                                        </div>
-                                        <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == true">
-                                            <button mat-stroked-button class="btn-dark-outline xs"
-                                                (click)="updateDomainSetting(false,'brand',domainS.get('brandVisible'),2)">Update</button>
 
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <mat-form-field appearance="standard" floatLabel="never">
-                                            <input matInput placeholder="Enter site title" autocomplete="off"
-                                                class="form-control" formControlName="brandVisible">
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                    <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser
-                                        bar.
-                                        You can customize it here. </p>
-                                    <p class="pt-4 text-custom roboto m-0">Tip: You can put your company name here for
-                                        better brand visibility.</p>
-                                    <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
                                     <div class="url-details">
                                         <ul class="d-block">
                                             <li class="text-custom p-0">Please decide on a subdomain that you want for
@@ -500,6 +470,40 @@
                                                 256-bit SSL encyrption while being sent to the server.</li>
                                         </ul>
                                     </div>
+                                    <div class="row pt-16">
+
+                                        <div class="col-md-8 pl-0">
+                                            <p class="m-0 text-black roboto f-500">Site title</p>
+                                        </div>
+                                        <div class="col-md-1 pr-0 text-right">
+                                            <mat-spinner *ngIf="loaderArray[2].isLoader" [diameter]="20"></mat-spinner>
+                                        </div>
+                                        <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == false">
+                                            <button mat-stroked-button class="btn-dark-outline xs"
+                                                (click)="editDomain(true,'brand')">Edit</button>
+                                        </div>
+                                        <div class="col-md-3 p-0 text-right" *ngIf="showUpdateBrand == true">
+                                            <button mat-stroked-button class="btn-dark-outline xs"
+                                                (click)="updateDomainSetting(false,'brand',domainS.get('brandVisible'),2)">Update</button>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <mat-form-field appearance="standard" floatLabel="never">
+                                            <input matInput placeholder="Enter site title" autocomplete="off"
+                                                class="form-control" formControlName="brandVisible">
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <img src="/assets/images/svg/site-title.svg" class="pt-20">
+                                    <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser
+                                        bar.
+                                        You can customize it here. </p>
+                                    <p class="pt-4 text-custom roboto m-0">Tip: You can put your company name here for
+                                        better brand visibility.</p>
+
+
                                 </div>
                             </div>
                         </div>
