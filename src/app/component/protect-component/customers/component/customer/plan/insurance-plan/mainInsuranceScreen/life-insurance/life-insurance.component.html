@@ -72,8 +72,8 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table *ngIf="dataSouce3.length>0" [dataSource]="dataSouce3" multiTemplateDataRows class="mat-elevation-z8"
-                        id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                    <table mat-table *ngIf="dataSouce3.length>0" [dataSource]="dataSouce3" multiTemplateDataRows
+                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
                         class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
@@ -116,17 +116,17 @@
                                 </div>
                             </td>
                         </ng-container>
-                        
+
                         <ng-container matColumnDef="expandedDetail">
-                                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length">
-                                  <div class="example-element-detail"
-                                       [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                       <div class="example-element-description">
-                                            {{element.advice}}
-                                        </div>
-                                  </div>
-                                </td>
-                              </ng-container>
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length">
+                                <div class="example-element-detail"
+                                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div class="example-element-description">
+                                        {{element.advice}}
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns3;" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
@@ -197,6 +197,398 @@
                     </div>
                 </div>
             </div>
+            <div class="row pt-32" *ngIf="inputData?.insuranceType == 1">
+                <div class="col-md-12 p-0 insuranceTable">
+                        <h5 class="roboto f-500">Need based analysis</h5>
+                        <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb">
+                                <div class="col-md-6 f-14 f-500">Particulars</div>
+                                <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>
+                                <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
+                                <div class="col-md-1 f-14"> </div>
+                            </div>
+                            <mat-accordion #accordion="matAccordion" [multi]="true">
+                                <div class="br bl">
+                                    <mat-expansion-panel  (click)="panelOpenState = true" [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                1. Liabilities
+                                            </mat-panel-title>
+                
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                
+                                            <mat-panel-description>
+                                               <span appFormatNumber [value]="plannerObj.liabilities"></span>
+                                            </mat-panel-description>
+                
+                                        </mat-expansion-panel-header>
+                
+                                        <div class="row p-20" *ngIf="panelOpenState == true">
+                                            <div class="col-md-10 pl-0 insurancePlanTable">
+                                                <table mat-table *ngIf="dataSourceLiability?.length > 0" [dataSource]="dataSourceLiability" id="table-low" class=" ">
+                
+                                                    <!--- Note that these columns can be defined in any order.
+                                                      The actual rendered columns are set as a property on the row definition" -->
+                
+                                                    <!-- Position Column -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th mat-header-cell *matHeaderCellDef> Liability details</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-checkbox [checked]="element.selected" #check (click)="$event.preventDefault()"> </mat-checkbox>{{element.name}}
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="outstanding">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> Principal outstanding
+                                                        </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" >
+                                                           <span>{{formatNumber(element.total_loan_outstanding,0)}}</span> 
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="consider">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" > {{element.percent}}%
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="edit">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element">
+                                                            <!-- <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p"> -->
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsNeedAnalysis"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsNeedAnalysis;"></tr>
+                                                </table>
+                                                <div *ngIf="dataSourceLiability?.length == 0" class="d-flex flex-column align-items-center">
+                                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                    <h4 class="text-center pt-12">No data found</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                
+                                    </mat-expansion-panel>
+                                    <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                2. Dependant's needs
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.dependantNeeds"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                
+                                        <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
+                                            <div class="col-md-1">2.1</div>
+                                            <div class="col-md-6 p-0">Life Insurance Premiums</div>
+                                            <div class="col-md-3 text-right" ><span>{{formatNumber(plannerObj.lifeInsurancePremiums,0)}}</span></div>
+                                            <div class="col-md-2 text-center"> - </div>
+                                        </div>
+                                        <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
+                                            <div class="col-md-1">2.2</div>
+                                            <div class="col-md-6 p-0"> Living expenses </div>
+                                            <div class="col-md-3 text-right" ><span appFormatNumber [value]="plannerObj.livingExpense"></span> </div>
+                                            <div class="col-md-2 text-center"> - </div>
+                                        </div>
+                
+                                        <div class="row p-20" *ngIf="panelOpenState == true">
+                                            <div class="col-md-10 pl-0 insurancePlanTable">
+                                                <table mat-table  *ngIf="dataSourceLifeInsurance?.length > 0"  [dataSource]="dataSourceLifeInsurance" id="table-low" class=" ">
+                
+                                                    <!--- Note that these columns can be defined in any order.
+                                                                  The actual rendered columns are set as a property on the row definition" -->
+                
+                                                    <!-- Position Column -->
+                
+                
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th mat-header-cell *matHeaderCellDef> Expense details </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-checkbox [checked]="element.selected" #check (click)="$event.preventDefault()"> </mat-checkbox> {{element.name}}
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="outstanding">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> Annual amount </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{formatNumber(element.amount,0)}}
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="consider">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" > {{element.percent}}%
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="edit">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" >
+                                                            <!-- <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p"> -->
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsNeedAnalysis"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsNeedAnalysis;"></tr>
+                                                </table>
+                                                <div *ngIf="dataSourceLifeInsurance?.length == 0" class="d-flex flex-column align-items-center">
+                                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                    <h4 class="text-center pt-12">No data found</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                
+                                    </mat-expansion-panel>
+                
+                                    <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                3. Goals to be met
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.goalsMeet"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                
+                                        <div class="row p-20" *ngIf="panelOpenState == true">
+                                            <div class="col-md-10 pl-0 insurancePlanTable">
+                                                <table mat-table *ngIf="dataSourceGoals?.length > 0" [dataSource]="dataSourceGoals" id="table-low" class=" ">
+                
+                                                    <!--- Note that these columns can be defined in any order.
+                                                              The actual rendered columns are set as a property on the row definition" -->
+                
+                                                    <!-- Position Column -->
+                
+                
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th mat-header-cell *matHeaderCellDef> Goal details </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-checkbox [checked]="element.selected" #check (click)="$event.preventDefault()"> </mat-checkbox> {{element.goalName}}
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="outstanding">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> Goal amount(PV) </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element">
+                                                            <span>{{formatNumber(element.goalFV,0)}}</span> 
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="consider">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.percent}}%
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="edit">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" >
+                                                            <!-- <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p"> -->
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsNeedAnalysis"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsNeedAnalysis;"></tr>
+                                                </table>
+                                                <div *ngIf="dataSourceGoals?.length == 0" class="d-flex flex-column align-items-center">
+                                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                    <h4 class="text-center pt-12">No data found</h4>
+                                                </div>
+                
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                
+                                    </mat-expansion-panel>
+                
+                                    <mat-expansion-panel hideToggle
+                                    [ngClass]="isExpansionDisabled()">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                4. Gross life insurance required(1+2+3)
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.GrossLifeinsurance"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                
+                                    <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                5 Less : Continuous income source
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.incomeSource"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                
+                                        <div class="row p-20" *ngIf="panelOpenState == true">
+                                            <div class="col-md-10 pl-0 insurancePlanTable">
+                                                <table mat-table *ngIf="dataSourceIncome?.length > 0" [dataSource]="dataSourceIncome" id="table-low" class=" ">
+                
+                                                    <!--- Note that these columns can be defined in any order.
+                                                                  The actual rendered columns are set as a property on the row definition" -->
+                
+                                                    <!-- Position Column -->
+                
+                
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th mat-header-cell *matHeaderCellDef> Income details </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-checkbox [checked]="element.selected" #check (click)="$event.preventDefault()"> </mat-checkbox> {{element.name}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="outstanding">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> Annual income </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{formatNumber(element.amount,0)}}
+                                                        </td>
+                                                    </ng-container>
+                                                   
+                                                    <ng-container matColumnDef="consider">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.percent}}%
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="edit">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" >
+                                                            <!-- <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p"> -->
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsNeedAnalysis"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsNeedAnalysis;"></tr>
+                                                </table>
+                                                <div *ngIf="dataSourceIncome?.length == 0" class="d-flex flex-column align-items-center">
+                                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                    <h4 class="text-center pt-12">No data found</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                
+                                    </mat-expansion-panel>
+                
+                                    <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                6 Less: Exisiting life Insurance (sum assured)
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.existingLifeInsurance"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                
+                                    <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                7 Less : Existing Assets
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                               <span appFormatNumber [value]="plannerObj.existingAsset"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                
+                                        <div class="row p-20" *ngIf="panelOpenState == true">
+                                            <div class="col-md-10 pl-0 insurancePlanTable">
+                                                <table mat-table *ngIf="dataSourceAsset?.length > 0" [dataSource]="dataSourceAsset" id="table-low" class=" ">
+                
+                                                    <!--- Note that these columns can be defined in any order.
+                                                                      The actual rendered columns are set as a property on the row definition" -->
+                
+                                                    <!-- Position Column -->
+                
+                
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th mat-header-cell *matHeaderCellDef> Asset details </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-checkbox   [checked]="element.selected" #check (click)="$event.preventDefault()"> </mat-checkbox> {{element.ownerName}}
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="outstanding">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> Total amount </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element">  
+                                                            <span  >{{formatNumber(element.currentValue,0)}}</span>
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="consider">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element" > {{element.percent}}%
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <ng-container matColumnDef="edit">
+                                                        <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
+                                                        <td class="text-right" mat-cell *matCellDef="let element">
+                                                            <!-- <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p"> -->
+                                                        </td>
+                                                    </ng-container>
+                
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsNeedAnalysis"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsNeedAnalysis;"></tr>
+                                                </table>
+                                                <div *ngIf="dataSourceAsset?.length == 0" class="d-flex flex-column align-items-center">
+                                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                    <h4 class="text-center pt-12">No data found</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                
+                                    </mat-expansion-panel>
+                
+                
+                                    <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="f-500 w-60">
+                                                8. Additional life insurance required (4-5-6-7)
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                -
+                                            </mat-panel-description>
+                                            <mat-panel-description>
+                                                <span appFormatNumber [value]="plannerObj.additionalLifeIns"></span>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                                </div>
+                            </mat-accordion>
+                
+                </div>
+            </div>
         </div>
 
         <div class="col-width-31 text-right">
@@ -207,12 +599,14 @@
 
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center " *ngIf="!isLoadingPlan" [ngClass]="{'justify-content-center': inputData.insuranceType != 1,'justify-content-between': inputData.insuranceType == 1}">
-                    <button mat-stroked-button class="btn140 text-primary br-2"  (click)="needAnalysis(null)">
+                <div class="d-flex mt-20 align-items-center " *ngIf="!isLoadingPlan"
+                    [ngClass]="{'justify-content-center': inputData.insuranceType != 1,'justify-content-between': inputData.insuranceType == 1}">
+                    <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
                     </button>
 
-                    <button mat-stroked-button class="btn140 text-primary br-2" *ngIf="!isLoadingPlan && inputData.insuranceType == 1" (click)="suggestPolicy(null)">
+                    <button mat-stroked-button class="btn140 text-primary br-2"
+                        *ngIf="!isLoadingPlan && inputData.insuranceType == 1" (click)="suggestPolicy(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
                     </button>
                 </div>

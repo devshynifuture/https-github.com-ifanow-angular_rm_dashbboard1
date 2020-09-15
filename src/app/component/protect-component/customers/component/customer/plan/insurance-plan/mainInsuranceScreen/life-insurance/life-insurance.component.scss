@@ -213,3 +213,6 @@ table {
   .example-element-description-attribution {
     opacity: 0.5;
   }
+  .disabled-pointer {
+    pointer-events: none;
+  }
