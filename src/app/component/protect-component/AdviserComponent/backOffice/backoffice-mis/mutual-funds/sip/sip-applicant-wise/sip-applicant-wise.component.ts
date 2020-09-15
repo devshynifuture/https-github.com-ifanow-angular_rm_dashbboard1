@@ -375,6 +375,7 @@ export class SipApplicantWiseComponent implements OnInit {
       sumWeightInPerc += element.weightInPercentage;
       this.arrayOfExcelData.push(data);
     });
+    sumWeightInPerc = Math.round(sumWeightInPerc);
     this.clientTotalArr = ['Total', '', sumAmtTotal, sumWeightInPerc];
   }
 
@@ -407,6 +408,7 @@ export class SipApplicantWiseComponent implements OnInit {
           sumAmtTotal += element.amount;
           sumWeightInPerc += element.weightInPercentage;
         });
+        sumWeightInPerc = Math.round(sumWeightInPerc);
         this.applicantTotalArr = ['Total', '', '', '', '', '', '', '', '', sumAmtTotal, sumWeightInPerc];
         break;
     }

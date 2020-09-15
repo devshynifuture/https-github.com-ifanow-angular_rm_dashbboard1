@@ -21,6 +21,7 @@ import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bot
 import { element } from 'protractor';
 import { CustomerService } from '../../customer.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { forkJoin } from 'rxjs';
 
 export const MY_FORMATS = {
   parse: {
@@ -125,6 +126,7 @@ export class ExpensesComponent implements OnInit {
   clientDob:any;
   billsAndUtilities: any;
   isLoadingBudget=false;
+  tab: any;
 
   // periodSelection: any;
 
@@ -452,15 +454,18 @@ export class ExpensesComponent implements OnInit {
 
     });
   }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
-    this.myFiles = fileName.target.files[0]
+    this.myFiles = [];
+    for (let i = 0; i < fileName.target.files.length; i++) {
+      this.myFiles.push(fileName.target.files[i]);
+    }
     const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
       data: this.myFiles,
     });
@@ -474,11 +479,13 @@ export class ExpensesComponent implements OnInit {
     }, 7000);
   }
   getBugetTab(tab) {
+    this.tab = tab;
     this.isTabLoaded = true;
     if (tab == 'Budget') {
-      this.getBudgetGraphValues();
-      this.getBudgetList();
-      this.getBugetRecurring();
+      // this.getBudgetGraphValues();
+      // this.getBudgetList();
+      // this.getBugetRecurring();
+      this.getBudgetApis();
       // setTimeout(() => {
       //   this.budgetChart('bugetChart')
 
@@ -493,6 +500,81 @@ export class ExpensesComponent implements OnInit {
 
       // }, 300);
     }
+  }
+  getBudgetApis(){
+    this.dataSource4.data = [{},{},{}];
+    this.isLoadingBudget = true;
+
+    const obj1 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      allOrSingle: 1,
+      endDate: this.endDate,
+      startDate: this.startDate,
+      limit: 10,
+      offset: 1,
+      familyMemberId: 0,
+    };
+    const obj2 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      allOrSingle: 1,
+      endDate: this.endDate,
+      startDate: this.startDate,
+      limit: 10,
+      offset: 1,
+      familyMemberId: 0,
+      clientDob :this.clientDob,
+      fmDobList:JSON.stringify(this.familyList)
+    };
+    const obj3 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      startDate: this.startDate,
+      endDate: this.endDate
+    };
+    const budgetList = this.planService.getBudget(obj1);
+    const BudgetRecurring = this.planService.otherCommitmentsGet(obj2);
+    const BudgetGraph = this.planService.getBudgetGraph(obj3);
+    forkJoin(budgetList, BudgetRecurring, BudgetGraph).subscribe(result => {
+      let budgetList = this.filterData(result[0]);
+      let budgetRecurring = this.filterData(result[1]);
+      let mergeArray = [...budgetList,...budgetRecurring];
+      this.dataSource4.data = mergeArray;
+      this.dataSource4.sort = this.BudgetSort;
+      if (result[2]) {
+        this.budgetAmount = result[2].budgetAmount
+        this.budgetChart('bugetChart')
+      } else {
+        this.budgetChart('bugetChart')
+      }
+      this.isLoadingBudget = false;
+
+    }, err => {
+      this.eventService.openSnackBar(err, 'Dismiss');
+      this.dataSource4.data = [];
+      this.dataSource5.data = [];
+      this.budgetChart('bugetChart');
+      this.isLoadingBudget = false;
+    })
+  }
+  filterData(array){
+    array.forEach(singleExpense => {
+      singleExpense.progressPercent = 0;
+      singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+      singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
+      if (singleExpense.progressPercent > 100) {
+        singleExpense.spentPer = 100;
+        singleExpense.budgetPer = singleExpense.progressPercent - 100;
+      } else {
+        singleExpense.spentPer = singleExpense.progressPercent;
+      }
+      const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
+      if (singleExpenseCategory) {
+        singleExpense.expenseType = singleExpenseCategory.expenseType;
+      }
+    });
+    return array;
   }
   getListFamilyMem() {
 
@@ -764,8 +846,9 @@ export class ExpensesComponent implements OnInit {
     // this.getTransaction();
     // this.getRecuringTransactions();
     this.getAllExpense();
-    this.getBudgetList();
-    this.getBugetRecurring();
+    this.getBudgetApis()
+    // this.getBudgetList();
+    // this.getBugetRecurring();
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
   }
   getRecuringTransactions() {
@@ -946,23 +1029,25 @@ export class ExpensesComponent implements OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (value == 'budget') {
-          this.planService.deletBudget(data.id).subscribe(
+        } else if (value == 'budget' && data.repeatFrequency && data.continueTill) {
+          this.planService.deleteRecuringBudget(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Buget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getBudgetList();
-              this.getBugetRecurring();
+              this.getBudgetApis();
+              // this.getBudgetList();
+              // this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.planService.deleteRecuringBudget(data.id).subscribe(
+          this.planService.deletBudget(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Recurring budget is deleted', 'Dismiss');
               dialogRef.close();
-              this.getBudgetList();
-              this.getBugetRecurring();
+              this.getBudgetApis();
+              // this.getBudgetList();
+              // this.getBugetRecurring();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -1014,11 +1099,13 @@ export class ExpensesComponent implements OnInit {
               this.getAllExpense();
               // this.getExpenseGraphValue();
             } else if (sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget') {
-              this.getBudgetList();
-              this.getBudgetGraphValues();
+              // this.getBudgetList();
+              this.getBudgetApis();
+              // this.getBudgetGraphValues();
             } else {
-              this.getBugetRecurring();
-              this.getBudgetGraphValues();
+              this.getBudgetApis();
+              // this.getBugetRecurring();
+              // this.getBudgetGraphValues();
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
           }
@@ -1036,11 +1123,14 @@ export class ExpensesComponent implements OnInit {
       state: 'open35',
       componentName: DetailedViewExpensesComponent
     };
-    if (data.continueTill && data.repeatFrequency) {
+    if (this.tab == 'Transactions' && data.continueTill && data.repeatFrequency) {
       fragmentData.data.value = 'Recurring transaction';
-    } else {
-      fragmentData.data.value = 'Transaction';
-
+    } else if(this.tab == 'Budget' && data.continueTill && data.repeatFrequency) {
+      fragmentData.data.value = 'Recurring Budget';
+    }else if(this.tab == 'Transactions' && !data.continueTill && !data.repeatFrequency){
+      fragmentData.data.value = 'Transactions';
+    }else{
+      fragmentData.data.value = 'Budget';
     }
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

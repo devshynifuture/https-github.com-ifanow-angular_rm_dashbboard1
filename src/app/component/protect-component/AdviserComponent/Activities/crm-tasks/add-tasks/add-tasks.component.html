@@ -42,7 +42,7 @@
                     {{ data.des }}
                 </h4>
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4 text-right pr-24">
                 <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
@@ -69,15 +69,22 @@
 
         <div class="row pt-16">
             <div class="w-18 pl-16">
-                <h5 class="m-0 pt-12 ws-nowrap text-left">Task Description</h5>
+                <h5 class="m-0 pt-12 ws-nowrap text-left">Task description</h5>
             </div>
-            <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="!isManual">
+            <div class="w-82 pl-15 pr-24 arn-ria align-items-center" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group mb-0">
-                    <mat-select formControlName="searchTemplateList" class="form-control">
+                    <mat-select formControlName="searchTemplateList" class="form-control"
+                        (selectionChange)="routeToTemplateAddition($event)">
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
                             {{ item.taskDescription }}
+                        </mat-option>
+                        <mat-option value="-1" class="d-flex align-items-center">
+                            <span class="d-flex align-items-center">
+                                <i class="material-icons pr-8">add</i>
+                                Add task template
+                            </span>
                         </mat-option>
                     </mat-select>
                     <mat-error>
@@ -88,7 +95,7 @@
             <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group m-0">
                     <input type="text" matInput formControlName="taskDescription" class="form-control"
-                        placeholder="Enter your task description here">
+                        placeholder="Add a task">
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -101,7 +108,7 @@
             <div class="w-41">
             </div>
             <div class="w-38 f-14 text-primitive roboto f-400 text-right" *ngIf="showManualToggle">
-                <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add Manually
+                <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add manual task
                 <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
 
             </div>
@@ -115,10 +122,10 @@
             </div>
 
             <div class="w-41 pr-15 pl-15 remove-top">
-                <mat-form-field float="never" appearance="standard">
+                <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="frequency">
                         <mat-option value="" disabled>
-                            Select Frequency
+                            Select frequency
                         </mat-option>
                         <mat-option *ngFor="let item of recurringTaskFrequencyList" [value]="item.id">
                             {{ item.name }}
@@ -152,7 +159,7 @@
                 <mat-form-field float="never" appearance="standard" class="form-group">
                     <mat-select formControlName="every" class="form-control">
                         <mat-option value="" disabled>
-                            Select Day
+                            Select day
                         </mat-option>
                         <mat-option *ngFor="let item of dayOfWeek" [value]="item.id">
                             {{ item.name }}
@@ -174,14 +181,14 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input class="form-control br-0" formControlName="searchClientList"
                         (input)="searchClientFamilyMember(inputSearch.value)" #inputSearch matInput
-                        placeholder="Start typing to search client" aria-label="State" [matAutocomplete]="auto">
+                        placeholder="Start typing to see client" aria-label="State" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let singleClient of clientList"
                             (onSelectionChange)="selectClient(singleClient)" [value]="singleClient.clientId">
                             {{singleClient.displayName}}
                         </mat-option>
                         <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoading">
-                            <p class="t-left m-0"> No Client Found</p>
+                            <p class="t-left m-0"> No Client found</p>
                         </mat-option>
 
                         <!-- empty state -->
@@ -192,13 +199,11 @@
                             </div>
                         </mat-option> -->
 
-                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
+                        <mat-option *ngIf="showDefaultDropDownOnSearch && isLoading">
                             <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                                 <div class="row height24">
-                                    <div class="col-md-12 p-0">
-                                        <div class="relClass">
-                                            <div class="bar height24"></div>
-                                        </div>
+                                    <div class="col-md-12 p-0 relClass">
+                                        <div class="bar height24"></div>
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +265,7 @@
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0 remove-top-flex">
                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
                     <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                        (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="01/12/2020">
+                        (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>
@@ -269,27 +274,27 @@
                 </mat-form-field>
 
             </div>
-            <div class="w-20">
-                <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
+            <div class="w-41 d-flex align-items-center">
+                <div class="f-14 text-primitive roboto f-400">
+                    <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this Recurring
+                    <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+                </div>
             </div>
         </div>
-        <div class="row pb-24">
+        <!-- <div class="row pb-24">
             <div class="w-18"></div>
-            <div class="w-41 f-14 pl-15 pr-15 text-primitive roboto f-400">
-                <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
-                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-            </div>
-        </div>
+            
+        </div> -->
 
         <div class="row pt-40" *ngIf="isRecurringTaskForm">
             <div class="w-18 pl-15">
-                <h5 class="m-0 roboto f-400 pt-12 ws-nowrap">Turn Around Time</h5>
+                <h5 class="m-0 roboto f-400 pt-12 ws-nowrap">Turnaround time</h5>
             </div>
 
             <div class="w-41 form-group pl-15 pr-15 mb-0">
                 <mat-form-field>
                     <mat-select formControlName="taskTurnAroundTime" class="form-control">
-                        <mat-option value="" disabled>Select Turn around time</mat-option>
+                        <mat-option value="" disabled>Select Turnaround time</mat-option>
                         <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                             {{ 'T + ' + item }}
                         </mat-option>
@@ -308,9 +313,9 @@
             </div>
         </div>
 
-        <div class="row pt-24 c-p" *ngFor="let item of subTaskList; index as i">
+        <div class="row c-p" *ngFor="let item of subTaskList; index as i" [ngClass]="{'pt-24': i == 0}">
             <div class="col-md-12 pl-20">
-                <div class="row pt-5 bt-1" [ngClass]="{'bb': i==(subTaskList.length-1)}">
+                <div class="row pt-5 pb-5 bt-1" [ngClass]="{'bb': i==(subTaskList.length-1)}">
                     <div class="col-md-1 pl-10">
                         <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
                             (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
@@ -320,10 +325,39 @@
                     </div>
                     <div class="col-md-6 text-right pr-0">
                         <div class="full-end">
-                            <img src="/assets/images/svg/men-2.svg" class="pr-10 c-p">
-                            <img src="/assets/images/svg/cal1.svg" class="pr-10 c-p">
-                            <img src="assets/images/svg/msg-chart.svg" class="pr-10 c-p">
-                            <span class="material-icons c-p" (click)="changeTabState(item, 2)">
+
+                            <span *ngIf="!!item.dueDate" class="pr-10">
+                                {{ item.dueDate | date: 'dd MMM' }}
+                            </span>
+                            <span *ngIf="!!item.profilePicUrl" class="pr-10">
+                                <img [src]="item.profilePicUrl" alt="profilepic" class="c-p">
+                            </span>
+
+                            <span *ngIf="item.hasOwnProperty('assignedToProfileUrl')" class="pr-10">
+                                <img [src]="item.assignedToProfileUrl" class="subTaskProfileAvatar"
+                                    alt="subtask profile pic">
+                            </span>
+
+                            <span *ngIf="!item.hasOwnProperty('assignedToProfileUrl')" class="pr-10">
+                                <img src="/assets/images/svg/men-2.svg" class="c-p">
+                            </span>
+
+                            <span *ngIf="!item.hasOwnProperty('dueDate')" class="pr-10">
+                                <img src="/assets/images/svg/cal1.svg" class="c-p">
+                            </span>
+
+                            <span class="pr-10">
+                                <img src="/assets/images/svg/delete.svg" alt="delete sub task"
+                                    (click)="removeItemFromSubTask(item, i)">
+                            </span>
+                            <span class="pr-10" *ngIf="item.commentsCount !== 0">
+                                {{ item.commentsCount }}
+                            </span>
+                            <span class="pr-10">
+                                <img src="assets/images/svg/msg-chart.svg" class="c-p">
+                            </span>
+                            <span class="material-icons c-p" (click)="changeTabState(item, 2)"
+                                *ngIf="item.status !== 1">
                                 keyboard_arrow_right
                             </span>
                         </div>
@@ -334,7 +368,7 @@
         </div>
         <div class="row pt-5 pb-5" *ngIf="showNoSubTaskFoundError">
             <h5 class="text-center col-md-12 b-a p-20">
-                No Sub tasks found, Try adding some
+                No Subtasks found
             </h5>
         </div>
 
@@ -343,7 +377,7 @@
                 <div class="col-md-4 pl-30 remove-top">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input class="form-control br-0 text-left" matInput type="text" formControlName="description"
-                            placeholder="Enter your Sub task description">
+                            placeholder="Add a subtask">
                         <mat-error>
                             This field is required
                         </mat-error>
@@ -354,7 +388,7 @@
 
                     <mat-form-field appearance="standard" class="arrowRemoveBox " floatLabel="never">
                         <mat-select class="form-control" formControlName="turnAroundTime">
-                            <mat-option value="" disabled>Select turn around time</mat-option>
+                            <mat-option value="" disabled>Select Turnaround time</mat-option>
                             <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                                 {{ 'T + ' + item }}
                             </mat-option>
@@ -372,7 +406,7 @@
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
                         <mat-select class="form-control" formControlName="assignedTo">
                             <mat-option value="" disabled>
-                                Select Team Member
+                                Select Team member
                             </mat-option>
                             <mat-option *ngFor="let item of teamMemberList" [value]="item.userId">
                                 {{ item.fullName }}
@@ -386,7 +420,7 @@
                 </div>
 
                 <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                    <i class="material-icons c-p mt-4 mr-3" (click)="appendSubTask(item, i)">
+                    <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3" *ngIf="i !== subTask.length-1">
                         add
                     </i>
                     <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
@@ -397,9 +431,19 @@
         </div>
 
         <div class="row pt-14">
-            <div class="col-md-12 text-primitive f-14 pl-16 c-p" (click)="addSubTask(null)">
+            <div class="col-md-12 text-primitive f-14 pl-16 c-p" [matMenuTriggerFor]="menu3"
+                *ngIf="shouldShowAddSubTaskLabel">
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
+            <mat-menu #menu3="matMenu" xPosition="after">
+                <button mat-menu-item (click)="getSubTaskFromTemplate()"
+                    [disabled]="data===null || isManualOrTaskTemplate == 'manual'">
+                    Task Template
+                </button>
+                <button mat-menu-item (click)="addSubTask(null)">
+                    Manual
+                </button>
+            </mat-menu>
         </div>
 
 
@@ -414,16 +458,36 @@
                     <div class="row">
                         <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
                             <div class="attachment-img">
+                                <img *ngIf="taskAttachmentPreviewList.length!==0"
+                                    [src]="taskAttachmentPreviewList ? taskAttachmentPreviewList[i].attachmentUrl : ''"
+                                    alt="attachment preview" />
                             </div>
                         </div>
                         <mat-menu #menu2="matMenu">
                             <button mat-menu-item (click)="downloadAttachment(item)">
-                                <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
-                                Download
+                                <div class="row">
+                                    <div class="col-md-4 p-0">
+                                        <img src="/assets/images/svg/download-icon.svg" class="h-23"
+                                            alt="download attachment image">
+                                    </div>
+                                    <div class="col-md-8 p-0">
+                                        Download
+                                    </div>
+                                </div>
+
+
                             </button>
                             <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'task')">
-                                <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
-                                Remove
+                                <div class="row">
+                                    <div class="col-md-4 p-0">
+                                        <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
+                                    </div>
+                                    <div class="col-md-8 p-0">
+                                        Remove
+                                    </div>
+                                </div>
+
+
                             </button>
                         </mat-menu>
                         <div class="col-md-8 p-0">
@@ -447,7 +511,7 @@
         </div>
 
 
-        <div class="bg-grey lter pt-20 mb-44" *ngIf="commentList.length !==0">
+        <div class="bg-grey lter pt-20 mb-24" *ngIf="commentList.length !==0">
             <div class="row">
                 <div class="col-md-12 pl-30">
                     <h5 class="f-500 roboto">Comments</h5>
@@ -475,9 +539,27 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <p class="f-14" *ngIf="!item.editMode">
+                            <p class="f-14 m-0" *ngIf="!item.editMode">
                                 {{  item.commentMsg }}
                             </p>
+                            <div class="row w-100 pt-12">
+                                <div class="col-md-1">
+                                    <img class="imgComment"
+                                        src="http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png">
+                                </div>
+                                <div class="col-md-8">
+                                    <h5 class="f-500 roboto">
+                                        Rahul Jain
+                                        <span class="text-primitive f-12"> 1 hours ago</span>
+                                    </h5>
+                                    <p class="f-14 m-0">dummy text</p>
+                                </div>
+                                <div class="col-md-3 d-flex editDelectText">
+                                    <a class="f-12 c-p">Edit</a>
+                                    <a class="f-12 pl-5 c-p">Save</a>
+                                    <a class="f-12 pl-5 c-p">Delete</a>
+                                </div>
+                            </div>
                             <p class="f-14 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentTaskFC" class="form-control"
                                     [value]="item.commentMsg">
@@ -498,7 +580,7 @@
             </div>
             <div class="col-md-7">
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4 text-right pr-24">
                 <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
@@ -526,12 +608,12 @@
         <!-- next page -->
         <div class="row pt-16">
             <div class="w-24 pl-15">
-                <h5 class="m-0 f-14 pt-12 ws-nowrap">Sub Task Description</h5>
+                <h5 class="m-0 f-14 pt-12 ws-nowrap">Sub task</h5>
             </div>
             <div class="w-50 arn-ria">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input type="text" matInput formControlName="description" class="form-control"
-                        placeholder="Enter your subtask description here">
+                        placeholder="Add a subtask">
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -546,7 +628,7 @@
             <div class="w-41 form-group mb-0 pr-15 pl-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="assignedTo">
-                        <mat-option value="" disabled> Team Member</mat-option>
+                        <mat-option value="" disabled>Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
                             {{ item.fullName }}
@@ -567,7 +649,7 @@
             <div class="w-30 pl-0 pr-15 form-group mb-0 remove-top-flex">
                 <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
                     <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                        (focus)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="Select Due Date">
+                        (focus)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-error>
@@ -594,6 +676,8 @@
                     <div class="row">
                         <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
                             <div class="attachment-img">
+                                <img *ngIf="subTaskAttachmentPreviewList.length!==0"
+                                    [src]="subTaskAttachmentPreviewList[i].attachmentUrl" alt="sub task preview list" />
                             </div>
                         </div>
                         <mat-menu #menu2="matMenu">
@@ -659,8 +743,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
+                            <p class="f-14 m-0" *ngIf="!item.editMode"> {{ item.commentMsg }}
                             </p>
+
+
                             <p class="f-12 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentSubTaskFC" class="form-control"
                                     [value]="item.commentMsg">
@@ -687,46 +773,48 @@
             <div class="col-md-9 remove-top pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <span>
-                        <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
-                            (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''"
-                            placeholder="Type your comment here and press enter">
+                        <input class="form-control bg-white br-0 text-left b-0" matInput [formControl]="taskCommentForm"
+                            #commentInput type="text" (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value)"
+                            placeholder="Add a comment">
                     </span>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
-
-
-
             </div>
             <div class="col-md-2">
-                <button mat-stroked-button class="btn-primary">save</button>
+                <button mat-stroked-button class="btn-primary c-p"
+                    (click)="onCreateCommentTaskSubTask(commentInput.value)">add</button>
             </div>
-            <div class="row pt-10">
-                <div class="col-md-12 f-14 p-0 pb-16">
-                    Collaborators
-                    <span *ngFor="let item of collaboratorList">
-                        <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
-                            [matMenuTriggerFor]="menu1">
-                        <mat-menu #menu1="matMenu">
-                            <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)"
-                                [disabled]="item.default" matTooltip="Can't remove default Collaborator"
-                                [matTooltipDisabled]="!item.default">
-                                Remove
-                            </button>
-                        </mat-menu>
-                    </span>
+        </div>
+        <div class="row pt-10">
+            <div class="w-10">
+            </div>
+            <div class="w-90 f-14 p-0 pb-16">
+                Collaborators
+                <span *ngFor="let item of collaboratorList">
+                    <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
+                        [matMenuTriggerFor]="menu1">
+                    <mat-menu #menu1="matMenu">
+                        <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)" [disabled]="item.default"
+                            matTooltip="Can't remove default Collaborator" [matTooltipDisabled]="!item.default">
+                            Remove
+                        </button>
+                    </mat-menu>
+                </span>
 
-                    <span *ngIf="data">
-                        <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" [matMenuTriggerFor]="menu2">
-                        <!-- (click)="onAddingCollaborator(null)" -->
-                        <mat-menu #menu2="matMenu">
-                            <button mat-menu-item *ngFor="let item of teamMemberList"
-                                (click)="onAddingCollaborator(item)">
-                                {{ item.fullName }}
-                            </button>
-                        </mat-menu>
-                    </span>
+                <span *ngIf="data">
+                    <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" [matMenuTriggerFor]="menu2">
+                    <!-- (click)="onAddingCollaborator(null)" -->
+                    <mat-menu #menu2="matMenu">
+                        <button mat-menu-item *ngFor="let item of teamMemberList" (click)="onAddingCollaborator(item)"
+                            [disabled]="isCollabotatorPresent(item)">
+                            {{ item.fullName }}
+                        </button>
+                    </mat-menu>
+                </span>
 
 
-                </div>
             </div>
         </div>
 
@@ -736,7 +824,7 @@
     <div class="bottom-fixed-50 wrapper-12 pt-16">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
             </div>
             <div class="col-md-4">
             </div>
@@ -744,7 +832,7 @@
                 <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
                     [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>
                     <span *ngIf="data!==null">
-                        save
+                        Save
                     </span>
                     <span *ngIf="data===null">
                         Create
@@ -755,7 +843,7 @@
                 [matTooltipDisabled]="data!==null">
                 <button mat-stroked-button [disabled]="data===null" class="btn-primary text-white c-p"
                     (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">
-                    save
+                    Save
                 </button>
             </div>
         </div>

@@ -28,7 +28,7 @@
 
   <div class="row pt-10">
     <div class="col-md-12">
-      <div class=" mb-20 mt-8 people-table-scroll" (scroll)="onWindowScroll($event)">
+      <div class="mt-8 people-table-scroll" (scroll)="onWindowScroll($event)">
         <table #tableEl matSort #unmappedTableSort="matSort" mat-table [dataSource]="unmappedDataSource" id="tbs"
            [appSkeletonLoading]="isLoading">
 

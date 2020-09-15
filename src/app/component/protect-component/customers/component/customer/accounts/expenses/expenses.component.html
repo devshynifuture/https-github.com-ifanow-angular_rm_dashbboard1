@@ -51,7 +51,7 @@
                                     <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
                                     <div class="pdfClass">
 
-                                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1"
+                                        <a class="c-p downloadPdfIcon mr-8" [matMenuTriggerFor]="menu1"
                                             *ngIf="!fragmentData.isSpinner">
                                             <img src="assets/images/svg/download-bordered.svg">
                                         </a>
@@ -66,26 +66,26 @@
                                         <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                                     </div>
 
-                                    <a class="c-p downloadPdfIcon iconBorderNone " [matMenuTriggerFor]="menu7">
+                                    <!-- <a class="c-p downloadPdfIcon iconBorderNone " [matMenuTriggerFor]="menu7">
                                         <img src="assets/images/svg/up-down.svg">
                                     </a>
                                     <mat-menu #menu7="matMenu">
                                         <button mat-menu-item>Upload file
-                                            <input (change)="fetchData('Expense',$event)" class="uploadInput"
+                                            <input (change)="fetchData('Budget',$event)" class="uploadInput"
                                                 id="file-4" multiple type="file">
                                         </button>
-                                    </mat-menu>
-                                    <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
+                                    </mat-menu> -->
+                                    <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
                                         class="c-p mr-12">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item>Email report</button>
                                         <button mat-menu-item>Option 1</button>
                                         <button mat-menu-item>Option 2</button>
-                                    </mat-menu>
+                                    </mat-menu> -->
                                     <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
                                     <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                             class="material-icons">filter_list</i>FILTERS</button> -->
-                                    <button mat-stroked-button class="btn-primary"
+                                    <button class="ml-8" mat-stroked-button class="btn-primary"
                                         (click)="openExpenses('addExpenses',null)">
                                         ADD NEW</button>
                                 </div>
@@ -175,6 +175,11 @@
                                                             <button mat-menu-item
                                                                 (click)="detailedViewExpense(element,'Transactions')">Detailed
                                                                 view</button>
+                                                            <button mat-menu-item>Upload file
+                                                                <input (change)="fetchData('Budget',$event,element)"
+                                                                    class="uploadInput" id="file-4" multiple
+                                                                    type="file">
+                                                            </button>
                                                             <!-- <button mat-menu-item>Activity</button> -->
                                                             <button mat-menu-item
                                                                 (click)="deleteModal('expense',element)">Delete</button>
@@ -332,7 +337,7 @@
                                 <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
                                 <div class="pdfClass ">
 
-                                    <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu2"
+                                    <a class="c-p downloadPdfIcon mr-8" [matMenuTriggerFor]="menu2"
                                         *ngIf="!fragmentData.isSpinner">
                                         <img src="assets/images/svg/download-bordered.svg">
                                     </a>
@@ -347,7 +352,7 @@
                                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                                 </div>
 
-                                <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                                <!-- <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
                                     <img src="assets/images/svg/up-down.svg">
                                 </a>
                                 <mat-menu #menu7="matMenu">
@@ -362,7 +367,7 @@
                                     <button mat-menu-item>Email report</button>
                                     <button mat-menu-item>Option 1</button>
                                     <button mat-menu-item>Option 2</button>
-                                </mat-menu>
+                                </mat-menu> -->
                                 <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
                                 <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle">
                                     <i class="material-icons">filter_list</i>
@@ -467,6 +472,10 @@
                                                         <button mat-menu-item
                                                             (click)="detailedViewExpense(element,'Budget')">Detailed
                                                             view</button>
+                                                        <button mat-menu-item>Upload file
+                                                            <input (change)="fetchData('Budget',$event,element)"
+                                                                class="uploadInput" id="file-4" multiple type="file">
+                                                        </button>
                                                         <!-- <button mat-menu-item>Activity</button> -->
                                                         <button mat-menu-item
                                                             (click)="deleteModal('budget',element)">Delete</button>
@@ -567,6 +576,10 @@
                                                         <button mat-menu-item
                                                             (click)="detailedViewExpense(element,'Other commitments')">Detailed
                                                             view</button>
+                                                        <button mat-menu-item>Upload file
+                                                            <input (change)="fetchData('Budget',$event,element)"
+                                                                class="uploadInput" id="file-4" multiple type="file">
+                                                        </button>
                                                         <!-- <button mat-menu-item>Activity</button> -->
                                                         <button mat-menu-item
                                                             (click)="deleteModal('budgetRecuring',element)">Delete</button>
@@ -705,7 +718,7 @@
                 {{item.expenseType}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.commencementDate ?( item.startsFrom | date:'dd/MM/yyyy') : '-'}}
+                {{isLoading ? '' : (item.continueTill && item.continueTill ? (item.startsFrom | date:'dd/MM/yyyy') : (item.expenseDoneOn | date:'dd/MM/yyyy'))}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -765,7 +778,7 @@
                 {{item.name ? item.name : '-'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.expenseDoneOn | date:'dd/MM/yyyy'}}
+                {{item.expenseDoneOn ? (item.expenseDoneOn | date:'dd/MM/yyyy') : '-'}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -899,8 +912,8 @@
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                
-                <div   *ngIf="item.progressPercent > 100">
+
+                <div *ngIf="item.progressPercent > 100">
                     <div style="background:#007bff ;height:5px;width: 70%; display: inline-block;float: left;">
 
                     </div>
@@ -930,18 +943,14 @@
             </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
             <td colspan="9"
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Other commitments</td>
-        </tr>
+        </tr> -->
 
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
+        <!-- <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
             *ngIf="dataSource5.data.length > 0">
-            <!-- <tr>
-                <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                    Transactions </td>
-            </tr> -->
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
@@ -973,8 +982,9 @@
                 appFormatNumber>
                 {{item.amount}}
             </td>
-            <td style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <!-- <progress id="file" value="50" max="100"> 32% </progress> -->
+            <td
+                style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            
                 <div *ngIf="item.budgetPerOther > 100 ">
                     <div style="background:#007bff ;height:5px;width: 70%;display: inline-block;float: left;">
 
@@ -994,14 +1004,14 @@
                 appFormatNumber>{{item.spent}}</td>
 
 
-        </tr>
+        </tr> -->
 
-        <tr *ngIf="dataSource5.data.length == 0">
+        <!-- <tr *ngIf="dataSource5.data.length == 0">
             <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                 colspan="9">
                 No data found
             </td>
-        </tr>
+        </tr> -->
         <!-- <tr>
             <td style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
                 <div>showPieChart</div>

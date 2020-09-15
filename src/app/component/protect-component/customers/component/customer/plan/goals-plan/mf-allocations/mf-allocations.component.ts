@@ -297,7 +297,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshObservable:true});
   }
 
   ngOnDestroy() {

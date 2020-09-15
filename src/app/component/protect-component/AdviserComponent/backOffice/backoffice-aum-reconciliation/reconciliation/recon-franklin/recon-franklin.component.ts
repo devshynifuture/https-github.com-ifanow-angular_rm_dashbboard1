@@ -105,6 +105,7 @@ export class ReconFranklinComponent implements OnInit {
             this.isLoading = false;
             this.dataSource.data = res;
           } else {
+            this.isLoading = false;
             this.eventService.openSnackBar("No Data Found!", "DISMISS");
           }
         }, err => {

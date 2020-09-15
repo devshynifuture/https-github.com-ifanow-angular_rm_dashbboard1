@@ -74,7 +74,7 @@
                     <h5 class="roboto f-500">Suggested policies</h5>
                     <table mat-table *ngIf="dataSouce3.length>0" [dataSource]="dataSouce3" multiTemplateDataRows class="mat-elevation-z8"
                         id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
-                        class="mt-8 skeletonAnimation">
+                        class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
@@ -207,12 +207,12 @@
 
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center justify-content-between" *ngIf="!isLoadingPlan">
-                    <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
+                <div class="d-flex mt-20 align-items-center " *ngIf="!isLoadingPlan" [ngClass]="{'justify-content-center': inputData.insuranceType != 1,'justify-content-between': inputData.insuranceType == 1}">
+                    <button mat-stroked-button class="btn140 text-primary br-2"  (click)="needAnalysis(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
                     </button>
 
-                    <button mat-stroked-button class="btn140 text-primary br-2" (click)="suggestPolicy(null)">
+                    <button mat-stroked-button class="btn140 text-primary br-2" *ngIf="!isLoadingPlan && inputData.insuranceType == 1" (click)="suggestPolicy(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
                     </button>
                 </div>
@@ -223,7 +223,7 @@
                     <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan">
+                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
                     <button (click)="recommendationsPolicy(null)" mat-stroked-button
                         class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies

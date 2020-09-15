@@ -104,12 +104,14 @@ export class AllSipComponent implements OnInit {
             this.dataSource.filteredData = [];
             this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
             this.eventService.openSnackBar('No More Data Found',"DISMISS");
+            this.hasEndReached = true;
           }
 
         },
         err => {
           this.isLoading = false;
           this.dataSource.filteredData = [];
+          this.hasEndReached = true;
           this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
           this.eventService.openSnackBar('No More Data Found',"DISMISS");
         }
@@ -161,7 +163,6 @@ export class AllSipComponent implements OnInit {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
         this.infiniteScrollingFlag = true;
-        this.hasEndReached = true;
         this.getAllSip(this.finalSipList.length);
         // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
       }

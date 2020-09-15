@@ -13,7 +13,7 @@ import { EmailModule } from '../../../../../AdviserComponent/Email/email.module'
     CommonModule,
     OverviewEmailRoutingModule,
     MaterialModule,
-    EmailModule
+    // EmailModule
   ]
 })
 export class OverviewEmailModule { }

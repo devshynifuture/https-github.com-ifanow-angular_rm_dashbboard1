@@ -183,13 +183,15 @@ export class BackofficeFileUploadComponent implements OnInit {
       fileType,
       fileName,
       advisorId: this.advisorId,
-      arnRiaDetailId: this.arnRiaId
+      arnRiaDetailId: this.arnRiaId,
+      uploadedFileName: this.targetFile.target.files[0].name
     };
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
       this.fileName = '';
       this.fileSize = '';
       // this.barWidth = "100%";
       this.addbarWidth(100);
+      this.targetFile = null;
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload
       var { value } = this.fileType[0];

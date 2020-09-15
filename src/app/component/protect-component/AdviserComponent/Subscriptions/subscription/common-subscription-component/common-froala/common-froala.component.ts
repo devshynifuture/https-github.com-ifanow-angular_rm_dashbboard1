@@ -306,7 +306,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.renderElement.nativeElement.innerHTML = this.storeData.documentText;
 
     // PdfService.generateTestDocument();
-    let docName: string = this.storeData.docName;
+    let docName: string = this.storeData.documentName;
     if (docName) {
       if (!docName.includes('.pdf')) {
         docName += '.pdf';

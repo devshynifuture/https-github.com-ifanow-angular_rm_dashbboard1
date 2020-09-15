@@ -235,7 +235,7 @@ export class AmcWiseComponent implements OnInit {
     });
 
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'MIS Report - AMC wise AUM', this.applicantWiseTotal,
-    [["Selected Amc Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]);
+    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]);
   }
 
   schemeWiseExcelReport(index) {
@@ -259,7 +259,7 @@ export class AmcWiseComponent implements OnInit {
       schemeList: false,
       applicantList: false
     }, this.schemeWiseTotal,
-    [["Selected Amc Name", this.selectedAmcName]]
+    [["Selected AMC Name", this.selectedAmcName]]
     );
   }
 
@@ -300,6 +300,7 @@ export class AmcWiseComponent implements OnInit {
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.schemeWiseTotal = ['Total', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
       case 'applicant':
@@ -317,6 +318,7 @@ export class AmcWiseComponent implements OnInit {
           sumAumTotal += element.totalAum;
           sumWeightInPercTotal += element.weightInPercentage;
         });
+        sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
         this.applicantWiseTotal = ['Total', '', '', sumAumTotal, Math.round(sumWeightInPercTotal)];
         break;
     }
@@ -342,6 +344,7 @@ export class AmcWiseComponent implements OnInit {
       sumAumTotal += element.totalAum;
       sumWeightInPercTotal += element.weightInPercentage;
     });
+    sumWeightInPercTotal = Math.round(sumWeightInPercTotal);
 
     console.log('totalAumObj : ', totalAumObj);
     console.log('sumAumTotal : ', sumAumTotal);

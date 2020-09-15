@@ -19,7 +19,8 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/materia
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { MY_FORMATS2 } from "../../../../constants/date-format.constant";
 import { MinorFormComponent } from './Component/people-clients/add-client/minor-form/minor-form.component';
-
+import { AgmCoreModule } from '@agm/core'
+import { from } from 'rxjs';
 export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent]
 
 @NgModule({
@@ -32,6 +33,10 @@ export const componentList = [CompanyMoreInfoComponent, AddClientComponent, Lead
     CustomDirectiveModule,
     CustomCommonModule,
     CommonComponentModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDT73orKeKk4P9XWM13mxh6SkGY-EpNv0k',
+      libraries: ['places']
+    })
   ], entryComponents: [componentList],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

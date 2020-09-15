@@ -21,11 +21,11 @@
                 <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
             </div>
 
-            <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+            <!-- <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
                 <img src="assets/images/svg/up-down.svg">
-            </a>
+            </a> -->
 
-            <mat-menu #menu7="matMenu">
+            <!-- <mat-menu #menu7="matMenu">
                 <button mat-menu-item>Upload file
                     <input (change)="fetchData('Other Payables',$event)" class="uploadInput" id="file-4" multiple
                         type="file">
@@ -36,11 +36,11 @@
                 <button mat-menu-item>Email report</button>
                 <button mat-menu-item>Option 1</button>
                 <button mat-menu-item>Option 2</button>
-            </mat-menu>
+            </mat-menu> -->
             <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS
             </button> -->
-            <button mat-stroked-button class="btn-default addon mr-12 v-middle" [matMenuTriggerFor]="liabilitiesMenu"><i
+            <button mat-stroked-button class="btn-default addon mr-12 ml-8 v-middle" [matMenuTriggerFor]="liabilitiesMenu"><i
                     class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #liabilitiesMenu>
@@ -162,6 +162,10 @@
                     <mat-menu #menu4="matMenu">
                         <button mat-menu-item (click)="open('addOtherPayables',element)">Edit</button>
                         <button mat-menu-item (click)="openDetailedView(element)">Detailed view</button>
+                        <button mat-menu-item>Upload file
+                            <input (change)="fetchData('Other Payables',$event,element)"
+                                class="uploadInput" id="file-4" multiple type="file">
+                        </button>
                         <!-- <button mat-menu-item>Activity</button> -->
                         <button mat-menu-item (click)="deleteModal('OTHER PAYABLES',element)">Delete</button>
                     </mat-menu>

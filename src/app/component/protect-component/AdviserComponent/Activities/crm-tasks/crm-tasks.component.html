@@ -10,7 +10,10 @@
         </div>
         <div class="col-xl-6 col-lg-8 col-md-10 crm-task-selects p-0">
             <div class="row w-100 text-right align-items-center">
-                <div class="col-md-4"></div>
+                <div class="col-md-4 pr-0">
+                    <input type="text" matInput placeholder="Search task" class="form-control text-left"
+                        (keyup)="applyFilter($event)">
+                </div>
                 <div class="col-md-6">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                         <mat-select class="form-control" [formControl]="filterFormControl">
@@ -110,10 +113,45 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
-        <div class="b-a text-center p-44 mt-20" *ngIf="dataSource.data === null">
-            <h5 class="m-0">
-                No Data Found
-            </h5>
+        <div class="pt-150" *ngIf="dataSource.data === null">
+            <div class="row align-items-center">
+
+                <div class="col-md-8 text-center">
+                    <img src="/assets/images/svg/task-empty.svg">
+                    <h5 class="m-0 pt-12 f-500 roboto pb-16">No tasks added yet</h5>
+                    <button mat-stroked-button class="btn-primary">ADD NEW</button>
+                </div>
+                <div class="col-md-4 p-20 ba-dotted">
+                    <div class="">
+                        <p class="m-0 roboto f-400">In order to collaborate with your team in an efficient way, you can
+                            create
+                            tasks and track them.</p>
+
+                        <p class="m-0 roboto f-400 pt-12"> You can create <b>Linked task</b> or <b>Non linked task</b>.
+                        </p>
+
+                        <p class="m-0 roboto f-500 pt-12"> What is a linked task?</p>
+                        <p class="m-0 roboto f-400 pt-4"> A linked task is one which is linked to an existing
+                            asset/insurance/loan. Linked tasks allow
+                            you to work seamlessly without having to worry about entering the details of the linked
+                            asset/insurance/loan manually.</p>
+
+                        <p class="m-0 roboto f-500 pt-12"> What is a non-linked task?</p>
+                        <p class="m-0 roboto f-400 pt-4">A non-linked task is the opposite of a linked task. There is
+                            nothing
+                            associated with such tasks. Depending on the nature of your work, you can create such tasks.
+                            E.g:
+                            On-board a new client, fill up form, do a review meeting etc.</p>
+
+                        <p class="m-0 roboto f-400 pt-12"><b>Note:</b> Tasks can also have sub-tasks associated with
+                            them. You
+                            can assign owners and turn around times to tasks as well as sub-tasks.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <button class="btn-primary addon v-middle" mat-stroked-button> ADD NEW</button> -->
         </div>
         <div class="row">
             <div class="col-md-12 p-0" *ngIf="infiniteScrollingFlag">
@@ -124,36 +162,7 @@
         </div>
     </div>
 
-    <!-- empty screen -->
 
-    <!-- <div class="row pt-150">
-        <div class="col-md-1"></div>
-        <div class="col-md-5 text-center">
-            <img src="/assets/images/svg/task-empty.svg" class="w-80">
-            <h5 class="m-0 pt-12 f-500 roboto pb-16">No tasks added yet</h5>
-            <button mat-stroked-button class="btn-primary">ADD NEW</button>
-        </div>
-        <div class="col-md-5 pr-0">
-            <div class="ba-dotted p-12 pb-28">
-                <p class="m-0 roboto f-400">In order to collaborate with your team in an efficient way, you can create
-                    tasks and track them.</p>
 
-                <p class="m-0 roboto f-400 pt-12"> You can create <b>Linked task</b> or <b>Non linked task</b>.</p>
 
-                <p class="m-0 roboto f-500 pt-12"> What is a linked task?</p>
-                <p class="m-0 roboto f-400 pt-4"> A linked task is one which is linked to an existing
-                    asset/insurance/loan. Linked tasks allow
-                    you to work seamlessly without having to worry about entering the details of the linked
-                    asset/insurance/loan manually.</p>
-
-                <p class="m-0 roboto f-500 pt-12"> What is a non-linked task?</p>
-                <p class="m-0 roboto f-400 pt-4">A non-linked task is the opposite of a linked task. There is nothing
-                    associated with such tasks. Depending on the nature of your work, you can create such tasks. E.g:
-                    On-board a new client, fill up form, do a review meeting etc.</p>
-
-                <p class="m-0 roboto f-400 pt-12"><b>Note:</b> Tasks can also have sub-tasks associated with them. You
-                    can assign owners and turn around times to tasks as well as sub-tasks.</p>
-            </div>
-        </div>
-    </div> -->
 </div>

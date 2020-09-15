@@ -17,6 +17,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
 import { SettingsService } from '../settings.service';
+import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -82,7 +83,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   isLoader: boolean;
   validatorType = ValidatorType;
   youtbeLink: SafeResourceUrl;
-
+  isDomain = new FormControl("1");
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -102,6 +103,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.emailTemplateList = []
     this.createAppearanceForm();
     this.addAppearanceFormListener();
+    this.getDoaminList();
   }
 
   loaderArray = [
@@ -178,7 +180,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const obj = {}
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
-        this.domainList = data
+        this.domainList = data;
+        this.youtbeLink = this.sanitizeUrl(data[0].videoLink);
+        this.domainName.setValue(data[0].videoLink);
+        this.copyUrl.setValue(data[0].videoLink);
       }
     })
   }
@@ -454,34 +459,19 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     if (this.isLoading) {
       return;
     }
-    let obj = {
-      clientData: { documentText: data.body },
-      showfromEmail: true,
-      openedFrom: 'settings',
-      fromEmail: data.fromEmail || '',
-      documentList: [],
-      id: data.id,
-      subject: data.subject,
-      emailTemplateTypeId: data.emailTemplateTypeId,
-      subjectChange: !data.subjectEditable,
-      bodyChange: !data.bodyEditable,
-      component_type: 'email_template',
-      email_header: data.title,
-      subjectEditable: data.subjectEditable
-    }
     const fragmentData = {
       flag: value,
-      data: obj,
+      data,
       id: 1,
       state: 'open',
-      componentName: EmailOnlyComponent
+      componentName: PreferenceEmailInvoiceComponent,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getEmailTemplate();
-            this.getEmailTemplate()
           }
           rightSideDataSub.unsubscribe();
         }
