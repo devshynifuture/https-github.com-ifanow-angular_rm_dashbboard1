@@ -46,8 +46,8 @@ export class AddGoalService {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
       if (mfAsset.absSIP <= 100 || mfAsset.absLumsum <= 100) {
         mfAsset.goalAssetMapping.forEach(element => {
-          obj.sipPercent = parseInt(element.sipPercent)
-          obj.lumpsumPercent = parseInt(element.lumpsumPercent)
+          obj.sipPercent = parseInt(element.remainSIP)
+          obj.lumpsumPercent = parseInt(element.remainLumsum)
         });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
