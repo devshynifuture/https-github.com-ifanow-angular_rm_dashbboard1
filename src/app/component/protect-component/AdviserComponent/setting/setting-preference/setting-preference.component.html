@@ -356,7 +356,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7 ">
+                            <div class="col-md-7 pr-0">
                                 <div *ngIf="isDomain.value=='1'">
                                     <!-- <div class="row">
                                         <div class="col-md-9 p-0">
@@ -395,7 +395,7 @@
                                         </div>
                                     </div> -->
                                     <div class="row ">
-                                        <div class="col-md-8 p-0">
+                                        <div class="col-md-9 p-0">
                                             <p class="m-0 text-black roboto f-500">Complete white label
                                             </p>
                                         </div>
@@ -413,12 +413,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-11 mb-10 p-0 pt-6">
-                                            <div class="form-group matFormPadding b-a">
+                                        <div class="col-md-12 mb-10 p-0 pt-6">
+                                            <div class="form-group matFormPadding b">
                                                 <mat-form-field class="url" floatLabel="never" appearance="standard"
                                                     [floatLabel]="'never'">
                                                     <button mat-stroked-button
-                                                        class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
+                                                        class="b-0 h-40 bg-grey lter min-80 text-custom br-rgba">https://</button>
                                                     <input matInput type="text" class="form-control b-0 w-60"
                                                         formControlName="whiteLable" placeholder="www.example.com">
                                                     <mat-error *ngIf="domainS.get('whiteLable').errors?.required"
