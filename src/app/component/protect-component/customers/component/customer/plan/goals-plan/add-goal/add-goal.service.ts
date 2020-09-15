@@ -44,7 +44,7 @@ export class AddGoalService {
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     } else {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
-      if (mfAsset.absAllocation < 100) {
+      if (mfAsset.absSIP <= 100 || mfAsset.absLumsum <= 100) {
         mfAsset.goalAssetMapping.forEach(element => {
           obj.sipPercent = parseInt(element.sipPercent)
           obj.lumpsumPercent = parseInt(element.lumpsumPercent)
