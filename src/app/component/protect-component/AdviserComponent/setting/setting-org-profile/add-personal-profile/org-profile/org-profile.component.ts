@@ -29,7 +29,7 @@ export class OrgProfileComponent implements OnInit {
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
-  selectedTab:number = 0;
+  selectedTab: number = 0;
 
   inputData: any;
   pinInvalid: boolean;
@@ -43,10 +43,10 @@ export class OrgProfileComponent implements OnInit {
   filteredCountryCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
-  dataLoaded:boolean = false;
-  imgData:string = '';
-  formPlaceHolder:any;
-  isLoading:boolean = false;
+  dataLoaded: boolean = false;
+  imgData: string = '';
+  formPlaceHolder: any;
+  isLoading: boolean = false;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & NEXT',
@@ -61,9 +61,9 @@ export class OrgProfileComponent implements OnInit {
   };
 
   constructor(
-    public utils: UtilService, 
+    public utils: UtilService,
     private event: EventService,
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private postalService: PostalService,
@@ -73,7 +73,7 @@ export class OrgProfileComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
-  
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -90,10 +90,10 @@ export class OrgProfileComponent implements OnInit {
     this.getdataForm(this.inputData);
     // listen for search field value changes
     this.filterCtrl.valueChanges
-    .pipe(takeUntil(this._onDestroy))
-    .subscribe(() => {
-      this.filterCodes();
-    });
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
     this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
@@ -118,16 +118,16 @@ export class OrgProfileComponent implements OnInit {
 
 
   Close(flag) {
-    this.subInjectService.closeNewRightSlider({ state: 'close'});
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 
-  getPostalPin(value:string) {
-    if (value != "" && value.length == 6 ) {
+  getPostalPin(value: string) {
+    if (value != "" && value.length == 6) {
       this.isLoading = true;
       this.postalService.getPostalPin(value).subscribe(data => {
         this.PinData(data)
         this.isLoading = false;
-      }, err=> {
+      }, err => {
         this.isLoading = false;
         this.orgProfile.get('city').enable();
         this.orgProfile.get('state').enable();
@@ -153,7 +153,7 @@ export class OrgProfileComponent implements OnInit {
 
 
   getdataForm(data) {
-    if(data.isdCodeId == 0) {
+    if (data.isdCodeId == 0) {
       data.isdCodeId = null;
     }
     this.orgProfile = this.fb.group({
@@ -163,12 +163,12 @@ export class OrgProfileComponent implements OnInit {
       mobileNo: [(!data) ? '' : data.mobileNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       website: [(!data) ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
-      gstTreatment:  ['', [Validators.required]],
-      country:  [(!data) ? '' : data.country, []],
+      gstTreatment: ['', [Validators.required]],
+      country: [(!data) ? '' : data.country, []],
       gstNumber: [(!data) ? '' : data.gstin],
-      city: [(!data) ? '' :data.city, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
-      state: [(!data) ? '' :data.state, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
-      pincode: [(!data) ? '' :data.zipCode, []],
+      city: [(!data) ? '' : data.city, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      state: [(!data) ? '' : data.state, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      pincode: [(!data) ? '' : data.zipCode, []],
     });
 
     this.subscribeToGSTTypeValueChange();
@@ -187,15 +187,15 @@ export class OrgProfileComponent implements OnInit {
     )
   }
 
-  changeGSTDependentValidators(value){
-    if(value == 4) {
+  changeGSTDependentValidators(value) {
+    if (value == 4) {
       this.orgProfile.get('gstNumber').setValidators([Validators.required, Validators.maxLength(15), Validators.minLength(15)]);
     } else {
       this.orgProfile.get('gstNumber').setValue('');
       this.orgProfile.get('gstNumber').clearValidators();
     }
-    
-    if(value == 3) {
+
+    if (value == 3) {
       this.orgProfile.get('pincode').setValue('');
       this.orgProfile.get('city').setValue('');
       this.orgProfile.get('state').setValue('');
@@ -214,23 +214,23 @@ export class OrgProfileComponent implements OnInit {
 
   }
 
-  updateOrgProfile(){
-    if(this.orgProfile.invalid || this.barButtonOptions.active) {
+  updateOrgProfile() {
+    if (this.orgProfile.invalid || this.barButtonOptions.active) {
       this.orgProfile.markAllAsTouched();
       return;
     }
     this.barButtonOptions.active = true;
     let obj = {
-      advisorId:this.advisorId,
+      advisorId: this.advisorId,
       companyName: this.orgProfile.controls.companyName.value || '',
-      email:this.orgProfile.controls.emailId.value || '',
+      email: this.orgProfile.controls.emailId.value || '',
       mobileNumber: this.orgProfile.controls.mobileNo.value || '',
-      website:this.orgProfile.controls.website.value || '',
-      billerAddress:this.orgProfile.controls.address.value || '',
+      website: this.orgProfile.controls.website.value || '',
+      billerAddress: this.orgProfile.controls.address.value || '',
       city: this.orgProfile.controls.city.value || '',
-      state:this.orgProfile.controls.state.value || '',
-      zipCode:this.orgProfile.controls.pincode.value || '',
-      gstTreatmentId:this.orgProfile.controls.gstTreatment.value || 0,
+      state: this.orgProfile.controls.state.value || '',
+      zipCode: this.orgProfile.controls.pincode.value || '',
+      gstTreatmentId: this.orgProfile.controls.gstTreatment.value || 0,
       gstin: this.orgProfile.controls.gstNumber.value || '',
       country: this.orgProfile.controls.country.value || '',
       isdCodeId: this.orgProfile.controls.isdCodeId.value || '',
@@ -256,7 +256,7 @@ export class OrgProfileComponent implements OnInit {
 
   saveImageInCloud(tag_folder) {
     if (this.showCropper) {
-      if(this.barButtonOptions.active) return;
+      if (this.barButtonOptions.active) return;
       this.barButtonOptions.active = false;
       const tags = this.advisorId + ',' + tag_folder + ',';
       const file = this.utils.convertB64toImageFile(this.finalImage);
@@ -266,7 +266,7 @@ export class OrgProfileComponent implements OnInit {
             let responseObject = JSON.parse(response);
             responseObject['advisorId'] = responseObject.id;
             delete responseObject.id;
-            if(tag_folder == 'organizational_profile_logo') {
+            if (tag_folder == 'organizational_profile_logo') {
               this.updateOrganizationPhotoAndMoveToNextPage(responseObject, 'web');
             } else if (tag_folder == 'organizational_report_logo') {
               this.updateOrganizationPhotoAndMoveToNextPage(responseObject, 'report');
@@ -281,10 +281,10 @@ export class OrgProfileComponent implements OnInit {
   }
 
   switchToTab(nextIndex) {
-    if(nextIndex > 2) {
+    if (nextIndex > 2) {
       this.Close(false);
     } else {
-      if(nextIndex == 2) {
+      if (nextIndex == 2) {
         this.barButtonOptions.text = 'SAVE & CLOSE'
       } else {
         this.barButtonOptions.text = 'SAVE & NEXT'
@@ -293,11 +293,11 @@ export class OrgProfileComponent implements OnInit {
     }
   }
 
-  updateOrganizationPhotoAndMoveToNextPage(cloudinaryResponseJson:any, web_or_report: string) {
-    if(web_or_report == 'web') {
+  updateOrganizationPhotoAndMoveToNextPage(cloudinaryResponseJson: any, web_or_report: string) {
+    if (web_or_report == 'web') {
       const jsonDataObj = {
         advisorId: this.advisorId,
-        logoUrl: cloudinaryResponseJson.url,
+        logoUrl: cloudinaryResponseJson.secure_url,
         cloudinary_json: JSON.stringify(cloudinaryResponseJson)
       }
       this.settingsService.editOrgProfileLogo(jsonDataObj).subscribe((res) => {
@@ -314,21 +314,21 @@ export class OrgProfileComponent implements OnInit {
         this.barButtonOptions.active = false;
       });
     } else {
-        const jsonDataObj = {
-          advisorId: this.advisorId,
-          reportLogoUrl: cloudinaryResponseJson.url,
-          report_cloudinary_json: JSON.stringify(cloudinaryResponseJson)
-        }
-        this.settingsService.editOrgProfileReportLogo(jsonDataObj).subscribe((res) => {
-          this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-          this.reportImg = jsonDataObj.reportLogoUrl;
-          this.switchToTab(++this.selectedTab);
-          this.subInjectService.setRefreshRequired();
-          this.barButtonOptions.active = false;
-        }, err => {
-          this.event.openSnackBar("Error occured while uploading image", "Dismiss");
-          this.barButtonOptions.active = false;
-        });
+      const jsonDataObj = {
+        advisorId: this.advisorId,
+        reportLogoUrl: cloudinaryResponseJson.url,
+        report_cloudinary_json: JSON.stringify(cloudinaryResponseJson)
+      }
+      this.settingsService.editOrgProfileReportLogo(jsonDataObj).subscribe((res) => {
+        this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        this.reportImg = jsonDataObj.reportLogoUrl;
+        this.switchToTab(++this.selectedTab);
+        this.subInjectService.setRefreshRequired();
+        this.barButtonOptions.active = false;
+      }, err => {
+        this.event.openSnackBar("Error occured while uploading image", "Dismiss");
+        this.barButtonOptions.active = false;
+      });
     }
   }
 
@@ -339,7 +339,7 @@ export class OrgProfileComponent implements OnInit {
   }
 
   // save the changes of current page only
-  saveCurrentPage(){
+  saveCurrentPage() {
     switch (this.selectedTab) {
       case 0: // Organizational profile details
         this.updateOrgProfile();
@@ -356,12 +356,12 @@ export class OrgProfileComponent implements OnInit {
   }
 
   // reset the variables when user changes tabs
-  resetPageVariables(){
+  resetPageVariables() {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
-    if(this.selectedTab == 2) {
+    if (this.selectedTab == 2) {
       this.barButtonOptions.text = 'SAVE & CLOSE';
     } else {
       this.barButtonOptions.text = 'SAVE & NEXT';
@@ -416,7 +416,7 @@ export class OrgProfileComponent implements OnInit {
     )
   }
 
-  resetLogoImage(){
+  resetLogoImage() {
     this.settingsService.resetReportLogoImage(this.data.id).subscribe(
       res => {
         this.reportImg = res;

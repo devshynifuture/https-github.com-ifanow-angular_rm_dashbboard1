@@ -1,12 +1,12 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {PhotoCloudinaryUploadService} from 'src/app/services/photo-cloudinary-upload.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {SettingsService} from '../../settings.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, AbstractControl} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { SettingsService } from '../../settings.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,8 +35,8 @@ export class AddPersonalProfileComponent implements OnInit {
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
-  dataLoaded:boolean = false;
-  formPlaceHolder:any;
+  dataLoaded: boolean = false;
+  formPlaceHolder: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & NEXT',
@@ -69,7 +69,7 @@ export class AddPersonalProfileComponent implements OnInit {
   personalProfile: FormGroup;
   validatorType = ValidatorType;
 
-  @Input() data:any = {};
+  @Input() data: any = {};
 
   ngOnInit() {
     this.selectedTab = this.data.openTab;
@@ -118,7 +118,7 @@ export class AddPersonalProfileComponent implements OnInit {
 
   saveImage() {
     if (this.showCropper) {
-      if(this.barButtonOptions.active) return;
+      if (this.barButtonOptions.active) return;
       const tags = this.advisorId + ',advisor_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
@@ -127,7 +127,7 @@ export class AddPersonalProfileComponent implements OnInit {
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
               id: this.advisorId,
-              profilePic: responseObject.url
+              profilePic: responseObject.secure_url
             };
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.subInjectService.setRefreshRequired();
@@ -154,7 +154,7 @@ export class AddPersonalProfileComponent implements OnInit {
 
   // save the changes of current page only
   saveCurrentPage() {
-    switch(this.selectedTab) {
+    switch (this.selectedTab) {
       case 0:
         this.updatePersonalProfile();
         break;
@@ -173,7 +173,7 @@ export class AddPersonalProfileComponent implements OnInit {
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
-    if(this.selectedTab < 2) {
+    if (this.selectedTab < 2) {
       this.barButtonOptions.text = 'SAVE & NEXT';
     } else {
       this.barButtonOptions.text = 'SAVE & CLOSE';
@@ -229,7 +229,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.closeNewRightSlider({ state: 'close'});
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 
   protected filterCodes() {
@@ -263,7 +263,7 @@ export class AddPersonalProfileComponent implements OnInit {
   hide3 = true;
 
   setNewPassword() {
-    if(this.setNewPasswordForm.pristine) {
+    if (this.setNewPasswordForm.pristine) {
       this.Close();
     }
     if (this.setNewPasswordForm.invalid || this.barButtonOptions.active) {

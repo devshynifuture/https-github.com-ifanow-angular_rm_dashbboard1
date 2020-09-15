@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -9,7 +9,9 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-
+import { MapsAPILoader } from '@agm/core';
+// import { } from 'googlemaps'
+import { from } from 'rxjs';
 @Component({
   selector: 'app-client-address',
   templateUrl: './client-address.component.html',
@@ -45,11 +47,11 @@ export class ClientAddressComponent implements OnInit {
   firstTimeEditFlag = false;
   valueChanges: boolean;
   valueChangeFlag: any;
-
+  @ViewChild('placeSearch', { static: false }) placeSearch: ElementRef;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
-    private utilService: UtilService, public dialog: MatDialog) {
+    private utilService: UtilService, public dialog: MatDialog, private mapApiLoader: MapsAPILoader, private ngZone: NgZone) {
   }
 
   addressForm: FormGroup;
@@ -75,6 +77,21 @@ export class ClientAddressComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.mapApiLoader.load().then(() => {
+    //   const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+    //     types: [],
+    //     componentRestrictions: { 'country': 'IN' }
+    //   });
+
+    //   autoCompelete.addListener('place_changed', () => {
+    //     this.ngZone.run(() => {
+    //       const place: google.maps.places.PlaceResult = autoCompelete.getPlace;
+    //       if (place.geometry === undefined || place.geometry === null) {
+    //         return;
+    //       }
+    //     })
+    //   })
+    // })
   }
 
   createAddressForm(data) {
