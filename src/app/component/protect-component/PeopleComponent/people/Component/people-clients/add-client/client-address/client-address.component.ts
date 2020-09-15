@@ -89,7 +89,7 @@ export class ClientAddressComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-          this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+          // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
           this.getPincode(place.formatted_address)
           // console.log(place)
         })
