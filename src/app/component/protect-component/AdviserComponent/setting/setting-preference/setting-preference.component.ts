@@ -116,7 +116,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
-      brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
+      brandVisible: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(this.validatorType.DOMAIN)]],
       feviconUrl: []
     });
   }
@@ -170,7 +170,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
     this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '')
     this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '')
-    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl)
+    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl);
+    this.isDomain.setValue(data.hasDoamin ? String(data.hasDoamin) : '1')
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
     this.domainS.controls.brandVisible.disable();
@@ -207,7 +208,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
       feviconUrl: this.domainS.controls.feviconUrl.value,
       partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
-      siteTitle: this.domainS.controls.brandVisible.value
+      siteTitle: this.domainS.controls.brandVisible.value,
+      hasDomain: this.isDomain.value
     }
     this.orgSetting.updateDomainSetting(obj).subscribe(
       data => this.updateDomainSettingRes(flag, event, data, index),

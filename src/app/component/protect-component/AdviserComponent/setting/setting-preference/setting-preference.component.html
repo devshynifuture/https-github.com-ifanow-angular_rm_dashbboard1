@@ -302,8 +302,8 @@
                             <h5 class="m-0">Domain settings</h5>
                             <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the
                                 link with which IFANOW is accessed by you, your team and your clients. You have an
-                                option to either Partially or Completely white label the URL. <span
-                                    (click)="openDialog()" class="text-primary text-underline c-p">Read more</span></p>
+                                option to Completely white label the URL. <span (click)="openDialog()"
+                                    class="text-primary text-underline c-p">Read more</span></p>
                         </div>
                         <div class="row pt-28" [formGroup]="domainS">
                             <div class=" pl-0 br"
@@ -358,7 +358,7 @@
                             </div>
                             <div class="col-md-7 ">
                                 <div *ngIf="isDomain.value=='1'">
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-md-9 p-0">
                                             <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                         </div>
@@ -390,6 +390,41 @@
                                                     <mat-error class="pl-90">This field is required</mat-error>
                                                     <button mat-stroked-button
                                                         class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.my-planner.in</button>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="row ">
+                                        <div class="col-md-8 p-0">
+                                            <p class="m-0 text-black roboto f-500">Complete white label
+                                            </p>
+                                        </div>
+                                        <div class="col-md-1 pr-0 text-right">
+                                            <mat-spinner *ngIf="loaderArray[1].isLoader" [diameter]="20"></mat-spinner>
+                                        </div>
+                                        <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == false">
+                                            <button mat-stroked-button class="btn-dark-outline xs"
+                                                (click)="editDomain(true,'white')">Edit</button>
+                                        </div>
+                                        <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == true">
+                                            <button mat-stroked-button class="btn-dark-outline xs"
+                                                (click)="updateDomainSetting(false,'white',domainS.get('whiteLable'),1)">Update</button>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-11 mb-10 p-0 pt-6">
+                                            <div class="form-group matFormPadding b-a">
+                                                <mat-form-field class="url" floatLabel="never" appearance="standard"
+                                                    [floatLabel]="'never'">
+                                                    <button mat-stroked-button
+                                                        class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
+                                                    <input matInput type="text" class="form-control b-0 w-60"
+                                                        formControlName="whiteLable" placeholder="www.example.com">
+                                                    <mat-error *ngIf="domainS.get('whiteLable').errors?.required"
+                                                        class="pl-90">This field is required</mat-error>
+                                                    <mat-error *ngIf="domainS.get('whiteLable').errors?.pattern"
+                                                        class="pl-90">Domain name invalid</mat-error>
                                                 </mat-form-field>
                                             </div>
                                         </div>
@@ -432,41 +467,6 @@
                                     <p class="pt-4 text-custom roboto m-0">Tip: You can put your company name here for
                                         better brand visibility.</p>
                                     <img src="/assets/images/svg/site-title.svg" class="pt-20 w-100">
-
-                                    <!-- <div class="row pt-60">
-                                    <div class="col-md-8 p-0">
-                                        <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span
-                                                class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-1 pr-0 text-right">
-                                        <mat-spinner *ngIf="loaderArray[1].isLoader" [diameter]="20"></mat-spinner>
-                                    </div>
-                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs"
-                                            (click)="editDomain(true,'white')">Edit</button>
-                                    </div>
-                                    <div class="col-md-2 p-0 text-right" *ngIf="showUpdateWhite == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs"
-                                            (click)="updateDomainSetting(false,'white',domainS.get('whiteLable'),1)">Update</button>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-11 mb-10 p-0 pt-6">
-                                        <div class="form-group matFormPadding b-a">
-                                            <mat-form-field class="url" floatLabel="never" appearance="standard"
-                                                [floatLabel]="'never'">
-                                                <button mat-stroked-button
-                                                    class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" class="form-control b-0 w-60"
-                                                    formControlName="whiteLable" placeholder="www.example.com">
-                                                <mat-error class="pl-90">This field is required</mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                </div> -->
-
                                     <div class="url-details">
                                         <ul class="d-block">
                                             <li class="text-custom p-0">Please decide on a subdomain that you want for

@@ -781,6 +781,7 @@ export class ValidatorType {
   static PASSPORT = new RegExp(/^[A-Z]{1}[0-9]{7}$/);
   // static DRIVING_LICENCE = new RegExp(/^(?[A-Z]{2})(?\d{2})(?\d{4})(?\d{7})$/);
   static VOTER_ID = new RegExp(/^([a-zA-Z]){3}([0-9]){7}?$/);
+  static DOMAIN = new RegExp(/([a-z0-9]+\.)*[a-z0-9]+\.[a-z]+/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions
