@@ -113,7 +113,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
-        <div class="pt-150" *ngIf="dataSource.data === null">
+        <div class="pt-150" *ngIf="finalTaskList.length===0">
             <div class="row align-items-center">
 
                 <div class="col-md-8 text-center">
