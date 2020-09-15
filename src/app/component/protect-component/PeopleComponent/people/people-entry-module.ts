@@ -34,7 +34,7 @@ export const componentList = [CompanyMoreInfoComponent, AddClientComponent, Lead
     CustomCommonModule,
     CommonComponentModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDT73orKeKk4P9XWM13mxh6SkGY-EpNv0k',
+      apiKey: 'AIzaSyADyxccMFAm_qzOE6slO2jHrKjQPlN_KG4',
       libraries: ['places']
     })
   ], entryComponents: [componentList],

@@ -77,21 +77,23 @@ export class ClientAddressComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.mapApiLoader.load().then(() => {
-    //   const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
-    //     types: [],
-    //     componentRestrictions: { 'country': 'IN' }
-    //   });
+    this.mapApiLoader.load().then(() => {
+      const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+        types: [],
+        componentRestrictions: { 'country': 'IN' }
+      });
 
-    //   autoCompelete.addListener('place_changed', () => {
-    //     this.ngZone.run(() => {
-    //       const place: google.maps.places.PlaceResult = autoCompelete.getPlace;
-    //       if (place.geometry === undefined || place.geometry === null) {
-    //         return;
-    //       }
-    //     })
-    //   })
-    // })
+      autoCompelete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+          this.getPincode(place.formatted_address)
+          // console.log(place)
+        })
+      })
+    })
   }
 
   createAddressForm(data) {
@@ -194,6 +196,16 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').disable();
     this.addressForm.get('state').disable();
     this.addressForm.get('country').disable();
+  }
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode.join("");
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.addressForm.get('pinCode').setValue(pincode)
+    this.getPostalPin(pincode);
   }
 
   getAddressList(data) {
