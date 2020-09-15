@@ -165,8 +165,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
             absAllocation += element.percentAllocated;
             absSIP += element.sipPercent;
             absLumsum += element.lumpsumPercent
-            remainSIP = 100 - absSIP
-            remainLumsum = 100 - absLumsum
+            element.remainSIP = 0
+            element.remainLumsum= 0
           });
         }
         return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
