@@ -30,7 +30,6 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/core": "^3.0.0-beta.0",
     "@angular/animations": "github:angular/animations-builds#8.2.x",
     "@angular/cdk": "github:angular/cdk-builds#8.2.x",
     "@angular/cli": "^8.3.25",
@@ -45,7 +44,6 @@
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@types/googlemaps": "^3.39.13",
     "angular-bootstrap-md": "^8.10.1",
     "angular-froala-wysiwyg": "^3.1.0",
     "angular-highcharts": "^8.0.3",
@@ -92,6 +90,7 @@
     "@ngxs/store": "^3.6.2",
     "@types/file-saver": "^2.0.1",
     "@types/google.analytics": "0.0.40",
+    "@types/googlemaps": "^3.39.13",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.31",

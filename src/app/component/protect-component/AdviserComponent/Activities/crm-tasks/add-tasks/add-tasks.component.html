@@ -326,8 +326,8 @@
                     <div class="col-md-6 text-right pr-0">
                         <div class="full-end">
 
-                            <span *ngIf="!!item.dueDate" class="pr-10">
-                                {{ item.dueDate | date: 'dd MMM' }}
+                            <span *ngIf="!!item.completionDate" class="pr-10">
+                                {{ item.completionDate | date: 'dd MMM' }}
                             </span>
                             <span *ngIf="!!item.profilePicUrl" class="pr-10">
                                 <img [src]="item.profilePicUrl" alt="profilepic" class="c-p">
@@ -342,7 +342,7 @@
                                 <img src="/assets/images/svg/men-2.svg" class="c-p">
                             </span>
 
-                            <span *ngIf="!item.hasOwnProperty('dueDate')" class="pr-10">
+                            <span *ngIf="!item.hasOwnProperty('completionDate')" class="pr-10">
                                 <img src="/assets/images/svg/cal1.svg" class="c-p">
                             </span>
 
@@ -366,7 +366,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-5 pb-5" *ngIf="showNoSubTaskFoundError">
+        <div class="row pt-25 pb-5" *ngIf="showNoSubTaskFoundError">
             <h5 class="text-center col-md-12 b-a p-20">
                 No Subtasks found
             </h5>
@@ -552,7 +552,7 @@
                                     <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
                                 </div>
                                 <div class="col-md-2">
-                                    <button mat-stroked-button class="btn-primary" (click)="addReply(replyItem, item, rindex, 'task')">
+                                    <button mat-stroked-button class="btn-primary" (click)="addReply(item, 'task')">
                                         Add
                                     </button>
                                 </div>
@@ -776,7 +776,7 @@
                             <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
                         </div>
                         <div class="col-md-2">
-                            <button mat-stroked-button class="btn-primary" (click)="addReply(replyItem, item, rindex, 'subTask')">
+                            <button mat-stroked-button class="btn-primary" (click)="addReply(item, 'subTask')">
                                 Add
                             </button>
                         </div>
