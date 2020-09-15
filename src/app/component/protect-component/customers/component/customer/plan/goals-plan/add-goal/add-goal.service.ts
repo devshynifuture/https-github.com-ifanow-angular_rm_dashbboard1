@@ -92,4 +92,14 @@ export class AddGoalService {
       this.eventService.openSnackBar(err);
     })
   }
+  allocateOtherAssetToGoalRm(obj){
+    this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+      this.refreshObservable.next();
+      this.plansService.assetSubject.next(res);
+      this.refreshAssetList.next();
+      this.eventService.openSnackBar("Unallocated", "Dismiss");
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
+  }
 }

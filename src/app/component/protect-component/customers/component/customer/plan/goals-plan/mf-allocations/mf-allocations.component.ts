@@ -271,21 +271,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          this.loadMFData();
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(() => {
-              this.loadMFData();
-            })
-          );
-          this.allocateOtherAssetService.refreshAssetList.next();
-          this.subInjectService.setRefreshRequired();
-        //  this.refreshAssetList.next();
-          this.eventService.openSnackBar("Asset unallocated");
-          dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
+        this.allocationService.allocateOtherAssetToGoalRm(obj);
+        dialogRef.close()
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
