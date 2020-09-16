@@ -113,6 +113,7 @@ export class AddTasksComponent implements OnInit {
   initPoint() {
     this.getTaskRecurringData()
     if (this.data !== null) {
+      this.dueDateMinDate = new Date(1990, 0, 1);
       this.getAttachmentPreviewList('task', this.data.id);
       if(this.data.taskTemplateId ===0){
         this.isManualOrTaskTemplate = 'manual';
@@ -280,6 +281,8 @@ export class AddTasksComponent implements OnInit {
             commentItem.showInputReply = false;
             commentItem.replies.push(res);
             this.replyCommentFC.patchValue('', { emitEvent: false });
+            commentItem.editMode = false;
+            commentItem.showReplyText = true;
 
             this.eventService.openSnackBar('Reply added successfully', 'DISMISS');
           }
@@ -396,7 +399,7 @@ export class AddTasksComponent implements OnInit {
   formInit(data) {
     if (data !== null) {
       this.subTaskList = data.subTasks;
-      // this.showManualToggle = false;
+      this.showManualToggle = false;
       // let tempClientList = this.enumDataService.getClientSearchData('');
       // this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
       this.selectedClient = {
@@ -424,6 +427,8 @@ export class AddTasksComponent implements OnInit {
         every: ['',]
       });
 
+      this.addTaskForm.valueChanges.subscribe(res => console.log(this.addTaskForm.controls));
+
       this.prevAddTaskFormValue = {
         ...this.addTaskForm.value
       }
@@ -431,6 +436,7 @@ export class AddTasksComponent implements OnInit {
       this.addTaskForm.valueChanges.subscribe(res=>{
         if(!this.util.areTwoObjectsSame(this.prevAddTaskFormValue, res)){
           this.addTaskSubTaskChanges = true;
+          this.prevAddTaskFormValue = res;
         }
       });
 
@@ -446,6 +452,7 @@ export class AddTasksComponent implements OnInit {
       this.editSubTaskForm.valueChanges.subscribe(item=> {
         if(!this.util.areTwoObjectsSame(this.prevSubTaskFormValues, item)){
           this.saveChangesSubTask = true;
+          this.prevSubTaskFormValues = item;
         }
       });
       
@@ -473,6 +480,7 @@ export class AddTasksComponent implements OnInit {
       this.addTaskForm.valueChanges.subscribe(res=>{
         if(!this.util.areTwoObjectsSame(this.prevAddTaskFormValue, res)){
           this.addTaskSubTaskChanges = true;
+          this.prevAddTaskFormValue = res;
         }
       });
     }
@@ -494,21 +502,26 @@ export class AddTasksComponent implements OnInit {
       frequency: '',
       every: ''
     }, { emitEvent: false });
+    if(this.isRecurringTaskForm){
+      this.addTaskForm.get('taskDueDate').setErrors(null);
+    }
     this.subTaskList = [];
   }
 
   makeTaskRecurring() {
     this.isRecurringTaskForm = !this.isRecurringTaskForm;
-    if(this.isRecurringTaskForm == true){
+    if(this.isRecurringTaskForm){
       this.addTaskForm.get('continuesTill').setValidators(Validators.required);
       this.addTaskForm.get('frequency').setValidators(Validators.required);
       this.addTaskForm.get('taskTurnAroundTime').setValidators(Validators.required); 
       this.addTaskForm.get('every').setValidators(Validators.required); 
+      this.addTaskForm.get('taskDueDate').setErrors(null);
     } else {
       this.addTaskForm.get('continuesTill').setErrors(null);
       this.addTaskForm.get('frequency').setErrors(null);
       this.addTaskForm.get('taskTurnAroundTime').setErrors(null);
       this.addTaskForm.get('every').setErrors(null);
+      this.addTaskForm.get('taskDueDate').setValidators(Validators.required);
     }
   }
     
@@ -556,7 +569,7 @@ export class AddTasksComponent implements OnInit {
 
   routeToTemplateAddition(event){
     if(event.value === '-1'){
-      this.close();
+      this.close(true);
       this.router.navigate(['/admin/setting/activity']);
     }
   }
@@ -850,45 +863,57 @@ export class AddTasksComponent implements OnInit {
   }
 
   markTaskOrSubTaskDone(choice, subTaskItem, value) {
-    let data;
+    let data;    
     if (choice === 'task') {
       data = {
         taskId: this.data.id,
         status: value == true ? 1 : 0
       }
-      this.data.status = 1;
     } else if (choice === 'subTask') {
       data = {
         subTaskId: subTaskItem.id,
         status: value == true ? 1 : 0
       }
-
     }
 
     if(choice === 'task'){
-      if(this.subTaskList.some(item => item.isCompleted === false)){
-
+      if(this.subTaskList.every(item => item.status !== 0)){
+        this.crmTaskService.markTaskOrSubTaskDone(data)
+        .subscribe(res => {
+          let msg = choice == 'Task' ? '' : (choice === 'Sub task' ? '' : '');
+          if (res) {
+            this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
+            this.data.status = 1;
+            this.close(true);
+          } else {
+            this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
+          }
+        }, err => {
+          console.log(err);
+          this.eventService.openSnackBar("Something went wrong", "DISMISS");
+        });
+      } else {
+        this.eventService.openSnackBar("Please finish your subtask!", "DISMISS");
       }
+    } else {
+      this.crmTaskService.markTaskOrSubTaskDone(data)
+        .subscribe(res => {
+          let msg = 'Sub task';
+          if (res) {
+            this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
+            this.tabState = 1;
+            subTaskItem.isCompleted = true;
+            subTaskItem.status = 1;
+            subTaskItem.completionDate = new Date();
+          } else {
+            this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
+          }
+        }, err => {
+          console.log(err);
+          this.eventService.openSnackBar("Something went wrong", "DISMISS");
+        });
     }
 
-    this.crmTaskService.markTaskOrSubTaskDone(data)
-      .subscribe(res => {
-        let msg = choice == 'Task' ? '' : (choice === 'Sub task' ? '' : '');
-        if (res) {
-          this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
-          if (choice === 'task') {
-            this.close(true);
-          } else if (choice === 'subTask') {
-            this.tabState = 1;
-            this.selectedSubTask.completionDate = new Date();
-          }
-        } else {
-          this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
-        }
-      }, err => {
-        console.log(err);
-        this.eventService.openSnackBar("Something went wrong", "DISMISS");
-      });
   }
 
   addSubTask(item) {
@@ -1038,6 +1063,7 @@ export class AddTasksComponent implements OnInit {
     } else {
       if(this.addTaskForm.get(`subTask.${formGroupIndex}`).valid){
         this.subTaskList.push({
+          isCompleted: data.value.status || data.value.status === 0 ? true: false,
           assignedTo: data.value.assignedTo,
           description: data.value.description,
           turnAroundTime: data.value.turnAroundTime,
@@ -1168,7 +1194,7 @@ export class AddTasksComponent implements OnInit {
         this.shouldShowAddSubTaskLabel = false;
       }
     } else {
-      this.shouldShowAddSubTaskLabel = false;
+      this.shouldShowAddSubTaskLabel = true;
       this.eventService.openSnackBar('Subtask not present in task template', "DISMISS");
     }
   }
@@ -1339,7 +1365,11 @@ export class AddTasksComponent implements OnInit {
         data['frequency'] = this.addTaskForm.get('frequency').value;
         data['continuesTill'] = this.addTaskForm.get('continuesTill').value.format("YYYY-MM-DD");
         data['taskTurnAroundTime'] = this.addTaskForm.get('taskTurnAroundTime').value;
-        data['every'] = this.addTaskForm.get('every').value;
+        if(this.addTaskForm.get('every').value === ''){
+          data['every'] = null;
+        } else {
+          data['every'] = this.addTaskForm.get('every').value;
+        }
       } else {
         data['dueDate'] = this.addTaskForm.get('taskDueDate').value.format("YYYY-MM-DD");
       }

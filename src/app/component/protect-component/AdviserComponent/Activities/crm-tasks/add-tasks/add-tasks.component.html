@@ -257,7 +257,7 @@
             </div>
         </div>
 
-        <div class="row pt-32" *ngIf="!isRecurringTaskForm">
+        <div class="row pt-32 pb-20" *ngIf="!isRecurringTaskForm">
             <div class="w-18 pl-16">
                 <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
             </div>
@@ -276,7 +276,7 @@
             </div>
             <div class="w-41 d-flex align-items-center">
                 <div class="f-14 text-primitive roboto f-400">
-                    <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make this recurring
+                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make this recurring
                     <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
                 </div>
             </div>
@@ -304,6 +304,13 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+            <div class="w-41 d-flex align-items-center">
+                <div class="f-14 text-primitive roboto f-400">
+                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make this recurring
+                    <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+                </div>
+            </div>
+
         </div>
 
 
@@ -576,7 +583,11 @@
                                     </div>
     
                                     <div class="col-md-3 d-flex editDelectText">
-                                        <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode">Edit</a>
+                                        <a class="f-12 c-p" *ngIf="!replyItem.editMode" 
+                                            (click)="replyItem.editMode = !replyItem.editMode; 
+                                                editReplyFC.patchValue(replyItem.commentMsg, { emitEvent:false })">
+                                                Edit
+                                            </a>
                                         <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'task')">Save</a>
                                         <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
                                     </div>
@@ -591,7 +602,7 @@
 
     <div class="mt-80 pb-160" *ngIf="tabState === 2" [formGroup]="editSubTaskForm">
         <div class="row">
-            <div class="col-md-1 pl-30">
+            <div class="col-md-1 pl-10">
                 <span class="material-icons f-500 c-p" (click)="changeTabState(null,1)">
                     arrow_back
                 </span>
@@ -762,7 +773,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <p class="f-14 m-0" *ngIf="!item.editMode"> {{ item.commentMsg }}
+                            <p class="f-14 m-0" *ngIf="!item.editMode"> 
+                                {{ item.commentMsg }}
                             </p>
 
                             <p class="f-12 form-group" *ngIf="item.editMode">
@@ -800,7 +812,11 @@
                             </div>
 
                             <div class="col-md-3 d-flex editDelectText">
-                                <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode">Edit</a>
+                                <a class="f-12 c-p" *ngIf="!replyItem.editMode" 
+                                    (click)="replyItem.editMode = !replyItem.editMode; 
+                                        editReplyFC.patchValue(replyItem.commentMsg, { emitEvent:false })">
+                                        Edit
+                                    </a>
                                 <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'subTask')">Save</a>
                                 <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
                             </div>
