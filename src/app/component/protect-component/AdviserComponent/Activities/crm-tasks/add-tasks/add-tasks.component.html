@@ -16,8 +16,7 @@
                     <i class="material-icons mr-4"> done</i> Mark complete
                 </span>
                 <span class="btn-primary p-5 f-14 pr-12 pl-12 d-flex align-items-center br-4"
-                    *ngIf="tabState === 2 && (selectedSubTask.status === 1) "
-                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, true)">
+                    *ngIf="tabState === 2 && (selectedSubTask.status === 1)">
                     Completed
                 </span>
             </span>
@@ -43,7 +42,7 @@
                 </h4>
             </div>
             <div class="col-md-4 text-right pr-24">
-                <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
+                <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12" [ngClass]="isTaskDone ? 'disabled-cursor': ''"
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
 
@@ -95,7 +94,7 @@
             <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group m-0">
                     <input type="text" matInput formControlName="taskDescription" class="form-control"
-                        placeholder="Add a task">
+                        placeholder="Add a task" [disabled]="isTaskDone">
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -109,7 +108,7 @@
             </div>
             <div class="w-38 f-14 text-primitive roboto f-400 text-right" *ngIf="showManualToggle">
                 <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add manual task
-                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5 c-p">
 
             </div>
 
