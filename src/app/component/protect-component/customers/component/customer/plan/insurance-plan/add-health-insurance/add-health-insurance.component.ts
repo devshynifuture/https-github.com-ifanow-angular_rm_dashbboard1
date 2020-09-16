@@ -225,7 +225,9 @@ export class AddHealthInsuranceComponent implements OnInit {
 
   }
   close() {
-    if (!this.showExisting) {
+    if(this.showNewPolicy){
+      this.showNewPolicy = false;
+    }else if (!this.showExisting) {
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
     } else if(this.inputData.flag == 'suggestExistingPolicy'){
       this.subInjectService.changeNewRightSliderState({ state: 'close' });

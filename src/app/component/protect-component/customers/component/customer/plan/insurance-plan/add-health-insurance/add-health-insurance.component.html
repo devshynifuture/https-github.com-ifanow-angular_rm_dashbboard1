@@ -124,9 +124,9 @@
     <div class="row">
     </div>
 </div>
-<!-- <div *ngIf="showNewPolicy">
-    <app-suggest-health-insurance></app-suggest-health-insurance>
-</div> -->
+<div *ngIf="showNewPolicy">
+    <app-suggest-health-insurance [data]="this.inputData"></app-suggest-health-insurance>
+</div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
