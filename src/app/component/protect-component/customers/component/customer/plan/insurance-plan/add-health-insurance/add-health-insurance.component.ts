@@ -26,6 +26,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   insuranceType: number;
   needAnalysis = [];
   ownerIds = [];
+  showNewPolicy = false;
 
   @Input()
   set data(data) {
@@ -218,6 +219,10 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.ownerIds = [...new Map(this.ownerIds.map(item => [item.ownerId, item])).values()];
       this.showError = false;
     }
+  }
+  openNewPolicy(){
+    this.showNewPolicy = true
+
   }
   close() {
     if (!this.showExisting) {
