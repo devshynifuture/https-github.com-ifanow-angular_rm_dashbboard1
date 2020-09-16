@@ -73,7 +73,7 @@
             <div class="w-82 pl-15 pr-24 arn-ria align-items-center" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group mb-0">
                     <mat-select formControlName="searchTemplateList" class="form-control"
-                        (selectionChange)="routeToTemplateAddition($event)">
+                        (selectionChange)="routeToTemplateAddition($event)" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
@@ -94,7 +94,7 @@
             <div class="w-82 pl-15 pr-24 arn-ria" *ngIf="isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group m-0">
                     <input type="text" matInput formControlName="taskDescription" class="form-control"
-                        placeholder="Add a task" [disabled]="isTaskDone">
+                        placeholder="Add a task" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -122,7 +122,7 @@
 
             <div class="w-41 pr-15 pl-15 remove-top">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select class="form-control" formControlName="frequency">
+                    <mat-select class="form-control" formControlName="frequency" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>
                             Select frequency
                         </mat-option>
@@ -140,7 +140,7 @@
                 <mat-form-field float="never" appearance="standard" class="ba-date ">
                     <input class="form-control br-0 b-0" formControlName="continuesTill"
                         (input)="preventDefault($event)" (focus)="picker2.open()" matInput [matDatepicker]="picker2"
-                        placeholder="Continuous till">
+                        placeholder="Continuous till" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error>
@@ -156,7 +156,7 @@
             </div>
             <div class="w-41 pl-15 pr-15">
                 <mat-form-field float="never" appearance="standard" class="form-group">
-                    <mat-select formControlName="every" class="form-control">
+                    <mat-select formControlName="every" class="form-control" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>
                             Select day
                         </mat-option>
@@ -178,7 +178,7 @@
 
             <div class="w-41  pl-15 pr-15 form-group pl-0 mb-0 arn-ria">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input class="form-control br-0" formControlName="searchClientList"
+                    <input class="form-control br-0" formControlName="searchClientList" [ngClass]="isTaskDone ? 'disabled-cursor': ''"
                         (input)="searchClientFamilyMember(inputSearch.value)" #inputSearch matInput
                         placeholder="Start typing to see client" aria-label="State" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -217,7 +217,7 @@
 
             <div class="w-41 pl-15 pr-24 form-group pl-0 mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="familyMemberId">
+                    <mat-select class="form-control br-0" formControlName="familyMemberId" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled> Select family member</mat-option>
                         <mat-option [value]="item.familyMemberId" *ngFor="let item of familyMemberList">
                             {{ item.displayName }}
@@ -242,7 +242,7 @@
 
             <div class="w-41 form-group pl-0 mb-0 pl-15 pr-15">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="assignedTo">
+                    <mat-select class="form-control br-0" formControlName="assignedTo" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select team member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
@@ -263,7 +263,7 @@
 
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0 remove-top-flex">
                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
-                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" (input)="preventDefault($event)"
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" [ngClass]="isTaskDone ? 'disabled-cursor': ''" (input)="preventDefault($event)"
                         (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -292,7 +292,7 @@
 
             <div class="w-41 form-group pl-15 pr-15 mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="taskTurnAroundTime" class="form-control">
+                    <mat-select formControlName="taskTurnAroundTime" class="form-control" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>Eg. T + 1</mat-option>
                         <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                             {{ 'T + ' + item }}
