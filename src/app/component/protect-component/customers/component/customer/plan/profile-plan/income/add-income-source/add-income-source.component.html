@@ -12,10 +12,16 @@
 
 <div class="row">
     <div *ngFor="let singleIncomeSource of stepOneData">
-        <div *ngIf="singleIncomeSource.selected" class="col-md-12 pl-28 text-center mb-44 d-flex">
+        <div *ngIf="singleIncomeSource.selected" class="col-md-12 pl-28 text-center mb-48 d-flex">
             <div class="mr-28">
                 <div class="memberBorderBox">
-                    <img src="assets/images/svg/income-man.svg">
+                <img src="/assets/images/svg/man-profile.svg" *ngIf="singleIncomeSource.relationshipId==2 ||singleIncomeSource.relationshipId==1">
+                <img src="/assets/images/svg/wife-profile.svg" *ngIf="singleIncomeSource.relationshipId==3">
+                <img src="/assets/images/svg/son-profile.svg" *ngIf="singleIncomeSource.relationshipId==4">
+                <img src="/assets/images/svg/daughter-profile.svg" *ngIf="singleIncomeSource.relationshipId==5">
+                <img src="/assets/images/svg/mother-profile.svg" *ngIf="singleIncomeSource.relationshipId==7">
+                <img src="/assets/images/svg/father-profile.svg" *ngIf="singleIncomeSource.relationshipId==6">
+                <img src="/assets/images/svg/others.svg" *ngIf="singleIncomeSource.relationshipId==10 || singleIncomeSource.relationshipId==8 || singleIncomeSource.relationshipId==9 || singleIncomeSource.relationshipId==11 || singleIncomeSource.relationshipId==12 || singleIncomeSource.relationshipId==15 || singleIncomeSource.relationshipId==16|| singleIncomeSource.relationshipId==18 || singleIncomeSource.relationshipId==19 || singleIncomeSource.relationshipId==17">
                 </div>
                 <p class="f-14 m-0 f-bold">{{singleIncomeSource.name}}</p>
             </div>

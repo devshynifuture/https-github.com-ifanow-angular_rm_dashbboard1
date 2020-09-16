@@ -8,15 +8,16 @@
 <div *ngIf="checkFamList" class="familyMemberBox">
     <div class="row">
         <div *ngFor="let familyMember of familyMemberList" (click)="select(familyMember)"
-            class="col-md-6 text-center mb-20">
+            class="col-md-6 text-center mb-48">
             <div class="memberBorderBox c-p" [ngClass]="{'activeMemberBox': familyMember.selected}">
                 <mat-checkbox class="checkPosition" *ngIf="familyMember.selected" checked="true"></mat-checkbox>
-                <img src="assets/images/svg/income-man.svg">
-                <!-- <img src="assets/images/svg/womenIcon.svg">
-                <img src="assets/images/svg/familyMember1.svg">
-                <img src="assets/images/svg/familyMember2.svg">
-                <img src="assets/images/svg/familyMember3.svg">
-                <img src="assets/images/svg/familyMember4.svg"> -->
+                <img src="/assets/images/svg/man-profile.svg" *ngIf="familyMember.relationshipId==2 ||familyMember.relationshipId==1">
+                <img src="/assets/images/svg/wife-profile.svg" *ngIf="familyMember.relationshipId==3">
+                <img src="/assets/images/svg/son-profile.svg" *ngIf="familyMember.relationshipId==4">
+                <img src="/assets/images/svg/daughter-profile.svg" *ngIf="familyMember.relationshipId==5">
+                <img src="/assets/images/svg/mother-profile.svg" *ngIf="familyMember.relationshipId==7">
+                <img src="/assets/images/svg/father-profile.svg" *ngIf="familyMember.relationshipId==6">
+                <img src="/assets/images/svg/others.svg" *ngIf="familyMember.relationshipId==10 || familyMember.relationshipId==8 || familyMember.relationshipId==9 || familyMember.relationshipId==11 || familyMember.relationshipId==12 || familyMember.relationshipId==15 || familyMember.relationshipId==16|| familyMember.relationshipId==18 || familyMember.relationshipId==19 || familyMember.relationshipId==17">
             </div>
             <p class="f-14 roboto">{{familyMember.name}}</p>
         </div>

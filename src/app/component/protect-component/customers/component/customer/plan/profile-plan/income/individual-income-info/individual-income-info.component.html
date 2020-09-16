@@ -14,7 +14,13 @@
         <div class="col-md-3 d-flex pl-0">
             <div class="mr-28">
                 <div class="memberBorderBox">
-                    <img src="assets/images/svg/income-man.svg">
+                <img src="/assets/images/svg/man-profile.svg" *ngIf="singleIndividualIncome.relationshipId==2 ||singleIndividualIncome.relationshipId==1">
+                <img src="/assets/images/svg/wife-profile.svg" *ngIf="singleIndividualIncome.relationshipId==3">
+                <img src="/assets/images/svg/son-profile.svg" *ngIf="singleIndividualIncome.relationshipId==4">
+                <img src="/assets/images/svg/daughter-profile.svg" *ngIf="singleIndividualIncome.relationshipId==5">
+                <img src="/assets/images/svg/mother-profile.svg" *ngIf="singleIndividualIncome.relationshipId==7">
+                <img src="/assets/images/svg/father-profile.svg" *ngIf="singleIndividualIncome.relationshipId==6">
+                <img src="/assets/images/svg/others.svg" *ngIf="singleIndividualIncome.relationshipId==10 || singleIndividualIncome.relationshipId==8 || singleIndividualIncome.relationshipId==9 || singleIndividualIncome.relationshipId==11 || singleIndividualIncome.relationshipId==12 || singleIndividualIncome.relationshipId==15 || singleIndividualIncome.relationshipId==16|| singleIndividualIncome.relationshipId==18 || singleIndividualIncome.relationshipId==19 || singleIndividualIncome.relationshipId==17">
                 </div>
                 <p class="f-14 m-0 f-bold text-center pb-20" *ngIf="singleIndividualIncome">
                     {{singleIndividualIncome.name}}</p>
@@ -403,7 +409,7 @@
                                     [inputValidator]="validatorType.NUMBER_ONLY" formControlName="othersIncome"
                                     class="form-control br-0 rupess">
                                     <mat-hint align="end" class="f-12">{{othersIncome.value.length}}/10</mat-hint>
-                                <mat-error>This field is required</mat-error>
+                                    <mat-hint>Optional</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -554,7 +560,7 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income period
                         </h5>
-                        <p class="m-0 f-12 text-custom">Income start % end dates helps in planning cash flow better
+                        <p class="m-0 f-12 text-custom">Income start and end dates helps in planning cash flow better
                         </p>
                     </div>
                     <div class="col-md-7">
@@ -617,8 +623,8 @@
                 <div *ngIf="addMoreFlag">
                     <div class="row pt-40">
                         <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">Next appraisal in</h5>
-                            <p class="m-0 f-12 text-custom">Enter next appriasal date. Approx year & month should do
+                            <h5 class="m-0 pt-8">{{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'Next appraisal in' : 'Next Increase'}}</h5>
+                            <p class="m-0 f-12 text-custom">Enter {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'next appraisal' : 'Next increase'}} date. Approx year & month should do
                             </p>
                         </div>
                         <div class="col-md-4">
@@ -672,7 +678,6 @@
                                     <i class="material-icons c-p text-custom" *ngIf="getBonusList.controls.length > 1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
-                                <mat-hint align="start" class="f-12 ml-8 pb-16">Optional</mat-hint>
                             </div>
 
                         </div>

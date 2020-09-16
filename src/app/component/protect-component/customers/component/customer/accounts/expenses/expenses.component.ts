@@ -126,7 +126,7 @@ export class ExpensesComponent implements OnInit {
   clientDob:any;
   billsAndUtilities: any;
   isLoadingBudget=false;
-  tab: any;
+  tab = 'Transactions';
 
   // periodSelection: any;
 
@@ -308,7 +308,16 @@ export class ExpensesComponent implements OnInit {
     let filterArray = []
     if (data) {
       obj = {
-        name: data[1].name, total: data[2].total, assetList: data[0].assetList
+        name: data[1].name, total: data[2].total, assetList: data[0].assetList,progressPercentOther:0,spentPerOther:0,budgetPerOther:0
+      }
+      obj.progressPercentOther = 0;
+      obj.progressPercentOther += (data[2].total /  data[2].total) * 100;
+      obj.progressPercentOther = Math.round(obj.progressPercentOther);
+      if (obj.progressPercentOther > 100) {
+        obj.spentPerOther = 100;
+        obj.budgetPerOther = obj.progressPercentOther - 100;
+      } else {
+        obj.spentPerOther = obj.progressPercentOther;
       }
     }
     if (obj) {
@@ -503,6 +512,7 @@ export class ExpensesComponent implements OnInit {
   }
   getBudgetApis(){
     this.dataSource4.data = [{},{},{}];
+    this.dataSource5.data = [{},{},{}];
     this.isLoadingBudget = true;
 
     const obj1 = {
@@ -542,16 +552,18 @@ export class ExpensesComponent implements OnInit {
       let mergeArray = [...budgetList,...budgetRecurring];
       this.dataSource4.data = mergeArray;
       this.dataSource4.sort = this.BudgetSort;
+      this.dataSource5.data = this.dataSource1.data;
+      this.dataSource5.sort = this.recurringBudgetSort;
       if (result[2]) {
         this.budgetAmount = result[2].budgetAmount
-        this.budgetChart('bugetChart')
+        this.budgetChart('bugetChart');
       } else {
-        this.budgetChart('bugetChart')
+        this.budgetChart('bugetChart');
       }
       this.isLoadingBudget = false;
 
     }, err => {
-      this.eventService.openSnackBar(err, 'Dismiss');
+      // this.eventService.openSnackBar(err, 'Dismiss');
       this.dataSource4.data = [];
       this.dataSource5.data = [];
       this.budgetChart('bugetChart');
@@ -559,21 +571,26 @@ export class ExpensesComponent implements OnInit {
     })
   }
   filterData(array){
-    array.forEach(singleExpense => {
-      singleExpense.progressPercent = 0;
-      singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
-      singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
-      if (singleExpense.progressPercent > 100) {
-        singleExpense.spentPer = 100;
-        singleExpense.budgetPer = singleExpense.progressPercent - 100;
-      } else {
-        singleExpense.spentPer = singleExpense.progressPercent;
-      }
-      const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
-      if (singleExpenseCategory) {
-        singleExpense.expenseType = singleExpenseCategory.expenseType;
-      }
-    });
+    if(array){
+      array.forEach(singleExpense => {
+        singleExpense.progressPercent = 0;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
+        if (singleExpense.progressPercent > 100) {
+          singleExpense.spentPer = 100;
+          singleExpense.budgetPer = singleExpense.progressPercent - 100;
+        } else {
+          singleExpense.spentPer = singleExpense.progressPercent;
+        }
+        const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
+        if (singleExpenseCategory) {
+          singleExpense.expenseType = singleExpenseCategory.expenseType;
+        }
+      });
+    }else{
+      array =[];
+    }
+
     return array;
   }
   getListFamilyMem() {
@@ -709,7 +726,7 @@ export class ExpensesComponent implements OnInit {
             }
           },
           {
-            name: 'Expenditure',
+            name: 'Committed expenditure',
             y: this.expenditure,
             color: "#FFFF00",
             dataLabels: {
@@ -803,7 +820,7 @@ export class ExpensesComponent implements OnInit {
     this.dataSource5.data = [{}, {}, {}];
     this.planService.otherCommitmentsGet(obj).subscribe(
       data => this.otherCommitmentsGetRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        // this.eventService.showErrorMessage(error);
         this.dataSource5.data = [];
         this.noData = 'No data found';
         this.isLoadingBudget = false;
@@ -1126,7 +1143,7 @@ export class ExpensesComponent implements OnInit {
     if (this.tab == 'Transactions' && data.continueTill && data.repeatFrequency) {
       fragmentData.data.value = 'Recurring transaction';
     } else if(this.tab == 'Budget' && data.continueTill && data.repeatFrequency) {
-      fragmentData.data.value = 'Recurring Budget';
+      fragmentData.data.value = 'Budget';
     }else if(this.tab == 'Transactions' && !data.continueTill && !data.repeatFrequency){
       fragmentData.data.value = 'Transactions';
     }else{
