@@ -298,6 +298,7 @@ export class ExpensesComponent implements OnInit {
       console.log(finalArray)
       this.dataSource1.data = finalArray;
       this.dataSource1.sort = this.recurringTransactionTabSort;
+      this.dataSource5.data = this.dataSource1.data;
 
 
       console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.dataSource1.data);
@@ -556,15 +557,18 @@ export class ExpensesComponent implements OnInit {
       this.dataSource5.sort = this.recurringBudgetSort;
       let mergeSpentArray = [...this.dataSource4.data,...this.dataSource5.data];
       this.spent = 0;
+      this.budgetAmount = 0;
       mergeSpentArray.forEach(element=>{
         this.spent += (element.spent == 0) ? 0 : element.spent ? element.spent :element.total ? element.total : 0
+        this.budgetAmount += (element.amount == 0) ? 0 : element.amount ? element.amount :element.total ? element.total : 0
       })
-      if (result[2]) {
-        this.budgetAmount = result[2].budgetAmount
-        this.budgetChart('bugetChart');
-      } else {
-        this.budgetChart('bugetChart');
-      }
+      // if (result[2]) {
+      //   this.budgetAmount = result[2].budgetAmount
+      //   this.budgetChart('bugetChart');
+      // } else {
+      //   this.budgetChart('bugetChart');
+      // }
+      this.budgetChart('bugetChart');
       this.isLoadingBudget = false;
 
     }, err => {

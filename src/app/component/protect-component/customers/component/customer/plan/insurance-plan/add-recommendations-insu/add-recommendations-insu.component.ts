@@ -45,6 +45,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     }
 }
   getRecommendations(){
+    this.dataSource = [];
     this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
       data => {
         this.dataSource = data
