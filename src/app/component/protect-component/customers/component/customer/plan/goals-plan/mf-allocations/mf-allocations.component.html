@@ -214,21 +214,21 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
-                        <td *matCellDef="let element" class="text-left w-25" mat-cell>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <td *matCellDef="let element" class="text-left w-15" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span><br>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"></span></td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef> Allocated goal </th>
-                        <td class="w-15" *matCellDef="let element" mat-cell>
+                        <th class="w-20" mat-header-cell *matHeaderCellDef> Allocated goal </th>
+                        <td class="w-20" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
-                                    <span class="text-success pl-8"> SIP{{allocatedGoal.sipPercent}}</span> 
-                                    <span class="text-primary pl-8"> Lumsun{{allocatedGoal.lumpsumPercent}}</span> 
+                                    <span class="text-success"> SIP{{allocatedGoal.sipPercent}}</span> 
+                                    <span class="text-primary"> Lumsun{{allocatedGoal.lumpsumPercent}}</span> 
                                 </div>
                             </div>
 
