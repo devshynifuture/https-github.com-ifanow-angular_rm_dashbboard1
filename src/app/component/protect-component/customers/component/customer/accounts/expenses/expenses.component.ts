@@ -216,7 +216,7 @@ export class ExpensesComponent implements OnInit {
           this.billsAndUtilities = data.billsAndUtilities ? data.billsAndUtilities : 0;
           this.transportAmount = data.Transport ? data.Transport : 0;
           this.housingAmount = data.Housing ? data.Housing : 0;
-          this.spent = data.total ? data.total :0;
+          // this.spent = data.total ? data.total :0;
           this.cashFlow('piechartExpense')
         } else {
           this.cashFlow('piechartExpense')
@@ -342,7 +342,7 @@ export class ExpensesComponent implements OnInit {
     this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
     // this.miscellaneousAmount = data.Billes_&_Utilies;
-    this.spent = data.total ? data.total : 0;
+    // this.spent = data.total ? data.total : 0;
     this.cashFlow('piechartExpense')
   }
   getBudgetGraphValues() {
@@ -554,6 +554,11 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.sort = this.BudgetSort;
       this.dataSource5.data = this.dataSource1.data;
       this.dataSource5.sort = this.recurringBudgetSort;
+      let mergeSpentArray = [...this.dataSource4.data,...this.dataSource5.data];
+      this.spent = 0;
+      mergeSpentArray.forEach(element=>{
+        this.spent += (element.spent == 0) ? 0 : element.spent ? element.spent :element.total ? element.total : 0
+      })
       if (result[2]) {
         this.budgetAmount = result[2].budgetAmount
         this.budgetChart('bugetChart');
