@@ -308,9 +308,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
+        arr_equity_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
+        arr_debt_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
+        arr_lump_equity:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
+        arr_lump_debt:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
+        key_arr_equity_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
+        key_arr_debt_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
+        key_arr_lump_equity:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
+        key_arr_lump_debt:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
+      console.log('mapData.dashboardData.key_arr_equity_monthly',mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
     } else {
@@ -329,9 +338,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
+        arr_equity_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
+        arr_debt_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
+        arr_lump_equity:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
+        arr_lump_debt:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
+        key_arr_equity_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
+        key_arr_debt_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
+        key_arr_lump_equity:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
+        key_arr_lump_debt:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
+      console.log('mapData.dashboardData.key_arr_equity_monthly',mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
     }
     return mapData;
@@ -346,7 +364,22 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     return sum;
   }
-
+  getSumOfJsonMapArr(json: Object = {}) {
+    let array = [];
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        array.push(json[k])
+      }
+    }
+    return array;
+  }
+  getSumOfJsonMapArrKey(json: Object = {}) {
+    let array1 = []; 
+    //   if (Object.keys(json)) {
+    //     array.push())
+    // }
+    return Object.keys(json);
+  }
   loadGlobalAPIs() {
     this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data) => {
       this.clientFamily = data.familyMembersList.sort((a, b) => {
@@ -445,6 +478,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
+    console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
       this.isRetirementTab = true;
