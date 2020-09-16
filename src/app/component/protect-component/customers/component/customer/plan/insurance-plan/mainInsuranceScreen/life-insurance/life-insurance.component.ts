@@ -299,6 +299,12 @@ export class LifeInsuranceComponent implements OnInit {
       this.dataSourceLiability=this.getFilterData(data[1],'liabilities','name','total_loan_outstanding');
       this.plannerObj.lifeInsurancePremiums = data[2.1][0].total_amount;
       this.dataSourceLifeInsurance=this.getFilterData(data[2.2],'dependantNeeds','name','amount');
+      this.plannerObj.livingExpense = 0 ;
+      this.dataSourceLifeInsurance.forEach(element => {
+        if(element.selected){
+          this.plannerObj.livingExpense += (element.amount * element.percent) / 100;
+        }
+      });
       this.dataSourceGoals=this.getFilterData(data[3],'goalsMeet','goalName','goalFV')
       this.plannerObj.GrossLifeinsurance = data[4][0].total_amount;
       this.dataSourceIncome=this.getFilterData(data[5],'incomeSource','name','amount')

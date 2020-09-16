@@ -1007,7 +1007,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         "description": this.incomeNetForm.get('description').value,
         "monthlyDistributionList": [],
         "bonusOrInflowList": [],
-
+        "relationshipId":this.singleIndividualIncome.relationshipId,
         'linkedBankAccountNumber': this.incomeNetForm.controls.bankAcNo.value ? this.incomeNetForm.controls.bankAcNo.value : null,
         // 'userBankMappingId': this.incomeNetForm.controls.bankAcNo.value,
       }
