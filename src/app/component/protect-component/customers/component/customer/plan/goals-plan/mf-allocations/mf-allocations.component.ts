@@ -48,6 +48,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   // refreshAssetList = new Subject();
   validatorType = ValidatorType;
   showEditMf: boolean = false;
+  absSIP: number;
+  absLumsum: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -178,6 +180,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
             });
           });
         }
+        absSIP=100-absSIP
+        absLumsum=100-absLumsum
+        
+        
         return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
 
