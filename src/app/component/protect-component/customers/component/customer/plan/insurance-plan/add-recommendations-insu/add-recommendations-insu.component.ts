@@ -18,6 +18,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   set data(data) {
     this.isLoading = true;
     this.inputData = data;
+    this.getHolderNames(this.inputData)
     this.getRecommendations();
   }
 
@@ -26,6 +27,21 @@ export class AddRecommendationsInsuComponent implements OnInit {
   }
   ngOnInit() {
   }
+  getHolderNames(obj){
+    if (obj.owners && obj.owners.length > 0) {
+      obj.displayHolderName = obj.owners[0].holderName;
+      if (obj.owners.length > 1) {
+        for (let i = 1; i < obj.owners.length; i++) {
+          if (obj.owners[i].holderName) {
+            const firstName = (obj.owners[i].holderName as string).split(' ')[0];
+            obj.displayHolderName += ', ' + firstName;
+          }
+        }
+      }
+    } else {
+      obj.displayHolderName = '';
+    }
+}
   getRecommendations(){
     this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
       data => {

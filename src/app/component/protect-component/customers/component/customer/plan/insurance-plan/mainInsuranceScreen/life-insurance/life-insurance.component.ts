@@ -110,7 +110,7 @@ export class LifeInsuranceComponent implements OnInit {
   isLoading: boolean;
   insuranceDetails: any;
   isLoadingPlan = true;
-  @ViewChild('accordion',{static:false}) Accordion: MatAccordion
+  @ViewChild('accordion',{static:true}) Accordion: MatAccordion
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   inputReceive: any;
@@ -156,6 +156,7 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.panelOpenState = false;
     console.log('inputData', this.inputData)
   }
 
@@ -252,7 +253,8 @@ export class LifeInsuranceComponent implements OnInit {
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;
     forkJoin(detailofInsurance, sendPolicy, sendRecommendation,needAnalysis).subscribe(result => {
-      this.Accordion.closeAll();
+      this.panelOpenState = false;
+      // this.Accordion.closeAll();
       this.getNeedAnalysisData(result[3]);
       this.getDetailsInsuranceRes(result[0])
 
