@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
@@ -47,6 +47,8 @@ export class OrgProfileComponent implements OnInit {
   imgData: string = '';
   formPlaceHolder: any;
   isLoading: boolean = false;
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & NEXT',
@@ -68,7 +70,8 @@ export class OrgProfileComponent implements OnInit {
     private settingsService: SettingsService,
     private postalService: PostalService,
     private peopleService: PeopleService,
-    private authService: AuthService
+    private authService: AuthService,
+    private ngZone: NgZone
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.formPlaceHolder = AppConstants.formPlaceHolders;
@@ -83,6 +86,26 @@ export class OrgProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+
+    const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
+
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        this.orgProfile.get('address').setValue(place.formatted_address)
+        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.getPincode(place.formatted_address)
+        // console.log(place)
+      })
+      // })
+    })
+
     this.switchToTab(this.inputData.openTab);
     this.profileImg = this.data.logoUrl;
     this.reportImg = this.data.reportLogoUrl;
@@ -99,6 +122,17 @@ export class OrgProfileComponent implements OnInit {
       .subscribe(() => {
         this.filterCodes();
       });
+  }
+
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode ? pincode.join("") : '';
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.orgProfile.get('pincode').setValue(pincode)
+    this.getPostalPin(pincode);
   }
 
   getIsdCodesData() {
@@ -148,6 +182,14 @@ export class OrgProfileComponent implements OnInit {
       this.orgProfile.get('state').setValue(pincodeData[0].State);
       this.orgProfile.get('city').disable();
       this.orgProfile.get('state').disable();
+      let address1 = this.orgProfile.get('address').value;
+      let pincodeFlag = address1.includes(`${this.orgProfile.get('pincode').value},`)
+      address1 = address1.replace(`${this.orgProfile.get('city').value},`, '')
+      address1 = address1.replace(!pincodeFlag ? `${this.orgProfile.get('state').value},` : this.orgProfile.get('state').value, '')
+      address1 = address1.replace(this.orgProfile.get('country').value, '');
+      address1 = address1.replace(pincodeFlag ? `${this.orgProfile.get('pincode').value},` : this.orgProfile.get('pincode').value, '')
+      this.orgProfile.get('address').setValue(address1)
+      this.pinInvalid = false;
     }
   }
 

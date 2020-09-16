@@ -189,7 +189,7 @@
         <div class="col-md-6">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never" class="w-100">
-                    <textarea placeholder="Enter billing address " matInput class="form-control"
+                    <textarea #placeSearch placeholder="Enter billing address " matInput class="form-control"
                         formControlName="billingAddress" rows="5"
                         maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
                     <mat-error class="f-12">

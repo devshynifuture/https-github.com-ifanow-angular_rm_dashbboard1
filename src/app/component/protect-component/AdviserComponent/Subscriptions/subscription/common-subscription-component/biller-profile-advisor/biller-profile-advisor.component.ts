@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -11,6 +11,7 @@ import { UtilService, ValidatorType } from '../../../../../../../services/util.s
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
+import { } from 'googlemaps'
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -76,7 +77,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
     private fb: FormBuilder,
     private subService: SubscriptionService, private postalService: PostalService,
-    private eventService: EventService, private http: HttpClient, private utilService: UtilService) {
+    private ngZone: NgZone, private eventService: EventService, private http: HttpClient, private utilService: UtilService) {
   }
 
   imageData: File;
@@ -89,7 +90,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   ifscFlag: boolean;
   pincodeFlag: boolean;
-
+  @ViewChild('Address', { static: true }) Address: ElementRef;
   // dirty fix to set open tab
   @Input() popupHeaderText = 0;
 
@@ -111,6 +112,35 @@ export class BillerProfileAdvisorComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.selected = this.popupHeaderText;
+
+    const autoCompelete = new google.maps.places.Autocomplete(this.Address.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
+
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        this.profileDetailsForm.get('Address').setValue(place.formatted_address)
+        // this.profileDetailsForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.getPincode(place.formatted_address)
+        // console.log(place)
+      })
+      // })
+    })
+  }
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode.join("");
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.profileDetailsForm.get('pincode').setValue(pincode)
+    this.getPostalPin(pincode);
   }
 
   getFormControl() {
@@ -318,14 +348,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  getPostalPin(value, state) {
+  getPostalPin(value) {
     const obj = {
       zipCode: value
     };
     this.pincodeFlag = true;
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        this.PinData(data, state);
+        this.PinData(data);
       });
     } else {
       this.pinInvalid = false;
@@ -333,7 +363,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  PinData(data, state) {
+  PinData(data) {
     this.pincodeFlag = false;
     if (data[0].Status == 'Error') {
       this.pinInvalid = true;
@@ -345,6 +375,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControlProfile().state.setValue(data[0].PostOffice[0].Circle);
+      let address1 = this.profileDetailsForm.get('Address').value;
+      let pincodeFlag = address1.includes(`${this.profileDetailsForm.get('pincode').value},`)
+      address1 = address1.replace(`${this.profileDetailsForm.get('city').value},`, '')
+      address1 = address1.replace(!pincodeFlag ? `${this.profileDetailsForm.get('state').value},` : this.profileDetailsForm.get('state').value, '')
+      address1 = address1.replace(this.profileDetailsForm.get('country').value, '');
+      address1 = address1.replace(pincodeFlag ? `${this.profileDetailsForm.get('pincode').value},` : this.profileDetailsForm.get('pincode').value, '')
+      this.profileDetailsForm.get('Address').setValue(address1)
       this.pinInvalid = false;
     }
   }
