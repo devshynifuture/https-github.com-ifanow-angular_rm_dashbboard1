@@ -1,4 +1,4 @@
-<div class="popup-header-fix w-70" *ngIf="showExisting == false">
+<div class="popup-header-fix w-60" *ngIf="showExisting == false && !showNewPolicy">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{showInsurance.header}}</h4>
@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-<div class="pt-80 pl-28 pr-28 pb-44 mb-44" *ngIf="showExisting == false">
+<div class="pt-80 pl-28 pr-28 pb-44 mb-44" *ngIf="showExisting == false && !showNewPolicy">
     <div class="row">
         <div class="col-md-12 text-center">
             <img src={{showInsurance.logo}}>
@@ -26,7 +26,7 @@
                     and suggest new</mat-radio-button>
                 <mat-radio-button
                     [ngClass]="{'bu-primary': selectPolicy=='2','borderRadio':selectPolicy!='2','text-primary':selectPolicy=='2','text-custom':selectPolicy!='2'}"
-                    value="2">
+                    value="2" (click)="openNewPolicy()">
                     Suggest new insurance policies
                 </mat-radio-button>
             </mat-radio-group>
@@ -123,6 +123,9 @@
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="showExisting == false">
     <div class="row">
     </div>
+</div>
+<div *ngIf="showNewPolicy">
+    <app-suggest-health-insurance [data]="this.inputData" (sendOutput)="getOutput($event)"></app-suggest-health-insurance>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

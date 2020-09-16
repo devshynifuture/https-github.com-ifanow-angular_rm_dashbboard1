@@ -127,6 +127,7 @@
                                 </div>
                             </td>
                         </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns3;" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
@@ -187,7 +188,20 @@
                                 <div class="bar">{{element.advice}} </div>
                             </td>
                         </ng-container>
-
+                        <ng-container matColumnDef="icon">
+                                <th mat-header-cell class="" *matHeaderCellDef> </th>
+                                <td mat-cell class="c-p" *matCellDef="let element" [matMenuTriggerFor]="menu4">
+                                    <div class="bar"> 
+                                        <img *ngIf="!isLoadingPlan" src="/assets/images/svg/dot-menu.svg"> 
+                                        <mat-menu #menu4="matMenu">
+                                                <button mat-menu-item  (click)="recommend(element)"> 
+                                                    Recommend
+                                                </button>
+                                            </mat-menu>
+                                    </div>
+                
+                                </td>
+                            </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
@@ -206,7 +220,7 @@
                                 <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
                                 <div class="col-md-1 f-14"> </div>
                             </div>
-                            <mat-accordion #accordion="matAccordion" [multi]="true">
+                            <mat-accordion #firstAccordion="matAccordion" [multi]="true">
                                 <div class="br bl">
                                     <mat-expansion-panel  (click)="panelOpenState = true" [expanded]="false">
                                         <mat-expansion-panel-header>

@@ -32,7 +32,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumnsNeedAnalysis: string[] = ['details', 'outstanding', 'consider', 'edit'];
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice','icon'];
   displayedColumns3 = ['name', 'sum', 'premium', 'status'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
@@ -110,7 +110,7 @@ export class LifeInsuranceComponent implements OnInit {
   isLoading: boolean;
   insuranceDetails: any;
   isLoadingPlan = true;
-  @ViewChild('accordion',{static:false}) Accordion: MatAccordion
+  @ViewChild('firstAccordion',{static:false}) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   inputReceive: any;
@@ -156,6 +156,7 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.panelOpenState = false;
     console.log('inputData', this.inputData)
   }
 
@@ -252,7 +253,10 @@ export class LifeInsuranceComponent implements OnInit {
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;
     forkJoin(detailofInsurance, sendPolicy, sendRecommendation,needAnalysis).subscribe(result => {
-      this.Accordion.closeAll();
+      this.panelOpenState = false;
+      if(this.inputData.insuranceType == 1){
+        this.firstAccordion.closeAll();
+      }
       this.getNeedAnalysisData(result[3]);
       this.getDetailsInsuranceRes(result[0])
 
@@ -284,7 +288,36 @@ export class LifeInsuranceComponent implements OnInit {
       this.isLoadingPlan = false;
     })
   }
-  
+  recommend(data){
+    const obj={
+      id : this.inputData.id,
+      insuranceId : data.insurance.id
+    }
+    if(this.inputData.insuranceType == 1){
+      this.planService.updateRecommendationsLI(obj).subscribe(
+        data => {
+            this.getDetailsInsurance()
+            console.log(data)
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }else{
+      this.planService.updateRecommendationsGI(obj).subscribe(
+        data => {
+          if(data){
+            this.getDetailsInsurance()
+            console.log(data)
+          }
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }
+
+  }
   getDetailsInsuranceRes(data) {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
@@ -299,6 +332,12 @@ export class LifeInsuranceComponent implements OnInit {
       this.dataSourceLiability=this.getFilterData(data[1],'liabilities','name','total_loan_outstanding');
       this.plannerObj.lifeInsurancePremiums = data[2.1][0].total_amount;
       this.dataSourceLifeInsurance=this.getFilterData(data[2.2],'dependantNeeds','name','amount');
+      this.plannerObj.livingExpense = 0 ;
+      this.dataSourceLifeInsurance.forEach(element => {
+        if(element.selected){
+          this.plannerObj.livingExpense += (element.amount * element.percent) / 100;
+        }
+      });
       this.dataSourceGoals=this.getFilterData(data[3],'goalsMeet','goalName','goalFV')
       this.plannerObj.GrossLifeinsurance = data[4][0].total_amount;
       this.dataSourceIncome=this.getFilterData(data[5],'incomeSource','name','amount')

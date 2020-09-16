@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -26,6 +26,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   insuranceType: number;
   needAnalysis = [];
   ownerIds = [];
+  showNewPolicy = false;
 
   @Input()
   set data(data) {
@@ -199,6 +200,9 @@ export class AddHealthInsuranceComponent implements OnInit {
       }
     );
   }
+  getOutput(value){
+    this.showNewPolicy = false;
+  }
   openExistingPolicy() {
     this.selectPolicy = "1"
     console.log(this.selectPolicy)
@@ -219,8 +223,13 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.showError = false;
     }
   }
+  openNewPolicy(){
+    this.showNewPolicy = true;
+  }
   close() {
-    if (!this.showExisting) {
+    if(this.showNewPolicy){
+      this.showNewPolicy = false;
+    }else if (!this.showExisting) {
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
     } else if(this.inputData.flag == 'suggestExistingPolicy'){
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
