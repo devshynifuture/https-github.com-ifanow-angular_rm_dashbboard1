@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -13,7 +15,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   dataSource : any;
   inputData: any;
   isLoading:any;
-  constructor(private planService : PlanService,private eventService:EventService,private subInjectService : SubscriptionInject) { }
+  constructor(public dialog: MatDialog,private planService : PlanService,private eventService:EventService,private subInjectService : SubscriptionInject) { }
   @Input()
   set data(data) {
     this.isLoading = true;
@@ -53,6 +55,32 @@ export class AddRecommendationsInsuComponent implements OnInit {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
+  }
+  recommend(data){
+    const obj={
+      id : this.inputData.id,
+      insuranceId : data.insurance.id
+    }
+    this.planService.updateRecommendationsLI(obj).subscribe(
+      data => {
+          this.getRecommendations()
+          console.log(data)
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+  openDialog(value, data): void {
+    const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
+      width: '780px',
+      height: '600px',
+      data: { value, data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

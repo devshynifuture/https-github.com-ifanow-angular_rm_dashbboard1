@@ -32,7 +32,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumnsNeedAnalysis: string[] = ['details', 'outstanding', 'consider', 'edit'];
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice','icon'];
   displayedColumns3 = ['name', 'sum', 'premium', 'status'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
@@ -110,7 +110,7 @@ export class LifeInsuranceComponent implements OnInit {
   isLoading: boolean;
   insuranceDetails: any;
   isLoadingPlan = true;
-  @ViewChild('accordion',{static:true}) Accordion: MatAccordion
+  @ViewChild('firstAccordion',{static:false}) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   inputReceive: any;
@@ -254,7 +254,9 @@ export class LifeInsuranceComponent implements OnInit {
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;
     forkJoin(detailofInsurance, sendPolicy, sendRecommendation,needAnalysis).subscribe(result => {
       this.panelOpenState = false;
-      // this.Accordion.closeAll();
+      if(this.inputData.insuranceType == 1){
+        this.firstAccordion.closeAll();
+      }
       this.getNeedAnalysisData(result[3]);
       this.getDetailsInsuranceRes(result[0])
 
@@ -286,7 +288,36 @@ export class LifeInsuranceComponent implements OnInit {
       this.isLoadingPlan = false;
     })
   }
-  
+  recommend(data){
+    const obj={
+      id : this.inputData.id,
+      insuranceId : data.insurance.id
+    }
+    if(this.inputData.insuranceType == 1){
+      this.planService.updateRecommendationsLI(obj).subscribe(
+        data => {
+            this.getDetailsInsurance()
+            console.log(data)
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }else{
+      this.planService.updateRecommendationsGI(obj).subscribe(
+        data => {
+          if(data){
+            this.getDetailsInsurance()
+            console.log(data)
+          }
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }
+
+  }
   getDetailsInsuranceRes(data) {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
