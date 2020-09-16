@@ -26,6 +26,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   insuranceType: number;
   needAnalysis = [];
   ownerIds = [];
+  showNewPolicy = false;
 
   @Input()
   set data(data) {
@@ -219,8 +220,14 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.showError = false;
     }
   }
+  openNewPolicy(){
+    this.showNewPolicy = true
+
+  }
   close() {
-    if (!this.showExisting) {
+    if(this.showNewPolicy){
+      this.showNewPolicy = false;
+    }else if (!this.showExisting) {
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
     } else if(this.inputData.flag == 'suggestExistingPolicy'){
       this.subInjectService.changeNewRightSliderState({ state: 'close' });

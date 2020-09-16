@@ -14,6 +14,56 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   suggestPolicy: any;
   storeData: string;
   showRecommendation=false;
+  insuranceData = [{
+    value: '1',
+    header: 'Add Health Insurance',
+    smallHeading: 'health insurance',
+    insuranceType: 5,
+    logo: '/assets/images/svg/helth-insurance.svg',
+    heading: 'Health insurance',
+    subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
+  }, {
+    value: '2',
+    logo: '/assets/images/svg/Criticalillness.svg',
+    header: 'Add Critical Illness',
+    smallHeading: 'critical illness',
+    insuranceType: 6,
+    heading: 'Critical illness',
+    subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
+  }, {
+    value: '3',
+    logo: '/assets/images/svg/Cancercare.svg',
+    header: 'Add Cancer Care',
+    smallHeading: 'cancer care',
+    insuranceType: 11,
+    heading: 'Cancer care',
+    subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
+  }, {
+    value: '4',
+    logo: '/assets/images/svg/Personalaccident.svg',
+    header: 'Add Personal Accident',
+    heading: 'Personal accident',
+    smallHeading: 'personal accident',
+    insuranceType: 7,
+    subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
+  }, {
+    value: '5',
+    logo: '/assets/images/svg/Householders.svg',
+    header: 'Add Householders',
+    smallHeading: 'householders',
+    insuranceType: 9,
+    heading: 'Householders',
+    subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
+  }, {
+    value: '6',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Fire Insurance',
+    smallHeading: 'fire insurance',
+    insuranceType: 10,
+    heading: 'Fire insurance',
+    subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
+  },]
+  insuranceType: number;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private custumService: CustomerService, ) { }
 
   @Input()
@@ -27,7 +77,12 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   ngOnInit() {
     this.storeData ='Here you can write recommendations';
     console.log('heder', this.inputData)
-    this.showInsurance = this.inputData
+    this.insuranceData.forEach(element => {
+      if (element.value == this.inputData.value) {
+        this.showInsurance = element
+        this.insuranceType = element.insuranceType
+      }
+    });
     this.getdataForm('');
   }
   close(data) {
