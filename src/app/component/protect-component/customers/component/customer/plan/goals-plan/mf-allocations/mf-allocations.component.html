@@ -11,7 +11,7 @@
     </div>
 
     <div class="row pt-72">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <p class="roboto mb-0 pt-8">Additional savings required</p>
             <div class="mt-8 additional-saving">
                 <table mat-table [dataSource]="dataSource" id="table-low">
@@ -41,7 +41,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-8 bl-grey">
+        <div class="col-md-9 bl-grey">
             <div class="row">
                 <div class="col-md-10 p-0">
                     <p class="m-0 roboto pt-8">Allocate mutual funds to goals from here</p>
@@ -214,20 +214,21 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
-                        <td *matCellDef="let element" class="text-left w-25" mat-cell>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <td *matCellDef="let element" class="text-left w-15" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span><br>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"></span></td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef> Goal </th>
-                        <td class="w-15" *matCellDef="let element" mat-cell>
+                        <th class="w-20" mat-header-cell *matHeaderCellDef> Allocated goal </th>
+                        <td class="w-20" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
-                                    SIP{{allocatedGoal.sipPercent}} Lumsun{{allocatedGoal.lumpsumPercent}}
+                                    <span class="text-success"> SIP{{allocatedGoal.sipPercent}}</span> 
+                                    <span class="text-primary"> Lumsun{{allocatedGoal.lumpsumPercent}}</span> 
                                 </div>
                             </div>
 
@@ -237,28 +238,26 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="value1">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef>SIP</th>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef> Remaining SIP %</th>
                         <td *matCellDef="let element" class="text-right w-15" mat-cell >
-                            <div class="d-flex align-items-center"
-                                *ngFor="let allocatedGoal of element.goalAssetMapping">
+                            <div class="d-flex align-items-center">
                                 <mat-form-field class="w-100 iconPetage">
                                     <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                        (input)="restrictFrom100($event,element.absSIP)" appInputValueValidation [min]="0" [max]="100"
-                                        class="form-control br-0 percentage"[disabled]="(element.absSIP == 100)?true:false"
-                                        [(ngModel)]="(element.absLumsum == 100)? 100 : allocatedGoal.remailSIP">
+                                        (input)="restrictFrom100($event,element.absSIP,element.goalAssetMapping,'sip')" appInputValueValidation [min]="0" [max]="100"
+                                        class="form-control br-0 percentage"
+                                        [(ngModel)]="element.absSIP">
                                 </mat-form-field>
                             </div>
                     </ng-container>
                     <ng-container matColumnDef="value2">
-                        <th class="w-10" mat-header-cell *matHeaderCellDef>Lumpsum</th>
+                        <th class="w-10" mat-header-cell *matHeaderCellDef> Remaining lumpsum %</th>
                         <td *matCellDef="let element" class="text-right w-10" mat-cell >
-                            <div class="d-flex align-items-center"
-                                *ngFor="let allocatedGoal of element.goalAssetMapping">
+                            <div class="d-flex align-items-center">
                                 <mat-form-field class="w-100 iconPetage">
                                     <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                        (input)="restrictFrom100($event,element.absLumsum)" appInputValueValidation [min]="0" [max]="100"
-                                        class="form-control br-0 percentage" [disabled]="(element.absLumsum == 100)?true:false"
-                                        [(ngModel)]="(element.absLumsum == 100)? 100 : allocatedGoal.remainLumsum">
+                                        (input)="restrictFrom100($event,element.absLumsum,element.goalAssetMapping,'lumpsum')" appInputValueValidation [min]="0" [max]="100"
+                                        class="form-control br-0 percentage" 
+                                        [(ngModel)]="element.absLumsum">
                                 </mat-form-field>
                             </div>
                         </td>
@@ -271,7 +270,7 @@
                         <td mat-cell *matCellDef="let element" class="t-10 br">
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <!-- <div class="d-flex align-items-center"
-                                    *ngIf="element.absSIP == 100 || element.absLumsum == 100">
+                                    *ngIf="element.absSIP == 100 && element.absLumsum == 100">
                                     <button class="unallcoateBtn ml-10 text-danger"
                                         (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
                                     <i class="material-icons c-p text-black" *ngIf="element.goalAssetMapping.length !=0"
@@ -281,7 +280,7 @@
                                 </div> -->
 
                             </div>
-                            <div class="d-flex" *ngIf="element.absSIP < 100 || element.absLumsum < 100">
+                            <div class="d-flex" *ngIf="element.absSIP > 0 || element.absLumsum > 0">
                                 <button class="allcoateBtn ml-10 text-primary"
                                     (click)="allocateAssetToGoal(element)">Allocate</button>
                                 <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"

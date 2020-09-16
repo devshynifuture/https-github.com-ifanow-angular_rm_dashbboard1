@@ -77,10 +77,10 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   reallocate(){
-    if(this.reallocationFG.invalid || this.barButtonOptions.active) {
-      this.reallocationFG.markAllAsTouched();
-      return;
-    }
+    // if(this.reallocationFG.invalid || this.barButtonOptions.active) {
+    //   this.reallocationFG.markAllAsTouched();
+    //   return;
+    // }
     this.barButtonOptions.active = true;
     let obj = {
       id: this.allocationData.id,
