@@ -142,8 +142,7 @@
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input #pincode
-                                            (focusout)="getPostalPin($event.target.value,'profileDetailsForm')"
+                                        <input #pincode (focusout)="getPostalPin($event.target.value)"
                                             [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                                             appInputValueValidation class="form-control br-0 text-left"
                                             formControlName="pincode" matInput minlength="6" type="text">

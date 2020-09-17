@@ -39,6 +39,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   showMultipleKeepBtn: boolean;
   selectedData: any;
   selectedRow: any = [];
+  prevFilterFormValue: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -46,7 +47,8 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     private backOfficeService: BackOfficeService,
     private fb: FormBuilder,
     private reconService: ReconciliationService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private util: UtilService
   ) { }
 
   advisorId = AuthService.getAdvisorId();
@@ -127,6 +129,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       markUnmark: [0],
       brokerCode: [-1],
     });
+    this.prevFilterFormValue = this.filterForm.value;
 
     this.filterSearchForm = new FormControl();
 
@@ -140,18 +143,21 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
         if (res) {
           this.brokerList = res;
           if (this.brokerList.length == 1) {
-            this.filterForm.get("brokerCode").setValue(this.brokerList[0].id);
-            this.filterForm.get("brokerCode").disable()
+            this.filterForm.get("brokerCode").setValue(this.brokerList[0].id, { emitEvent: false });
+            this.filterForm.get("brokerCode").disable({emitEvent: false});
           } else {
-            this.filterForm.get("brokerCode").enable();
-            this.filterForm.get("brokerCode").setValue(-1);
+            this.filterForm.get("brokerCode").enable({ emitEvent:false });
+            this.filterForm.get("brokerCode").setValue(-1, { emitEvent: false });
           }
         }
         this.getSipCleanUpList(true);
       });
 
     this.filterSub = this.filterForm.valueChanges.subscribe((res) => {
-      this.getSipCleanUpList(true);
+      if(!this.util.areTwoObjectsSame(this.prevFilterFormValue, res)){
+        this.getSipCleanUpList(true);
+        this.prevFilterFormValue = res;
+      } 
     });
     // this.getSipCleanUpList(false);
   }

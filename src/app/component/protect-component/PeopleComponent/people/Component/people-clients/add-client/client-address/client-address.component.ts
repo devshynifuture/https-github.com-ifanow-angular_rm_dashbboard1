@@ -53,6 +53,7 @@ export class ClientAddressComponent implements OnInit {
     private peopleService: PeopleService, private eventService: EventService,
     private utilService: UtilService, public dialog: MatDialog, private ngZone: NgZone) {
   }
+  adressType: string;
 
   addressForm: FormGroup;
   validatorType = ValidatorType;
@@ -79,7 +80,7 @@ export class ClientAddressComponent implements OnInit {
   ngOnInit() {
     // this.mapApiLoader.load().then(() => {
     const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
-      types: [],
+      types: [this.addressType],
       componentRestrictions: { 'country': 'IN' }
     });
 
@@ -89,6 +90,7 @@ export class ClientAddressComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
+        this.addressForm.get('addressLine2').setValue(place.formatted_address)
         // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
         this.getPincode(place.formatted_address)
         // console.log(place)
@@ -197,13 +199,20 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').disable();
     this.addressForm.get('state').disable();
     this.addressForm.get('country').disable();
+    let address1 = this.addressForm.get('addressLine2').value;
+    let pincodeFlag = address1.includes(`${this.addressForm.get('pinCode').value},`)
+    address1 = address1.replace(`${this.addressForm.get('city').value},`, '')
+    address1 = address1.replace(!pincodeFlag ? `${this.addressForm.get('state').value},` : this.addressForm.get('state').value, '')
+    address1 = address1.replace(this.addressForm.get('country').value, '');
+    address1 = address1.replace(pincodeFlag ? `${this.addressForm.get('pinCode').value},` : this.addressForm.get('pinCode').value, '')
+    this.addressForm.get('addressLine2').setValue(address1)
   }
 
   getPincode(data) {
     let pincode, addressData;
     addressData = data.trim();
     pincode = addressData.match(/\d/g);
-    pincode = pincode.join("");
+    pincode = pincode ? pincode.join("") : '';
     pincode = pincode.substring(pincode.length - 6, pincode.length);
     this.addressForm.get('pinCode').setValue(pincode)
     this.getPostalPin(pincode);

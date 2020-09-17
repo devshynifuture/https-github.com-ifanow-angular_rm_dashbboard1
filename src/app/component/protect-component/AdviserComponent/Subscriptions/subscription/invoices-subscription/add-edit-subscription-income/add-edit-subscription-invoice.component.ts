@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -40,8 +40,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   finalAmount: any = 0;
   discount: any;
   auto: any;
-  editAdd1: boolean;
-  editAdd2: boolean;
+  editAdd1: boolean = false;
+  editAdd2: boolean = false;
   storeData: any;
   rpyment: boolean;
   clientId: any;
@@ -71,7 +71,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   dataSource: any;
   showPaymentRecive: boolean;
   feeCollectionMode: any;
-  showEdit: boolean;
+  showEdit: boolean = true;
   clientList: any;
   defaultVal: any;
   serviceList: any;
@@ -79,8 +79,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   dueDate: any;
   selectedService: any;
+  @ViewChild('billerAddress', { static: true }) billerAddress: ElementRef;
+  @ViewChild('payeeAddress', { static: true }) payeeAddress: ElementRef;
 
-  constructor(public enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subService: SubscriptionService,
+  constructor(private ngZone: NgZone, public enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
   }
 
@@ -105,6 +107,17 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.showErr = false;
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+
+    const autoCompelete = new google.maps.places.Autocomplete(this.billerAddress.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
+
+    const autoCompelete1 = new google.maps.places.Autocomplete(this.payeeAddress.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
+
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
       this.editPayment.reset();
       this.auto = true;
@@ -335,9 +348,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         // igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
         // cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
         // sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
-        igstTaxAmount:this.igstTaxAmount ? this.igstTaxAmount: null,
-        cgstTaxAmount: this.cgstTaxAmount ? this.cgstTaxAmount :null,
-        sgstTaxAmount: this.sgstTaxAmount ? this.sgstTaxAmount: null,
+        igstTaxAmount: this.igstTaxAmount ? this.igstTaxAmount : null,
+        cgstTaxAmount: this.cgstTaxAmount ? this.cgstTaxAmount : null,
+        sgstTaxAmount: this.sgstTaxAmount ? this.sgstTaxAmount : null,
         footnote: this.editPayment.value.footnote,
         terms: this.editPayment.value.terms
       };
@@ -384,12 +397,12 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.Close('close', true);
     }
   }
-  changeSelection(value){
-    if(value == "IGST(18%)"){
-      this.cgstTaxAmount=0;
-      this.sgstTaxAmount=0;
-    }else{
-      this.igstTaxAmount=0;
+  changeSelection(value) {
+    if (value == "IGST(18%)") {
+      this.cgstTaxAmount = 0;
+      this.sgstTaxAmount = 0;
+    } else {
+      this.igstTaxAmount = 0;
     }
   }
   getClients() {
