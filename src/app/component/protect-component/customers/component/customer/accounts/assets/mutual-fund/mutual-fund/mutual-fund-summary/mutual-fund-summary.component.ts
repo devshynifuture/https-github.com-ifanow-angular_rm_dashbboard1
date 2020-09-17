@@ -1256,7 +1256,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data
-
+        this.isLoading = false;
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1338,7 +1338,6 @@ export class MutualFundSummaryComponent implements OnInit {
               break;
           }
         });
-        this.isLoading = false;
         if (this.isBulkDataResponse) {
           this.mfService.getSummaryData()
             .subscribe(res => {

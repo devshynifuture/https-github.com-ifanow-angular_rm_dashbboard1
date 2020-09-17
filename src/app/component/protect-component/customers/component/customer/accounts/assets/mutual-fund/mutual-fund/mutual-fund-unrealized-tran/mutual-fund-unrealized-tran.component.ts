@@ -802,6 +802,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         data => {
           console.log(data);
           const response = this.mfService.doFiltering(data);
+            // response.mutualFundList.forEach(element => {
+            //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+            // });
           Object.assign(response.mutualFundList, {flag: true});
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
@@ -950,6 +953,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         this.dataTransaction.viewMode = this.mode;
         this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
         this.dataTransaction.columnHeader = this.columnHeader;
+        this.isLoading = false;
         if(!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)){
           this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
           this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
@@ -1091,7 +1095,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         // this.setUnrealizedDataSource(this.customDataSource.data);
 
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
-        this.isLoading = false;
         if (mutualFund.flag == true) {
           this.dataTransaction.flag = true;
         }
@@ -1342,6 +1345,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
             if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             }
+            if(this.rightFilterData.transactionPeriodCheck){
+              this.reponseData.mutualFundList.forEach(element => {
+                element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
+              });
+            }
+            
             this.mfData = this.reponseData;
             this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {

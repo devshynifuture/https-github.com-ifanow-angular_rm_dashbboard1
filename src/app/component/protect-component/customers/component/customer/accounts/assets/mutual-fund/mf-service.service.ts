@@ -324,6 +324,7 @@ export class MfServiceService {
         );
       });
     }
+    
     // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
     //   let array = [];
     //   mutualFundList.forEach(element => {
@@ -337,13 +338,14 @@ export class MfServiceService {
     // }
     if (dataForFilter.transactionPeriodCheck) {
       if (dataForFilter.fromDate && dataForFilter.toDate) {
+        
         mutualFundList.forEach(element => {
-          element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-            item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
-          );
+          element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= dataForFilter.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.toDate);
+       
         });
       }
     }
+    
 
     // let type = dataForFilter.reportType[0].name;
     // (type == 'Sub Category wise') ? type = 'subCategoryName' :
