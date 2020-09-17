@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { iif } from 'rxjs';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -87,6 +88,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   // @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
+    this.getFamilyMemberList();
     let date = this.maxDate.setDate(this.maxDate.getDate() - 1);
     this.maximumDate =new Date(date);
     console.log('ttra data', this.data)
@@ -176,6 +178,14 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.familyMemberList = res;
+          this.familyMemberList.forEach(element=>{
+            if(element.familyMemberId == this.data.familyMemberId){
+              if(element.name != this.data.ownerName){
+                this.data.ownerName = this.data.ownerName.toUpperCase();
+                this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
+              }
+            }
+          })
           console.log(res);
         } else {
           this.eventService.openSnackBar("No Family Member found!", "Dismiss");
@@ -431,7 +441,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
               mutualFundId: this.data.mutualFundId,
               sip: this.schemeLevelHoldingForm.controls.sip.value,
-              tag: this.schemeLevelHoldingForm.controls.tag.value,
+              tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
               fwTransactionType: (element.transactionType) ? this.getTransactionName(element.transactionType) : null,
               transactionDate: (element.date) ? this.getDateFormatted(element.date) : null,
               unit: element.Units,
@@ -517,7 +527,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           schemeCode: this.schemeObj['schemeCode'],
           balanceUnit: 0,
           sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
-          tag: this.schemeLevelHoldingForm.controls.tag.value,
+          tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           realOrFictitious: 0,
           parentId: this.parentId,
           mutualFundTransactions
@@ -553,7 +563,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           balanceUnit: this.data.balanceUnit,
           isSip: this.data.isSip,
           sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
-          tag: this.schemeLevelHoldingForm.controls.tag.value,
+          tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           // realOrFictitious: 0,
           parentId: this.parentId,
           // mutualFundTransactions: mutualFundTransactions,

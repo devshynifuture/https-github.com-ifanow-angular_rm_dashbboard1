@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 m-0">STATUS</p>
-                    <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails.status : 0"
+                    <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails.graph : 0"
                         class="h-30 bg-primary " placeholder="32%">
                         32%
                     </mat-progress-bar>
@@ -79,7 +79,7 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">{{element?.insurance?.policyName}} </div>
+                                <div class="bar">{{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}} </div>
                             </td>
                         </ng-container>
 
@@ -87,8 +87,8 @@
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right  amt">
-                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
-                                        {{element?.insurance?.sumAssured}} </span></div>
+                                <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
+                                    {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
                             </td>
                         </ng-container>
 
@@ -96,7 +96,7 @@
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
-                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                                <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
                             </td>
                         </ng-container>
@@ -106,7 +106,7 @@
                             <th mat-header-cell *matHeaderCellDef> Status </th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span *ngIf="!isLoadingPlan">{{element.advice}} </span>
+                                    <span *ngIf="!isLoadingPlan">{{element.status ? element.status : '-'}} </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_down
                                     </span>
@@ -122,7 +122,7 @@
                                 <div class="example-element-detail"
                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                     <div class="example-element-description">
-                                        {{element.advice}}
+                                        {{element.advice ? element.advice : '-'}}
                                     </div>
                                 </div>
                             </td>
@@ -152,7 +152,7 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">{{element?.insurance?.policyName}} </div>
+                                <div class="bar">{{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}} </div>
 
                             </td>
                         </ng-container>
@@ -161,15 +161,15 @@
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right  amt">
-                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
-                                        {{element?.insurance?.sumAssured}} </span></div>
+                                <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
+                                        {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
-                                <div class="bar">{{!isLoadingPlan ? "₹" : ""}}<span appFormatNumber>
+                                <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
                             </td>
                         </ng-container>
@@ -178,14 +178,14 @@
                         <ng-container matColumnDef="returns">
                             <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
-                                <div class="bar">{{element.returnRate}}{{!isLoadingPlan ? '%' : ''}} </div>
+                                <div class="bar">{{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}} </div>
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">{{element.advice}} </div>
+                                <div class="bar">{{element.advice ? element.advice : '-'}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="icon">
