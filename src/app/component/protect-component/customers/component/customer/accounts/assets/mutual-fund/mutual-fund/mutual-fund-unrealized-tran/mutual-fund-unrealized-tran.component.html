@@ -124,7 +124,7 @@
                   </td>
                   <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
                      <div class="bar">
-                        {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                        {{(mfData) ? (mfData.total_absolute_return) : 0}}
                      </div>
                   </td>
                </ng-container>
@@ -758,7 +758,7 @@
          </td>
          <td
             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+            {{(mfData) ? (mfData.total_absolute_return) : 0}}
          </td>
          <td
             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
