@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-md-4 pt-58 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
-                        <p class="m-0 roboto text-lighter" *ngIf="asset.maturityValue !=0">₹<span appFormatNumber>{{asset.maturityValue}}</span></p>
+                        <p class="m-0 roboto text-lighter" *ngIf="asset.maturityValue !=0">₹<span appFormatNumber [value]="asset.maturityValue"></span></p>
                         <p class="m-0 roboto text-lighter" *ngIf="asset.maturityValue ==0"><span appFormatNumber>-</span></p>
                     </div>
                 </div>

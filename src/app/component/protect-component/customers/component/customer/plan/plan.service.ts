@@ -198,7 +198,8 @@ export class PlanService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
   }
   deleteMilestone(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_MILESTONE, data);
+    let httpParams = new HttpParams().set('milestoneId', data.milestoneId)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MILESTONE + '?' + httpParams, '');
   }
   removeAllocation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
