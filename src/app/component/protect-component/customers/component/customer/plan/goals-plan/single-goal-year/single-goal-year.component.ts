@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -46,6 +46,7 @@ export class SingleGoalYearComponent implements OnInit {
   idWiseData: any;
   getLifeExpentancy: any;
   dateF: number;
+  callMethod: { methodName: string; ParamValue: any; disControl: any; };
 
   constructor(
     private eventService: EventService,
@@ -125,6 +126,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       case AppConstants.RETIREMENT_GOAL: // retirement
+       obj['milestoneModels'] = [];
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100 + this.singleYearGoalForm.get('costReduction').value)) / 100
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -142,6 +144,9 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
         obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
+         this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
+          obj['milestoneModels'].push(element)
+        });
         break;
       case AppConstants.CAR_GOAL: // Car
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -271,9 +276,9 @@ export class SingleGoalYearComponent implements OnInit {
   setMinMaxAgeOrYear(value) {
 
     if (this.goalTypeData.validations.showAge && value) {
-      this.minAgeYear = ((this.goalTypeData.validations.minAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
+      this.minAgeYear = ((this.goalTypeData.validations.minAge) ? this.goalTypeData.validations.minAge : '' || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
       this.maxAgeYear = 100;
-     // ((this.goalTypeData.validations.maxAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
+      // ((this.goalTypeData.validations.maxAge)?this.goalTypeData.validations.minAge:'' || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
@@ -300,14 +305,42 @@ export class SingleGoalYearComponent implements OnInit {
     // if goal is retirement
     if (this.goalTypeData.id === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
-      this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70,[Validators.min(this.singleYearGoalForm.get('age').value)]));
+      this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());
+      this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array(
+        [this.fb.group({
+          onRetirementOrDemise: [''],
+          milestoneTypeId: [0],
+          amount: [0],
+        })]),
+
+      )
     }
   }
 
-
+  get getMilestone() {
+    return this.singleYearGoalForm.get('getMilestoneName') as FormArray;
+  }
+  removeMilestone(item) {
+    this.disabledMember(null, null);
+    this.getMilestone.removeAt(item);
+  }
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: 'disabledMember',
+      ParamValue: value,
+      disControl: type
+    };
+  }
+  addMilestone(data) {
+    this.getMilestone.push(this.fb.group({
+      onRetirementOrDemise: [''],
+      milestoneTypeId: [0],
+      amount: [0],
+    }));
+  }
   previewGoalImage(event) {
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;
