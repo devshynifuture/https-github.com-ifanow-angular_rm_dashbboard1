@@ -889,6 +889,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         // this.asyncFilter(this.mutualFund.mutualFundList);
         if (this.isBulkEmailing) {
           // this.filterForBulkEmailing(data);
+          if(this.fromDate && this.toDate){
+            data.forEach(element => {
+            element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy/MM/dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+          });
+        }
           this.asyncFilter(data);
         } else {
           this.asyncFilter(data);
