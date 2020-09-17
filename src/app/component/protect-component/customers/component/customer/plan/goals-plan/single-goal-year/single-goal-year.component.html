@@ -163,12 +163,13 @@
                                     <div class="row pt-8">
                                         <div class="col-md-3 p-0">
                                             <div class="pr-0 text-left">
-                                                <h5 class="m-0 pt-8">Select type</h5>
+                                                <h5 class="m-0 pt-8">Planning</h5>
                                             </div>
                                             <div class="form-group">
                                                 <mat-form-field>
                                                     <mat-select class="form-control f-500" formControlName="onRetirementOrDemise">
-                                                        <mat-option class="f-500" [value]="" disabled>Planning
+                                                        <mat-option class="f-500" [value]="0" disabled>Select option
+
                                                         </mat-option>
                                                         <mat-option class="f-500" [value]="1">Post retirement
                                                         </mat-option>
@@ -186,7 +187,7 @@
                                                 <mat-form-field>
                                                     <mat-select class="form-control f-500"
                                                         formControlName="milestoneTypeId">
-                                                        <mat-option class="f-500" [value]="" disabled>Select option
+                                                        <mat-option class="f-500" [value]="0" disabled>Select option
                                                         </mat-option>
                                                         <mat-option class="f-500" [value]="1">Philanthrophy</mat-option>
                                                         <mat-option class="f-500" [value]="2">Legacy</mat-option>
