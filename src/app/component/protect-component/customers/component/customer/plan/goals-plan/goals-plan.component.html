@@ -320,9 +320,58 @@
                     </div>
                     <div class="row pt-40" *ngIf="!loaderFn.loading && isRetirementTab">
                         <div class="col-md-12 p-0">
+                            <h5 class="m-0 pb-12">Milestone details</h5>
+                        </div>
+                    </div>
+                    <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
+                    *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length > 0">
+                    <table mat-table [dataSource]="dataSource1" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="loaderFn.loading">
+                        <ng-container matColumnDef="select">
+                            <th *matHeaderCellDef class="br  " mat-header-cell>Planning</th>
+                            <td *matCellDef="let element; let i = index;" class="br" mat-cell>
+                                <div class="bar"> {{(element.onRetirementOrDemise == 1)?'Post retirement':'Demise'}} </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="milestone">
+                            <th mat-header-cell *matHeaderCellDef class="br text-left">Milestone type </th>
+                            <td mat-cell *matCellDef="let element" class="br text-left">
+                                <div class="bar">{{!loaderFn.loading? "" : ""}}<span>
+                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':'Others'}} </span></div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right">
+                                Amount
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="br text-right">
+                                <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                        {{element.amount}} </span></div>
+                            </td>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="icons">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p">
+                                <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="deleteMilestone(element)">Delete milestone</button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                    </table>
+
+
+                </div>
+                    <div class="row pt-40" *ngIf="!loaderFn.loading && isRetirementTab">
+                        <div class="col-md-12 p-0">
                             <h5 class="m-0 pb-12">Goal year wise details</h5>
                         </div>
                     </div>
+                    
                     <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
                         *ngIf="!loaderFn.loading && isRetirementTab">
                         <table mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
