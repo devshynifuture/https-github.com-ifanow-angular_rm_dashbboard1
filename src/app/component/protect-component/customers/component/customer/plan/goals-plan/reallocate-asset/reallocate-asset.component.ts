@@ -89,12 +89,17 @@ export class ReallocateAssetComponent implements OnInit {
       assetId: this.allocationData.assetId,
       assetType: this.allocationData.assetType,
       goalId: this.goalData.remainingData.id,
-      lumpsumPercent: parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2)),
-      sipPercent: parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2)),
       allocateOrEdit : 2,
+      lumpsumPercent:null,
+      sipPercent:null,
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }
+    if(this.allocationData.assetName == 'MUTUAL_FUNDS'){
+      obj.lumpsumPercent= parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2));
+      obj.sipPercent= parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2));
+    }
+
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation updated");
       this.allocateOtherAssetService.refreshObservable.next();
