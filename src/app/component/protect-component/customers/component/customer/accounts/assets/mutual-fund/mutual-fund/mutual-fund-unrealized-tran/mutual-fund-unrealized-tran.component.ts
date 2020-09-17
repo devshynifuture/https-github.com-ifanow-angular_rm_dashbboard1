@@ -213,6 +213,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
   headerHtml: HTMLElement;
   cashFlowXirr: any;
   cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
+  fromDate: any;
 
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
@@ -302,6 +303,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions';
           this.mode = 'All Transactions';
+          this.fromDate = (param1.fromDate)
+          this.toDate = (param1.toDate)
         } else {
           this.viewMode = 'Unrealized Transactions';
           this.mode = 'Unrealized Transactions';
