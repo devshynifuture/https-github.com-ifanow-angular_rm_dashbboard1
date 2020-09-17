@@ -140,7 +140,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         }
         console.log(this.filteredSchemes);
       });
-    this.getFamilyMemberList();
+    // this.getFamilyMemberList();
   }
 
   getRtTypeIdList() {
@@ -560,7 +560,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           // schemeName: this.schemeObj['schemeName'],
           folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
           // schemeCode: this.schemeObj['schemeCode'],
-          balanceUnit: this.data.balanceUnit,
+          balanceUnit:this.data.balanceUnitOrg,
           isSip: this.data.isSip,
           sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
           tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
