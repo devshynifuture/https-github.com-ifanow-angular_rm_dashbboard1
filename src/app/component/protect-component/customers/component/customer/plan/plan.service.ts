@@ -197,7 +197,9 @@ export class PlanService {
   allocateOtherAssetToGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
   }
-
+  deleteMilestone(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_MILESTONE, data);
+  }
   removeAllocation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
   }

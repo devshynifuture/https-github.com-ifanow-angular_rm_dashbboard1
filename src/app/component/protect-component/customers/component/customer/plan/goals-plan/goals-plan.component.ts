@@ -513,7 +513,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           goalId: milestone.goalId,
           milestoneFV: milestone.milestoneFV,
         }
-        this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+        this.plansService.deleteMilestone(obj).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
