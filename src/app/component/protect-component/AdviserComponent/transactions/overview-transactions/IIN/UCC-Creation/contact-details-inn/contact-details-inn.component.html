@@ -32,7 +32,7 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input class="form-control" formControlName="email" matInput maxlength="30" placeholder="Enter Email"
-                     type="text">
+                type="text">
               <mat-error class="">This field is required</mat-error>
 
             </mat-form-field>
@@ -62,8 +62,8 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input #mobileNo [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
-                       class="form-control" formControlName="mobileNo" matInput maxlength="10"
-                       placeholder="Enter Mobile number" type="number">
+                  class="form-control" formControlName="mobileNo" matInput maxlength="10"
+                  placeholder="Enter Mobile number" type="number">
                 <mat-error class="">This field is required</mat-error>
                 <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
               </mat-form-field>
@@ -77,15 +77,15 @@
           <div class="col-md-5">
             <mat-form-field appearance="standard" floatLabel="never">
               <input #foreignMobileNo [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="14"
-                     appInputValueValidation class="form-control" formControlName="foreignMobileNo" matInput
-                     maxlength="14" placeholder="Enter Mobile number" type="number">
+                appInputValueValidation class="form-control" formControlName="foreignMobileNo" matInput maxlength="14"
+                placeholder="Enter Mobile number" type="number">
               <mat-error class="">This field is required</mat-error>
               <mat-hint align="end">{{foreignMobileNo.value.length}}/14</mat-hint>
             </mat-form-field>
           </div>
         </div>
 
-        <div *ngIf="formId != 'second'&&formId!='third'">
+        <div>
 
           <h3 class="f-18 mb-12 mt-44 f-600">{{addressTypeLabel}} </h3>
 
@@ -97,7 +97,7 @@
             <div class="col-md-5 form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input class="form-control" formControlName="address1" matInput placeholder="Flat/building/street"
-                       type="text">
+                  type="text">
                 <mat-error class="">This field is required</mat-error>
 
               </mat-form-field>
@@ -109,8 +109,8 @@
             </div>
             <div class="col-md-5 form-group">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input class="form-control" formControlName="address2" matInput placeholder="Block/locality"
-                       type="text">
+                <input #placeSearch autocomplete="off" autocapitalize="off" spellcheck="off" class="form-control"
+                  formControlName="address2" matInput placeholder="Block/locality" type="text">
                 <mat-error class="">This field is required</mat-error>
 
               </mat-form-field>
@@ -123,8 +123,8 @@
             <div class="col-md-3 form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input #pincode (focusout)="getPostalPin($event.target.value)"
-                       [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
-                       class="form-control" formControlName="pinCode" matInput placeholder="Enter Pin code" type="text">
+                  [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
+                  class="form-control" formControlName="pinCode" matInput placeholder="Enter Pin code" type="text">
                 <mat-error class="">This field is required</mat-error>
                 <mat-hint align="end" class=" text-custom">
                   {{pincode.value.length}} / 6
@@ -166,7 +166,7 @@
             <div class="col-md-5 form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
-                       formControlName="country" matInput placeholder="Start typing to see country names" type="text">
+                  formControlName="country" matInput placeholder="Start typing to see country names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
                     {{scheme.name}}

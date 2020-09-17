@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
@@ -65,6 +65,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   },]
   insuranceType: number;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private custumService: CustomerService, ) { }
+  @Output() sendOutput = new EventEmitter();
 
   @Input()
   set data(data) {
@@ -86,7 +87,11 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     this.getdataForm('');
   }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    if(this.inputData.id){
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    }else{
+      this.sendOutput.emit(true);
+    }
   }
   getdataForm(data) {
 
