@@ -5,8 +5,7 @@
         </div>
     </div>
     <div class="row pt-150 pr-20 pb-10">
-        <div class="col-xl-6 col-lg-4 col-md-2">
-
+        <div class="col-xl-6 col-lg-4 col-md-2 text-right">
         </div>
         <div class="col-xl-6 col-lg-8 col-md-10 crm-task-selects p-0">
             <div class="row w-100 text-right align-items-center">
@@ -14,13 +13,23 @@
                     <input type="text" matInput placeholder="Search task" class="form-control text-left"
                         (keyup)="applyFilter($event)">
                 </div>
-                <div class="col-md-6" *ngIf="finalTaskList.length>0">
+                <div class="col-md-3" *ngIf="finalTaskList.length>0">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
                         <mat-select class="form-control" [formControl]="filterFormControl">
                             <mat-option value="" disabled>Filter</mat-option>
                             <mat-option (click)="setFilterToDefault()">All</mat-option>
                             <mat-option *ngFor="let item of dateFilterList" [value]="item.id"
                                 (click)="setFilterValue()">
+                                {{ item.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 pl-0" *ngIf="finalTaskList.length>0">
+                    <mat-form-field float="never" appearance="standard" class="form-group mb-0">
+                        <mat-select class="form-control" [formControl]="statusFC" (selectionChange)="setTaskFilterWithStatus($event)">
+                            <mat-option value="" disabled>Status</mat-option>
+                            <mat-option [value]="item.value" *ngFor="let item of statusList">
                                 {{ item.name }}
                             </mat-option>
                         </mat-select>
