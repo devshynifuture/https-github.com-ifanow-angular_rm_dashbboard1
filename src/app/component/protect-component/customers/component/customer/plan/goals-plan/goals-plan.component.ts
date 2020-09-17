@@ -508,13 +508,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnNo: 'DELETE',
       positiveMethod: () => {
         let obj = {
-          ...this.advisor_client_id,
-          id: milestone.id,
-          goalId: milestone.goalId,
-          milestoneFV: milestone.milestoneFV,
+          milestoneId: milestone.id,
         }
-        this.plansService.deleteMilestone(obj).subscribe(res => {
+        this.plansService.deleteMilestone({milestoneId:milestone.id}).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadAllGoals();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
@@ -552,6 +550,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
             this.selectedGoal = {};
           }
           // update asset list if user deletes goal and the list is still open
+          this.loadAllGoals();
           this.allocateOtherAssetService.refreshAssetList.next();
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
@@ -595,6 +594,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
           const assetIndex = this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
           this.allocatedList.splice(assetIndex, 1);
+          this.loadAllGoals();
           // update asset list if user deletes goal and the list is still open
           this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
