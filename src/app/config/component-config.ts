@@ -310,6 +310,7 @@ export const appConfig = {
   // UPDATE_INFLAMATION_RETURNS:'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
+  DELETE_MILESTONE:'',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',

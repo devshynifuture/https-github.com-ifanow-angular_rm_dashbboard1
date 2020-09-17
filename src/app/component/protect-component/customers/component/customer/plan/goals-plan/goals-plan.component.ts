@@ -33,9 +33,11 @@ import { element } from 'protractor';
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
   displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated'];
+  displayedColumns1 = ['select', 'milestone', 'amount','icons'];
   clientFamily: any[];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
+  dataSource1 = new MatTableDataSource(this.data);
   isRetirementTab = false;
   isLoading = true;
   advisor_client_id: any = {
@@ -490,13 +492,42 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.isRetirementTab = false;
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
+    this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
     this.dataSource.sort = this.sort;
     console.log('table',this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
   }
-
+  deleteMilestone(milestone){
+    const dialogData = {
+      header: 'DELETE MILESTONE',
+      body: 'Are you sure you want to remove milestone?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj = {
+          ...this.advisor_client_id,
+          id: milestone.id,
+          goalId: milestone.goalId,
+          milestoneFV: milestone.milestoneFV,
+        }
+        this.plansService.deleteMilestone(obj).subscribe(res => {
+          this.allocateOtherAssetService.refreshAssetList.next();
+          this.eventService.openSnackBar("Asset unallocated");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   deleteGoal() {
     const dialogData = {
       header: 'DELETE GOAL',
