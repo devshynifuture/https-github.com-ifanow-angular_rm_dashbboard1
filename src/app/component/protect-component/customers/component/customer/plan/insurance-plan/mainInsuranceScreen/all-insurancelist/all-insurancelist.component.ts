@@ -77,6 +77,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.showIsurance = true
   }
   getInsuranceList() {
+    this.showIsurance = true
     this.isLoadingInInsurance={isLoading:true};
     let obj = {
       clientId: this.clientId,

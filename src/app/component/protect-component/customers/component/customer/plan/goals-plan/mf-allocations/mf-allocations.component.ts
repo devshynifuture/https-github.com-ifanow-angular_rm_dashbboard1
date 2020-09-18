@@ -86,7 +86,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     let tableSource = [];
     // logic for saving status
     tableSource.push({
-      name: 'LumpSum',
+      name: 'Lumpsum',
       equity: required.lump_equity,
       debt: required.lump_debt
     })
@@ -180,10 +180,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
             });
           });
         }
-        absSIP=100-absSIP
-        absLumsum=100-absLumsum
-        
-        
+        absSIP = 100 - absSIP
+        absLumsum = 100 - absLumsum
+
+
         return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
 
@@ -282,7 +282,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           return parseInt(event.target.value);
         } else if ((100 - add) == 0) {
           let temp = 100 - add
-          console.log('temp',temp)
+          console.log('temp', temp)
           return event.target.value = temp
         } else {
           return event.target.value = 100 - add;
@@ -292,7 +292,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
         add += element.lumpsumPercent
         if ((100 - add) >= parseInt(event.target.value)) {
           return parseInt(event.target.value);
-        } else if ((100 - add)==0) {
+        } else if ((100 - add) == 0) {
           return event.target.value = 0
         } else {
           return event.target.value = 100 - add;
