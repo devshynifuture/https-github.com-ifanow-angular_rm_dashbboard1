@@ -37,7 +37,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   clientFamily: any[];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-  dataSource1 = new MatTableDataSource(this.data);
+  dataSource1 = [];
   isRetirementTab = false;
   isLoading = true;
   advisor_client_id: any = {
@@ -142,6 +142,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ngOnInit() {
+    this.dataSource1 = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
         this.loadAllGoals();
