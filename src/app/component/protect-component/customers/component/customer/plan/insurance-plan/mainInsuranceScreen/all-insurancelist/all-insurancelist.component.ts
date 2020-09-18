@@ -77,6 +77,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.showIsurance = true
   }
   getInsuranceList() {
+    this.showIsurance = true
     this.isLoadingInInsurance={isLoading:true};
     let obj = {
       clientId: this.clientId,
@@ -221,7 +222,7 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if(upperSliderData['data'] == true ){
+          if(upperSliderData['data']){
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

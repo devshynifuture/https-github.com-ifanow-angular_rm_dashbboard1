@@ -13,7 +13,7 @@
 </div>
 
 <div class="pt-90 pr-28 pl-28">
-    <div class="recommendationTable">
+    <div class="recommendationTable" *ngIf="!isLoading">
         <table mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading"
             class=" skeletonAnimation">
             <ng-container matColumnDef="policyName">
@@ -88,6 +88,9 @@
             <h4 class="text-center pt-12"> No data found</h4>
         </div>
     </div>
+    <div *ngIf="isLoading" class="bg-white p-20">Loading data...</div>
+
+
 </div>
 
 <div class="bottom-fixed wrapper-12 pt-16">

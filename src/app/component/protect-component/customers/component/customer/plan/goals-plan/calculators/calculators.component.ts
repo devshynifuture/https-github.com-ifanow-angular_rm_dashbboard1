@@ -63,6 +63,8 @@ export class CalculatorsComponent implements OnInit {
   chart: Highcharts.Chart;
   perLoanAmt: number;
   downPayPer: any;
+  downPayement: number;
+  loanAmount: number;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -148,7 +150,10 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-
+    this.downPayement = this.calculatedEMI.downPayment/this.calculatedEMI.goalAmount
+    this.loanAmount = this.calculatedEMI.loanAmount/this.calculatedEMI.goalAmount
+    console.log('this.downPayement',this.downPayement )
+    console.log('this.loanAmount',this.loanAmount)
     this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
     this.perLoanAmt = 100 - this.downPayPer
     console.log('LA',this.perLoanAmt);
@@ -199,7 +204,7 @@ export class CalculatorsComponent implements OnInit {
           {
             name: 'Loan amount',
             // y:20,
-            y: this.perLoanAmt,
+            y: this.loanAmount,
             color: '#008FFF',
             dataLabels: {
               enabled: false
@@ -207,7 +212,7 @@ export class CalculatorsComponent implements OnInit {
           }, {
             name: 'Down payment',
             // y:20,
-            y: this.downPayPer,
+            y: this.downPayement,
             color: '#FFC100',
             dataLabels: {
               enabled: false

@@ -16,14 +16,15 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class ShowHealthPlanningComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'advice', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource :any;
   inputData: any;
   showInsurance: any;
 
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1:any;
   clientId: any;
   advisorId: any;
+  isLoading = false;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -49,6 +50,9 @@ export class ShowHealthPlanningComponent implements OnInit {
     this.getStepOneAndTwoData();
   }
   getStepOneAndTwoData(){
+    this.dataSource =[{},{},{}];
+    this.dataSource1 =[{},{},{}];
+    this.isLoading = true;
     let obj = {
       id: this.inputData.id,
       insuranceType:this.inputData.insuranceType
@@ -59,6 +63,7 @@ export class ShowHealthPlanningComponent implements OnInit {
           if (data) {
             this.dataSource =this.getFilterData(data.current) ;
             this.dataSource1 =this.getFilterData(data.suggested) ;
+            this.isLoading = false;
             console.log(data);
           }
           this.dataSource = data.current;                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -80,14 +85,18 @@ export class ShowHealthPlanningComponent implements OnInit {
               if (singleInsuranceData.insuranceDetails.insuredMembers[i].name) {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
-                const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
-                singleInsuranceData.displayHolderSumInsured += ', ' + firstSumInsured;
+                if(singleInsuranceData.insurance.insuredMembers[i].sumInsured){
+                  const firstSumInsured = (singleInsuranceData.insurance.insuredMembers[i].sumInsured as string).split(' ')[0];
+                  singleInsuranceData.displayHolderSumInsured += ', ' + firstSumInsured;
+                }else{
+                  singleInsuranceData.displayHolderSumInsured = 0;
+                }
               }
             }
           }
         } else {
           singleInsuranceData.displayHolderName = '';
-          singleInsuranceData.displayHolderSumInsured = '';
+          singleInsuranceData.displayHolderSumInsured = 0;
         }
       });
     }else{
@@ -154,7 +163,9 @@ export class ShowHealthPlanningComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getStepOneAndTwoData();
+          if(sideBarData.refreshRequired){
+            this.getStepOneAndTwoData();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

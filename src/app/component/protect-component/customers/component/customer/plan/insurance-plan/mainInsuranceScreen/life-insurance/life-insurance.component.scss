@@ -216,3 +216,27 @@ table {
   .disabled-pointer {
     pointer-events: none;
   }
+  ::ng-deep .mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: flex-end;
+    color: #000000 !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    // height: 39px !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid #DADCE0;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+    color: #000000 !important
+}
+
+::ng-deep .mat-expansion-panel-spacing {
+    margin: 0px !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0px !important;
+    border-bottom: 1px solid #DADCE0;
+}

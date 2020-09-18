@@ -299,6 +299,9 @@ export class ExpensesComponent implements OnInit {
       this.dataSource1.data = finalArray;
       this.dataSource1.sort = this.recurringTransactionTabSort;
       this.dataSource5.data = this.dataSource1.data;
+      if(finalArray.length > 0){
+        this.getGraphCalculations();
+      }
 
 
       console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.dataSource1.data);
@@ -555,20 +558,14 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.sort = this.BudgetSort;
       this.dataSource5.data = this.dataSource1.data;
       this.dataSource5.sort = this.recurringBudgetSort;
-      let mergeSpentArray = [...this.dataSource4.data,...this.dataSource5.data];
-      this.spent = 0;
-      this.budgetAmount = 0;
-      mergeSpentArray.forEach(element=>{
-        this.spent += (element.spent == 0) ? 0 : element.spent ? element.spent :element.total ? element.total : 0
-        this.budgetAmount += (element.amount == 0) ? 0 : element.amount ? element.amount :element.total ? element.total : 0
-      })
+      this.getGraphCalculations();
+
       // if (result[2]) {
       //   this.budgetAmount = result[2].budgetAmount
       //   this.budgetChart('bugetChart');
       // } else {
       //   this.budgetChart('bugetChart');
       // }
-      this.budgetChart('bugetChart');
       this.isLoadingBudget = false;
 
     }, err => {
@@ -578,6 +575,17 @@ export class ExpensesComponent implements OnInit {
       this.budgetChart('bugetChart');
       this.isLoadingBudget = false;
     })
+  }
+  getGraphCalculations(){
+    let mergeSpentArray = [...this.dataSource4.data,...this.dataSource5.data];
+    this.spent = 0;
+    this.budgetAmount = 0;
+    mergeSpentArray.forEach(element=>{
+      this.spent += (element.spent == 0) ? 0 : element.spent ? element.spent :element.total ? element.total : 0
+      this.budgetAmount += (element.amount == 0) ? 0 : element.amount ? element.amount :element.total ? element.total : 0
+    })
+    this.budgetChart('bugetChart');
+
   }
   filterData(array){
     if(array){

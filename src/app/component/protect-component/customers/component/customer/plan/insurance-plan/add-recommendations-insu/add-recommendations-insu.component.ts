@@ -18,7 +18,6 @@ export class AddRecommendationsInsuComponent implements OnInit {
   constructor(public dialog: MatDialog,private planService : PlanService,private eventService:EventService,private subInjectService : SubscriptionInject) { }
   @Input()
   set data(data) {
-    this.isLoading = true;
     this.inputData = data;
     this.getHolderNames(this.inputData)
     this.getRecommendations();
@@ -45,6 +44,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     }
 }
   getRecommendations(){
+    this.isLoading = true;
     this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
       data => {
         this.dataSource = data
@@ -52,6 +52,8 @@ export class AddRecommendationsInsuComponent implements OnInit {
         console.log(data)
       },
       err => {
+        this.dataSource = [];
+        this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
