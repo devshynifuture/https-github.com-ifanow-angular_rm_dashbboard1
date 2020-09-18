@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2 pr-0 right text-right" (click)="deleteInsurance()">
+    <div class="col-md-2 pr-0 right text-right" (click)="deleteInsurance()" *ngIf="!isLoadingPlan">
         <img src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>
@@ -185,7 +185,7 @@
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">{{element.advice ? element.advice : '-'}} </div>
+                                <div class="bar">{{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="icon">
@@ -220,7 +220,7 @@
                                 <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
                                 <div class="col-md-1 f-14"> </div>
                             </div>
-                            <mat-accordion #firstAccordion="matAccordion" [multi]="true">
+                            <mat-accordion *ngIf="!isLoadingPlan" #firstAccordion="matAccordion" [multi]="true">
                                 <div class="br bl">
                                     <mat-expansion-panel  (click)="panelOpenState = true" [expanded]="false">
                                         <mat-expansion-panel-header>
@@ -600,6 +600,13 @@
                                     </mat-expansion-panel>
                                 </div>
                             </mat-accordion>
+                            <div class="relClass d-flex mt-20 align-items-center" [hidden]="!isLoadingPlan">
+                                    <div class="w-100 p-0 text-primary br-2 recommendations bar">
+                                        <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
+                                        </div>
+                                    </div>
+            
+                                </div>
                 
                 </div>
             </div>

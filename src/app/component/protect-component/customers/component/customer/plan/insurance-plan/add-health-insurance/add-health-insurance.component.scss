@@ -1,0 +1,85 @@
+.skeletonAnimation .relClass {
+    position: relative;
+    .bar82 {
+        background-color: #E7E7E7;
+        width: 100%;
+        &:after {
+            position: absolute;
+            transform: translateY(-50%);
+            top: 50%;
+            left: 0;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 82px;
+            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+            background-size: 100px 82px;
+            background-position: -10px 0;
+            background-repeat: no-repeat;
+            animation: loading 1s infinite;
+        }
+    }
+    .bar289 {
+        background-color: #E7E7E7;
+        width: 100%;
+        &:after {
+            position: absolute;
+            transform: translateY(-50%);
+            top: 50%;
+            left: 0;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 289px;
+            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+            background-size: 100px 289px;
+            background-position: -10px 0;
+            background-repeat: no-repeat;
+            animation: loading 1s infinite;
+        }
+    }
+    .bar36 {
+        background-color: #E7E7E7;
+        width: 100%;
+        &:after {
+            position: absolute;
+            transform: translateY(-50%);
+            top: 50%;
+            left: 0;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 36px;
+            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+            background-size: 100px 36px;
+            background-position: -10px 0;
+            background-repeat: no-repeat;
+            animation: loading 1s infinite;
+        }
+    }
+}
+
+.height36 {
+    height: 36px;
+    width: 145px !important;
+}
+
+.height289 {
+    height: 289px;
+}
+
+.height82 {
+    height: 82px;
+}
+
+.height24 {
+    height: 24px;
+}
+.height36 {
+    height: 36px;
+    width: 145px !important;
+}
+table {
+    width: 100%;
+  }
+  
