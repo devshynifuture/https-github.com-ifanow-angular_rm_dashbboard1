@@ -33,7 +33,7 @@ import { element } from 'protractor';
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
   displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated','status'];
-  displayedColumns1 = ['select', 'milestone', 'amount','icons'];
+  displayedColumns1 = ['select', 'milestone', 'amount','fv','icons'];
   clientFamily: any[];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
