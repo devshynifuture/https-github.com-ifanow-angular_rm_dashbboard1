@@ -218,14 +218,17 @@
                                 <div class="col-md-3 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Description </p>
                                 </div>
-                                <div class="col-md-3 d-flex align-items-center">
+                                <div class="col-md-2 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Advice </p>
                                 </div>
-                                <div class="col-md-3 d-flex align-items-center">
+                                <div class="col-md-2 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Current value </p>
                                 </div>
-                                <div class="col-md-3 d-flex align-items-center">
+                                <div class="col-md-2 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Maturity value </p>
+                                </div> 
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <p class="roboto m-0 text-black f-500">Percentage allocated</p>
                                 </div>
                             </div>
                             <div class="row height40 bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
@@ -234,14 +237,16 @@
                                     <div class="bar height24"></div>
 
                                 </div>
-                                <div class="col-md-3 d-flex align-items-center relClass">
+                                <div class="col-md-2 d-flex align-items-center relClass">
                                     <div class="bar height24"></div>
 
                                 </div>
-                                <div class="col-md-3 d-flex align-items-center relClass">
+                                <div class="col-md-2 d-flex align-items-center relClass">
                                     <div class="bar height24"></div>
                                 </div>
-
+                                <div class="col-md-2 d-flex align-items-center relClass">
+                                    <div class="bar height24"></div>
+                                </div>
                                 <div class="col-md-3 d-flex align-items-center justify-content-between relClass">
                                     <div class="bar height24"></div>
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
@@ -258,7 +263,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-3 d-flex align-items-center">
+                                    <div class="col-md-2 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">
                                                 <p class="mb-0 roboto">{{allocation.advice || '-'}}</p>
@@ -266,7 +271,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-3 d-flex align-items-center">
+                                    <div class="col-md-2 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">
                                                 <p class="mb-0 roboto" appFormatNumber
@@ -274,13 +279,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-2 d-flex align-items-center">
+                                        <div class="relClass">
+                                            <div class="bar">
+                                                <p class="m-0 roboto" appFormatNumber
+                                                    [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-3  relClass d-flex align-items-center justify-content-between ">
 
                                         <div class="bar">
-                                            <p class="m-0 roboto" appFormatNumber
-                                                [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
-                                            </p>
+                                            <p class="mb-0 roboto" appFormatNumber
+                                                [value]='(allocation.assetType == 5)?"-":allocation.percentAllocated'>%</p>
                                         </div>
 
                                         <div class="bar">
@@ -350,7 +363,16 @@
                             </td>
 
                         </ng-container>
+                        <ng-container matColumnDef="fv">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right">
+                                Future value
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="br text-right">
+                                <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                        {{element.milestoneFV}} </span></div>
+                            </td>
 
+                        </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p">
@@ -401,10 +423,12 @@
                             </ng-container>
 
                             <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef class="br "> Goal present value</th>
-                                <td mat-cell *matCellDef="let element" class="br ">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
-                                        {{loaderFn.loading ? '' :(element.goalPresentValue ? element.goalPresentValue : 0)}}
+                                        <span appFormatNumber>
+                                            {{loaderFn.loading ? '' :(element.goalPresentValue ? element.goalPresentValue : 0)}}
+                                        </span>
                                     </div>
                                 </td>
 
