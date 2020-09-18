@@ -254,9 +254,7 @@ export class LifeInsuranceComponent implements OnInit {
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;
     forkJoin(detailofInsurance, sendPolicy, sendRecommendation,needAnalysis).subscribe(result => {
       this.panelOpenState = false;
-      if(this.inputData.insuranceType == 1){
-        this.firstAccordion.closeAll();
-      }
+      
       this.getNeedAnalysisData(result[3]);
       this.getDetailsInsuranceRes(result[0])
 
@@ -276,6 +274,9 @@ export class LifeInsuranceComponent implements OnInit {
       }
       this.stopLoaderWhenReponse.emit(true);
       this.isLoadingPlan = false;
+      if(this.inputData.insuranceType == 1){
+        this.firstAccordion.closeAll();
+      }
       // this.allAssets = [...otherAssetRes, ...mfAssetRes];
       // this.loaderFn.decreaseCounter();
     }, err => {

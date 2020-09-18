@@ -20,45 +20,58 @@
         <div class="row b-a">
             <div class="col-md-6">
                 <h5 class="text-center f-500 text-black bb-1 pt-8 pb-8">Step 1 - Select existing policy</h5>
-                <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource" class="mt-20" id="table-low">
+                <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource" class="mt-20 skeletonAnimation"
+                    id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br w-24"> Policy name </th>
                         <td mat-cell *matCellDef="let element" class="br w-24">
-                            {{element.insuranceDetails?.insurerName}} </td>
+                            <div class="bar">
+                                {{element.insuranceDetails?.insurerName}}
+                            </div>
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Premium </th>
-                        <td mat-cell *matCellDef="let element" class="br" >
-                          <span appFormatNumber> {{element.insuranceDetails?.premiumAmount}}/year</span> </td>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar">
+                                <span appFormatNumber> {{element.insuranceDetails?.premiumAmount}} {{!isLoading && element.insuranceDetails?.premiumAmount? '/year' : ''}}</span>
+                            </div>
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Member name </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <span>{{element.displayHolderName}} </span>
+                            <div class="bar">
+                                <span>{{element.displayHolderName}} </span>
+                            </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="symbol">
                         <th mat-header-cell *matHeaderCellDef class="br"> Sum insured </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <span appFormatNumber>{{element.displayHolderSumInsured}}</span>
+                            <div class="bar">
+                                <span appFormatNumber>{{element.displayHolderSumInsured}}</span>
+                            </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="advice">
                         <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <span>
-                                {{element.advice ? element.advice : '-'}}
-                            </span>
+                            <div class="bar">
+                                <span>
+                                    {{isLoading ? '' : (element.advice ? element.advice : '-')}}
+                                </span>
+                            </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLoading">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
@@ -72,13 +85,15 @@
                 </table>
                 <div *ngIf="dataSource.length == 0 " class="d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
-                    <h4 class="text-center pt-12">Select from existing health insurance policies. 
-                            Once selected, you can give advice on them</h4>
+                    <h4 class="text-center pt-12">Select from existing health insurance policies.
+                        Once selected, you can give advice on them</h4>
                     <h4 class="text-center pt-12 text-custom">You can give advice on multiple policies at once.</h4>
-                    <button mat-stroked-button class="btn-primary addon v-middle" (click)="openHelthInsurance(showInsurance)" >SELECT ONE
+                    <button mat-stroked-button class="btn-primary addon v-middle"
+                        (click)="openHelthInsurance(showInsurance)">SELECT ONE
                     </button>
                 </div>
-                <p class="m-0 text-black roboto pt-20 pb-20 c-p" *ngIf="dataSource.length > 0" (click)="openHelthInsurance(showInsurance)">+ Add more
+                <p class="m-0 text-black roboto pt-20 pb-20 c-p" *ngIf="!isLoading && dataSource.length > 0"
+                    (click)="openHelthInsurance(showInsurance)">+ Add more
                 </p>
             </div>
             <div class="col-md-6 bl-1">
@@ -90,18 +105,24 @@
                         <button mat-stroked-button class="mt-20 btn-primary">SUGGEST NEW</button>
                     </div>
                 </div> -->
-                <table mat-table *ngIf="dataSource1.length > 0" [dataSource]="dataSource1" class="mt-20" id="table-low">
+                <table mat-table *ngIf="dataSource1.length > 0" [dataSource]="dataSource1"
+                    class="mt-20 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br w-35"> Policy name </th>
                         <td mat-cell *matCellDef="let element" class="br w-35">
-                            {{element.insuranceDetails?.insurerName}} </td>
+                            <div class="bar">
+                                {{element.insuranceDetails?.insurerName}}
+                            </div>
+                        </td>
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br">Premium </th>
-                        <td mat-cell *matCellDef="let element" class="br" >
-                            <span appFormatNumber> {{element.insuranceDetails?.premiumAmount}}/year</span>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar">
+                                <span appFormatNumber> {{element.insuranceDetails?.premiumAmount}} {{!isLoading && element.insuranceDetails?.premiumAmount? '/year' : ''}}</span>
+                            </div>
                         </td>
                     </ng-container>
 
@@ -109,20 +130,24 @@
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Member name </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <span>{{element.displayHolderName}} </span>
+                            <div class="bar">
+                                <span>{{element.displayHolderName}} </span>
+                            </div>
                         </td>
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="symbol">
                         <th mat-header-cell *matHeaderCellDef class="br"> Sum insured</th>
-                        <td mat-cell *matCellDef="let element" class="br"> <span
-                                appFormatNumber>{{element.displayHolderSumInsured}}</span> </td>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar"> <span appFormatNumber>{{element.displayHolderSumInsured}}</span>
+                            </div>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLoading">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
@@ -138,10 +163,12 @@
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
                     <h4 class="text-center pt-12">Suggest new policy from here.</h4>
                     <h4 class="text-center pt-12 text-custom">You can suggest multiple policies too.</h4>
-                    <button mat-stroked-button class="btn-primary addon v-middle" (click)="openSuggestHealth(showInsurance)">SUGGEST NEW
-                        </button>
+                    <button mat-stroked-button class="btn-primary addon v-middle"
+                        (click)="openSuggestHealth(showInsurance)">SUGGEST NEW
+                    </button>
                 </div>
-                <p class="m-0 text-black text-left roboto pt-20 pb-20 c-p"  *ngIf="dataSource1.length > 0 " (click)="openSuggestHealth(showInsurance)">+
+                <p class="m-0 text-black text-left roboto pt-20 pb-20 c-p" *ngIf="!isLoading && dataSource1.length > 0 "
+                    (click)="openSuggestHealth(showInsurance)">+
                     Suggest more</p>
             </div>
         </div>
@@ -154,7 +181,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(showInsurance)">Cancel</h5>
         </div>
         <div class="col-md-6 text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="close(showInsurance)">Save
             </button>
         </div>
     </div>

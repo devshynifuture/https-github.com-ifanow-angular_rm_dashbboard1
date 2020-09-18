@@ -325,12 +325,12 @@ export class AddPlaninsuranceComponent implements OnInit {
     data.forEach(element => {
       if (element.needTypeId == 2) {
         this.getdataForm(element);
-        this.plannerNote = element.plannerNotes.replace( /(<([^>]+)>)/ig, '');
+        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace( /(<([^>]+)>)/ig, '') : '-';
         this.manualObj = element
 
       } else {
         this.needBase = element
-        this.plannerNote = data.plannerNotes.replace( /(<([^>]+)>)/ig, '');
+        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace( /(<([^>]+)>)/ig, '') : '-';
 
       }
     });
@@ -368,8 +368,8 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.sendObj = {
         lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
         needTypeId: 1,
-        adviceAmount: this.manualForm.get('insuranceAmount').value,
-        plannerNotes:  this.plannerNotes,
+        adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : null),
+        plannerNotes:  this.needBase ? this.needBase.plannerNotes : this.plannerNotes,
         needBasedObject:needBasedAnalysis
       }
     } else {
