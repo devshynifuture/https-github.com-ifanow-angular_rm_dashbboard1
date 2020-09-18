@@ -445,7 +445,7 @@
                                 <h5 class="m-0 f-500 pb-8">Planner notes</h5>
                             </div>
                             <div class="col-md-3 pL-0 d-flex align-items-center  justify-content-end ">
-                                <p class="m-0 text-primitive ">23/12/2019</p>
+                                <p class="m-0 text-primitive "></p>
                                 <img src="/assets/images/svg/dot-menu.svg" class="c-p ml-16">
                             </div>
 
@@ -454,9 +454,7 @@
                             <div class="col-md-12 p-0">
                                 <div class="b-a relClass">
                                     <div class="m-0 p-8 text-black f-14 roboto" [hidden]="loaderFn.loading">
-                                        We have given higher allocations to your retirement goal compared to other
-                                        goals. We suggest you to first allocate maximum corpus to this goal. We wile
-                                        update your EPF contributions too once we have the details of the same.
+                                        {{selectedGoal.notes}}.
                                     </div>
                                     <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}"
                                         [hidden]="!loaderFn.loading">

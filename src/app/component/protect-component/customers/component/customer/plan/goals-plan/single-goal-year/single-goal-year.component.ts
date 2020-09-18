@@ -145,7 +145,9 @@ export class SingleGoalYearComponent implements OnInit {
         obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
         obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
          this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
-          obj['milestoneModels'].push(element)
+           if(element.onRetirementOrDemise !=""){
+            obj['milestoneModels'].push(element)
+           }
         });
         break;
       case AppConstants.CAR_GOAL: // Car
