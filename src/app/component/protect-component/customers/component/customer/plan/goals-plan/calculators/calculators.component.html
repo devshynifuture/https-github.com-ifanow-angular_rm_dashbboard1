@@ -142,9 +142,9 @@
               <div class="wrapper-20 ba-light">
                 <div class="row ">
                   <div class="col-md-6 p-0">
-                    <p class="m-0 text-primitive f-12">INCOME IN GOAL YEAR</p>
+                    <p class="m-0 text-primitive f-12">MONTHLY INCOME IN GOAL YEAR</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
-                        [value]="(calculatedEMI.netSalary || 0) * 12">{{(calculatedEMI.netSalary || 0) * 12}}</span>
+                        [value]="(calculatedEMI.highestLoanAndEmiEligible.income_at_goal_yeary || 0)">{{(calculatedEMI.highestLoanAndEmiEligible.income_at_goal_year || 0)}}</span>
                     </h5>
                   </div>
                   <div class="col-md-6 p-0"></div>
