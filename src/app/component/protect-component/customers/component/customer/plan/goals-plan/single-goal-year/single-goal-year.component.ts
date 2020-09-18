@@ -145,7 +145,9 @@ export class SingleGoalYearComponent implements OnInit {
         obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
         obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
          this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
-          obj['milestoneModels'].push(element)
+           if(element.onRetirementOrDemise != 0){
+            obj['milestoneModels'].push(element)
+           }
         });
         break;
       case AppConstants.CAR_GOAL: // Car
@@ -311,7 +313,7 @@ export class SingleGoalYearComponent implements OnInit {
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());
       this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array(
         [this.fb.group({
-          onRetirementOrDemise: [''],
+          onRetirementOrDemise: [0],
           milestoneTypeId: [0],
           amount: [0],
         })]),
@@ -336,7 +338,7 @@ export class SingleGoalYearComponent implements OnInit {
   }
   addMilestone(data) {
     this.getMilestone.push(this.fb.group({
-      onRetirementOrDemise: [''],
+      onRetirementOrDemise: [0],
       milestoneTypeId: [0],
       amount: [0],
     }));
