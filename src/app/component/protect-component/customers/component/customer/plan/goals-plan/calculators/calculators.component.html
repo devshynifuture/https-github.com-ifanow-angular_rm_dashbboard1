@@ -144,7 +144,7 @@
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">MONTHLY INCOME IN GOAL YEAR</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
-                        [value]="(calculatedEMI.highestLoanAndEmiEligible.income_at_goal_yeary || 0)">{{(calculatedEMI.highestLoanAndEmiEligible.income_at_goal_year || 0)}}</span>
+                        [value]="(calculatedEMI?.highestLoanAndEmiEligible?.income_at_goal_yeary || 0)">{{(calculatedEMI?.highestLoanAndEmiEligible?.income_at_goal_year || 0)}}</span>
                     </h5>
                   </div>
                   <div class="col-md-6 p-0"></div>
@@ -153,7 +153,7 @@
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST LOAN AVAILABLE</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
-                        [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span>
+                        [value]="calculatedEMI?.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI?.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span>
                     </h5>
                   </div>
                   <div class="col-md-6 p-0">
