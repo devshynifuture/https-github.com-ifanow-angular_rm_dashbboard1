@@ -413,7 +413,7 @@
                                     <mat-form-field class="w-100">
                                         <input matInput formControlName="equityAllocation" type="text"
                                             class="form-control br-0"
-                                            (change)="setOtherBifurcation(assetAllocationFG.get('equityAllocation'), assetAllocationFG.get('debtAllocation'))">
+                                            (change)="setOtherBifurcation(goalDetailsFG.get('equityAllocation'), goalDetailsFG.get('debtAllocation'))">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -423,7 +423,7 @@
                                     <mat-form-field class="w-100">
                                         <input matInput formControlName="debtAllocation" type="text"
                                             class="form-control br-0"
-                                            (change)="setOtherBifurcation(assetAllocationFG.get('debtAllocation'), assetAllocationFG.get('equityAllocation'))">
+                                            (change)="setOtherBifurcation(goalDetailsFG.get('debtAllocation'), goalDetailsFG.get('equityAllocation'))">
                                     </mat-form-field>
                                 </div>
                             </div>
