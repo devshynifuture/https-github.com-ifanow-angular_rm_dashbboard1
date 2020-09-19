@@ -9,13 +9,14 @@
                 <mat-menu #peopleMenu="matMenu">
                     <mat-button-toggle-group vertical (change)="filterAndSortAssets()"
                         [(ngModel)]="currentFamilyFilter">
-                        <mat-button-toggle *ngFor="let member of familyList" [value]="member.familyMemberId">
+                        <mat-button-toggle class="bt-0 h-48" *ngFor="let member of familyList"
+                            [value]="member.familyMemberId">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-3 pl-0">
                                     <img src="/assets/images/svg/right.svg" class="c-p"
                                         *ngIf="member.familyMemberId == currentFamilyFilter">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9 text-left pl-0 f-14">
                                     {{member.displayName}}
                                 </div>
                             </div>
@@ -27,29 +28,30 @@
                 <img src="/assets/images/svg/lines-3.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
                 <mat-menu #menu="matMenu">
                     <mat-button-toggle-group vertical (change)="filterAndSortAssets()"
-                        [(ngModel)]="currentAllocationFilter">
-                        <mat-button-toggle *ngFor="let allocation_filter of allocationBtnList"
+                        [(ngModel)]="currentAllocationFilter" class="w-100">
+                        <mat-button-toggle class="bt-0 h-48" *ngFor="let allocation_filter of allocationBtnList"
                             [value]="allocation_filter.filter">
                             <div class="row">
                                 <div class="col-md-3">
                                     <img src="/assets/images/svg/right.svg" class="c-p"
                                         *ngIf="allocation_filter.filter == currentAllocationFilter">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9 text-left pl-0 f-14">
                                     {{allocation_filter.name}}
                                 </div>
                             </div>
                         </mat-button-toggle>
                     </mat-button-toggle-group>
-                    <p class="text-primitive roboto m-0">Sort</p>
-                    <mat-button-toggle-group vertical (change)="sortList()" [(ngModel)]="currentSort">
-                        <mat-button-toggle *ngFor="let sortMenu of sortBtnList" [value]="sortMenu.sortKey">
+                    <p class="text-primitive roboto m-0 pl-12 pt-12 pb-12">Sort</p>
+                    <mat-button-toggle-group class="w-100" vertical (change)="sortList()" [(ngModel)]="currentSort">
+                        <mat-button-toggle class="bt-0 h-48" *ngFor="let sortMenu of sortBtnList"
+                            [value]="sortMenu.sortKey">
                             <div class="row">
                                 <div class="col-md-3">
                                     <img src="/assets/images/svg/right.svg" class="c-p"
                                         *ngIf="sortMenu.sortKey == currentSort">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9 text-left f-14 pl-0">
                                     {{sortMenu.name}}
                                 </div>
                             </div>
