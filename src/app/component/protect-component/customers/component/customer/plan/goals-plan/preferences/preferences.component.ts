@@ -121,8 +121,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       
     }
     if(this.data.goalType ==1){
-      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
-      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
+      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio));
+      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio));
     }
   }
   restrictFrom100(event) {
