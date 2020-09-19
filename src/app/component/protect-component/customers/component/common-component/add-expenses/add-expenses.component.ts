@@ -9,6 +9,10 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { MatDialog } from '@angular/material';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { CustomerService } from '../../customer/customer.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -50,8 +54,10 @@ export class AddExpensesComponent implements OnInit {
   trnFlag: string;
   budgetFlag: string;
   mytime: Date = new Date();
+  bankList:any = [];
+  ownerNameToSend: any;
 
-  constructor(private peopleService: PeopleService, private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
+  constructor(private custumService :CustomerService,private enumService: EnumServiceService,private dialog: MatDialog,private peopleService: PeopleService, private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService, private datePipe: DatePipe) {
   }
   @Input()
@@ -76,6 +82,7 @@ export class AddExpensesComponent implements OnInit {
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
+    this.bankList = this.enumService.getBank();
     this.getListFamilyMem();
     if (this.inputData.continueTill && this.inputData.repeatFrequency) {
       this.inputData.isRecuring = true;
@@ -123,7 +130,8 @@ export class AddExpensesComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
-      isRecuring: false
+      isRecuring: false,
+      bankAcNo: [(data == undefined) ? '' : (data.linkedBankAccountNumber ? data.linkedBankAccountNumber : ''), ],
     });
     this.expenseList = this.constantService.expenseList;
     this.familyMemberId = this.expenses.controls.familyMemberId.value
@@ -152,6 +160,7 @@ export class AddExpensesComponent implements OnInit {
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
+      bankAcNo: [(data == undefined) ? '' : (data.linkedBankAccountNumber ? data.linkedBankAccountNumber : ''), ],
     });
     this.expenseList = this.constantService.expenseList
     this.familyMemberId = this.recuring.controls.familyMemberId.value
@@ -234,6 +243,8 @@ export class AddExpensesComponent implements OnInit {
   }
   selectClient(event, selected) {
     this.familyMemberId = selected.id
+    this.ownerNameToSend = selected.name;
+    this.getAccountList(selected);
     let isCheck;
     if (this.isRecuring == true && (this.inputData.flag == 'editExpenses' || this.inputData.flag == 'addExpenses')) {
       let List = this.inputData.getData.expenseList
@@ -333,7 +344,55 @@ export class AddExpensesComponent implements OnInit {
       form.get(value).setValue(event.target.value);
     }
   }
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: {bankList: this.bankList, userInfo: true,  ownerList :  this.ownerNameToSend ? this.ownerNameToSend :'' }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+  getAccountList(userData) {
+    const self = this;
+    return new Promise(function(resolve, reject) {
+        let array = [];
+        const obj = {
+          userId:userData.familyMemberId == 0 ? userData.clientId : userData.id,
+          userType: userData.familyMemberId == 0 ? 2 : 3 
+        };
+        array.push(obj);
+        self.custumService.getBankList(array).subscribe(
+          (data) => {
+            if(data){
+              self.bankList = data;
+              resolve(data);
+              self.enumService.addBank(self.bankList);
+            }else{
+              self.bankList = [];
+            }
+
+          },
+          (err) => {
+            reject('failed');
+          }
+        );
+      
+    });
+  }
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
 
   saveRecuringExpense() {
     if (this.recuring.invalid) {
@@ -355,6 +414,7 @@ export class AddExpensesComponent implements OnInit {
         // UntilDate: this.recuring.controls.UntilDate.value,
         expenseCategoryId: this.recuring.controls.category.value,
         description: this.recuring.controls.description.value,
+        linkedBankAccountNumber: this.recuring.controls.bankAcNo.value ? this.recuring.controls.bankAcNo.value : null,
 
       }
       if (this.getFlag == 'addExpenses') {
@@ -430,7 +490,8 @@ export class AddExpensesComponent implements OnInit {
         expenseCategoryId: this.expenses.controls.category.value,
         budgetCategoryId: this.expenses.controls.category.value,
         description: this.expenses.controls.description.value,
-        id: this.expenses.controls.id.value
+        id: this.expenses.controls.id.value,
+        linkedBankAccountNumber: this.expenses.controls.bankAcNo.value ? this.expenses.controls.bankAcNo.value : null,
       }
       if (this.getFlag == 'addExpenses') {
         if (this.expenses.controls.id.value == undefined) {

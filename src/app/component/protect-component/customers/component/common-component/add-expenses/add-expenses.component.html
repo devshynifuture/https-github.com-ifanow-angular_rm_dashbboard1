@@ -37,7 +37,8 @@
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
-                            <mat-option *ngFor="let choice of expenseList"  (click)="selectCategory($event)" [value]="choice.clientExpenseTypeMasterId">
+                            <mat-option *ngFor="let choice of expenseList" (click)="selectCategory($event)"
+                                [value]="choice.clientExpenseTypeMasterId">
                                 {{choice.expenseType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -177,7 +178,7 @@
                 <h5 class="m-0 pt-8">Family member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="ownerName" class="form-control br-0">
+                        <mat-select formControlName="ownerName" (emitBank)='getBank()' class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.name"
                                 (click)="selectClient($event, f)">
@@ -194,6 +195,29 @@
                 </div>
             </div>
         </div>
+        <div class="pt-32">
+            <h5 class="m-0 pt-8">Linked bank account</h5>
+            <div class="pl-0">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="pt-8 form-group">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="bankAcNo" matInput>
+                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                        {{option.bankNameAndLast4Digit}}</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                                <mat-hint>Optional</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-1 p-0 pt-8 d-flex">
+                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <div class="bottom-fixed-35 wrapper-16 pb-12">
@@ -204,7 +228,8 @@
             <div class="col-md-8 text-right">
                 <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
                 <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringExpense()">SAVE</button> -->
-                <app-progress-button (click)="saveRecuringExpense()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+                <app-progress-button (click)="saveRecuringExpense()" class="btn-bottom br-0 text-inherit"
+                    [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>
@@ -262,7 +287,8 @@
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field>
                         <mat-select class="form-control br-0" formControlName="category">
-                            <mat-option *ngFor="let choice of expenseList" (click)="selectCategory($event)" [value]="choice.clientExpenseTypeMasterId">
+                            <mat-option *ngFor="let choice of expenseList" (click)="selectCategory($event)"
+                                [value]="choice.clientExpenseTypeMasterId">
                                 {{choice.expenseType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -322,7 +348,7 @@
                 <h5 class="m-0 pt-8">Family member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="ownerName" class="form-control br-0">
+                        <mat-select formControlName="ownerName" (emitBank)='getBank()' class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.name"
                                 (click)="selectClient($event, f)">
@@ -339,6 +365,29 @@
                 </div>
             </div>
         </div>
+        <div class="pt-32">
+            <h5 class="m-0 pt-8">Linked bank account</h5>
+            <div class="pl-0">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="pt-8 form-group">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="bankAcNo" matInput>
+                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                        {{option.bankNameAndLast4Digit}}</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                                <mat-hint>Optional</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-1 p-0 pt-8 d-flex">
+                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="bottom-fixed-35 wrapper-16 pb-12">
         <div class="row">
@@ -347,7 +396,8 @@
             </div>
             <div class="col-md-8  text-right">
                 <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveExpenses()">SAVE</button> -->
-                <app-progress-button (click)="saveExpenses()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+                <app-progress-button (click)="saveExpenses()" class="btn-bottom br-0 text-inherit"
+                    [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>

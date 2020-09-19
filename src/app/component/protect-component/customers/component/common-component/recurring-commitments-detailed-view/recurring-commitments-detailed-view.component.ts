@@ -42,6 +42,9 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
     return this.inputData;
   }
   getSipData(data){
+    if(data.assetList.length > 0){
+      data.assetList = data.assetList.filter(item => item.countThis == true);
+    }
     this.flag = data.name
    if(data.name == 'Mutual fund - SIP'){
       if(data.assetList.length > 0){

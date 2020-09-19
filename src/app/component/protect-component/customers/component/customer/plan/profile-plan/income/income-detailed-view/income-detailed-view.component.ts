@@ -102,12 +102,14 @@ export class IncomeDetailedViewComponent implements OnInit {
           array.push(obj);
           this.custumService.getBankList(array).subscribe(
             (data) => {
-              this.bankList = data;
-              this.bankList.forEach(element => {
-                if (element.id == this.income.linkedBankAccountNumber) {
-                  this.income.bankName = element.bankName;
-                }
-              });
+              if(data){
+                this.bankList = data;
+                this.bankList.forEach(element => {
+                  if (element.id == this.income.linkedBankAccountNumber) {
+                    this.income.bankName = element.bankName;
+                  }
+                });
+              }
               this.enumService.addBank(this.bankList);
             },
             (err) => {
