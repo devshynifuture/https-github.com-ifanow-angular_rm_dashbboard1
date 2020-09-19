@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20 btl-1" *ngIf="data.goalType == 5">
+                    <div class="row pt-20 btl-1 pb-20" *ngIf="data.goalType == 5">
                         <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
                             <p class="roboto mb-0 ">Frequency
                                 <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
@@ -42,49 +42,22 @@
                                 <mat-form-field>
                                     <mat-form-field>
                                         <mat-select matInput class="form-control br-0" formControlName="frequency">
-                                            <mat-option [value]="" disabled>Select option</mat-option> 
+                                            <mat-option [value]="" disabled>Select option</mat-option>
                                             <!-- <mat-option [value]="0.6">0.6</mat-option> -->
                                             <mat-option [value]="1">1</mat-option>
                                             <mat-option [value]="2">2</mat-option>
                                             <mat-option [value]="3">3</mat-option>
                                             <mat-option [value]="4">4</mat-option>
                                             <mat-option [value]="5">5</mat-option>
-                                          </mat-select>
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
+                                        </mat-select>
+                                        <mat-error>This field is required</mat-error>
+                                    </mat-form-field>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20 btl-1" *ngIf="data.goalType == 1">
-                        <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
-                            <p class="roboto mb-0 ">Post retirement asset allocation
-                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
-                            </p>
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto text-black">Equity bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="postequityAllocation" type="text"
-                                        class="form-control br-0"
-                                        (change)="setOtherBifurcation(goalDetailsFG.get('postequityAllocation'), goalDetailsFG.get('postdebtAllocation'))">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto text-black">Debt bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="postdebtAllocation" type="text"
-                                        class="form-control br-0"
-                                        (change)="setOtherBifurcation(goalDetailsFG.get('postdebtAllocation'), goalDetailsFG.get('postequityAllocation'))">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row pt-20 btl-1">
                         <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
                             <p class="roboto mb-0 ">Savings start date
@@ -196,7 +169,7 @@
                             <mat-error>Goal start date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
-                    <div class="row pt-20 pb-20 btl-1" *ngIf="data.singleOrMulti == 2 || data.goalType == 1">
+                    <div class="row pt-0 pb-20" *ngIf="data.singleOrMulti == 2 || data.goalType == 1">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
                             *ngIf="data.goalType != 1">
                             <p class="roboto mb-0 ">Goal end date
@@ -224,7 +197,7 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none" formControlName="goalEndDateYear">
+                                    <mat-select class="form-control br-0" formControlName="goalEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year" *ngFor="let year of years">{{year}}
                                         </mat-option>
@@ -234,7 +207,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20 pb-20">
+                    <div class="row pt-0 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0  ">Goal addition date
                                 <img src="/assets/images/svg/info.svg"
@@ -329,7 +302,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20 pb-20">
+                    <div class="row pt-0 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 ">Goal notes</p>
                         </div>
@@ -342,7 +315,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20 pb-20">
+                    <div class="row pt-0 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 pt-16">Archive goal<img src="/assets/images/svg/info.svg"
                                     matTooltip="When “Group all years together” is selected, we assume that you are saving for all goal years together. When Save for individual years is selected, we assume that you will save individually for each year and focus will be for saving for goal which is nearest. E.g. for a goal which is between 2023 - 2035 we will first calculate savings requirement for 2023 year only. Come 2023, we will calculate savings requirement for the 2024 year’s goal amount only."
@@ -357,7 +330,7 @@
             </mat-tab>
             <mat-tab label="Asset allocation">
                 <div class="wrapper-20" [formGroup]="assetAllocationFG">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12 allocationGoals pl-10">
                             <mat-radio-group aria-label="Select an option" formControlName="strategicOrTactical">
                                 <mat-radio-button [checked]=true [value]="1" class="b-a text-primitive"
@@ -368,9 +341,9 @@
                                     Tactical</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="mt-20 pl-10" *ngIf="assetAllocationFG.get('strategicOrTactical').value == 2">
+                    <!-- <div class="mt-20 pl-10" *ngIf="assetAllocationFG.get('strategicOrTactical').value == 2">
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <p>The asset allocation in case of “Tactical” is decided based on current market
@@ -383,10 +356,10 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-12 pl-10" *ngIf="assetAllocationFG.get('strategicOrTactical').value == 1">
-                        <div class="row pt-20 pb-16">
+                        <!-- <div class="row pt-20 pb-16">
                             <div class="col-md-12 p-0">
                                 <mat-radio-group aria-label="Select an option" name="allocation_type"
                                     formControlName="staticOrProgressive">
@@ -396,9 +369,14 @@
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="row">
+                        <div class="row pb-10">
+                            <div class="row w-100">
+                                <div class="col-md-6 pl-0">
+                                    <h5>Pre retirement</h5>
+                                </div>
+                            </div>
                             <div class="col-md-5 pl-0">
                                 <p class="m-0 roboto text-black">Equity bifurcation</p>
                                 <div class="form-group mb-0">
@@ -417,6 +395,42 @@
                                             class="form-control br-0"
                                             (change)="setOtherBifurcation(assetAllocationFG.get('debtAllocation'), assetAllocationFG.get('equityAllocation'))">
                                     </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="data.goalType == 1">
+                            <div class="row pt-20">
+                                <div class="row w-100">
+                                    <div class="col-md-6 pl-0">
+                                        <h5>Post retirement</h5>
+                                    </div>
+
+                                </div>
+                                <!-- <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
+                                    <p class="roboto mb-0 ">Post retirement asset allocation
+                                        <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                                            aria-label="Button that displays a tooltip when focused or hovered over">
+                                    </p>
+                                </div> -->
+                                <div class="col-md-5 pl-0 pr-10">
+                                    <p class="m-0 roboto text-black">Equity bifurcation</p>
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput formControlName="postequityAllocation" type="text"
+                                                class="form-control br-0"
+                                                (change)="setOtherBifurcation(goalDetailsFG.get('postequityAllocation'), goalDetailsFG.get('postdebtAllocation'))">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 pl-10 pr-0">
+                                    <p class="m-0 roboto text-black">Debt bifurcation</p>
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput formControlName="postdebtAllocation" type="text"
+                                                class="form-control br-0"
+                                                (change)="setOtherBifurcation(goalDetailsFG.get('postdebtAllocation'), goalDetailsFG.get('postequityAllocation'))">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -477,11 +491,11 @@
                             </div>
                         </div> -->
 
-                        <div class="row pt-20">
+                        <!-- <div class="row pt-20">
                             <div class="col-md-12">
                                 <h5 class="m-0 text-primitive c-p" (click)="addStages()">+ Add stage</h5>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </mat-tab>
@@ -492,8 +506,8 @@
                         <table mat-table [dataSource]="dataSource1" id="table-low">
 
                             <ng-container matColumnDef="position">
-                                <th mat-header-cell *matHeaderCellDef class="br"> </th>
-                                <td mat-cell *matCellDef="let element" class="br "> {{element.position}} </td>
+                                <th mat-header-cell *matHeaderCellDef class="br w-32"> </th>
+                                <td mat-cell *matCellDef="let element" class="br  w-32"> {{element.position}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="name">
@@ -510,14 +524,14 @@
                     <div class="mt-40 Return-Inflation-table">
                         <table mat-table [dataSource]="dataSource" id="table-low">
                             <ng-container matColumnDef="static-header">
-                                <td mat-header-cell *matHeaderCellDef colspan="3"
+                                <td mat-header-cell *matHeaderCellDef
                                     class=" text-left f-400  pl-4 text-primitive bg-white">
                                     Asset class
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="position">
-                                <th mat-header-cell *matHeaderCellDef class="br"></th>
-                                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                                <th mat-header-cell *matHeaderCellDef class="br w-32"></th>
+                                <td mat-cell *matCellDef="let element" class="br w-32"> {{element.position}} </td>
                             </ng-container>
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell class="text-center br" *matHeaderCellDef> Assumption </th>
