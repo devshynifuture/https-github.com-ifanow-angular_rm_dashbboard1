@@ -214,8 +214,8 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-22" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
-                        <td *matCellDef="let element" class="text-left w-22" mat-cell>
+                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <td *matCellDef="let element" class="text-left w-25" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span><br>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"></span></td>
@@ -223,7 +223,7 @@
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
                         <th class="w-20" mat-header-cell *matHeaderCellDef> </th>
-                        <td class="w-20" *matCellDef="let element" mat-cell>
+                        <td class="w-20 text-right" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
@@ -233,12 +233,12 @@
                             </div>
 
                             <div *ngIf="element.absAllocation < 100">
-                                <div>-</div>
+                                <div>0 %</div>
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="value1">
-                        <th class="w-15" mat-header-cell *matHeaderCellDef> </th>
+                        <th class="w-15" mat-header-cell *matHeaderCellDef>Remaining SIP %</th>
                         <td *matCellDef="let element" class="text-right w-15" mat-cell>
                             <div class="d-flex align-items-center">
                                 <mat-form-field class="w-100 iconPetage">
@@ -250,7 +250,7 @@
                             </div>
                     </ng-container>
                     <ng-container matColumnDef="value2">
-                        <th class="w-20" mat-header-cell *matHeaderCellDef> </th>
+                        <th class="w-20" mat-header-cell *matHeaderCellDef>Remaining Lumpsum % </th>
                         <td *matCellDef="let element" class="text-right w-20" mat-cell>
                             <div class="d-flex align-items-center">
                                 <mat-form-field class="w-100 iconPetage">
@@ -290,8 +290,8 @@
 
                             </div>
                             <mat-menu #menu4="matMenu">
-                                <button mat-menu-item (click)="reallocateAsset(element)">Change allocation
-                                    percentage</button>
+                                <button mat-menu-item (click)="reallocateAsset(element)">Edit allocation
+                                    %</button>
                             </mat-menu>
                         </td>
                     </ng-container>

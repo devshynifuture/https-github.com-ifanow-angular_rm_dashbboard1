@@ -81,7 +81,8 @@
                 </div>
                 <div class="row pt-40" *ngIf="incomeOption=='2' && (singleIndividualIncome.finalIncomeList.incomeTypeList==1 || singleIndividualIncome.finalIncomeList.incomeTypeList==2 || singleIndividualIncome.finalIncomeList.incomeTypeList==3 || singleIndividualIncome.finalIncomeList.incomeTypeList==4) ">
                     <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Monthly income</h5>
+                        <h5 class="m-0 pt-8">Monthly amount</h5>
+                        <p class="m-0 f-12 text-custom">Enter the net income <br>you get in hand</p>
                     </div>
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0 iconRupess">
@@ -464,7 +465,7 @@
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income style</h5>
-                        <p class="m-0 f-12 text-custom">This helps us in planning your cash flows better</p>
+                        <p class="m-0 f-12 text-custom">This helps us in planning <br>your cash flows better</p>
                     </div>
                     <div class="col-md-7">
                         <div class="form-group  ">
@@ -540,7 +541,7 @@
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income growth rate</h5>
-                        <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next
+                        <p class="m-0 f-12 text-custom">This is the long term growth rate <br>rather than just the next
                             year’s
                         </p>
                     </div>
@@ -560,7 +561,8 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income period
                         </h5>
-                        <p class="m-0 f-12 text-custom">Income start and end dates helps in planning cash flow better
+                        <p class="m-0 f-12 text-custom">Income start & end dates helps<br>
+                                in planning cash flows better
                         </p>
                     </div>
                     <div class="col-md-7">
@@ -624,7 +626,7 @@
                     <div class="row pt-40">
                         <div class="col-md-5 pr-0 text-right">
                             <h5 class="m-0 pt-8">{{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'Next appraisal in' : 'Next Increase'}}</h5>
-                            <p class="m-0 f-12 text-custom">Enter {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'next appraisal' : 'Next increase'}} date. Approx year & month should do
+                            <p class="m-0 f-12 text-custom">Enter {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'next appraisal' : 'Next increase'}} date.<br>Approx year & month should do
                             </p>
                         </div>
                         <div class="col-md-4">
@@ -644,6 +646,8 @@
                     <div class="row pt-40">
                         <div class="col-md-5 p-0 text-right">
                             <h5 class="m-0 pt-8 ws-nowrap">I'm expecting a bonus/inflow</h5>
+                            <p class="m-0 f-12 text-custom">Enter the month & approx amount</p>
+
                         </div>
                         <div class="col-md-7 pr-0" [formGroup]="expectedBonusForm">
                             <div *ngFor="let singleBonusForm of getBonusList.controls;index as i"
@@ -704,7 +708,7 @@
                     <div class="row pt-40">
                         <div class="col-md-5 p-0 text-right">
                             <h5 class="m-0 pt-8">Description</h5>
-                            <p class="m-0 f-12 text-custom">Enter next appriasal date. Approx year & month should do
+                            <p class="m-0 f-12 text-custom">E.g your company name <br>or something similar
                             </p>
                         </div>
                         <div class="col-md-7">

@@ -292,11 +292,14 @@ export class MutualFundOverviewComponent implements OnInit {
 
           this.showHideTable = overviewFilter;
           (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
-          (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
-          (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
-          (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
-          (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
-          (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+          (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true && this.dataSource2.data.length > 0) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
+          (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true && this.datasource1.data.length > 0) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
+          (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
+          (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
+          (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+          if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+            this.showSummaryBar = false;
+          }
         }
 
       }
@@ -682,7 +685,9 @@ export class MutualFundOverviewComponent implements OnInit {
               }
               this.dataSource2 = new MatTableDataSource(sortedData);
               this.sendaata.dataSource2 = this.dataSource2;
-
+              if(this.dataSource2.data.length > 0){
+                this.showSchemeWise = true;
+              }
               this.MfServiceService.setSendData(this.sendaata);
               // if(this.dataSource2.data.length == 0){
               //   this.showSchemeWise=false
@@ -706,7 +711,9 @@ export class MutualFundOverviewComponent implements OnInit {
         }
         this.dataSource2 = new MatTableDataSource(sortedData);
         this.sendaata.dataSource2 = this.dataSource2;
-
+        if(this.dataSource2.data.length > 0){
+          this.showSchemeWise = true;
+        }
         this.MfServiceService.setSendData(this.sendaata);
         // if(this.dataSource2.data.length == 0){
         //   this.showSchemeWise=false
@@ -988,12 +995,16 @@ export class MutualFundOverviewComponent implements OnInit {
             if (this.rightFilterData) {
               this.showHideTable = this.rightFilterData.overviewFilter;
               (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
-              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
-              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
-              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
-              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
-              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true && this.dataSource2.data.length > 0) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
+              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true && this.datasource1.data.length > 0) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
+              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
+              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
+              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+              if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+                this.showSummaryBar = false;
+              }
             }
+            
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             this.isLoading = false;

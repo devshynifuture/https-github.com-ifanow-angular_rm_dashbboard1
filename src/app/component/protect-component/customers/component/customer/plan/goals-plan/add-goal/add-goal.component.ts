@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { LoaderFunction } from 'src/app/services/util.service';
+import { LoaderFunction, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subscriber, Subscription } from 'rxjs';
@@ -168,13 +168,22 @@ export class AddGoalComponent implements OnInit {
   filterByFamily(member) {
     if(member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
+      this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
+      this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+
     } else {
       if(member !='all' ){
         this.displayedAssets = this.allAssetsList.filter((obj) => {
           return obj.familyMemberId === member
         });
+        this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+
       }else{
         this.displayedAssets = this.allAssetsList;
+        this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+
       }
 
     }

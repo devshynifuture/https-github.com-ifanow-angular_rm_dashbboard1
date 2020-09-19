@@ -11,9 +11,10 @@
         </i>
     </div>
 </div>
-<div [formGroup]="multiYearGoalForm" class="row bg-grey lter">
+<div [formGroup]="multiYearGoalForm" class="row bg-white">
+    <div class="col-md-2"></div>
     <div class="col-md-8 p-0">
-        <div class="wrapper-40 pt-72">
+        <div class="wrapper-40 pt-100">
             <div class="row">
                 <div class="col-md-8 p-0">
 
@@ -23,8 +24,8 @@
                             <h5 class="m-0 text-black pl-0">{{Questions.Q}}</h5>
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
-                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="field1"
-                                        class="form-control br-0 br-none">
+                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)"
+                                        formControlName="field1" class="form-control br-0 br-none">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
                                             {{familyMember.displayName}}</mat-option>
@@ -40,11 +41,8 @@
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q1}}</h5>
                             <div class="row pt-8">
-                                <div id="custom-slider" class="col-md-8">
-                                    <ng5-slider
-                                        formControlName="field2"    
-                                        [options]="rangeFieldOptions"
-                                    ></ng5-slider>
+                                <div id="custom-slider" class="col-md-8 pl-0">
+                                    <ng5-slider formControlName="field2" [options]="rangeFieldOptions"></ng5-slider>
                                 </div>
                             </div>
                         </div>
@@ -56,15 +54,15 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                                <mat-select matInput class="form-control br-0" formControlName="field3">
-                                                    <mat-option [value]="" disabled>Select option</mat-option> 
-                                                    <!-- <mat-option [value]="0.6">0.6</mat-option> -->
-                                                    <mat-option [value]="1">1</mat-option>
-                                                    <mat-option [value]="2">2</mat-option>
-                                                    <mat-option [value]="3">3</mat-option>
-                                                    <mat-option [value]="4">4</mat-option>
-                                                    <mat-option [value]="5">5</mat-option>
-                                                  </mat-select>
+                                            <mat-select matInput class="form-control br-0" formControlName="field3">
+                                                <mat-option [value]="" disabled>Select option</mat-option>
+                                                <!-- <mat-option [value]="0.6">0.6</mat-option> -->
+                                                <mat-option [value]="1">1</mat-option>
+                                                <mat-option [value]="2">2</mat-option>
+                                                <mat-option [value]="3">3</mat-option>
+                                                <mat-option [value]="4">4</mat-option>
+                                                <mat-option [value]="5">5</mat-option>
+                                            </mat-select>
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -81,25 +79,27 @@
                     <div class="row pt-20" formArrayName="detailedSpendings">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
-                            <ng-container [formGroupName]="i" *ngFor="let spending of detailedSpendingFormArray; let i = index;">
+                            <ng-container [formGroupName]="i"
+                                *ngFor="let spending of detailedSpendingFormArray; let i = index;">
                                 <div class="row pt-8">
                                     <div class="col-md-4 p-0">
                                         <div class="form-group mb-0">
-                                            <span *ngIf="detailedPlanning">{{multiYearGoalForm.get('field2').value[0] + i}}</span>
-                                            <mat-form-field>
-                                                <input type="number"
-                                                    [value]="spending.value" [formControl]="spending"
-                                                    autocomplete="off" matInput
-                                                    class="form-control br-0 rupess">
-                                                <mat-error *ngIf="multiYearGoalForm.get('field1').errors?.required">This field is required</mat-error>
-                                                <mat-error *ngIf="multiYearGoalForm.get('field1').errors?.min || multiYearGoalForm.get('field1').errors?.max">Please enter valid value</mat-error>
+                                            <span
+                                                *ngIf="detailedPlanning">{{multiYearGoalForm.get('field2').value[0] + i}}</span>
+                                            <mat-form-field class="iconRupess">
+                                                <input type="number" [value]="spending.value" [formControl]="spending"
+                                                    autocomplete="off" matInput class="form-control br-0 rupess">
+                                                <mat-error *ngIf="multiYearGoalForm.get('field1').errors?.required">This
+                                                    field is required</mat-error>
+                                                <mat-error
+                                                    *ngIf="multiYearGoalForm.get('field1').errors?.min || multiYearGoalForm.get('field1').errors?.max">
+                                                    Please enter valid value</mat-error>
                                             </mat-form-field>
                                         </div>
                                     </div>
                                     <div class="col-md-8 pr-0">
                                         <div id="custom-slider">
-                                            <mat-slider 
-                                                [formControl]="spending" [value]="spending.value"
+                                            <mat-slider [formControl]="spending" [value]="spending.value"
                                                 [min]="goalTypeData.validations.minCost"
                                                 [max]="goalTypeData.validations.maxCost"></mat-slider>
                                         </div>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- GOAL NOTES -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
@@ -152,7 +152,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-12 pt-4">
+                                <div class="col-md-12 pt-4 pl-4">
                                     <p class="f-12 m-0 text-primitive">Optional</p>
                                 </div>
                             </div>
@@ -163,14 +163,15 @@
                     <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg" (click)="file.click()" class="c-p">
                     <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;" (click)="file.click()" class="c-p">
                 </div>
-                <input #file (change)="previewGoalImage($event)" accept='image/*'
-                    formControlName="logo" type="file" [hidden]="true">
+                <input #file (change)="previewGoalImage($event)" accept='image/*' formControlName="logo" type="file"
+                    [hidden]="true">
             </div>
         </div>
         <div class="col-md-4"></div>
 
     </div>
-    <div class="col-md-4 p-0">
+    <div class="col-md-2"></div>
+    <!-- <div class="col-md-4 p-0">
         <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are planning for
             their
             house goal.<img src="/assets/images/svg/info.svg"></h5>
@@ -274,7 +275,7 @@
                 <h5 class="m-0 text-black">9%</h5>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row">
