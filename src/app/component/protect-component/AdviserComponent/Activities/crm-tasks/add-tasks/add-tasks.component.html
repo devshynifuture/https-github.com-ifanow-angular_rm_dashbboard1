@@ -42,8 +42,8 @@
                 </h4>
             </div>
             <div class="col-md-4 text-right pr-24">
-                <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12" [ngClass]="isTaskDone ? 'disabled-cursor': ''"
-                    (click)="taskFileInput.click()">
+                <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
+                    [ngClass]="isTaskDone ? 'disabled-cursor': ''" (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
 
                 <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
@@ -73,7 +73,8 @@
             <div class="w-82 pl-15 pr-24 arn-ria align-items-center" *ngIf="!isManual">
                 <mat-form-field floatLabel="never" appearance="standard" class="form-group mb-0">
                     <mat-select formControlName="searchTemplateList" class="form-control"
-                        (selectionChange)="routeToTemplateAddition($event)" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                        (selectionChange)="routeToTemplateAddition($event)"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
@@ -122,7 +123,8 @@
 
             <div class="w-41 pr-15 pl-15 remove-top">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select class="form-control" formControlName="frequency" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                    <mat-select class="form-control" formControlName="frequency"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>
                             Select frequency
                         </mat-option>
@@ -156,7 +158,8 @@
             </div>
             <div class="w-41 pl-15 pr-15">
                 <mat-form-field float="never" appearance="standard" class="form-group">
-                    <mat-select formControlName="every" class="form-control" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                    <mat-select formControlName="every" class="form-control"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>
                             Select day
                         </mat-option>
@@ -178,7 +181,8 @@
 
             <div class="w-41  pl-15 pr-15 form-group pl-0 mb-0 arn-ria">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input class="form-control br-0" formControlName="searchClientList" [ngClass]="isTaskDone ? 'disabled-cursor': ''"
+                    <input class="form-control br-0" formControlName="searchClientList"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''"
                         (input)="searchClientFamilyMember(inputSearch.value)" #inputSearch matInput
                         placeholder="Start typing to see client" aria-label="State" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -217,7 +221,8 @@
 
             <div class="w-41 pl-15 pr-24 form-group pl-0 mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="familyMemberId" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                    <mat-select class="form-control br-0" formControlName="familyMemberId"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled> Select family member</mat-option>
                         <mat-option [value]="item.familyMemberId" *ngFor="let item of familyMemberList">
                             {{ item.displayName }}
@@ -242,7 +247,8 @@
 
             <div class="w-41 form-group pl-0 mb-0 pl-15 pr-15">
                 <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="assignedTo" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                    <mat-select class="form-control br-0" formControlName="assignedTo"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select team member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
                             (click)="setTeamMember(item.userId)">
@@ -263,7 +269,8 @@
 
             <div class="w-25 pl-15 pr-15 form-group pl-0 mb-0 remove-top-flex">
                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
-                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" [ngClass]="isTaskDone ? 'disabled-cursor': ''" (input)="preventDefault($event)"
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''" (input)="preventDefault($event)"
                         (focus)="picker.open()" matInput [matDatepicker]="picker" placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -275,7 +282,8 @@
             </div>
             <div class="w-41 d-flex align-items-center">
                 <div class="f-14 text-primitive roboto f-400">
-                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make this recurring
+                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make
+                    this recurring
                     <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
                 </div>
             </div>
@@ -292,7 +300,8 @@
 
             <div class="w-41 form-group pl-15 pr-15 mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="taskTurnAroundTime" class="form-control" [ngClass]="isTaskDone ? 'disabled-cursor': ''">
+                    <mat-select formControlName="taskTurnAroundTime" class="form-control"
+                        [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value="" disabled>Eg. T + 1</mat-option>
                         <mat-option *ngFor="let item of taskNumberArr" [value]="item">
                             {{ 'T + ' + item }}
@@ -305,7 +314,8 @@
             </div>
             <div class="w-41 d-flex align-items-center">
                 <div class="f-14 text-primitive roboto f-400">
-                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make this recurring
+                    <mat-checkbox (click)="makeTaskRecurring()" [checked]="isRecurringTaskForm"></mat-checkbox> Make
+                    this recurring
                     <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
                 </div>
             </div>
@@ -555,7 +565,8 @@
                             </p>
                             <div class="row w-100 pt-12" *ngIf="item.showInputReply">
                                 <div class="col-md-10">
-                                    <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
+                                    <input type="text" matInput class="form-control pr-0" placeholder="Add a reply"
+                                        [formControl]="replyCommentFC">
                                 </div>
                                 <div class="col-md-2">
                                     <button mat-stroked-button class="btn-primary" (click)="addReply(item, 'task')">
@@ -566,13 +577,14 @@
                             <div class="row w-100 pt-12" *ngFor="let replyItem of item.replies; index as rindex">
                                 <div class="row w-100">
                                     <div class="col-md-1">
-                                        <img class="imgComment"
-                                            [src]="replyItem.profilePicUrl" alt="reply profile image">
+                                        <img class="imgComment" [src]="replyItem.profilePicUrl"
+                                            alt="reply profile image">
                                     </div>
                                     <div class="col-md-8" *ngIf="item.showReplyText">
                                         <h5 class="f-500 roboto">
                                             {{ replyItem.name }}
-                                            <span class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
+                                            <span
+                                                class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
                                         </h5>
                                         <p class="f-14 m-0" *ngIf="!replyItem.editMode">{{ replyItem.commentMsg }}</p>
                                         <p class="f-14 form-group" *ngIf="replyItem.editMode">
@@ -580,15 +592,16 @@
                                                 [value]="replyItem.commentMsg">
                                         </p>
                                     </div>
-    
+
                                     <div class="col-md-3 d-flex editDelectText">
-                                        <a class="f-12 c-p" *ngIf="!replyItem.editMode" 
-                                            (click)="replyItem.editMode = !replyItem.editMode; 
+                                        <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode; 
                                                 editReplyFC.patchValue(replyItem.commentMsg, { emitEvent:false })">
-                                                Edit
-                                            </a>
-                                        <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'task')">Save</a>
-                                        <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
+                                            Edit
+                                        </a>
+                                        <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode"
+                                            (click)="editReplySave(replyItem, item, rindex, 'task')">Save</a>
+                                        <a class="f-12 pl-5 c-p"
+                                            (click)="deleteReply(replyItem, item, rindex)">Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -676,8 +689,9 @@
 
             <div class="w-30 pl-0 pr-15 form-group mb-0 remove-top-flex">
                 <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
-                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate" (input)="preventDefault($event)"
-                        (focus)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="01/01/2020">
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" [min]="dueDateMinDate"
+                        (input)="preventDefault($event)" (focus)="picker3.open()" matInput [matDatepicker]="picker3"
+                        placeholder="01/01/2020">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                     <mat-error>
@@ -772,7 +786,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <p class="f-14 m-0" *ngIf="!item.editMode"> 
+                            <p class="f-14 m-0" *ngIf="!item.editMode">
                                 {{ item.commentMsg }}
                             </p>
 
@@ -784,7 +798,8 @@
                     </div>
                     <div class="row w-100 pt-12" *ngIf="item.showInputReply">
                         <div class="col-md-10">
-                            <input type="text" matInput class="form-control pr-0" placeholder="Add a reply" [formControl]="replyCommentFC">
+                            <input type="text" matInput class="form-control pr-0" placeholder="Add a reply"
+                                [formControl]="replyCommentFC">
                         </div>
                         <div class="col-md-2">
                             <button mat-stroked-button class="btn-primary" (click)="addReply(item, 'subTask')">
@@ -795,8 +810,7 @@
                     <div class="row w-100 pt-12" *ngFor="let replyItem of item.replies; index as rindex">
                         <div class="row w-100">
                             <div class="col-md-1">
-                                <img class="imgComment"
-                                    [src]="replyItem.profilePicUrl" alt="reply profile image">
+                                <img class="imgComment" [src]="replyItem.profilePicUrl" alt="reply profile image">
                             </div>
                             <div class="col-md-8" *ngIf="item.showReplyText">
                                 <h5 class="f-500 roboto">
@@ -811,12 +825,12 @@
                             </div>
 
                             <div class="col-md-3 d-flex editDelectText">
-                                <a class="f-12 c-p" *ngIf="!replyItem.editMode" 
-                                    (click)="replyItem.editMode = !replyItem.editMode; 
+                                <a class="f-12 c-p" *ngIf="!replyItem.editMode" (click)="replyItem.editMode = !replyItem.editMode; 
                                         editReplyFC.patchValue(replyItem.commentMsg, { emitEvent:false })">
-                                        Edit
-                                    </a>
-                                <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode" (click)="editReplySave(replyItem, item, rindex, 'subTask')">Save</a>
+                                    Edit
+                                </a>
+                                <a class="f-12 pl-5 c-p" *ngIf="replyItem.editMode"
+                                    (click)="editReplySave(replyItem, item, rindex, 'subTask')">Save</a>
                                 <a class="f-12 pl-5 c-p" (click)="deleteReply(replyItem, item, rindex)">Delete</a>
                             </div>
                         </div>
@@ -852,7 +866,7 @@
             </div>
             <div class="col-md-2">
                 <button mat-stroked-button class="btn-primary c-p"
-                    (click)="onCreateCommentTaskSubTask(commentInput.value)">add</button>
+                    (click)="onCreateCommentTaskSubTask(commentInput.value)">Add</button>
             </div>
         </div>
         <div class="row pt-10">

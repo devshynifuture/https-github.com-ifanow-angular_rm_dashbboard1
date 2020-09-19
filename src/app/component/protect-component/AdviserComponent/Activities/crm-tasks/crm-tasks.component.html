@@ -27,7 +27,8 @@
                 </div>
                 <div class="col-md-3 pl-0" *ngIf="finalTaskList.length>0">
                     <mat-form-field float="never" appearance="standard" class="form-group mb-0">
-                        <mat-select class="form-control" [formControl]="statusFC" (selectionChange)="setTaskFilterWithStatus($event)">
+                        <mat-select class="form-control" [formControl]="statusFC"
+                            (selectionChange)="setTaskFilterWithStatus($event)">
                             <mat-option value="" disabled>Status</mat-option>
                             <mat-option [value]="item.value" *ngFor="let item of statusList">
                                 {{ item.name }}
@@ -122,13 +123,13 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
-        <div class="pt-150" *ngIf="dataSource.data===null">
+        <div class="pt-20" *ngIf="dataSource.data===null">
             <div class="row align-items-center">
 
                 <div class="col-md-8 text-center">
                     <img src="/assets/images/svg/task-empty.svg">
                     <h5 class="m-0 pt-12 f-500 roboto pb-16">No tasks added yet</h5>
-                    <button mat-stroked-button class="btn-primary">ADD NEW</button>
+                    <button mat-stroked-button class="btn-primary" (click)="openAddTask(null)">ADD NEW</button>
                 </div>
                 <div class="col-md-4 p-20 ba-dotted">
                     <div class="">
