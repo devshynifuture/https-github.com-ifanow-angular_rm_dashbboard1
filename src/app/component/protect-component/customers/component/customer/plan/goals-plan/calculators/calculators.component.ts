@@ -37,7 +37,7 @@ export class CalculatorsComponent implements OnInit {
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'ADD TO GOALS',
+    text: 'ADD TO GOAL',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -78,7 +78,7 @@ export class CalculatorsComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+
     this.getdataForm();
     const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
     for (let index = 0; index < yearGap; index++) {
@@ -101,10 +101,10 @@ export class CalculatorsComponent implements OnInit {
     });
 
     this.delayFG = this.fb.group({
-      delay1: ['', ],
-      delay2: ['', ],
-      delay3: ['', ],
-      delay4: ['', ],
+      delay1: ['',],
+      delay2: ['',],
+      delay3: ['',],
+      delay4: ['',],
     })
     setTimeout(() => {
       this.pieChart('')
@@ -126,7 +126,7 @@ export class CalculatorsComponent implements OnInit {
         incomeGrowthRate: parseInt(this.incomeFG.controls.growthRate.value),
         loanAmount: parseInt(this.loanFG.controls.loanAmt.value),
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: parseInt(this.data.remainingData.futureValue)?this.data.remainingData.futureValue:this.data.remainingData.goalFV
+        goalAmount: parseInt(this.data.remainingData.futureValue) ? this.data.remainingData.futureValue : this.data.remainingData.goalFV
       }
 
       this.barButtonOptions.active = true;
@@ -150,14 +150,14 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-    this.downPayement = this.calculatedEMI.downPayment/this.calculatedEMI.goalAmount
-    this.loanAmount = this.calculatedEMI.loanAmount/this.calculatedEMI.goalAmount
-    console.log('this.downPayement',this.downPayement )
-    console.log('this.loanAmount',this.loanAmount)
+    this.downPayement = this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount
+    this.loanAmount = this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount
+    console.log('this.downPayement', this.downPayement)
+    console.log('this.loanAmount', this.loanAmount)
     this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
     this.perLoanAmt = 100 - this.downPayPer
-    console.log('LA',this.perLoanAmt);
-    console.log('DP',this.downPayPer)
+    console.log('LA', this.perLoanAmt);
+    console.log('DP', this.downPayPer)
     Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,

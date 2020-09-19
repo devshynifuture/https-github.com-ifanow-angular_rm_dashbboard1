@@ -32,8 +32,8 @@ import { element } from 'protractor';
   providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
-  displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated','status'];
-  displayedColumns1 = ['select', 'milestone', 'amount','fv','icons'];
+  displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated', 'status'];
+  displayedColumns1 = ['select', 'milestone', 'amount', 'fv', 'icons'];
   clientFamily: any[];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
@@ -128,7 +128,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private UtilService : UtilService,
+    private UtilService: UtilService,
     private eventService: EventService,
     private plansService: PlanService,
     private dialog: MatDialog,
@@ -265,7 +265,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   afterDataLoadMethod() {
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
-    
+
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
       element.dashboardData.futureValue = UtilService.getNumberToWord(element.dashboardData.futureValue)
@@ -298,9 +298,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
-      if(goalSubData.goalType == 1){
+      if (goalSubData.goalType == 1) {
         mapData.goalEndDate = goalSubData.goalEndDate; // because start hote hi khatam ho gaya
-      }else{
+      } else {
         mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
       }
       mapData.dashboardData = {
@@ -311,28 +311,28 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
-        arr_equity_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
-        arr_debt_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
-        arr_lump_equity:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
-        arr_lump_debt:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
-        key_arr_equity_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
-        key_arr_debt_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
-        key_arr_lump_equity:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
-        key_arr_lump_debt:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
+        arr_equity_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
+        arr_debt_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
+        arr_lump_equity: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
+        arr_lump_debt: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
+        key_arr_equity_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
+        key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
+        key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
+        key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
-      console.log('mapData.dashboardData.key_arr_equity_monthly',mapData.dashboardData.key_arr_equity_monthly)
+      console.log('mapData.dashboardData.key_arr_equity_monthly', mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
     } else {
       const goalSubData: any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear()):'-';
+      mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear()) : '-';
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
-      mapData.goalStartDate =goalSubData.differentGoalYears? goalSubData.differentGoalYears[0]:'-';
-      mapData.goalEndDate = goalSubData.differentGoalYears ?goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]:0;
+      mapData.goalStartDate = goalSubData.differentGoalYears ? goalSubData.differentGoalYears[0] : '-';
+      mapData.goalEndDate = goalSubData.differentGoalYears ? goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1] : 0;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
@@ -341,18 +341,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
-        arr_equity_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
-        arr_debt_monthly:this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
-        arr_lump_equity:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
-        arr_lump_debt:this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
-        key_arr_equity_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
-        key_arr_debt_monthly:this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
-        key_arr_lump_equity:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
-        key_arr_lump_debt:this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
+        arr_equity_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
+        arr_debt_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
+        arr_lump_equity: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
+        arr_lump_debt: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
+        key_arr_equity_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
+        key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
+        key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
+        key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
-      console.log('mapData.dashboardData.key_arr_equity_monthly',mapData.dashboardData.key_arr_equity_monthly)
+      console.log('mapData.dashboardData.key_arr_equity_monthly', mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
     }
     return mapData;
@@ -377,7 +377,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     return array;
   }
   getSumOfJsonMapArrKey(json: Object = {}) {
-    let array1 = []; 
+    let array1 = [];
     //   if (Object.keys(json)) {
     //     array.push())
     // }
@@ -495,12 +495,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
     this.dataSource.sort = this.sort;
-    console.log('table',this.dataSource)
+    console.log('table', this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
   }
-  deleteMilestone(milestone){
+  deleteMilestone(milestone) {
     const dialogData = {
       header: 'DELETE MILESTONE',
       body: 'Are you sure you want to remove milestone?',
@@ -511,7 +511,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let obj = {
           milestoneId: milestone.id,
         }
-        this.plansService.deleteMilestone({milestoneId:milestone.id}).subscribe(res => {
+        this.plansService.deleteMilestone({ milestoneId: milestone.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.loadAllGoals();
           this.eventService.openSnackBar("Asset unallocated");
@@ -538,7 +538,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let deleteObj = {
           goalId: this.selectedGoalId,
           goalType: this.selectedGoal.goalType,
-          id:this.selectedGoal.id
+          id: this.selectedGoal.id
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
