@@ -147,7 +147,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
-      height: '400px',
+
       data: dialogData,
       autoFocus: false,
     });
