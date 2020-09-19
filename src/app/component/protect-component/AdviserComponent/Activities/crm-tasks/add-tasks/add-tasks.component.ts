@@ -290,7 +290,7 @@ export class AddTasksComponent implements OnInit {
             commentItem.editMode = false;
             commentItem.showReplyText = true;
 
-            this.eventService.openSnackBar('Reply added successfully', 'DISMISS');
+            this.eventService.openSnackBar('Replied successfully', 'DISMISS');
           }
         }, err => {
           console.error(err);
@@ -424,7 +424,7 @@ export class AddTasksComponent implements OnInit {
         assignedTo: [data.assignedTo, Validators.required],
         taskDueDate: [moment(data.dueDateTimeStamp),],
         taskDescription: [data.des, Validators.required],
-        familyMemberId: [data.familyMemberId,],
+        // familyMemberId: [data.familyMemberId,],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -439,7 +439,7 @@ export class AddTasksComponent implements OnInit {
         this.addTaskForm.get('assignedTo').disable({ emitEvent: false });
         this.addTaskForm.get('taskDueDate').disable({ emitEvent: false });
         this.addTaskForm.get('taskDescription').disable({ emitEvent: false });
-        this.addTaskForm.get('familyMemberId').disable({ emitEvent: false });
+        // this.addTaskForm.get('familyMemberId').disable({ emitEvent: false });
         this.addTaskForm.get('taskTurnAroundTime').disable({ emitEvent: false });
         this.addTaskForm.get('continuesTill').disable({ emitEvent: false });
         this.addTaskForm.get('isRecurring').disable({ emitEvent: false });
@@ -482,7 +482,7 @@ export class AddTasksComponent implements OnInit {
         assignedTo: ["", Validators.required],
         taskDueDate: ['', Validators.required],
         taskDescription: ['', Validators.required],
-        familyMemberId: ["",],
+        // familyMemberId: ["",],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -512,7 +512,7 @@ export class AddTasksComponent implements OnInit {
       assignedTo: '',
       taskDueDate: '',
       taskDescription: '',
-      familyMemberId: '',
+      // familyMemberId: '',
       subTask: [],
       taskTurnAroundTime: '',
       continuesTill: '',
@@ -579,7 +579,7 @@ export class AddTasksComponent implements OnInit {
       this.tabState = value;
 
     } else if(value === 1 && this.saveChangesSubTask === true){
-      this.eventService.openSnackBar("Please save changes!", "DISMISS");
+      this.eventService.openSnackBar("Please the save changes!", "DISMISS");
     } else {
       this.tabState = value;
     }
@@ -622,7 +622,7 @@ export class AddTasksComponent implements OnInit {
           item.editMode = false;
           this.eventService.openSnackBar('Comment edited successfully', "DISMISS");
         } else {
-          this.eventService.openSnackBar('Comment editing failed', "DISMISS");
+          this.eventService.openSnackBar('Something went wrong', "DISMISS");
         }
       }, err => {
         console.error(err);
@@ -666,7 +666,7 @@ export class AddTasksComponent implements OnInit {
             this.saveChangesSubTask = false;
             this.eventService.openSnackBar('Sub-task saved successfully!', 'DISMISS');
           } else {
-            this.eventService.openSnackBar('Sub-task saving failed!', 'DISMISS');
+            this.eventService.openSnackBar('Something went wrong', 'DISMISS');
           }
         }, err => {
           console.error(err);
@@ -754,7 +754,7 @@ export class AddTasksComponent implements OnInit {
         if (data) {
           this.familyMemberList = data;
         } else {
-          this.eventService.openSnackBar("No client family member found!", "DISMISS");
+          this.eventService.openSnackBar("Something went wrong", "DISMISS");
         }
       }, err => {
         console.error(err);
@@ -793,7 +793,7 @@ export class AddTasksComponent implements OnInit {
             this.subTaskAttachmentList.splice(index, 1);
           }
         } else {
-          this.eventService.openSnackBar('Attachment deleting failed!', "DISMISS");
+          this.eventService.openSnackBar('Sonething went wrong', "DISMISS");
           console.log(res);
         }
       }, err => {
@@ -814,7 +814,7 @@ export class AddTasksComponent implements OnInit {
           }
           this.eventService.openSnackBar('Comment deleted successfully!', "DISMISS");
         } else {
-          this.eventService.openSnackBar('Comment deleting failed!', "DISMISS");
+          this.eventService.openSnackBar('Something went wrong', "DISMISS");
           console.log(res);
         }
       }, err =>{ 
@@ -832,7 +832,7 @@ export class AddTasksComponent implements OnInit {
           let index = this.collaboratorList.indexOf(item);
           this.collaboratorList.splice(index, 1);
         } else {
-          this.eventService.openSnackBar('Collaborator removing failed!', "DISMISS");
+          this.eventService.openSnackBar('Something went wrong', "DISMISS");
           console.log(res);
         }
       }, err => {
@@ -872,7 +872,7 @@ export class AddTasksComponent implements OnInit {
           let index = this.subTaskList.indexOf(this.selectedSubTask);
           this.removeSubTask(index);
         } else {
-          this.eventService.openSnackBar('Sub task deleting failed!', "DISMISS");
+          this.eventService.openSnackBar('Something went wrong', "DISMISS");
           console.log(res);
         }
       }, err => {
@@ -902,11 +902,11 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             let msg = choice == 'Task' ? '' : (choice === 'Sub task' ? '' : '');
             if (res) {
-              this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
+              this.eventService.openSnackBar(msg + ' completed successfully', "DISMISS");
               this.data.status = 1;
               this.close(true);
             } else {
-              this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
+              this.eventService.openSnackBar('Something went wrong', 'DISMISS');
             }
           }, err => {
             console.log(err);
@@ -920,13 +920,13 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             let msg = 'Sub task';
             if (res) {
-              this.eventService.openSnackBar(msg + ' marked as done', "DISMISS");
+              this.eventService.openSnackBar(msg + ' completed successfully', "DISMISS");
               this.tabState = 1;
               subTaskItem.isCompleted = true;
               subTaskItem.status = 1;
               subTaskItem.completionDate = new Date();
             } else {
-              this.eventService.openSnackBar(msg + 'marking failed', 'DISMISS');
+              this.eventService.openSnackBar('Something went wrong', 'DISMISS');
             }
           }, err => {
             console.log(err);
@@ -968,7 +968,7 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           window.open(res);
         } else {
-          this.eventService.openSnackBar("Attachment fetching failed !", "DISMISS");
+          this.eventService.openSnackBar("Something went wrong", "DISMISS");
           console.log("hopefully this is error", res);
         }
       }, err => {
@@ -1121,7 +1121,7 @@ export class AddTasksComponent implements OnInit {
             if (res) {
               console.log('this is added res of collaborator', res);
               this.collaboratorList.push(res);
-              this.eventService.openSnackBar("Collaborator added successfully");
+              this.eventService.openSnackBar("Collaborator added successfully", "DISMISS");
             }
           })
       } else {
@@ -1314,9 +1314,9 @@ export class AddTasksComponent implements OnInit {
         adviceTypeId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
       }
 
-      if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
-        editObj['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
-      }
+      // if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
+      //   editObj['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
+      // }
 
       if(this.subTask.length!==0){
         let arr = [];
@@ -1346,7 +1346,7 @@ export class AddTasksComponent implements OnInit {
                       this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
                       this.close(true);
                     } else {
-                      this.eventService.openSnackBar("Task editing failed!", "DISMISS");
+                      this.eventService.openSnackBar("Something went wrong", "DISMISS");
                     }
                   });
               }
@@ -1361,7 +1361,7 @@ export class AddTasksComponent implements OnInit {
               this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
               this.close(true);
             } else {
-              this.eventService.openSnackBar("Task editing failed!", "DISMISS");
+              this.eventService.openSnackBar("Something went wrong", "DISMISS");
             }
           });
       }
@@ -1383,9 +1383,9 @@ export class AddTasksComponent implements OnInit {
         subTasks: subTaskArr,
       }
 
-      if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
-        data['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
-      }
+      // if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
+      //   data['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
+      // }
 
       if (this.isRecurringTaskForm) {
         data['isRecurring'] = true;
@@ -1460,7 +1460,7 @@ export class AddTasksComponent implements OnInit {
             this.taskCommentForm.markAsUntouched();
             this.eventService.openSnackBar("Comment added successfully", "DISMISS");
           } else {
-            this.eventService.openSnackBar("Comment adding failed", "DISMISS");
+            this.eventService.openSnackBar("Something went wrong", "DISMISS");
           }
         }, err => {
           this.isMainLoading = false;
