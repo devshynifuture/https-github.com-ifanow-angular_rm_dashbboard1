@@ -371,8 +371,8 @@
                             </div>
                         </div> -->
 
-                        <div class="row pb-10">
-                            <div class="row w-100">
+                        <div class="row pb-10" >
+                            <div class="row w-100"  *ngIf="data.goalType == 1">
                                 <div class="col-md-6 pl-0">
                                     <h5>Pre retirement</h5>
                                 </div>
@@ -418,7 +418,7 @@
                                         <mat-form-field class="w-100">
                                             <input matInput formControlName="postequityAllocation" type="text"
                                                 class="form-control br-0"
-                                                (change)="setOtherBifurcation(goalDetailsFG.get('postequityAllocation'), goalDetailsFG.get('postdebtAllocation'))">
+                                                (change)="setOtherBifurcation(assetAllocationFG.get('postequityAllocation'), assetAllocationFG.get('postdebtAllocation'))">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -428,7 +428,7 @@
                                         <mat-form-field class="w-100">
                                             <input matInput formControlName="postdebtAllocation" type="text"
                                                 class="form-control br-0"
-                                                (change)="setOtherBifurcation(goalDetailsFG.get('postdebtAllocation'), goalDetailsFG.get('postequityAllocation'))">
+                                                (change)="setOtherBifurcation(assetAllocationFG.get('postdebtAllocation'), assetAllocationFG.get('postequityAllocation'))">
                                         </mat-form-field>
                                     </div>
                                 </div>

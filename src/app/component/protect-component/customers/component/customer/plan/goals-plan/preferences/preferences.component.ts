@@ -116,10 +116,6 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
-    if(this.data.goalType ==1){
-      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
-      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
-    }
     if(this.data.goalType == 5){
       this.goalDetailsFG.addControl('frequency', this.fb.control(remainingData.frequency, [Validators.required]));
       
@@ -149,12 +145,6 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-            if(this.data.goalType == 1 ){
-              this.goalDetailsFG.controls.postequityAllocation.enable();
-              this.goalDetailsFG.controls.postdebtAllocation.enable();
-              this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementEquityAssetAllocation);
-              this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementDebtAssetAllocation);
-            }
           }
         })
       )
@@ -265,6 +255,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })
+    if(this.data.goalType ==1){
+      this.assetAllocationFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
+      this.assetAllocationFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
+    }
   }
   createAssetFormInflamation(remainingData) {
     this.inflamationReturnsFG = this.fb.group({
@@ -276,7 +270,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
   setAssetAllocationListeners() {
-
+    if(this.data.goalType == 1 ){
+      this.assetAllocationFG.controls.postequityAllocation.enable();
+      this.assetAllocationFG.controls.postdebtAllocation.enable();
+      this.assetAllocationFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementEquityAssetAllocation);
+      this.assetAllocationFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementDebtAssetAllocation);
+    }
     if (this.assetAllocationFG.controls.strategicOrTactical.value == 2) {
       // this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
       // this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
