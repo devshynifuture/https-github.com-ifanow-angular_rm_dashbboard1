@@ -156,8 +156,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     if(this.data.goalType == 1 ){
       this.goalDetailsFG.controls.postequityAllocation.enable();
       this.goalDetailsFG.controls.postdebtAllocation.enable();
-      this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementEquityAssetAllocation);
-      this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementDebtAssetAllocation);
+      this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.equity_ratio);
+      this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.debt_ratio);
     }
   }
   setInflamationReturns() {
