@@ -624,6 +624,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       data => {
         if(data.policyDetails.length>0){
           this.options = data.policyDetails;
+          this.checkValidPolicy(data,inpValue);
         }else{
           this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
           this.lifeInsuranceForm.get('policyName').markAsTouched();
@@ -631,7 +632,17 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       }
     );
   }
-
+  checkValidPolicy(value,input){
+    if(this.policyData){
+      if(this.policyData.policyName != input){
+        this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
+        this.lifeInsuranceForm.get('policyName').markAsTouched();
+      }
+    }else if(!this.policyData){
+      this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
+      this.lifeInsuranceForm.get('policyName').markAsTouched();
+    }
+  }
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
@@ -717,7 +728,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.lifeInsuranceForm.get('policyName').value;
     this.loanDetailsForm.controls.loanTakenOn.setErrors(null);
     if (this.lifeInsuranceForm.invalid) {
-      // this.inputs.find(input => !input.ngControl.valid).focus();
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return;
   } else {
@@ -725,7 +736,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.insuranceFormFilledData = {
         familyMemberIdLifeAssured: (this.lifeInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.lifeInsuranceForm.value.getCoOwnerName[0].clientId : this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-        familyMemberIdProposer: (this.selectedProposerData) ? this.selectedProposerData.familyMemberId : null,
+        familyMemberIdProposer: (this.selectedProposerData) ? (this.selectedProposerData.familyMemberId == 0 ? this.clientId : this.selectedProposerData.familyMemberId) : null,
         clientId: this.clientId,
         advisorId: this.advisorId,
         ownerName: '',
@@ -753,8 +764,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         advisorName: this.Miscellaneous.get('advisorName').value,
         serviceBranch: this.Miscellaneous.get('serviceBranch').value,
         linkedBankAccountId: this.Miscellaneous.get('bankAccount').value,
-        policyId: this.policyData.id,
-        policyTypeId: this.policyData.policyTypeId,
+        policyId: this.policyData.id ? this.policyData.id : null,
+        policyTypeId: this.policyData.policyTypeId ?this.policyData.policyTypeId : null,
         description: 'test data life insurance 22',
         insuranceTypeId: this.insuranceTypeId,
         insuranceSubTypeId: this.insuranceSubTypeId,

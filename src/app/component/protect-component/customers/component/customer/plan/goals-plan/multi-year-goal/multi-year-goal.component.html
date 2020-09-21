@@ -25,7 +25,7 @@
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
                                     <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)"
-                                        formControlName="field1" class="form-control br-0 br-none">
+                                        formControlName="field1" class="form-control br-0">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
                                             {{familyMember.displayName}}</mat-option>
@@ -55,13 +55,13 @@
                                     <div class="form-group mb-0">
                                         <mat-form-field>
                                             <mat-select matInput class="form-control br-0" formControlName="field3">
-                                                <mat-option [value]="" disabled>Select option</mat-option>
+                                                <mat-option value="" selected disabled>Select Option</mat-option>
                                                 <!-- <mat-option [value]="0.6">0.6</mat-option> -->
-                                                <mat-option [value]="1">1</mat-option>
-                                                <mat-option [value]="2">2</mat-option>
-                                                <mat-option [value]="3">3</mat-option>
-                                                <mat-option [value]="4">4</mat-option>
-                                                <mat-option [value]="5">5</mat-option>
+                                                <mat-option [value]="1">Every year</mat-option>
+                                                <mat-option [value]="2">Every 2 year</mat-option>
+                                                <mat-option [value]="3">Every 3 year</mat-option>
+                                                <mat-option [value]="4">Every 4 year</mat-option>
+                                                <mat-option [value]="5">Every 5 year</mat-option>
                                             </mat-select>
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>

@@ -50,7 +50,10 @@
                                             <input type="number" formControlName="age" autocomplete="off" matInput
                                                 [value]="singleYearGoalForm.value.age" class="form-control br-0"
                                                 [placeholder]="goalTypeData.placeHolder">
-                                            <label class="static-value">Years</label>
+                                            <span *ngIf="goalTypeData.name !='Emergency' && goalTypeData.name !='Wealth creation' && goalTypeData.name !='Big spends' && goalTypeData.name !='Others'"
+                                                class="static-value">Years</span>
+                                            <span *ngIf="goalTypeData.name =='Emergency'"
+                                                class="static-value">Months</span>
                                         </mat-form-field>
                                         <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This
                                             field is required
@@ -99,7 +102,7 @@
                     <!-- GOAL COST -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
+                            <h5 class="m-0 text-black">{{Questions.Q2}} ?</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group ">
@@ -256,7 +259,7 @@
                     <!-- GOAL NOTES -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black">{{Questions.Q4}}</h5>
+                            <h5 class="m-0 text-black t-c">{{Questions.Q4}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
                                     <div class="form-group">
@@ -264,7 +267,7 @@
                                             <input formControlName="goalDescription" autocomplete="off" matInput
                                                 class="form-control br-0">
                                             <mat-error class="f-12">This field is required</mat-error>
-                                            <mat-hint>Optional</mat-hint>
+                                            <mat-hint class="pl-6">Optional</mat-hint>
                                         </mat-form-field>
                                     </div>
                                 </div>

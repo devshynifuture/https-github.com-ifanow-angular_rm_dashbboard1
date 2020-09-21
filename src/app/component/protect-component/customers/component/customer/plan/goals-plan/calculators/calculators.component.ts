@@ -63,8 +63,8 @@ export class CalculatorsComponent implements OnInit {
   chart: Highcharts.Chart;
   perLoanAmt: number;
   downPayPer: any;
-  downPayement: number;
-  loanAmount: number;
+  downPayement: any;
+  loanAmount: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -106,9 +106,9 @@ export class CalculatorsComponent implements OnInit {
       delay3: ['',],
       delay4: ['',],
     })
-    setTimeout(() => {
-      this.pieChart('')
-    }, 300);
+    // setTimeout(() => {
+    //   this.pieChart('')
+    // }, 300);
   }
 
   // ---------------------------------- calculator ---------------------------------------
@@ -150,14 +150,10 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-    this.downPayement = this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount
-    this.loanAmount = this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount
+    this.downPayement =parseFloat(((this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount)*100).toFixed(2))
+    this.loanAmount = parseFloat(((this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount)*100).toFixed(2))
     console.log('this.downPayement', this.downPayement)
     console.log('this.loanAmount', this.loanAmount)
-    this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
-    this.perLoanAmt = 100 - this.downPayPer
-    console.log('LA', this.perLoanAmt);
-    console.log('DP', this.downPayPer)
     Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,
@@ -204,7 +200,7 @@ export class CalculatorsComponent implements OnInit {
           {
             name: 'Loan amount',
             // y:20,
-            y: this.loanAmount,
+            y: (this.loanAmount),
             color: '#008FFF',
             dataLabels: {
               enabled: false
@@ -212,7 +208,7 @@ export class CalculatorsComponent implements OnInit {
           }, {
             name: 'Down payment',
             // y:20,
-            y: this.downPayement,
+            y: (this.downPayement),
             color: '#FFC100',
             dataLabels: {
               enabled: false
@@ -239,7 +235,7 @@ export class CalculatorsComponent implements OnInit {
         downPayment: this.calculatedEMI.downPayment,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.gv,
+        goalAmount: this.data.remainingData.goalFV,
         goalId: this.data.remainingData.id,
         goalType: this.data.goalType
       }

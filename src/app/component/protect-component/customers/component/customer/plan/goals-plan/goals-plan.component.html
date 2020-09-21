@@ -73,7 +73,7 @@
                 <div class="col-width-31">
                     <div class="row">
                         <div class="col-md-12 text-right p-0" *ngIf="selectedGoal">
-                            <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg">
+                            <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
                         </div>
                     </div>
                 </div>
@@ -419,7 +419,7 @@
                                             {{element.fvOnGoalDate}} </span></div>
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="goalFvAllocated">
+                            <!-- <ng-container matColumnDef="goalFvAllocated">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right">
                                     FV of assets required
                                 </th>
@@ -428,7 +428,7 @@
                                             {{element.fvOnGoalDate}} </span></div>
                                 </td>
 
-                            </ng-container>
+                            </ng-container> -->
 
                             <ng-container matColumnDef="status">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
@@ -452,10 +452,10 @@
                             <div class="col-md-9 p-0">
                                 <h5 class="m-0 f-500 pb-8">Planner notes</h5>
                             </div>
-                            <div class="col-md-3 pL-0 d-flex align-items-center  justify-content-end ">
+                            <!-- <div class="col-md-3 pL-0 d-flex align-items-center  justify-content-end ">
                                 <p class="m-0 text-primitive "></p>
                                 <img src="/assets/images/svg/dot-menu.svg" class="c-p ml-16">
-                            </div>
+                            </div> -->
 
                         </div>
                         <div class="row">
@@ -596,21 +596,24 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn"
+                                    <!-- <button mat-stroked-button class="in-btn"
                                         (click)="openInSideBar(null, 'openKeyinfo')">
-                                        <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                                        <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button> -->
                                     <button mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openCalculators')">
                                         <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openPreferences')">
+                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
                                 </div>
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn">
-                                        <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
-                                    <button mat-stroked-button class="in-btn-two"
+                                    <!-- <button mat-stroked-button class="in-btn">
+                                        <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button> -->
+                                    <!-- <button mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openPreferences')">
-                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button> -->
                                 </div>
 
 
