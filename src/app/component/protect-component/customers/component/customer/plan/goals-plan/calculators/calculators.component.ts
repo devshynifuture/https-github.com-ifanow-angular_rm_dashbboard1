@@ -150,8 +150,8 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-    this.downPayement = this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount
-    this.loanAmount = this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount
+    this.downPayement = (this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount)*100
+    this.loanAmount = (this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount)*100
     console.log('this.downPayement', this.downPayement)
     console.log('this.loanAmount', this.loanAmount)
     this.downPayPer = (this.calculatedEMI.downPayment * 100) / parseInt(this.loanFG.controls.loanAmt.value)
