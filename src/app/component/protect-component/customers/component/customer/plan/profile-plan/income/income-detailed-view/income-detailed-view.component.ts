@@ -41,7 +41,9 @@ export class IncomeDetailedViewComponent implements OnInit {
     this.monthlyContribution = [];
     let monthlyData = this.inputData.bonusOrInflowList
     monthlyData.forEach(element => {
-      element.date=new Date(element.receivingYear, element.receivingMonth)
+      if(element.receivingYear && element.amount){
+        element.date=new Date(element.receivingYear, element.receivingMonth)
+      }
     });
     this.monthlyContribution  = monthlyData;
   }
