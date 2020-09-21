@@ -269,8 +269,8 @@ export class AddGoalsComponent implements OnInit {
         case AppConstants.WEALTH_CREATION_GOAL: // Wealth Creation
           element.questions = {
             Q: 'Who are you planning this for?',
-            Q1: 'When do you want to it?',
-            Q2: "What's the target amount?",
+            Q1: 'When do you want it?',
+            Q2: "What's the target amount",
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
@@ -290,7 +290,7 @@ export class AddGoalsComponent implements OnInit {
           break;
         case AppConstants.BIG_SPEND_GOAL: // Big Spends
           element.questions = {
-            Q1: 'When year do you plan this to happen?',
+            Q1: 'When do you plan this to happen?',
             Q2: 'How much does it cost today',
             Q3: 'Give this goal a name',
             Q4: 'notes'
