@@ -392,12 +392,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       })
       if (data.bonusOrInflowList.length > 0) {
         data.bonusOrInflowList.forEach(element => {
-          this.getBonusList.push(this.fb.group({
-            id: [element.id],
-            bonusOrInflow: [element.bonusOrInflow],
-            receivingDate: [new Date(element.receivingYear, element.receivingMonth), [Validators.required]],
-            amount: [element.amount, [Validators.required]],
-          }))
+          if(element.receivingYear && element.receivingMonth && element.amount){
+            this.getBonusList.push(this.fb.group({
+              id: [element.id],
+              bonusOrInflow: [element.bonusOrInflow],
+              receivingDate: [new Date(element.receivingYear, element.receivingMonth), [Validators.required]],
+              amount: [element.amount, [Validators.required]],
+            }))
+          }
         });
       } else {
         this.getBonusList.push(this.fb.group({
