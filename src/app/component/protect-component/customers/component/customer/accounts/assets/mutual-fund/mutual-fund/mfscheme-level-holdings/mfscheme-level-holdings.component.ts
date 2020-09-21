@@ -121,8 +121,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
             finalize(() => {
-              this.isLoadingForDropDown = false
-              this.errorMsg = 'No scheme Found';
+              this.isLoadingForDropDown = false;
+              // (!this.schemeNameControl.value || ) ?  this.errorMsg =  'No scheme Found' : this.errorMsg = '';
+              (this.errorMsg=='No scheme Found')?this.errorMsg =  'No scheme Found' : this.errorMsg = '';
+              // this.errorMsg = 'No scheme Found';
 
             }),
           )
@@ -136,7 +138,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           this.filteredSchemeError = false;
         } else {
           this.filteredSchemeError = true;
-          this.errorMsg = "No data found";
+          this.errorMsg = "No scheme Found";
         }
         console.log(this.filteredSchemes);
       });
@@ -169,6 +171,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
   mapSchemeWithForm(scheme) {
     this.schemeObj = scheme;
+    this.errorMsg = '';
     console.log("this is scheme obj", this.schemeObj);
   }
 
@@ -394,16 +397,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   }
   saveMfSchemeLevel() {
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
-    if(this.errorMsgForScheme){
-      this.schemeNameControl.setErrors({ incorrect: true });
-      this.schemeNameControl.markAsTouched();
-    }
-
-    if(this.transactionArray.invalid){
-      this.transactionArray.markAllAsTouched()
-
-    }
-    if (this.schemeLevelHoldingForm.invalid) {
+    // if(this.errorMsg || !this.schemeNameControl.value){
+    //   this.schemeNameControl.setErrors({ incorrect: true });
+    //   this.schemeNameControl.markAsTouched();
+    // }else if(this.transactionArray.invalid){
+    //   this.transactionArray.markAllAsTouched();
+    // }else
+     if ((this.errorMsg || !this.schemeNameControl.value) && this.schemeLevelHoldingForm.invalid && this.transactionArray.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       // this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
       // // this.schemeLevelHoldingForm.get('schemeName').markAsTouched();
@@ -416,7 +416,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       //   element.get('transactionAmount').markAsTouched();
       //   element.get('Units').markAsTouched();
       // });
+      this.schemeNameControl.setErrors({ incorrect: true });
+      this.schemeNameControl.markAsTouched();
       this.schemeLevelHoldingForm.markAllAsTouched()
+      this.transactionArray.markAllAsTouched();
     // }else if(this.transactionListForm.invalid == false){
     //   }
     }else if(this.transactionListForm.invalid){
