@@ -230,7 +230,7 @@ export class MultiYearGoalComponent implements OnInit {
       detailedSpendings: this.fb.array([
         new FormControl(this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)])
       ]),
-      field3: ['', Validators.required],//vacation frequency
+      field3: [0, Validators.required],//vacation frequency
       field4: ['', Validators.required], // goal name
       field5: [''],  // goal description
       logo: ['']
