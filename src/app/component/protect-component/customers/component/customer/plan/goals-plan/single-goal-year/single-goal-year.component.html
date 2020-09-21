@@ -60,7 +60,7 @@
                                 <div class=" col-md-8 pr-0">
                                     <div id="custom-slider">
                                         <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age"
-                                            [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
+                                            [min]="singleYearGoalForm.get('goalMember').value.familyMemberAge" [max]="maxAgeYear"></mat-slider>
                                     </div>
                                 </div>
                             </div>
