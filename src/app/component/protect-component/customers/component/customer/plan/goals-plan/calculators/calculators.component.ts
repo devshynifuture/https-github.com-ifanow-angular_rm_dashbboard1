@@ -235,7 +235,7 @@ export class CalculatorsComponent implements OnInit {
         downPayment: this.calculatedEMI.downPayment,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
-        goalAmount: this.data.gv,
+        goalAmount: this.data.remainingData.goalFV,
         goalId: this.data.remainingData.id,
         goalType: this.data.goalType
       }
