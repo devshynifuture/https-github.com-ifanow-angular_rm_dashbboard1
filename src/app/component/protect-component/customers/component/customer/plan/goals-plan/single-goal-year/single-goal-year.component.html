@@ -50,7 +50,10 @@
                                             <input type="number" formControlName="age" autocomplete="off" matInput
                                                 [value]="singleYearGoalForm.value.age" class="form-control br-0"
                                                 [placeholder]="goalTypeData.placeHolder">
-                                            <label class="static-value">Years</label>
+                                            <span *ngIf="goalTypeData.name !='Emergency' && goalTypeData.name !='Wealth creation' && goalTypeData.name !='Big spends' && goalTypeData.name !='Others'"
+                                                class="static-value">Years</span>
+                                            <span *ngIf="goalTypeData.name =='Emergency'"
+                                                class="static-value">Months</span>
                                         </mat-form-field>
                                         <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This
                                             field is required
@@ -60,7 +63,7 @@
                                 <div class=" col-md-8 pr-0">
                                     <div id="custom-slider">
                                         <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age"
-                                            [min]="singleYearGoalForm.get('goalMember').value.familyMemberAge" [max]="maxAgeYear"></mat-slider>
+                                            [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
                                     </div>
                                 </div>
                             </div>
