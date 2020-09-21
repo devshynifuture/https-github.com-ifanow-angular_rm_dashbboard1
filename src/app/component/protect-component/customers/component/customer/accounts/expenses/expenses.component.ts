@@ -127,6 +127,7 @@ export class ExpensesComponent implements OnInit {
   billsAndUtilities: any;
   isLoadingBudget = false;
   tab = 'Transactions';
+  allExpnseData: any;
 
   // periodSelection: any;
 
@@ -244,6 +245,7 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAllExpense(obj).subscribe(
       data => {
         if (data) {
+          this.allExpnseData = data;
           this.isLoading = true;
           this.expenseList = this.filterExpenseAndRecurring(data.expenseList);
           this.recurringTrnList = this.filterExpenseAndRecurring(data.recurringExpenseList);
@@ -573,6 +575,9 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.sort = this.BudgetSort;
       this.dataSource5.data = this.dataSource1.data;
       this.dataSource5.sort = this.recurringBudgetSort;
+      if(this.allExpnseData){
+        this.getAssetData(this.allExpnseData);
+      }
       this.getGraphCalculations();
 
       // if (result[2]) {
