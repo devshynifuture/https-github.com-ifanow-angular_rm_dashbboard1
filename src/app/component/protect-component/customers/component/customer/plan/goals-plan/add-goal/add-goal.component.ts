@@ -168,21 +168,21 @@ export class AddGoalComponent implements OnInit {
   filterByFamily(member) {
     if(member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
-      this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
-      this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+      this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+      this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
 
     } else {
       if(member !='all' ){
         this.displayedAssets = this.allAssetsList.filter((obj) => {
           return obj.familyMemberId === member
         });
-        this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
-        this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+        this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
 
       }else{
         this.displayedAssets = this.allAssetsList;
-        this.displayedAssets.forEach(element => element.maturityValue = UtilService.getNumberToWord(element.maturityValue))
-        this.displayedAssets.forEach(element => element.currentValue = UtilService.getNumberToWord(element.currentValue))
+        this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
 
       }
 
