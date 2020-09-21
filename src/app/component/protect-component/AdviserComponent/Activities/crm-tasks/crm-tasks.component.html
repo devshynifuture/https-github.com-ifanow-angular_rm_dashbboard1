@@ -36,7 +36,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'">
+                <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'" *ngIf="finalTaskList.length>0">
                     <button (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
                         ADD NEW
                     </button>

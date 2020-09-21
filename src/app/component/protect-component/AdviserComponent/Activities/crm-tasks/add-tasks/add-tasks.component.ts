@@ -579,7 +579,7 @@ export class AddTasksComponent implements OnInit {
       this.tabState = value;
 
     } else if(value === 1 && this.saveChangesSubTask === true){
-      this.eventService.openSnackBar("Please the save changes!", "DISMISS");
+      this.eventService.openSnackBar("Please save the changes!", "DISMISS");
     } else {
       this.tabState = value;
     }
@@ -868,7 +868,7 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           this.addTaskSubTaskChanges = true;
           this.tabState = 1;
-          this.eventService.openSnackBar('Sub task deleted successfully!', "DISMISS");
+          this.eventService.openSnackBar('Sub-task deleted successfully!', "DISMISS");
           let index = this.subTaskList.indexOf(this.selectedSubTask);
           this.removeSubTask(index);
         } else {
@@ -913,12 +913,12 @@ export class AddTasksComponent implements OnInit {
             this.eventService.openSnackBar("Something went wrong", "DISMISS");
           });
         } else {
-          this.eventService.openSnackBar("Please finish your subtask!", "DISMISS");
+          this.eventService.openSnackBar("Please complete your sub-task!", "DISMISS");
         }
       } else {
         this.crmTaskService.markTaskOrSubTaskDone(data)
           .subscribe(res => {
-            let msg = 'Sub task';
+            let msg = 'Sub-task';
             if (res) {
               this.eventService.openSnackBar(msg + ' completed successfully', "DISMISS");
               this.tabState = 1;
@@ -1080,7 +1080,7 @@ export class AddTasksComponent implements OnInit {
             res.status = 0;
             this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
-            this.eventService.openSnackBar("Sub task added  Successfully", "DISMISS");
+            this.eventService.openSnackBar("Sub-task added successfully", "DISMISS");
             this.removeSubTask(formGroupIndex);
           }
         });
@@ -1222,7 +1222,7 @@ export class AddTasksComponent implements OnInit {
       }
     } else {
       this.shouldShowAddSubTaskLabel = true;
-      this.eventService.openSnackBar('Subtask not present in task template', "DISMISS");
+      this.eventService.openSnackBar('No sub-task found in task template', "DISMISS");
     }
   }
 

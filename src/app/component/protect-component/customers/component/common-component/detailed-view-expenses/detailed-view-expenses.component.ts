@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { CustomerService } from '../../customer/customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-detailed-view-expenses',
@@ -15,10 +16,12 @@ export class DetailedViewExpensesComponent implements OnInit {
   monthlyContribution: any[];
   expense: any;
   bankList=[];                                                                                                                                  
+  clientId: any;
 
   constructor(public custumService:CustomerService,public utils: UtilService,private subInjectService: SubscriptionInject,public enumService:EnumServiceService) { }
 
   ngOnInit() {
+    this.clientId = AuthService.getClientId();
     this.expense = this.inputData
     this.bankAccountList();
 
@@ -30,7 +33,7 @@ export class DetailedViewExpensesComponent implements OnInit {
   bankAccountList() {
     let array = [];
     const obj = {
-      userId: this.expense.familyMemberId == 0 ?this.expense.clientId :this.expense.id,
+      userId: this.expense.familyMemberId == 0 ? this.clientId :this.expense.id,
       userType: this.expense.familyMemberId == 0 ? 2 : 3 
     };
     array.push(obj);
