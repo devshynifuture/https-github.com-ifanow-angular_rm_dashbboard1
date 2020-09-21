@@ -261,9 +261,10 @@ export class ExpensesComponent implements OnInit {
             }
           });
           this.recurringTransaction = this.recurringTrnList;
-          this.dataSource.data = [...this.transaction, ...this.recurringTransaction];
-
+          let mergeArray = [...this.transaction, ...this.recurringTransaction];
+          mergeArray = this.sorting(mergeArray,'expenseType');
           // this.dataSource.data = data;
+          this.dataSource.data = mergeArray
           this.dataSource.sort = this.TransactionSort;
           this.expenseGraph = data.expenseGraphData;
           this.isLoading = false;
@@ -280,6 +281,14 @@ export class ExpensesComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
+  }
+  sorting(data, filterId) {
+    if (data) {
+      data.sort((a, b) =>
+        a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+      );
+    }
+    return data
   }
   filterExpenseAndRecurring(array){
     array = array.filter(item => item.totalAmount > 0);
@@ -559,6 +568,7 @@ export class ExpensesComponent implements OnInit {
       let budgetList = this.filterData(result[0]);
       let budgetRecurring = this.filterData(result[1]);
       let mergeArray = [...budgetList, ...budgetRecurring];
+      mergeArray = this.sorting(mergeArray,'expenseType');
       this.dataSource4.data = mergeArray;
       this.dataSource4.sort = this.BudgetSort;
       this.dataSource5.data = this.dataSource1.data;
