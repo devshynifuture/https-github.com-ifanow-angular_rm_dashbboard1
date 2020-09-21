@@ -22,7 +22,7 @@
                         {{expense.ownerName}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget'">
+                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget' || expense.value=='Recurring transaction'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Date
                     </div>
@@ -35,7 +35,7 @@
                         Time
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.timeInString}}
+                        {{expense.timeInString ? expense.timeInString : '-'}}
                     </div>
                 </div>
 
