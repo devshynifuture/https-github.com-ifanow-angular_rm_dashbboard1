@@ -68,14 +68,15 @@ export class LoginService {
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
     authService.setUserInfo(userData);
-    this.roleService.getRoleDetails(userData.roleId);
-
+    
     if (userData.userType == 1 || userData.userType == 8) {
+      this.roleService.getRoleDetails(userData.roleId);
       router.navigate(['admin', 'dashboard']);
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
       router.navigate(['support', 'dashboard']);
     } else {
+      this.roleService.getRoleDetails(userData.roleId);
       authService.setToken('authTokenInLoginComponent');
       userData.id = userData.clientId;
       authService.setClientData(userData);
