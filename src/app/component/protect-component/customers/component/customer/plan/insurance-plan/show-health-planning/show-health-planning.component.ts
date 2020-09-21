@@ -85,8 +85,8 @@ export class ShowHealthPlanningComponent implements OnInit {
               if (singleInsuranceData.insuranceDetails.insuredMembers[i].name) {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
-                if(singleInsuranceData.insurance.insuredMembers[i].sumInsured){
-                  const firstSumInsured = (singleInsuranceData.insurance.insuredMembers[i].sumInsured as string).split(' ')[0];
+                if(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured){
+                  const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
                   singleInsuranceData.displayHolderSumInsured += ', ' + firstSumInsured;
                 }else{
                   singleInsuranceData.displayHolderSumInsured = 0;

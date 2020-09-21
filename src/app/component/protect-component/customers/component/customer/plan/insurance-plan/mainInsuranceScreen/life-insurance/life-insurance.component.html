@@ -214,13 +214,13 @@
             <div class="row pt-32" *ngIf="inputData?.insuranceType == 1">
                 <div class="col-md-12 p-0 insuranceTable">
                         <h5 class="roboto f-500">Need based analysis</h5>
-                        <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb">
+                        <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb" *ngIf="needAnalysisLoaded">
                                 <div class="col-md-6 f-14 f-500">Particulars</div>
                                 <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>
                                 <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
                                 <div class="col-md-1 f-14"> </div>
                             </div>
-                            <mat-accordion *ngIf="!isLoadingPlan" #firstAccordion="matAccordion" [multi]="true">
+                            <mat-accordion *ngIf="!isLoadingPlan && needAnalysisLoaded" #firstAccordion="matAccordion" [multi]="true">
                                 <div class="br bl">
                                     <mat-expansion-panel  (click)="panelOpenState = true" [expanded]="false">
                                         <mat-expansion-panel-header>
@@ -606,6 +606,9 @@
                                         </div>
                                     </div>
             
+                                </div>
+                                <div class=" text-center" *ngIf="!isLoadingPlan &&  !needAnalysisLoaded">
+                                    <span class="align-items-center">No data found</span>
                                 </div>
                 
                 </div>
