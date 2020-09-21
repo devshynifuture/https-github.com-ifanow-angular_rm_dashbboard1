@@ -25,7 +25,7 @@
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
                                     <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)"
-                                        formControlName="field1" class="form-control br-0 br-none">
+                                        formControlName="field1" class="form-control br-0">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
                                             {{familyMember.displayName}}</mat-option>
