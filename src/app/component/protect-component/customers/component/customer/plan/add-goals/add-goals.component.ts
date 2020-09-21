@@ -253,8 +253,8 @@ export class AddGoalsComponent implements OnInit {
             Q4: 'Notes'
           }
           element.validations = {
-            minAge: 1,
-            maxAge: 60,
+            minAge: 6,
+            maxAge: 120,
             minCost: 10000,
             maxCost: 10000000,
             showAge: true, // here age is true as we want fixed numbers of months
