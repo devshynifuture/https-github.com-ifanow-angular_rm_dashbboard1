@@ -624,6 +624,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       data => {
         if(data.policyDetails.length>0){
           this.options = data.policyDetails;
+          this.checkValidPolicy(data,inpValue);
         }else{
           this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
           this.lifeInsuranceForm.get('policyName').markAsTouched();
@@ -631,7 +632,17 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       }
     );
   }
-
+  checkValidPolicy(value,input){
+    if(this.policyData){
+      if(this.policyData.policyName != input){
+        this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
+        this.lifeInsuranceForm.get('policyName').markAsTouched();
+      }
+    }else if(!this.policyData){
+      this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
+      this.lifeInsuranceForm.get('policyName').markAsTouched();
+    }
+  }
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
@@ -717,7 +728,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.lifeInsuranceForm.get('policyName').value;
     this.loanDetailsForm.controls.loanTakenOn.setErrors(null);
     if (this.lifeInsuranceForm.invalid) {
-      // this.inputs.find(input => !input.ngControl.valid).focus();
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return;
   } else {
