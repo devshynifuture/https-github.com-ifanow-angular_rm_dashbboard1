@@ -392,7 +392,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       })
       if (data.bonusOrInflowList.length > 0) {
         data.bonusOrInflowList.forEach(element => {
-          if(element.receivingYear && element.receivingMonth && element.amount){
+          if(element.receivingYear  && element.amount){
             this.getBonusList.push(this.fb.group({
               id: [element.id],
               bonusOrInflow: [element.bonusOrInflow],
