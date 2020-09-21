@@ -28,7 +28,6 @@ export class AuthGuard implements CanActivate {
         return false;
       } else if(state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')){
         if(AuthService.getUserInfo().isRmLogin){
-          this.myRoute.navigate(['support', 'dashboard']);
           return true;
         } else {
           this.myRoute.navigate(['/']);
