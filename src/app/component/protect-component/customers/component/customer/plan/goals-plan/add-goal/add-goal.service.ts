@@ -29,6 +29,10 @@ export class AddGoalService {
           obj.percentAllocated = 100 - element.percentAllocated
         });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
+        if(asset.assetType == 44 || asset.assetType == 43){
+          obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
+          obj.insuranceCashFlowId= asset.insuranceCashFlowId
+        }
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
         obj.currentValue = asset.currentValue
         this.allocateAsset(obj);
