@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subscriber, Subscription } from 'rxjs';
 import { AddGoalService } from './add-goal.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-goal',
@@ -47,6 +48,11 @@ export class AddGoalComponent implements OnInit {
       name: 'Un-deployed',
       filter: 'not-deployed',
     },
+    {
+      name : 'Asset type',
+      filter:'asset type'
+    }
+
   ];
   sortBtnList:any[] = [
     {
@@ -206,7 +212,9 @@ export class AddGoalComponent implements OnInit {
       case 'not-deployed':
         this.displayedAssets = this.displayedAssets.filter(asset => !asset.isDeployed);
         break;
-    
+        case 'asset type':
+          this.displayedAssets = this.displayedAssets.filter(asset => asset.assetType);
+          break;
       default:
         console.error("Invalid asset filter id found", filterType);
         break;
