@@ -17,6 +17,7 @@ export class KeyInfoComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
+    console.log('key info ==',this.data)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
