@@ -157,7 +157,7 @@
 
                         <div class="row p-20" *ngIf="panelOpenState == true">
                             <div class="col-md-10 pl-0 insurancePlanTable">
-                                <table mat-table [dataSource]="dataSource1" id="table-low" class=" ">
+                                <table mat-table *ngIf="dataSource1.length > 0" [dataSource]="dataSource1" id="table-low" class=" ">
 
                                     <!--- Note that these columns can be defined in any order.
                                                   The actual rendered columns are set as a property on the row definition" -->
@@ -220,7 +220,7 @@
 
                         <div class="row p-20" *ngIf="panelOpenState == true">
                             <div class="col-md-10 pl-0 insurancePlanTable">
-                                <table mat-table [dataSource]="dataSource3" id="table-low" class=" ">
+                                <table *ngIf="dataSource3.length > 0" mat-table [dataSource]="dataSource3" id="table-low" class=" ">
 
                                     <!--- Note that these columns can be defined in any order.
                                               The actual rendered columns are set as a property on the row definition" -->
@@ -301,7 +301,7 @@
 
                         <div class="row p-20" *ngIf="panelOpenState == true">
                             <div class="col-md-10 pl-0 insurancePlanTable">
-                                <table mat-table [dataSource]="dataSource4" id="table-low" class=" ">
+                                <table mat-table *ngIf="dataSource4.length > 0" [dataSource]="dataSource4" id="table-low" class=" ">
 
                                     <!--- Note that these columns can be defined in any order.
                                                   The actual rendered columns are set as a property on the row definition" -->
@@ -344,6 +344,10 @@
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                                 </table>
+                                <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center">
+                                    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                    <h4 class="text-center pt-12">No data found</h4>
+                                </div>
 
                             </div>
                             <div class="col-md-2"></div>

@@ -44,6 +44,14 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
   getSipData(data){
     if(data.assetList.length > 0){
       data.assetList = data.assetList.filter(item => item.countThis == true);
+      if(data.name == 'Recurring deposits'){
+        data.assetList.forEach(element=>{
+          if(element.name == "Sukanya samriddhi yojna"){
+            element.rdNumber = element.ssyNo;
+          }
+        })
+      }
+      
     }
     this.flag = data.name
    if(data.name == 'Mutual fund - SIP'){
