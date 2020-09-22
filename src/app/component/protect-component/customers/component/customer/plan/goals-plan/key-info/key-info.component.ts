@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-key-info',
@@ -14,7 +15,9 @@ export class KeyInfoComponent implements OnInit {
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'KEY INFO';
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject,   
+     public utils: UtilService,
+    ) { }
 
   ngOnInit() {
     console.log('key info ==',this.data)
