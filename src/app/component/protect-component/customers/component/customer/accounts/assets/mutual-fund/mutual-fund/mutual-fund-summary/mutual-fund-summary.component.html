@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center">
             <div class="pdfClass"
-                *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (summary.data.length > 0)">
+                *ngIf="!isLoading && this.mutualFund?.mutualFundList?.length > 0 && (summary.data.length > 0)">
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
@@ -32,8 +32,8 @@
 
     <div class="row">
         <div [ngClass]="isLoading ? 'overflow-hidden': 'table-scroll-veiw'" class="col-md-12 p-0 mb-8">
-            <table mat-table [dataSource]="summary" id="tbs" class="mutualfunds-capital-equity skeletonAnimation"
-                appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="summary.data.length>0">
+            <table mat-table *ngIf="summary.data.length > 0" [dataSource]="summary" id="tbs" class="mutualfunds-capital-equity skeletonAnimation"
+                appSkeletonLoading [appSkeletonLoading]="isLoading" >
 
                 <ng-container matColumnDef="schemeName">
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>

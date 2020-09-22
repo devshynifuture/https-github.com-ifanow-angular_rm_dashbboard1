@@ -120,6 +120,7 @@ export class LifeInsuranceComponent implements OnInit {
   dataSourceGoals: any;
   dataSourceIncome: any;
   dataSourceAsset: any;
+  needAnalysisLoaded:any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -307,10 +308,8 @@ export class LifeInsuranceComponent implements OnInit {
     }else{
       this.planService.updateRecommendationsGI(obj).subscribe(
         data => {
-          if(data){
             this.getDetailsInsurance()
             console.log(data)
-          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -330,6 +329,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   getNeedAnalysisData(data){
     if(data){
+      this.needAnalysisLoaded = data;
       this.dataSourceLiability=this.getFilterData(data[1],'liabilities','name','total_loan_outstanding');
       this.plannerObj.lifeInsurancePremiums = data[2.1][0].total_amount;
       this.dataSourceLifeInsurance=this.getFilterData(data[2.2],'dependantNeeds','name','amount');
@@ -345,6 +345,8 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = data[6][0].total_amount;
       this.dataSourceAsset=this.getFilterData(data[7],'incomeSource','ownerName','currentValue')
       this.plannerObj.additionalLifeIns = data[8][0].total_amount;
+    }else{
+      this.needAnalysisLoaded ='';
     }
 
 

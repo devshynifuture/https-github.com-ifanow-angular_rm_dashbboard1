@@ -1057,7 +1057,11 @@ export class MutualFundSummaryComponent implements OnInit {
         }
         this.mfService.setCashFlowXirr(this.cashFlowObj);
       }, (error) => {
+        this.summary.data = [];
+        this.changeInput.emit(false);
         this.eventService.showErrorMessage(error);
+        this.isLoading = false;
+
       }
     );
   }
