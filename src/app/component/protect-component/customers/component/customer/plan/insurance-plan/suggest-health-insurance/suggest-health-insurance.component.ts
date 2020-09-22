@@ -62,7 +62,23 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     insuranceType: 10,
     heading: 'Fire insurance',
     subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
-  },]
+  },{
+    value: '7',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Travel Insurance',
+    smallHeading: 'travel insurance',
+    insuranceType: 8,
+    heading: 'Travel insurance',
+    subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
+  },{
+    value: '8',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Motor Insurance',
+    smallHeading: 'motor insurance',
+    insuranceType: 4,
+    heading: 'Motor insurance',
+    subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
+  }]
   insuranceType: number;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private custumService: CustomerService, ) { }
   @Output() sendOutput = new EventEmitter();
