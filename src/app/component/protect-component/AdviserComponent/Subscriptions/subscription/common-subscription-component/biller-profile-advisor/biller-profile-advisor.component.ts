@@ -1,18 +1,18 @@
-import {Component, Input, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, NgZone} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
-import {} from 'googlemaps'
-import {EnumDataService} from "../../../../../../../services/enum-data.service";
+import { Component, Input, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, NgZone } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
+import { } from 'googlemaps'
+import { EnumDataService } from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -76,11 +76,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
   cropImage: boolean;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder,
-              private subService: SubscriptionService, private postalService: PostalService,
-              private ngZone: NgZone, private eventService: EventService, private http: HttpClient,
-              private utilService: UtilService,
-              private enumDataService: EnumDataService) {
+    private fb: FormBuilder,
+    private subService: SubscriptionService, private postalService: PostalService,
+    private ngZone: NgZone, private eventService: EventService, private http: HttpClient,
+    private utilService: UtilService,
+    public enumDataService: EnumDataService) {
   }
 
   imageData: File;
@@ -93,7 +93,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   ifscFlag: boolean;
   pincodeFlag: boolean;
-  @ViewChild('Address', {static: true}) Address: ElementRef;
+  @ViewChild('Address', { static: true }) Address: ElementRef;
   // dirty fix to set open tab
   @Input() popupHeaderText = 0;
 
@@ -118,7 +118,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     const autoCompelete = new google.maps.places.Autocomplete(this.Address.nativeElement, {
       types: [],
-      componentRestrictions: {'country': 'IN'}
+      componentRestrictions: { 'country': 'IN' }
     });
 
     autoCompelete.addListener('place_changed', () => {
@@ -308,7 +308,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
 
   }
 
@@ -341,10 +341,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.ifscFlag = true;
     if (ifsc != '') {
       this.subService.getBankAddress(obj).subscribe(data => {
-          this.bankData(data);
-          // this.PinData(data, 'bankDetailsForm')
+        this.bankData(data);
+        // this.PinData(data, 'bankDetailsForm')
 
-        },
+      },
         err => {
           this.ifscFlag = false;
           this.bankData(err);

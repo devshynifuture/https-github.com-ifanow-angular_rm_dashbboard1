@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators, FormArray, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType, UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import {PostalService} from 'src/app/services/postal.service';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -66,16 +66,16 @@ export class ClientBankComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.clientName = data.displayName
+    this.clientName = data.displayName;
     this.fieldFlag;
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
     if (this.userData.bankData == undefined && this.fieldFlag) {
-      this.getBankList(data)
+      this.getBankList(data);
     } else {
-      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {}
-      this.barButtonOptions.text = "SAVE & CLOSE";
+      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {};
+      this.barButtonOptions.text = 'SAVE & CLOSE';
       this.createBankForm(this.userData.bankData);
     }
   }
@@ -96,18 +96,18 @@ export class ClientBankComponent implements OnInit {
   }
 
   getBankList(data) {
-    let obj =
+    const obj =
       [{
-        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-        "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-      }]
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
         (data == 0) ? data = undefined : '';
         if (data && data.length > 0) {
           this.bankList = data[0];
-          this.createBankForm(this.bankList)
+          this.createBankForm(this.bankList);
         } else {
           this.bankList = {};
         }
@@ -116,7 +116,7 @@ export class ClientBankComponent implements OnInit {
         this.bankList = {};
       }
       // this.eventService.openSnackBar(err, "Dismiss")
-    )
+    );
   }
 
   createBankForm(data) {
@@ -149,17 +149,17 @@ export class ClientBankComponent implements OnInit {
         this.addNewNominee(element);
       });
     }
-    this.bankForm.setValue(this.bankForm.value, {emitEvent: false})
+    this.bankForm.setValue(this.bankForm.value, {emitEvent: false});
     this.bankForm.valueChanges.subscribe(data => {
-      console.log(data)
-    })
+      console.log(data);
+    });
     this.ownerData = {Fmember: this.nomineesListFM, controleData: this.bankForm};
 
   }
 
   selectHolder(data, index) {
-    this.getNominee.controls[index].get('clientId').setValue(data.clientId)
-    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId)
+    this.getNominee.controls[index].get('clientId').setValue(data.clientId);
+    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId);
   }
 
   get getNominee() {
@@ -228,16 +228,16 @@ export class ClientBankComponent implements OnInit {
     if (data.address) {
       adderessData = data.address.trim();
       pincode = adderessData.match(/\d/g);
-      pincode = pincode.join("");
-      pincode = pincode.substring(pincode.length - 6, pincode.length)
+      pincode = pincode.join('');
+      pincode = pincode.substring(pincode.length - 6, pincode.length);
       adderessData = adderessData.replace(pincode, '');
-      let addressMidLength = adderessData.length / 2;
+      const addressMidLength = adderessData.length / 2;
       address1 = adderessData.substring(0, addressMidLength);
       address2 = adderessData.substring(addressMidLength, adderessData.length);
       address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
-      address1 = address1.replace(/,\s*$/, "");
+      address1 = address1.replace(/,\s*$/, '');
       address2 = address2.substr(address2.indexOf(' '), address2.length);
-      address2 = address2.replace(/[0-9]/g, '')
+      address2 = address2.replace(/[0-9]/g, '');
       // pincode = pincode.join("");
     }
     (data == undefined) ? data = {} : '';
@@ -249,7 +249,7 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchCountry').setValue('India');
     this.bankForm.get('branchAddressLine1').setValue(address1);
     this.bankForm.get('branchAddressLine2').setValue(address2);
-    this.bankForm.get('branchPinCode').setValue(pincode)
+    this.bankForm.get('branchPinCode').setValue(pincode);
 
     this.bankForm.get('bankName').disable();
     // this.bankForm.get('branchCity').disable();
@@ -274,7 +274,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   PinData(data) {
-    this.isPostal = false
+    this.isPostal = false;
     const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
     this.bankForm.get('branchCity').setValue(pincodeData[0].District);
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
@@ -295,14 +295,14 @@ export class ClientBankComponent implements OnInit {
       this.bankForm.markAllAsTouched();
       return;
     } else {
-      let holderList = [];
+      const holderList = [];
       this.bankForm.value.getNomineeName.forEach(element => {
-        delete element['sharePercentage'];
-        holderList.push(element)
+        delete element.sharePercentage;
+        holderList.push(element);
       });
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
-      ;
-      let obj = {
+
+      const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
         bankName: this.bankForm.get('bankName').value,
@@ -338,7 +338,7 @@ export class ClientBankComponent implements OnInit {
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
-            this.refreshClientUploadBankDetails.emit(true)
+            this.refreshClientUploadBankDetails.emit(true);
           } else {
             this.closeAndSave();
           }
@@ -367,9 +367,9 @@ export class ClientBankComponent implements OnInit {
             this.closeAndSave();
           },
           err => {
-            this.eventService.openSnackBar(err, "Dismiss")
+            this.eventService.openSnackBar(err, 'Dismiss');
           }
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

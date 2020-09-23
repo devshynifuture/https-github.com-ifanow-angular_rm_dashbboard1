@@ -122,10 +122,10 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   getBankList(data, shouldSetValue) {
-    const obj = {
+    const obj = [{
       userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
       userType: data.userType
-    };
+    }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         if (data && data.length > 0) {

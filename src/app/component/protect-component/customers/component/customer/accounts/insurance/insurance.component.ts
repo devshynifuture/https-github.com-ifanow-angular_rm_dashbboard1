@@ -1,26 +1,26 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
-import { AddHealthInsuranceAssetComponent } from './add-health-insurance-asset/add-health-insurance-asset.component';
-import { AddPersonalAccidentInAssetComponent } from './add-personal-accident-in-asset/add-personal-accident-in-asset.component';
-import { AddCriticalIllnessInAssetComponent } from './add-critical-illness-in-asset/add-critical-illness-in-asset.component';
-import { AddMotorInsuranceInAssetComponent } from './add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
-import { AddTravelInsuranceInAssetComponent } from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
-import { AddHomeInsuranceInAssetComponent } from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
-import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { DetailedViewLifeInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
-import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
-import { PdfGenService } from 'src/app/services/pdf-gen.service';
-import { FileUploadServiceService } from '../assets/file-upload-service.service';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AddInsuranceComponent} from '../../../common-component/add-insurance/add-insurance.component';
+import {AddHealthInsuranceAssetComponent} from './add-health-insurance-asset/add-health-insurance-asset.component';
+import {AddPersonalAccidentInAssetComponent} from './add-personal-accident-in-asset/add-personal-accident-in-asset.component';
+import {AddCriticalIllnessInAssetComponent} from './add-critical-illness-in-asset/add-critical-illness-in-asset.component';
+import {AddMotorInsuranceInAssetComponent} from './add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
+import {AddTravelInsuranceInAssetComponent} from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
+import {AddHomeInsuranceInAssetComponent} from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
+import {AddFireAndPerilsInsuranceInAssetComponent} from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {DetailedViewLifeInsuranceComponent} from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
+import {DetailedViewGeneralInsuranceComponent} from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
+import {PdfGenService} from 'src/app/services/pdf-gen.service';
+import {FileUploadServiceService} from '../assets/file-upload-service.service';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-insurance',
@@ -54,24 +54,28 @@ export class InsuranceComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   data2: Array<any> = [{}, {}, {}];
-  fragmentData = { isSpinner: false };
+  fragmentData = {isSpinner: false};
   dataSourceGeneralInsurance = new MatTableDataSource(this.data);
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  lifeInsuranceList = [{ name: 'Term', id: 1, count: '' }, { name: 'Traditional', id: 2, count: '' }, { name: 'ULIP', id: 3, count: '' }];
-  generalLifeInsuranceList = [{ name: 'Health', id: 5, count: '' },
-  { name: 'Personal accident', id: 7, count: '' },
-  { name: 'Critical illness', id: 6, count: '' },
-  { name: 'Motor', id: 4, count: '' },
-  { name: 'Travel', id: 8, count: '' },
-  { name: 'Home', id: 9, count: '' },
-  { name: 'Fire & special perils', id: 10, count: '' }];
-  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  lifeInsuranceList = [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {
+    name: 'ULIP',
+    id: 3,
+    count: ''
+  }];
+  generalLifeInsuranceList = [{name: 'Health', id: 5, count: ''},
+    {name: 'Personal accident', id: 7, count: ''},
+    {name: 'Critical illness', id: 6, count: ''},
+    {name: 'Motor', id: 4, count: ''},
+    {name: 'Travel', id: 8, count: ''},
+    {name: 'Home', id: 9, count: ''},
+    {name: 'Fire & special perils', id: 10, count: ''}];
+  allInsurance = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}, {
     name: 'Health',
     id: 5
-  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+  }, {name: 'Personal accident', id: 7}, {name: 'Critical illness', id: 6}, {
     name: 'Motor',
     id: 4
-  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
+  }, {name: 'Travel', id: 8}, {name: 'Home', id: 9}, {name: 'Fire & special perils', id: 10}];
   viewMode;
   dislayList: any;
   sumAssured = 0;
@@ -81,10 +85,10 @@ export class InsuranceComponent implements OnInit {
   totalPremiunAmountLifeIns = 0;
   totalSumAssuredLifeIns = 0;
   showInsurance: any;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('tableEl2', { static: false }) tableEl2;
-  @ViewChild('lifeInsurance', { static: false }) lifeInsurance: ElementRef;
-  @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
+  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl2', {static: false}) tableEl2;
+  @ViewChild('lifeInsurance', {static: false}) lifeInsurance: ElementRef;
+  @ViewChild('generalInsurance', {static: false}) generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
   showType = 'Plan type';
@@ -100,14 +104,14 @@ export class InsuranceComponent implements OnInit {
   selectedInsuranceName = 'LIFE INSURANCE'
 
   constructor(private eventService: EventService, public dialog: MatDialog,
-    private fileUpload: FileUploadServiceService,
-    private subInjectService: SubscriptionInject, 
-    private cusService: CustomerService, 
-    private utils: UtilService,
-     private excelGen: ExcelGenService, 
-     private pdfGen: PdfGenService,
-     private _bottomSheet: MatBottomSheet,
-    private enumDataService: EnumDataService) {
+              private fileUpload: FileUploadServiceService,
+              private subInjectService: SubscriptionInject,
+              private cusService: CustomerService,
+              private utils: UtilService,
+              private excelGen: ExcelGenService,
+              private pdfGen: PdfGenService,
+              private _bottomSheet: MatBottomSheet,
+              private enumDataService: EnumDataService) {
     this.clientData = AuthService.getClientData();
 
   }
@@ -130,15 +134,18 @@ export class InsuranceComponent implements OnInit {
     this.generalInsuranceFlag = false;
     this.enumDataService.setBankAccountTypes();
   }
+
   changeExpression() {
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
 
   }
+
   changeExpressionGeneral() {
     this.isExpandedGeneral = true;
     this.isExpandedLife = false;
   }
+
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true;
     let obj = {
@@ -163,11 +170,12 @@ export class InsuranceComponent implements OnInit {
       this.isLoadingUpload = false;
     }, 7000);
   }
+
   getBankList(data) {
-    const obj = {
+    const obj = [{
       userId: data.clientId,
       userType: data.userType
-    };
+    }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
@@ -182,6 +190,7 @@ export class InsuranceComponent implements OnInit {
       }
     );
   }
+
   getCount() {
     const obj = {
       advisorId: this.advisorId,
@@ -272,14 +281,14 @@ export class InsuranceComponent implements OnInit {
         this.totalSumAssuredLifeIns = 0;
         this.totalCurrentValue = 0;
         this.dataSource.data.forEach(element => {
-          this.totalFundValues=0;
-          if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+          this.totalFundValues = 0;
+          if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
             element.ulipFundDetails.forEach(ele => {
               this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
-              element.currentValue =  this.totalFundValues
+              element.currentValue = this.totalFundValues
             });
           }
-          this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
+          this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
             this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
           this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
         });
@@ -368,14 +377,14 @@ export class InsuranceComponent implements OnInit {
       this.totalSumAssuredLifeIns = 0;
       this.totalCurrentValue = 0;
       this.dataSource.data.forEach(element => {
-        this.totalFundValues=0;
-        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+        this.totalFundValues = 0;
+        if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
           element.ulipFundDetails.forEach(ele => {
             this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
-            element.currentValue =  this.totalFundValues
+            element.currentValue = this.totalFundValues
           });
         }
-        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
+        this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
@@ -447,13 +456,13 @@ export class InsuranceComponent implements OnInit {
       this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
         this.totalFundValues = 0;
-        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+        if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
           element.ulipFundDetails.forEach(ele => {
             this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
-            element.currentValue =  this.totalFundValues
+            element.currentValue = this.totalFundValues
           });
         }
-        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
+        this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
@@ -701,7 +710,11 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       // this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{ name: 'Term', id: 1, count: '' }, { name: 'Traditional', id: 2, count: '' }, { name: 'ULIP', id: 3, count: '' }].map((i) => {
+      [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {
+        name: 'ULIP',
+        id: 3,
+        count: ''
+      }].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -709,10 +722,14 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{ name: 'Health', id: 5, count: '' }, { name: 'Personal accident', id: 7, count: '' }, { name: 'Critical illness', id: 6, count: '' }, {
+      [{name: 'Health', id: 5, count: ''}, {name: 'Personal accident', id: 7, count: ''}, {
+        name: 'Critical illness',
+        id: 6,
+        count: ''
+      }, {
         name: 'Motor',
         id: 4, count: ''
-      }, { name: 'Travel', id: 8, count: '' }, { name: 'Home', id: 9, count: '' }, {
+      }, {name: 'Travel', id: 8, count: ''}, {name: 'Home', id: 9, count: ''}, {
         name: 'Fire & special perils',
         id: 10,
         count: ''
