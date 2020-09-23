@@ -204,7 +204,8 @@
                     <ng-container matColumnDef="scheme">
                         <th class="w-35" mat-header-cell *matHeaderCellDef> Scheme </th>
                         <td class="w-35" mat-cell *matCellDef="let element">
-                            {{element.schemeName}}<span class="text-success pl-8">[SIP]</span>
+                            {{element.schemeName}}
+                            <span *ngIf="element.isSip == true" class="text-success pl-8">[SIP]</span>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="family">
@@ -214,11 +215,11 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
-                        <td *matCellDef="let element" class="text-left w-25" mat-cell>
-                            <span class="d-block" [value]="element.currentValue" appFormatNumber></span>
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"></span><br>
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"></span></td>
+                        <th class="w-35" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <td *matCellDef="let element" class="text-left w-35" mat-cell>
+                            <span class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
+                            <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> | </span><br/>
+                            <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"> | </span></td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
@@ -227,8 +228,8 @@
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
-                                    <span class="text-success"> SIP-{{allocatedGoal.sipPercent}}%</span>
-                                    <span class="text-primary"> Lumpsum-{{allocatedGoal.lumpsumPercent}}%</span>
+                                    <span class="text-success" *ngIf="element.isSip == true"> SIP-{{allocatedGoal.sipPercent}}%</span>
+                                    <span class="text-primary" *ngIf="element.isSip != true"> Lumpsum-{{allocatedGoal.lumpsumPercent}}%</span>
                                 </div>
                             </div>
 
