@@ -1,17 +1,18 @@
-import { Component, Input, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { MatInput } from '@angular/material';
-import { } from 'googlemaps'
+import {Component, Input, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, NgZone} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {MatInput} from '@angular/material';
+import {} from 'googlemaps'
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -75,9 +76,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
   cropImage: boolean;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder,
-    private subService: SubscriptionService, private postalService: PostalService,
-    private ngZone: NgZone, private eventService: EventService, private http: HttpClient, private utilService: UtilService) {
+              private fb: FormBuilder,
+              private subService: SubscriptionService, private postalService: PostalService,
+              private ngZone: NgZone, private eventService: EventService, private http: HttpClient,
+              private utilService: UtilService,
+              private enumDataService: EnumDataService) {
   }
 
   imageData: File;
@@ -90,7 +93,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   ifscFlag: boolean;
   pincodeFlag: boolean;
-  @ViewChild('Address', { static: true }) Address: ElementRef;
+  @ViewChild('Address', {static: true}) Address: ElementRef;
   // dirty fix to set open tab
   @Input() popupHeaderText = 0;
 
@@ -115,7 +118,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     const autoCompelete = new google.maps.places.Autocomplete(this.Address.nativeElement, {
       types: [],
-      componentRestrictions: { 'country': 'IN' }
+      componentRestrictions: {'country': 'IN'}
     });
 
     autoCompelete.addListener('place_changed', () => {
@@ -179,7 +182,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   uploadImage() {
     if (this.showCropper) {
       this.barButtonOptions.active = true;
-      const files = this.utilService.convertB64toImageFile(this.finalImage);;
+      const files = this.utilService.convertB64toImageFile(this.finalImage);
+      ;
       const tags = this.advisorId + ',biller_profile_logo,';
       PhotoCloudinaryUploadService.uploadFileToCloudinary([files], 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
@@ -270,7 +274,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().Address.maxLength = 150;
     this.getFormControlBank().nameOnBank.maxLength = 50;
     this.getFormControlBank().bankName.maxLength = 35;
-    this.getFormControlBank().acNo.maxLength = 16;
+    this.getFormControlBank().acNo.maxLength = this.enumDataService.maxBankAccountLength;
     this.getFormControlBank().ifscCode.maxLength = 11;
     this.getFormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 500;
@@ -304,7 +308,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: data});
 
   }
 
@@ -337,10 +341,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.ifscFlag = true;
     if (ifsc != '') {
       this.subService.getBankAddress(obj).subscribe(data => {
-        this.bankData(data);
-        // this.PinData(data, 'bankDetailsForm')
+          this.bankData(data);
+          // this.PinData(data, 'bankDetailsForm')
 
-      },
+        },
         err => {
           this.ifscFlag = false;
           this.bankData(err);
@@ -525,6 +529,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.cropImage = true;
     this.showCropper = true;
   }
+
   resetPageVariables() {
     this.showCropper = false;
     this.cropImage = false;

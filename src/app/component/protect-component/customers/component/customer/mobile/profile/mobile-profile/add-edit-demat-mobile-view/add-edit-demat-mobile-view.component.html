@@ -128,10 +128,10 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Linked bank account</h5>
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
+                    <input placeholder="Enter linked bank account" autocomplete="off" #linkedAccNum [maxLength]="enumDataService.maxBankAccountLength"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         formControlName="linkedBankAccount" matInput class="form-control text-primitive">
-                    <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
+                    <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/{{enumDataService.maxBankAccountLength}}</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>

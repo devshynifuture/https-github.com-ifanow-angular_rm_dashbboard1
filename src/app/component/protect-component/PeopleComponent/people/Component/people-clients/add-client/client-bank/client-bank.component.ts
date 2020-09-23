@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType, UtilService } from 'src/app/services/util.service';
-import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { EnumDataService } from 'src/app/services/enum-data.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators, FormArray, FormGroup} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType, UtilService} from 'src/app/services/util.service';
+import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {EnumDataService} from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -44,11 +44,12 @@ export class ClientBankComponent implements OnInit {
   nomineesListFM: any = [];
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   idData: any;
+
   constructor(private cusService: CustomerService, private eventService: EventService,
-    private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService, private utilService: UtilService, public dialog: MatDialog,
-    private enumDataservice: EnumDataService) {
+              private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private subService: SubscriptionService, private postalService: PostalService,
+              private peopleService: PeopleService, private utilService: UtilService, public dialog: MatDialog,
+              public enumDataService: EnumDataService) {
   }
 
   bankForm: FormGroup;
@@ -72,13 +73,13 @@ export class ClientBankComponent implements OnInit {
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
     if (this.userData.bankData == undefined && this.fieldFlag) {
       this.getBankList(data)
-    }
-    else {
+    } else {
       (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {}
       this.barButtonOptions.text = "SAVE & CLOSE";
       this.createBankForm(this.userData.bankData);
     }
   }
+
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
     if (event.target.value.length < 11) {
@@ -93,6 +94,7 @@ export class ClientBankComponent implements OnInit {
       return;
     }
   }
+
   getBankList(data) {
     let obj =
       [{
@@ -116,6 +118,7 @@ export class ClientBankComponent implements OnInit {
       // this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   createBankForm(data) {
     (data == undefined) ? data = {} : data;
     this.bankForm = this.fb.group({
@@ -146,11 +149,11 @@ export class ClientBankComponent implements OnInit {
         this.addNewNominee(element);
       });
     }
-    this.bankForm.setValue(this.bankForm.value, { emitEvent: false })
+    this.bankForm.setValue(this.bankForm.value, {emitEvent: false})
     this.bankForm.valueChanges.subscribe(data => {
       console.log(data)
     })
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bankForm };
+    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.bankForm};
 
   }
 
@@ -192,7 +195,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accountTypes = this.enumDataservice.getBankAccountTypes();
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
 
   getBankAddress(ifsc) {
@@ -203,16 +206,16 @@ export class ClientBankComponent implements OnInit {
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-        console.log('postal 121221', data);
-        this.bankData(data);
-        // this.PinData(data, 'bankDetailsForm')
+          console.log('postal 121221', data);
+          this.bankData(data);
+          // this.PinData(data, 'bankDetailsForm')
 
-      },
+        },
         err => {
           console.log(err, 'error internet');
           this.isIfsc = false;
           this.bankForm.enable();
-          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true });
+          this.bankForm.get('ifscCode').setErrors({invalidIfsc: true});
           this.bankData(err);
         });
     }
@@ -291,14 +294,14 @@ export class ClientBankComponent implements OnInit {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
       return;
-    }
-    else {
+    } else {
       let holderList = [];
       this.bankForm.value.getNomineeName.forEach(element => {
         delete element['sharePercentage'];
         holderList.push(element)
       });
-      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;;
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
+      ;
       let obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
@@ -363,7 +366,9 @@ export class ClientBankComponent implements OnInit {
             dialogRef.close();
             this.closeAndSave();
           },
-          err => { this.eventService.openSnackBar(err, "Dismiss") }
+          err => {
+            this.eventService.openSnackBar(err, "Dismiss")
+          }
         )
       },
       negativeMethod: () => {
@@ -383,11 +388,13 @@ export class ClientBankComponent implements OnInit {
 
     });
   }
+
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({state: 'close'}) :
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
+
   closeAndSave() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 }
