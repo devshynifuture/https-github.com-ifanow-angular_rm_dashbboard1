@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 export interface DialogData {
   [x: string]: any;
@@ -60,10 +60,10 @@ export class LinkBankComponent implements OnInit {
   nomineesListFM: any = [];
 
   constructor(private cusService: CustomerService, private eventService: EventService,
-              public dialogRef: MatDialogRef<LinkBankComponent>,
-              private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
-              private subService: SubscriptionService, private postalService: PostalService,
-              private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    public dialogRef: MatDialogRef<LinkBankComponent>,
+    private fb: FormBuilder, private subInjectService: SubscriptionInject, public enumDataService: EnumDataService,
+    private subService: SubscriptionService, private postalService: PostalService,
+    private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.bankList = data.bankList;
     this.userInfo = data.userInfo;
     this.ownerList = data.ownerList.value;
@@ -198,7 +198,7 @@ export class LinkBankComponent implements OnInit {
       },
         err => {
           this.isIfsc = false;
-          this.bankForm.get('ifscCode').setErrors({invalidIfsc: true});
+          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true });
           this.bankData(err);
         });
     }
