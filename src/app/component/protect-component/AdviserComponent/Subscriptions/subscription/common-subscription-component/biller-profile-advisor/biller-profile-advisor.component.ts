@@ -12,6 +12,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
 import { } from 'googlemaps'
+import { EnumDataService } from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -77,7 +78,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
     private fb: FormBuilder,
     private subService: SubscriptionService, private postalService: PostalService,
-    private ngZone: NgZone, private eventService: EventService, private http: HttpClient, private utilService: UtilService) {
+    private ngZone: NgZone, private eventService: EventService, private http: HttpClient,
+    private utilService: UtilService,
+    public enumDataService: EnumDataService) {
   }
 
   imageData: File;
@@ -179,7 +182,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   uploadImage() {
     if (this.showCropper) {
       this.barButtonOptions.active = true;
-      const files = this.utilService.convertB64toImageFile(this.finalImage);;
+      const files = this.utilService.convertB64toImageFile(this.finalImage);
+      ;
       const tags = this.advisorId + ',biller_profile_logo,';
       PhotoCloudinaryUploadService.uploadFileToCloudinary([files], 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
@@ -270,7 +274,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().Address.maxLength = 150;
     this.getFormControlBank().nameOnBank.maxLength = 50;
     this.getFormControlBank().bankName.maxLength = 35;
-    this.getFormControlBank().acNo.maxLength = 16;
+    this.getFormControlBank().acNo.maxLength = this.enumDataService.maxBankAccountLength;
     this.getFormControlBank().ifscCode.maxLength = 11;
     this.getFormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 500;
@@ -525,6 +529,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.cropImage = true;
     this.showCropper = true;
   }
+
   resetPageVariables() {
     this.showCropper = false;
     this.cropImage = false;

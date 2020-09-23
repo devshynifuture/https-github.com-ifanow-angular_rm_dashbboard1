@@ -377,7 +377,7 @@
                                         class="form-control br-0 text-left" formControlName="acNo" matInput
                                         type="number">
                                     <mat-error class="f-12">Account no. is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{acNo.value.length}}/16</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{acNo.value.length}}/{{enumDataService.maxBankAccountLength}}</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>

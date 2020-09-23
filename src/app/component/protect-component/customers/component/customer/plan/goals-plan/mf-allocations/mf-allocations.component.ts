@@ -23,7 +23,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
-  displayedColumns1 = ['scheme', 'value', 'value1', 'value2', 'goal', 'icons'];
+  displayedColumns1 = ['scheme', 'value', 'goal', 'icons'];
   dataSource1 = new MatTableDataSource([]);
 
   @Input() data: any = {};

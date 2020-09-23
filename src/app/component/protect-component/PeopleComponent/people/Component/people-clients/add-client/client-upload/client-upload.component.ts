@@ -1,14 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { HttpService } from 'src/app/http-service/http-service';
-import { HttpHeaders } from '@angular/common/http';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { FileUploadServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/file-upload-service.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {HttpService} from 'src/app/http-service/http-service';
+import {HttpHeaders} from '@angular/common/http';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {FileUploadServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/file-upload-service.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-client-upload',
@@ -80,17 +79,17 @@ export class ClientUploadComponent implements OnInit {
   fileUploadData: any;
   file: any;
   clientData: any;
-  isLoadingUpload: boolean = false;
+  isLoadingUpload = false;
   urlResponse: boolean;
   folderId: any;
   fileuploadurl: any;
   imageType: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
-    private custumService: CustomerService, private enumService: EnumServiceService,
-    private eventService: EventService,
-    private fileUpload: FileUploadServiceService, ) {
-    this.clientData = AuthService.getClientData()
+              private custumService: CustomerService, private enumService: EnumServiceService,
+              private eventService: EventService,
+              private fileUpload: FileUploadServiceService,) {
+    this.clientData = AuthService.getClientData();
     this.clientId = AuthService.getClientId();
   }
 
@@ -244,21 +243,21 @@ export class ClientUploadComponent implements OnInit {
     switch (imgType) {
       case 'company-pan':
         fileName = this.fileComPanImg.store;
-        this.fetchData('PAN', e)
+        this.fetchData('PAN', e);
         break;
       case 'personal-pan':
         fileName = this.filePerPanImg.store;
-        this.fetchData('Aadhaar', e)
+        this.fetchData('Aadhaar', e);
         // this.addDocObj.proofType = 1;
         break;
       case 'proof-type1':
         fileName = this.fileProof1Img.store;
-        this.fetchData('Bank Account', e)
+        this.fetchData('Bank Account', e);
         // this.addDocObj.documentType = 1;
         break;
       case 'proof-type2':
         fileName = this.fileProof2Img.store;
-        this.fetchData('Address', e)
+        this.fetchData('Address', e);
         // this.addDocObj.documentType = 2;
         break;
     }
@@ -273,13 +272,13 @@ export class ClientUploadComponent implements OnInit {
     // }
   }
   fetchData(value, fileName) {
-    this.isLoadingUpload = true
-    let obj = {
+    this.isLoadingUpload = true;
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.userData.clientId,
       familyMemberId: (this.userData.familyMemberId) ? this.userData.familyMemberId : 0,
       asset: value
-    }
+    };
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
@@ -290,7 +289,7 @@ export class ClientUploadComponent implements OnInit {
     //   this.urlResponse = this.fileUpload.uploadFile(fileName)
     // }
     setTimeout(() => {
-      this.isLoadingUpload = false
+      this.isLoadingUpload = false;
     }, 7000);
   }
 
@@ -304,11 +303,11 @@ export class ClientUploadComponent implements OnInit {
     this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
-        this.folderId = data
+        this.folderId = data;
         console.log('fileUploadData', this.fileUploadData);
         myFiles.forEach(fileName => {
           this.filenm = fileName;
-          this.uploadFileData(this.filenm, value)
+          this.uploadFileData(this.filenm, value);
         });
 
       },
@@ -330,7 +329,7 @@ export class ClientUploadComponent implements OnInit {
     this.custumService.uploadFile(obj).subscribe(
       data => {
         const fileuploadurl = data;
-        this.fileuploadurl = data
+        this.fileuploadurl = data;
         const httpOptions = {
           headers: new HttpHeaders()
             .set('Content-Type', '')
@@ -338,9 +337,9 @@ export class ClientUploadComponent implements OnInit {
         this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
           console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
           if (responseData == null) {
-            this.uploadFileRes(fileName, this.imageType, fileuploadurl)
+            this.uploadFileRes(fileName, this.imageType, fileuploadurl);
             // this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-            return responseData
+            return responseData;
           }
         });
       },
@@ -374,11 +373,11 @@ export class ClientUploadComponent implements OnInit {
     }
   }
   getBankList() {
-    let obj =
+    const obj =
       [{
-        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-        "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-      }]
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      }];
     this.custumService.getBankList(obj).subscribe(
       data => {
         console.log(data);
@@ -394,7 +393,7 @@ export class ClientUploadComponent implements OnInit {
         this.selectedBank = '';
       }
       // this.eventService.openSnackBar(err, "Dismiss")
-    )
+    );
   }
   deleteImg(imgId) {
     const obj = { id: imgId };
@@ -407,10 +406,10 @@ export class ClientUploadComponent implements OnInit {
     this.addDocObj.fileName = fileName;
     switch (type) {
       case 'company-pan':
-        this.addDocObj.documentType = 1
+        this.addDocObj.documentType = 1;
         break;
       case 'personal-pan':
-        this.addDocObj.documentType = 2
+        this.addDocObj.documentType = 2;
         break;
       case 'proof-type1':
         this.addDocObj.proofType = this.bankProof;
@@ -425,7 +424,7 @@ export class ClientUploadComponent implements OnInit {
     }
     this.countFile++;
     url = url.substring(url.search('x-amz-meta-uuid'), url.length - 1);
-    url = url.substring(0, url.indexOf('&'))
+    url = url.substring(0, url.indexOf('&'));
     const uuID = url.replace('x-amz-meta-uuid=', '');
     this.addDocObj.fileName = uuID;
     this.addDocumentUsers(this.addDocObj);

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CustomerService } from '../../../../customer.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CustomerService} from '../../../../customer.service';
 
 @Component({
   selector: 'app-mobile-view-bank',
@@ -12,21 +12,25 @@ export class MobileViewBankComponent implements OnInit {
   userData: any;
   selectedBank: any;
 
-  constructor(private cusService: CustomerService) { }
+  constructor(private cusService: CustomerService) {
+  }
 
   ngOnInit() {
   }
+
   @Output() backfunc = new EventEmitter();
+
   @Input() set data(data) {
     this.userData = data;
     this.getBankList(data);
   }
+
   getBankList(data) {
     this.bankFlag = true;
-    const obj = {
+    const obj = [{
       userId: data.familyMemberId,
       userType: data.userType
-    };
+    }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         this.bankFlag = false;
@@ -46,13 +50,16 @@ export class MobileViewBankComponent implements OnInit {
       }
     );
   }
+
   back() {
     this.backfunc.emit(undefined);
   }
+
   addEditBank(data) {
     this.selectedBank = this.userData;
-    this.selectedBank['bankData'] = data;
+    this.selectedBank.bankData = data;
   }
+
   addEditFlag(data) {
     this.selectedBank = undefined;
     this.getBankList(this.userData);

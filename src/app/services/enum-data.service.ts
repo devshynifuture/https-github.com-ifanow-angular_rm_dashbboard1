@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { UtilService } from './util.service';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { EnumServiceService } from './enum-service.service';
-import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
-import { AuthService } from '../auth-service/authService';
-import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
-import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
-import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
-import { SubscriptionInject } from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { rejects } from 'assert';
-import { element } from 'protractor';
+import {Injectable} from '@angular/core';
+import {UtilService} from './util.service';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {EnumServiceService} from './enum-service.service';
+import {OnlineTransactionService} from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import {AuthService} from '../auth-service/authService';
+import {CustomerService} from '../component/protect-component/customers/component/customer/customer.service';
+import {OrgSettingServiceService} from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
+import {SubscriptionInject} from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {rejects} from 'assert';
+import {element} from 'protractor';
 import {apiConfig} from '../config/main-config';
 
 @Injectable({
@@ -24,59 +24,60 @@ export class EnumDataService {
     this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
 
+  maxBankAccountLength = 18;
   PRODUCTION = apiConfig.PRODUCTION;
   searchData: any;
   clientAndFamilyData: any = [];
   proofType = [
-    { proofId: 1, proofType: 'Personal Pan' },
-    { proofId: 2, proofType: 'Company Pan' },
-    { proofId: 3, proofType: 'Passport' },
-    { proofId: 4, proofType: 'Aadhaar' },
-    { proofId: 5, proofType: 'Driving licence' },
-    { proofId: 6, proofType: 'Voter\'s ID card' },
-    { proofId: 7, proofType: 'NREGA job card' }
+    {proofId: 1, proofType: 'Personal Pan'},
+    {proofId: 2, proofType: 'Company Pan'},
+    {proofId: 3, proofType: 'Passport'},
+    {proofId: 4, proofType: 'Aadhaar'},
+    {proofId: 5, proofType: 'Driving licence'},
+    {proofId: 6, proofType: 'Voter\'s ID card'},
+    {proofId: 7, proofType: 'NREGA job card'}
   ];
   roleList = [
-    { roleTypeId: 1, roleTypeName: 'Admin' },
-    { roleTypeId: 2, roleTypeName: 'Para planner' },
-    { roleTypeId: 3, roleTypeName: 'Relationship manager' },
-    { roleTypeId: 4, roleTypeName: 'Operations' },
+    {roleTypeId: 1, roleTypeName: 'Admin'},
+    {roleTypeId: 2, roleTypeName: 'Para planner'},
+    {roleTypeId: 3, roleTypeName: 'Relationship manager'},
+    {roleTypeId: 4, roleTypeName: 'Operations'},
   ];
 
   cashflowAssetNaming = [
-    { assetName: 'ASSETS', assetType: 1, assetShortName: 'Asset' },
-    { assetShortName: 'Liabilities', assetName: 'LIABILITIES', assetType: 2 },
-    { assetShortName: 'LI', assetName: 'LIFE_INSURANCE', assetType: 3 },
-    { assetShortName: 'GI', assetName: 'GENERAL_INSURANCE', assetType: 4 },
-    { assetShortName: 'MF', assetName: 'MUTUAL_FUNDS', assetType: 5 },
-    { assetShortName: 'Stocks', assetName: 'STOCKS', assetType: 6 },
-    { assetShortName: '', assetName: 'FIXED_INCOME', assetType: 7 },
-    { assetShortName: 'Real estate', assetName: 'REAL_ESTATE', assetType: 8 },
-    { assetShortName: '', assetName: 'RETIREMENT_ACCOUNTS', assetType: 9 },
-    { assetShortName: '', assetName: 'SMALL_SAVING_SCHEMES', assetType: 10 },
-    { assetShortName: '', assetName: 'CASH_AND_BANKS', assetType: 11 },
-    { assetShortName: '', assetName: 'COMMODITIES', assetType: 12 },
-    { assetShortName: 'FD', assetName: 'FIXED_DEPOSIT', assetType: 13 },
-    { assetShortName: 'RD', assetName: 'RECURRING_DEPOSIT', assetType: 14 },
-    { assetShortName: 'Bonds', assetName: 'BONDS', assetType: 15 },
-    { assetShortName: 'EPF', assetName: 'EPF', assetType: 16 },
-    { assetShortName: 'NPS', assetName: 'NPS', assetType: 17 },
-    { assetShortName: 'Gratuity', assetName: 'GRATUITY', assetType: 18 },
-    { assetShortName: 'FD', assetName: 'SUPERANNUATION', assetType: 19 },
-    { assetShortName: 'EPS', assetName: 'EPS', assetType: 20 },
-    { assetShortName: 'PPF', assetName: 'PPF', assetType: 21 },
-    { assetShortName: 'NSC', assetName: 'NSC', assetType: 22 },
-    { assetShortName: 'SSY', assetName: 'SSY', assetType: 23 },
-    { assetShortName: 'KVP', assetName: 'KVP', assetType: 24 },
-    { assetShortName: 'SCSS', assetName: 'SCSS', assetType: 25 },
-    { assetShortName: 'PO savings', assetName: 'PO_SAVINGS', assetType: 26 },
-    { assetShortName: 'PO RD', assetName: 'PO_RD', assetType: 27 },
-    { assetShortName: 'PO TD', assetName: 'PO_TD', assetType: 28 },
-    { assetShortName: 'PO MIS', assetName: 'PO_MIS', assetType: 29 },
-    { assetShortName: 'Bank accounts', assetName: 'BANK_ACCOUNTS', assetType: 30 },
-    { assetShortName: 'Cash', assetName: 'CASH_IN_HAND', assetType: 31 },
-    { assetShortName: 'Gold', assetName: 'GOLD', assetType: 32 },
-    { assetShortName: 'Others', assetName: 'Others', assetType: 33 },
+    {assetName: 'ASSETS', assetType: 1, assetShortName: 'Asset'},
+    {assetShortName: 'Liabilities', assetName: 'LIABILITIES', assetType: 2},
+    {assetShortName: 'LI', assetName: 'LIFE_INSURANCE', assetType: 3},
+    {assetShortName: 'GI', assetName: 'GENERAL_INSURANCE', assetType: 4},
+    {assetShortName: 'MF', assetName: 'MUTUAL_FUNDS', assetType: 5},
+    {assetShortName: 'Stocks', assetName: 'STOCKS', assetType: 6},
+    {assetShortName: '', assetName: 'FIXED_INCOME', assetType: 7},
+    {assetShortName: 'Real estate', assetName: 'REAL_ESTATE', assetType: 8},
+    {assetShortName: '', assetName: 'RETIREMENT_ACCOUNTS', assetType: 9},
+    {assetShortName: '', assetName: 'SMALL_SAVING_SCHEMES', assetType: 10},
+    {assetShortName: '', assetName: 'CASH_AND_BANKS', assetType: 11},
+    {assetShortName: '', assetName: 'COMMODITIES', assetType: 12},
+    {assetShortName: 'FD', assetName: 'FIXED_DEPOSIT', assetType: 13},
+    {assetShortName: 'RD', assetName: 'RECURRING_DEPOSIT', assetType: 14},
+    {assetShortName: 'Bonds', assetName: 'BONDS', assetType: 15},
+    {assetShortName: 'EPF', assetName: 'EPF', assetType: 16},
+    {assetShortName: 'NPS', assetName: 'NPS', assetType: 17},
+    {assetShortName: 'Gratuity', assetName: 'GRATUITY', assetType: 18},
+    {assetShortName: 'FD', assetName: 'SUPERANNUATION', assetType: 19},
+    {assetShortName: 'EPS', assetName: 'EPS', assetType: 20},
+    {assetShortName: 'PPF', assetName: 'PPF', assetType: 21},
+    {assetShortName: 'NSC', assetName: 'NSC', assetType: 22},
+    {assetShortName: 'SSY', assetName: 'SSY', assetType: 23},
+    {assetShortName: 'KVP', assetName: 'KVP', assetType: 24},
+    {assetShortName: 'SCSS', assetName: 'SCSS', assetType: 25},
+    {assetShortName: 'PO savings', assetName: 'PO_SAVINGS', assetType: 26},
+    {assetShortName: 'PO RD', assetName: 'PO_RD', assetType: 27},
+    {assetShortName: 'PO TD', assetName: 'PO_TD', assetType: 28},
+    {assetShortName: 'PO MIS', assetName: 'PO_MIS', assetType: 29},
+    {assetShortName: 'Bank accounts', assetName: 'BANK_ACCOUNTS', assetType: 30},
+    {assetShortName: 'Cash', assetName: 'CASH_IN_HAND', assetType: 31},
+    {assetShortName: 'Gold', assetName: 'GOLD', assetType: 32},
+    {assetShortName: 'Others', assetName: 'Others', assetType: 33},
   ];
   accountTypes: any;
   accountTypeMap: any = {};
@@ -89,7 +90,8 @@ export class EnumDataService {
   userData: any;
 
   clientFamilybankList: any = [];
-getAll:boolean;
+  getAll: boolean;
+
   getAccountList(userData) {
     const self = this;
     self.getAll = false;
@@ -102,34 +104,34 @@ getAll:boolean;
         self.getAll = true;
       }
     });
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
-      if ( self.getAll) {
+      if (self.getAll) {
         // let self = this;
-      self.clientData = AuthService.getClientData();
-      const obj = {
-        clientId: self.clientData.clientId
-      };
-      self.custumService.getclientFamilybankList(obj).subscribe(
-        (data) => {
-          self.bankList = data;
-          resolve(data);
-          self.enumService.addBank(self.bankList);
-        },
-        (err) => {
-          reject('failed');
-        });
+        self.clientData = AuthService.getClientData();
+        const obj = {
+          clientId: self.clientData.clientId
+        };
+        self.custumService.getclientFamilybankList(obj).subscribe(
+          (data) => {
+            self.bankList = data;
+            resolve(data);
+            self.enumService.addBank(self.bankList);
+          },
+          (err) => {
+            reject('failed');
+          });
       } else {
         let obj = [];
         userData.forEach(u => {
-         let user =  {
+          let user = {
             userId: u.id == 0 ? u.clientId : u.id,
             userType: u.userType
           };
           obj.push(user);
         });
-        
+
         self.custumService.getJointBankList(obj).subscribe(
           (data) => {
             self.bankList = data;
@@ -151,8 +153,8 @@ getAll:boolean;
   //       data.forEach(b => {
   //         this.bankList.push(b);
   //       });
-        // resolve(data);
-        // self.enumService.addBank(self.bankList);
+  // resolve(data);
+  // self.enumService.addBank(self.bankList);
   //     },
   //     (err) => {
   //       // reject('failed');
@@ -233,7 +235,7 @@ getAll:boolean;
   }
 
   toCamelCase(str) {
-    return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
+    return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function (match) {
       return match.charAt(match.length - 1).toUpperCase();
     });
   }
