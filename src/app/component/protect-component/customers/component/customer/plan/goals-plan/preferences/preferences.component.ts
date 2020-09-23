@@ -183,6 +183,14 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns + "%"
       } else if (element.position == 'Stocks') {
         element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }else if (element.position == 'Real Estates') {
+        element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }else if (element.position == 'Bank Accounts Saving') {
+        element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }else if (element.position == 'Commodities - Gold') {
+        element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }else if (element.position == 'Commodities- Others') {
+        element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
       }
     });
     this.dataSource1.forEach(element => {
@@ -354,6 +362,14 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         Object.assign(this.obj, { balancedFundReturns: parseInt(element.name) });
       } else if (element.position == 'Stocks') {
         Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      }else if (element.position == 'Real Estates') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      }else if (element.position == 'Bank Accounts Saving') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      }else if (element.position == 'Commodities - Gold') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      }else if (element.position == 'Commodities- Others') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
       }
     });
     this.dataSource1.forEach(element => {
@@ -451,6 +467,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 'Equity funds', name: '10%' },
   { position: 'Balanced funds', name: '7%' },
   { position: 'Stocks', name: '7%' },
+  { position: 'Real Estates', name: '7%' },
+  { position: 'Bank Accounts Saving', name: '7%' },
+  { position: 'Commodities - Gold', name: '7%' },
+  { position: 'Commodities- Others', name: '7%' },
 ];
 export interface PeriodicElement1 {
   name: string;
