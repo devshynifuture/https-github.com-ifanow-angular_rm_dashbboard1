@@ -1,19 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType, UtilService } from 'src/app/services/util.service';
-import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumDataService } from 'src/app/services/enum-data.service';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumDataService} from 'src/app/services/enum-data.service';
 
 export interface DialogData {
   [x: string]: any;
+
   animal: string;
   name: string;
 }
@@ -44,7 +45,7 @@ export class LinkBankComponent implements OnInit {
   userData: any;
   holderList: any;
   bankList: any = [];
-  userInfo: boolean = false;
+  userInfo = false;
   bankForm;
   isIfsc;
   isPostal;
@@ -57,12 +58,12 @@ export class LinkBankComponent implements OnInit {
   ownerData: any;
   ownerList: any;
   nomineesListFM: any = [];
-  
+
   constructor(private cusService: CustomerService, private eventService: EventService,
-    public dialogRef: MatDialogRef<LinkBankComponent>,
-    private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
-    private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+              public dialogRef: MatDialogRef<LinkBankComponent>,
+              private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
+              private subService: SubscriptionService, private postalService: PostalService,
+              private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.bankList = data.bankList;
     this.userInfo = data.userInfo;
     this.ownerList = data.ownerList.value;
@@ -84,16 +85,16 @@ export class LinkBankComponent implements OnInit {
     }
   }
   getBankList(data) {
-    let obj =
-    {
-      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    }
+    const obj =
+      [{
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         if (data && data.length > 0) {
           this.bankList = data[0];
-          this.createBankForm(this.bankList)
+          this.createBankForm(this.bankList);
         } else {
           this.bankList = {};
         }
@@ -102,7 +103,7 @@ export class LinkBankComponent implements OnInit {
         this.bankList = {};
       }
       // this.eventService.openSnackBar(err, "Dismiss")
-    )
+    );
   }
   createBankForm(data) {
     (data == undefined) ? data = {} : data;
@@ -179,8 +180,8 @@ export class LinkBankComponent implements OnInit {
 
 
   selectHolder(data, index) {
-    this.getNominee.controls[index].get('clientId').setValue(data.clientId)
-    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId)
+    this.getNominee.controls[index].get('clientId').setValue(data.clientId);
+    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId);
   }
 
   getBankAddress(ifsc) {
@@ -197,7 +198,7 @@ export class LinkBankComponent implements OnInit {
       },
         err => {
           this.isIfsc = false;
-          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true })
+          this.bankForm.get('ifscCode').setErrors({invalidIfsc: true});
           this.bankData(err);
         });
     }
@@ -210,14 +211,14 @@ export class LinkBankComponent implements OnInit {
       if (data.address) {
         adderessData = data.address.trim();
         pincode = adderessData.match(/\d/g);
-        pincode = pincode.join("");
-        pincode = pincode.substring(pincode.length - 6, pincode.length)
+        pincode = pincode.join('');
+        pincode = pincode.substring(pincode.length - 6, pincode.length);
         adderessData = adderessData.replace(pincode, '');
-        let addressMidLength = adderessData.length / 2;
+        const addressMidLength = adderessData.length / 2;
         address1 = adderessData.substring(0, addressMidLength);
         address2 = adderessData.substring(addressMidLength, adderessData.length);
         address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
-        address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
+        address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length));
         // pincode = pincode.join("");
       }
       this.bankDetail = data;
@@ -228,7 +229,7 @@ export class LinkBankComponent implements OnInit {
       this.bankForm.get('branchCountry').setValue('India');
       this.bankForm.get('branchAddressLine1').setValue(adderessData);
       this.bankForm.get('branchAddressLine2').setValue(address2);
-      this.bankForm.get('branchPinCode').setValue(pincode)
+      this.bankForm.get('branchPinCode').setValue(pincode);
     }
 
   }
@@ -246,7 +247,7 @@ export class LinkBankComponent implements OnInit {
   }
 
   PinData(data) {
-    this.isPostal = false
+    this.isPostal = false;
     const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
     this.bankForm.get('branchCity').setValue(pincodeData[0].District);
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
@@ -261,12 +262,11 @@ export class LinkBankComponent implements OnInit {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
       return;
-    }
-    else {
-      let holderList = [];
+    } else {
+      const holderList = [];
       this.bankForm.value.getNomineeName.forEach(element => {
-        delete element['sharePercentage'];
-        holderList.push(element)
+        delete element.sharePercentage;
+        holderList.push(element);
       });
       (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
@@ -298,7 +298,7 @@ export class LinkBankComponent implements OnInit {
       };
       if (this.ownerList) {
         this.ownerList.forEach(o => {
-          if(o.name != ''){
+          if (o.name != '') {
             obj.userId = o.familyMemberId;
             obj.userType = o.isClient == 1 ? 2 : 3;
           }
@@ -311,7 +311,7 @@ export class LinkBankComponent implements OnInit {
           this.enumDataService.getAccountList(this.enumDataService.userData);
           this.enumDataService.getclientFamilybankList();
           // this.valueChange.emit("get-list");
-          this.closeDialog("get-list");
+          this.closeDialog('get-list');
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
