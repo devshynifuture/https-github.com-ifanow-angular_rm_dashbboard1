@@ -58,7 +58,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   flag = 'Add';
   bankList: any;
   filterNomineesList: any[];
-
+  cashFlowArray=[{name:"Survival benefit",disabled:false,value:"1"},{name:"Maturity benefit",disabled:false,value:"2"},{name:"Annuity",disabled:false,value:"3"}]
   /*_data;
   @Input()
   set data(inputData) {
@@ -432,7 +432,15 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       form.get(value).setValue(event.target.value);
     }
   }
-
+  disabledSelected(value){
+    this.cashFlowArray.forEach(element=>{
+      if(value == '2' || value == '3'){
+        if(element.name == 'Maturity benefit' || element.name == 'Annuity'){
+          element.disabled = true;
+        }
+      }
+    })
+  }
   addTransaction() {
     this.cashFlowEntries.push(this.fb.group({
       cashFlowType: null,

@@ -159,7 +159,7 @@
                 <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
-    
+
             </div>
         </div>
         <div *ngIf="showHide == true">
@@ -168,7 +168,7 @@
                     <p class="m-0 roboto f-400 text-dark f-16 pb-10">RD number</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" matInput #rdNo type="text" maxlength="18" class="form-control br-0"
+                            <input autocomplete="off" matInput #rdNo type="text" [maxlength]="18" class="form-control br-0"
                             formControlName="rdNo">
                         <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{rdNo.value.length}}/18</mat-hint>
