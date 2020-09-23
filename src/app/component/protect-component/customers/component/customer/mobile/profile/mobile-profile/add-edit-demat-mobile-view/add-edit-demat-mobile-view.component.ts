@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {EnumDataService} from "../../../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-add-edit-demat-mobile-view',
@@ -44,9 +45,11 @@ export class AddEditDematMobileViewComponent implements OnInit {
   disableBtn = false;
   saveAndNextFlag: any;
   storeTempDematData: any;
+
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, public dialog: MatDialog) {
+              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+              private eventService: EventService, public dialog: MatDialog,
+              public enumDataService: EnumDataService) {
   }
 
   validatorType = ValidatorType;
@@ -56,6 +59,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
   @Output() cancelTab = new EventEmitter();
   @Input() fieldFlag;
   idData;
+
   @Input() set data(data) {
     this.userData = data;
     this.storeTempDematData = Object.assign({}, data);
@@ -81,6 +85,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
   callMethod: any;
   nomineesListFM: any = [];
   checkNomineeFlag = true;
+
   // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value);
@@ -91,8 +96,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
   lisNominee(value) {
     if (value && value.length == 0) {
       this.checkNomineeFlag = false;
-    }
-    else {
+    } else {
       this.ownerData.Fmember = value;
       this.nomineesListFM = Object.assign([], value);
     }
@@ -105,6 +109,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
       disControl: type
     };
   }
+
   displayControler(con) {
     console.log('value selected', con);
     if (this.dematForm.value.getCoOwnerName) {
@@ -134,7 +139,11 @@ export class AddEditDematMobileViewComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]],
+      share: [data ? data.share : '', [Validators.required]],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -173,6 +182,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
       this.disabledMember(null, null);
     }
   }
+
   /***owner***/
 
   /***nominee***/
@@ -199,10 +209,13 @@ export class AddEditDematMobileViewComponent implements OnInit {
   }
 
 
-
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''],
+      sharePercentage: [data ? data.sharePercentage : 0],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (const e in this.getNominee.controls) {
@@ -223,6 +236,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
 
 
   }
+
   /***nominee***/
   // ===================owner-nominee directive=====================//
 
@@ -274,9 +288,10 @@ export class AddEditDematMobileViewComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.dematForm };
+    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.dematForm};
     // ==============owner-nominee Data ========================\\
   }
+
   getDematList(data) {
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
@@ -299,6 +314,7 @@ export class AddEditDematMobileViewComponent implements OnInit {
       }
     );
   }
+
   ngOnInit() {
   }
 
@@ -319,13 +335,11 @@ export class AddEditDematMobileViewComponent implements OnInit {
       this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
-    }
-    else if (this.holderList.invalid) {
+    } else if (this.holderList.invalid) {
       this.holderList.markAllAsTouched();
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
-    }
-    else {
+    } else {
       const mobileList = [];
       const holderList = [];
       if (this.mobileData) {
@@ -403,14 +417,17 @@ export class AddEditDematMobileViewComponent implements OnInit {
 
     }
   }
+
   back() {
     this.backFunc.emit(undefined);
   }
+
   capitalise(event) {
     if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,
@@ -425,7 +442,9 @@ export class AddEditDematMobileViewComponent implements OnInit {
             dialogRef.close();
             this.closeAndSave();
           },
-          err => { this.eventService.openSnackBar(err, "Dismiss") }
+          err => {
+            this.eventService.openSnackBar(err, "Dismiss")
+          }
         )
       },
       negativeMethod: () => {
@@ -445,11 +464,13 @@ export class AddEditDematMobileViewComponent implements OnInit {
 
     });
   }
+
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({state: 'close'}) :
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
+
   closeAndSave() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 }

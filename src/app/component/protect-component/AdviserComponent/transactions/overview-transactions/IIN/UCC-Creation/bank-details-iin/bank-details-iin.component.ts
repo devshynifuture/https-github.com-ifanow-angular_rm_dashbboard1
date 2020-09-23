@@ -33,7 +33,7 @@ export class BankDetailsIINComponent implements OnInit {
               private enumService: EnumServiceService,
               private datePipe: DatePipe, public utils: UtilService,
               public eventService: EventService,
-              private enumDataService: EnumDataService) {
+              public enumDataService: EnumDataService) {
     this.clientId = AuthService.getClientId();
   }
 
