@@ -64,7 +64,7 @@
 
 ::ng-deep .mat-tab-header {
     border-bottom: transparent !important;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
 }
 
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
@@ -73,6 +73,10 @@
 
 .borderTop {
     border-top: 1px solid #DADCE0;
+}
+.bottom {
+    margin-bottom: 20px;
+
 }
 
 ::ng-deep .mat-tab-group {

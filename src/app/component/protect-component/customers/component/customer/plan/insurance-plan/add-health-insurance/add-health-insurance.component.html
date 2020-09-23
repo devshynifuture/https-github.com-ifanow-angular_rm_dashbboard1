@@ -151,10 +151,17 @@
     </div>
 </div>
 <div *ngIf="showNewPolicy">
-    <app-suggest-health-insurance [data]="this.inputData" (sendOutput)="getOutput($event)">
+    <app-suggest-health-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 5">
     </app-suggest-health-insurance>
+    <app-critical-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 6"></app-critical-insurance>
+    <app-personal-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 7"></app-personal-insurance>
+    <app-householders-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 9"></app-householders-insurance>
+    <app-fire-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 10"></app-fire-insurance>    
+    <app-travel-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 8"></app-travel-insurance>    
+    <app-motor-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 4"></app-motor-insurance>    
+
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="showExisting == false && !showNewPolicy">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">

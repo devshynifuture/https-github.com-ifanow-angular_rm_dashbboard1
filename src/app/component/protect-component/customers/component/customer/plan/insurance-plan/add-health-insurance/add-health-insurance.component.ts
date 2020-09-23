@@ -9,6 +9,14 @@ import { ShowHealthPlanningComponent } from '../show-health-planning/show-health
 import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance-upper.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
+import { AddHealthInsuranceAssetComponent } from '../../../accounts/insurance/add-health-insurance-asset/add-health-insurance-asset.component';
+import { AddPersonalAccidentInAssetComponent } from '../../../accounts/insurance/add-personal-accident-in-asset/add-personal-accident-in-asset.component';
+import { AddCriticalIllnessInAssetComponent } from '../../../accounts/insurance/add-critical-illness-in-asset/add-critical-illness-in-asset.component';
+import { AddMotorInsuranceInAssetComponent } from '../../../accounts/insurance/add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
+import { AddTravelInsuranceInAssetComponent } from '../../../accounts/insurance/add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
+import { AddHomeInsuranceInAssetComponent } from '../../../accounts/insurance/add-home-insurance-in-asset/add-home-insurance-in-asset.component';
+import { AddFireAndPerilsInsuranceInAssetComponent } from '../../../accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
+import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -28,12 +36,15 @@ export class AddHealthInsuranceComponent implements OnInit {
   ownerIds = [];
   showNewPolicy = false;
   isLoading = false;
+  dislayList: any;
+  newPolicyData: any;
 
   @Input()
   set data(data) {
     this.inputData = data;
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
+    this.getGlobalDataInsurance();
     if(this.inputData.flag == 'suggestExistingPolicy'){
       this.getAddMore();
     }
@@ -239,9 +250,78 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.showError = false;
     }
   }
-  openNewPolicy(){
-    this.showNewPolicy = true;
+  getGlobalDataInsurance() {
+    const obj = {};
+    this.custumService.getInsuranceGlobalData(obj).subscribe(
+      data => {
+        console.log(data),
+          this.dislayList = data;
+      }
+    );
   }
+
+  openNewPolicy(){
+    this.newPolicyData = {
+      data:null,
+      insuranceTypeId: 2,
+      insuranceSubTypeId: this.insuranceType,
+      displayList: this.dislayList,
+      showInsurance: this.showInsurance,
+      inputData :this.inputData
+    };
+    this.showNewPolicy = true;
+  //   const inputData = {
+  //     data:null,
+  //     insuranceTypeId: 2,
+  //     insuranceSubTypeId: this.insuranceType,
+  //     displayList: this.dislayList,
+  //     showInsurance: this.showInsurance
+  //   };
+  //   const fragmentData = {
+  //     flag: 'addInsurance',
+  //     data: inputData,
+  //     componentName: null,
+  //     state: 'open'
+  //   };
+  //   switch (this.insuranceType) {
+  //     case 5:
+  //       fragmentData.componentName = AddHealthInsuranceAssetComponent;
+  //       break;
+  //     case 7:
+  //       fragmentData.componentName = AddPersonalAccidentInAssetComponent;
+  //       break;
+  //     case 6:
+  //       fragmentData.componentName = AddCriticalIllnessInAssetComponent;
+  //       break;
+  //     case 4:
+  //       fragmentData.componentName = AddMotorInsuranceInAssetComponent;
+  //       break;
+  //     case 8:
+  //       fragmentData.componentName = AddTravelInsuranceInAssetComponent;
+  //       break;
+  //     case 9:
+  //       fragmentData.componentName = AddHomeInsuranceInAssetComponent;
+  //       break;
+  //     case 10:
+  //       fragmentData.componentName = AddFireAndPerilsInsuranceInAssetComponent;
+  //       break;
+  //     default:
+  //       fragmentData.componentName = AddInsuranceComponent;
+  //       break;
+
+  //   }
+  //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+  //     sideBarData => {
+  //       if (UtilService.isDialogClose(sideBarData)) {
+  //         this.showExisting == false
+  //         rightSideDataSub.unsubscribe();
+
+  //       }
+  //     }
+  //   );
+  // }
+  }
+  
   close(flag) {
     if(this.showNewPolicy){
       this.showNewPolicy = false;
