@@ -355,7 +355,7 @@
 
                     <td *matFooterCellDef class="text-right" mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="iconsTotal" sticky>
+                <ng-container matColumnDef="iconsTotal" >
                     <td *matCellDef="let element" class="zIndex" mat-cell>
                     </td>
                 </ng-container>
@@ -363,7 +363,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
 
 
             </table>
