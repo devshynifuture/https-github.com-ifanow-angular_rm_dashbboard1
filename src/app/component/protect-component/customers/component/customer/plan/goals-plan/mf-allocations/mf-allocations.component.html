@@ -218,8 +218,10 @@
                         <th class="w-35" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
                         <td *matCellDef="let element" class="text-left w-35" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> | </span><br/>
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"> | </span></td>
+                            <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
+                            </span><br />
+                            <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"> | </span>
+                        </td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
@@ -228,8 +230,10 @@
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
-                                    <span class="text-success" *ngIf="element.isSip == true"> SIP-{{allocatedGoal.sipPercent}}%</span>
-                                    <span class="text-primary" *ngIf="element.isSip != true"> Lumpsum-{{allocatedGoal.lumpsumPercent}}%</span>
+                                    <span class="text-success" *ngIf="element.isSip == true">
+                                        SIP-{{allocatedGoal.sipPercent}}%</span>
+                                    <span class="text-primary" *ngIf="element.isSip != true">
+                                        Lumpsum-{{allocatedGoal.lumpsumPercent}}%</span>
                                 </div>
                             </div>
 
@@ -270,25 +274,38 @@
                         <th mat-header-cell *matHeaderCellDef class="t-10 br">Allocations</th>
                         <td mat-cell *matCellDef="let element" class="t-10 br">
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
-                                <!-- <div class="d-flex align-items-center"
-                                    *ngIf="element.absSIP == 100 && element.absLumsum == 100">
+                                <div class="d-flex align-items-center"
+                                    *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                     <button class="unallcoateBtn ml-10 text-danger"
                                         (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
                                     <i class="material-icons c-p text-black" *ngIf="element.goalAssetMapping.length !=0"
                                         [matMenuTriggerFor]="menu4">
                                         more_vert
                                     </i>
-                                </div> -->
+                                </div>
 
                             </div>
-                            <div class="d-flex" *ngIf="element.absSIP > 0 || element.absLumsum > 0">
-                                <button class="allcoateBtn ml-10 text-primary"
-                                    (click)="allocateAssetToGoal(element)">Allocate</button>
-                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"
-                                    *ngIf="(element.absSIP > 0 || element.absLumsum > 0) && element.goalAssetMapping.length != 0">
-                                    more_vert
-                                </i>
-
+                            <div class="d-flex">
+                                <div *ngFor="let allocatedGoal of element.goalAssetMapping">
+                                    <div class="d-flex align-items-center"
+                                        *ngIf="(element.isSip == true && allocatedGoal.sipPercent != 100 && element.absSIP != 100)">
+                                        <button class="allcoateBtn ml-10 text-primary"
+                                            (click)="allocateAssetToGoal(element)">Allocate</button>
+                                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"
+                                            *ngIf="(element.absSIP > 0 || element.absLumsum > 0) && element.goalAssetMapping.length != 0">
+                                            more_vert
+                                        </i>
+                                    </div>
+                                    <div class="d-flex align-items-center"
+                                        *ngIf="(element.isSip != true && allocatedGoal.lumpsumPercent != 100 && element.absLumsum !== 100)">
+                                        <button class="allcoateBtn ml-10 text-primary"
+                                            (click)="allocateAssetToGoal(element)">Allocate</button>
+                                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"
+                                            *ngIf="(element.absSIP > 0 || element.absLumsum > 0) && element.goalAssetMapping.length != 0">
+                                            more_vert
+                                        </i>
+                                    </div>
+                                </div>
                             </div>
                             <mat-menu #menu4="matMenu">
                                 <button mat-menu-item (click)="reallocateAsset(element)">Edit allocation
