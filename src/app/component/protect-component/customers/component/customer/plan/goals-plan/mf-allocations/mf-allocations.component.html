@@ -202,8 +202,8 @@
 
                     <!-- Position Column -->
                     <ng-container matColumnDef="scheme">
-                        <th class="w-35" mat-header-cell *matHeaderCellDef> Scheme </th>
-                        <td class="w-35" mat-cell *matCellDef="let element">
+                        <th class="w-45" mat-header-cell *matHeaderCellDef> Scheme </th>
+                        <td class="w-45" mat-cell *matCellDef="let element">
                             {{element.schemeName}}
                             <span *ngIf="element.isSip == true" class="text-success pl-8">[SIP]</span>
                         </td>
@@ -215,8 +215,8 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-35" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
-                        <td *matCellDef="let element" class="text-left w-35" mat-cell>
+                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <td *matCellDef="let element" class="text-center w-25" mat-cell>
                             <span class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
                             <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
                             </span><br />
@@ -225,7 +225,7 @@
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
-                        <th class="w-20" mat-header-cell *matHeaderCellDef> </th>
+                        <th class="w-20" mat-header-cell *matHeaderCellDef>Goal </th>
                         <td class="w-20 text-right" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div>{{allocatedGoal.goalName}}</div>
