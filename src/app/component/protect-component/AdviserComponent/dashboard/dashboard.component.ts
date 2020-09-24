@@ -815,8 +815,8 @@ export class DashboardComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,
-      startDate: new Date().getTime(),
-      endDate: new Date(this.lastSevenDays).getTime()
+      startDate: new Date(this.lastSevenDays).getTime(),
+      endDate: new Date().getTime()
     };
 
     //    const obj = {
