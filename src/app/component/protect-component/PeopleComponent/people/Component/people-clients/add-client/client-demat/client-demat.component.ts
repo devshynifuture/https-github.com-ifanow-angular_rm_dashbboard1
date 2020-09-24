@@ -1,15 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {EnumDataService} from "../../../../../../../../services/enum-data.service";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { EnumDataService } from "../../../../../../../../services/enum-data.service";
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 @Component({
   selector: 'app-client-demat',
@@ -48,11 +49,12 @@ export class ClientDematComponent implements OnInit {
   clientName: any;
   nomineesListFM1: any = [];
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
+  bankList: any = [];
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, public dialog: MatDialog,
-              public enumDataService: EnumDataService) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, public dialog: MatDialog,
+    public enumDataService: EnumDataService, private enumService: EnumDataService) {
   }
 
   validatorType = ValidatorType;
@@ -261,7 +263,7 @@ export class ClientDematComponent implements OnInit {
       dematClientId: [data.dematClientId],
       brekerName: [data.brokerName],
       brokerAddress: [data.brokerAddress],
-      linkedBankAccount: [data.linkedBankAccount],
+      linkedBankAccount: [data.userBankMappingId && data.userBankMappingId != 0 ? data.userBankMappingId : '', [Validators.required]],
       powerOfAttName: [data.powerOfAttorneyName],
       powerOfAttMasId: [data.powerOfAttorneyMasterId],
       getNomineeName: this.fb.array([this.fb.group({
@@ -307,7 +309,7 @@ export class ClientDematComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.dematForm};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.dematForm };
     // ==============owner-nominee Data ========================\\
   }
 
@@ -340,6 +342,29 @@ export class ClientDematComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getBankList();
+  }
+
+  getBankList() {
+    const obj = [{
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+    }];
+    this.cusService.getBankList(obj).subscribe(
+      data => {
+        console.log(data);
+        (data == 0) ? data = undefined : '';
+        if (data && data.length > 0) {
+          this.bankList = data;
+        } else {
+          this.bankList = [];
+        }
+      },
+      err => {
+        this.bankList = [];
+      }
+      // this.eventService.openSnackBar(err, "Dismiss")
+    );
   }
 
   getHolderList(data) {
@@ -417,12 +442,12 @@ export class ClientDematComponent implements OnInit {
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         brokerAddress: this.dematForm.get('brokerAddress').value,
         depositoryParticipantId: this.dematForm.get('depositoryPartId').value,
-        linkedBankAccount: this.dematForm.get('linkedBankAccount').value,
         powerOfAttorneyName: this.dematForm.get('powerOfAttName').value,
         nomineeList: this.dematForm.value.getNomineeName,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         brokerName: this.dematForm.get('brekerName').value,
-        dematClientId: this.dematForm.get('dematClientId').value
+        dematClientId: this.dematForm.get('dematClientId').value,
+        userBankMappingId: this.dematForm.get('linkedBankAccount').value
       };
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
@@ -491,11 +516,26 @@ export class ClientDematComponent implements OnInit {
   }
 
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({state: 'close'}) :
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
   closeAndSave() {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
+
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: { bankList: this.bankList, userInfo: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
+  }
+
 }
