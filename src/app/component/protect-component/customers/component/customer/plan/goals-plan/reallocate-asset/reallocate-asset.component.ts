@@ -38,6 +38,7 @@ export class ReallocateAssetComponent implements OnInit {
     fullWidth: false,
   };
   allocationToThisGoal:number = 0;
+  allocated: any;
 
   constructor(
     public dialogRef: MatDialogRef<ReallocateAssetComponent>,
@@ -51,6 +52,7 @@ export class ReallocateAssetComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.allocationData = this.dialogData.allocationData;
     this.goalData = this.dialogData.goalData;
+    this.allocated = this.dialogData.allocated
   }
 
   ngOnInit() {
@@ -61,8 +63,8 @@ export class ReallocateAssetComponent implements OnInit {
       allocatedPercentage: [this.allocationData.percentAllocated, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });
     if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
-      this.reallocationFG.addControl('sipPercent', this.fb.control(this.allocationData.sipPercent, [Validators.required]))
-      this.reallocationFG.addControl('lumpsumPercent', this.fb.control(this.allocationData.lumpsumPercent, [Validators.required]))
+      this.reallocationFG.addControl('sipPercent', this.fb.control((this.allocated)?this.allocated.sipPercent:this.allocationData.sipPercent, [Validators.required]))
+      this.reallocationFG.addControl('lumpsumPercent', this.fb.control((this.allocated)?this.allocated.lumpsumPercent:this.allocationData.lumpsumPercent, [Validators.required]))
     }
 
     this.subscriber.add(

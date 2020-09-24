@@ -278,10 +278,16 @@
                                     *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                     <button class="unallcoateBtn ml-10 text-danger"
                                         (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
-                                    <i class="material-icons c-p text-black" *ngIf="element.goalAssetMapping.length !=0"
+                                    <i class="material-icons c-p text-black"
                                         [matMenuTriggerFor]="menu4">
                                         more_vert
                                     </i>
+                                    <mat-menu #menu4="matMenu">
+                                        <div>
+                                            <button mat-menu-item (click)="reallocateAsset(element,allocatedGoal)">Edit allocation
+                                                %</button>
+                                        </div>
+                                    </mat-menu>
                                 </div>
 
                             </div>
@@ -307,10 +313,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <mat-menu #menu4="matMenu">
-                                <button mat-menu-item (click)="reallocateAsset(element)">Edit allocation
-                                    %</button>
-                            </mat-menu>
                         </td>
                     </ng-container>
 
