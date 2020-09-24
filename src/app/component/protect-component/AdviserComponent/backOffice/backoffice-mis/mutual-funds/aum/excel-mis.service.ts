@@ -28,7 +28,7 @@ export class ExcelMisService {
             username = userData.name;
         }
 
-        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Friday','Saturday'];
+        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Thursday','Friday','Saturday'];
         const monthArr = ['January', 'February','March', 'April','May', 'June', 'July','August','September', 'October','November','December'];
         const currentDate = new Date();
         const curDateFormat = daysArr[currentDate.getDay()] + "- " 
@@ -105,7 +105,7 @@ export class ExcelMisService {
             username = userData.name;
         }
 
-        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Friday','Saturday'];
+        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday','Saturday'];
         const monthArr = ['January', 'February','March', 'April','May', 'June', 'July','August','September', 'October','November','December'];
         const currentDate = new Date();
         const curDateFormat = daysArr[currentDate.getDay()] + "- " 
@@ -1062,7 +1062,7 @@ export class ExcelMisService {
             username = userData.name;
         }
         
-        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Friday','Saturday'];
+        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday','Saturday'];
         const monthArr = ['January', 'February','March', 'April','May', 'June', 'July','August','September', 'October','November','December'];
         const currentDate = new Date();
         const curDateFormat = daysArr[currentDate.getDay()] + "- " 
@@ -1440,7 +1440,7 @@ export class ExcelMisService {
         meta2.font = { bold: true };
         meta3.font = { bold: true };
 
-        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Friday','Saturday'];
+        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Thursday','Friday','Saturday'];
         const monthArr = ['January', 'February','March', 'April','May', 'June', 'July','August','September', 'October','November','December'];
         const currentDate = new Date();
         const curDateFormat = daysArr[currentDate.getDay()] + "- " 
@@ -1672,7 +1672,7 @@ export class ExcelMisService {
         meta2.font = { bold: true };
         meta3.font = { bold: true };
 
-        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Friday','Saturday'];
+        const daysArr = ['Sunday','Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday','Saturday'];
         const monthArr = ['January', 'February','March', 'April','May', 'June', 'July','August','September', 'October','November','December'];
         const currentDate = new Date();
         const curDateFormat = daysArr[currentDate.getDay()] + "- " 
