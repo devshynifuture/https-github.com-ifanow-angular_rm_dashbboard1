@@ -560,10 +560,12 @@
                                     <div class=" col-md-9 p-0 ">
                                         <p class=" m-0 f-14 ">
                                             <span
-                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
-                                            <br> DP ID: {{selectedDemat.depositoryParticipantId}} <br> UCC:
-                                            {{selectedDemat.dematClientId}} <br>
-                                            {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : ''}}
+                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName ?selectedDemat.depositoryParticipantName :'N/A'}}</span>
+                                            <br> DP ID:
+                                            {{selectedDemat.depositoryParticipantId?selectedDemat.depositoryParticipantId:'N/A'}}
+                                            <br> UCC:
+                                            {{selectedDemat.dematClientId? selectedDemat.dematClientId:'N/A'}} <br>
+                                            {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : 'N/A'}}
 
                                         </p>
                                     </div>
