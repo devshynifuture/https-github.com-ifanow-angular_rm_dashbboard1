@@ -439,9 +439,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         fragmentData.state = 'open65';
         break;
       case 'openKeyinfo':
-        fragmentData.componentName = KeyInfoComponent;
-        fragmentData.state = 'open65';
-        fragmentData.data = this.selectedGoal.dashboardData;
+        if(this.selectedGoal.singleOrMulti == 1){
+          fragmentData.componentName = KeyInfoComponent;
+          fragmentData.state = 'open35';
+          fragmentData.data = this.selectedGoal;
+        }else{
+          fragmentData.componentName = KeyInfoComponent;
+          fragmentData.state = 'open65';
+          fragmentData.data = this.selectedGoal;
+        }
+        
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
