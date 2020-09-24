@@ -227,8 +227,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       { name: 'Daughter', value: 5 },
       { name: 'Brother', value: 8 },
       { name: 'Sister', value: 9 },
+      { name: 'Others', value: 10 },
       { name: 'Daughter_In_Law', value: 11 },
       { name: 'Sister_In_Law', value: 12 },
+      { name: 'Grand_mother', value: 13 },
+      { name: 'Grand_father', value: 14 },
       { name: 'Niece', value: 15 },
       { name: 'Nephew', value: 16 },
     ]
