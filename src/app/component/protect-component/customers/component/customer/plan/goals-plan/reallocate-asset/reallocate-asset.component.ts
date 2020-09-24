@@ -39,6 +39,7 @@ export class ReallocateAssetComponent implements OnInit {
   };
   allocationToThisGoal:number = 0;
   allocated: any;
+  allocation: any;
 
   constructor(
     public dialogRef: MatDialogRef<ReallocateAssetComponent>,
@@ -53,6 +54,7 @@ export class ReallocateAssetComponent implements OnInit {
     this.allocationData = this.dialogData.allocationData;
     this.goalData = this.dialogData.goalData;
     this.allocated = this.dialogData.allocated
+    this.allocation = this.dialogData.allocation
   }
 
   ngOnInit() {
