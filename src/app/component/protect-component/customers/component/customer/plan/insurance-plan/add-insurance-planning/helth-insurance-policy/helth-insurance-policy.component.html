@@ -2,46 +2,53 @@
     <h5 class="m-0 text-black f-500">Advice on {{showInsurance.smallHeading}} policy</h5>
     <div class="row pt-20">
         <div class="col-md-4 p-0 br-1">
-            <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
-            <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
-                <mat-radio-button [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
-                    [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''">
-                    {{advice.advice}}</mat-radio-button>
-            </mat-radio-group>
-            <!-- <div class="col-md-11 pl-0 pr-24">
+            <p class="m-0 pb-8">Select primary advice{{healthInsurance.get('selectAdvice').value}}<img src="/assets/images/svg/info.svg"></p>
+                    <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
+                        <mat-radio-button [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
+                            [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''" (click)="setValue()">
+                            {{advice.advice}}</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error class="f-12">
+                        {{showError ? 'Please select primary advise' : ''}}
+                      </mat-error>
+            <div class="col-md-11 pl-0 pr-24">
                 <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select class="form-control" formControlName="nominee">
-                            <mat-option value="option">Add nominee</mat-option>
+                        <mat-select class="form-control" formControlName="nonFinAdvice">
+                            <mat-option value="">Select option</mat-option>
+                            <mat-option value="1">Add nominee</mat-option>
+                            <mat-option value="2">Remove nominee</mat-option>
                         </mat-select>
+                        <mat-error class="f-12">This field is required</mat-error>
                     </mat-form-field>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="col-md-8 p-0 bl-1">
             <div class="row">
                 <div class="col-md-8">
-                    <p class="m-0 text-black pb-8">Advice header</p>
+                    <p class="m-0 text-black pb-8">Advice header{{healthInsurance.get('adviceHeader').value}}</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control" formControlName="adviceHeader">
+                            <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control"
+                                formControlName="adviceHeader">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-8">Advice rationale</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <textarea matInput rows="6" class="form-control" formControlName="adviceRationale"></textarea>
+                            <textarea matInput rows="6" class="form-control"
+                                formControlName="adviceRationale"></textarea>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-8 pt-110">Advice status</p>
+                    <p class="m-0 text-black pb-8 pt-120">Advice status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput class="form-control" value="Given"
-                                formControlName="adviceStatus">
-                                <mat-error class="f-12">This field is required</mat-error>
+                            <input matInput class="form-control" value="Given" formControlName="adviceStatus">
+                            <!-- <mat-error class="f-12">This field is required</mat-error> -->
                         </mat-form-field>
                     </div>
                     <p class="m-0">Consent option<img src="/assets/images/svg/info.svg"></p>
@@ -52,12 +59,15 @@
                             possible only after your client
                             gives explicit consent via email.</p>
                         <mat-checkbox>Create a linked task</mat-checkbox>
-                    </mat-radio-group>
-                    <mat-radio-group aria-label="Select an option" class="pt-20" formControlName="bypassConsent">
-                        <mat-radio-button value="1">Bypass client consent</mat-radio-button>
+                        <mat-radio-button value="2">Bypass client consent</mat-radio-button>
                         <p class="f-12 roboto text-custom">If this option is selected, you can directly start further
                             work on this advice without taking any explicit consent from your client.</p>
                     </mat-radio-group>
+                    <!-- <mat-radio-group aria-label="Select an option" class="pt-20" formControlName="bypassConsent">
+                      
+                        <p class="f-12 roboto text-custom">If this option is selected, you can directly start further
+                            work on this advice without taking any explicit consent from your client.</p>
+                    </mat-radio-group> -->
 
                 </div>
                 <div class="col-md-4">
@@ -89,7 +99,7 @@
 </div>
 <div class="row pt-10">
     <div class="col-md-12 text-right">
-        <button mat-button class="text-primary"(click)="saveAdviceOnHealth()">SAVE</button>
+        <button mat-button class="text-primary" (click)="saveAdviceOnHealth()">SAVE</button>
         <button mat-button (click)="close()">cancel</button>
     </div>
 </div>
