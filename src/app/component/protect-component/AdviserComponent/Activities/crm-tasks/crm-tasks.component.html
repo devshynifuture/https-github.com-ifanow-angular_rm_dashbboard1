@@ -68,7 +68,7 @@
                 </ng-container>
                 <ng-container matColumnDef="des">
                     <th mat-sort-header *matHeaderCellDef class="" mat-header-cell sticky> Description</th>
-                    <td *matCellDef="let element" mat-cell
+                    <td *matCellDef="let element" mat-cell class="c-p"
                         (click)="isLoading ? $event.preventDefault() : openAddTask(element)">
                         <div class="bar">
                             {{element.des}}
@@ -104,7 +104,7 @@
                 </ng-container>
                 <ng-container matColumnDef="taskStatus">
                     <th *matHeaderCellDef mat-header-cell sticky> Status</th>
-                    <td *matCellDef="let element" mat-cell class="c-p">
+                    <td *matCellDef="let element" (click)="isLoading ? $event.preventDefault() : openAddTask(element)" mat-cell class="c-p">
                         <div class="bar">{{element.taskStatus}}</div>
                     </td>
                 </ng-container>

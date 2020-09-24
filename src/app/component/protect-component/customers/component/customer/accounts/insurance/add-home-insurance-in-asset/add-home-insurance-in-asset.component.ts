@@ -264,7 +264,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['', [Validators.required]],
         share: [0,],
-        familyMemberId: 0,
+        familyMemberId: null,
         id: 0,
         isClient: 0,
         userType: 0,

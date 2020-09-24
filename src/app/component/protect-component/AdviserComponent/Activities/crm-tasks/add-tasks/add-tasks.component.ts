@@ -24,7 +24,7 @@ import { MatDialog } from '@angular/material';
 })
 export class AddTasksComponent implements OnInit {
   selectedClient: any;
-  familyMemberList: any;
+  familyMemberList: any = [];
   clientList;
   isLoading: boolean;
   templateList;
@@ -368,7 +368,7 @@ export class AddTasksComponent implements OnInit {
       this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
         debounceTime(700)).subscribe(
         data => {
-          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+          this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
               if (value.length >= 0) {
                 this.clientList = responseArray;
@@ -424,7 +424,7 @@ export class AddTasksComponent implements OnInit {
         assignedTo: [data.assignedTo, Validators.required],
         taskDueDate: [moment(data.dueDateTimeStamp),],
         taskDescription: [data.des, Validators.required],
-        // familyMemberId: [data.familyMemberId,],
+        familyMemberId: [data.familyMemberId,],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -439,7 +439,7 @@ export class AddTasksComponent implements OnInit {
         this.addTaskForm.get('assignedTo').disable({ emitEvent: false });
         this.addTaskForm.get('taskDueDate').disable({ emitEvent: false });
         this.addTaskForm.get('taskDescription').disable({ emitEvent: false });
-        // this.addTaskForm.get('familyMemberId').disable({ emitEvent: false });
+        this.addTaskForm.get('familyMemberId').disable({ emitEvent: false });
         this.addTaskForm.get('taskTurnAroundTime').disable({ emitEvent: false });
         this.addTaskForm.get('continuesTill').disable({ emitEvent: false });
         this.addTaskForm.get('isRecurring').disable({ emitEvent: false });
@@ -482,7 +482,7 @@ export class AddTasksComponent implements OnInit {
         assignedTo: ["", Validators.required],
         taskDueDate: ['', Validators.required],
         taskDescription: ['', Validators.required],
-        // familyMemberId: ["",],
+        familyMemberId: ["",],
         subTask: this.fb.array([]),
         taskTurnAroundTime: ['',],
         continuesTill: ['',],
@@ -512,7 +512,7 @@ export class AddTasksComponent implements OnInit {
       assignedTo: '',
       taskDueDate: '',
       taskDescription: '',
-      // familyMemberId: '',
+      familyMemberId: '',
       subTask: [],
       taskTurnAroundTime: '',
       continuesTill: '',
@@ -1189,6 +1189,11 @@ export class AddTasksComponent implements OnInit {
             item.attachments = [];
           })
         }
+        if(res.hasOwnProperty('turnAroundTime') && res.turnAroundTime !==0){
+          let d = new Date();
+          d.setDate(d.getDate() + res.turnAroundTime);
+          this.addTaskForm.get('taskDueDate').patchValue(d, { emitEvent: false });
+        }
         console.log('this is subtask List::: ')
         if (res.assignedTo) {
           this.addTaskForm.patchValue({ assignedTo: res.assignedTo, taskDescription: item.taskDescription });
@@ -1314,9 +1319,9 @@ export class AddTasksComponent implements OnInit {
         adviceTypeId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
       }
 
-      // if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
-      //   editObj['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
-      // }
+      if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '' && this.familyMemberList.length!==0) {
+        editObj['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
+      }
 
       if(this.subTask.length!==0){
         let arr = [];
@@ -1383,9 +1388,9 @@ export class AddTasksComponent implements OnInit {
         subTasks: subTaskArr,
       }
 
-      // if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '') {
-      //   data['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
-      // }
+      if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '' && this.familyMemberList.length!==0) {
+        data['familyMemberId'] = this.addTaskForm.get('familyMemberId').value;
+      }
 
       if (this.isRecurringTaskForm) {
         data['isRecurring'] = true;

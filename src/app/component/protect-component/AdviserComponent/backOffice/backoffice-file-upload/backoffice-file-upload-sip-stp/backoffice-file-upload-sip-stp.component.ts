@@ -86,8 +86,12 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
             element.status = "Success";
           } else if (element.processStatus === -1) {
             element.status = "Failed";
-          } else {
-            element.status = "Failed";
+          } else if(element.processStatus === -2) {
+            element.status = "Duplicate";
+          } else if(element.processStatus === -3){
+            element.status = "Wrong broker code";
+          } else if(element.processStatus === -4){
+            element.status = "No data";
           }
         });
         this.listData = data;

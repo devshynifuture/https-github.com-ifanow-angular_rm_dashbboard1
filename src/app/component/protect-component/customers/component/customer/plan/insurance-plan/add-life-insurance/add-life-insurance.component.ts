@@ -16,7 +16,7 @@ export class AddLifeInsuranceComponent implements OnInit {
   dataSource: any = new MatTableDataSource();
 
   counter: number;
-  isLoading: boolean;
+  isLoading = true;
   clientId: any;
   selectvalue;
   advisorId: any;
@@ -35,6 +35,7 @@ export class AddLifeInsuranceComponent implements OnInit {
   };
   familyMemberSend: any;
   addplan = false;
+  isLoadingLifeInsurance = true;
 
   constructor(
     private planService: PlanService,
@@ -79,16 +80,19 @@ export class AddLifeInsuranceComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.loader(1);
+    this.isLoadingLifeInsurance = true;
     this.planService.getFamilyDetailsInsurance(obj).subscribe(
       data => this.getFamilyDetailsInsuranceRes(data),
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
+        this.isLoadingLifeInsurance = false;
         this.loader(-1);
       }
     );
   }
   getFamilyDetailsInsuranceRes(data) {
     this.loader(-1);
+    this.isLoadingLifeInsurance = false;
     console.log('getFamilyDetailsInsuranceRes', data)
     this.dataSource = data
   }
