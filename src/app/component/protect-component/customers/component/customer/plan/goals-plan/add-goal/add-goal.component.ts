@@ -2,11 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { LoaderFunction } from 'src/app/services/util.service';
+import { LoaderFunction, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subscriber, Subscription } from 'rxjs';
 import { AddGoalService } from './add-goal.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-goal',
@@ -47,6 +48,11 @@ export class AddGoalComponent implements OnInit {
       name: 'Un-deployed',
       filter: 'not-deployed',
     },
+    {
+      name : 'Asset type',
+      filter:'asset type'
+    }
+
   ];
   sortBtnList:any[] = [
     {
@@ -168,13 +174,22 @@ export class AddGoalComponent implements OnInit {
   filterByFamily(member) {
     if(member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
+      this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+      this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
+
     } else {
       if(member !='all' ){
         this.displayedAssets = this.allAssetsList.filter((obj) => {
           return obj.familyMemberId === member
         });
+        this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
+
       }else{
         this.displayedAssets = this.allAssetsList;
+        this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
+        this.displayedAssets.forEach(element => element.currentValue1 = UtilService.getNumberToWord(element.currentValue))
+
       }
 
     }
@@ -197,7 +212,9 @@ export class AddGoalComponent implements OnInit {
       case 'not-deployed':
         this.displayedAssets = this.displayedAssets.filter(asset => !asset.isDeployed);
         break;
-    
+        case 'asset type':
+          this.displayedAssets = this.displayedAssets.filter(asset => asset.assetType);
+          break;
       default:
         console.error("Invalid asset filter id found", filterType);
         break;

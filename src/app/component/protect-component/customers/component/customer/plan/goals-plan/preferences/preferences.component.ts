@@ -116,13 +116,13 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
-    if(this.data.goalType ==1){
-      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio, [Validators.required]));
-      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio, [Validators.required]));
-    }
     if(this.data.goalType == 5){
       this.goalDetailsFG.addControl('frequency', this.fb.control(remainingData.frequency, [Validators.required]));
       
+    }
+    if(this.data.goalType ==1){
+      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio));
+      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio));
     }
   }
   restrictFrom100(event) {
@@ -134,6 +134,15 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     if (this.data.singleOrMulti == 1) {
       this.subscription.add(
         this.goalDetailsFG.controls.goalStartDateYear.valueChanges.subscribe(year => {
+          this.goalStartYears = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
+        })
+      )
+      this.subscription.add(
+        this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
           if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
@@ -149,15 +158,15 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-            if(this.data.goalType == 1 ){
-              this.goalDetailsFG.controls.postequityAllocation.enable();
-              this.goalDetailsFG.controls.postdebtAllocation.enable();
-              this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementEquityAssetAllocation);
-              this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementDebtAssetAllocation);
-            }
           }
         })
       )
+    }
+    if(this.data.goalType == 1 ){
+      this.goalDetailsFG.controls.postequityAllocation.enable();
+      this.goalDetailsFG.controls.postdebtAllocation.enable();
+      this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.equity_ratio);
+      this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.debt_ratio);
     }
   }
   setInflamationReturns() {
@@ -174,6 +183,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns + "%"
       } else if (element.position == 'Stocks') {
         element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
+      }else if (element.position == 'Insurance') {
+        element.name = this.data.remainingData.returnsAssumptions.insurance_return + "%"
+      }else if (element.position == 'Real Estates') {
+        element.name = this.data.remainingData.returnsAssumptions.real_estate + "%"
+      }else if (element.position == 'Bank Accounts Saving') {
+        element.name = this.data.remainingData.returnsAssumptions.bank_account_saving + "%"
+      }else if (element.position == 'Commodities - Gold') {
+        element.name = this.data.remainingData.returnsAssumptions.commodity_gold + "%"
+      }else if (element.position == 'Commodities- Others') {
+        element.name = this.data.remainingData.returnsAssumptions.commodity_other + "%"
       }
     });
     this.dataSource1.forEach(element => {
@@ -276,7 +295,6 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
   setAssetAllocationListeners() {
-
     if (this.assetAllocationFG.controls.strategicOrTactical.value == 2) {
       // this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
       // this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
@@ -346,6 +364,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         Object.assign(this.obj, { balancedFundReturns: parseInt(element.name) });
       } else if (element.position == 'Stocks') {
         Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      } else if (element.position == 'Insurance') {
+        Object.assign(this.obj, { insuranceReturn: parseInt(element.name) });
+      }else if (element.position == 'Real Estates') {
+        Object.assign(this.obj, { realEstate: parseInt(element.name) });
+      }else if (element.position == 'Bank Accounts Saving') {
+        Object.assign(this.obj, { bankAccountSaving: parseInt(element.name) });
+      }else if (element.position == 'Commodities - Gold') {
+        Object.assign(this.obj, { commodityGold: parseInt(element.name) });
+      }else if (element.position == 'Commodities- Others') {
+        Object.assign(this.obj, {     commodityOther : parseInt(element.name) });
       }
     });
     this.dataSource1.forEach(element => {
@@ -443,6 +471,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 'Equity funds', name: '10%' },
   { position: 'Balanced funds', name: '7%' },
   { position: 'Stocks', name: '7%' },
+  { position: 'Stocks', name: '7%' },
+  { position: 'Insurance', name: '7%' },
+  { position: 'Bank Accounts Saving', name: '7%' },
+  { position: 'Commodities - Gold', name: '7%' },
+  { position: 'Commodities- Others', name: '7%' },
 ];
 export interface PeriodicElement1 {
   name: string;

@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { iif } from 'rxjs';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -87,6 +88,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   // @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
+    this.getFamilyMemberList();
     let date = this.maxDate.setDate(this.maxDate.getDate() - 1);
     this.maximumDate =new Date(date);
     console.log('ttra data', this.data)
@@ -119,8 +121,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
             finalize(() => {
-              this.isLoadingForDropDown = false
-              this.errorMsg = 'No scheme Found';
+              this.isLoadingForDropDown = false;
+              // (!this.schemeNameControl.value || ) ?  this.errorMsg =  'No scheme Found' : this.errorMsg = '';
+              (this.errorMsg=='No scheme Found')?this.errorMsg =  'No scheme Found' : this.errorMsg = '';
+              // this.errorMsg = 'No scheme Found';
 
             }),
           )
@@ -134,11 +138,11 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           this.filteredSchemeError = false;
         } else {
           this.filteredSchemeError = true;
-          this.errorMsg = "No data found";
+          this.errorMsg = "No scheme Found";
         }
         console.log(this.filteredSchemes);
       });
-    this.getFamilyMemberList();
+    // this.getFamilyMemberList();
   }
 
   getRtTypeIdList() {
@@ -167,6 +171,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
   mapSchemeWithForm(scheme) {
     this.schemeObj = scheme;
+    this.errorMsg = '';
     console.log("this is scheme obj", this.schemeObj);
   }
 
@@ -176,6 +181,14 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.familyMemberList = res;
+          this.familyMemberList.forEach(element=>{
+            if(element.familyMemberId == this.data.familyMemberId){
+              if(element.name != this.data.ownerName){
+                this.data.ownerName = this.data.ownerName.toUpperCase();
+                this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
+              }
+            }
+          })
           console.log(res);
         } else {
           this.eventService.openSnackBar("No Family Member found!", "Dismiss");
@@ -384,16 +397,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   }
   saveMfSchemeLevel() {
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
-    if(this.errorMsgForScheme){
-      this.schemeNameControl.setErrors({ incorrect: true });
-      this.schemeNameControl.markAsTouched();
-    }
-
-    if(this.transactionArray.invalid){
-      this.transactionArray.markAllAsTouched()
-
-    }
-    if (this.schemeLevelHoldingForm.invalid) {
+    // if(this.errorMsg || !this.schemeNameControl.value){
+    //   this.schemeNameControl.setErrors({ incorrect: true });
+    //   this.schemeNameControl.markAsTouched();
+    // }else if(this.transactionArray.invalid){
+    //   this.transactionArray.markAllAsTouched();
+    // }else
+     if ((this.errorMsg || !this.schemeNameControl.value) && this.schemeLevelHoldingForm.invalid && this.transactionArray.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       // this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
       // // this.schemeLevelHoldingForm.get('schemeName').markAsTouched();
@@ -406,7 +416,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       //   element.get('transactionAmount').markAsTouched();
       //   element.get('Units').markAsTouched();
       // });
+      this.schemeNameControl.setErrors({ incorrect: true });
+      this.schemeNameControl.markAsTouched();
       this.schemeLevelHoldingForm.markAllAsTouched()
+      this.transactionArray.markAllAsTouched();
     // }else if(this.transactionListForm.invalid == false){
     //   }
     }else if(this.transactionListForm.invalid){
@@ -431,7 +444,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
               mutualFundId: this.data.mutualFundId,
               sip: this.schemeLevelHoldingForm.controls.sip.value,
-              tag: this.schemeLevelHoldingForm.controls.tag.value,
+              tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
               fwTransactionType: (element.transactionType) ? this.getTransactionName(element.transactionType) : null,
               transactionDate: (element.date) ? this.getDateFormatted(element.date) : null,
               unit: element.Units,
@@ -517,7 +530,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           schemeCode: this.schemeObj['schemeCode'],
           balanceUnit: 0,
           sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
-          tag: this.schemeLevelHoldingForm.controls.tag.value,
+          tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           realOrFictitious: 0,
           parentId: this.parentId,
           mutualFundTransactions
@@ -550,10 +563,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           // schemeName: this.schemeObj['schemeName'],
           folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
           // schemeCode: this.schemeObj['schemeCode'],
-          balanceUnit: this.data.balanceUnit,
+          balanceUnit:this.data.balanceUnitOrg,
           isSip: this.data.isSip,
           sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
-          tag: this.schemeLevelHoldingForm.controls.tag.value,
+          tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           // realOrFictitious: 0,
           parentId: this.parentId,
           // mutualFundTransactions: mutualFundTransactions,

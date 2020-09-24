@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-7 p-0">
-            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - {{insuranceData.holderName}} </h3>
+            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - {{insuranceData?.displayHolderName}} </h3>
         </div>
         <div class="col-md-5 text-right">
             <div class="wrapper-20">
@@ -10,21 +10,31 @@
         </div>
     </div>
 </div>
-<div class="pt-80 pr-28 pl-28">
+<div class="pt-80 pr-28 pl-28"  [formGroup]="suggestPolicyForm">
     <div class="row">
         <div class="col-md-8 pl-0">
             <h5 class="m-0">Policy name</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0">
+                    <input matInput class="form-control br-0" formControlName="policyName" matInput (keyup)="findPolicyName($event)" autocomplete="off" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of options" [value]="option.name">
+                                {{option.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-4 pr-0">
             <h5 class="m-0">Premium amount</h5>
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput class="form-control br-0 rupess">
+                    <input matInput class="form-control br-0 rupess" #premiumAmount [maxLength]="10" formControlName="premiumAmount" matInput>
+                    <mat-hint align="end" class="f-12">{{premiumAmount.value.length}}/10</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -34,18 +44,25 @@
             <h5 class="m-0">Frequency</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0">
-                        <mat-option selected>Action</mat-option>
-                        <mat-option value="1">Action</mat-option>
+                    <mat-select class="form-control br-0" formControlName="frequency" matInput>
+                            <mat-option value='12'>Monthly</mat-option>
+                            <mat-option value='4'>Quarterly</mat-option>
+                            <mat-option value='2'>Half yearly</mat-option>
+                            <mat-option value='1'>Yearly</mat-option>
                     </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
                     </div>
         </div>
         <div class="col-md-4 pl-0">
             <h5 class="m-0">Insurance amount</h5>
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput class="form-control br-0 rupess">
+                    <input matInput class="form-control br-0 rupess" #insuranceAmount [maxLength]="10" formControlName="insuranceAmount" >
+                    <mat-hint align="end" class="f-12">{{insuranceAmount.value.length}}/10</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -53,7 +70,9 @@
             <h5 class="m-0">Tenure</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0">
+                    <input matInput class="form-control br-0" formControlName="tenure" #tenure (keyup)="onChange(suggestPolicyForm,'tenure',$event)">
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>

@@ -1,4 +1,4 @@
-<div class="p-20">
+<div class="p-24">
 
     <div class="headerEditClass">
         <h2 class="f-20 mb-12">
@@ -40,17 +40,21 @@
             <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input type="text" formControlName="allocatedPercentage" appInputValueValidation [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
-                        <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.required">This field is required
+                        <input type="text" formControlName="allocatedPercentage" appInputValueValidation
+                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput
+                            class="form-control">
+                        <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.required">This field is
+                            required
                         </mat-error>
-                        <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.min || reallocationFG.get('allocatedPercentage').errors?.max">
+                        <mat-error
+                            *ngIf="reallocationFG.get('allocatedPercentage').errors?.min || reallocationFG.get('allocatedPercentage').errors?.max">
                             Please enter valid number</mat-error>
                     </mat-form-field>
                 </div>
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
+        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS' && allocationData.sipPercent !=0">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of SIP % (editable) </p>
@@ -58,7 +62,8 @@
             <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input type="text" formControlName="sipPercent" appInputValueValidation [inputValidator]="decimalValidator" matInput class="form-control">
+                        <input type="text" formControlName="sipPercent" appInputValueValidation
+                            [inputValidator]="decimalValidator" matInput class="form-control">
                         <mat-error *ngIf="reallocationFG.get('sipPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
@@ -66,7 +71,7 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS'">
+        <div class="row pb-10 align-items-center" *ngIf="allocationData.assetName == 'MUTUAL_FUNDS' && allocationData.lumpsumPercent !=0">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> c) Allocation of lumpsum % (editable) </p>
@@ -74,7 +79,8 @@
             <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input type="text" formControlName="lumpsumPercent" appInputValueValidation [inputValidator]="decimalValidator" matInput class="form-control">
+                        <input type="text" formControlName="lumpsumPercent" appInputValueValidation
+                            [inputValidator]="decimalValidator" matInput class="form-control">
                         <mat-error *ngIf="reallocationFG.get('lumpsumPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
@@ -82,7 +88,7 @@
             </div>
 
         </div>
-        <div class="row"  *ngIf="allocationData.assetName != 'MUTUAL_FUNDS'">
+        <div class="row" *ngIf="allocationData.assetName != 'MUTUAL_FUNDS'">
 
             <div class="col-md-6 p-0">
                 <p class="mb-0 text-black">c) Net allocation available</p>
@@ -101,12 +107,14 @@
         <div class="row">
             <div class="col-md-7 pl-0 text-left">
                 <!-- <button class="text-danger p-0" mat-button>UNALLOCATE</button> -->
-                <button class="text-primitive mr-12" mat-button mat-dialog-close>Cancel</button>
+
             </div>
 
             <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
-                <app-progress-button (btnClick)="reallocate()" class="btn-bottom   br-0 text-inherit" [options]="barButtonOptions">
-                </app-progress-button>
+                <!-- <app-progress-button class="btn-bottom   br-0 text-inherit">
+                </app-progress-button> -->
+                <button class="text-primitive mr-12 f-500" mat-button mat-dialog-close>Cancel</button>
+                <button mat-button class="text-primary f-500" (click)="reallocate()">Save</button>
             </div>
         </div>
     </div>

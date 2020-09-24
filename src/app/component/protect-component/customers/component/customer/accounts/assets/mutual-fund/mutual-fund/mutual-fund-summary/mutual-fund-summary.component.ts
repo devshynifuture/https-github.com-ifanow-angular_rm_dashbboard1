@@ -1057,7 +1057,11 @@ export class MutualFundSummaryComponent implements OnInit {
         }
         this.mfService.setCashFlowXirr(this.cashFlowObj);
       }, (error) => {
+        this.summary.data = [];
+        this.changeInput.emit(false);
         this.eventService.showErrorMessage(error);
+        this.isLoading = false;
+
       }
     );
   }
@@ -1222,7 +1226,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.grandTotal = data.totalValue;
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
-        this.summary.data = [{}, {}, {}];
+        
         // this.summary.data = data.customDataSourceData;
 
         const myArray = data.customDataSourceData;
@@ -1230,10 +1234,11 @@ export class MutualFundSummaryComponent implements OnInit {
         myArray.forEach(val => list.push(Object.assign({}, val)));
         this.summary.data = list;
         console.log('Summmary data get here ===', this.summary)
-        if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)) {
+        if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain) && !isNaN(this.mfData.total_unrealized_gain)) {
           this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
           this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
           this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
+          this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         }
         this.mfData.withdrawals = this.grandTotal.withdrawals
         this.mfData.withdrawals = this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
@@ -1241,7 +1246,6 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
         this.mfData.sip = this.grandTotal.sip
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
-        this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
 
         console.log("this is summary Data:::", data.customDataSourceData)
@@ -1256,7 +1260,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data
-
+        this.isLoading = false;
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1338,7 +1342,6 @@ export class MutualFundSummaryComponent implements OnInit {
               break;
           }
         });
-        this.isLoading = false;
         if (this.isBulkDataResponse) {
           this.mfService.getSummaryData()
             .subscribe(res => {

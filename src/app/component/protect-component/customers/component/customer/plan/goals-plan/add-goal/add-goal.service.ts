@@ -29,6 +29,10 @@ export class AddGoalService {
           obj.percentAllocated = 100 - element.percentAllocated
         });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
+        if(asset.assetType == 44 || asset.assetType == 43){
+          obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
+          obj.insuranceCashFlowId= asset.insuranceCashFlowId
+        }
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
         obj.currentValue = asset.currentValue
         this.allocateAsset(obj);
@@ -44,10 +48,15 @@ export class AddGoalService {
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     } else {
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
-      if (mfAsset.absAllocation < 100) {
+      if (mfAsset.absSIP != 0 || mfAsset.absLumsum != 0) {
         mfAsset.goalAssetMapping.forEach(element => {
-          obj.sipPercent = parseInt(element.sipPercent)
-          obj.lumpsumPercent = parseInt(element.lumpsumPercent)
+          if(mfAsset.isSip == true){
+            obj.sipPercent = parseInt(mfAsset.absSIP)
+            obj.lumpsumOrSip = 2
+          }else{
+            obj.lumpsumPercent = parseInt(mfAsset.absLumsum)
+            obj.lumpsumOrSip = 1
+          }
         });
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
@@ -88,6 +97,16 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
+  }
+  allocateOtherAssetToGoalRm(obj){
+    this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+      this.refreshObservable.next();
+      this.plansService.assetSubject.next(res);
+      this.refreshAssetList.next();
+      this.eventService.openSnackBar("Unallocated", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err);
     })

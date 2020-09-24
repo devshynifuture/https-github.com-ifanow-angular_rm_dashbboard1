@@ -10,6 +10,7 @@ import { ConstantsService } from 'src/app/constants/constants.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { MatDialog, MatAccordion } from '@angular/material';
 import { EditPercentComponent } from '../edit-percent/edit-percent.component';
+import { arrayMax } from 'highcharts';
 
 @Component({
   selector: 'app-add-planinsurance',
@@ -72,7 +73,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     fullWidth: false,
   };
   manualObj: any;
-  tab: any;
+  tab = 0;
   sendObj: any;
   needBase: any;
   id: any;
@@ -93,6 +94,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   dataSource4 = [];
   blockExpansion = true;
   @ViewChild('accordion',{static:true}) Accordion: MatAccordion
+  plannerNotes: any;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
@@ -151,10 +153,12 @@ export class AddPlaninsuranceComponent implements OnInit {
       // plannerNote: [(!data) ? '' : (data.plannerNotes) + '', [Validators.required]],
        insuranceAmount: [(!data) ? '' : data.adviceAmount, [Validators.required]],
     });
-    this.storeData=data ? data.plannerNotes : ''
+    this.storeData=data ? data.plannerNotes : '';
+
   }
   saveData(data) {
-    this.manualObj.plannerNotes = data;
+    this.plannerNotes = data;
+
   }
   getListFamilyMem() {
 
@@ -306,8 +310,6 @@ export class AddPlaninsuranceComponent implements OnInit {
 
     let obj = {
       id: this.insuranceData.id,
-      dependantId: 0,
-      lifeExpectancy: 0
     }
     this.loader(1);
     this.planService.getLifeInuranceNeedAnalysis(obj).subscribe(
@@ -323,30 +325,59 @@ export class AddPlaninsuranceComponent implements OnInit {
     data.forEach(element => {
       if (element.needTypeId == 2) {
         this.getdataForm(element);
-        this.plannerNote = element.plannerNotes.replace( /(<([^>]+)>)/ig, '');
+        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace( /(<([^>]+)>)/ig, '') : '-';
         this.manualObj = element
 
       } else {
         this.needBase = element
+        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace( /(<([^>]+)>)/ig, '') : '-';
+
       }
     });
   }
+  getNeedBasedObj(){
+    let array=[];
+    array = this.getFilteredObj(array,this.dataSource,'1',this.plannerObj.liabilities,'total_loan_outstanding','name')
+    array.push({"amount": this.plannerObj.lifeInsurancePremiums,"step": "2.1","name": "Life Insurance premiums","percentage": "100","isSelected": 1,"totalAmount": this.plannerObj.dependantNeeds})
+    array = this.getFilteredObj(array,this.dataSource1,'2.2',this.plannerObj.dependantNeeds,'amount','name')
+    array = this.getFilteredObj(array,this.dataSource3,'3',this.plannerObj.goalsMeet,'goalFV','goalName')
+    array.push({"amount": 0,"step": "4","name": "Gross Life insurance Required","percentage": "100","isSelected": 1,"totalAmount": this.plannerObj.GrossLifeinsurance})
+    array = this.getFilteredObj(array,this.dataSource4,'5',this.plannerObj.incomeSource,'amount','name')
+    array.push({"amount": 0,"step": "6","name": "Existing life insurance(sum assured)","percentage": "100","isSelected": 1,"totalAmount": this.plannerObj.existingLifeInsurance})
+    array = this.getFilteredObj(array,this.dataSource2,'7',this.plannerObj.existingAsset,'currentValue','ownerName')
+    array.push({"amount": 0,"step": "8","name": "Additional life insurance required","percentage": "100","isSelected": 1,"totalAmount": this.plannerObj.additionalLifeIns})
+    return array;
+  }
+  getFilteredObj(mainArray,array,step,totalAmount,amount,name){ 
+    array.forEach(element => {
+      const obj={
+        "amount": element[amount],
+        "step": step,
+        "name": element[name],
+        "percentage": element.percent,
+        "isSelected": (element.selected) ? 1 : 0,
+        "totalAmount": totalAmount
+      }
+      mainArray.push(obj);
+    });
+    return mainArray;
+  }
   saveAnalysis() {
+    let needBasedAnalysis = this.getNeedBasedObj();
     if (this.tab == 0) {
       this.sendObj = {
-        lifeInsurancePlanningId: this.needBase.lifeInsurancePlanningId,
-        needTypeId: this.needBase.needTypeId,
-        adviceAmount: this.needBase.adviceAmount,
-        plannerNotes: this.needBase.plannerNotes,
-
+        lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
+        needTypeId: 1,
+        adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : null),
+        plannerNotes:  this.needBase ? this.needBase.plannerNotes : this.plannerNotes,
+        needBasedObject:needBasedAnalysis
       }
     } else {
       this.sendObj = {
-        lifeInsurancePlanningId: this.manualObj.lifeInsurancePlanningId,
-        needTypeId: this.manualObj.needTypeId,
-        adviceAmount: this.manualObj.adviceAmount,
-        plannerNotes: this.manualObj.plannerNotes,
-        id: this.manualObj.id
+        lifeInsurancePlanningId: this.manualObj  ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  .manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
+        needTypeId: 2,
+        adviceAmount: this.manualForm.get('insuranceAmount').value,
+        plannerNotes:  this.plannerNotes,
       }
     }
     this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(

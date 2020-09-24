@@ -42,6 +42,17 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
     return this.inputData;
   }
   getSipData(data){
+    if(data.assetList.length > 0){
+      data.assetList = data.assetList.filter(item => item.countThis == true);
+      if(data.name == 'Recurring deposits'){
+        data.assetList.forEach(element=>{
+          if(element.name == "Sukanya samriddhi yojna"){
+            element.rdNumber = element.ssyNo;
+          }
+        })
+      }
+      
+    }
     this.flag = data.name
    if(data.name == 'Mutual fund - SIP'){
       if(data.assetList.length > 0){
@@ -53,7 +64,7 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
       if(data.assetList.length > 0){
         data.assetList.forEach(element => {
           element.name = (data.name == 'Life insurance premium') ? element.lifeAssuredName :(data.name == 'General insurance premium') ? element.policyHolderName : (data.name == 'Loan EMI') ? element.ownerName : (element.ownerList.length > 0 ? element.ownerList[0].name : '') 
-          element.currentValue =(data.name == 'General insurance premium') ? element.premiumAmount : (data.name == 'Loan EMI') ? element.loanAmount :element.currentValue 
+          element.currentValue = (data.name == 'Life insurance premium') ? element.premiumAmount : (data.name == 'General insurance premium') ? element.premiumAmount : (data.name == 'Loan EMI') ? element.emi : (data.name == 'Recurring deposits') ? element.monthlyContribution : element.currentValue 
           element.number = (data.name == 'Life insurance premium' ||data.name=='General insurance premium') ? element.policyNumber : (data.name == 'Loan EMI') ? ((element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage') : 
           (data.name == 'Recurring deposits') ? element.rdNumber:element.accountNumber
         });

@@ -498,11 +498,15 @@
                                     <div class="form-group">
 
                                         <mat-form-field>
-                                            <mat-select matInput formControlName="cashFlowType" #cashFlowType autocomplete="off" class="form-control br-0">
+                                            <!-- <mat-select matInput formControlName="cashFlowType" #cashFlowType autocomplete="off" class="form-control br-0">
                                                 <mat-option value="1">Survival benefit</mat-option>
                                                 <mat-option value="2">Maturity benefit</mat-option>
                                                 <mat-option value="3">Annuity</mat-option>
-                                            </mat-select>
+                                            </mat-select> -->
+                                            <mat-select matInput  formControlName="cashFlowType" #cashFlowType  autocomplete="off" class="form-control br-0">
+                                            <mat-option (click)="disabledSelected(option.value)" *ngFor="let option of cashFlowArray;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
                                         </mat-form-field>
                                     </div>
                                 </div>

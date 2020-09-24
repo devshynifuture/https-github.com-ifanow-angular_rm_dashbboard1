@@ -213,6 +213,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
   headerHtml: HTMLElement;
   cashFlowXirr: any;
   cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
+  fromDate: any;
 
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
@@ -302,6 +303,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions';
           this.mode = 'All Transactions';
+          this.fromDate = (param1.fromDate)
+          this.toDate = (param1.toDate)
         } else {
           this.viewMode = 'Unrealized Transactions';
           this.mode = 'Unrealized Transactions';
@@ -802,6 +805,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         data => {
           console.log(data);
           const response = this.mfService.doFiltering(data);
+            // response.mutualFundList.forEach(element => {
+            //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+            // });
           Object.assign(response.mutualFundList, {flag: true});
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
@@ -883,6 +889,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         // this.asyncFilter(this.mutualFund.mutualFundList);
         if (this.isBulkEmailing) {
           // this.filterForBulkEmailing(data);
+          if(this.fromDate && this.toDate){
+            data.forEach(element => {
+            element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy/MM/dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+          });
+        }
           this.asyncFilter(data);
         } else {
           this.asyncFilter(data);
@@ -932,14 +943,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         console.log('startTime ', new Date());
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
-        this.dataSource.data = (data.dataSourceData);
         this.dataTransaction.dataSource = data.dataSourceData;
         // this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource = [];
         this.customDataSource.data = [];
         // this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
         // this.unrealisedData.allData = data.customDataSourceData;
-        this.setUnrealizedDataSource(data.customDataSourceData);
         this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource.data.arrayTran = [];
         this.customDataSource.data.arrayUnrealised = [];
@@ -950,13 +959,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         this.dataTransaction.viewMode = this.mode;
         this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
         this.dataTransaction.columnHeader = this.columnHeader;
-        if(!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)){
+        if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain) && !isNaN(this.mfData.total_unrealized_gain)) {
           this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
           this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
           this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
+          this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         }
+        this.setUnrealizedDataSource(data.customDataSourceData);
+        this.dataSource.data = (data.dataSourceData);
+        this.isLoading = false;
         this.mfService.setTransactionData(this.dataTransaction);
-
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
           this.displayedColumns.forEach((element, ind) => {
             this.styleObjectTransaction(element, ind);
@@ -1091,7 +1103,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         // this.setUnrealizedDataSource(this.customDataSource.data);
 
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
-        this.isLoading = false;
         if (mutualFund.flag == true) {
           this.dataTransaction.flag = true;
         }
@@ -1342,6 +1353,18 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
             if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             }
+            if(this.rightFilterData.transactionPeriodCheck){
+              if(this.viewMode == 'Unrealized Transactions'){
+                this.reponseData.mutualFundList.forEach(element => {
+                  element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
+                });
+              }else{
+                this.reponseData.mutualFundList.forEach(element => {
+                  element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
+                });
+              }
+            }
+            
             this.mfData = this.reponseData;
             this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {

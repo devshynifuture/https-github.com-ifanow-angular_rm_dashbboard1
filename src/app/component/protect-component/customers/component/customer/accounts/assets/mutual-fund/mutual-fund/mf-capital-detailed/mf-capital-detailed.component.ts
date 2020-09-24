@@ -219,6 +219,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       const list = [];
       myArray.forEach(val => list.push(Object.assign({}, val)));
       let catObj = this.MfServiceService.categoryFilter(list, 'category');
+      this.categorisedHybridFund(catObj);
       Object.keys(catObj).map(key => {
         if (catObj[key][0].category != 'DEBT') {
           // this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
@@ -265,6 +266,41 @@ export class MfCapitalDetailedComponent implements OnInit {
         toDateYear: this.toDateYear,
       }
     }
+  }
+  categorisedHybridFund(data){
+    let equityFund = [];
+    let debtFund=[];
+    Object.keys(data).map(key => {
+      if (data[key][0].category == 'HYBRID') {
+        data[key][0].mutualFund.forEach(element => {
+          if(element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
+          || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv'|| element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced'){
+            equityFund.push(element);
+          }else if(element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation'){
+            debtFund.push(element);
+          }else{
+            equityFund.push(element);
+          }
+        });
+      }
+    });
+    if(debtFund.length >0 ){
+      if(data['DEBT']){
+        data['DEBT'][0].mutualFund=[...data['DEBT'][0].mutualFund,...debtFund];
+      }else{
+        data.DEBT[0].mutualFund = debtFund
+      }
+    }
+    if(equityFund.length > 0){
+      if(data['EQUITY']){
+        data['EQUITY'][0].mutualFund=[...data['EQUITY'][0].mutualFund,...equityFund]
+      }else{
+        data.EQUITY[0].mutualFund = equityFund
+
+      }
+    }
+    delete data['HYBRID'];
+    return data;
   }
   openFilter() {
     const fragmentData = {

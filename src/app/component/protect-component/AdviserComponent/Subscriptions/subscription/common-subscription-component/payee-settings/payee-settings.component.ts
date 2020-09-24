@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -11,6 +11,7 @@ import { MatInput } from '@angular/material';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { element } from 'protractor';
+import { } from 'googlemaps'
 
 @Component({
   selector: 'app-payee-settings',
@@ -44,6 +45,8 @@ export class PayeeSettingsComponent implements OnInit {
   inputData: any;
   @Output() closeAddPayee = new EventEmitter();
   @Output() getEditData = new EventEmitter();
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
+
   obj = [
     {
       id: null,
@@ -95,7 +98,7 @@ export class PayeeSettingsComponent implements OnInit {
   payeeList: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService, private custumService: CustomerService) {
+    private ngZone: NgZone, private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService, private custumService: CustomerService) {
   }
 
   get data() {
@@ -112,11 +115,43 @@ export class PayeeSettingsComponent implements OnInit {
     // this.clientId = AuthService.getClientId()
     this.getClientPayeeSettings(data);
     this.getListFamilyMem();
+
+    const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+      types: [],
+      componentRestrictions: { 'country': 'IN' }
+    });
+
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        this.payeeSettingsForm.get('billingAddress').setValue(place.formatted_address)
+        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.getPincode(place.formatted_address)
+        // console.log(place)
+      })
+      // })
+    })
   }
 
   OnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+
+
+  }
+
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode.join("");
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.payeeSettingsForm.get('pincode').setValue(pincode)
+    this.getPostalPin(pincode);
   }
   getListFamilyMem() {
     this.advisorId = AuthService.getAdvisorId();
@@ -253,6 +288,13 @@ export class PayeeSettingsComponent implements OnInit {
       this.getFormControl().city.disable();
       this.getFormControl().country.disable();
       this.getFormControl().state.disable();
+      let address1 = this.payeeSettingsForm.get('billingAddress').value;
+      let pincodeFlag = address1.includes(`${this.payeeSettingsForm.get('pincode').value},`)
+      address1 = address1.replace(`${this.payeeSettingsForm.get('city').value},`, '')
+      address1 = address1.replace(!pincodeFlag ? `${this.payeeSettingsForm.get('state').value},` : this.payeeSettingsForm.get('state').value, '')
+      address1 = address1.replace(this.payeeSettingsForm.get('country').value, '');
+      address1 = address1.replace(pincodeFlag ? `${this.payeeSettingsForm.get('pincode').value},` : this.payeeSettingsForm.get('pincode').value, '')
+      this.payeeSettingsForm.get('billingAddress').setValue(address1)
       this.pinInvalid = false;
     }
   }

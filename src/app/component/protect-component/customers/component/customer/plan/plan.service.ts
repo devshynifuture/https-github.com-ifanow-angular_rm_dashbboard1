@@ -197,7 +197,10 @@ export class PlanService {
   allocateOtherAssetToGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
   }
-
+  deleteMilestone(data) {
+    let httpParams = new HttpParams().set('milestoneId', data.milestoneId)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MILESTONE + '?' + httpParams, '');
+  }
   removeAllocation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
   }
@@ -272,5 +275,14 @@ export class PlanService {
   }
   getCurrentPolicyAddMore(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_CURRENT_POLICY_GET, data)
+  }
+  getNeedBasedDetailsLifeInsurance(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_NEED_BASED_DETAILS+ 'id=' + data, '')
+  }
+  updateRecommendationsLI(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_RECOMMENDATION_UPDATE, data)
+  }
+  updateRecommendationsGI(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GEN_INSURANCE_RECOMMENDATION_UPDATE, data)
   }
 }

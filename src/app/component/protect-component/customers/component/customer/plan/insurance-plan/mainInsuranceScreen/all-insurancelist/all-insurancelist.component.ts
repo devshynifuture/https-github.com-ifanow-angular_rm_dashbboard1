@@ -77,6 +77,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.showIsurance = true
   }
   getInsuranceList() {
+    this.showIsurance = true
     this.isLoadingInInsurance={isLoading:true};
     let obj = {
       clientId: this.clientId,
@@ -115,17 +116,20 @@ export class AllInsurancelistComponent implements OnInit {
         } else if (element.insuranceType == 6) {
           element.heading = 'Critical illness'
           element.logo = '/assets/images/svg/CIsmall.svg'
-        } else if (element.insuranceType == 4) {
-          element.heading = 'Cancer care'
-          element.logo = '/assets/images/svg/CCsmall.svg'
-        } else if (element.insuranceType == 10) {
+        }  else if (element.insuranceType == 10) {
           element.heading = 'Fire insurance'
           element.logo = '/assets/images/svg/FIsmall.svg'
         } else if (element.insuranceType = 11) {
-          element.heading = 'Householders'
+          element.heading = 'Home insurance'
           element.logo = '/assets/images/svg/Hsmall.svg'
         } else if (element.insuranceType = 7) {
           element.heading = 'Personal accident'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        }else if (element.insuranceType = 8) {
+          element.heading = 'Travel insurance'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        }else if (element.insuranceType = 4) {
+          element.heading = 'Motor insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
         }
       });
@@ -221,7 +225,7 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if(upperSliderData['data'] == true ){
+          if(upperSliderData['data']){
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

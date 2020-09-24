@@ -142,9 +142,9 @@
               <div class="wrapper-20 ba-light">
                 <div class="row ">
                   <div class="col-md-6 p-0">
-                    <p class="m-0 text-primitive f-12">INCOME IN GOAL YEAR</p>
+                    <p class="m-0 text-primitive f-12">MONTHLY INCOME IN GOAL YEAR</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
-                        [value]="(calculatedEMI.netSalary || 0) * 12">{{(calculatedEMI.netSalary || 0) * 12}}</span>
+                        [value]="(calculatedEMI?.highestLoanAndEmiEligible?.income_at_goal_yeary || 0)">{{(calculatedEMI?.highestLoanAndEmiEligible?.income_at_goal_year || 0)}}</span>
                     </h5>
                   </div>
                   <div class="col-md-6 p-0"></div>
@@ -153,7 +153,7 @@
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST LOAN AVAILABLE</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
-                        [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span>
+                        [value]="calculatedEMI?.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI?.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span>
                     </h5>
                   </div>
                   <div class="col-md-6 p-0">
@@ -188,7 +188,7 @@
                         [value]="calculatedEMI.downPayment || 0">{{calculatedEMI.downPayment || 0}}</span></h5>
                   </div>
                 </div>
-                <div class="row pt-28">
+                <!-- <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">MONTHLY REQUIRED</p>
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
@@ -199,16 +199,16 @@
                     <h5 class="m-0 text-black">&#8377;<span appFormatNumber
                         [value]="calculatedEMI.lumpsumRequired || 0">{{calculatedEMI.lumpsumRequired || 0}}</span></h5>
                   </div>
-                </div>
-                <div class="row btl-1 pt-20 pb-20">
+                </div> -->
+                <div class="row btl-1 pt-20 pb-20" *ngIf="loanAmount">
                   <div class="col-md-6">
                     <div class="highcharts-figure" id="piechartMutualFund"></div>
                   </div>
                   <div class="col-md-6 pt-30">
                     <p class="m-0 f-12 text-black"><span
-                        class="hw-10 mr-4 bg-primary iflex"></span>{{perLoanAmt?perLoanAmt:0}}% Loan amount</p>
+                        class="hw-10 mr-4 bg-primary iflex"></span>{{loanAmount?loanAmount:0}}% Loan amount</p>
                     <p class="m-0 f-12 text-black pt-20"><span
-                        class="hw-10 mr-4 bg-warning iflex"></span>{{perLoanAmt?downPayPer:0}}% Down payment</p>
+                        class="hw-10 mr-4 bg-warning iflex"></span>{{downPayement?downPayement:0}}% Down payment</p>
                   </div>
                 </div>
               </div>
@@ -219,7 +219,7 @@
         <!-- <mat-tab label="Rent vs buy">Content 2</mat-tab> -->
         <!-- <mat-tab label="Tax impact">Content 2</mat-tab> -->
 
-        <mat-tab label="Step up">
+        <!-- <mat-tab label="Step up">
           <div class="mt-32">
             <div class="row">
               <div class="col-md-6 d-flex align-items-end">
@@ -264,7 +264,7 @@
 
           </div>
 
-        </mat-tab>
+        </mat-tab> -->
 
         <mat-tab label="Cost of delay">
           <div class="mt-32">

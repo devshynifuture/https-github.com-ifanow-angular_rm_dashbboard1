@@ -1,0 +1,466 @@
+<div class="popup-header-fix w-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">{{showInsurance.header}}</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(showInsurance)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-80 pl-28 pr-28 pb-44 mb-44" [formGroup]="travelInsuranceForm">
+    <div formArrayName="getCoOwnerName">
+        <div class="row" *ngFor="let obj of travelInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-8 ">Name of policy holder</h5>
+            </div>
+            <div [ngClass]="travelInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="form-group  ">
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' (selectionChange)="getOwnerData($event.value,nomineesListFM)" class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="travelInsuranceForm.value.getCoOwnerName.length > 1">
+                <div class="form-group   iconPetage">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                            Total percent should be 100%
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 p-0 d-flex align-items-center">
+                <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
+                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-10 ">Plan type</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field>
+                <mat-select matInput formControlName="PlanType" autocomplete="true" #planTypeRef class="form-control br-0">
+                    <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option> -->
+                    <mat-option value='9'> Single Trip Travel Insurance Plan </mat-option>
+                    <mat-option value='16'>Multi Trip Travel Insurance Plan - 30 days
+                    </mat-option>
+                    <mat-option value='17'>Multi Trip Travel Insurance Plan - 60 days
+                    </mat-option>
+                    <!-- <mat-option value='11'>Family Floater Travel Insurance PlanFamily Floater Travel Insurance Plan</mat-option> -->
+                    <mat-option value='12'>Student Travel Insurance Plan</mat-option>
+                </mat-select>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 pl-0 form-group">
+            <mat-form-field>
+                <mat-select matInput formControlName="planDetails" #planDetails (selectionChange)="onChangeSetErrorsType($event.value,'planDetails')" autocomplete="off" class="form-control br-0">
+                    <mat-option value='0'>Individual</mat-option>
+                    <mat-option value='1'>Family floater</mat-option>
+                    <!-- <mat-option value='2'>Super top up</mat-option> -->
+                </mat-select>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row  pt-32">
+        <div class="col-md-4 text-right pr-0">
+            <h5 class="mb-0 mt-28">Insured members</h5>
+        </div>
+        <div class="col-md-8 pr-0">
+            <div class="row">
+                <div class="col-md-7 pr-0">
+                    <h5 class="mb-4 f-14">Name </h5>
+                </div>
+                <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
+                    <h5 class="mb-4 f-14">Sum insured </h5>
+                </div>
+            </div>
+
+            <div formArrayName="InsuredMemberForm">
+                <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex">
+
+                    <div class="col-md-7  pr-0">
+                        <div class="form-group ">
+                            <mat-form-field>
+                                <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData(insuredMemberList)">
+                                    <mat-option value='' disabled>Select insured members</mat-option>
+                                    <mat-option *ngFor="let f of insuredMemberList" [disabled]="f.isDisabled" [value]="f.userName">
+                                        {{f.userName}}</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
+                        <div class="form-group  iconDollar">
+
+                            <mat-form-field>
+                                <input matInput type="number" formControlName="sumAssured" #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control dollar br-0">
+                                <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pr-0 d-flex mt-8 ">
+                        <i class="material-icons text-primitive c-p  " (click)="addTransaction(undefined)">add</i>
+                        <i (click)="removeTransaction(pointIndex)" *ngIf="travelInsuranceForm.value.InsuredMemberForm?.length > 1" class="material-icons text-primitive c-p float-right">remove</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row pt-32" *ngIf="planDetails.value == '1' || showSumAssured">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Sum insured</h5>
+        </div>
+        <div class="col-md-3 form-group iconDollar">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="number" formControlName="sumAssuredIdv" #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control dollar br-0">
+                <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/10</mat-hint>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Policy number</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-10 ">Name of insurer</h5>
+            <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field>
+                <input #insurerName (keyup)="findCompanyName($event)" autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option.name">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Plan name</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="text" [maxLength]="40" formControlName="planeName" #planeName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Plan name">
+                <mat-hint align="end" class="f-12">{{planeName.value.length}}/40</mat-hint>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+
+    <div class="row pt-32">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Premium</h5>
+        </div>
+        <div class="col-md-3 form-group iconRupess">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="number" formControlName="premium" #premium [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                <mat-hint align="end" class="f-12">{{premium.value.length}}/10</mat-hint>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-36">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Policy start date</h5>
+        </div>
+        <div class="col-md-3 form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input (focus)="policyStartDatePicker.open()" (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0"
+                    #policyStartDate formControlName="policyStartDate" matInput>
+                <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #policyStartDatePicker></mat-datepicker>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-44">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8 ">Policy expiry date</h5>
+        </div>
+        <div class="col-md-3 form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0"
+                    formControlName="policyExpiryDate" matInput>
+                <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
+                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.max)">policy expiry date cannot be greater than policy start date
+
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
+        <div (click)="openOptionField()" class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="pt-40 pb-48" *ngIf="addMoreFlag">
+        <div (click)="openOptionField()" class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-14 c-p">Show less</p>
+        </div>
+
+
+        <div formArrayName="planFeatureForm">
+            <div class="row pt-36" *ngFor="let obj of travelInsuranceForm.controls['planFeatureForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-20 ">Plan features</h5>
+                </div>
+
+                <div class="col-md-5 form-group">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
+                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                                {{option.type}}</mat-option> -->
+                            <mat-option value='15'>Emergency Medical Benefits</mat-option>
+                            <mat-option value='16'>Accidental Death & Permanent Disablement </mat-option>
+                            <mat-option value='17'>Emergency Dental Treatment</mat-option>
+                            <mat-option value='18'>Hospital Cash</mat-option>
+                            <mat-option value='19'>Loss of Baggage & Personal Documents</mat-option>
+                            <mat-option value='20'>Medical Evacuation</mat-option>
+                            <mat-option value='21'>Repatriation</mat-option>
+                            <mat-option value='22'>Loss of Checked Baggage</mat-option>
+                            <mat-option value='23'>Delay of Checked Baggage</mat-option>
+                            <mat-option value='24'>Accidental Death</mat-option>
+                            <mat-option value='25'>Financial Emergency Assistance</mat-option>
+                            <mat-option value='26'>Personal Liability</mat-option>
+                            <mat-option value='27'> Flight Delay</mat-option>
+                            <mat-option value='28'>Hijack Distress Allowance</mat-option>
+                            <mat-option value='29'>Hotel Accommodation</mat-option>
+                            <mat-option value='14'>Trip cancellation and interruptions</mat-option>
+                            <mat-option value='30'>Others</mat-option>
+                        </mat-select>
+                        <mat-error>This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
+                    <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
+                    <i class="material-icons text-primitive c-p float-right" *ngIf="travelInsuranceForm.value.planFeatureForm?.length > 1" (click)="removeNewFeature(pointIndex)">remove</i>
+                </div>
+            </div>
+
+        </div>
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Geography</h5>
+            </div>
+            <div class="col-md-5 form-group  ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select matInput formControlName="geography" #bonusType autocomplete="off" class="form-control br-0">
+                        <mat-option value='1'>Worldwide</mat-option>
+                        <mat-option value='2'>Worldwide excluding USA & Canada</mat-option>
+                        <mat-option value='3'>Asia</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Exclusions/Special conditons</h5>
+            </div>
+            <div class="col-md-5 form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div formArrayName="getNomineeName">
+            <div class="row pt-36" *ngFor="let obj of travelInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                </div>
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="getNominee.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0 d-flex align-items-center">
+                    <i *ngIf="travelInsuranceForm.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p  " (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="travelInsuranceForm.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Third party administrator (TPA) Name</h5>
+            </div>
+            <div class="col-md-5 form-group  ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Advisor name</h5>
+            </div>
+            <div class="col-md-5 form-group  ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Service branch</h5>
+            </div>
+            <div class="col-md-5 form-group  ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
+
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="bankAccount" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankNameAndLast4Digit}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 p-0 pt-8 d-flex">
+                <!--  prod build appBankAccount appBankAccount  [data]="bankAccountDetails"  [data]="bankAccountDetails" (inputChange)='bankAccountList($event.value)' -->
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-12 p-0">
+            <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
+            <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
+        </div>
+    </div>
+    <app-froala *ngIf="showRecommendation" (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
+
+</div>
+
+<div class="bottom-fixed wrapper-16 pb-12">
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <h5 (click)="close(null)" class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <!-- <button (click)="saveHealthInsurance()"  mat-button>SAVE</button> -->
+            <app-progress-button (btnClick)="saveTravelInsurance()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+            </app-progress-button>
+        </div>
+    </div>
+</div>

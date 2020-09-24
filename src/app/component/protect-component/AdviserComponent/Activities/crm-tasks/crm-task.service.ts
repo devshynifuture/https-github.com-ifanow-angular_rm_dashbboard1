@@ -65,6 +65,10 @@ export class CrmTaskService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ACTIVITY_ADD_COMMENT_TASK_SUBTASK, data);
   }
 
+  addReplyOnCommentActivityTaskSubTask(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ACTIVITY_POST_TASK_COMMENT_REPLIES, data);
+  }
+
 
   // put calls
 

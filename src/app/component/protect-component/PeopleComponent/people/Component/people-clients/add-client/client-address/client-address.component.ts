@@ -9,8 +9,8 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-import { MapsAPILoader } from '@agm/core';
-// import { } from 'googlemaps'
+// import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps'
 import { from } from 'rxjs';
 @Component({
   selector: 'app-client-address',
@@ -47,12 +47,13 @@ export class ClientAddressComponent implements OnInit {
   firstTimeEditFlag = false;
   valueChanges: boolean;
   valueChangeFlag: any;
-  @ViewChild('placeSearch', { static: false }) placeSearch: ElementRef;
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
-    private utilService: UtilService, public dialog: MatDialog, private mapApiLoader: MapsAPILoader, private ngZone: NgZone) {
+    private utilService: UtilService, public dialog: MatDialog, private ngZone: NgZone) {
   }
+  adressType: string;
 
   addressForm: FormGroup;
   validatorType = ValidatorType;
@@ -78,20 +79,24 @@ export class ClientAddressComponent implements OnInit {
 
   ngOnInit() {
     // this.mapApiLoader.load().then(() => {
-    //   const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
-    //     types: [],
-    //     componentRestrictions: { 'country': 'IN' }
-    //   });
+    const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+      types: [this.addressType],
+      componentRestrictions: { 'country': 'IN' }
+    });
 
-    //   autoCompelete.addListener('place_changed', () => {
-    //     this.ngZone.run(() => {
-    //       const place: google.maps.places.PlaceResult = autoCompelete.getPlace;
-    //       if (place.geometry === undefined || place.geometry === null) {
-    //         return;
-    //       }
-    //     })
-    //   })
-    // })
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        this.addressForm.get('addressLine2').setValue(place.formatted_address)
+        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.getPincode(place.formatted_address)
+        // console.log(place)
+      })
+      // })
+    })
   }
 
   createAddressForm(data) {
@@ -194,6 +199,23 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').disable();
     this.addressForm.get('state').disable();
     this.addressForm.get('country').disable();
+    let address1 = this.addressForm.get('addressLine2').value;
+    let pincodeFlag = address1.includes(`${this.addressForm.get('pinCode').value},`)
+    address1 = address1.replace(`${this.addressForm.get('city').value},`, '')
+    address1 = address1.replace(!pincodeFlag ? `${this.addressForm.get('state').value},` : this.addressForm.get('state').value, '')
+    address1 = address1.replace(this.addressForm.get('country').value, '');
+    address1 = address1.replace(pincodeFlag ? `${this.addressForm.get('pinCode').value},` : this.addressForm.get('pinCode').value, '')
+    this.addressForm.get('addressLine2').setValue(address1)
+  }
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode ? pincode.join("") : '';
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.addressForm.get('pinCode').setValue(pincode)
+    this.getPostalPin(pincode);
   }
 
   getAddressList(data) {

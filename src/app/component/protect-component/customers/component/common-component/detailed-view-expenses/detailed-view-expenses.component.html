@@ -1,7 +1,7 @@
- <div class="popup-header-fix-35">
+<div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">EXPENSE ({{expense.value}})- DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">{{expense.value}}- DETAILED VIEW</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -22,32 +22,32 @@
                         {{expense.ownerName}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget'">
+                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget' || expense.value=='Recurring transaction'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                       {{expense.expenseDoneOn ? (expense.expenseDoneOn | date:'dd/MM/yyyy') :  (expense.startsFrom | date:'dd/MM/yyyy') }}
+                        {{expense.expenseDoneOn ? (expense.expenseDoneOn | date:'dd/MM/yyyy') :  (expense.startsFrom | date:'dd/MM/yyyy') }}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget'">
+                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Time
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.timeInString}}
+                        {{expense.timeInString ? expense.timeInString : '-'}}
                     </div>
                 </div>
 
-                <div class="row bb p-8 b-l br" >
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Category
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                       {{expense.expenseType}}
+                        {{expense.expenseType}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" >
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Enter amount
                     </div>
@@ -55,16 +55,18 @@
                         {{expense.amount? "₹" : ""}}<span appFormatNumber>{{expense.amount}}</span>
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
+                <div class="row bb p-8 b-l br"
+                    *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{expense.repeatFrequency == '1' ? 'Daily' : expense.repeatFrequency == '2' ? 'Weekly' :  expense.repeatFrequency == '3' ? 'Monthly' : expense.repeatFrequency == '4' ? 'Yearly' : '-'}}
-                
+
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
+                <div class="row bb p-8 b-l br"
+                    *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Start from
                     </div>
@@ -72,7 +74,8 @@
                         {{expense.startsFrom | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
+                <div class="row bb p-8 b-l br"
+                    *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Continues till
                     </div>
@@ -80,27 +83,32 @@
                         {{(expense.continueTill == 1) ? 'Retirement' : (expense.continueTill == 2) ? 'Life time' : (expense.continueTill == 3) ? 'No.of yrs' : (expense.continueTill == 4) ? 'No.of times' : '-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="(expense.value == 'Other commitments' || expense.value == 'Recurring commitments')">
+                <div class="row bb p-8 b-l br"
+                    *ngIf="(expense.value == 'Other commitments' || expense.value == 'Recurring commitments')">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                       {{ (expense.continueTill == 3) ? 'No.of years' : (expense.continueTill == 4) ? 'No.of times'  :''}}
+                        {{ (expense.continueTill == 3) ? 'No.of years' : (expense.continueTill == 4) ? 'No.of times'  :''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{expense.numberOfYearOrNumberOfTime}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" >
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Payment mode
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(expense.paymentModeId==1) ? 'Credit card' : (expense.paymentModeId==2) ? 'Debit card' : '-'}}
+                        {{(expense.paymentModeId==1) ? 'Credit card' : (expense.paymentModeId==2) ? 'Debit card' : (expense.paymentModeId==3) ? 'Cash' : '-'}}
                     </div>
                 </div>
-              
-            
-             
-             
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Linked bank account
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(expense.bankName) ? expense.bankName : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Description
                     </div>

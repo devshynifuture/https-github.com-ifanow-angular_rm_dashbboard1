@@ -35,6 +35,12 @@ export class CrmTasksComponent implements OnInit {
   filterValueId: any;
   customDateFilter: boolean = false;
   customFromToDate: any;
+  filterTaskWithStatus: any = 0;
+  statusFC: FormControl;
+  statusList = [
+    { name: 'Done', value: 1},
+    { name: 'Not Done', value: 0},
+  ]
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -45,6 +51,7 @@ export class CrmTasksComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statusFC = new FormControl(0);
     this.initPoint();
   }
 
@@ -52,6 +59,7 @@ export class CrmTasksComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = ELEMENT_DATA;
     this.dataSource.sort = this.sort;
+    this.statusFC.patchValue(0);
     console.log("iniitialized");
     this.getTaskStatus();
     // this.registerForPushNotification();
@@ -110,6 +118,7 @@ export class CrmTasksComponent implements OnInit {
   setFilterToDefault() {
     this.filterFormControl.patchValue('');
     this.isFilterSet = false;
+    this.statusFC.patchValue(0, {emitEvent: false});
     this.initPoint();
   }
 
@@ -119,11 +128,23 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  setTaskFilterWithStatus(event){
+    const value = event.value;
+    if(value !== ""){
+      this.filterTaskWithStatus = parseInt(value);
+    }
+    this.finalTaskList = [];
+    this.dataSource.data = ELEMENT_DATA;
+    this.isLoading = true;
+    this.getAllTaskList(0);
+  }
+
   getAllTaskList(offset) {
     const data = {
       advisorId: this.advisorId,
       offset,
-      limit: 20
+      limit: 20,
+      status: this.filterTaskWithStatus
     }
     if (this.isFilterSet) {
       data['dateFilter'] = this.filterValueId;
@@ -195,6 +216,9 @@ export class CrmTasksComponent implements OnInit {
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
+      }, err=> {
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong!","DISMISS");
       })
   }
 
@@ -215,8 +239,13 @@ export class CrmTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+          this.finalTaskList = [];
+          
           this.initPoint();
         }
+      }, err=> {
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong!","DISMISS");
       })
   }
 

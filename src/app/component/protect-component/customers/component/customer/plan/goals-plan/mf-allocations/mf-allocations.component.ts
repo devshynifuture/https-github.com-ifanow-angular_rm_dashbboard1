@@ -23,7 +23,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
-  displayedColumns1 = ['scheme', 'value', 'value1', 'value2', 'goal', 'icons'];
+  displayedColumns1 = ['scheme', 'value', 'goal', 'icons'];
   dataSource1 = new MatTableDataSource([]);
 
   @Input() data: any = {};
@@ -47,6 +47,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   // refreshObservable = new Subject();
   // refreshAssetList = new Subject();
   validatorType = ValidatorType;
+  showEditMf: boolean = false;
+  absSIP: number;
+  absLumsum: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -64,7 +67,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
-  
+
 
   ngOnInit() {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
@@ -83,7 +86,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     let tableSource = [];
     // logic for saving status
     tableSource.push({
-      name: 'LumpSum',
+      name: 'Lumpsum',
       equity: required.lump_equity,
       debt: required.lump_debt
     })
@@ -134,6 +137,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
           this.selectedAllocation = element
+          this.showEditMf = true
         }
       });
     });
@@ -143,7 +147,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
-      height: '400px',
+
       data: dialogData,
       autoFocus: false,
     });
@@ -154,18 +158,41 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.mfList = res;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
+        let absSIP = 0;
+        let absLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
+            absSIP += element.sipPercent;
+            absLumsum += element.lumpsumPercent
+            element.remainSIP = 0
+            element.remainLumsum = 0
+          });
+          this.data.goalAssetAllocation.forEach(element => {
+            mf.goalAssetMapping.forEach(element1 => {
+              if (element.id == element1.id) {
+                element1.disable = false
+              } else if (element.remainLumsum == 0 || element.remainSIP) {
+                element1.disable = false
+              } else {
+                element1.disable = true
+              }
+            });
           });
         }
-        return { absAllocation, ...mf };
+        absSIP = 100 - absSIP
+        absLumsum = 100 - absLumsum
+
+
+        return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
       })
+
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.loaderFn.decreaseCounter();
     })
+
   }
 
   filterAssets() {
@@ -243,10 +270,35 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
 
   }
-  restrictFrom100(event) {
-    if (parseInt(event.target.value) > 100) {
-      event.target.value = 100;
+  restrictFrom100(event, ele, mf, flag) {
+    let add = 0
+    if (event.target.value == "") {
+      event.target.value = 0
     }
+    mf.forEach(element => {
+      if (flag == 'sip') {
+        add += element.sipPercent
+        if ((100 - add) >= parseInt(event.target.value)) {
+          return parseInt(event.target.value);
+        } else if ((100 - add) == 0) {
+          let temp = 100 - add
+          console.log('temp', temp)
+          return event.target.value = temp
+        } else {
+          return event.target.value = 100 - add;
+        }
+
+      } else if (flag == 'lumpsum') {
+        add += element.lumpsumPercent
+        if ((100 - add) >= parseInt(event.target.value)) {
+          return parseInt(event.target.value);
+        } else if ((100 - add) == 0) {
+          return event.target.value = 0
+        } else {
+          return event.target.value = 100 - add;
+        }
+      }
+    });
   }
 
   removeAllocation(allocation, allocatedGoal) {
@@ -271,21 +323,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          this.loadMFData();
-          this.subscriber.add(
-            this.allocationService.refreshObservable.subscribe(() => {
-              this.loadMFData();
-            })
-          );
-          this.allocateOtherAssetService.refreshAssetList.next();
-          this.subInjectService.setRefreshRequired();
-        //  this.refreshAssetList.next();
-          this.eventService.openSnackBar("Asset unallocated");
-          dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
+        this.allocationService.allocateOtherAssetToGoalRm(obj);
+        dialogRef.close()
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -297,7 +336,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
 
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshObservable:true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
   }
 
   ngOnDestroy() {
