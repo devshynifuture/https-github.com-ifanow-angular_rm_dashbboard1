@@ -33,11 +33,11 @@ export class HelthInsurancePolicyComponent implements OnInit {
       selectAdvice: [(!data) ? '' : data.selectAdvice, [Validators.required]],
       adviceHeader: [data ? '' : data.adviceHeader, [Validators.required]],
       adviceStatus: [(!data) ? '' : data.adviceStatus, [Validators.required]],
-      bypassConsent: [(!data) ? '' : data.bypassConsent, [Validators.required]],
       adviceRationale: [(!data) ? '' : data.adviceRationale, [Validators.required]],
       adviceHeaderDate: [(!data) ? '' : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
-      consent: [(!data) ? '' : data.consent, [Validators.required]],
+      consent: [(!data) ? '1' : data.consent, [Validators.required]],
+      nonFinAdvice:[(!data) ? '' : '',[Validators.required]]
     });
   }
   getFormControl(): any {
@@ -47,33 +47,13 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.dialogRef.close(this.showInsurance)
   }
   saveAdviceOnHealth(){
-    if (this.healthInsurance.get('selectAdvice').invalid) {
-      this.healthInsurance.get('selectAdvice').markAsTouched();
-      return;
-    } else if (this.healthInsurance.get('selectAdvice').invalid) {
-      this.healthInsurance.get('selectAdvice').markAsTouched();
-      return;
-    } else if (this.healthInsurance.get('bypassConsent').invalid) {
-      this.healthInsurance.get('bypassConsent').markAsTouched();
-      return;
-    } else if (this.healthInsurance.get('adviceRationale').invalid) {
-      this.healthInsurance.get('adviceRationale').markAsTouched();
-      return;
-    }else if (this.healthInsurance.get('adviceHeaderDate').invalid) {
-      this.healthInsurance.get('adviceHeaderDate').markAsTouched();
-      return;
-    }else if (this.healthInsurance.get('implementationDate').invalid) {
-      this.healthInsurance.get('implementationDate').markAsTouched();
-      return;
-    } else if (this.healthInsurance.get('consent').invalid) {
-      this.healthInsurance.get('consent').markAsTouched();
-      return;
-    }else {
+    if (this.healthInsurance.invalid) {
+      this.healthInsurance.markAllAsTouched();
+  }else {
     let obj = {
       selectAdvice:this.healthInsurance.controls.selectAdvice.value,
       adviceHeader:this.healthInsurance.controls.selectAdvice.value,
       adviceStatus:'Given',
-      bypassConsent:this.healthInsurance.controls.bypassConsent.value,
       adviceRationale:this.healthInsurance.controls.adviceRationale.value,
       adviceHeaderDate:this.healthInsurance.controls.adviceHeaderDate.value,
       implementationDate:this.healthInsurance.controls.implementationDate.value,
@@ -82,9 +62,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.adviceHealthInsurance.push(obj);
     this.data.value.adviceValue = obj.selectAdvice;
     this.advice = this.data.value
-  }
-    
     console.log('this.advice',this.adviceHealthInsurance)
     this.dialogRef.close(this.advice)
+  }
+    
+   
   }
 }
