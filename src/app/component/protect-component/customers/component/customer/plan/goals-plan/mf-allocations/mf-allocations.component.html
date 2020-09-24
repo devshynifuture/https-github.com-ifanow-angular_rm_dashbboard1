@@ -288,16 +288,16 @@
                             <div class="d-flex">
                                 <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                     <div class="d-flex align-items-center"
-                                        *ngIf="(element.isSip == true && allocatedGoal.sipPercent != 100)">
+                                        *ngIf="(element.isSip == true && allocatedGoal.sipPercent != 100 && element.absSIP != 0)">
                                         <button class="allcoateBtn ml-10 text-primary"
-                                            (click)="allocateAssetToGoal(element)">Allocate</button>
+                                            (click)="allocateAssetToGoal(element)">Allocate</button>{{allocatedGoal.sipPercent}} | {{element.absSIP}}
                                         <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"
                                             *ngIf="(element.absSIP > 0 || element.absLumsum > 0) && element.goalAssetMapping.length != 0">
                                             more_vert
                                         </i>
                                     </div>
                                     <div class="d-flex align-items-center"
-                                        *ngIf="(element.isSip != true && allocatedGoal.lumpsumPercent != 100)">
+                                        *ngIf="(element.isSip != true && allocatedGoal.lumpsumPercent != 100 && element.absLumsum != 0)">
                                         <button class="allcoateBtn ml-10 text-primary"
                                             (click)="allocateAssetToGoal(element)">Allocate</button>
                                         <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4"
