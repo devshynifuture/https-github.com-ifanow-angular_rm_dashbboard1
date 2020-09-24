@@ -531,8 +531,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             element['path'] = '/customer/detail/account/assets/mutual'
           }
         })
-        let mfIndex = this.portFolioData.findIndex(record => record.assetType === 5);
-
+        let mfValue = this.portFolioData.filter(record => record.assetType === 5);
+        this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
         this.portFolioData.forEach((element, ind) => {
           if (element.assetType == 2) {
             element['gainAmount'] = ''
@@ -546,7 +546,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             element['gainAmount'] = ''
           }
         })
-        this.portFolioData.splice(mfIndex, 1)
+        this.portFolioData.unshift(mfValue[0]);
+        // this.portFolioData.splice(mfIndex, 1)
 
       }
 

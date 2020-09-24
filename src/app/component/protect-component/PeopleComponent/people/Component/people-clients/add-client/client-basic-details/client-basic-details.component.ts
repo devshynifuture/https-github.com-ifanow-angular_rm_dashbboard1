@@ -227,8 +227,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       { name: 'Daughter', value: 5 },
       { name: 'Brother', value: 8 },
       { name: 'Sister', value: 9 },
+      { name: 'Others', value: 10 },
       { name: 'Daughter_In_Law', value: 11 },
       { name: 'Sister_In_Law', value: 12 },
+      { name: 'Grand_mother', value: 13 },
+      { name: 'Grand_father', value: 14 },
       { name: 'Niece', value: 15 },
       { name: 'Nephew', value: 16 },
     ]
@@ -276,7 +279,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     // this.basicDetails.controls.email.updateValueAndValidity();
     this.basicDetails.controls.pan.updateValueAndValidity();
-
+    if (this.basicDetailsData.userId) {
+      this.basicDetails.controls.leadOwner.disable();
+      this.basicDetails.controls.clientOwner.disable();
+      this.basicDetails.controls.role.disable();
+    }
     this.basicDetails.valueChanges.subscribe(data => {
       if (this.valueChangeFlag) {
         this.tabDisableFlag.emit(true)
@@ -401,6 +408,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.fieldFlag == 'client') {
       this.nonIndividualForm.controls.clientOwner.setValidators([Validators.required]);
       this.nonIndividualForm.controls.role.setValidators([Validators.required]);
+    }
+    if (this.basicDetailsData.userId) {
+      this.nonIndividualForm.controls.leadOwner.disable();
+      this.nonIndividualForm.controls.clientOwner.disable();
+      this.nonIndividualForm.controls.role.disable();
     }
     this.nonIndividualForm.valueChanges.subscribe(data => {
       if (this.valueChangeFlag) {
