@@ -217,10 +217,10 @@
                     <ng-container matColumnDef="value">
                         <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
                         <td *matCellDef="let element" class="text-center w-25" mat-cell>
-                            <span class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
+                            <span *ngIf="element.isSip != true" class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
+                            <span *ngIf="element.isSip != true" class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
                             </span><br />
-                            <span class="text-primitive f-12" appFormatNumber [value]="element.sipAmount"> | </span>
+                            <span *ngIf="element.isSip == true" class="d-block f-12" appFormatNumber [value]="element.sipAmount"> | </span>
                         </td>
                     </ng-container>
                     <!-- Weight Column -->
