@@ -2,14 +2,14 @@
     <h5 class="m-0 text-black f-500">Advice on {{showInsurance.smallHeading}} policy</h5>
     <div class="row pt-20">
         <div class="col-md-4 p-0 br-1">
-            <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
+            <p class="m-0 pb-8">Select primary advice{{healthInsurance.get('selectAdvice').value}}<img src="/assets/images/svg/info.svg"></p>
                     <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
                         <mat-radio-button [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
-                            [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''" >
+                            [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''" (click)="setValue()">
                             {{advice.advice}}</mat-radio-button>
                     </mat-radio-group>
                     <mat-error class="f-12">
-                        {{healthInsurance.get('adviceHeader').value ? '' : 'This field is required'}}
+                        {{showError ? 'Please select primary advise' : ''}}
                       </mat-error>
             <div class="col-md-11 pl-0 pr-24">
                 <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput class="form-control" value="Given" formControlName="adviceStatus">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <!-- <mat-error class="f-12">This field is required</mat-error> -->
                         </mat-form-field>
                     </div>
                     <p class="m-0">Consent option<img src="/assets/images/svg/info.svg"></p>
