@@ -225,7 +225,7 @@
                                 <div class="col-md-3 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Advice </p>
                                 </div>
-                                <div class="col-md-2 d-flex align-items-center">
+                                <div class="col-md-2 pl-0 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Current value </p>
                                 </div>
                                 <div class="col-md-2 d-flex align-items-center pr-0">
@@ -318,11 +318,13 @@
                                 </div>
                             </ng-container>
 
-                            <div class="row height40 bl-1 bb-1 br bg-white text-center"
-                                *ngIf="!loaderFn.loading && allocatedList.length == 0">
-                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No asset
-                                    allocated</span>
-                                <span *ngIf="assetError">Unable to load asset data</span>
+                            <div class="row height40 bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
+                                <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
+                                    <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No asset
+                                        allocated</span>
+                                    <span *ngIf="assetError">Unable to load asset data</span>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
