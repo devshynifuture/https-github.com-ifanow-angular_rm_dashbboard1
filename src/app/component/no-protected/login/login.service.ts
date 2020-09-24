@@ -68,7 +68,7 @@ export class LoginService {
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
     authService.setUserInfo(userData);
-    
+
     if (userData.userType == 1 || userData.userType == 8) {
       this.roleService.getRoleDetails(userData.roleId);
       router.navigate(['admin', 'dashboard']);
@@ -87,6 +87,10 @@ export class LoginService {
 
   getCLientDetails(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_INFO_BASED_ON_USERNAME, data, 1);
+  }
+
+  updateResetLinkExpire(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.RESET_LINK_EXPIRE, data);
   }
 }
 

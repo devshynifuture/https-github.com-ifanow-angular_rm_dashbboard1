@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { HttpService } from 'src/app/http-service/http-service';
+import { HttpClient } from '@angular/common/http';
 const Buffer = require('buffer/').Buffer;
 
 @Component({
@@ -31,13 +32,16 @@ export class SetNewPasswordComponent implements OnInit {
     { name: "VERIFY MOBILE", flag: true },
     { name: "SET PASSWORD", flag: false }
   ]
+  datavalue: any;
+  encodeUud: any;
   constructor(private authService: AuthService,
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
     private eventService: EventService,
     private httpService: HttpService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private http: HttpClient) {
   }
 
   setNewPasswordForm;
@@ -65,8 +69,9 @@ export class SetNewPasswordComponent implements OnInit {
     } else {
       this.route.queryParams.subscribe((params) => {
         if (params.userName) {
-          const datavalue = (Buffer.from(params.userName, 'base64').toString('utf-8'));
-          this.getClientDetails(datavalue)
+          this.encodeUud = params.userName;
+          this.datavalue = (Buffer.from(params.userName, 'base64').toString('utf-8'));
+          this.getClientDetails(this.datavalue)
         }
       });
       // this.getClientDetails(this.httpService.changeBase64ToString(window.history.state.userName));
@@ -84,8 +89,10 @@ export class SetNewPasswordComponent implements OnInit {
       res => {
         if (res) {
           this.userData = res;
-          this.eventService.openSnackBar(`Your username is ${data}`, "Dismiss")
+          this.eventService.openSnackBar(`Your username is ${res.userName}`, "Dismiss")
         }
+      }, err => {
+        this.eventService.openSnackBar("Link has been expired", "Dimiss")
       }
     )
   }
@@ -108,13 +115,26 @@ export class SetNewPasswordComponent implements OnInit {
               };
               this.loginService.sendWelcomeEmail(obj).subscribe(
                 data => {
-                  this.barButtonOptions.active = false;
+                  if (this.datavalue) {
+                    this.loginService.updateResetLinkExpire(this.encodeUud).subscribe(
+                      data => {
+                        this.barButtonOptions.active = false;
+                        this.loginService.handleUserData(this.authService, this.router, this.userData);
+                      }, err => {
+                        this.eventService.openSnackBar(err, "Dimiss")
+                        this.barButtonOptions.active = false;
+                      }
+                    )
+                  }
                 },
-                err => { }
+                err => {
+                  this.eventService.openSnackBar(err, "Dimiss")
+                  this.barButtonOptions.active = false;
+                }
               );
             }
             // this.authService.setToken(data.token);
-            this.loginService.handleUserData(this.authService, this.router, this.userData);
+            (this.datavalue) ? '' : this.loginService.handleUserData(this.authService, this.router, this.userData);
           } else {
             // this.passEvent = '';
             // this.errorMsg = true;
@@ -125,6 +145,9 @@ export class SetNewPasswordComponent implements OnInit {
             // this.barButtonOptions.active = false;
             this.barButtonOptions.active = false;
           }
+        }, err => {
+          this.barButtonOptions.active = false;
+          this.eventService.openSnackBar(err, "Dimiss")
         });
     }
   }
