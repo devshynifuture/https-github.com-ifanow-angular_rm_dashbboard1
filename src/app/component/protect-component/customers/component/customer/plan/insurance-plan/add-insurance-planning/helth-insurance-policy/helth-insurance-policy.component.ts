@@ -13,6 +13,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   adviceHealthInsurance=[];
   showInsurance: DialogData;
   advice: any;
+  showError = false;
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
@@ -32,7 +33,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.healthInsurance = this.fb.group({
       selectAdvice: [(!data) ? '' : data.selectAdvice, [Validators.required]],
       adviceHeader: [data ? '' : data.adviceHeader, [Validators.required]],
-      adviceStatus: [(!data) ? '' : data.adviceStatus, [Validators.required]],
+      adviceStatus: [(!data) ? '' : data.adviceStatus],
       adviceRationale: [(!data) ? '' : data.adviceRationale, [Validators.required]],
       adviceHeaderDate: [(!data) ? '' : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
@@ -46,8 +47,15 @@ export class HelthInsurancePolicyComponent implements OnInit {
   close(){
     this.dialogRef.close(this.showInsurance)
   }
+  setValue(){
+    this.healthInsurance.get('adviceHeader').value = this.healthInsurance.get('selectAdvice').value ;
+    this.showError =false;
+    this.healthInsurance.get('adviceHeader').setErrors(null);
+
+  }
   saveAdviceOnHealth(){
     if (this.healthInsurance.invalid) {
+      this.healthInsurance.get('selectAdvice').value ? '' : this.showError = true;
       this.healthInsurance.markAllAsTouched();
   }else {
     let obj = {
