@@ -42,8 +42,7 @@
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
               <h3 class="mb-0 roboto f-400 text-black mt-8">
-                <span *ngIf="!keyMatrixFlag" appFormatNumber
-                  [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
+                <span *ngIf="!keyMatrixFlag">{{(mfAumValue) ? mfAumValue : '0'}}</span>
               </h3>
             </div>
           </div>
