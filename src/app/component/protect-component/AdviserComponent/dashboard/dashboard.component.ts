@@ -992,7 +992,6 @@ export class DashboardComponent implements OnInit {
         if (data) {
           this.isBirhtdayLoader = false;
           data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
-          data = this.sortDateWise(data);
           data.forEach(element => {
             if (element.displayName.length > 15) {
               element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
@@ -1014,12 +1013,6 @@ export class DashboardComponent implements OnInit {
         this.isBirhtdayLoader = false;
       }
     );
-  }
-
-  sortDateWise(data) {
-    return data.sort((a: any, b: any) => {
-      return new Date(a.dateOfBirth).getTime() - new Date(b.dateOfBirth).getTime();
-    });
   }
 
   getPosition(string, subString, index) {
