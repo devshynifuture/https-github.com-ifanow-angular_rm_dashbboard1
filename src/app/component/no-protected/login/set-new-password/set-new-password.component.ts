@@ -69,7 +69,6 @@ export class SetNewPasswordComponent implements OnInit {
     } else {
       this.route.queryParams.subscribe((params) => {
         if (params.userName) {
-          this.encodeUud = params.userName;
           this.datavalue = (Buffer.from(params.userName, 'base64').toString('utf-8'));
           this.getClientDetails(this.datavalue)
         }
@@ -116,7 +115,7 @@ export class SetNewPasswordComponent implements OnInit {
               this.loginService.sendWelcomeEmail(obj).subscribe(
                 data => {
                   if (this.datavalue) {
-                    this.loginService.updateResetLinkExpire(this.encodeUud).subscribe(
+                    this.loginService.updateResetLinkExpire(this.datavalue).subscribe(
                       data => {
                         this.barButtonOptions.active = false;
                         this.loginService.handleUserData(this.authService, this.router, this.userData);
