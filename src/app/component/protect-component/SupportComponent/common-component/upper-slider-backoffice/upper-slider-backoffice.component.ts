@@ -788,7 +788,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
-          excelData.push(Object.assign(data));
+          if(parseFloat(element.calculatedUnits.toFixed(2)) >= 0.05 && parseFloat(element.aumUnits.toFixed(2)) >= 0.05){
+            excelData.push(Object.assign(data));
+          }
         });
 
         ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
