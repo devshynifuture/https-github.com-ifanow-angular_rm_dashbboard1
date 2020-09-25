@@ -88,7 +88,7 @@ export class SetNewPasswordComponent implements OnInit {
       res => {
         if (res) {
           this.userData = res;
-          this.userData['buttonFlag'] = true;
+          this.userData['buttonFlag'] = 'reset';
           this.eventService.openSnackBar(`Your username is ${res.userName}`, "Dismiss")
         }
       }, err => {
@@ -115,17 +115,7 @@ export class SetNewPasswordComponent implements OnInit {
               };
               this.loginService.sendWelcomeEmail(obj).subscribe(
                 data => {
-                  if (this.datavalue) {
-                    this.loginService.updateResetLinkExpire(this.datavalue).subscribe(
-                      data => {
-                        this.barButtonOptions.active = false;
-                        this.loginService.handleUserData(this.authService, this.router, this.userData);
-                      }, err => {
-                        this.eventService.openSnackBar(err, "Dimiss")
-                        this.barButtonOptions.active = false;
-                      }
-                    )
-                  }
+                  this.loginService.handleUserData(this.authService, this.router, this.userData);
                 },
                 err => {
                   this.eventService.openSnackBar(err, "Dimiss")
@@ -133,8 +123,22 @@ export class SetNewPasswordComponent implements OnInit {
                 }
               );
             }
+            if (this.datavalue) {
+              this.loginService.updateResetLinkExpire(this.datavalue).subscribe(
+                data => {
+                  this.barButtonOptions.active = false;
+                  this.loginService.handleUserData(this.authService, this.router, this.userData);
+                }, err => {
+                  this.eventService.openSnackBar(err, "Dimiss")
+                  this.barButtonOptions.active = false;
+                }
+              )
+            } else {
+              if (this.userData.buttonFlag === 'reset') {
+                this.loginService.handleUserData(this.authService, this.router, this.userData);
+              }
+            }
             // this.authService.setToken(data.token);
-            (this.datavalue) ? '' : this.loginService.handleUserData(this.authService, this.router, this.userData);
           } else {
             // this.passEvent = '';
             // this.errorMsg = true;
