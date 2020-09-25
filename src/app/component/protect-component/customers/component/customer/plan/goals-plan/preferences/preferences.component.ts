@@ -120,10 +120,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('frequency', this.fb.control(remainingData.frequency, [Validators.required]));
       
     }
-    if(this.data.goalType ==1){
-      this.goalDetailsFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio));
-      this.goalDetailsFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio));
-    }
+   
   }
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
@@ -162,12 +159,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         })
       )
     }
-    if(this.data.goalType == 1 ){
-      this.goalDetailsFG.controls.postequityAllocation.enable();
-      this.goalDetailsFG.controls.postdebtAllocation.enable();
-      this.goalDetailsFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.equity_ratio);
-      this.goalDetailsFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.debt_ratio);
-    }
+   
   }
   setInflamationReturns() {
     this.dataSource.forEach(element => {
@@ -284,6 +276,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })
+    if(this.data.goalType ==1){
+      this.assetAllocationFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio));
+      this.assetAllocationFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio));
+    }
   }
   createAssetFormInflamation(remainingData) {
     this.inflamationReturnsFG = this.fb.group({
@@ -309,6 +305,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.progressiveStageArrayControl.disable();
       for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
         this.removeStage(i);
+      }
+      if(this.data.goalType == 1 ){
+        this.assetAllocationFG.controls.postequityAllocation.enable();
+        this.assetAllocationFG.controls.postdebtAllocation.enable();
+        this.assetAllocationFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.equity_ratio);
+        this.assetAllocationFG.controls.postdebtAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.debt_ratio);
       }
       this.progressiveStageArrayControl.controls.forEach(control => {
         control.setValue({
@@ -406,6 +408,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     obj.debtAllocation = parseInt(obj.debtAllocation);
     obj.strategicOrTactical = parseInt(obj.strategicOrTactical);
     obj.staticOrProgressive = parseInt(obj.staticOrProgressive);
+    obj.postRetirementDebtAssetAllocation = parseInt(obj.postdebtAllocation),
+    obj.postRetirementEquityAssetAllocation = parseInt(obj.postequityAllocation),
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");

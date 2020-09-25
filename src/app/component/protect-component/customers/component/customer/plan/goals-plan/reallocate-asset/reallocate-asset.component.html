@@ -25,10 +25,12 @@
                 </p>
             </div>
             <div class="col-md-6">
-                <p class="mb-8 ">
+                <p class="mb-8 " *ngIf="showMf == false">
                     <span [value]="allocationData?.allocatedToOtherGoal" appFormatNumber></span>
                 </p>
-
+                <p class="mb-8 " *ngIf="showMf != false">
+                    <span [value]="availableAllocation" appFormatNumber></span>
+                </p>
             </div>
         </div>
 
@@ -54,7 +56,7 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true &&  allocation.isSip == true">
+        <div class="row pb-10 align-items-center" *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 2 || allocationData?.sipPercent !=0)">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of SIP % (editable) </p>
@@ -71,10 +73,10 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true && allocation.isSip != true">
+        <div class="row pb-10 align-items-center" *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 1 || allocationData?.lumpsumPercent !=0)">
 
             <div class="col-md-6 p-0">
-                <p class="text-black mb-8"> c) Allocation of lumpsum % (editable) </p>
+                <p class="text-black mb-8"> b) Allocation of lumpsum % (editable) </p>
             </div>
             <div class="col-md-6">
                 <div class="editable_textBox" [formGroup]="reallocationFG">
@@ -88,7 +90,7 @@
             </div>
 
         </div>
-        <div class="row" *ngIf="showMf == false ">
+        <div class="row">
 
             <div class="col-md-6 p-0">
                 <p class="mb-0 text-black">c) Net allocation available</p>
