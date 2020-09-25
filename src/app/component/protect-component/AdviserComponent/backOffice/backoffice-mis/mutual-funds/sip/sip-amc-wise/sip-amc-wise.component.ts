@@ -584,7 +584,7 @@ export class SipAmcWiseComponent implements OnInit {
     } else {
       this.removeValuesFromExcel('investor', index);
       if (investorData.hasOwnProperty('investorList') && investorData.investorList.length !== 0) {
-        investorData.investorList.foreach(investorElement => {
+        investorData.investorList.forEach(investorElement => {
           investorElement.showInvestor = false;
         });
       }
