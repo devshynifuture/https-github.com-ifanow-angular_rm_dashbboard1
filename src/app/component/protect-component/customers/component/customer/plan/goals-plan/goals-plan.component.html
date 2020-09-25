@@ -598,25 +598,35 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn"
+                                   
+                                    
+
+                                        <button mat-stroked-button class="in-btn"
                                         (click)="openInSideBar(null, 'openKeyinfo')">
                                         <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
-                                    <button mat-stroked-button class="in-btn-two"
-                                        (click)="openInSideBar(null, 'openCalculators')">
-                                        <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
-                                    <button mat-stroked-button class="in-btn-two"
-                                        (click)="openInSideBar(null, 'openPreferences')">
-                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+
+                                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
+                                            <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+
+                                   
                                 </div>
 
-
                                 <div class="btnBox" [hidden]="loaderFn.loading">
+                                    <button mat-stroked-button class="in-btn-two"
+                                    (click)="openInSideBar(null, 'openCalculators')">
+                                    <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                                </div>
+
+                             
+
+
+                                <!-- <div class="btnBox" [hidden]="loaderFn.loading"> -->
                                     <!-- <button mat-stroked-button class="in-btn">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button> -->
                                     <!-- <button mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openPreferences')">
                                         <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button> -->
-                                </div>
+                                <!-- </div> -->
 
 
 
