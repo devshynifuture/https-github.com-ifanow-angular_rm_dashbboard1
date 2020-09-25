@@ -65,7 +65,7 @@
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input type="text" formControlName="sipPercent" appInputValueValidation
-                            [inputValidator]="decimalValidator" matInput class="form-control">
+                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
                         <mat-error *ngIf="reallocationFG.get('sipPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
@@ -82,7 +82,7 @@
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input type="text" formControlName="lumpsumPercent" appInputValueValidation
-                            [inputValidator]="decimalValidator" matInput class="form-control">
+                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
                         <mat-error *ngIf="reallocationFG.get('lumpsumPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
