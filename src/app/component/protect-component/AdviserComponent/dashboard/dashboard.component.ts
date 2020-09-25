@@ -205,6 +205,7 @@ export class DashboardComponent implements OnInit {
   mfDataflag: boolean;
   keyMatrixFlag: boolean = true;
   newchartData: any[];
+  mfAumValue: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -1430,9 +1431,10 @@ export class DashboardComponent implements OnInit {
         this.mfDataflag = false;
         if (data) {
           this.keyMetricJson.mfAum = data.totalAumRupees;
+          this.mfAumValue = data.totalAumRupees
         }
         else {
-          this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
+          this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
         }
         this.loaderFun()
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)

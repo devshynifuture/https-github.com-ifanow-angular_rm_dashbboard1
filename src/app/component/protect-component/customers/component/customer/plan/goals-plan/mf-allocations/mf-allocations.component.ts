@@ -132,7 +132,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       }
     );
   }
-  reallocateAsset(allocation) {
+  reallocateAsset(allocation,allo) {
     this.data.goalAssetAllocation.forEach(element => {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
@@ -144,6 +144,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     const dialogData = {
       goalData: this.data,
       allocationData: this.selectedAllocation,
+      allocation : allocation,
+      allocated: allo,
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',

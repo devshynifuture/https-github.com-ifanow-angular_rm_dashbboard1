@@ -748,8 +748,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     ];
     if (this.filteredAumListWithIsMappedToMinusOne.length !== 0) {
       const rtName = this.getRtName(this.data.rtId);
-      let calculatedUnitsTotal = 0;
-      let aumUnitsTotal = 0;
+      // remove entries where calculatedUnits and aumUnits is 0.0002
+
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         const data = [
           element.investorName ? element.investorName : '-',
@@ -759,26 +759,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.folioNumber ? element.folioNumber : '-',
           element.latestTransactionDate ? this.datePipe.transform(element.latestTransactionDate) : '-',
           rtName,
-          element.calculatedUnits ? element.calculatedUnits : '0',
-          element.aumUnits ? element.aumUnits : '0',
+          element.calculatedUnits || element.calculatedUnits !== 0  ? element.calculatedUnits : '0',
+          element.aumUnits || element.aumUnits !== 0 ? element.aumUnits : '0',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
           element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
-        calculatedUnitsTotal = calculatedUnitsTotal + parseFloat(element.calculatedUnits);
-        aumUnitsTotal = aumUnitsTotal + parseFloat(element.aumUnits);
-        excelData.push(Object.assign(data));
+        if(parseFloat(element.calculatedUnits.toFixed(2)) >= 0.05 && parseFloat(element.aumUnits.toFixed(2)) >= 0.05){
+          excelData.push(Object.assign(data));
+        }
       });
-      if(calculatedUnitsTotal !==0 && aumUnitsTotal !==0){
-        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
-      } else {
-        this.eventService.openSnackBar("The units RTA & units IFAnow is 0", "DISMISS");
-      }
+      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         const rtName = this.getRtName(this.data.rtId);
-        let calculatedUnitsTotal = 0;
-        let aumUnitsTotal = 0;
         this.reportListWithIsMappedToMinusOne.forEach(element => {
           const data = [
             element.investorName ? element.investorName : '-',
@@ -788,21 +782,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.folioNumber ? element.folioNumber : '-',
             element.latestTransactionDate ? this.datePipe.transform(element.latestTransactionDate) : '-',
             rtName,
-            element.calculatedUnits ? element.calculatedUnits : '0',
-            element.aumUnits ? element.aumUnits : '0',
+            element.calculatedUnits || element.calculatedUnits !== 0 ? element.calculatedUnits : '0',
+            element.aumUnits || element.aumUnits !== 0 ? element.aumUnits : '0',
             element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
             element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
-          excelData.push(Object.assign(data));
-          calculatedUnitsTotal = calculatedUnitsTotal + parseFloat(element.calculatedUnits);
-          aumUnitsTotal = aumUnitsTotal + parseFloat(element.aumUnits);
+          if(parseFloat(element.calculatedUnits.toFixed(2)) >= 0.05 && parseFloat(element.aumUnits.toFixed(2)) >= 0.05){
+            excelData.push(Object.assign(data));
+          }
         });
-        if(calculatedUnitsTotal !==0 && aumUnitsTotal !==0){
-          ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
-        } else {
-          this.eventService.openSnackBar("The units RTA & units IFAnow is 0", "DISMISS");
-        }
+
+        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
       } else {
         this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
       }
@@ -902,7 +893,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         item.mutualFundTransaction = mfTransArr
                       }
                     });
-                    if (Math.round(diff) === 0) {
+                    if (parseFloat(diff.toFixed(2)) >= 0.05) {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
@@ -942,7 +933,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       item.calculatedUnits = parseFloat(sideBarData.data.changesInUnitOne)
                     }
                   });
-                  if (Math.round(diff) === 0) {
+                  if (parseFloat(diff.toFixed(2)) >= 0.05) {
                     this.dataSource.data.map(item => {
                       item.after_recon = String(parseFloat(item.after_recon) - 1);
                     });

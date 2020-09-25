@@ -101,8 +101,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           { name: 'Niece', value: 15 },
           { name: 'Nephew', value: 16 },
           { name: 'Others', value: 10 },
-          { name: 'Grand_mother', value: 13 },
-          { name: 'Grand_father', value: 14 },
+          { name: 'Grandmother', value: 13 },
+          { name: 'Grandfather', value: 14 },
         ]
       }
       else {
@@ -122,8 +122,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           { name: 'Niece', value: 15 },
           { name: 'Nephew', value: 16 },
           { name: 'Others', value: 10 },
-          { name: 'Grand_mother', value: 13 },
-          { name: 'Grand_father', value: 14 },
+          { name: 'Grandmother', value: 13 },
+          { name: 'Grandfather', value: 14 },
         ]
       }
     }

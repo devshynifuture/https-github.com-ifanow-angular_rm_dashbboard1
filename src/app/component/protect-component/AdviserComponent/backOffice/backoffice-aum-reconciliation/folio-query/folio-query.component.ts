@@ -7,7 +7,7 @@ import { ReconciliationService } from '../reconciliation/reconciliation.service'
 import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/folio-master-detail-view.component';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class FolioQueryComponent implements OnInit {
   isLoadingForDropDownInvestor: boolean = false;
   folioQueryGroupHead = new FormControl();
   folioQueryInvestor = new FormControl();
+  folioOption = new FormControl('', Validators.required);
   optionList = [
     { name: 'Investor', value: 1 },
     { name: 'Group Head', value: 2 },
@@ -39,6 +40,9 @@ export class FolioQueryComponent implements OnInit {
   arnRiaList: any;
   arnRiaValue = -1;
   isMainLoading: boolean;
+  searchedObj: { flag: any; value: any; searchFrom: any; };
+  inputSearchFC = new FormControl('', Validators.required);
+  shouldCheckValidation = false;
 
   constructor(
     private reconService: ReconciliationService,
@@ -49,14 +53,27 @@ export class FolioQueryComponent implements OnInit {
   isSearchDone: boolean = false;
   isLoading: boolean = false;
   dataSource = new MatTableDataSource<folioQueryI>(ELEMENT_DATA);
+  subscription:any = {};
 
   ngOnInit() {
     this.dataSource.data = ELEMENT_DATA;
+    this.subscription['folioOption'] = this.folioOption.valueChanges.subscribe(res => this.shouldCheckValidation = true);
+    this.subscription['inputOption'] = this.inputSearchFC.valueChanges.subscribe(res => this.shouldCheckValidation = true);
     this.viewMode = 'Select option';
     this.getArnRiaList();
     this.activateValueChanges();
     this.teamMemberListGet();
   }
+
+  ngOnDestroy(): void {
+    if(!!this.subscription.folioOption){
+      this.subscription.folioOption.unsubscribe();
+    }
+    if(!!this.subscription.inputOption){
+      this.subscription.inputOption.unsubscribe();
+    }
+  }
+
   getArnRiaList() {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
@@ -192,54 +209,76 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
+      this.searchedObj = {
+        flag,
+        value,
+        searchFrom
+      }
+      if(searchFrom === 'navInputSearch'){
+        this.shouldCheckValidation = true;
+      }
 
-    this.isMainLoading = true;
-    const data = {
-      flag_search: flag,
-      advisorId: this.parentId > 0 ? this.advisorId: -1,
-      // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
-      key: value,
-      arnRiaDetailId: this.arnRiaValue,
-      parentId: this.parentId === 0 ? this.advisorId : this.parentId
-      // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
-    };
+      const data = {
+        flag_search: flag,
+        advisorId: this.parentId > 0 ? this.advisorId: -1,
+        // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+        key: value,
+        arnRiaDetailId: this.arnRiaValue,
+        parentId: this.parentId === 0 ? this.advisorId : this.parentId
+        // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
+      };
 
-    this.reconService.getFolioQueryDataListValues(data)
-      .subscribe(res => {
-        this.isMainLoading = false;
-        console.log("response:::",res);
-        if (res && res.length !== 0) {
-          let arrValue = [];
-          res.forEach(element => {
-            arrValue.push({
-              arnRiaCode: element.arnRiaCode ? element.arnRiaCode : '-',
-              name: element.shemeName,
-              investorName: element.investorName,
-              folioNumber: element.folioNumber,
-              reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
-              mutualFundTransaction: element.mutualFundTransaction,
-              mutualFundId: element.mutualFundId,
-              unitsRta: element.aumUnits,
-              unitsIfanow: element.calculatedUnits,
-              difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
-              schemeCode: element.schemeCode,
-              aumDate: element.aumDate,
-              id: element.id,
-              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
-            })
-          });
-          this.dataSource.data = arrValue;
-          console.log("this is what we are having",arrValue);
+      if(this.shouldCheckValidation){
+        if(this.inputSearchFC.valid && this.folioOption.valid){
+          this.isMainLoading = true;
+          this.reconService.getFolioQueryDataListValues(data)
+          .subscribe(res => this.bindDataWithTable(res, searchFrom));
+        } else {
+          this.inputSearchFC.markAllAsTouched();
+          this.folioOption.markAllAsTouched();
         }
-        else {
-          this.dataSource.data = null;
-        }
-        // toggling view
-        if (searchFrom !== 'navInputSearch') {
-          this.isSearchDone = !this.isSearchDone;
-        }
-      })
+      } else {
+        this.isMainLoading = true;
+        this.reconService.getFolioQueryDataListValues(data)
+          .subscribe(res => this.bindDataWithTable(res, searchFrom));
+      }
 
+  
+  }
+
+  bindDataWithTable(res,searchFrom){
+      this.isMainLoading = false;
+      console.log("response:::",res);
+      if (res && res.length !== 0) {
+        let arrValue = [];
+        res.forEach(element => {
+          arrValue.push({
+            arnRiaCode: element.arnRiaCode ? element.arnRiaCode : '-',
+            name: element.shemeName,
+            investorName: element.investorName,
+            folioNumber: element.folioNumber,
+            reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
+            mutualFundTransaction: element.mutualFundTransaction,
+            mutualFundId: element.mutualFundId,
+            unitsRta: element.aumUnits,
+            unitsIfanow: element.calculatedUnits,
+            difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
+            schemeCode: element.schemeCode,
+            aumDate: element.aumDate,
+            id: element.id,
+            freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
+          })
+        });
+        this.dataSource.data = arrValue;
+        console.log("this is what we are having",arrValue);
+      }
+      else {
+        this.dataSource.data = null;
+      }
+      // toggling view
+      if (searchFrom !== 'navInputSearch') {
+        this.isSearchDone = !this.isSearchDone;
+      }
   }
 
   openReconDetailView(flag, data) {
@@ -257,6 +296,8 @@ export class FolioQueryComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
 
             if (sideBarData.refreshRequired) {
+              this.isSearchDone = !this.isSearchDone;
+              this.search(this.searchedObj.flag, this.searchedObj.value, this.searchedObj.searchFrom);
               // this.getDataFromObsAfterDeletingTransacn();
               // this.isSearchDone = !this.isSearchDone;
             }
