@@ -59,8 +59,10 @@
                                             </div>
                                             <div class="col-md-7 p-0 text-right">
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
-                                                    <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">
-                                                        {{(sipCount &&  sipCount.hasOwnProperty('avgSipAmount')) ? sipCount.avgSipAmount : 0}}</span>
+                                                    <!-- <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">
+                                                        {{(sipCount &&  sipCount.hasOwnProperty('avgSipAmount')) ? sipCount.avgSipAmount : 0}}</span> -->
+                                                        <span *ngIf="!isLoading && sipCount" appFormatNumber>{{(sipCount) ? sipCount.avgSipAmount : '0'}}
+                                                        </span>
                                                     <span *ngIf="isLoading">{{''}}</span>
                                                 </h1>
                                                 <p class="f-12 mb-0 text-diff" *ngIf="!isLoading">Average SIP</p>

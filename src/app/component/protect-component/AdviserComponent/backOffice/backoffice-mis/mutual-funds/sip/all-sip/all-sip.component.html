@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 overflow-hidden">
-            <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container" (scroll)="onWindowScroll($event)" *ngIf="finalSipList?.length!==0">
+            <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container" (scroll)="onWindowScroll($event)">
                 <table #tableEl matSort  mat-table [dataSource]="dataSource" 
                     id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>
@@ -127,6 +127,9 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
                 </table>
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
+                </div>
 
             </div>
             <div *ngIf="dataSource.finalSipList?.length==0" class="d-flex flex-column align-items-center b-a">

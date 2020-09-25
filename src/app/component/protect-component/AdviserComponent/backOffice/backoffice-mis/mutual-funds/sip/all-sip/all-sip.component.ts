@@ -43,6 +43,8 @@ export class AllSipComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.isLoading = true;
     if (this.mode == 'expired') {
       this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount', 'status', 'remark'];
     } else if (this.mode == 'expiring') {
@@ -85,8 +87,8 @@ export class AllSipComponent implements OnInit {
   }
 
   getAllSip(offset) {
-    this.isLoading = true;
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    // this.isLoading = true;
+    // this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       limit: 20,
       offset,
@@ -97,6 +99,7 @@ export class AllSipComponent implements OnInit {
     if (this.mode == 'all') {
       this.backoffice.allSipGet(obj).subscribe(
         data => {
+          (this.finalSipList.length > 0) ? '' : this.isLoading = false;
           this.isLoading = false;
           if (data) {
             this.response(data);
@@ -178,6 +181,8 @@ export class AllSipComponent implements OnInit {
     this.dataSource.filteredData.forEach(element => {
       this.totalAmount += element.amount;
     });
+    this.hasEndReached = false;
+    this.infiniteScrollingFlag = false;
   }
 
   aumReport() {
