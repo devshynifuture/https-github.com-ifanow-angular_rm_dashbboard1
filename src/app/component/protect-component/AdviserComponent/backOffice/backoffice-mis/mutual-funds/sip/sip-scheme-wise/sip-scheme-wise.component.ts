@@ -497,9 +497,9 @@ export class SipSchemeWiseComponent implements OnInit {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
-
         schemeId: ApplicantData.mutualFundSchemeMasterId,
-        clientId: ApplicantData.clientId
+        familyMemberId:!ApplicantData.familyMemberId || ApplicantData.familyMemberId == 0 ? -1 : ApplicantData.familyMemberId,
+        clientId: ApplicantData.familyMemberId > 0 ?  -1 : ApplicantData.clientId,
       };
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data => {
