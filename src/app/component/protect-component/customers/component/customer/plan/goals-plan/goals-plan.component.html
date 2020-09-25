@@ -297,7 +297,7 @@
 
                                         <div class="bar">
                                             <p class="mb-0 roboto pr-48" appFormatNumber
-                                                [value]='(allocation.assetType == 5)?"-":allocation.percentAllocated'>%
+                                                [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>%
                                             </p>
                                         </div>
 
