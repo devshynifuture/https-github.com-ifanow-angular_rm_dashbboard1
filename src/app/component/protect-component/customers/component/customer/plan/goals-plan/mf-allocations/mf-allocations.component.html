@@ -215,7 +215,7 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP amount</th>
+                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP</th>
                         <td *matCellDef="let element" class="text-center w-25" mat-cell>
                             <span *ngIf="element.isSip != true" class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
                             <span *ngIf="element.isSip != true" class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
