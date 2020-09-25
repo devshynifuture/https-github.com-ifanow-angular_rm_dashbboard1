@@ -16,14 +16,14 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class ReallocateAssetComponent implements OnInit {
 
-  remainingAllocation:number = 0;
-  availableAllocation:number = 0;
-  reallocationFG:FormGroup;
-  allocationData:any = {};
-  goalData:any = {};
+  remainingAllocation: number = 0;
+  availableAllocation: number = 0;
+  reallocationFG: FormGroup;
+  allocationData: any = {};
+  goalData: any = {};
   subscriber = new Subscriber();
-  advisorId:any;
-  clientId:any;
+  advisorId: any;
+  clientId: any;
   decimalValidator = ValidatorType.NUMBER_ONLY_WITH_TWO_DECIMAL;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -37,7 +37,7 @@ export class ReallocateAssetComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
-  allocationToThisGoal:number = 0;
+  allocationToThisGoal: number = 0;
   allocated: any;
   allocation: any;
   showMf: boolean = false;
@@ -45,9 +45,9 @@ export class ReallocateAssetComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ReallocateAssetComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    private fb:FormBuilder,
-    private eventService:EventService,
-    private plansService:PlanService,
+    private fb: FormBuilder,
+    private eventService: EventService,
+    private plansService: PlanService,
     private allocateOtherAssetService: AddGoalService
   ) {
     this.advisorId = AuthService.getAdvisorId();
@@ -56,46 +56,54 @@ export class ReallocateAssetComponent implements OnInit {
     this.goalData = this.dialogData.goalData;
     this.allocated = this.dialogData.allocated
     this.allocation = this.dialogData.allocation
-    if( this.allocationData){
-      if(this.allocationData.assetName == 'MUTUAL_FUNDS'){
+    if (this.allocationData) {
+      if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
         this.showMf = true
       }
-    }else if( this.allocated.assetType == 5){
+    } else if (this.allocated.assetType == 5) {
       this.showMf = true
-    }else{
+    } else {
       this.showMf = false
     }
   }
 
   ngOnInit() {
-    if( this.showMf == true){
-      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
-      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - this.allocationData.percentAllocated;
-    }else{
+    if (this.allocated && this.showMf == true) {
+      this.availableAllocation = this.allocated.allocatedToOtherGoal;
+      if (this.allocated && this.allocationData.lumpsumOrSip == 2 && this.allocationData.sipPercent != 0) {
+        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent);
+      } else if (this.allocated && this.allocationData.lumpsumOrSip == 1 && this.allocationData.lumpsumPercent != 0) {
+        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent);
+      } else {
+        this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
+        this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
+      }
+    } else {
       this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
-    this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
+      this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
     }
-    
+
     this.reallocationFG = this.fb.group({
       allocatedPercentage: [this.allocationData.percentAllocated, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });
     if (this.showMf == true) {
-      this.reallocationFG.addControl('sipPercent', this.fb.control((this.allocated)?this.allocated.sipPercent:this.allocationData.sipPercent, [Validators.required]))
-      this.reallocationFG.addControl('lumpsumPercent', this.fb.control((this.allocated)?this.allocated.lumpsumPercent:this.allocationData.lumpsumPercent, [Validators.required]))
+      this.reallocationFG.addControl('sipPercent', this.fb.control((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent, [Validators.required]))
+      this.reallocationFG.addControl('lumpsumPercent', this.fb.control((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent, [Validators.required]))
+      this.reallocationFG.controls.allocatedPercentage.setValue(this.availableAllocation)
     }
 
-    this.subscriber.add(
-      this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
-        if(value) {
-          this.remainingAllocation = (this.availableAllocation - parseFloat(value));
-        } else {
-          this.remainingAllocation = 0;
-        }
-      })
-    )
+    // this.subscriber.add(
+    //   this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
+    //     if(value) {
+    //       this.remainingAllocation = (this.availableAllocation - parseFloat(value));
+    //     } else {
+    //       this.remainingAllocation = 0;
+    //     }
+    //   })
+    // )
   }
 
-  reallocate(){
+  reallocate() {
     // if(this.reallocationFG.invalid || this.barButtonOptions.active) {
     //   this.reallocationFG.markAllAsTouched();
     //   return;
@@ -104,19 +112,19 @@ export class ReallocateAssetComponent implements OnInit {
     let obj = {
       id: this.allocationData.id,
       advisorId: this.advisorId,
-      clientId:this.clientId,
+      clientId: this.clientId,
       assetId: this.allocationData.assetId,
       assetType: this.allocationData.assetType,
       goalId: this.goalData.remainingData.id,
-      allocateOrEdit : 2,
-      lumpsumPercent:null,
-      sipPercent:null,
+      allocateOrEdit: 2,
+      lumpsumPercent: null,
+      sipPercent: null,
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }
-    if(this.allocationData.assetName == 'MUTUAL_FUNDS'){
-      obj.lumpsumPercent= parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2));
-      obj.sipPercent= parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2));
+    if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
+      obj.lumpsumPercent = parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2));
+      obj.sipPercent = parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2));
     }
 
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
