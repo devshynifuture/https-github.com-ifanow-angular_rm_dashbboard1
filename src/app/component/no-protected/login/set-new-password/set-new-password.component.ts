@@ -88,6 +88,7 @@ export class SetNewPasswordComponent implements OnInit {
       res => {
         if (res) {
           this.userData = res;
+          this.userData['buttonFlag'] = true;
           this.eventService.openSnackBar(`Your username is ${res.userName}`, "Dismiss")
         }
       }, err => {
