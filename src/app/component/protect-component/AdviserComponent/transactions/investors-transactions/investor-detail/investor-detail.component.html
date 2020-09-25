@@ -80,22 +80,22 @@
     </div>
   </div>
   <div *ngIf="!statusData[1].checked&&!isLoading" class="row pt-12 pb-44 text-center">
-  <div class="col-md-6">
-  <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
-      mat-button>
-      Upload AOF
-      <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
-    </button></div>
-  <div class="col-md-6">
-   <button (click)="openUploadConfirmBox('CHEQUE',4)" [disabled]="isFileUploading"
-      class="h-40 bg-primary text-white ml-8" mat-button>
-      Upload Cheque
-      <!-- <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file"> -->
-    </button>
+    <div class="col-md-6">
+      <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
+              mat-button>
+        Upload AOF
+        <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
+      </button>
     </div>
-    
+    <div class="col-md-6">
+      <button *ngIf="details.aggregatorType != 2" (click)="openUploadConfirmBox('CHEQUE',4)"
+              [disabled]="isFileUploading"
+              class="h-40 bg-primary text-white ml-8" mat-button>
+        Upload Cheque
+        <!-- <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file"> -->
+      </button>
+    </div>
 
-   
 
   </div>
   <div class="row">
