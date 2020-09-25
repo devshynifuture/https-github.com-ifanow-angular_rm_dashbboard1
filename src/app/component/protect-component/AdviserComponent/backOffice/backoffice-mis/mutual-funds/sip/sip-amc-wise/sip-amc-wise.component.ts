@@ -610,7 +610,8 @@ export class SipAmcWiseComponent implements OnInit {
       this.applicantList = [];
       applicantData.applicantList = [{}, {}, {}];
       const obj = {
-        clientId: applicantData.clientId,
+        familyMemberId:!applicantData.familyMemberId || applicantData.familyMemberId == 0 ? -1 : applicantData.familyMemberId,
+        clientId: applicantData.familyMemberId > 0 ?  -1 : applicantData.clientId,
         schemeId: applicantData.mutualFundSchemeMasterId,
         sipAmount: applicantData.sipAmount,
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],

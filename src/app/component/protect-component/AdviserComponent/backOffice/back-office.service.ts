@@ -191,7 +191,7 @@ export class BackOfficeService {
   }
 
   Sip_Investors_Applicant_Get(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId).set('schemeId', data.schemeId).set('sipAmount', data.sipAmount);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('familyMemberId', data.familyMemberId).set('parentId', data.parentId).set('schemeId', data.schemeId).set('sipAmount', data.sipAmount);
     return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Investors_Applicants, httpParams);
   }
 
@@ -211,7 +211,7 @@ export class BackOfficeService {
   }
 
   scheme_wise_Applicants_Get(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId).set('schemeId', data.schemeId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('familyMemberId', data.familyMemberId).set('parentId', data.parentId).set('schemeId', data.schemeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, httpParams);
   }
 
