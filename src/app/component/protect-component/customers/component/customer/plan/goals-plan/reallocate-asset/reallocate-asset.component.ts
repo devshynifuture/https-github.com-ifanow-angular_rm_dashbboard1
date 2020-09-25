@@ -68,9 +68,14 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
+    if( this.showMf == true){
+      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
+      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - this.allocationData.percentAllocated;
+    }else{
+      this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
     this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
+    }
+    
     this.reallocationFG = this.fb.group({
       allocatedPercentage: [this.allocationData.percentAllocated, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });

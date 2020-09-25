@@ -54,7 +54,7 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true &&  allocation.isSip == true">
+        <div class="row pb-10 align-items-center" *ngIf="showMf == true && ( allocation?.isSip == true || allocationData?.sipPercent !=0)">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of SIP % (editable) </p>
@@ -71,7 +71,7 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true && allocation.isSip != true">
+        <div class="row pb-10 align-items-center" *ngIf="showMf == true && (allocation?.isSip != true || allocationData?.lumpsumPercent !=0)">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of lumpsum % (editable) </p>
