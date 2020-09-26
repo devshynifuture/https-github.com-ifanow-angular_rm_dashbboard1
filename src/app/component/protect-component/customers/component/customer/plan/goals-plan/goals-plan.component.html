@@ -481,12 +481,8 @@
                         <div class="col-md-1 text-right">
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Edit note</button>
-                                <button mat-menu-item>Hide from client</button>
-                                <button mat-menu-item>Delete note</button>
-                                <button mat-menu-item (click)="openInSideBar(null, 'openView')">View from
-                                    client</button>
-                                <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Add new note</button>
+                                <button mat-menu-item (click)="openInSideBar(selectedGoal?.remainingData?.loan, 'openCalculators')">Edit Loan</button>
+                                <button mat-menu-item (click)="deleteLoan(selectedGoal?.remainingData?.loan)">Delete Loan</button>
                             </mat-menu>
                         </div>
                     </div>

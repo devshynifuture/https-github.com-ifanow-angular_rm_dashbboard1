@@ -18,8 +18,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class CalculatorsComponent implements OnInit {
 
-  @Input() data: any = {};
-  @Input() popupHeaderText: string = 'CALCULATORS';
+  @Input() data :any;
   validatorType = ValidatorType;
 
   incomeFG: FormGroup;
@@ -78,7 +77,7 @@ export class CalculatorsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.data)
     this.getdataForm();
     const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
     for (let index = 0; index < yearGap; index++) {

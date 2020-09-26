@@ -573,7 +573,33 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-
+  deleteLoan(loan) {
+    const dialogData = {
+      header: 'DELETE LOAN',
+      body: 'Are you sure you want to remove loan?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj = {
+          milestoneId: loan.id,
+        }
+        this.plansService.deleteLoan({ milestoneId: loan.id }).subscribe(res => {
+          this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadAllGoals();
+          this.eventService.openSnackBar("Asset unallocated");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container || !event.isPointerOverContainer) {
