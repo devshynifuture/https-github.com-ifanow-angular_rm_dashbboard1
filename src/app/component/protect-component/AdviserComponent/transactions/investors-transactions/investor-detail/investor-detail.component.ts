@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { FileUploadService } from '../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../config/main-config';
-import { appConfig } from '../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from '../../../../../../Data-service/event.service';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {FileUploadService} from '../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../config/main-config';
+import {appConfig} from '../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from '../../../../../../Data-service/event.service';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmUploadComponent} from './confirm-upload/confirm-upload.component';
 
 @Component({
   selector: 'app-investor-detail',
@@ -17,6 +17,10 @@ import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.componen
 })
 export class InvestorDetailComponent implements OnInit {
 
+  num: any = 0;
+  numlimit: any;
+  num1: any = 0;
+  numlimit1: any;
   data;
   details: any;
   transactionData: any;
@@ -42,11 +46,13 @@ export class InvestorDetailComponent implements OnInit {
   loader1: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private dialog: MatDialog) {
+              private eventService: EventService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.details = this.data;
+    console.error('InvestorDetailComponent data : ', this.data);
+
     this.getFormUploadDetail();
     this.getDataStatus(this.details);
   }
@@ -59,10 +65,7 @@ export class InvestorDetailComponent implements OnInit {
 
   }
 
-  num: any = 0;
-  numlimit: any;
-  num1: any = 0;
-  numlimit1: any;
+
   recall() {
     if (this.num <= this.numlimit) {
       this.addbarWidth(this.num);
@@ -102,7 +105,6 @@ export class InvestorDetailComponent implements OnInit {
   }
 
 
-
   getDataStatus(data) {
     // this.isLoading = true;
     this.statusDetails = this.statusData;
@@ -113,7 +115,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getInvestorStatus() {
-    const obj = { id: this.details.id };
+    const obj = {id: this.details.id};
     this.isLoading = true;
 
     this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
@@ -127,7 +129,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFormUploadDetail() {
-    const obj = { id: this.details.id };
+    const obj = {id: this.details.id};
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
       /*if (this.details.aggregatorType == 2) {
@@ -150,7 +152,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   openUploadConfirmBox(value, typeId) {
@@ -191,8 +193,7 @@ export class InvestorDetailComponent implements OnInit {
         if (typeId == 1) {
           this.addbarWidth(1);
           this.loader1 = true
-        }
-        else {
+        } else {
           this.addbarWidth1(1);
           this.loader2 = true
         }
@@ -205,8 +206,7 @@ export class InvestorDetailComponent implements OnInit {
     if (documentType == 1) {
       this.addbarWidth(30);
       this.loader1 = true
-    }
-    else {
+    } else {
       this.addbarWidth1(30);
       this.loader2 = true
     }
@@ -221,8 +221,7 @@ export class InvestorDetailComponent implements OnInit {
     if (documentType == 1) {
       this.addbarWidth(50);
       this.loader1 = true
-    }
-    else {
+    } else {
       this.addbarWidth1(0);
       this.loader2 = true
     }
@@ -232,8 +231,7 @@ export class InvestorDetailComponent implements OnInit {
         if (documentType == 1) {
           this.addbarWidth(100);
           this.loader1 = true
-        }
-        else {
+        } else {
           this.addbarWidth1(100);
           this.loader2 = true
         }

@@ -3,7 +3,7 @@
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-12 pr-0 mb-10">
-                    <div class="right text-right" *ngIf="arnRiaList.length>1">
+                    <div class="right text-right" *ngIf="arnRiaList?.length>1">
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                             {{viewMode}}
                             <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
@@ -98,7 +98,7 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span *ngIf="!isLoading"> {{ category.sipAmount }}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true"> {{ category.sipAmount }}</span>
                                     </div>
                                 </td>
                                 <td style="padding-left: 30px !important;">
@@ -196,7 +196,7 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                        {{isLoadingCategory ? ' ' : '₹ '}} <span *ngIf="!isLoadingCategory"> {{subcategory.sipAmount }}</span>
+                                                        {{isLoadingCategory ? ' ' : '₹ '}} <span *ngIf="!isLoadingCategory" appFormatNumber [shouldRoundOff]="true"> {{subcategory.sipAmount }}</span>
                                                     </div>
                                                 </td>
                                                 <td style="padding-left: 30px !important;">
@@ -291,7 +291,7 @@
                                                                 <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
                                                                         {{isLoadingSubCategory ? ' ' : '₹ '}} 
-                                                                        <span *ngIf="!isLoadingSubCategory">
+                                                                        <span *ngIf="!isLoadingSubCategory" appFormatNumber [shouldRoundOff]="true">
                                                                             {{inv.sipAmount}}
                                                                         </span>
                                                                     </div>
@@ -504,7 +504,7 @@
                                                                                 <td><span>
                                                                                         <div
                                                                                             [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                            {{isLoadingApplicant ? ' ' : '₹ '}}{{applicant.sipAmount}}
+                                                                                            {{isLoadingApplicant ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true">{{applicant.sipAmount}}</span>
                                                                                         </div>
                                                                                     </span>
                                                                                 </td>
@@ -571,8 +571,7 @@
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table text-right"><strong><span
-                                        >{{totalOfSipAmount}}</span></strong>
+                                <td class="p-table text-right"><strong>₹<span appFormatNumber [shouldRoundOff]="true">{{totalOfSipAmount}}</span></strong>
                                 </td>
                                 <td class="p-table" style="padding-left: 30px !important;">
                                     <strong>{{totalOfSipCount}}</strong></td>

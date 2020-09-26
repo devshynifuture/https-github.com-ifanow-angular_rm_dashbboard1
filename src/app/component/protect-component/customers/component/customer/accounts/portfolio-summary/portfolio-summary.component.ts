@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import {ColorString} from 'highcharts';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../customer.service';
 import {DatePipe} from '@angular/common';
@@ -10,7 +11,6 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {UtilService} from 'src/app/services/util.service';
 import {Chart} from 'angular-highcharts';
 import {AppConstants} from 'src/app/services/app-constants';
-import {ColorString} from "highcharts";
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -108,6 +108,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private enumService: EnumServiceService,
+    public authService: AuthService
   ) {
   }
 
@@ -119,6 +120,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       familyfilter: ['all']
     });
     this.userData = AuthService.getUserInfo();
+    console.log('Portfolio summary userData : ', this.userData);
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
