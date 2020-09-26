@@ -85,6 +85,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   removedGaurdianList: any = [];
   emailData: any;
   valueChangeFlag: boolean;
+  userData;
 
   // advisorId;
 
@@ -96,6 +97,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   @Input() set data(data) {
+    this.userData = AuthService.getUserInfo();
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
     this.basicDetailsData = data;
@@ -279,7 +281,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     // this.basicDetails.controls.email.updateValueAndValidity();
     this.basicDetails.controls.pan.updateValueAndValidity();
-    if (this.basicDetailsData.userId) {
+    if (this.userData.userType == 2 && this.basicDetailsData.userId) {
       this.basicDetails.controls.leadOwner.disable();
       this.basicDetails.controls.clientOwner.disable();
       this.basicDetails.controls.role.disable();
@@ -409,7 +411,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.controls.clientOwner.setValidators([Validators.required]);
       this.nonIndividualForm.controls.role.setValidators([Validators.required]);
     }
-    if (this.basicDetailsData.userId) {
+    if (this.userData.userType == 2 && this.basicDetailsData.userId) {
       this.nonIndividualForm.controls.leadOwner.disable();
       this.nonIndividualForm.controls.clientOwner.disable();
       this.nonIndividualForm.controls.role.disable();
