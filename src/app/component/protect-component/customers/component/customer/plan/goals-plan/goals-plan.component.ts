@@ -581,10 +581,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        let obj = {
-          milestoneId: loan.id,
-        }
-        this.plansService.deleteLoan({ milestoneId: loan.id }).subscribe(res => {
+      
+        this.plansService.deleteLoan({ loanId: loan.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.loadAllGoals();
           this.eventService.openSnackBar("Asset unallocated");
