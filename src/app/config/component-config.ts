@@ -312,7 +312,7 @@ export const appConfig = {
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   DELETE_MILESTONE: 'goal-planning/milestone/remove',
   DELETE_LOAN:'goal-loan/delete',
-  REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
+  REMOVE_ALLOCATION: 'goal-planning/goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
   GET_ASSET_ALLOCATION_SUMMARY_LIST: 'account/asset/asset-allocation/summary/get',
