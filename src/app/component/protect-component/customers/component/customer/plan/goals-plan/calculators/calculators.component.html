@@ -204,7 +204,7 @@
                   <div class="col-md-6">
                     <div class="highcharts-figure" id="piechartMutualFund"></div>
                   </div>
-                  <div class="col-md-6 pt-30">
+                  <div class="col-md-6 pt-30" *ngIf="loanAmount && downPayement">
                     <p class="m-0 f-12 text-black"><span
                         class="hw-10 mr-4 bg-primary iflex"></span>{{loanAmount?loanAmount:0}}% Loan amount</p>
                     <p class="m-0 f-12 text-black pt-20"><span
