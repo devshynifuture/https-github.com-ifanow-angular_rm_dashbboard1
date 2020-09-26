@@ -429,31 +429,32 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row pb-10" *ngIf="data.goalType == 1">
-                        <div class="row w-100" *ngIf="data.goalType == 1">
-                            <div class="col-md-6 pl-0">
-                                <h5>Post retirement asset allocation</h5>
+
+                        <div class="row pb-10" *ngIf="data.goalType == 1">
+                            <div class="row w-100" *ngIf="data.goalType == 1">
+                                <div class="col-md-6 pl-0">
+                                    <h5>Post retirement asset allocation</h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-5 pl-0">
-                            <p class="m-0 roboto text-black">Equity bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="postequityAllocation" type="text"
-                                        class="form-control br-0"
-                                        (change)="setOtherBifurcation(assetAllocationFG.get('postequityAllocation'), assetAllocationFG.get('postdebtAllocation'))">
-                                </mat-form-field>
+                            <div class="col-md-5 pl-0">
+                                <p class="m-0 roboto text-black">Equity bifurcation</p>
+                                <div class="form-group mb-0">
+                                    <mat-form-field class="w-100">
+                                        <input matInput formControlName="postequityAllocation" type="text"
+                                            class="form-control br-0"
+                                            (change)="setOtherBifurcation(assetAllocationFG.get('postequityAllocation'), assetAllocationFG.get('postdebtAllocation'))">
+                                    </mat-form-field>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-5 pl-0">
-                            <p class="m-0 roboto text-black">Debt bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="postdebtAllocation" type="text"
-                                        class="form-control br-0"
-                                        (change)="setOtherBifurcation(assetAllocationFG.get('postdebtAllocation'), assetAllocationFG.get('postequityAllocation'))">
-                                </mat-form-field>
+                            <div class="col-md-5 pl-0">
+                                <p class="m-0 roboto text-black">Debt bifurcation</p>
+                                <div class="form-group mb-0">
+                                    <mat-form-field class="w-100">
+                                        <input matInput formControlName="postdebtAllocation" type="text"
+                                            class="form-control br-0"
+                                            (change)="setOtherBifurcation(assetAllocationFG.get('postdebtAllocation'), assetAllocationFG.get('postequityAllocation'))">
+                                    </mat-form-field>
+                                </div>
                             </div>
                         </div>
                     </div>
