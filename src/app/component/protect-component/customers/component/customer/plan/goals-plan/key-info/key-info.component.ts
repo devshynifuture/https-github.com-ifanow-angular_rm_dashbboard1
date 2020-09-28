@@ -14,13 +14,23 @@ export class KeyInfoComponent implements OnInit {
   
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'KEY INFO';
+  equity: any;
+  debt: any;
+  equityLumpsum: any;
+  debtLumpsum: any;
 
   constructor(private subInjectService: SubscriptionInject,   
      public utils: UtilService,
     ) { }
 
   ngOnInit() {
-    console.log('key info ==',this.data)
+   
+    this.equity= this.data.dashboardData.arr_equity_monthly
+    this.debt = this.data.dashboardData.arr_debt_monthly
+    this.equityLumpsum =this.data.dashboardData.arr_lump_equity
+    this.debtLumpsum =this.data.dashboardData.arr_lump_debt
+    console.log('key info ==',this.equity);
+    console.log('key info ==',this.debtLumpsum)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
