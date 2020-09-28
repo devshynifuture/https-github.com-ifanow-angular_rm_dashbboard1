@@ -529,6 +529,7 @@
                 <div class="wrapper-20">
 
                     <div class="mt-8 perferences-inflation-rate">
+                        <span>{{(data.remainingData.goalSpan ==1)?'Short term':'Long term'}}</span>
                         <table mat-table [dataSource]="dataSource1" id="table-low">
 
                             <ng-container matColumnDef="position">
