@@ -179,7 +179,7 @@ export class IncomeComponent implements OnInit {
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     
-    this.util.htmlToPdf('',para.innerHTML, 'Income', 'true', this.fragmentData, '', '');
+    this.util.htmlToPdf('',para.innerHTML, 'Income', 'true', this.fragmentData, '', '',false);
 
   }
   deleteModal(value, incomeData) {

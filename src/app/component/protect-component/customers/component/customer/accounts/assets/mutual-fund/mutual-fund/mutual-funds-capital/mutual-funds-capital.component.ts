@@ -300,7 +300,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     const para = document.getElementById('template');
    // let header = null
     const header = document.getElementById('templateHeader');
-    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '',true);
   }
   calculateCapitalGain(data) {
     this.isLoading = false;
@@ -620,7 +620,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    this.UtilService.htmlToPdf(para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf('',para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '',true);
     // let rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
   }

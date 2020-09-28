@@ -201,6 +201,10 @@ export class PlanService {
     let httpParams = new HttpParams().set('milestoneId', data.milestoneId)
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MILESTONE + '?' + httpParams, '');
   }
+  deleteLoan(data) {
+    let httpParams = new HttpParams().set('loanId', data.loanId)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_LOAN + '?' + httpParams, '');
+  }
   removeAllocation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
   }

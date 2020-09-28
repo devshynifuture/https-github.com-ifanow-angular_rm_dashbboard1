@@ -558,7 +558,8 @@ export class UtilService {
     landscape,
     fragData: any = {},
     key = null,
-    svg = null
+    svg = null,
+    showFooter
   ) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
@@ -572,7 +573,7 @@ export class UtilService {
       htmlInput: inputData,
       header: header,
       name: pdfName,
-      showMfFooter: true,
+      showMfFooter: showFooter==false ? false : true,
       landscape,
       key,
       svg,
