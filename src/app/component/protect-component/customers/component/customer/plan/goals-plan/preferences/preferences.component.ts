@@ -475,7 +475,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 'Equity funds', name: '10%' },
   { position: 'Balanced funds', name: '7%' },
   { position: 'Stocks', name: '7%' },
-  { position: 'Stocks', name: '7%' },
+  { position: 'Real Estates', name: '7%' },
   { position: 'Insurance', name: '7%' },
   { position: 'Bank Accounts Saving', name: '7%' },
   { position: 'Commodities - Gold', name: '7%' },

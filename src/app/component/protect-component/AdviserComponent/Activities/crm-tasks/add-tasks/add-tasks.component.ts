@@ -1191,8 +1191,7 @@ export class AddTasksComponent implements OnInit {
         }
         if(res.hasOwnProperty('turnAroundTime') && res.turnAroundTime !==0){
           let d = new Date();
-          d.setDate(d.getDate() + res.turnAroundTime);
-          this.addTaskForm.get('taskDueDate').patchValue(d, { emitEvent: false });
+          this.addTaskForm.get('taskDueDate').patchValue(moment(d, "DD-MM-YYYY").add(res.turnAroundTime, 'days'), { emitEvent: false });
         }
         console.log('this is subtask List::: ')
         if (res.assignedTo) {

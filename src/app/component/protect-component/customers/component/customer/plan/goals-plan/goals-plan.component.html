@@ -491,11 +491,11 @@
                             [appSkeletonLoading]="loaderFn.loading">
                             <div class="row pt-16 relClass">
                                 <div class="col-md-4 p-0">
-                                    <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
+                                    <p class="m-0 f-12 text-primitive">MONTHLY INCOME IN GOAL YEAR</p>
                                     <h5 class="m-0">
                                         <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
                                                 appFormatNumber
-                                                [value]="selectedGoal?.remainingData?.loan?.netSalary"></span></span>
+                                                [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible.income_at_goal_year"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
