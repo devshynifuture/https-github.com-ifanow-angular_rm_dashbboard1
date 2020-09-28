@@ -86,7 +86,7 @@
                         <button mat-stroked-button class="br-0 mt-12 text-white goal-box-btn" [ngClass]="{'btn-danger': asset.absAllocation == 100, 
                                         'btn-primary': asset.absAllocation > 0 && asset.absAllocation < 100, 
                                         'btn-success': asset.absAllocation == 0}">
-                            {{asset.absAllocation}}%
+                            {{100 - asset.absAllocation}}%
                         </button>
                         <button *ngIf="asset.maturityValue !=0" mat-stroked-button
                             class="btn-default br-0 mt-12 mb-12 goal-box-btn">{{asset.MaturityYear}}</button>
