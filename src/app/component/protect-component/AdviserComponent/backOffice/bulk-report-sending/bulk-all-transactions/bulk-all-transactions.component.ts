@@ -119,7 +119,7 @@ export class BulkAllTransactionsComponent implements OnInit {
         toEmail: 'devshyni@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-      this.utilService.htmlToPdf(para.innerHTML, 'Test', 'true', this.fragmentData, '', '')
+      this.utilService.htmlToPdf('',para.innerHTML, 'Test', 'true', this.fragmentData, '', '',true)
   }
 
 }

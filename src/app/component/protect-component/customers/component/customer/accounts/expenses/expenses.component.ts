@@ -433,12 +433,12 @@ export class ExpensesComponent implements OnInit {
     if (tmp == 'template') {
       let expenseSvg = this.expenseChart.getSVG();
       header = this.transactionExpens.nativeElement.innerHTML
-      this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg);
+      this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg,false);
 
     } else {
       let budgetSvg = this.budgetChartSvg.getSVG();
       header = this.budgetPdf.nativeElement.innerHTML
-      this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg);
+      this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg,false);
 
 
     }

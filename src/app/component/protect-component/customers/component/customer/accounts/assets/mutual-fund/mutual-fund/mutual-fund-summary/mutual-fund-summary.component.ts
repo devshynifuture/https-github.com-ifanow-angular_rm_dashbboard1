@@ -1660,7 +1660,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // const header = document.getElementById('templateHeader');
       const header = this.summaryTemplateHeader.nativeElement.innerHTML
 
-      this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '',true);
     });
 
   }

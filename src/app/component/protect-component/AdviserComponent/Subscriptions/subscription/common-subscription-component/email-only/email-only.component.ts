@@ -529,7 +529,7 @@ export class EmailOnlyComponent implements OnInit {
     const obj = {
       data: data.documentText,
       cancelButton: () => {
-        this.utilservice.htmlToPdf('', data.documentText, 'document', '');
+        this.utilservice.htmlToPdf('', data.documentText, 'document', '',data.documentText,'','',false);
         dialogRef.close();
       }
     };

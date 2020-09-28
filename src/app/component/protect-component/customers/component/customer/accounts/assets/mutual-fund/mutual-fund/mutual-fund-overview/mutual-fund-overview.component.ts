@@ -737,7 +737,7 @@ export class MutualFundOverviewComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg);
+    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg,true);
     console.log('return value ====', this.returnValue);
     return obj;
   }
