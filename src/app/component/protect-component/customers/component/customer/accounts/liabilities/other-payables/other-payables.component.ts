@@ -144,7 +144,7 @@ export class OtherPayablesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf(para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '');
+    this.util.htmlToPdf('',para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '',false);
   }
 
   // generatePdf(tableTitle){

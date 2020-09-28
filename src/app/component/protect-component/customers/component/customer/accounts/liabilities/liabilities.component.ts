@@ -168,7 +168,7 @@ export class LiabilitiesComponent implements OnInit {
 
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    this.util.htmlToPdf(para.innerHTML, 'Liabilities', 'true', this.fragmentData, '', '');
+    this.util.htmlToPdf('',para.innerHTML, 'Liabilities', 'true', this.fragmentData, '', '',false);
   }
   // generatePdf(tableTitle){
   //   let rows = this.tableEl._elementRef.nativeElement.rows;
