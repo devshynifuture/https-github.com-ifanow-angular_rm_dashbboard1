@@ -121,144 +121,115 @@
       </div>
 
 
-        
-          <div class="pt-20">
-            <p class="m-0 roboto f-500 text-black text-center pb-8">MONTHLY</p>
-          </div>
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Equity</p>
-              </div>
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                 <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.equity_monthly}}</span></p> 
-              </div>
-              
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Debt</p>
-              </div>
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                 <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.debt_monthly}}</span></p>
-              </div>
-             
-            </div>
-          </div>
-        
-          <div class="pt-20">
-            <p class="m-0 roboto f-500 text-black text-center pb-8">LUMPSUM</p>
-          </div>
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black ">Equity</p>
-              </div>
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_equity}}</span></p> 
-              </div>
 
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Debt</p>
-              </div>
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                  <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_debt}}</span></p>
-              </div>
-             
+      <div class="pt-20">
+        <p class="m-0 roboto f-500 text-black text-center pb-8">MONTHLY</p>
+      </div>
+      <div class="ba-light">
+        <div class="row">
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto f-500 text-black">Equity</p>
+          </div>
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.equity_monthly}}</span></p>
+          </div>
 
-            </div>
-            <!-- <div class="row">
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto f-500 text-black">Debt</p>
+          </div>
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.debt_monthly}}</span></p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pt-20">
+        <p class="m-0 roboto f-500 text-black text-center pb-8">LUMPSUM</p>
+      </div>
+      <div class="ba-light">
+        <div class="row">
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto f-500 text-black ">Equity</p>
+          </div>
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_equity}}</span></p>
+          </div>
+
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto f-500 text-black">Debt</p>
+          </div>
+          <div class="col-md-6 bg-grey lter p-8 bb br">
+            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_debt}}</span></p>
+          </div>
+
+
+        </div>
+        <!-- <div class="row">
           
         </div> -->
-          </div>
       </div>
     </div>
-  <div class="wrapper-20 pt-72"  *ngIf="data.singleOrMulti == 2">
+  </div>
+  <div class="wrapper-20 pt-72" *ngIf="data.singleOrMulti == 2">
     <div class="ba-light">
       <div class="row">
 
-        <div class="col-md-2 bg-grey lter p-8 bb br">
+        <div class="col-md-1 bg-grey lter p-8 bb br">
           <div class="pt-20">
             <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
-          <p class="m-0 roboto f-500 text-black">Goal year</p>
+          <p class="m-0 roboto f-500 text-black text-left">Goal year</p>
         </div>
 
-        <!-- <p class="m-0 roboto text-right">{{data.goalYear}}</p> -->
-
-        <div class="col-md-2 bg-grey lter p-8 bb br">
+        <div class="col-md-1 bg-grey lter p-8 bb br">
           <div class="pt-20">
             <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
-          <p class="m-0 roboto f-500 text-black">Present value</p>
+          <p class="m-0 roboto f-500 text-black text-right">Present value</p>
         </div>
-
-        <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.presentValue}}</span></p> -->
-
-
 
         <div class="col-md-2 bg-grey lter p-8 bb br">
           <div class="pt-20">
             <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
-          <p class="m-0 roboto f-500 text-black">Future value</p>
+          <p class="m-0 roboto f-500 text-black text-right">Future value</p>
         </div>
 
-        <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.futureValue}}</span></p> -->
-
-
-        <div class="col-md-3 bg-grey lter p-8 bb br">
+        <div class="col-md-2 bg-grey lter p-8 bb br">
           <div class="pt-20">
-            <p class="m-0 roboto f-500 text-black text-center pb-8">MONTHLY</p>
+            <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Equity</p>
-              </div>
-
-              <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.equity_monthly}}</span></p> -->
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Debt</p>
-              </div>
-
-              <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.debt_monthly}}</span></p> -->
-            </div>
-          </div>
+          <p class="m-0 roboto f-500 text-black text-right">Equity</p>
         </div>
-
-        <div class="col-md-3 bg-grey lter p-8 bb br">
+        <div class="col-md-2 bg-grey lter p-8 bb br">
           <div class="pt-20">
-            <p class="m-0 roboto f-500 text-black text-center pb-8">LUMPSUM</p>
+            <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black ">Equity</p>
-              </div>
-
-              <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.lump_equity}}</span></p> -->
-
-              <div class="col-md-6 bg-grey lter p-8 bb br">
-                <p class="m-0 roboto f-500 text-black">Debt</p>
-              </div>
-
-              <!-- <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.lump_debt}}</span></p> -->
-
-            </div>
-            <!-- <div class="row">
-            
-          </div> -->
+          <p class="m-0 roboto f-500 text-black text-right">Debt</p>
+        </div>
+        <div class="col-md-2 bg-grey lter p-8 bb br">
+          <div class="pt-20">
+            <p class="m-0 roboto f-500 text-black pb-8"></p>
           </div>
+          <p class="m-0 roboto f-500 text-black text-right">Equity</p>
+        </div>
+        <div class="col-md-2 bg-grey lter p-8 bb br">
+          <div class="pt-20">
+            <p class="m-0 roboto f-500 text-black pb-8"></p>
+          </div>
+          <p class="m-0 roboto f-500 text-black text-right">Debt</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2 lter p-8 bb br">
+        <div class="col-md-1 lter p-8 bb br">
           <div class="row">
             <div class="col-md-12 p-8" *ngFor="let d of data.dashboardData.key_arr_debt_monthly">
               <p class="m-0 roboto text-left">{{d | date:'yyyy'}}</p>
             </div>
           </div>
         </div>
-        <div class="col-md-2 lter p-8 bb br">
+        <div class="col-md-1 lter p-8 bb br">
           <div class="row">
             <div class="col-md-12 p-8" *ngFor="let p of data.dashboardData.key_arr_debt_monthly">
               <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
@@ -272,27 +243,31 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 lter p-8 bb br">
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 lter p-8 br" *ngFor="let e of equity">
-                <p class="m-0 roboto text-right">₹<span appFormatNumber>{{e}}</span></p>
-              </div>
-              <div class="col-md-6 lter p-8 br" *ngFor="let d of debt">
-                <p class="m-0 roboto text-right">₹<span appFormatNumber>{{d}}</span></p>
-              </div>
+        <div class="col-md-2 lter p-8 bb br">
+          <div class="row">
+            <div class="col-md-12 p-8" *ngFor="let e of equity">
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{e}}</span></p>
             </div>
           </div>
         </div>
-        <div class="col-md-3 lter p-8 bb br">
-          <div class="ba-light">
-            <div class="row">
-              <div class="col-md-6 lter p-8 br" *ngFor="let le of equityLumpsum">
-                <p class="m-0 roboto text-right">₹<span appFormatNumber>{{le}}</span></p>
-              </div>
-              <div class="col-md-6 lter p-8 br" *ngFor="let ld of debtLumpsum">
-                <p class="m-0 roboto text-right">₹<span appFormatNumber>{{ld}}</span></p>
-              </div>
+        <div class="col-md-2 lter p-8 bb br">
+          <div class="row">
+            <div class="col-md-12 p-8" *ngFor="let d of debt">
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{d}}</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 lter p-8 bb br">
+          <div class="row">
+            <div class="col-md-12 p-8" *ngFor="let el of equityLumpsum">
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{el}}</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 lter p-8 bb br">
+          <div class="row">
+            <div class="col-md-12 p-8" *ngFor="let dl of debtLumpsum">
+              <p class="m-0 roboto text-right">₹<span appFormatNumber>{{dl}}</span></p>
             </div>
           </div>
         </div>
