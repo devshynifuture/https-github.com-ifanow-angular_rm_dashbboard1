@@ -21,7 +21,6 @@ export class AddGoalComponent implements OnInit {
   @Input() popupHeaderText: string = 'KEY INFO';
   allAssetsList:any[] = [];
   clientId:any;
-
   familyList:any[] = [{familyMemberId: 'all', displayName: 'All'}];
   displayedAssets:any[] = [];
   currentAllocationFilter:string = 'all';
@@ -79,6 +78,9 @@ export class AddGoalComponent implements OnInit {
   advisorId: any;
   subscription = new Subscription();
 
+  isLoading: boolean = true;
+  show: boolean = true;
+
   
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -94,6 +96,8 @@ export class AddGoalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+   
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAndSortAssets)
     this.getFamilyMembersList();
     this.loadAssets();
@@ -172,6 +176,8 @@ export class AddGoalComponent implements OnInit {
   }
 
   filterByFamily(member) {
+    this.show = false
+   this.isLoading = false
     if(member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
       this.displayedAssets.forEach(element => element.maturityValue1 = UtilService.getNumberToWord(element.maturityValue))
