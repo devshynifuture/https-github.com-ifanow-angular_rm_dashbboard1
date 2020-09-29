@@ -18,12 +18,16 @@
                 <mat-form-field>
                     <input matInput class="form-control br-0" formControlName="policyName" matInput (keyup)="findPolicyName($event)" autocomplete="off" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of options" [value]="option.name">
+                            <mat-option  (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.name">
                                 {{option.name}}
                             </mat-option>
                         </mat-autocomplete>
-                    <mat-error>This field is required
-                    </mat-error>
+                        <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.required)">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.erroInPolicy)">
+                               Enter valid policy name
+                            </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -31,7 +35,7 @@
             <h5 class="m-0">Premium amount</h5>
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput class="form-control br-0 rupess" #premiumAmount [maxLength]="10" formControlName="premiumAmount" matInput>
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 rupess" #premiumAmount [maxLength]="10" formControlName="premiumAmount" matInput>
                     <mat-hint align="end" class="f-12">{{premiumAmount.value.length}}/10</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
@@ -59,7 +63,7 @@
             <h5 class="m-0">Insurance amount</h5>
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput class="form-control br-0 rupess" #insuranceAmount [maxLength]="10" formControlName="insuranceAmount" >
+                    <input matInput class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #insuranceAmount [maxLength]="10" formControlName="insuranceAmount" >
                     <mat-hint align="end" class="f-12">{{insuranceAmount.value.length}}/10</mat-hint>
                     <mat-error>This field is required
                     </mat-error>

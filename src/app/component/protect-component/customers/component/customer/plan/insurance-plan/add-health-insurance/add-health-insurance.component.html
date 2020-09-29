@@ -161,7 +161,7 @@
     <app-motor-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 4"></app-motor-insurance>    
 
 </div>
-<div class="bottom-fixed wrapper-12 pt-16" *ngIf="showExisting == false && !showNewPolicy">
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="!showNewPolicy">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">

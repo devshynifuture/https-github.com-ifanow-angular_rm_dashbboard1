@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
+import { MatInput } from '@angular/material';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-suggest-policy',
@@ -32,7 +34,9 @@ export class AddSuggestPolicyComponent implements OnInit {
   advisorId: any;
   clientId: any;
   options =[];
+  selectedVal: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,private customerService:CustomerService) { }
+  validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -41,6 +45,7 @@ export class AddSuggestPolicyComponent implements OnInit {
     this.getdataForm(data);
     console.log(data);
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   ngOnInit() {
     this.storeData = 'Here you can write recommendations';
@@ -88,13 +93,35 @@ export class AddSuggestPolicyComponent implements OnInit {
     const inpValue = this.suggestPolicyForm.get('policyName').value;
     this.customerService.getCompanyNames(inpValue).subscribe(
         data => {
-            console.log(data);
+           if(data){
             this.options = data;
+            this.checkValidPolicy(data,inpValue);
+           }else{
+            this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+            this.suggestPolicyForm.get('policyName').markAsTouched();
+           }
         },
         (error) => {
             console.log(error);
+            this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+            this.suggestPolicyForm.get('policyName').markAsTouched();
+
         }
     );
+  }
+  selectPolicy(value){
+    this.selectedVal = value;
+  }
+  checkValidPolicy(value,input){
+    if(this.selectedVal){
+      if(this.selectedVal){
+        this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+        this.suggestPolicyForm.get('policyName').markAsTouched();
+      }
+    }else if(!this.selectedVal){
+      this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+      this.suggestPolicyForm.get('policyName').markAsTouched();
+    }
   }
   onChange(form, value, event) {
     if (parseInt(event.target.value) > 100) {
@@ -104,6 +131,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   }
   saveSuggestPolicy() {
     if (this.suggestPolicyForm.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
       this.suggestPolicyForm.markAllAsTouched();
     } else {
       const obj = {

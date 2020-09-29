@@ -44,13 +44,6 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
   getSipData(data){
     if(data.assetList.length > 0){
       data.assetList = data.assetList.filter(item => item.countThis == true);
-      if(data.name == 'Recurring deposits'){
-        data.assetList.forEach(element=>{
-          if(element.name == "Sukanya samriddhi yojna"){
-            element.rdNumber = element.ssyNo;
-          }
-        })
-      }
       
     }
     this.flag = data.name
@@ -60,13 +53,13 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
       }else{
         this.dataSource.data = []
       }
-    }else{
+    }else {
       if(data.assetList.length > 0){
         data.assetList.forEach(element => {
           element.name = (data.name == 'Life insurance premium') ? element.lifeAssuredName :(data.name == 'General insurance premium') ? element.policyHolderName : (data.name == 'Loan EMI') ? element.ownerName : (element.ownerList.length > 0 ? element.ownerList[0].name : '') 
-          element.currentValue = (data.name == 'Life insurance premium') ? element.premiumAmount : (data.name == 'General insurance premium') ? element.premiumAmount : (data.name == 'Loan EMI') ? element.emi : (data.name == 'Recurring deposits') ? element.monthlyContribution : element.currentValue 
+          element.currentValue = (data.name == 'Life insurance premium') ? element.premiumAmount : (data.name == 'General insurance premium') ? element.premiumAmount : (data.name == 'Loan EMI') ? element.emi : (data.name == 'Bank recurring deposits' || data.name == 'Post office recurring deposits' || data.name == 'Sukanya samriddhi yojna') ? element.monthlyContribution : element.currentValue 
           element.number = (data.name == 'Life insurance premium' ||data.name=='General insurance premium') ? element.policyNumber : (data.name == 'Loan EMI') ? ((element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage') : 
-          (data.name == 'Recurring deposits') ? element.rdNumber : (data.name == 'Sukanya samriddhi yojna') ? element.ssyNo : (data.name == 'pord') ? element.rdNumber : element.accountNumber
+          (data.name == 'Bank recurring deposits' || data.name == 'Post office recurring deposits') ? element.rdNumber : (data.name == 'Sukanya samriddhi yojna') ? element.ssyNo : (data.name == 'pord') ? element.rdNumber : element.accountNumber
         });
         this.dataSource1.data = data.assetList
       }else{
@@ -74,6 +67,14 @@ export class RecurringCommitmentsDetailedViewComponent implements OnInit {
       }
     }
     this.isLoading =false;
+  }
+  filterData(data){
+    data.forEach(element => {
+      element.name = element.ownerList.length > 0 ? element.ownerList[0].name : '';
+      element.currentValue = data.name == 'Recurring deposits' ? element.monthlyContribution : element.currentValue ;
+      element.number = (data.name == 'Recurring deposits') ? element.rdNumber : (data.name == 'Sukanya samriddhi yojna') ? element.ssyNo : (data.name == 'pord') ? element.rdNumber : element.rdNumber
+    });
+    return data;
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});

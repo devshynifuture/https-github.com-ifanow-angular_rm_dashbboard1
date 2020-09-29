@@ -317,7 +317,7 @@ export class PayeeSettingsComponent implements OnInit {
     if (data != undefined) {
       if (this.payeeList) {
         data.forEach(element => {
-          if (this.payeeList.some(payee => payee.companyDisplayName == element.name)) {
+          if (this.payeeList.some(payee => payee.familyMemberId == element.familyMemberId)) {
             element['disableFlag'] = true;
           }
           else {

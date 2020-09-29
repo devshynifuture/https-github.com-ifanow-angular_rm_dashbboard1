@@ -8,6 +8,12 @@ import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-
 import { AddInsuranceUpperComponent } from '../add-insurance-upper/add-insurance-upper.component';
 import { PlanService } from '../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { PersonalInsuranceComponent } from '../mainInsuranceScreen/personal-insurance/personal-insurance.component';
+import { CriticalInsuranceComponent } from '../mainInsuranceScreen/critical-insurance/critical-insurance.component';
+import { MotorInsuranceComponent } from '../mainInsuranceScreen/motor-insurance/motor-insurance.component';
+import { TravelInsuranceComponent } from '../mainInsuranceScreen/travel-insurance/travel-insurance.component';
+import { HouseholdersInsuranceComponent } from '../mainInsuranceScreen/householders-insurance/householders-insurance.component';
+import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fire-insurance.component';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -25,6 +31,10 @@ export class ShowHealthPlanningComponent implements OnInit {
   clientId: any;
   advisorId: any;
   isLoading = false;
+  displayList =[];
+  newPolicyData: { data: any; insuranceTypeId: number; insuranceSubTypeId: any; displayList: any; showInsurance: any; inputData: any; };
+  showNewPolicy = false;
+  insuranceType: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -39,6 +49,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
     this.inputData = data;
+    this.insuranceType = this.inputData.insuranceType;
   }
 
   get data() {
@@ -48,6 +59,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
     this.getStepOneAndTwoData();
+    this.getGlobalDataInsurance();
   }
   getStepOneAndTwoData(){
     this.dataSource =[{},{},{}];
@@ -125,24 +137,72 @@ export class ShowHealthPlanningComponent implements OnInit {
 
   //   this.eventService.changeUpperSliderState(fragmentData);
   // }
-
+  getGlobalDataInsurance() {
+    const obj = {};
+    this.custumService.getInsuranceGlobalData(obj).subscribe(
+      data => {
+        console.log(data),
+          this.displayList = data;
+      }
+    );
+  }
   openSuggestHealth(data) {
+      data.data= null;
+      data.insuranceTypeId=  2;
+      data.insuranceSubTypeId=  data.insuranceType;
+      data.displayList=  this.displayList;
+      data.showInsurance=  this.showInsurance;
+      data.inputData = this.inputData;
+
     const fragmentData = {
-      flag: 'opencurrentpolicies',
-      data,
-      componentName: SuggestHealthInsuranceComponent,
+      flag: 'suggestExistingPolicy',
+      data:data,
+      componentName: null,
       id: 1,
       state: 'open',
     };
+    switch (data.insuranceType) {
+      case 5:
+        fragmentData.componentName = SuggestHealthInsuranceComponent;
+        break;
+      case 7:
+        fragmentData.componentName = PersonalInsuranceComponent;
+        break;
+      case 6:
+        fragmentData.componentName = CriticalInsuranceComponent;
+        break;
+      case 4:
+        fragmentData.componentName = MotorInsuranceComponent;
+        break;
+      case 8:
+        fragmentData.componentName = TravelInsuranceComponent;
+        break;
+      case 9:
+        fragmentData.componentName = HouseholdersInsuranceComponent;
+        break;
+      case 10:
+        fragmentData.componentName = FireInsuranceComponent;
+        break;
+      default:
+        fragmentData.componentName = SuggestHealthInsuranceComponent;
+        break;
+
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if(sideBarData.refreshRequired){
+            this.getStepOneAndTwoData();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
     );
+  }
+  getOutput(value){
+    this.showNewPolicy = false;
   }
   openHelthInsurance(data) {
     if (data == null) {
