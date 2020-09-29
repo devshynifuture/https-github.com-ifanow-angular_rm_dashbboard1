@@ -241,11 +241,18 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.isChecked = event.checked
     if (this.isChecked) {
       this.needAnalysis.push(element.insurance.id)
-      element.insurance.insuredMembers.forEach(ele => {
+      if(element.insurance.insuredMembers.length > 0){
+        element.insurance.insuredMembers.forEach(ele => {
+          this.ownerIds.push({
+            'ownerId': ele.familyMemberId
+          })
+        });
+      }else{
         this.ownerIds.push({
-          'ownerId': ele.familyMemberId
+          'ownerId': element.insurance.policyHolderId
         })
-      });
+      }
+
       this.ownerIds = [...new Map(this.ownerIds.map(item => [item.ownerId, item])).values()];
       this.showError = false;
     }

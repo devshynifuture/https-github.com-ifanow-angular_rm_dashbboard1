@@ -18,8 +18,8 @@
                 <mat-form-field>
                     <input matInput class="form-control br-0" formControlName="policyName" matInput (keyup)="findPolicyName($event)" autocomplete="off" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option  (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.name">
-                                {{option.name}}
+                            <mat-option  (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
+                                {{option.policyName}}
                             </mat-option>
                         </mat-autocomplete>
                         <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.required)">

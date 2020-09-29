@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-helth-insurance-policy',
@@ -9,6 +10,21 @@ import { DialogData } from 'src/app/component/protect-component/AdviserComponent
   styleUrls: ['./helth-insurance-policy.component.scss']
 })
 export class HelthInsurancePolicyComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+};
   healthInsurance: any;
   adviceHealthInsurance=[];
   showInsurance: DialogData;
@@ -58,6 +74,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.healthInsurance.get('selectAdvice').value ? '' : this.showError = true;
       this.healthInsurance.markAllAsTouched();
   }else {
+    this.barButtonOptions.active = true;
     let obj = {
       selectAdvice:this.healthInsurance.controls.selectAdvice.value,
       adviceHeader:this.healthInsurance.controls.selectAdvice.value,

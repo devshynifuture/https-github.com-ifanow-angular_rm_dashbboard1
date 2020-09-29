@@ -91,15 +91,26 @@ export class AddSuggestPolicyComponent implements OnInit {
   }
   findPolicyName(data){
     const inpValue = this.suggestPolicyForm.get('policyName').value;
-    this.customerService.getCompanyNames(inpValue).subscribe(
+    const obj = {
+      policyName: inpValue,
+      insuranceSubTypeId: 0
+    };
+    this.customerService.getPolicyName(obj).subscribe(
         data => {
-           if(data){
-            this.options = data;
+          //  if(data){
+          //   this.options = data;
+          //   this.checkValidPolicy(data,inpValue);
+          //  }else{
+          //   this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+          //   this.suggestPolicyForm.get('policyName').markAsTouched();
+          //  }
+           if(data.policyDetails.length>0){
+            this.options = data.policyDetails;
             this.checkValidPolicy(data,inpValue);
-           }else{
+          }else{
             this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
             this.suggestPolicyForm.get('policyName').markAsTouched();
-           }
+          }
         },
         (error) => {
             console.log(error);
