@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {RoutingState} from '../../../../../../services/routing-state.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-plan',
@@ -18,7 +19,9 @@ export class PlanComponent implements OnInit {
   }
 
   constructor(private router: Router, private routingStateService: RoutingState,
-              public authService: AuthService,    public roleService: RoleService
+              public authService: AuthService,    public roleService: RoleService,
+              public enumDataService: EnumDataService,
+
               ) {
   }
 
