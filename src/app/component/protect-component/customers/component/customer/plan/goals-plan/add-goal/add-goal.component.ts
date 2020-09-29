@@ -21,6 +21,7 @@ export class AddGoalComponent implements OnInit {
   @Input() popupHeaderText: string = 'KEY INFO';
   allAssetsList:any[] = [];
   clientId:any;
+  isLoading;
 
   familyList:any[] = [{familyMemberId: 'all', displayName: 'All'}];
   displayedAssets:any[] = [];
@@ -94,6 +95,7 @@ export class AddGoalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAndSortAssets)
     this.getFamilyMembersList();
     this.loadAssets();
