@@ -24,15 +24,15 @@
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> Equity </th>
-                        <td mat-cell *matCellDef="let element"><span appFormatNumber [value]="element.equity"></span>
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
+                        <td mat-cell *matCellDef="let element" class="text-right" ><span appFormatNumber [value]="element.equity"></span>
                         </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef> Debt </th>
-                        <td mat-cell *matCellDef="let element"><span appFormatNumber [value]="element.debt"></span>
+                        <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
+                        <td mat-cell class="text-right" *matCellDef="let element"><span appFormatNumber [value]="element.debt"></span>
                         </td>
                     </ng-container>
 
@@ -197,6 +197,7 @@
                     </mat-menu>
                 </div>
             </div>
+
             <div class="mt-8">
                 <table mat-table [dataSource]="dataSource1" id="table-low">
 
@@ -215,8 +216,8 @@
                     </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="value">
-                        <th class="w-25" mat-header-cell *matHeaderCellDef> Value | Units | SIP</th>
-                        <td *matCellDef="let element" class="text-center w-25" mat-cell>
+                        <th class="w-25 text-right" mat-header-cell *matHeaderCellDef> Value | Units </th>
+                        <td *matCellDef="let element" class="text-right w-25" mat-cell>
                             <span *ngIf="element.isSip != true" class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
                             <span *ngIf="element.isSip != true" class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
                             </span><br />
@@ -226,9 +227,11 @@
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
                         <th class="w-20" mat-header-cell *matHeaderCellDef>Goal </th>
-                        <td class="w-20 text-left" *matCellDef="let element" mat-cell>
+                        <td class="w-20 text-left" style="padding-right: 0px !important;" *matCellDef="let element" mat-cell>
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
-                                <div>{{allocatedGoal.goalName}}</div>
+                                
+                                <div class="mb-10 pb-10 bb">{{allocatedGoal.goalName}}</div>
+
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                     <span class="text-success" *ngIf="element.isSip == true">
                                         SIP-{{allocatedGoal.sipPercent}}%</span>
@@ -240,6 +243,7 @@
                             <div *ngIf="element.absAllocation < 100">
                                 <div>0 %</div>
                             </div>
+                            
                         </td>
                     </ng-container>
                     <!-- <ng-container matColumnDef="value1">
@@ -271,9 +275,10 @@
 
 
                     <ng-container matColumnDef="icons">
-                        <th mat-header-cell *matHeaderCellDef class="t-10 br">Allocations</th>
-                        <td mat-cell *matCellDef="let element" class="t-10 br">
-                            <div *ngFor="let allocatedGoal of element.goalAssetMapping">
+                        <th mat-header-cell *matHeaderCellDef class="t-10 text-right br">Allocations</th>
+                        <td mat-cell *matCellDef="let element" class="t-10 br" style="padding-left: 0px !important;">
+                          
+                            <div class="mb-10 pb-10 bb" *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div class="d-flex align-items-center"
                                     *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                     <button class="unallcoateBtn ml-10 text-danger"
@@ -289,9 +294,9 @@
                                         </div>
                                     </mat-menu>
                                 </div>
-
                             </div>
-                            <div class="d-flex">
+                           
+                             
                                 <div *ngFor="let allocatedGoal of element.goalAssetMapping">
                                     <div class="d-flex align-items-center"
                                         *ngIf="(element.isSip == true && allocatedGoal.sipPercent != 100 && element.absSIP != 0)">
@@ -312,7 +317,7 @@
                                         </i> -->
                                     </div>
                                 </div>
-                            </div>
+                            
                         </td>
                     </ng-container>
 
