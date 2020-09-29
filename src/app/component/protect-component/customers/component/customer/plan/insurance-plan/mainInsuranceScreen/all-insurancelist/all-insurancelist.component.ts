@@ -104,7 +104,21 @@ export class AllInsurancelistComponent implements OnInit {
   getInsurancePlaningListRes(data) {
     this.loader(-1);
     if(data){
-      console.log('incurance list', data)
+      data.forEach(singleInsuranceData => {
+        if (singleInsuranceData.owners.length > 0) {
+          singleInsuranceData.displayHolderName = singleInsuranceData.owners[0].holderName;
+          if (singleInsuranceData.owners.length > 1) {
+            for (let i = 1; i < singleInsuranceData.owners.length; i++) {
+              if (singleInsuranceData.owners[i].holderName) {
+                const firstName = (singleInsuranceData.owners[i].holderName as string).split(' ')[0];
+                singleInsuranceData.displayHolderName += ', ' + firstName;
+              }
+            }
+          }
+        } else {
+          singleInsuranceData.displayHolderName = '';
+        }
+      });
       this.dataSource = data
       this.dataSource.forEach(element => {
         if (element.insuranceType == 1) {

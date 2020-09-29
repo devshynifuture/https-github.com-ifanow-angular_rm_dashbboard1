@@ -301,12 +301,12 @@ export class ExpensesComponent implements OnInit {
       let finalArray = [];
       let committedInvestmentExpense = this.filterAssetData(data.committedInvestmentExpense);
       let committedExpenditureExpense = this.filterAssetData(data.committedExpenditureExpense);
-      let pord = this.filterAssetData(data.pord);
+      let pord = this.filterAssetData(data.pordAsset);
       let lifeInsuranceList = this.filterAssetData(data.lifeInsuranceList);
       let generalInsuranceExpense = this.filterAssetData(data.generalInsurancePremium);
-      let ssy = this.filterAssetData(data.ssy);
+      let ssy = this.filterAssetData(data.ssyAsset);
       let loanExpense = this.filterAssetData(data.loanEmi);
-      let recurringDeposit = this.filterAssetData(data.recurringAssetList);
+      let recurringDeposit = this.filterAssetData(data.rdAsset);
       let sipExpense = this.filterAssetData(data.mutualFundSipList);
       this.expenseAssetData = data;
       finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense, ...pord, ...lifeInsuranceList, ...generalInsuranceExpense, ...ssy, ...loanExpense, ...recurringDeposit, ...sipExpense];
@@ -327,11 +327,45 @@ export class ExpensesComponent implements OnInit {
     let obj;
     let filterArray = []
     if (data) {
+      if(data[1].name == 'Pord'){
+        data[1].name = 'Post office recurring deposits'
+        data[0].assetList = data[0].pordList;
+      }else if(data[1].name == 'Recurring deposits'){
+        data[1].name = 'Bank recurring deposits'
+      }else if(data[1].name == 'Sukanya samriddhi yojna'){
+        data[0].assetList = data[0].ssyList;
+      }
       obj = {
         name: data[1].name, total: data[2].total, assetList: data[0].assetList, progressPercentOther: 0, spentPerOther: 0, budgetPerOther: 0
       }
       obj.progressPercentOther = 0;
       obj.progressPercentOther += (data[2].total / data[2].total) * 100;
+      obj.progressPercentOther = Math.round(obj.progressPercentOther);
+      if (obj.progressPercentOther > 100) {
+        obj.spentPerOther = 100;
+        obj.budgetPerOther = obj.progressPercentOther - 100;
+      } else {
+        obj.spentPerOther = obj.progressPercentOther;
+      }
+    }
+    if (obj) {
+      // filterArray.push({name:data[1].name},{total:data[2].total},{});
+      filterArray.push(obj);
+
+    }
+    return filterArray
+  }
+  filterAssetDataRd(data){
+    let obj;
+    let filterArray = [];
+    let mergeArray=[];
+    if (data) {
+      mergeArray =[...data[0].rdList,...data[1].ssyList,...data[2].pordList]
+      obj = {
+        name: data[3].name, total: data[4].total, assetList: mergeArray, progressPercentOther: 0, spentPerOther: 0, budgetPerOther: 0,dataPord:data[2].pordList,dataSsy:data[1].ssyList,dataRd:data[0].rdList
+      }
+      obj.progressPercentOther = 0;
+      obj.progressPercentOther += (data[4].total / data[4].total) * 100;
       obj.progressPercentOther = Math.round(obj.progressPercentOther);
       if (obj.progressPercentOther > 100) {
         obj.spentPerOther = 100;

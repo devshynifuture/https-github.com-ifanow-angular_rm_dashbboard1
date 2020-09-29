@@ -113,7 +113,11 @@ export const componentList = [
   RecurringCommitmentsDetailedViewComponent,
   EditPercentComponent,
   TravelInsuranceComponent,
-  MotorInsuranceComponent
+  MotorInsuranceComponent,
+  PersonalInsuranceComponent,
+  HouseholdersInsuranceComponent,
+  FireInsuranceComponent,
+  CriticalInsuranceComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
@@ -123,7 +127,7 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: [...componentList,  CancerInsuranceComponent,CashflowTableEditDirective, CriticalInsuranceComponent, FireInsuranceComponent, HouseholdersInsuranceComponent, PersonalInsuranceComponent],
+  declarations: [...componentList,  CancerInsuranceComponent,CashflowTableEditDirective, ],
   imports: [
     CommonModule,
     MaterialModule,
