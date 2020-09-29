@@ -8,19 +8,19 @@
   </div>
   <div class="col-md-8 p-0">
     <nav mat-align-tabs="center" mat-tab-nav-bar>
-      <a [routerLink]="['/customer/detail/plan/summary']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION"  mat-tab-link routerLinkActive="active">SUMMARY</a>
-      <a [routerLink]="['/customer/detail/plan/profile']"  *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION" mat-tab-link routerLinkActive="active">PROFILE</a>
-      <a [routerLink]="['/customer/detail/plan/insurance']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION"  class="width110" mat-tab-link
+      <a [routerLink]="['/customer/detail/plan/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
+      <a [routerLink]="['/customer/detail/plan/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
+      <a [routerLink]="['/customer/detail/plan/insurance']" class="width110" mat-tab-link
          routerLinkActive="active">INSURANCE</a>
       <a [routerLink]="['/customer/detail/plan/goals']" class="width70" mat-tab-link
          routerLinkActive="active">GOALS</a>
-      <a [routerLink]="['/customer/detail/plan/taxes']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION" class="width70" mat-tab-link
+      <a [routerLink]="['/customer/detail/plan/taxes']" class="width70" mat-tab-link
          routerLinkActive="active">TAXES</a>
-      <a [routerLink]="['/customer/detail/plan/cash-flow']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION"  class="width120" mat-tab-link
+      <a [routerLink]="['/customer/detail/plan/cash-flow']" class="width120" mat-tab-link
          routerLinkActive="active">CASH
         FLOWS</a>
       <!-- <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link routerLinkActive="active">DEPLOYMENTS</a> -->
-      <a [routerLink]="['/customer/detail/plan/scenarios']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION"  class="width110" mat-tab-link
+      <a [routerLink]="['/customer/detail/plan/scenarios']" class="width110" mat-tab-link
          routerLinkActive="active">SCENARIOS</a>
     </nav>
   </div>
