@@ -26,7 +26,7 @@
                     mat-tab-link>PORTFOLIO</a>
                 <a class="planWidth" [routerLink]="['/customer/detail/plan']" *ngIf="authService.isAdvisor()&&roleService.planPermission.enabled&&!enumDataService.PRODUCTION" routerLinkActive="successBorder"
                     mat-tab-link>PLAN</a>
-                <a [routerLink]="['/customer/detail/activity']" *ngIf="roleService.transactionPermission.enabled" routerLinkActive="successBorder"
+                <a [routerLink]="['/customer/detail/activity']" *ngIf="roleService.planPermission.enabled" routerLinkActive="successBorder"
                     mat-tab-link>ACTIVITY</a>
                 <a [routerLink]="['/customer/detail/transact']" *ngIf="roleService.transactionPermission.enabled"  mat-tab-link
                     routerLinkActive="successBorder">TRANSACT</a>
