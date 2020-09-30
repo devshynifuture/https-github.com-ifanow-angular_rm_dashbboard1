@@ -289,4 +289,7 @@ export class PlanService {
   updateRecommendationsGI(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GEN_INSURANCE_RECOMMENDATION_UPDATE, data)
   }
+  addSuggestNew(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SUGGEST_NEW, data)
+  }
 }

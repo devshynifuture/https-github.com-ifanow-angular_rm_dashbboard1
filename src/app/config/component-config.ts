@@ -342,6 +342,7 @@ export const appConfig = {
   LIFE_INSURANCE_NEED_BASED_DETAILS: 'insurance/planning/life/insurance/need/based/details/saved/get?',
   LIFE_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/life/insurance/recommendation/status/update',
   GEN_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/gen/insurance/recommendation/status/update',
+  ADD_SUGGEST_NEW:'insurance/planning/life/insurance/need/analysis/suggest/new/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',

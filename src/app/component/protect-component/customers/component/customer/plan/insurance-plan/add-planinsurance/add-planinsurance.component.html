@@ -42,7 +42,7 @@
                     <div class="col-md-3">
                         <div class="form-group ">
                             <mat-form-field>
-                                <mat-select [(ngModel)]="selectedFamily">
+                                <mat-select [(ngModel)]="selectedFamily" class="form-control br-0">
                                     <mat-option value=''>Select one</mat-option>
                                     <mat-option [value]="option.name" (click)="selectDependent(option.familyMemberId)"
                                         *ngFor="let option of familyList">{{ option.name }}
