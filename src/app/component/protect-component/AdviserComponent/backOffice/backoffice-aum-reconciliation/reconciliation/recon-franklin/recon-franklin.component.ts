@@ -69,6 +69,8 @@ export class ReconFranklinComponent implements OnInit {
           this.adminAdvisorIds = [...this.advisorId];
           this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
+      }, err => {
+        this.eventService.openSnackBar("Something went wrong", "DISMISS");
       });
   }
 
@@ -79,9 +81,11 @@ export class ReconFranklinComponent implements OnInit {
           this.brokerList = res;
           this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
           this.getAumReconHistoryData();
-        } else {
-          this.eventService.openSnackBar("No Arn Ria Data Found","DISMISS");
         }
+      }, err=> {
+        this.isLoading = false;
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong", "DISMISS");
       });
   }
 

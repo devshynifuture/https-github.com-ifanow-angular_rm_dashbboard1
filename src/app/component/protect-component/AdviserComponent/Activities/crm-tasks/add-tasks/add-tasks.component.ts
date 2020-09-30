@@ -265,7 +265,7 @@ export class AddTasksComponent implements OnInit {
         case 'task':
           data = {
             taskId: commentItem.taskId, //(for sub task comments subTaskId)
-            userId: commentItem.userId,
+            userId: this.userId,
             commentMsg: this.replyCommentFC.value,
             parentId: commentItem.id //(new param, id of comment to which its replying)
           }
@@ -274,7 +274,7 @@ export class AddTasksComponent implements OnInit {
         case 'subTask':
           data = {
             subTaskId: commentItem.subTaskId, //(for sub task comments subTaskId)
-            userId: commentItem.userId,
+            userId: this.userId,
             commentMsg: this.replyCommentFC.value,
             parentId: commentItem.id //(new param, id of comment to which its replying)
           }
