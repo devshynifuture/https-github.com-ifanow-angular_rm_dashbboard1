@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { MatInput } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-suggest-policy',
@@ -35,7 +37,8 @@ export class AddSuggestPolicyComponent implements OnInit {
   clientId: any;
   options =[];
   selectedVal: any;
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,private customerService:CustomerService) { }
+  policyDetails: any;
+  constructor(private eventService:EventService,private planService:PlanService,private subInjectService: SubscriptionInject, private fb: FormBuilder,private customerService:CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -48,19 +51,21 @@ export class AddSuggestPolicyComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   ngOnInit() {
-    this.storeData = 'Here you can write recommendations';
   }
   saveData(data) {
 
   }
   getHolderNames(obj) {
+    obj.familyMemberIds = [];
     if (obj.owners && obj.owners.length > 0) {
       obj.displayHolderName = obj.owners[0].holderName;
+      obj.familyMemberId = obj.owners[0].ownerId;
       if (obj.owners.length > 1) {
         for (let i = 1; i < obj.owners.length; i++) {
           if (obj.owners[i].holderName) {
             const firstName = (obj.owners[i].holderName as string).split(' ')[0];
             obj.displayHolderName += ', ' + firstName;
+            obj.familyMemberIds.push(obj.owners[i].ownerId);
           }
         }
       }
@@ -85,9 +90,9 @@ export class AddSuggestPolicyComponent implements OnInit {
       this.showRecommendation = false;
     }
   }
-  close() {
+  close(flag) {
 
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
   findPolicyName(data){
     const inpValue = this.suggestPolicyForm.get('policyName').value;
@@ -97,13 +102,6 @@ export class AddSuggestPolicyComponent implements OnInit {
     };
     this.customerService.getPolicyName(obj).subscribe(
         data => {
-          //  if(data){
-          //   this.options = data;
-          //   this.checkValidPolicy(data,inpValue);
-          //  }else{
-          //   this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
-          //   this.suggestPolicyForm.get('policyName').markAsTouched();
-          //  }
            if(data.policyDetails.length>0){
             this.options = data.policyDetails;
             this.checkValidPolicy(data,inpValue);
@@ -122,6 +120,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   }
   selectPolicy(value){
     this.selectedVal = value;
+    this.policyDetails = value;
   }
   checkValidPolicy(value,input){
     if(this.selectedVal){
@@ -148,14 +147,29 @@ export class AddSuggestPolicyComponent implements OnInit {
       const obj = {
         'clientId': this.clientId,
         'advisorId': this.advisorId,
+        'familyMemberIdLifeAssured':this.insuranceData.familyMemberId || this.insuranceData.familyMemberId == 0 ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
+        'insuranceTypeId':this.policyDetails.insuranceTypeId,
+        'insuranceSubTypeId':this.policyDetails.insuranceSubTypeId,
+        'policyNumber':this.policyDetails.policyNumber,
+        'policyId':this.policyDetails.id,
+        'policyTypeId':this.policyDetails.policyTypeId,
         'policyName': this.suggestPolicyForm.get('policyName').value,
         'premiumAmount': this.suggestPolicyForm.get('premiumAmount').value,
         'frequency': this.suggestPolicyForm.get('frequency').value,
-        'insuranceAmount': this.suggestPolicyForm.get('insuranceAmount').value,
-        'tenure': this.suggestPolicyForm.get('tenure').value,
-        'recommendation': this.storeData
+        'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
+        'policyTenure': this.suggestPolicyForm.get('tenure').value,
+        'realOrFictitious':2,
+        'suggestion': this.storeData ? this.storeData : null
       }
-      console.log()
+      this.planService.addSuggestNew(obj).subscribe(
+        data => {
+            console.log(data);
+            this.close(true);
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
     }
   }
 }
