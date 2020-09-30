@@ -620,9 +620,9 @@
             </div>
         </div>
 
-        <div class="col-width-31 text-right">
-            <div class="fix-sticky skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-                <img class="mt-20" src={{logo}} [hidden]="isLoadingPlan">
+        <div class="col-width-31">
+            <div class="fix-sticky skeletonAnimation align-items-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 pl-90">
                 <div class="relClass" [hidden]="!isLoadingPlan">
                     <div class="bar289" [ngClass]="{'height289': isLoadingPlan}">
 
