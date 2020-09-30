@@ -133,16 +133,16 @@ export class AllInsurancelistComponent implements OnInit {
         }  else if (element.insuranceType == 10) {
           element.heading = 'Fire insurance'
           element.logo = '/assets/images/svg/FIsmall.svg'
-        } else if (element.insuranceType = 11) {
+        } else if (element.insuranceType == 11) {
           element.heading = 'Home insurance'
           element.logo = '/assets/images/svg/Hsmall.svg'
-        } else if (element.insuranceType = 7) {
+        } else if (element.insuranceType == 7) {
           element.heading = 'Personal accident'
           element.logo = '/assets/images/svg/PAsmall.svg'
-        }else if (element.insuranceType = 8) {
+        }else if (element.insuranceType == 8) {
           element.heading = 'Travel insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
-        }else if (element.insuranceType = 4) {
+        }else if (element.insuranceType == 4) {
           element.heading = 'Motor insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
         }

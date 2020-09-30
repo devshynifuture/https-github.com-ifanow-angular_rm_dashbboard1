@@ -149,8 +149,8 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
             this.filterForm.get("brokerCode").enable({ emitEvent:false });
             this.filterForm.get("brokerCode").setValue(-1, { emitEvent: false });
           }
+          this.getSipCleanUpList(true);
         }
-        this.getSipCleanUpList(true);
       });
 
     this.filterSub = this.filterForm.valueChanges.subscribe((res) => {

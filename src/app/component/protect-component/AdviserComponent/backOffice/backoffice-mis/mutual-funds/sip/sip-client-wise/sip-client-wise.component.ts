@@ -253,7 +253,7 @@ export class SipClientWiseComponent implements OnInit {
     const obj = {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
-      amount: sip.amount,
+      sipAmount: sip.sipAmount,
       ceaseDate: this.datePipe.transform(date, 'yyyy-MM-dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(

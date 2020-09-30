@@ -1,3 +1,4 @@
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -6,11 +7,17 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./record-details.component.scss"],
 })
 export class RecordDetailsComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private subsInjectService: SubscriptionInject
+  ) {}
 
   data;
 
   ngOnInit() {
     console.log(this.data);
+  }
+  
+  close(){
+    this.subsInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
