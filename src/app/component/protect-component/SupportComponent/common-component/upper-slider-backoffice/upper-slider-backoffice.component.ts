@@ -34,6 +34,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   // showCelebrationGif: boolean = true;
   subAdvisorList: any;
   backofficeApiHitCount: number = 0;
+  objForAddRecon: {};
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -305,6 +306,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
                       // this.showCelebrationGif = true;
                       this.errorMessage = "All Folios are Matched";
+                      let dateObjDoneOn = new Date();
+                      let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+                        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+                        (dateObjDoneOn.getMonth() + 1) + "-" +
+                        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
+
+                        this.objForAddRecon = {
+                          advisorId: this.advisorId,
+                          brokerId: this.brokerId,
+                          totalFolioCount: this.totalCount,
+                          matchedCount: this.totalCount,
+                          aumBalanceDate: res.aumList[0].aumDate,
+                          unmatchedCountBeforeRecon: 0,
+                          unmatchedCountAfterRecon: 0,
+                          transactionDate: res.transactionDate,
+                          rtId: this.data.rtId,
+                          doneOn: doneOnFormatted,
+                          rmId: this.rmId
+                        }
                     }
 
                     // aum date for all object is the same
@@ -319,8 +339,26 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
                     // this.showCelebrationGif = true;
                     this.errorMessage = "All Folios are Matched";
-                  }
+                    let dateObjDoneOn = new Date();
+                    let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+                        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+                        (dateObjDoneOn.getMonth() + 1) + "-" +
+                        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
 
+                    this.objForAddRecon = {
+                      advisorId: this.advisorId,
+                      brokerId: this.brokerId,
+                      totalFolioCount: this.totalCount,
+                      matchedCount: this.totalCount,
+                      aumBalanceDate: null,
+                      unmatchedCountBeforeRecon: 0,
+                      unmatchedCountAfterRecon: 0,
+                      transactionDate: null,
+                      rtId: this.data.rtId,
+                      doneOn: doneOnFormatted,
+                      rmId: this.rmId
+                    }
+                  }
                   this.isLoading = false;
                 });
             } else if (this.totalCount === 0) {
@@ -558,7 +596,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
       }
     } else {
-      this.eventService.openSnackBar("Reconciliation cannot be started as data is not present", "DISMISS");
+      this.reconService.putBackofficeReconAdd(this.objForAddRecon)
+        .subscribe(res => {
+          console.log('started reconciliation::::::::::::', res);
+          this.aumReconId = res;
+          this.backofficeApiHitCount = 1;
+          if (this.fromClose) {
+            this.postReqForBackOfficeUnmatchedFolios();
+          } else {
+            this.getBackofficeAumFileOrderListDeleteReorder();
+          }
+        }, err => {
+          console.error(err);
+        });
+      // this.eventService.openSnackBar("Reconciliation cannot be started as data is not present", "DISMISS");
     }
   }
 
@@ -897,6 +948,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
+                      this.isDeleteAndReorderClicked = false;
 
                       if (this.data.flag === 'report') {
 
@@ -937,6 +989,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.dataSource.data.map(item => {
                       item.after_recon = String(parseFloat(item.after_recon) - 1);
                     });
+                    this.isDeleteAndReorderClicked = false;
 
                     if (this.data.flag === 'report') {
                       let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);

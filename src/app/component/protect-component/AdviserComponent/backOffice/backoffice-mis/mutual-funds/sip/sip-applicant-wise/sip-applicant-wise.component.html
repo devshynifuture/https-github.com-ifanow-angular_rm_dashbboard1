@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="row" *ngIf="!isLoading && applicantList.length > 0">
+            <div class="row" *ngIf="!isLoading && applicantList && applicantList.length > 0">
                 <div class="col-md-8"></div>
                 <div class="col-md-4 pr-0 mt-12 mb-12" ng-init="applicantFilter=''">
                     <input class="form-control" type="text" placeholder="Search applicant Name"
