@@ -88,7 +88,7 @@
         </ng-container>
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status" sticky> Status</th>
-          <td *matCellDef="let element" class="br text-success" mat-cell>
+          <td *matCellDef="let element"[ngClass]="element.activationStatus == 'NO' ? 'br text-danger':'br text-success'" mat-cell>
             <div class="bar">
               {{isLoading ? '' : (element.activationStatus == 'NO') ? 'INACTIVE' : 'INVESTMENT READY'}} </div>
           </td>
