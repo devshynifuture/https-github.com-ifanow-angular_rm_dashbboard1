@@ -5,6 +5,6 @@ export const environment = {
   TransactionPlatform: 'https://transactplatform.my-planner.in/transaction-platform/api/v1/web/',
   PostalUrl: 'https://api.postalpincode.in/pincode/',
   UserUrl: 'https://userserver.my-planner.in/userserver/api/v1/web/',
-  MarketPlaceUrl: 'https://dev.ifanow.in/marketplace-server/api/v1/web/',
+  MarketPlaceUrl: true,
   hmr: false,
 };

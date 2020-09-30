@@ -173,7 +173,7 @@
     [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
 
   <div *ngIf="checkNomineeFlag && (userData.userId || userData.familyMemberId)" formArrayName="getNomineeName">
-    <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
+    <div class="row  " *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
         <h5 class="m-0">Nominee {{pointIndex + 1}}</h5>
       </div>

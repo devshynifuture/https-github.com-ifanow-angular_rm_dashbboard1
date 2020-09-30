@@ -26,6 +26,7 @@ export class EnumDataService {
 
   maxBankAccountLength = 18;
   PRODUCTION = apiConfig.PRODUCTION;
+  MARKET_SUMMARY  = apiConfig.MARKET_PLACE;
   searchData: any;
   clientAndFamilyData: any = [];
   proofType = [

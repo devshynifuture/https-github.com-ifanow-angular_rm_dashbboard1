@@ -18,6 +18,6 @@ export const environment = {
     'https://dev.ifanow.in/transaction-platform/api/v1/web/',
   PostalUrl: 'https://api.postalpincode.in/pincode/',
   UserUrl: 'https://dev.ifanow.in/userserver/api/v1/web/',
-  MarketPlaceUrl: 'https://dev.ifanow.in/marketplace-server/api/v1/web/',
+  MarketPlaceUrl: false,
   hmr: false,
 };
