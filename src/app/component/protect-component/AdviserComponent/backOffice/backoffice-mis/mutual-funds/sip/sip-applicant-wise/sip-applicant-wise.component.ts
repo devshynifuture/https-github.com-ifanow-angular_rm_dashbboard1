@@ -286,7 +286,7 @@ export class SipApplicantWiseComponent implements OnInit {
     const obj = {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
-      amount: sip.amount,
+      sipAmount: sip.amount,
       ceaseDate: this.datePipe.transform(date, 'yyyy-MM-dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(
