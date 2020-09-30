@@ -391,10 +391,16 @@ export class LifeInsuranceComponent implements OnInit {
     return '';
   }
   changeValue(array, ele) {
-    ele.expanded = true;
+    // ele.expanded = true;
     array.forEach(element => {
-      if (element.insurance.id != ele.insurance.id) {
-        element.expanded = false
+      element.insurance.suggestion= element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
+      if(element.insurance.id == ele.insurance.id && ele.expanded == true){
+        element.expanded = false;
+      }else if(element.insurance.id != ele.insurance.id){
+        element.expanded = false;
+      }else{
+        element.expanded = true;
+
       }
     });
   }
@@ -466,6 +472,9 @@ export class LifeInsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getDetailsInsurance();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

@@ -79,7 +79,7 @@
         <div class=" goal-border mb-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="relClass">
+                    <div class="relClass mt-10 mb-10">
                         <div class="bar height24"></div>
                     </div>
                 </div>
@@ -108,11 +108,12 @@
             </div>
 
         </div>
+
 
         <div class=" goal-border mb-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="relClass">
+                    <div class="relClass mt-10 mb-10">
                         <div class="bar height24"></div>
                     </div>
                 </div>
@@ -141,11 +142,12 @@
             </div>
 
         </div>
+
 
         <div class=" goal-border mb-8">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="relClass">
+                    <div class="relClass mt-10 mb-10">
                         <div class="bar height24"></div>
                     </div>
                 </div>
@@ -174,6 +176,12 @@
             </div>
 
         </div>
+
+
+
+        
+
+         
     </div>
 
 
@@ -199,7 +207,7 @@
                         <button *ngIf="asset.maturityValue ==0" mat-stroked-button
                             class="btn-default br-0 mt-12 mb-12 goal-box-btn">-</button>
                     </div>
-                    <div class="col-md-4 pt-12 pr-0">
+                    <div class="col-md-4 pt-12 pl-10 pr-0">
                         <p class="m-0 f-12 roboto text-primitive f-400">Owner</p>
                         <p class="m-0 roboto text-lighter f-400">
                             {{asset.ownerInfoName ? asset.ownerInfoName  : '-'}}</p>
@@ -207,7 +215,7 @@
                         <p class="m-0 roboto text-lighter f-400">₹<span appFormatNumber>{{asset.currentValue1}}</span>
                         </p>
                     </div>
-                    <div class="col-md-4 pt-58 pr-0">
+                    <div class="col-md-4 pt-58 pr-10 pl-0">
                         <p class="m-0 f-12 roboto text-primitive pt-4 f-400">Maturity value</p>
                         <p class="m-0 roboto text-lighter f-400" *ngIf="asset.maturityValue1 !=0">₹<span appFormatNumber
                                 [value]="asset.maturityValue1"></span></p>
