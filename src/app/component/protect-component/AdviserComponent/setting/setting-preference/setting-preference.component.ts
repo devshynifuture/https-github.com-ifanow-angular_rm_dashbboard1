@@ -375,6 +375,54 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       //  this.bankDetailsSend.emit(result);
     });
   }
+
+
+  resendVerification(value, data) {
+    const dialogData = {
+      // data: value,
+      header: 'RESEND VERIFICATION',
+      body: 'Are you sure you want to resend?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'RESEND',
+      positiveMethod: () => {
+        let obj = {
+          id: data.id,
+          emailAddress: data.emailAddress,
+          userId: this.advisorId
+        }
+        this.orgSetting.addEmailVerfify(obj).subscribe(
+          data => {
+            dialogRef.close();
+            this, this.eventService.openSnackBar(data, "Dismiss")
+            this.getEmailVerification()
+          },
+          err => {
+            dialogRef.close();
+            this, this.eventService.openSnackBar(`Verification link is sent to ${data.emailAddress}`, "Dismiss")
+            this.getEmailVerification()
+          }
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+
   addEmailVerfifyRes(data) {
     this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss");
     this.getEmailVerification()

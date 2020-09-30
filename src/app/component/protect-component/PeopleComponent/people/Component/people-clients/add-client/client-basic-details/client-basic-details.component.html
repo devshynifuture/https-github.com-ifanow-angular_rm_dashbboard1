@@ -461,6 +461,32 @@
                 </div>
             </div>
 
+            <div class=" row pt-28">
+                <div class="col-md-4 d-flex align-items-center justify-content-end">
+                    <h5 class="m-0">PAN</h5>
+                </div>
+                <div class="col-md-3 pl-0 mob-pl-10 mob-pr-10">
+                    <div class="form-group mb-0">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #pan (input)="toUpperCase(minorForm.get('pan'),$event)"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10"
+                                placeholder="Enter pan">
+                            <mat-error *ngIf="minorForm.get('pan').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid
+                            </mat-error>
+                            <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                            <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 p-0 d-flex align-items-center">
+                    <!-- <p class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
+              <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
+                </div>
+            </div>
+
             <div *ngIf="fieldFlag=='familyMember' " class="row pt-28">
                 <div class="col-md-4 text-right full-end">
                     <h5 class="m-0"> Relation</h5>

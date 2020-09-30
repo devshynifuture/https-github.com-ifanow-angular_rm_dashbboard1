@@ -300,6 +300,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
       relationType: [(data.relationshipId != 0) ? data.relationshipId : ''],
+      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       getCoOwnerName: this.fb.array([this.fb.group({
         name: [''],
         share: [''],
