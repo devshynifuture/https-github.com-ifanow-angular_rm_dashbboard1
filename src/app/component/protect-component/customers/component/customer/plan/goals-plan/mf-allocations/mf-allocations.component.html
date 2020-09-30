@@ -228,9 +228,9 @@
                     <ng-container matColumnDef="goal">
                         <th class="w-20" mat-header-cell *matHeaderCellDef>Goal </th>
                         <td class="w-20 text-left" style="padding-right: 0px !important;" *matCellDef="let element" mat-cell>
-                            <div *ngFor="let allocatedGoal of element.goalAssetMapping">
+                            <div class="mb-10 pb-10 bb" *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 
-                                <div class="mb-10 pb-10 bb">{{allocatedGoal.goalName}}</div>
+                                <div>{{allocatedGoal.goalName}}</div>
 
                                 <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                     <span class="text-success" *ngIf="element.isSip == true">
