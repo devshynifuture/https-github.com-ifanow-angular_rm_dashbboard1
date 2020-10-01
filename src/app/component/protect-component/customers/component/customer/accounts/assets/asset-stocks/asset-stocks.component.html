@@ -19,8 +19,8 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
-        <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 right text-right">
-            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
+        <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 d-flex justify-content-end">
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon mr-10" *ngIf="!fragmentData.isSpinner">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
@@ -32,7 +32,7 @@
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
           class="material-icons">filter_list</i>FILTERS  -->
-      </button>
+       
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                 ADD NEW
             </button>
@@ -607,7 +607,7 @@
     </div>
 </div>
 
-<div id="template" style="display: none;">
+<div id="template" style="display: none;" >
     <table cellpadding="0" cellspacing="0" border="0"
         style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
@@ -619,8 +619,7 @@
             align="center; page-break-before: always;">
                 <tr>
                     <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
-                        <div
-                            *ngIf="getOrgData.reportLogoUrl">
+                        <div *ngIf="getOrgData.reportLogoUrl">
                             <img width="140px" [src]="getOrgData.reportLogoUrl">
                         </div>
                         <div *ngIf="getOrgData.logoUrl">
@@ -649,7 +648,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" >
-                        <p style="margin: 0px; font-weight: 700; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                        <p style="margin-bottom: 10px; font-weight: 700; font-size: 14px; padding-top: 4px;" *ngIf="clientData">
                             Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
                         <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;"
                             *ngIf="clientData && showSummaryBar ">
@@ -666,8 +665,8 @@
             <td>
                 <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
                     <tr>
-                         <td style="border: 1px solid #dee5e7; vertical-align: top; width: 380px;">
-                             <div style="background: #F5F7F7; height: 40px; font-size: 16px; line-height: 40px; padding-left: 8px;">
+                         <td style="border: 1px solid #dee5e7; vertical-align: top; width: 420px;">
+                             <div style="background: #F5F7F7; border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; height: 40px; font-size: 16px; line-height: 40px; padding-left: 8px;">
                                 Summary
                             </div>
                             <div style="padding: 22px 10px;">
@@ -675,25 +674,25 @@
                                 <h3 style="margin: 0px; font-size: 20px;">₹<span [value]="grandTotalCurrentValue"
                                 appFormatNumber>{{grandTotalCurrentValue}}</span></h3>
                             </div>
-                            <table style="width: 100%; background: #f8f9fa; padding: 10px;">
+                            <table style="width: 100%;   background: #f8f9fa; border-top: 1px solid #dee5e7; padding: 10px;">
                                 <tr>
-                                    <td>
-                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 5px 0px;">Amount invested </p>
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">Amount invested </p>
                                         <h5 style="margin: 0px; font-size: 16px;">
                                             ₹<span [value]="grandTotalAmountInvested" appFormatNumber></span>
                                         </h5>
                                     </td>
                                     
-                                    <td>
-                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 5px 0px;">  Unrealized gain/loss </p>
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">  Unrealized gain/loss </p>
                                         <h5 style="margin: 0px; font-size: 16px; color: #5DC644;">
                                             ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss"
                                                     appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss}}</span>
                                         </h5>
                                     </td>
 
-                                    <td>
-                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 5px 0px;">  Returns </p>
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">  Returns </p>
                                         <h5 style="margin: 0px; font-size: 16px; color: #5DC644;">
                                             <span>{{assetStockData.grandTotalAbsReturns?assetStockData.grandTotalAbsReturns:0}}{{assetStockData.grandTotalAbsReturns?'%':''}}</span>
                                             <!-- <i class="material-icons v-sub f-18 f-700 textGreen" *ngIf="gain">
@@ -709,7 +708,7 @@
 
                          </td>
 
-                         <td style="width: 190px; height: 190px; border: 1px solid #dee5e7;">
+                         <td style="width: 190px; height: 190px; border: 1px solid #dee5e7; border-left: transparent; border-right: transparent;">
                             <div>showPieChart</div>
                          </td>
 
@@ -717,11 +716,11 @@
                              <table style="width: 100%;">
                                 <tr *ngIf="categories.Banks != undefined">
                                     <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
-                                        <div style="background:#008FFF; width: 10px; display: inline-block; height: 10px;">  </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Banking</div>
-                                        <div style="font-size: 14px; display: inline-block;">{{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue"
+                                        <div style="background:#008FFF; margin-right: 10px; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 160px;">Banking</div>
+                                        <div style="font-size: 14px; display: inline-block; margin-right: 10px;">{{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue"
                                             appFormatNumber>{{categories.Banks.currentValue}}</span></div>
-                                        <div style="font-size: 12px; display: inline-block;">{{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}} </div>
+                                        <div style="font-size: 12px; text-align: right; display: inline-block;">{{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}} </div>
                                     </td>
                                 </tr>
 
