@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
-import { element } from 'protractor';
-import { OrgSettingServiceService } from '../../org-setting-service.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {MatTableDataSource, MatSort, MatDialog} from '@angular/material';
+import {element} from 'protractor';
+import {OrgSettingServiceService} from '../../org-setting-service.service';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -17,10 +17,10 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class BulkEmailReviewSendComponent implements OnInit {
   clientList: any = [];
   dataSource = new MatTableDataSource();
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'email'];
-  isLoading = false
-  dataCount: number = 0;
+  isLoading = false;
+  dataCount = 0;
   advisorId: any;
   mailForm: any;
   verifiedAccountsList: any = [];
@@ -52,8 +52,8 @@ export class BulkEmailReviewSendComponent implements OnInit {
     private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder,
     private dialog: MatDialog
-  ) { }
-
+  ) {
+  }
 
 
   logoText = 'Your Logo here';
@@ -100,13 +100,13 @@ export class BulkEmailReviewSendComponent implements OnInit {
               For more information, contact $organization_name at $organization_mobile or write an email to
               $organization_email</span></p>
   </body>
-  </html>`
+  </html>`;
 
   ngOnInit() {
   }
 
   @Input() set data(data) {
-    this.advisorId = AuthService.getAdvisorId()
+    this.advisorId = AuthService.getAdvisorId();
     this.step1Flag = true;
     if (data && data.length > 0) {
       data.forEach(element => {
@@ -115,7 +115,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
         element.name = '';
         element.userName = '';
       });
-      this.dataSource.data = data
+      this.dataSource.data = data;
     }
     this.getEmailVerification();
     this.mailForm = this.fb.group({
@@ -128,8 +128,8 @@ export class BulkEmailReviewSendComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
     this.dataCount = 0;
-    this.dataSource.filteredData.forEach(element => {
-      if (element['selected']) {
+    this.dataSource.filteredData.forEach((element: any) => {
+      if (element.selected) {
         this.dataCount++;
       }
     });
@@ -138,9 +138,9 @@ export class BulkEmailReviewSendComponent implements OnInit {
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
-      this.dataSource.filteredData.forEach(element => {
-        element['selected'] = event.checked;
-        if (element['selected']) {
+      this.dataSource.filteredData.forEach((element: any) => {
+        element.selected = event.checked;
+        if (element.selected) {
           this.dataCount++;
         }
       });
@@ -149,18 +149,18 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
   changeSelect() {
     this.dataCount = 0;
-    this.dataSource.filteredData.forEach(item => {
-      if (item['selected']) {
+    this.dataSource.filteredData.forEach((item: any) => {
+      if (item.selected) {
         this.dataCount++;
       }
     });
   }
 
   getEmailVerification() {
-    let obj = {
+    const obj = {
       userId: this.advisorId,
       // advisorId: this.advisorId
-    }
+    };
     this.isLoading = true;
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
@@ -171,13 +171,13 @@ export class BulkEmailReviewSendComponent implements OnInit {
   }
 
   getEmailVerificationRes(data) {
-    console.log(data)
+    console.log(data);
     if (data.listItems && data.listItems.length > 0) {
       data.listItems.map(element => {
         if (element.emailVerificationStatus == 1) {
-          this.verifiedAccountsList.push(element)
+          this.verifiedAccountsList.push(element);
         }
-      })
+      });
       if (this.verifiedAccountsList.length > 1) {
         this.selectedFromEmail.setValue(this.verifiedAccountsList[0].emailAddress);
         this.selectedFromEmail.setValidators([Validators.required]);
@@ -187,15 +187,15 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
   selectedClientListStep() {
     if (this.dataCount > 0 && this.dataSource.filteredData.length > 0) {
-      this.dataSource.filteredData.forEach(element => {
-        if (element['selected']) {
-          this.clientList.push(element['clientId'])
+      this.dataSource.filteredData.forEach((element: any) => {
+        if (element.selected) {
+          this.clientList.push(element.clientId);
         }
-      })
+      });
       this.step1Flag = false;
       this.step2Flag = true;
     } else {
-      this.dataCount == 0 ? this.eventService.openSnackBar("Please select clients", "Dismiss") : this.eventService.openSnackBar("No clients found", "Dismiss");
+      this.dataCount == 0 ? this.eventService.openSnackBar('Please select clients', 'Dismiss') : this.eventService.openSnackBar('No clients found', 'Dismiss');
     }
   }
 
@@ -204,25 +204,24 @@ export class BulkEmailReviewSendComponent implements OnInit {
       return;
     }
     this.barButtonOptions.active = true;
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       clientIds: this.clientList,
       fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
       subject: this.subject.value,
       messageBody: this.emailBody
-    }
+    };
     this.orgSetting.sendEmailToClients(obj).subscribe(
       data => {
-        this.eventService.openSnackBar(data, "Dismiss")
+        this.eventService.openSnackBar(data, 'Dismiss');
         this.close(true);
         this.barButtonOptions.active = false;
       },
       err => {
         this.barButtonOptions.active = false;
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
-    )
+    );
   }
 
   bulkEmail(value) {
@@ -235,7 +234,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
       btnNo: 'PROCEED',
       positiveMethod: () => {
         dialogRef.close();
-        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, tab2view: true });
+        this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true, tab2view: true});
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -262,7 +261,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
   }
 
   close(flag) {
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: flag});
   }
 }
 
