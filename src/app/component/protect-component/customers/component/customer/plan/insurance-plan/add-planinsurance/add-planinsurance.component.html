@@ -71,7 +71,7 @@
 
                 </div>
                 <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb">
-                    <div class="col-md-6 f-14 f-500">Particulars</div>
+                    <div class="col-md-6 f-14 pl-15 f-500">Particulars</div>
                     <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>
                     <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
                     <div class="col-md-1 f-14"> </div>
@@ -84,11 +84,11 @@
                                     1. Liabilities
                                 </mat-panel-title>
 
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     -
                                 </mat-panel-description>
 
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     <span appFormatNumber [value]="plannerObj.liabilities"></span>
                                 </mat-panel-description>
 
@@ -153,10 +153,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     2. Dependant's needs
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     <span appFormatNumber [value]="plannerObj.dependantNeeds"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -239,10 +239,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     3. Goals to be met
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     <span appFormatNumber [value]="plannerObj.goalsMeet"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -312,10 +312,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     4. Gross life insurance required(1+2+3)
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="pr-48">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description >
                                     <span appFormatNumber [value]="plannerObj.GrossLifeinsurance"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -326,10 +326,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     5 Less : Continuous income source
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     <span appFormatNumber [value]="plannerObj.incomeSource"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -404,10 +404,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     6 Less: Exisiting life Insurance (sum assured)
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="pr-32">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description > 
                                     <span appFormatNumber [value]="plannerObj.existingLifeInsurance"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -418,10 +418,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     7 Less : Existing Assets
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description class="w-20">
                                     <span appFormatNumber [value]="plannerObj.existingAsset"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
@@ -490,10 +490,10 @@
                                 <mat-panel-title class="f-500 w-60">
                                     8. Additional life insurance required (4-5-6-7)
                                 </mat-panel-title>
-                                <mat-panel-description>
+                                <mat-panel-description class="pr-24">
                                     -
                                 </mat-panel-description>
-                                <mat-panel-description>
+                                <mat-panel-description >
                                     <span appFormatNumber [value]="plannerObj.additionalLifeIns"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>

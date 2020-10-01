@@ -166,6 +166,10 @@
                                                     <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
                                                         <span>Delete</span>
                                                     </button>
+                                                    <button *ngIf="element.emailVerificationStatus != 1" mat-menu-item
+                                                        (click)="resendVerification('RESEND VERIFICATION',element)">
+                                                        <span>Resend verification</span>
+                                                    </button>
                                                 </mat-menu>
                                             </div>
                                         </td>

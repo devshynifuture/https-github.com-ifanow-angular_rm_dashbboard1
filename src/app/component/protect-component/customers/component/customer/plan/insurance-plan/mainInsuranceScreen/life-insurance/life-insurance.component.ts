@@ -50,7 +50,7 @@ export class LifeInsuranceComponent implements OnInit {
   setLogo = [{
     heading: 'Life insurance',
     logo: '/assets/images/svg/LIbig.svg',
-
+    bigLogo:'/assets/images/svg/LIbig.svg',
 
   }, {
     value: '1',
@@ -58,11 +58,13 @@ export class LifeInsuranceComponent implements OnInit {
     smallHeading: 'health insurance',
     insuranceType: 5,
     logo: '/assets/images/svg/helth-insurance.svg',
+    bigLogo:'/assets/images/svg/HIbig.svg',
     heading: 'Health insurance',
     subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
   }, {
     value: '2',
     logo: '/assets/images/svg/Criticalillness.svg',
+    bigLogo:'/assets/images/svg/CIbig.svg',
     header: 'Add Critical Illness',
     smallHeading: 'critical illness',
     insuranceType: 6,
@@ -71,6 +73,7 @@ export class LifeInsuranceComponent implements OnInit {
   }, {
     value: '3',
     logo: '/assets/images/svg/Cancercare.svg',
+    bigLogo:'/assets/images/svg/CCbig.svg',
     header: 'Add Cancer Care',
     smallHeading: 'cancer care',
     insuranceType: 11,
@@ -79,6 +82,7 @@ export class LifeInsuranceComponent implements OnInit {
   }, {
     value: '4',
     logo: '/assets/images/svg/Personalaccident.svg',
+    bigLogo:'/assets/images/svg/PAbig.svg',
     header: 'Add Personal Accident',
     heading: 'Personal accident',
     smallHeading: 'personal accident',
@@ -87,6 +91,7 @@ export class LifeInsuranceComponent implements OnInit {
   }, {
     value: '5',
     logo: '/assets/images/svg/Householders.svg',
+    bigLogo:'/assets/images/svg/Hbig.svg',
     header: 'Add Householders',
     smallHeading: 'householders',
     insuranceType: 9,
@@ -95,6 +100,7 @@ export class LifeInsuranceComponent implements OnInit {
   }, {
     value: '6',
     logo: '/assets/images/svg/Fireinsurance.svg',
+    bigLogo:'/assets/images/svg/Fibig.svg',
     header: 'Add Fire Insurance',
     smallHeading: 'fire insurance',
     insuranceType: 10,
@@ -104,6 +110,7 @@ export class LifeInsuranceComponent implements OnInit {
   {
     value: '7',
     logo: '/assets/images/svg/Fireinsurance.svg',
+    bigLogo:'/assets/images/svg/PAbig.svg',
     header: 'Add Travel Insurance',
     smallHeading: 'travel insurance',
     insuranceType: 8,
@@ -112,6 +119,7 @@ export class LifeInsuranceComponent implements OnInit {
   },{
     value: '8',
     logo: '/assets/images/svg/Fireinsurance.svg',
+    bigLogo:'/assets/images/svg/PAbig.svg',
     header: 'Add Motor Insurance',
     smallHeading: 'motor insurance',
     insuranceType: 4,
@@ -138,6 +146,7 @@ export class LifeInsuranceComponent implements OnInit {
   dataSourceIncome: any;
   dataSourceAsset: any;
   needAnalysisLoaded: any;
+  clicked =false;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -183,7 +192,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.getData = data
       this.setLogo.forEach(element => {
         if (element.heading == data.heading) {
-          this.logo = element.logo
+          this.logo = element.bigLogo
           this.needAnalysisData = element
           this.needAnalysisData.id = data.id
           // Object.assign( this.needAnalysisData.id, {id: data.id});
@@ -391,6 +400,7 @@ export class LifeInsuranceComponent implements OnInit {
     return '';
   }
   changeValue(array, ele) {
+    this.clicked = true;
     // ele.expanded = true;
     array.forEach(element => {
       element.insurance.suggestion= element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;

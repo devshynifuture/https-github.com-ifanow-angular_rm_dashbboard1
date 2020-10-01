@@ -122,21 +122,21 @@
                             </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length">
-                                <div class="example-element-detail"
+                        <ng-container matColumnDef="expandedDetail" >
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length" [hidden]="!element.expanded">
+                                <div class="example-element-detail" *ngIf="clicked"
                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                    <div class="example-element-description">
-                                        {{element?.insurance?.suggestion ? element?.insurance?.suggestion : '-'}}
+                                    <div class="example-element-description" >
+                                        {{element?.insurance?.suggestion ? element?.insurance?.suggestion : 'No suggestions found'}}
                                     </div>
                                 </div>
                             </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-                        <tr mat-row *matRowDef="let element; columns: displayedColumns3;" class="example-element-row"
+                        <tr mat-row *matRowDef="let element; columns: displayedColumns3" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element ? null : element;changeValue(dataSouce3,element)">
+                            (click)="expandedElement = expandedElement === element ? null : element;changeValue(dataSouce3,element)" >
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
@@ -156,7 +156,7 @@
                         [appSkeletonLoading]="isLoadingPlan" class="mt-8 skeletonAnimation" id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="w-25">
                                 <div class="bar">{{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}} </div>
 
                             </td>
@@ -164,8 +164,8 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt">
+                            <th mat-header-cell class="textRight"  class="w-20" *matHeaderCellDef> Sum assured </th>
+                            <td mat-cell *matCellDef="let element" class="text-right w-20 amt">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
                         </ng-container>
@@ -233,11 +233,11 @@
                                                 1. Liabilities
                                             </mat-panel-title>
                 
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
                 
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                <span appFormatNumber [value]="plannerObj.liabilities"></span>
                                             </mat-panel-description>
                 
@@ -295,10 +295,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 2. Dependant's needs
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.dependantNeeds"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -371,10 +371,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 3. Goals to be met
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.goalsMeet"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -438,10 +438,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 4. Gross life insurance required(1+2+3)
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.GrossLifeinsurance"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -452,10 +452,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 5 Less : Continuous income source
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.incomeSource"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -515,10 +515,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 6 Less: Exisiting life Insurance (sum assured)
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.existingLifeInsurance"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -529,10 +529,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 7 Less : Existing Assets
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                <span appFormatNumber [value]="plannerObj.existingAsset"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -595,10 +595,10 @@
                                             <mat-panel-title class="f-500 w-60">
                                                 8. Additional life insurance required (4-5-6-7)
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 -
                                             </mat-panel-description>
-                                            <mat-panel-description>
+                                            <mat-panel-description class="w-20">
                                                 <span appFormatNumber [value]="plannerObj.additionalLifeIns"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
@@ -620,9 +620,9 @@
             </div>
         </div>
 
-        <div class="col-width-31 text-right">
-            <div class="fix-sticky skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-                <img class="mt-20" src={{logo}} [hidden]="isLoadingPlan">
+        <div class="col-width-31">
+            <div class="fix-sticky skeletonAnimation align-items-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 pl-90">
                 <div class="relClass" [hidden]="!isLoadingPlan">
                     <div class="bar289" [ngClass]="{'height289': isLoadingPlan}">
 

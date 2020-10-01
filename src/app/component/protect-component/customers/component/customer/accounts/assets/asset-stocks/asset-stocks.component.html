@@ -15,17 +15,24 @@
    </mat-menu>
  </div>
 </div> -->
-    <div class="row pt-24">
+    <div class="row pt-24" #tableEl>
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
-        <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 right text-right">
-            <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p">
-            <img src="assets/images/svg/up-down.svg" class="c-p">
+        <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 d-flex justify-content-end">
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon mr-10" *ngIf="!fragmentData.isSpinner">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-menu #menu5="matMenu">
+                <button (click)="generatePdf()" mat-menu-item>PDF</button>
+                <!-- <button (click)="Excel('Bonds')" mat-menu-item>XLS</button> -->
+            </mat-menu>
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+            <!-- <img src="assets/images/svg/up-down.svg" class="c-p">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-          class="material-icons">filter_list</i>FILTERS
-      </button> -->
+          class="material-icons">filter_list</i>FILTERS  -->
+       
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                 ADD NEW
             </button>
@@ -79,9 +86,9 @@
         <div class="overflow-y-1200">
             <div class="row pt-12 w-1024">
                 <div class="col-md-5 pl-0 pr-4">
-                    <div class="row b-a">
+                    <div class="row b-a" #summery>
                         <div class="col-md-12 bg-grey lter p-0">
-                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
+                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary </h5>
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
@@ -101,7 +108,7 @@
                         <div class="col-md-12 p-0">
                             <div class="row bg-light lter pt-20 pb-20 bt-1">
                                 <div class="col-md-4 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Amount invested</p>
+                                    <p class="text-custom m-0 roboto"> Amount invested</p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0 text-black">
@@ -115,7 +122,7 @@
 
                                 </div>
                                 <div class="col-md-5 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
+                                    <p class="text-custom m-0 roboto"> Unrealized gain/loss</p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0"
@@ -130,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Returns</p>
+                                    <p class="text-custom m-0 roboto"> Returns </p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0"
@@ -162,7 +169,7 @@
                             <div class="relClass">
                                 <div class="bar227" [ngClass]="{'height227': isLoading}">
                                     <div *ngIf="!isLoading">
-                                        <div class="highcharts-figure" id="piechartStock"></div>
+                                        <div #PaiChart class="highcharts-figure" id="piechartStock"></div>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +197,7 @@
 
 
 
-                        <div *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column"
+                        <div #categoriesL *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column"
                             [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
                             [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
                             <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
@@ -354,7 +361,7 @@
             </div>
         </div>
         <div>
-            <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
+            <div  [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
                 <div class="col-md-12 p-0">
                     <div class="bg-white">
                         <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} |
@@ -363,8 +370,8 @@
                     </div>
                 </div>
 
-                <div class="stock-overview w-100">
-                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
+                <div class="stock-overview w-100" >
+                    <table  [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
 
                         <ng-container matColumnDef="groupHeader" sticky>
                             <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length"
@@ -598,4 +605,239 @@
             </button>
         </mat-menu>
     </div>
+</div>
+
+<div id="template" style="display: none;" >
+    <table cellpadding="0" cellspacing="0" border="0"
+        style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        align="center; page-break-before: always;">
+
+        
+        <tr>
+            <table  cellpadding="0" cellspacing="0" border="0"
+            style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+            align="center; page-break-before: always;">
+                <tr>
+                    <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
+                        <div *ngIf="getOrgData.reportLogoUrl">
+                            <img width="140px" [src]="getOrgData.reportLogoUrl">
+                        </div>
+                        <div *ngIf="getOrgData.logoUrl">
+                            <img width="200px" [src]="getOrgData.logoUrl">
+                        </div>
+                        <div *ngIf="getOrgData.companyName">
+                            <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
+                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                        <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Number:</strong>
+                            {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Email:</strong>
+                            {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+        
+                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                                {{'Stock Summary'}}</strong>
+                        </p>
+                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                                {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" >
+                        <p style="margin-bottom: 10px; font-weight: 700; font-size: 14px; padding-top: 4px;" *ngIf="clientData">
+                            Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;"
+                            *ngIf="clientData && showSummaryBar ">
+                            Summary</p>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+            <td colspan="5" style="padding: 10px;"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                    <tr>
+                         <td style="border: 1px solid #dee5e7; vertical-align: top; width: 420px;">
+                             <div style="background: #F5F7F7; border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; height: 40px; font-size: 16px; line-height: 40px; padding-left: 8px;">
+                                Summary
+                            </div>
+                            <div style="padding: 22px 10px;">
+                                <p style="margin: 0px 0px 5px 0px; font-size: 12px; color: #757575;">Current value</p>
+                                <h3 style="margin: 0px; font-size: 20px;">₹<span [value]="grandTotalCurrentValue"
+                                appFormatNumber>{{grandTotalCurrentValue}}</span></h3>
+                            </div>
+                            <table style="width: 100%;   background: #f8f9fa; border-top: 1px solid #dee5e7; padding: 10px;">
+                                <tr>
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">Amount invested </p>
+                                        <h5 style="margin: 0px; font-size: 16px;">
+                                            ₹<span [value]="grandTotalAmountInvested" appFormatNumber></span>
+                                        </h5>
+                                    </td>
+                                    
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">  Unrealized gain/loss </p>
+                                        <h5 style="margin: 0px; font-size: 16px; color: #5DC644;">
+                                            ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss"
+                                                    appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss}}</span>
+                                        </h5>
+                                    </td>
+
+                                    <td style="padding: 8px 0px;">
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">  Returns </p>
+                                        <h5 style="margin: 0px; font-size: 16px; color: #5DC644;">
+                                            <span>{{assetStockData.grandTotalAbsReturns?assetStockData.grandTotalAbsReturns:0}}{{assetStockData.grandTotalAbsReturns?'%':''}}</span>
+                                            <!-- <i class="material-icons v-sub f-18 f-700 textGreen" *ngIf="gain">
+                                                arrow_upward
+                                            </i>
+                                            <i class="material-icons v-sub f-18 f-700 text-danger" *ngIf="!gain">
+                                                arrow_downward
+                                            </i> -->
+                                        </h5>
+                                    </td>
+                                </tr>
+                            </table>
+
+                         </td>
+
+                         <td style="width: 190px; height: 190px; border: 1px solid #dee5e7; border-left: transparent; border-right: transparent;">
+                            <div>showPieChart</div>
+                         </td>
+
+                         <td style="border: 1px solid #dee5e7; ">
+                             <table style="width: 100%;">
+                                <tr *ngIf="categories.Banks != undefined">
+                                    <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
+                                        <div style="background:#008FFF; margin-right: 10px; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 160px;">Banking</div>
+                                        <div style="font-size: 14px; display: inline-block; margin-right: 10px;">{{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue"
+                                            appFormatNumber>{{categories.Banks.currentValue}}</span></div>
+                                        <div style="font-size: 12px; text-align: right; display: inline-block;">{{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}} </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="categories.Information_Technology.perrcentage > 0">
+                                    <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
+                                        <div style="background:#5DC644; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Information technology</div>
+                                        <div style="font-size: 14px; display: inline-block;">{{categories.Information_Technology?'₹':''}}<span
+                                            [value]="categories.Information_Technology.currentValue"
+                                            appFormatNumber>{{categories.Information_Technology.currentValue}}</span></div>
+                                        <div style="font-size: 12px; display: inline-block;">{{categories.Information_Technology.perrcentage | number: '1.2-2'}}{{categories.Information_Technology?'%':''}}</div>
+                                    </td>
+                                </tr>
+                                <tr  *ngIf="categories.fmcg.perrcentage > 0">
+                                    <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
+                                        <div style="background:#FFC100; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 150px;">FMCG</div>
+                                        <div style="font-size: 14px; display: inline-block;">{{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue"
+                                            appFormatNumber>{{categories.fmcg.currentValue}}</span></div>
+                                        <div style="font-size: 12px; display: inline-block;">{{categories.fmcg.perrcentage | number: '1.2-2'}}{{categories.fmcg?'%':''}}</div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="categories.Auto_Ancillaries.perrcentage > 0">
+                                    <td style="padding: 10px;">
+                                        <div style="background:#FF6823; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Auto ancillaries</div>
+                                        <div style="font-size: 14px; display: inline-block;">{{categories.Auto_Ancillaries?'₹':''}}<span
+                                            [value]="categories.Auto_Ancillaries.currentValue"
+                                            appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span></div>
+                                        <div style="font-size: 12px; display: inline-block;">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}</div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="categories.OTHERS.perrcentage > 0">
+                                    <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
+                                        <div style="background:#A0AEB4; width: 10px; display: inline-block; height: 10px;">  </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Other</div>
+                                        <div style="font-size: 14px; display: inline-block;">{{categories.OTHERS?'₹':''}}<span
+                                            [value]="categories.OTHERS.currentValue"
+                                            appFormatNumber>{{categories.OTHERS.currentValue}}</span></div>
+                                        <div style="font-size: 12px; display: inline-block;">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}</div>
+                                    </td>
+                                </tr>     
+                            </table>
+                         </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+         
+        <tr *ngFor="let singlePortfolio of portfolioData">
+            <td>
+                <p style="margin: 30px 0px 0px 0px; padding: 8px; color: #008FFF; border: 1px solid #dee5e7; border-bottom: transparent; ">{{singlePortfolio.portfolioName}} |
+                    {{singlePortfolio.ownerList.length > 0?singlePortfolio.ownerList[0].name:''}}</p>
+                <table style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;" cellpadding="0" cellspacing="0"  >
+                    <tr>
+                        <td style="background: #F5F7F7; padding: 10px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Scrip </td>
+                        <td style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Amount invested </td>
+                        <td style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Current value</td>
+                        <td style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Unrealized gain/loss</td>
+                        <td style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Balance shares</td>
+                        <td style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Average price</td>
+                        <td style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Market price</td>
+                        <td style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Absolute returns</td>
+                        <td style="background: #F5F7F7; padding: 10px; text-align: right; border-bottom: 1px solid #dee5e7;">Dividend</td>
+                    </tr>
+
+                    <tr *ngFor="let element of singlePortfolio.stockListGroup">
+                        <td *ngIf="!element.id" colspan="9" style="color: #008FFF; padding: 10px; text-align: center; border-bottom: 1px solid #dee5e7;">
+                           {{element.group}}
+                        </td>
+                        <td *ngIf="element.id" style="border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; padding: 10px;"><span
+                            *ngIf="element.stockType != 1">{{element.scripName}}</span>
+                        <span *ngIf="element.stockType == 1">Portfolio</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">₹<span
+                            appFormatNumber>{{element.amountInvested}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">₹<span
+                            appFormatNumber>{{element.currentMarketValue}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">₹<span
+                            appFormatNumber>{{element.unrealizedGainLoss}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"><span *ngIf="element.stockType == 1 && !isLoading">-</span>
+                            <span *ngIf="element.stockType == 3 && !isLoading">{{element.balanceShares}}</span>
+                            <span
+                                *ngIf="element.stockType == 2 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                            appFormatNumber>{{element.averagePrice}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                            appFormatNumber>{{element.scripCurrentValue}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"><span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn && !isLoading?'%':''}}</span></td>
+                        <td *ngIf="element.id" style="padding: 10px; text-align: right;   border-bottom: 1px solid #dee5e7;">{{isLoading?'':element.dividend}}</td>
+                    </tr>
+                    <tr>
+                        <td style="  border-right: 1px solid #dee5e7; padding: 10px; text-align: right; font-weight: 600;">Total</td>
+                        <td style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7;  font-weight: 600;">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                            [value]="singlePortfolio.totalAmountInvested"
+                            appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
+                        <td style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7;  font-weight: 600;">{{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalCurrentValue"
+                            appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span></td>
+                        <td style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7;  font-weight: 600;">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                            [value]="singlePortfolio.totalUnrealizedGainLoss"
+                            appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span></td>
+                        <td style="padding: 10px; text-align: right;   ">     </td>
+                        <td style="padding: 10px; text-align: right;   ">   </td>
+                        <td style="padding: 10px; text-align: right;    border-right: 1px solid #dee5e7; ">    </td>
+                        <td style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7;   font-weight: 600;"><span>{{isLoading?'':singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn && !isLoading?'%':''}}</td>
+                        <td style="padding: 10px; text-align: right;   ">  </td>
+                    </tr>
+
+                </table>
+
+ 
+                
+
+            </td>
+        </tr>
+
+        </table>
 </div>

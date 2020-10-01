@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {FileUploadService} from '../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../config/main-config';
-import {appConfig} from '../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from '../../../../../../Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmUploadComponent} from './confirm-upload/confirm-upload.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { FileUploadService } from '../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../config/main-config';
+import { appConfig } from '../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
 
 @Component({
   selector: 'app-investor-detail',
@@ -46,7 +46,7 @@ export class InvestorDetailComponent implements OnInit {
   loader1: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private dialog: MatDialog) {
+    private eventService: EventService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -115,7 +115,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getInvestorStatus() {
-    const obj = {id: this.details.id};
+    const obj = { id: this.details.id };
     this.isLoading = true;
 
     this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
@@ -129,7 +129,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFormUploadDetail() {
-    const obj = {id: this.details.id};
+    const obj = { id: this.details.id };
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
       /*if (this.details.aggregatorType == 2) {
@@ -152,7 +152,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   openUploadConfirmBox(value, typeId) {
@@ -167,7 +167,7 @@ export class InvestorDetailComponent implements OnInit {
       data: value,
       header: 'UPLOAD',
       body: UtilService.transactionDocumentsRequired(this.details.taxMasterId),
-      // body2: 'This cannot be undone.',
+      body2: 'Please upload the document in TIFF format only with max size up to 5MB',
       btnYes: 'CANCEL',
       btnNo: 'CHOOSE',
       positiveMethod: (fileData) => {
@@ -203,6 +203,16 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFileDetails(documentType, e) {
+    if (e.target.files[0].type !== 'image/tiff') {
+      if (documentType == 1) {
+        this.addbarWidth(0);
+        this.loader1 = false
+      } else {
+        this.addbarWidth1(0);
+        this.loader2 = false
+      }
+      return;
+    }
     if (documentType == 1) {
       this.addbarWidth(30);
       this.loader1 = true

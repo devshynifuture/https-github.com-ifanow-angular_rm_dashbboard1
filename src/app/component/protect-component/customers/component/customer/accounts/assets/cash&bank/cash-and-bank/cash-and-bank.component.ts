@@ -19,7 +19,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-cash-and-bank',
   templateUrl: './cash-and-bank.component.html',
@@ -40,7 +40,8 @@ export class CashAndBankComponent implements OnInit {
   noData: string;
   excelData: any[];
   footer = [];
-
+  private unSubcrip: Subscription;
+  private unSubcrip2: Subscription;
   @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
 
@@ -74,8 +75,12 @@ export class CashAndBankComponent implements OnInit {
     this.getBankAccountList();
     this.bankAccountList = new MatTableDataSource(this.data);
     this.bankList = this.enumService.getBank();
-    this.accountTypes = this.enumDataService.getBankAccountTypes();
-    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    this.unSubcrip = this.enumDataService.getBankAccountViewTypes().subscribe(data =>{
+      this.accountTypes = data;
+    });
+    this.unSubcrip2 =this.enumService.getclientViewbankList().subscribe(data =>{
+      this.clientFamilybankList = data;
+    });
     console.log(this.bankList,"this.bankList",this.clientFamilybankList);
     
   }
@@ -362,6 +367,12 @@ export class CashAndBankComponent implements OnInit {
       }
     );
   }
+
+  ngOnDestroy() {
+    this.unSubcrip.unsubscribe();
+    this.unSubcrip2.unsubscribe();
+    console.log("unsubscribe");
+  }
 }
 
 export interface PeriodicElement7 {
@@ -422,5 +433,5 @@ const ELEMENT_DATA8: PeriodicElement8[] = [
     desc: '',
   },
 
-
+  
 ];
