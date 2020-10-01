@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { style } from '@angular/animations';
 import { AuthService } from './../../../../../auth-service/authService';
@@ -70,7 +71,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     private subscriptionInject: SubscriptionInject,
     private reconService: ReconciliationService,
     private eventService: EventService,
-    private supportService: SupportService
+    private supportService: SupportService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -89,15 +91,33 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.tableEntriesType = 2;
     }
     this.arnRiaCode = this.data.arnRiaCode;
+    if(this.router.url.includes('folio-query')){
+      let temArr = [];
+      this.data.tableData.forEach(element => {     
+        if(element.transactionDate <= this.data.aumDate){
+          temArr.push(element);
+        }
+      });
 
-    const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
-      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
-      difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
-    }];
+      const tableArr: PeriodicElement[] = [{
+        unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+        unitOne: temArr[temArr.length-1].balanceUnits,
+        difference: String(this.data.unitsRta - temArr[temArr.length-1].balanceUnits),
+      }];
+      this.dataSource.data = tableArr;
+      this.upperTableArr = tableArr;
 
-    this.dataSource.data = tableArr;
-    this.upperTableArr = tableArr;
+    } else {
+      const tableArr: PeriodicElement[] = [{
+        unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+        unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
+        difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
+      }];
+      this.dataSource.data = tableArr;
+      this.upperTableArr = tableArr;
+    }
+
+
     if (this.data && this.data.freezeDate === null) {
       this.disableUnfreezeBtn = true;
     } else {
@@ -360,7 +380,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.changesInUnitOne = String(res.units);
           item.difference = String((parseFloat(res.units) - parseFloat(item.unitsRta)).toFixed(3));
           this.data.difference = String((parseFloat(item.unitOne) - parseFloat(item.unitsRta)).toFixed(3));
-          if (this.data && (Math.round(parseFloat(item.difference)) === 0)) {
+          if (this.data && (parseFloat(item.difference) === 0.000)) {
             this.disableFreezeBtn = false;
           } else {
             this.disableFreezeBtn = true;

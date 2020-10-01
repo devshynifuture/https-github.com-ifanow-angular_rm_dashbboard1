@@ -816,7 +816,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
-        if(parseFloat(element.calculatedUnits.toFixed(2)) >= 0.05 && parseFloat(element.aumUnits.toFixed(2)) >= 0.05){
+        if((element.calculatedUnits - element.aumUnits) >=0.009){
           excelData.push(Object.assign(data));
         }
       });
@@ -839,7 +839,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
-          if(parseFloat(element.calculatedUnits.toFixed(2)) >= 0.05 && parseFloat(element.aumUnits.toFixed(2)) >= 0.05){
+          if((element.calculatedUnits - element.aumUnits)>= 0.009){
             excelData.push(Object.assign(data));
           }
         });
@@ -902,7 +902,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       componentName: ReconciliationDetailsViewComponent
     };
 
-    if (tableData && tableData.length !== 0) {
+    if (tableData && tableData.length !== 0 && element.id !== 0 && element.id !==null) {
       const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
           console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -944,7 +944,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         item.mutualFundTransaction = mfTransArr
                       }
                     });
-                    if (parseFloat(diff.toFixed(2)) >= 0.05) {
+                    if (parseFloat(diff.toFixed(3)) >= 0.009) {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
@@ -985,7 +985,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       item.calculatedUnits = parseFloat(sideBarData.data.changesInUnitOne)
                     }
                   });
-                  if (parseFloat(diff.toFixed(2)) >= 0.05) {
+                  if (parseFloat(diff.toFixed(3)) >= 0.009) {
                     this.dataSource.data.map(item => {
                       item.after_recon = String(parseFloat(item.after_recon) - 1);
                     });
