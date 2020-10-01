@@ -1,9 +1,8 @@
-import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {EnumDataService} from 'src/app/services/enum-data.service';
-import {MatTableDataSource, MatSort, MatDialog} from '@angular/material';
-import {element} from 'protractor';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {OrgSettingServiceService} from '../../org-setting-service.service';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -14,10 +13,11 @@ import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-
   templateUrl: './bulk-email-review-send.component.html',
   styleUrls: ['./bulk-email-review-send.component.scss']
 })
-export class BulkEmailReviewSendComponent implements OnInit {
+export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
+
   clientList: any = [];
   dataSource = new MatTableDataSource();
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('clientTableSort', {static: false}) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
   isLoading = false;
   dataCount = 0;
@@ -105,6 +105,10 @@ export class BulkEmailReviewSendComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.step1Flag = true;
@@ -116,6 +120,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
         element.userName = '';
       });
       this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
     }
     this.getEmailVerification();
     this.mailForm = this.fb.group({
@@ -149,6 +154,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
   changeSelect() {
     this.dataCount = 0;
+
     this.dataSource.filteredData.forEach((item: any) => {
       if (item.selected) {
         this.dataCount++;

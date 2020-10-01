@@ -44,7 +44,7 @@
                         {{dataCount}} clients
                         selected</p>
                     <table *ngIf="dataSource.filteredData.length>0" [dataSource]="dataSource" id="tbs" mat-table
-                        matSort>
+                        matSort  #clientTableSort="matSort">
                         <ng-container matColumnDef="checkbox" sticky>
                             <th mat-header-cell *matHeaderCellDef class="br">
                                 <mat-checkbox (change)="selectAll($event)" name="selectAll"
