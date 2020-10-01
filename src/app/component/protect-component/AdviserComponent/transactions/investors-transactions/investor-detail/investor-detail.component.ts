@@ -205,6 +205,13 @@ export class InvestorDetailComponent implements OnInit {
   getFileDetails(documentType, e) {
     if (e.target.files[0].type !== 'image/tiff') {
       this.eventService.openSnackBar("Please upload the document in TIFF format only with max size up to 5MB", "Dimiss")
+      if (documentType == 1) {
+        this.addbarWidth(0);
+        this.loader1 = false
+      } else {
+        this.addbarWidth1(0);
+        this.loader2 = false
+      }
       return;
     }
     if (documentType == 1) {
