@@ -146,6 +146,7 @@ export class LifeInsuranceComponent implements OnInit {
   dataSourceIncome: any;
   dataSourceAsset: any;
   needAnalysisLoaded: any;
+  clicked =false;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -399,6 +400,7 @@ export class LifeInsuranceComponent implements OnInit {
     return '';
   }
   changeValue(array, ele) {
+    this.clicked = true;
     // ele.expanded = true;
     array.forEach(element => {
       element.insurance.suggestion= element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
