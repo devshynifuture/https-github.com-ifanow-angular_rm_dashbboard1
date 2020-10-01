@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
@@ -15,6 +15,7 @@ import { StockDetailsViewComponent } from '../stock-details-view/stock-details-v
 import { StockTransactionDetailsComponent } from './stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent} from './stock-holding-details/stock-holding-details.component';
 import { AssetValidationService } from '../asset-validation.service';
+import { StockPdfService } from 'src/app/services/stock-pdf.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -22,6 +23,10 @@ import { AssetValidationService } from '../asset-validation.service';
   styleUrls: ['./asset-stocks.component.scss']
 })
 export class AssetStocksComponent implements OnInit {
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('summery', { static: false }) summery;
+  @ViewChild('PaiChart', { static: false }) PaiChart;
+  @ViewChild('categoriesL', { static: false }) categoriesL;
   displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
     'dividend', 'icons'];
 
@@ -39,7 +44,7 @@ export class AssetStocksComponent implements OnInit {
   data;
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
-    private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService, private stockPDF : StockPdfService) {
   }
 
   ngOnInit() { 
@@ -55,7 +60,13 @@ export class AssetStocksComponent implements OnInit {
     pieChart(id);
   }
 
-
+  pdf() {
+    let sum = this.summery.nativeElement.textContent;
+    let cate = this.categoriesL.nativeElement.textContent;
+    let rows = this.tableEl;
+    console.log(rows, "rows", sum, "PaiChart", this.PaiChart, 'categoriesL', cate);
+    this.stockPDF.generatePdf(rows, cate, sum);
+  }
   @Output() changeCount = new EventEmitter();
   getStocksData() {
     this.isLoading = true;

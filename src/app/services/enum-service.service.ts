@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {element} from 'protractor';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,8 @@ import {element} from 'protractor';
 export class EnumServiceService {
   roleList: any = [];
   bankList: any = [];
-  clientFamilybankList: any = [];
-
+  clientFamilybankList = [];
+  clientViewbankList = new Subject();
   clientRoleList: any = [];
   proofTypeList: any = [];
   const;
@@ -39,13 +40,11 @@ export class EnumServiceService {
 
   public addToGlobalEnumData(data) {
     console.log(data, 'check data variable fee 2');
-
     Object.assign(this.globalEnumData, data);
   }
 
   getOtherAssetData() {
     console.log(this.globalEnumData.otherAssetTypes, 'check data variable fee 1');
-
     return this.globalEnumData.otherAssetTypes;
   }
 
@@ -65,6 +64,7 @@ export class EnumServiceService {
   getTaxStatusList() {
     return this.globalEnumData.taxStatusList;
   }
+
   getMinorTaxList() {
     return this.globalEnumData.minorTaxList;
   }
@@ -94,7 +94,9 @@ export class EnumServiceService {
   }
 
   public addclientFamilyBanks(data) {
-    this.clientFamilybankList = data
+
+    this.clientFamilybankList = data;
+    this.clientViewbankList.next([...data]);
   }
 
   familyList: any;
@@ -111,8 +113,12 @@ export class EnumServiceService {
     return this.bankList;
   }
 
-  public getclientFamilybankList() {
-    return this.clientFamilybankList;
+  getclientFamilybankList() {
+    return this.clientFamilybankList
+  }
+
+  getclientViewbankList() {
+    return this.clientViewbankList.asObservable();
   }
 
   public addClientRole(data) {
