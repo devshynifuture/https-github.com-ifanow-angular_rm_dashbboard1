@@ -50,6 +50,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   showEditMf: boolean = false;
   absSIP: number;
   absLumsum: any;
+  disableAllocate: boolean = false;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -261,6 +262,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   }
 
   allocateAssetToGoal(data) {
+    
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -269,8 +271,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       sipPercent: data.sipPercent,
       lumpsumPercent: data.lumpsumPercent,
     }
+    this.disableAllocate = true
     this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
-
+    this.disableAllocate = false
   }
   restrictFrom100(event, ele, mf, flag) {
     let add = 0

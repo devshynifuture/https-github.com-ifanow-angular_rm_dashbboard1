@@ -797,7 +797,6 @@ export const appConfig = {
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
-  GET_ALL_CLIENTS: 'user/client/all/get',
   GET_ADVISOR_FROM_EMAIL_MOBILE: 'user/advisor/search/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',

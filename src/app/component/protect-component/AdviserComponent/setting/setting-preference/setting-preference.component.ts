@@ -1,23 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OrgSettingServiceService } from '../org-setting-service.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
-import { MatDialog } from '@angular/material';
-import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
-import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
-import { Subscription } from 'rxjs';
-import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
-import { PeopleService } from '../../../PeopleComponent/people.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
-import { SettingsService } from '../settings.service';
-import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OrgSettingServiceService} from '../org-setting-service.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OpenEmailVerificationComponent} from './open-email-verification/open-email-verification.component';
+import {MatDialog} from '@angular/material';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {ConfirmDialogComponent} from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import {Subscription} from 'rxjs';
+import {BulkEmailReviewSendComponent} from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
+import {PeopleService} from '../../../PeopleComponent/people.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {DomainSettingPopupComponent} from './domain-setting-popup/domain-setting-popup.component';
+import {SettingsService} from '../settings.service';
+import {PreferenceEmailInvoiceComponent} from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -25,6 +23,17 @@ import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscriptio
   styleUrls: ['./setting-preference.component.scss']
 })
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
+  constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
+              public subInjectService: SubscriptionInject,
+              private eventService: EventService,
+              public dialog: MatDialog,
+              private fb: FormBuilder,
+              private peopleService: PeopleService, private settingsService: SettingsService) {
+
+    this.advisorId = AuthService.getAdvisorId();
+    this.userId = AuthService.getUserId();
+  }
+
   displayedColumns: string[] = ['position', 'name', 'weight'];
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
   subcription = new Subscription();
@@ -50,19 +59,19 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   whiteLable;
   domain: any;
   domainS: FormGroup;
-  clientData
+  clientData;
   userId: any;
   showUpdateWhite = false;
-  isLoading = false
+  isLoading = false;
   brandVisibility: any;
-  showUpdateBrand: boolean = false;
+  showUpdateBrand = false;
   brandVisible: any;
-  counter: number = 0;
+  counter = 0;
   appearanceFG: FormGroup;
   appearanceUpdateFlag: boolean;
-  hasError: boolean = false;
+  hasError = false;
   domainName = new FormControl('', [Validators.required]);
-  copyUrl = new FormControl('')
+  copyUrl = new FormControl('');
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'BEGIN',
@@ -83,34 +92,24 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   isLoader: boolean;
   validatorType = ValidatorType;
   youtbeLink: SafeResourceUrl;
-  isDomain = new FormControl("1");
-  constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject,
-    private eventService: EventService,
-    public dialog: MatDialog,
-    private fb: FormBuilder,
-    private peopleService: PeopleService, private settingsService: SettingsService) {
+  isDomain = new FormControl('1');
 
-    this.advisorId = AuthService.getAdvisorId()
-    this.userId = AuthService.getUserId()
-  }
+  loaderArray = [
+    {isLoader: false},
+    {isLoader: false},
+    {isLoader: false}
+  ];
 
   ngOnInit() {
-    this.getPortfolio()
-    this.getdataForm('')
-    this.emailList = []
-    this.planSection = []
-    this.emailTemplateList = []
+    this.getPortfolio();
+    this.getdataForm('');
+    this.emailList = [];
+    this.planSection = [];
+    this.emailTemplateList = [];
     this.createAppearanceForm();
     this.addAppearanceFormListener();
     this.getDoaminList();
   }
-
-  loaderArray = [
-    { isLoader: false },
-    { isLoader: false },
-    { isLoader: false }
-  ]
 
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -140,12 +139,13 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   selectedURl(url) {
     this.copyUrl.setValue(url);
-    this.youtbeLink = this.sanitizeUrl(url)
+    this.youtbeLink = this.sanitizeUrl(url);
   }
 
   getFormControl(): any {
     return this.domainS.controls;
   }
+
   getOrgProfiles() {
     // this.utilService.loader(1)
     const obj = {
@@ -154,7 +154,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.settingsService.getOrgProfile(obj).subscribe(
       data => {
         if (data) {
-          this.getDomainSettingRes(data)
+          this.getDomainSettingRes(data);
         }
       },
       err => {
@@ -163,24 +163,25 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   getDomainSettingRes(data) {
     // this.loader(-1);
     data.completeWhiteLabel = data.completeWhiteLabel == 'NA' ? '' : data.completeWhiteLabel;
-    data.siteTitle = data.siteTitle == 'NA' ? '' : data.siteTitle
+    data.siteTitle = data.siteTitle == 'NA' ? '' : data.siteTitle;
     this.domainSetting = data;
-    data.partialWhiteLabel = data.partialWhiteLabel.replace('.my-planner.in', '')
-    this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '')
-    this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '')
-    this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '')
+    data.partialWhiteLabel = data.partialWhiteLabel.replace('.my-planner.in', '');
+    this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '');
+    this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '');
+    this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '');
     this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl);
-    this.isDomain.setValue(data.hasDomain ? String(data.hasDomain) : '1')
+    this.isDomain.setValue(data.hasDomain ? String(data.hasDomain) : '1');
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
     this.domainS.controls.brandVisible.disable();
   }
 
   getDoaminList() {
-    const obj = {}
+    const obj = {};
     this.orgSetting.getDomainList(obj).subscribe(data => {
       if (data) {
         this.domainList = data;
@@ -188,60 +189,58 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.domainName.setValue(data[0].videoLink);
         this.copyUrl.setValue(data[0].videoLink);
       }
-    })
+    });
   }
 
   copyInputMessage(inputElement) {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
-    this.eventService.openSnackBar('Site url link is copied', "Dismiss")
+    this.eventService.openSnackBar('Site url link is copied', 'Dismiss');
   }
 
   updateDomainSetting(flag, event, controlName, index) {
     if (controlName.invalid) {
       controlName.markAsTouched();
-      return
+      return;
     }
     this.loaderArray[index].isLoader = true;
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
       feviconUrl: this.domainS.controls.feviconUrl.value,
       partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
       siteTitle: this.domainS.controls.brandVisible.value,
       hasDomain: this.isDomain.value
-    }
+    };
     this.orgSetting.updateDomainSetting(obj).subscribe(
       data => this.updateDomainSettingRes(flag, event, data, index),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
   updateDomainSettingRes(flag, event, data, index) {
-    this.eventService.openSnackBar("Updated sucessfully", "Dismiss")
+    this.eventService.openSnackBar('Updated sucessfully', 'Dismiss');
     this.loaderArray[index].isLoader = false;
-    this.updateDomain = data
+    this.updateDomain = data;
     // this.getDomain();
-    this.editDomain(flag, event)
+    this.editDomain(flag, event);
   }
 
   setDomainYesOrNO(value) {
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       completeWhiteLabel: this.domainS.controls.whiteLable.value,
       feviconUrl: this.domainS.controls.feviconUrl.value,
       partialWhiteLabel: this.domainS.controls.normalLable.value + '.my-planner.in',
       siteTitle: this.domainS.controls.brandVisible.value,
       hasDomain: parseInt(this.isDomain.value)
-    }
+    };
     this.orgSetting.updateDomainSetting(obj).subscribe(
       data => {
 
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
@@ -255,19 +254,19 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.domainS.controls.normalLable.enable();
       } else {
         this.domainS.controls.brandVisible.enable();
-        this.showUpdateBrand = true
+        this.showUpdateBrand = true;
       }
 
     } else {
       if (event == 'white') {
-        this.showUpdateWhite = false
+        this.showUpdateWhite = false;
         this.domainS.controls.whiteLable.disable();
       } else if (event == 'normal') {
-        this.showUpdate = false
+        this.showUpdate = false;
         this.domainS.controls.normalLable.disable();
       } else {
         this.domainS.controls.brandVisible.disable();
-        this.showUpdateBrand = false
+        this.showUpdateBrand = false;
       }
       // this.updateDomainSetting(event, value)
     }
@@ -275,36 +274,37 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getPortfolio() {
     this.loader(1);
-    let obj = {
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.portfolio = undefined;
         this.loader(-1);
         this.hasError = true;
       }
     );
   }
+
   getPortfolioRes(data) {
     this.loader(-1);
-    this.portfolio = data
-    this.mutualFund = this.portfolio.find(element => element.portfolioOptionId == 1)
-    this.mutualFund2 = this.portfolio.find(element => element.portfolioOptionId == 2)
-    this.mutualFund3 = this.portfolio.find(element => element.portfolioOptionId == 3)
+    this.portfolio = data;
+    this.mutualFund = this.portfolio.find(element => element.portfolioOptionId == 1);
+    this.mutualFund2 = this.portfolio.find(element => element.portfolioOptionId == 2);
+    this.mutualFund3 = this.portfolio.find(element => element.portfolioOptionId == 3);
   }
 
   getPlan() {
     this.loader(1);
-    let obj = {
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.loader(-1);
         this.hasError = true;
       }
@@ -330,14 +330,16 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       });
     }
 
-    const obj = this.portfolio
+    const obj = this.portfolio;
     this.orgSetting.updatePortFolio(obj).subscribe(
       data => this.updatePortFolioRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
+
   updatePortFolioRes(data) {
   }
+
   selectPlan(event, value) {
     this.planSection.forEach(element => {
       if (element.planOptionId == value.planOptionId) {
@@ -345,32 +347,34 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       }
       element.advisorId = this.advisorId;
     });
-    var obj = this.planSection
+    const obj = this.planSection;
     this.orgSetting.updatePlanSection(obj).subscribe(
       data => this.updatePlanSectionRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
+
   updatePlanSectionRes(data) {
   }
+
   verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
       width: '400px',
-      data: { bank: value, animal: this.element }
+      data: {bank: value, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       this.element = result;
-      let obj = {
+      const obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
         userId: this.advisorId
-      }
+      };
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
+        err => this.eventService.openSnackBar(err, 'Dismiss')
       );
       //  this.bankDetailsSend.emit(result);
     });
@@ -386,21 +390,21 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       btnYes: 'CANCEL',
       btnNo: 'RESEND',
       positiveMethod: () => {
-        let obj = {
+        const obj = {
           id: data.id,
           emailAddress: data.emailAddress,
           userId: this.advisorId
-        }
+        };
         this.orgSetting.addEmailVerfify(obj).subscribe(
           data => {
             dialogRef.close();
-            this, this.eventService.openSnackBar(data, "Dismiss")
-            this.getEmailVerification()
+            this, this.eventService.openSnackBar(data, 'Dismiss');
+            this.getEmailVerification();
           },
           err => {
             dialogRef.close();
-            this, this.eventService.openSnackBar(`Verification link is sent to ${data.emailAddress}`, "Dismiss")
-            this.getEmailVerification()
+            this, this.eventService.openSnackBar(`Verification link is sent to ${data.emailAddress}`, 'Dismiss');
+            this.getEmailVerification();
           }
         );
       },
@@ -424,12 +428,13 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
 
   addEmailVerfifyRes(data) {
-    this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss");
-    this.getEmailVerification()
+    this.eventService.openSnackBar('An email has been sent to your registered email address', 'Dismiss');
+    this.getEmailVerification();
   }
+
   deleteEmailModal(value, data) {
     if (data.defaultFlag == 1) {
-      this.eventService.openSnackBar("Email dependency found!", "Dismiss");
+      this.eventService.openSnackBar('Email dependency found!', 'Dismiss');
       return;
     }
     const dialogData = {
@@ -444,7 +449,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           data => {
             dialogRef.close();
             this.getEmailVerification();
-            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -460,13 +465,14 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
     });
   }
+
   getPlanRes(data) {
     if (data) {
-      this.planSection = data
-      this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      this.planSection = data;
+      this.planSec1 = this.planSection.filter(element => element.planOptionId == 1);
       this.planSec1 = this.planSec1[0];
     } else {
-      this.planSection = []
+      this.planSection = [];
     }
     this.loader(-1);
   }
@@ -474,10 +480,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getEmailVerification() {
     this.loader(1);
     this.emailList = [{}, {}, {}];
-    let obj = {
+    const obj = {
       userId: this.advisorId,
       // advisorId: this.advisorId
-    }
+    };
     this.isLoading = true;
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
@@ -485,46 +491,50 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
         this.isLoading = false;
         this.loader(-1);
       }
     );
   }
+
   getEmailVerificationRes(data) {
     if (data) {
-      this.emailDetails = data
-      this.emailList = data.listItems
+      this.emailDetails = data;
+      this.emailList = data.listItems;
     } else {
-      this.emailList = []
+      this.emailList = [];
     }
     this.loader(-1);
   }
+
   getEmailTemplate() {
     this.loader(1);
     this.emailTemplateList = [{}, {}, {}];
-    let obj = {
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
         this.loader(-1);
       }
     );
   }
+
   getEmailTempalatRes(data) {
     if (data) {
-      this.emailTemplateList = data
-      console.log(this.emailTemplateList)
+      this.emailTemplateList = data;
+      console.log(this.emailTemplateList);
     } else {
-      this.emailTemplateList = []
+      this.emailTemplateList = [];
     }
     this.loader(-1);
   }
+
   OpenEmail(value, data) {
     if (this.isLoading) {
       return;
@@ -560,9 +570,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getAppearance() {
     this.loader(1);
-    let obj = {
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.appearanceUpdateFlag = false;
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
@@ -572,9 +582,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.appearanceUpdateFlag = true;
       },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
-        this.loader(-1)
+        this.loader(-1);
       }
     );
   }
@@ -584,25 +594,26 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       portfolioOpt: '',
       financialOpt: '',
       clientOpt: '',
-    })
+    });
   }
 
   addAppearanceFormListener() {
     this.subcription.add(
       this.appearanceFG.valueChanges.subscribe(value => {
-        let jsonArr = [];
+        const jsonArr = [];
         let counter = 0;
-        for (let k in value) {
+        for (const k in value) {
           counter++;
           jsonArr.push({
             advisorId: this.advisorId,
             appearanceOptionId: counter,
             advisorOrOrganisation: value[k]
-          })
+          });
         }
 
-        if (this.appearanceUpdateFlag)
+        if (this.appearanceUpdateFlag) {
           this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
+        }
       })
     );
   }
@@ -619,7 +630,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.getPlan();
         break;
 
-      // case 'tab3': 
+      // case 'tab3':
       //   this.getPortfolio();
       //   break;
 
@@ -631,7 +642,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.getEmailTemplate();
         break;
 
-      // case 'tab6': 
+      // case 'tab6':
       //   this.getPortfolio();
       //   break;
 
@@ -639,7 +650,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.getOrgProfiles();
         break;
 
-      // case 'tab8': 
+      // case 'tab8':
       //   this.getPortfolio();
       //   break;
 
@@ -662,13 +673,15 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       btnYes: 'CANCEL',
       btnNo: 'SEND',
       positiveMethod: () => {
-        this.orgSetting.bulkEmailPassWord({ advisorId: this.advisorId }).subscribe(
+        this.orgSetting.bulkEmailPassWord({advisorId: this.advisorId}).subscribe(
           data => {
-            this.eventService.openSnackBar(data, "Dismiss")
+            this.eventService.openSnackBar(data, 'Dismiss');
             dialogRef.close();
           },
-          err => { this.eventService.openSnackBar(err, "Dismiss") }
-        )
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -689,10 +702,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   openFragment() {
-    this.barButtonOptions.active = true
+    this.barButtonOptions.active = true;
     const obj = {
       advisorId: this.advisorId,
-      status: 1,
+      // status: 1,
       limit: -1,
       offset: 0
     };
@@ -700,7 +713,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.peopleService.getClientList(obj).subscribe(
       data => {
         // this.isLoading = false;
-        this.barButtonOptions.active = false
+        this.barButtonOptions.active = false;
         if (data && data.length > 0) {
           data.forEach((singleData) => {
             if (singleData.emailList && singleData.emailList.length > 0) {
@@ -720,10 +733,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           // this.router.navigate(['/subscription-upper'])
           AuthService.setSubscriptionUpperSliderData(fragmentData);
           const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-            upperSliderData => {
+            (upperSliderData: any) => {
               if (UtilService.isDialogClose(upperSliderData)) {
-                if (upperSliderData['tab2view']) {
-                  this.viewMode = 'tab4'
+                if (upperSliderData.tab2view) {
+                  this.viewMode = 'tab4';
                   this.getEmailVerification();
                 }
                 // this.getClientSubscriptionList();
@@ -732,7 +745,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
             }
           );
         }
-      })
+      });
   }
 
   openPopup(value, data) {
@@ -746,19 +759,18 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       btnNo: header.toUpperCase(),
       positiveMethod: () => {
         const obj = {
-          "advisorId": this.advisorId,
-          "advisorEmailCategoryId": data.emailTemplateId,
-          "enableOrDisable": header == 'enable' ? 0 : 1,
+          advisorId: this.advisorId,
+          advisorEmailCategoryId: data.emailTemplateId,
+          enableOrDisable: header == 'enable' ? 0 : 1,
           id: data.advisorEmailPermissionId
-        }
+        };
         this.orgSetting.enableDisableTemplate(obj).subscribe(
           data => {
-            this.eventService.openSnackBar("Updated sucessfully", "Dismiss")
+            this.eventService.openSnackBar('Updated sucessfully', 'Dismiss');
             dialogRef.close();
             this.getEmailTemplate();
           }
-
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
