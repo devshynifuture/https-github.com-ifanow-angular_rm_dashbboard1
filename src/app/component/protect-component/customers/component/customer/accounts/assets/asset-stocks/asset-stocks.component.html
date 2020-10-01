@@ -20,12 +20,18 @@
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
         <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 right text-right">
-            <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <!-- <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-menu #menu5="matMenu">
+                <button (click)="pdf()" mat-menu-item>PDF</button>
+                <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
+            </mat-menu>
             <img src="assets/images/svg/up-down.svg" class="c-p">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-          class="material-icons">filter_list</i>FILTERS
-      </button> -->
+          class="material-icons">filter_list</i>FILTERS 
+      </button>-->
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                 ADD NEW
             </button>
@@ -79,9 +85,9 @@
         <div class="overflow-y-1200">
             <div class="row pt-12 w-1024">
                 <div class="col-md-5 pl-0 pr-4">
-                    <div class="row b-a">
+                    <div class="row b-a" #summery>
                         <div class="col-md-12 bg-grey lter p-0">
-                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
+                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary </h5>
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
@@ -101,7 +107,7 @@
                         <div class="col-md-12 p-0">
                             <div class="row bg-light lter pt-20 pb-20 bt-1">
                                 <div class="col-md-4 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Amount invested</p>
+                                    <p class="text-custom m-0 roboto"> Amount invested</p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0 text-black">
@@ -115,7 +121,7 @@
 
                                 </div>
                                 <div class="col-md-5 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
+                                    <p class="text-custom m-0 roboto"> Unrealized gain/loss</p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0"
@@ -130,7 +136,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 pr-0 pl-12">
-                                    <p class="text-custom m-0 roboto">Returns</p>
+                                    <p class="text-custom m-0 roboto"> Returns </p>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <h5 *ngIf="assetStockData && !isLoading" class="m-0"
@@ -162,7 +168,7 @@
                             <div class="relClass">
                                 <div class="bar227" [ngClass]="{'height227': isLoading}">
                                     <div *ngIf="!isLoading">
-                                        <div class="highcharts-figure" id="piechartStock"></div>
+                                        <div #PaiChart class="highcharts-figure" id="piechartStock"></div>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +196,7 @@
 
 
 
-                        <div *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column"
+                        <div #categoriesL *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column"
                             [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
                             [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
                             <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
@@ -363,8 +369,8 @@
                     </div>
                 </div>
 
-                <div class="stock-overview w-100">
-                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
+                <div class="stock-overview w-100" >
+                    <table  [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
 
                         <ng-container matColumnDef="groupHeader" sticky>
                             <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length"
