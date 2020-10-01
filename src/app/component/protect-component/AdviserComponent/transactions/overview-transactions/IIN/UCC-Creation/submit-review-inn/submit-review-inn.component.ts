@@ -308,6 +308,10 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   getFileDetails(documentType, e, singleBrokerCred) {
+    if (e.target.files[0].type !== 'image/tiff') {
+      this.eventService.openSnackBar("Please upload the document in TIFF format only with max size up to 5MB", "Dimiss")
+      return;
+    }
     this.showLoader = true;
     this.addbarWidth(30);
     console.log('file', e);
