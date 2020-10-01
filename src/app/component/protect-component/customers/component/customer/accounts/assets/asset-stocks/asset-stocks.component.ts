@@ -16,6 +16,8 @@ import { StockTransactionDetailsComponent } from './stock-transaction-details/st
 import { StockHoldingDetailsComponent} from './stock-holding-details/stock-holding-details.component';
 import { AssetValidationService } from '../asset-validation.service';
 import { StockPdfService } from 'src/app/services/stock-pdf.service';
+import * as Highcharts from 'highcharts';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -39,11 +41,18 @@ export class AssetStocksComponent implements OnInit {
   portfolioData: any = [];
   isLoading = true;
   noData: string;
-
+  returnValue: any;
   // build issue
   data;
-
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
+  chart: Highcharts.Chart;
+  svg: string;
+  fragmentData = { isSpinner: false };
+  reportDate = new Date();
+  clientDetails:any;
+  clientData:any;
+  getOrgData:any;
+  userInfo:any;
+  constructor(public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
     private cusService: CustomerService, private eventService: EventService, private stockPDF : StockPdfService) {
   }
 
@@ -54,18 +63,131 @@ export class AssetStocksComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getStocksData();
     this.isLoading = true;
+    this.getOrgData = AuthService.getOrgDetails();
+    this.getDetails();
   }
 
-  pieChart(id) {
-    pieChart(id);
+  pieChart(data) {
+    // pieChart(id);
+    this.chart = Highcharts.chart('piechartStock', {
+      chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: 0,
+          plotShadow: false
+      },
+      title: {
+          text: '',
+          align: 'center',
+          verticalAlign: 'middle',    
+          y: 60
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+          pie: {
+              dataLabels: {
+                  enabled: true,
+                  distance: -50,
+                  style: {
+                      fontWeight: 'bold',
+                      color: 'white'
+                  }
+              },
+              startAngle: 0,
+              endAngle: 360,
+              center: ['52%', '55%'],
+              size: '120%'
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Browser share',
+          innerSize: '60%',
+          data: [
+              {
+                  name: 'Banking',
+                  y: data.Banks?data.Banks.perrcentage:0,
+                  color: '#008FFF',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }, {
+                  name: 'Information technology',
+                  y: data.Information_Technology?data.Information_Technology.perrcentage:0,
+                  color: '#5DC644',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }, {
+                  name: 'FMCG',
+                  y: data.fmcg?data.fmcg.perrcentage:0,
+                  color: '#FFC100',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }, {
+                  name: 'Other',
+                  y: data.OTHERS?data.OTHERS.perrcentage:0,
+                  color: '#A0AEB4',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }, {
+                  name: 'Auto ancillaries',
+                  y: data.Auto_Ancillaries?data.Auto_Ancillaries.perrcentage:0,
+                  color: '#FF6823',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }
+          ]
+      }]
+  });
+  }
+
+  
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data);
+    this.clientDetails = data;
+    this.clientData = data.clientData;
+    this.getOrgData = data.advisorData
+    this.userInfo = data.advisorData;
+  }
+
+  generatePdf() {
+    this.svg = this.chart.getSVG();
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById('template');
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: 'Overview',
+      landscape: true,
+      key: 'showPieChart',
+      svg: this.svg
+    };
+    let header = null
+    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg,true);
+    console.log('return value ====', this.returnValue);
+    return obj;
   }
 
   pdf() {
     let sum = this.summery.nativeElement.textContent;
     let cate = this.categoriesL.nativeElement.textContent;
     let rows = this.tableEl;
-    console.log(rows, "rows", sum, "PaiChart", this.PaiChart, 'categoriesL', cate);
-    this.stockPDF.generatePdf(rows, cate, sum);
+    console.log(rows, "rows");
+    // this.stockPDF.generatePdf(rows, cate, sum);
   }
   @Output() changeCount = new EventEmitter();
   getStocksData() {
