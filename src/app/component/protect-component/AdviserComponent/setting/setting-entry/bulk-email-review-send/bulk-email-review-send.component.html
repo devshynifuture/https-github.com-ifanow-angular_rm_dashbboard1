@@ -71,6 +71,13 @@
                                 {{element.email}}
                             </td>
                         </ng-container>
+                      <ng-container matColumnDef="status">
+                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status
+                        </th>
+                        <td *matCellDef="let element" class="c-p br" mat-cell>
+                          {{element.status==1? 'Client':'Lead'}}
+                        </td>
+                      </ng-container>
                         <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                     </table>

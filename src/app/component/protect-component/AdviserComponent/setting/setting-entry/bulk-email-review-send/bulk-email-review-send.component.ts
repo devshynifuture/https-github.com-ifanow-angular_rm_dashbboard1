@@ -18,7 +18,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
   clientList: any = [];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  displayedColumns: string[] = ['checkbox', 'name', 'email'];
+  displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
   isLoading = false;
   dataCount = 0;
   advisorId: any;
