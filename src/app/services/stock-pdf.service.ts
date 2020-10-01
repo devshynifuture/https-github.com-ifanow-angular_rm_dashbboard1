@@ -47,7 +47,7 @@ export class StockPdfService {
 
 
 
-  generatePdf(rows, title) {
+  generatePdf(rows, cate, sum) {
 
     console.log(this.imageUrl, "this.getBase64ImageFromURL(this.getOrgData.reportLogoUrl)");
     let headers = [];
@@ -86,25 +86,26 @@ export class StockPdfService {
     });
     tabArr.push(footer);
     headers.forEach(th => {
-      if (th == "Owner") {
-        cellWidth.push("*");
-      }
-      else if (th == "Description") {
+      if (th == "Scrip") {
         cellWidth.push("*");
       }
       else {
         cellWidth.push('auto');
       }
     });
+    tabArr[tabArr.length - 1].push('','');
     tabArr.forEach((data, index) => {
 
       for (let i = 0; i < data.length; i++) {
-        if (data[i].charAt(0) == '₹' || data[i].charAt(data[i].length - 1) == '%') {
-          data[i] = {
-            text: data[i],
-            alignment: 'right'
+        if(typeof data[i] === 'string'){
+          if (data[i].charAt(0) == '₹' || data[i].charAt(data[i].length - 1) == '%') {
+            data[i] = {
+              text: data[i],
+              alignment: 'right'
+            }
           }
         }
+        
         if (index == tabArr.length - 1) {
           if (data[i] != '' || data[i] == 'Total') {
             if (data[i] == 'Total') {
@@ -118,6 +119,13 @@ export class StockPdfService {
               data[i].bold = true;
               data[i].fontSize = 10;
             }
+          }else{
+            if(i == 4){
+              data[i] = {
+                text: '',
+                colSpan: 3,
+              }
+            }
           }
         }
       }
@@ -129,7 +137,7 @@ export class StockPdfService {
     const documentDefinition = {
       pageOrientation: 'landscape',
       info: {
-        title: title,
+        title: 'Stocks overview',
         author: 'IFAnow',
       },
       defaultStyle: {
@@ -190,7 +198,7 @@ export class StockPdfService {
                 // height: 150
               }, { lineHeight: 2, text: this.advisor.name, style: 'header' }],
               [{ text: 'Header 1' }, { lineHeight: 2, text: 'Number: ' + this.advisor.mobileList[0].mobileNo + ' Email: ' + this.advisor.emailList[0].email, style: 'advisorContactStyle' }],
-              [{ text: 'Header 1' }, { text: title, style: 'anotherStyle' }],
+              [{ text: 'Header 1' }, { text: 'Stocks overview', style: 'anotherStyle' }],
               [{ text: 'Header 1' }, { lineHeight: 2, text: 'Report as on: ' + this.datePipe.transform(new Date(), 'd MMM, yyyy'), style: 'anotherStyle' }],
             ]
           }

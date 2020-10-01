@@ -11,6 +11,7 @@ import {SubscriptionInject} from '../component/protect-component/AdviserComponen
 import {rejects} from 'assert';
 import {element} from 'protractor';
 import {apiConfig} from '../config/main-config';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,7 @@ export class EnumDataService {
     {assetShortName: 'Others', assetName: 'Others', assetType: 33},
   ];
   accountTypes: any;
+  accountViewTypes = new Subject();
   accountTypeMap: any = {};
 
   relationshipList: any;
@@ -229,6 +231,7 @@ export class EnumDataService {
             }
           });
           this.accountTypes = data;
+          this.accountViewTypes.next([...data])
         }
       }
     );
@@ -253,6 +256,10 @@ export class EnumDataService {
 
   getBankAccountTypes() {
     return this.accountTypes;
+  }
+
+  getBankAccountViewTypes() {
+    return this.accountViewTypes.asObservable();
   }
 
   getRelationshipStatus() {

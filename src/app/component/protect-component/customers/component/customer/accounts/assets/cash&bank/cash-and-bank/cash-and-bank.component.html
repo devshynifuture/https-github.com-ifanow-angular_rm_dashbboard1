@@ -133,7 +133,7 @@
                         <div class="bar">
                             <div *ngIf="element.accountNo" [ngSwitch]="element.accountNo">
                                 <div *ngFor="let bank of clientFamilybankList">
-                                    <div *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
+                                    <div  *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
                                 </div>
                             </div>
                             <div *ngIf="!element.accountNo">
