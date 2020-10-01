@@ -20,18 +20,19 @@
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
         <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 right text-right">
-            <!-- <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
             </mat-menu>
-            <img src="assets/images/svg/up-down.svg" class="c-p">
+
+            <!-- <img src="assets/images/svg/up-down.svg" class="c-p">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
           class="material-icons">filter_list</i>FILTERS 
-      </button>-->
+      </button>  -->
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                 ADD NEW
             </button>
