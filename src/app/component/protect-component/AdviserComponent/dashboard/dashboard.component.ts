@@ -1407,16 +1407,26 @@ export class DashboardComponent implements OnInit {
   }
 
   openGuideDialog(): void {
-    const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
-      maxWidth: '100vw',
-      width: '90vw',
-      //height: '90vh',
-      data: this.userData
-    });
+    const obj = {
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    }
+    this.dashboardService.onBoardingQuestionMaster(obj).subscribe(
+      data => {
+        if (data) {
+          const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
+            maxWidth: '100vw',
+            width: '90vw',
+            data: { userData: this.userData, masterGet: data }
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
+        }
+      }
+    )
+
+
   }
 
   getMisData() {
