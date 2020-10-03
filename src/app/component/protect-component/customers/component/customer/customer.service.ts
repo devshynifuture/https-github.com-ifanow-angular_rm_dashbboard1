@@ -1026,6 +1026,9 @@ export class CustomerService {
   unmapFamilyMembers(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.UNMAP_FAMILY_MEMBER, data);
   }
+  getSubAdvisorListValues(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+  }
 
 }
 

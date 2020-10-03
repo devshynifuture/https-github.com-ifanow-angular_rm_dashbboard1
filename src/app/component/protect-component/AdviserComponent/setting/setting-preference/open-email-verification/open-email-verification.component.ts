@@ -60,5 +60,7 @@ export class OpenEmailVerificationComponent implements OnInit {
     }
     this.dialogRef.close(obj);
   }
-
+  close(){
+        this.dialogRef.close();
+  }
 }
