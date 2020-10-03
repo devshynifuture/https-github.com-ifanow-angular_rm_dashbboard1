@@ -5,7 +5,7 @@
       <div class="headerGuide">
         <div class="row headerRow">
           <div class="col-md-12">
-            <h3 class="mb-0 f-500  text-diff">Hey {{data.name}}. </h3>
+            <h3 class="mb-0 f-500  text-diff">Hey {{userInfo.name}}. </h3>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
 
       <div [ngClass]="{'creds-section': step==14,'rta-section':step==12}" class="row headerRow">
         <div class="col-md-12">
-          <h3 *ngIf="step==2" class="mb-0 f-500  text-diff">So {{data.name}}, what best describes you?</h3>
+          <h3 *ngIf="step==2" class="mb-0 f-500  text-diff">So {{userInfo.name}}, what best describes you?</h3>
           <h3 *ngIf="step==3" class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select
             only the ones
             that
@@ -63,7 +63,7 @@
             Select
             only the ones that apply</h3>
           <h3 *ngIf="step==6" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
-          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice?
+          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{userInfo.name}}, how are you managing your practice?
             Like,
             are you managing it alone or you have a team?</h3>
           <h3 *ngIf="step==8" class=" m-0 f-500 pb-20 text-diff">I suggest you add your team members right away. We’ll
@@ -79,9 +79,9 @@
             that in place,you will ve able to view your client's <br> mututal fundholding in no time.</h3>
           <h3 *ngIf="step==12" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
           <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thanks for providing these details</h3>
-          <!-- <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3> -->
+          <!-- <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{userInfo.name}}. One last step.</h3> -->
           <h3 *ngIf="step==14" class="m-0 f-500 pb-20 text-diff">Adding RTA credentials now</h3>
-          <h3 *ngIf="step==15" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
+          <h3 *ngIf="step==15" class="m-0 f-500 pb-20 text-diff">Thank you {{userInfo.name}}. One last step.</h3>
           <h3 *ngIf="step==16" class="m-0 f-500 pb-20 text-diff">Steps to set-up auto forward of your registered Gmail
             ID</h3>
           <h3 *ngIf="step==17" class="m-0 f-500 pb-20 text-diff">Congratulations! Hard part over. Now the easy part.
@@ -741,7 +741,8 @@
     <div class="contentGuideBox mt-40">
       <div class="row ">
         <div class="col-md-12">
-          <p class="text-diff m-0 roboto f-400 lh-16">{{data.name}}, you can order now your client`s transaction.folio
+          <p class="text-diff m-0 roboto f-400 lh-16">{{userInfo.name}}, you can order now your client`s
+            transaction.folio
             master,SIP files and upload them manually.
             Or you can provide us your RTA credentials and we will do this for you in no time.
             <!-- With these credentials, we will now be able to order RTA files on

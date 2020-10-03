@@ -64,6 +64,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   shouldShowMultipleDelete: boolean = false;
   selectedBalanceUnits: any = 0;
   selectedFolioUnitsFiltered: any = 0;
+  freezeDate: any;
 
   constructor(
     private eRef: ElementRef,
@@ -99,11 +100,15 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         }
       });
 
+      this.freezeDate = this.data.freezeDate;
+
       const tableArr: PeriodicElement[] = [{
         unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
         unitOne: temArr[temArr.length-1].balanceUnits,
-        difference: String(this.data.unitsRta - temArr[temArr.length-1].balanceUnits),
+        difference: (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3),
       }];
+
+      this.data.difference = (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3);
       this.dataSource.data = tableArr;
       this.upperTableArr = tableArr;
 
@@ -296,6 +301,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
+          
+          this.freezeDate = this.data.freezeDate;
 
           if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
             this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
@@ -324,12 +331,14 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
           // console.log(res);
+          
           this.disableDeletionForTable2 = false;
           this.disableUnfreezeBtn = true;
-          if (Math.round(this.data.difference) === 0) {
+          if (Math.round(parseFloat(this.dataSource.data[0].difference)) === 0) {
             this.disableFreezeBtn = false;
           }
-          
+          this.freezeDate = null;
+
           if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
             this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
           }
