@@ -227,10 +227,10 @@
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
                         <th class="w-20" mat-header-cell *matHeaderCellDef>Goal </th>
-                        <td class="w-20 text-left" style="padding-right: 0px !important;" *matCellDef="let element" mat-cell>
+                        <td class="w-20 text-left" style="padding-right: 0px !important; vertical-align: top;" *matCellDef="let element" mat-cell>
                             <div  class="" *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div [ngClass]="allocatedGoal.sipPercent > 0 && allocatedGoal.sipPercent != 100? 'mb-10 pb-10 bb' : allocatedGoal.lumpsumPercent > 0 && allocatedGoal.lumpsumPercent != 100 ? 'mb-10 pb-10 bb':''">
-                                    <div>{{allocatedGoal.goalName}}</div>
+                                    <div class="lh-14">{{allocatedGoal.goalName}}</div>
 
                                     <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
                                         <span class="text-success" *ngIf="element.isSip == true">
