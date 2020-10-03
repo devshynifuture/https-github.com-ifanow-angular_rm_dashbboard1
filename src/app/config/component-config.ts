@@ -311,7 +311,7 @@ export const appConfig = {
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   DELETE_MILESTONE: 'goal-planning/milestone/remove',
-  DELETE_LOAN:'goal-planning/goal-loan/delete',
+  DELETE_LOAN: 'goal-planning/goal-loan/delete',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
@@ -342,7 +342,7 @@ export const appConfig = {
   LIFE_INSURANCE_NEED_BASED_DETAILS: 'insurance/planning/life/insurance/need/based/details/saved/get?',
   LIFE_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/life/insurance/recommendation/status/update',
   GEN_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/gen/insurance/recommendation/status/update',
-  ADD_SUGGEST_NEW:'insurance/planning/life/insurance/need/analysis/suggest/new/add',
+  ADD_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -920,7 +920,9 @@ export const appConfig = {
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
   GET_TASK_DASHBOARD_COUNT: 'admin/dashboard/task/metrics/get',
-
+  QUESTION_MASTER: 'admin/dashboard/on-boarding/question-master',
+  QUESTION_ANSWER_ADD: 'admin/dashboard/on-boarding/question-answer/add',
+  QUESTION_ANSWER_GET: 'admin/dashboard/on-boarding/question-answer/get',
 
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
