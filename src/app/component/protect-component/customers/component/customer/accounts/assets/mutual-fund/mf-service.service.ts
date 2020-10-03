@@ -30,6 +30,7 @@ export class MfServiceService {
   private sendDataCapitalSummary = new BehaviorSubject('')
   private sendDataCapitalDetailed = new BehaviorSubject('')
   private setCashFlow = new BehaviorSubject('')
+  private advisorIdList = new BehaviorSubject('')
 
   getPersonalDetails(data) {
     const obj = {
@@ -709,5 +710,11 @@ export class MfServiceService {
   }
   getCashFlowXirr() {
     return this.setCashFlow.asObservable();
+  }
+  setadvisorList(value) {
+    this.advisorIdList.next(value);
+  }
+  getadvisorList() {
+    return this.advisorIdList.asObservable();
   }
 }

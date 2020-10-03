@@ -24,10 +24,12 @@ export class TransactionsComponent implements OnInit {
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  parentId = AuthService.getAdminAdvisorId();
   investorName: any;
   isLoading = false;
   mfList: any;
   nav: any;
+  adminAdvisorIds: string;
 
   constructor(
     private UtilService: UtilService,
@@ -48,6 +50,10 @@ export class TransactionsComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
 
   ngOnInit() {
+    this.mfService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
     this.profitOrLossValue = this.data.unrealizedGain;
@@ -113,7 +119,7 @@ export class TransactionsComponent implements OnInit {
             //  mutualfund get call  
             this.isLoading = true;
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.cusService.getMutualFund({ advisorId: this.advisorId, clientId: this.clientId })
+            this.cusService.getMutualFund({ parentId:this.parentId === this.advisorId ? this.parentId : 0,advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0, clientId: this.clientId })
               .subscribe(res => {
                 if (res) {
                   this.isLoading = false;
@@ -203,7 +209,7 @@ export class TransactionsComponent implements OnInit {
             if (res) {
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-              this.cusService.getMutualFund({ advisorId: this.advisorId, clientId: this.clientId })
+              this.cusService.getMutualFund({ parentId:this.parentId === this.advisorId ? this.parentId : 0,advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0, clientId: this.clientId  })
                 .subscribe(res => {
                   if (res) {
                     this.getTransactionDataBasedOnMf(res);

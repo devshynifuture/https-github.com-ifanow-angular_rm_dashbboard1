@@ -214,6 +214,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
   cashFlowXirr: any;
   cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
   fromDate: any;
+  adminAdvisorIds:any;
+  parentId: any;
 
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
@@ -231,6 +233,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
 
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
+        this.parentId = AuthService.getAdminAdvisorId();
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
         // this.toDate = param1.toDate;
         // this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
@@ -240,6 +243,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
       } else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.parentId = AuthService.getAdminAdvisorId();
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.details = AuthService.getProfileDetails();
@@ -376,6 +380,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
   }
 
   getFilterData(value) {
+    this.mfService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     this.mfService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
@@ -487,7 +495,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
             this.changeInput.emit(true);
             this.getMutualFundResponse(this.mutualFund);
           } else {
-            this.getMutualFund();
+            if(this.adminAdvisorIds.length > 0){ 
+              this.getMutualFund();
+            }else{
+              this.teamMemberListGet();
+            }
           }
         }
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
@@ -529,7 +541,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
           this.changeInput.emit(true);
           this.getMutualFundResponse(this.mutualFund);
         } else {
-          this.getMutualFund();
+          if(this.adminAdvisorIds.length > 0){
+            this.getMutualFund();
+          }else{
+            this.teamMemberListGet();
+          }
         }
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
@@ -537,7 +553,32 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
     );
 
   }
+  teamMemberListGet(){
+    this.adminAdvisorIds =[];
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.getMutualFund();
+      this.mfService.setadvisorList(this.mutualFund);
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.mfService.setadvisorList(this.mutualFund);
+      this.getMutualFund();
 
+    });
+  }
   styleObjectTransaction(header, ind) {
 
     if (header == 'no') {
@@ -697,7 +738,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
-      advisorId: this.advisorId,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -794,7 +836,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         categoryWiseMfList.push(element.id);
       });
       const obj = {
-        advisorId: this.advisorId,
+        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,

@@ -109,6 +109,9 @@ export class MutualFundOverviewComponent implements OnInit {
   mfBulkEmailRequestId: number;
   cashFlowObj:any;
   showZeroFolio = false;
+  parentId: any;
+  adminAdvisorIds:any;
+  advisorIdList: string;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -121,10 +124,12 @@ export class MutualFundOverviewComponent implements OnInit {
         const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
+        this.parentId = AuthService.getAdminAdvisorId();
         console.log('2423425', param1);
       } else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.parentId = AuthService.getAdminAdvisorId();
       }
     });
     this.userInfo = AuthService.getUserInfo();
@@ -147,7 +152,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    // token : authTokenInLoginComponnennt
+    // token : 
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
@@ -205,15 +210,46 @@ export class MutualFundOverviewComponent implements OnInit {
       .subscribe(res => {
         this.cashFlowObj = res;
       })
+      this.mfService.getadvisorList()
+      .subscribe(res => {
+      this.adminAdvisorIds = res;
+      });
     if (this.mfGetData && this.mfGetData != '') {
       this.getMutualFundResponse(this.mfGetData);
     } else {
-      this.getMutualFundData();
+      this.teamMemberListGet();
+
+      // this.getMutualFundData();
     }
 
 
   }
+  teamMemberListGet(){
+    this.adminAdvisorIds =[];
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
+      this.getMutualFundData();
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
+      this.getMutualFundData();
 
+    });
+  }
   getTransactionTypeData() {
     const obj = {
       advisorIds: [this.advisorId],
@@ -369,7 +405,8 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundData() {
     const obj = {
       // advisorId: 2753,
-      advisorId: this.advisorId,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       // clientId: this.clientId
@@ -1022,9 +1059,21 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundSummary() {
+    let advisorIdList;
+    if(this.adminAdvisorIds.length > 1){
+      for (let i = 1; i < this.adminAdvisorIds.length; i++) {
+        if (this.adminAdvisorIds[i]) {
+          const firstName = (this.adminAdvisorIds[i] as string).split(' ')[0];
+          advisorIdList += ', ' + firstName;
+        }
+      }
+    }else{
+      advisorIdList = this.advisorId;
+    }
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
