@@ -68,18 +68,13 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.allocated && this.showMf == true) {
-      this.availableAllocation = this.allocated.allocatedToOtherGoal;
-      if (this.allocated && this.allocationData.lumpsumOrSip == 2 && this.allocationData.sipPercent != 0) {
-         this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
-        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent);
-      } else if (this.allocated && this.allocationData.lumpsumOrSip == 1 && this.allocationData.lumpsumPercent != 0) {
-         this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
-        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent);
-      } else {
-        this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
-        this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
-      }
+
+    if (this.showMf == true && this.allocated && this.allocationData.lumpsumOrSip == 2 && this.allocationData.sipPercent != 0) {
+      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
+      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent);
+    } else if (this.showMf == true && this.allocated && this.allocationData.lumpsumOrSip == 1 && this.allocationData.lumpsumPercent != 0) {
+      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
+      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent);
     } else {
       this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
       this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
@@ -95,8 +90,8 @@ export class ReallocateAssetComponent implements OnInit {
     }
 
     this.subscriber.add(
-      this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
-        if(value) {
+      this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value: string) => {
+        if (value) {
           this.remainingAllocation = (this.availableAllocation - parseFloat(value));
         } else {
           this.remainingAllocation = 0;
@@ -104,8 +99,8 @@ export class ReallocateAssetComponent implements OnInit {
       })
     )
     this.subscriber.add(
-      this.reallocationFG.controls.lumpsumPercent.valueChanges.subscribe((value:string) => {
-        if(value) {
+      this.reallocationFG.controls.lumpsumPercent.valueChanges.subscribe((value: string) => {
+        if (value) {
           this.remainingAllocation = (this.availableAllocation - parseFloat(value));
         } else {
           this.remainingAllocation = 0;
@@ -113,8 +108,8 @@ export class ReallocateAssetComponent implements OnInit {
       })
     )
     this.subscriber.add(
-      this.reallocationFG.controls.sipPercent.valueChanges.subscribe((value:string) => {
-        if(value) {
+      this.reallocationFG.controls.sipPercent.valueChanges.subscribe((value: string) => {
+        if (value) {
           this.remainingAllocation = (this.availableAllocation - parseFloat(value));
         } else {
           this.remainingAllocation = 0;
