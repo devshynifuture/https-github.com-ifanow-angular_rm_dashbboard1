@@ -57,7 +57,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
   // dataSource2 = ELEMENT_DATA2;
   showExisting = false;
-  selectPolicy='1'
+  selectPolicy=''
   insuranceData = [{
     value: '1',
     header: 'Add Health Insurance',
@@ -231,7 +231,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.showNewPolicy = false;
   }
   openExistingPolicy() {
-    this.selectPolicy = "1"
+    this.selectPolicy = ""
     console.log(this.selectPolicy)
     this.showExisting = true
     this.getReviewExistingPolicy();
