@@ -151,6 +151,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   userInfo: any;
   isLoadingAssetAllocation = false;
   isAssetAllocationDataLoaded = false;
+  parentId: any;
+  adminAdvisorIds=[];
 
   constructor(
     private customerService: CustomerService,
@@ -181,6 +183,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     // }
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
+    this.parentId = AuthService.getAdminAdvisorId();
     this.advisorImg = this.advisorInfo.profilePic;
     this.greeter();
     this.greeterFnID = setInterval(() => this.greeter(), 1000);
@@ -284,6 +287,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   portFolioSectionOffset: any = 0;
 
   ngOnInit() {
+    this.teamMemberListGet();
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
     this.loadCustomerProfile();
@@ -296,7 +300,6 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.loadDocumentValutData();
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
-    this.getMFPortfolioData();
     // this.loadGoalsData(); // Not to be implemented for demo purpose
     this.loadCashFlowSummary(); // needs better implementation
   }
@@ -353,8 +356,29 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         break;
     }
   }
-
-
+//get subadvisorList
+  teamMemberListGet(){
+    this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.getMFPortfolioData();
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.getMFPortfolioData();
+    });
+  }
   // Load data from various apis
   loadCustomerProfile() {
     const obj = {
@@ -1024,7 +1048,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
     };
 
     if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {

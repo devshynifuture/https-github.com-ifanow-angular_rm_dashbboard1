@@ -70,6 +70,8 @@ export class MfCapitalDetailedComponent implements OnInit {
   familyList = [];
   mfBulkEmailRequestId: number;
   criteriaDate: Date;
+  adminAdvisorIds: any;
+  parentId: any;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
@@ -82,6 +84,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.parentId = AuthService.getAdminAdvisorId();
         this.familyMemberId = parseInt(param1.familyMemberId)
 
         this.fromDateYear = param1.from,
@@ -95,6 +98,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
+        this.parentId = AuthService.getAdminAdvisorId();
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.getOrgData = AuthService.getOrgDetails();
@@ -119,12 +123,20 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.toDate = new Date(this.toDateYear, 2, 31);
       this.grandFatheringEffect = true;
       // this.getAdvisorData();
-      this.getCapitalgain();
+      if(this.adminAdvisorIds.length > 0){
+        this.getCapitalgain();
+      }else{
+        this.teamMemberListGet();
+      }
     }
     return this.setCapitaDetails
 
   }
   ngOnInit() {
+    this.MfServiceService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
@@ -140,7 +152,11 @@ export class MfCapitalDetailedComponent implements OnInit {
           this.fromDate = new Date(this.fromDateYear, 3, 1);
         this.toDate = new Date(this.toDateYear, 2, 31);
         this.grandFatheringEffect = true;
-        this.getCapitalgain();
+        if(this.adminAdvisorIds.length > 0){
+          this.getCapitalgain();
+        }else{
+          this.teamMemberListGet();
+        }
         console.log('2423425', param1)
         this.getDetails()
       }
@@ -174,13 +190,38 @@ export class MfCapitalDetailedComponent implements OnInit {
 
 
   }
+  teamMemberListGet(){
+    this.adminAdvisorIds =[];
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+          this.getCapitalgain();
+      this.MfServiceService.setadvisorList(this.mutualFund);
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.MfServiceService.setadvisorList(this.mutualFund);
+          this.getCapitalgain();
+    });
+  }
   getCapitalgain() {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      advisorIds: [this.advisorId],
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorIds: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
-      parentId: this.advisorId
 
     };
     this.custumService.capitalGainGet(obj).subscribe(

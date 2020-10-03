@@ -41,7 +41,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   parentId: any;
   advisorId: any;
   clientId: any;
-  adminAdvisorIds: any[] = [];
+  adminAdvisorIds:any;
   categoryData: any[] = [];
   mfList: any[];
   mutualFundTransactions: any[];
@@ -103,13 +103,15 @@ export class MutualFundsCapitalComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.parentId = AuthService.getAdminAdvisorId();
         console.log('2423425', param1)
       } else {
         this.advisorId = AuthService.getAdvisorId();
-        this.parentId = AuthService.getUserInfo().parentId
+        // this.parentId = AuthService.getUserInfo().parentId
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.getOrgData = AuthService.getOrgDetails();
+        this.parentId = AuthService.getAdminAdvisorId();
 
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
       }
@@ -130,6 +132,10 @@ export class MutualFundsCapitalComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.MfServiceService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
@@ -176,10 +182,40 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.toDate = new Date(this.toDateYear, 2, 31);
     this.grandFatheringEffect = true;
     // this.getAdvisorData();
-    this.getCapitalgain();
+    if(this.adminAdvisorIds.length > 0){
+      this.getCapitalgain();
+    }else{
+      this.teamMemberListGet();
+    }
     this.summaryView = true
     // this.calculateCapitalGain(this.capitalGainData)
 
+  }
+  teamMemberListGet(){
+    this.adminAdvisorIds =[];
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.getCapitalgain();
+      this.MfServiceService.setadvisorList(this.mutualFund);
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.MfServiceService.setadvisorList(this.mutualFund);
+      this.getCapitalgain();
+
+    });
   }
   openFilter() {
     // this.MfServiceService.getCapitalGainFilter(this.objSendToDetailedCapital,this.rightFilterData)
@@ -264,9 +300,9 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      advisorIds: [this.advisorId],
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorIds: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
-      parentId: this.advisorId
 
     };
     this.custumService.capitalGainGet(obj).subscribe(

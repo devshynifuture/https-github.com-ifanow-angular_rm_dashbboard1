@@ -104,6 +104,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   showZeroFolio = false;
   setAllTrue = false;
   setTrueKey =false;
+  parentId: any;
+  adminAdvisorIds: string;
 
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -121,11 +123,16 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mfService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     this.setTrueKey =this._data.setTrueKey;
     this.showZeroFolio = this._data.showFolio == '2' ? false : true;
     this.panelOpenState = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getAdminAdvisorId();
     // this._data.forEach(element => {()
     //   element.done = false
     // });
@@ -1731,7 +1738,8 @@ export class RightFilterDuplicateComponent implements OnInit {
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        advisorId: this.advisorId,
+        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate:this._data.name == 'SUMMARY REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
