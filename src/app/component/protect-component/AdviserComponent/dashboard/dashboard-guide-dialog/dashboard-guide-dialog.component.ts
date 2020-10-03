@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogData } from '../../../customers/component/common-component/document-new-folder/document-new-folder.component';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
@@ -16,6 +15,11 @@ export interface PeriodicElement {
   position: string;
   weight: string;
 
+}
+
+export interface DialogData {
+  userData: any;
+  masterGet: any;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -185,6 +189,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   cropImage: boolean;
   showEditOption: boolean = false;
   hideWillDoLater: boolean;
+  userInfo: any;
+  questionData: any;
 
 
   constructor(private fb: FormBuilder,
@@ -201,6 +207,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userInfo = this.data.userData;
+    this.questionData = this.data.masterGet;
     this.formPlaceHolders = AppConstants.formPlaceHolders;
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();

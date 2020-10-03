@@ -80,4 +80,17 @@ export class DashboardService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.DASHBOARD_CHART, httpParams);
   }
 
+  onBoardingQuestionMaster(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.QUESTION_MASTER, data);
+  }
+
+  onBoardingQuestionAnswer(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.QUESTION_ANSWER_ADD, data);
+  }
+
+  getOnBoardingQuestionAnswer(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.QUESTION_ANSWER_GET, httpParams);
+  }
+
 }
