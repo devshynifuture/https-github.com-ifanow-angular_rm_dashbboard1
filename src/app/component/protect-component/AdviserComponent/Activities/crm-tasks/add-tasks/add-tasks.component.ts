@@ -1269,6 +1269,32 @@ export class AddTasksComponent implements OnInit {
     }
   }
 
+  defaultCollaboratorsArray(){
+    // loggedInUser and taskAssignedTo user
+    let arr = [
+      { userId: this.userId, isDefault: true }, 
+      { userId: this.addTaskForm.get('assignedTo').value, isDefault: true }
+    ];
+
+    // all sub task assigned to user ids
+    if(this.subTask.value.length>0){
+      this.subTask.value.forEach(element => {
+        arr.push({
+          userId: element.assignedTo,
+          isDefault: true
+        });
+      });
+    }
+    //  clientOwner
+    if(this.teamMemberList.length>0 && this.selectedClient){
+      arr.push({
+        userId: this.teamMemberList.find(i=> i.adminAdvisorId = this.selectedClient.advisorId).userId,
+        isDefault: true
+      });
+    }
+    return arr;
+  }
+
   onCreateTask() {
     let subTaskArr = [];
     let taskNumberForSubTask;

@@ -163,7 +163,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="w-41 pl-15 pr-24 form-group pl-0 mb-0" *ngIf="familyMemberList.length !==0">
+            <div class="w-41 pl-15 pr-24 form-group pl-0 mb-0" *ngIf="familyMemberList.length>0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="familyMemberId"
                         [ngClass]="isTaskDone ? 'disabled-cursor': ''">
