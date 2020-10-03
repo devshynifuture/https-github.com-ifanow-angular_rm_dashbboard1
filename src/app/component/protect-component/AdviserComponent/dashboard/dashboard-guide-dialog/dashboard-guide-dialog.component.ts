@@ -4,12 +4,12 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { element } from 'protractor';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { OrgSettingServiceService } from '../../setting/org-setting-service.service';
 import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { DashboardService } from '../dashboard.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -37,114 +37,114 @@ export class DashboardGuideDialogComponent implements OnInit {
   step: number;
 
   serviceList = [
-    { name: 'Portfolio review', selected: false },
-    { name: 'Financial planning', selected: false },
-    { name: 'Emergency planning', selected: false },
-    { name: 'Insurance planning', selected: false },
-    { name: 'Investment management', selected: false },
-    { name: 'Investment consulting', selected: false },
-    { name: 'Reitrement planning', selected: false },
-    { name: 'Asset allocation', selected: false },
-    { name: 'Tax planning', selected: false },
-    { name: 'Cash flow planning', selected: false },
-    { name: 'Real estate advisory', selected: false },
-    { name: 'Will writing', selected: false },
-    { name: 'Estate planning', selected: false },
-    { name: 'Raising capital or Dept', selected: false },
-    { name: 'Personal leading', selected: false },
+    { name: 'Portfolio review', value: false },
+    { name: 'Financial planning', value: false },
+    { name: 'Emergency planning', value: false },
+    { name: 'Insurance planning', value: false },
+    { name: 'Investment management', value: false },
+    { name: 'Investment consulting', value: false },
+    { name: 'Reitrement planning', value: false },
+    { name: 'Asset allocation', value: false },
+    { name: 'Tax planning', value: false },
+    { name: 'Cash flow planning', value: false },
+    { name: 'Real estate advisory', value: false },
+    { name: 'Will writing', value: false },
+    { name: 'Estate planning', value: false },
+    { name: 'Raising capital or Dept', value: false },
+    { name: 'Personal leading', value: false },
 
   ]
 
   descriptionArray = [
-    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false, id: 1 },
-    { name: 'I am new to this industry and just getting started.', selected: false, id: 2 }
+    { name: 'I’ve been running a financial advisory practice for few years now.', value: false, id: 1 },
+    { name: 'I am new to this industry and just getting started.', value: false, id: 2 }
   ]
 
   clientsWorkWithList = [
-    { name: 'Salaried workforce', selected: false },
-    { name: 'Small Business owners', selected: false },
-    { name: 'Medical professionals', selected: false },
-    { name: 'Finance professionals', selected: false },
-    { name: 'Legal professionals', selected: false },
-    { name: 'Business executives', selected: false },
-    { name: 'Entreprenures', selected: false },
-    { name: 'Retirees', selected: false },
-    { name: 'Public sector workforce', selected: false },
-    { name: 'HNI investors', selected: false },
-    { name: 'UHNI investors', selected: false },
-    { name: 'Institutional investors', selected: false },
+    { name: 'Salaried workforce', value: false },
+    { name: 'Small Business owners', value: false },
+    { name: 'Medical professionals', value: false },
+    { name: 'Finance professionals', value: false },
+    { name: 'Legal professionals', value: false },
+    { name: 'Business executives', value: false },
+    { name: 'Entreprenures', value: false },
+    { name: 'Retirees', value: false },
+    { name: 'Public sector workforce', value: false },
+    { name: 'HNI investors', value: false },
+    { name: 'UHNI investors', value: false },
+    { name: 'Institutional investors', value: false },
   ]
 
   productList = [
-    { name: 'Mutual funds', selected: false },
-    { name: 'Stocks', selected: false },
-    { name: 'Fixed income & Bonds', selected: false },
-    { name: 'Life & General insurance', selected: false },
-    { name: 'Post office schemes', selected: false },
-    { name: 'PF & Pension schemes', selected: false },
-    { name: 'Alternative investments', selected: false },
-    { name: 'Commodities', selected: false },
-    { name: 'Real estate', selected: false },
+    { name: 'Mutual funds', value: false },
+    { name: 'Stocks', value: false },
+    { name: 'Fixed income & Bonds', value: false },
+    { name: 'Life & General insurance', value: false },
+    { name: 'Post office schemes', value: false },
+    { name: 'PF & Pension schemes', value: false },
+    { name: 'Alternative investments', value: false },
+    { name: 'Commodities', value: false },
+    { name: 'Real estate', value: false },
   ]
 
   mutualFundPractices = [
-    { name: 'I offer mutual funds under my ARN/RIA code', selected: false, option: 'A' },
-    { name: 'I work with a national distributor as a sub-broker', selected: false, option: 'B' },
-    { name: 'I only give advice. I do not distribute or offer implementation services.', selected: false, option: 'C' },
-    { name: 'Option a and b both applies to me', selected: false, option: 'D' },
+    { name: 'I offer mutual funds under my ARN/RIA code', value: false, option: 'A', id: 1 },
+    { name: 'I work with a national distributor as a sub-broker', value: false, option: 'B', id: 2 },
+    { name: 'I only give advice. I do not distribute or offer implementation services.', value: false, option: 'C', id: 3 },
+    { name: 'Option a and b both applies to me', value: false, option: 'D', id: 4 },
   ]
 
   teamAloneList = [
-    { name: 'I’m alone', selected: false, option: 'A', id: 1 },
-    { name: 'I have a team', selected: false, option: 'B', id: 2 },
+    { name: 'I’m alone', value: false, option: 'A', id: 1 },
+    { name: 'I have a team', value: false, option: 'B', id: 2 },
   ]
 
   addTeamMemberChoiceList = [
-    { name: 'Sure, let’s add them', selected: false, option: 'A', id: 1 },
-    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+    { name: 'Sure, let’s add them', value: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', value: false, option: 'B', id: 2 },
   ]
 
   arnRiaCodeChoiceList = [
-    { name: 'Yes', selected: false, option: 'A', id: 1 },
-    { name: 'No', selected: false, option: 'B', id: 2 },
-    { name: 'I have just started the process of registering', selected: false, option: 'C', id: 3 },
+    { name: 'Yes', value: false, option: 'A', id: 1 },
+    { name: 'No', value: false, option: 'B', id: 2 },
+    { name: 'I have just started the process of registering', value: false, option: 'C', id: 3 },
   ]
 
   basicDetailsChoiceList = [
-    { name: 'Sure, let`s add', selected: false, option: 'A', id: 1 },
-    { name: 'I`ll do this later', selected: false, option: 'B', id: 2 },
+    { name: 'Sure, let`s add', value: false, option: 'A', id: 1 },
+    { name: 'I`ll do this later', value: false, option: 'B', id: 2 },
   ]
 
   rtaCredentialsChoiceList = [
-    { name: 'Sure, let’s set-up auto forward', selected: false, option: 'A', id: 1 },
-    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+    { name: 'Sure, let’s set-up auto forward', value: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', value: false, option: 'B', id: 2 },
   ]
 
   rtaCredentialsChoiceList1 = [
-    { name: 'Sure, let’s set-up auto forward', selected: false, option: 'A', id: 1 },
-    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+    { name: 'Sure, let’s set-up auto forward', value: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', value: false, option: 'B', id: 2 },
   ]
 
   rolesList = [
-    { name: 'Admin', selected: false, option: 'A', id: 1 },
-    { name: 'Back office', selected: false, option: 'B', id: 2 },
-    { name: 'Financial planner', selected: false, option: 'C', id: 3 },
+    { name: 'Admin', value: false, option: 'A', id: 1 },
+    { name: 'Back office', value: false, option: 'B', id: 2 },
+    { name: 'Financial planner', value: false, option: 'C', id: 3 },
   ]
 
   uploadMfFIleOption = [
-    { name: 'Order & Upload files for me please', selected: false, option: 'A', id: 1 },
-    { name: 'Do not order. I will manually do it.', selected: false, option: 'B', id: 2 },
+    { name: 'Order & Upload files for me please', value: false, option: 'A', id: 1 },
+    { name: 'Do not order. I will manually do it.', value: false, option: 'B', id: 2 },
   ]
 
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
-  step2Flag: boolean;
+  step2SelectedId: number;
   step3Flag = 0;
   step4Flag = 0;
   step5Flag = 0
-  step6Flag
-  step7Flag;
+  step6SelectedId: number;
+  step7SelectedId: number;
   editPictureFlag;
   step8Flag: boolean;
   doItLater
@@ -154,17 +154,17 @@ export class DashboardGuideDialogComponent implements OnInit {
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
-  selectedArnRIaChoice: any;
+  valueArnRIaChoice: any;
   basicDetailsChoice: any;
   selctedRtaDataChoice: any = {};
-  selectedTeamMemberChoice: any;
+  valueTeamMemberChoice: any;
   step11Flag: boolean;
-  teamOrAloneSelectedData: any = {};
+  teamOrAloneSelectedData;
   selctedArmOrRia: any;
-  selectedArmOrRiaIndex: any;
+  valueArmOrRiaIndex: any;
   arnRiaList = [];
   ArnRiaIndex: any;
-  selectedArnRIa: any;
+  valueArnRIa: any;
   formPlaceHolders
   stepRoleChoice: boolean;
   rolesFlag: boolean = true;
@@ -181,7 +181,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   emailList: any;
   isLoading: boolean;
   step17Flag: boolean;
-  selectedMfOption: any;
+  valueMfOption: any;
   finalImage: any;
   imageUploadEvent: any;
   showCropper: boolean = false;
@@ -191,6 +191,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   hideWillDoLater: boolean;
   userInfo: any;
   questionData: any;
+  answerObj: any;
 
 
   constructor(private fb: FormBuilder,
@@ -199,7 +200,8 @@ export class DashboardGuideDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private orgSetting: OrgSettingServiceService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private dashService: DashboardService
   ) { }
 
   onNoClick(): void {
@@ -213,7 +215,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
     this.step = 1;
-    this.selectedArmOrRiaIndex = 0
+    this.valueArmOrRiaIndex = 0
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
@@ -242,6 +244,23 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.getPersonalInfo()
     // this.getRtaDetails();
     this.getEmailVerification();
+    this.getAnswerData()
+  }
+
+  getAnswerData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashService.getOnBoardingQuestionAnswer(obj).subscribe(
+      data => {
+        if (data) {
+          this.answerObj = data;
+          // Object.entries(data).forEach(([key, value], index) => {
+          //   console.log(`${index}: ${key} = ${value}`);
+          //   if(value.val)
+          // });
+        }
+      })
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -300,42 +319,42 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.step--;
   }
 
-  selectPractice(selectedPractise) {
-    this.step6Flag = true;
+  selectPractice(valuePractise) {
+    this.step6SelectedId = valuePractise.id;
     this.mutualFundPractices.map(element => {
-      (selectedPractise.name == element.name) ? element.selected = true : element.selected = false
+      (valuePractise.name == element.name) ? element.value = true : element.value = false
     })
   }
 
   selectDes(selectDescription) {
-    this.step2Flag = true
+    this.step2SelectedId = selectDescription.id
     this.descriptionArray.map(element => {
-      (selectDescription.id == element.id) ? element.selected = true : element.selected = false
+      (selectDescription.id == element.id) ? element.value = true : element.value = false
     })
   }
 
   selectSingleOrTeam(singOrTeam) {
-    this.step7Flag = true;
+    this.step7SelectedId = singOrTeam.id;
     this.teamOrAloneSelectedData = singOrTeam;
     this.teamAloneList.map(element => {
-      (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
+      (singOrTeam.id == element.id) ? element.value = true : element.value = false
     });
     (singOrTeam.id == 1) ? this.editPictureFlag = true : this.editPictureFlag = false;
   }
 
   selectAddTeamMemberChoice(selectChoice) {
     this.step8Flag = true
-    this.selectedTeamMemberChoice = selectChoice
+    this.valueTeamMemberChoice = selectChoice
     this.addTeamMemberChoiceList.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
   selectarnRiaChoice(selectChoice) {
     this.step9Flag = true
-    this.selectedArnRIaChoice = selectChoice;
+    this.valueArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
@@ -343,7 +362,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.step10Flag = true
     this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
@@ -351,7 +370,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.step11Flag = true
     this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
@@ -359,56 +378,56 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.step15Flag = true
     this.selctedRtaDataChoice1 = selectChoice;
     this.rtaCredentialsChoiceList1.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
-  selectRoles(selectedRole) {
+  selectRoles(valueRole) {
     this.stepRoleChoice = true;
     this.editPictureFlag = true
-    this.selctedRoleChoice = selectedRole;
+    this.selctedRoleChoice = valueRole;
     this.rolesList.map(element => {
-      (selectedRole.id == element.id) ? element.selected = true : element.selected = false
+      (valueRole.id == element.id) ? element.value = true : element.value = false
     })
   }
 
   selectUploadMfOption(selectChoice) {
     this.step17Flag = true
-    this.selectedMfOption = selectChoice;
+    this.valueMfOption = selectChoice;
     this.uploadMfFIleOption.map(element => {
-      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+      (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
   selectService(service) {
-    if (service.selected) {
-      service.selected = false;
+    if (service.value) {
+      service.value = false;
       this.step3Flag--;
     }
     else {
-      service.selected = true;
+      service.value = true;
       this.step3Flag++;
     }
   }
 
   selectClientWork(clientWork) {
-    if (clientWork.selected) {
-      clientWork.selected = false;
+    if (clientWork.value) {
+      clientWork.value = false;
       this.step4Flag--;
     }
     else {
-      clientWork.selected = true;
+      clientWork.value = true;
       this.step4Flag++;
     }
   }
 
   selectProduct(product) {
-    if (product.selected) {
-      product.selected = false;
+    if (product.value) {
+      product.value = false;
       this.step5Flag--;
     }
     else {
-      product.selected = true;
+      product.value = true;
       this.step5Flag++;
     }
   }
@@ -437,7 +456,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
         this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
         this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
-        this.selectedArnRIa = '';
+        this.valueArnRIa = '';
         this.ArnRiaIndex = index + 1;
       }
       else {
@@ -463,11 +482,11 @@ export class DashboardGuideDialogComponent implements OnInit {
     });
   }
 
-  selectArnRia(data, selectedIndex) {
-    this.selectedArmOrRiaIndex = selectedIndex;
+  selectArnRia(data, valueIndex) {
+    this.valueArmOrRiaIndex = valueIndex;
     this.selctedArmOrRia = data;
     this.arnRtaData.forEach((element, index) => {
-      (selectedIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
+      (valueIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
     });
   }
 
@@ -554,10 +573,10 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.step = 15;
       }
       else {
-        this.selectedArmOrRiaIndex = index + 1
+        this.valueArmOrRiaIndex = index + 1
         this.selctedArmOrRia = this.arnRtaData[index + 1];
         this.arnRtaData.forEach((element, index) => {
-          if (this.selectedArmOrRiaIndex == index) {
+          if (this.valueArmOrRiaIndex == index) {
             element.colorFlag = true;
           } else {
             element.colorFlag = false;
@@ -612,7 +631,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.settingService.addTeamMember(dataObj).subscribe((res) => {
       if (flag == 'addMore') {
         this.eventService.openSnackBar('Team member added successfully', "Dismiss");
-        this.rolesList.map(element => element.selected = false);
+        this.rolesList.map(element => element.value = false);
         this.rolesFlag = true
         this.step = 8.5;
         this.addTeamMember = false;
@@ -695,6 +714,142 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
+  }
+
+  insertOnboardingSteps(stepFlag, valueData) {
+    let obj = {
+      "id": {
+        "name": "id",
+        "value": this.answerObj.id ? this.answerObj.id.value : 0
+      },
+      "advisorId": {
+        "name": "advisorId",
+        "value": this.advisorId
+      },
+      "step1": {
+        "name": "step1",
+        "value": this.answerObj.step1 ? this.answerObj.step1.value : (this.step2SelectedId) ? this.step2SelectedId : 0
+      },
+      "step2": [
+        {
+          "name": "id",
+          "value": this.answerObj.step2[0] ? this.answerObj.step2[0].value : 0
+        },
+      ],
+      "step3": [
+        {
+          "name": "id",
+          "value": this.answerObj.step3[0] ? this.answerObj.step3[0].value : 0
+        },
+      ],
+      "step4": [
+        {
+          "name": "UHNI investors",
+          "value": this.answerObj.step4[0] ? this.answerObj.step4[0].value : 0
+        },
+      ],
+      "step5": {
+        "name": "step5",
+        "value": this.answerObj.step5 ? this.answerObj.step5.value : (this.step6SelectedId) ? this.step6SelectedId : null
+      },
+      "step6": {
+        "name": "step6",
+        "value": this.answerObj.step6 ? this.answerObj.step6.value : (this.step7SelectedId) ? this.step7SelectedId : null
+      },
+      "step7": {
+        "name": "step7",
+        "value": this.answerObj.step7 ? this.answerObj.step7.value : (this.teamOrAloneSelectedData) ? this.teamOrAloneSelectedData.id : null
+      },
+      "step8": {
+        "name": "step8",
+        "value": null
+      },
+      "step9": {
+        "name": "step9",
+        "value": null
+      },
+      "step10": {
+        "name": "step10",
+        "value": null
+      },
+      "step11": {
+        "name": "step11",
+        "value": null
+      },
+      "step12": {
+        "name": "step12",
+        "value": null
+      },
+      "step13": {
+        "name": "step13",
+        "value": null
+      },
+      "step14": {
+        "name": "step14",
+        "value": null
+      },
+      "step15": {
+        "name": "step15",
+        "value": null
+      },
+      "step16": {
+        "name": "step16",
+        "value": null
+      },
+      "step17": {
+        "name": "step17",
+        "value": null
+      },
+      "step18": {
+        "name": "step18",
+        "value": null
+      },
+      "step19": {
+        "name": "step19",
+        "value": null
+      },
+      "step20": {
+        "name": "step20",
+        "value": null
+      },
+      "isActive": 0,
+      "createdDate": null,
+      "lastUpdated": null,
+      "step2Id": 1,
+      "step3Id": 1,
+      "step4Id": 1
+    }
+    obj.step2 = obj.step2.concat(this.serviceList)
+    obj.step3 = obj.step3.concat(this.clientsWorkWithList);
+    obj.step4 = obj.step4.concat(this.productList);
+    if (this.answerObj.id != 0) {
+      obj.step2 = obj.step2.concat({
+        "name": "modified",
+        "value": true
+      })
+    }
+    if (this.answerObj.id != 0) {
+      obj.step3 = obj.step3.concat({
+        "name": "modified",
+        "value": true
+      })
+    }
+    if (this.answerObj.id != 0) {
+      obj.step4 = obj.step4.concat({
+        "name": "modified",
+        "value": true
+      })
+    }
+    console.log(obj)
+    this.dashService.onBoardingQuestionAnswer(obj).subscribe(
+      data => {
+        if (data) {
+          this.step++;
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "Dimiss");
+      }
+    )
   }
 
 
