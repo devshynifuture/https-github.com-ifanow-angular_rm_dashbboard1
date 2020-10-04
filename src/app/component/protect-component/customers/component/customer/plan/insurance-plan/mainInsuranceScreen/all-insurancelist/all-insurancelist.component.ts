@@ -58,6 +58,8 @@ export class AllInsurancelistComponent implements OnInit {
   // showIsurance: boolean = false;
   showIsurance: boolean = true; //page initial loads blank ..
   isLoadingInInsurance: any;
+  id = 0;
+  index: any;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private eventService: EventService,) {
@@ -98,6 +100,9 @@ export class AllInsurancelistComponent implements OnInit {
   }
   getOutput(value){
     if(value){
+      if(value.id){
+        this.id = value.id;
+      }
       this.getInsuranceList()
     }
   }
@@ -149,8 +154,14 @@ export class AllInsurancelistComponent implements OnInit {
       });
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
-      this.insurancePlanningList =this.dataSource
-      this.detailsInsurance = this.insuranceList[0]
+      this.insurancePlanningList =this.dataSource;
+      if(this.id){
+        this.index = this.dataSource.findIndex(x => x.id ===this.id);
+        this.detailsInsurance = this.insuranceList[this.index]
+      }else{
+        this.detailsInsurance = this.insuranceList[0]
+      }
+
       this.showIsurance = true;
     }else{
       this.showIsurance = false;

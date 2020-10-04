@@ -440,7 +440,8 @@ export class LifeInsuranceComponent implements OnInit {
           console.log('this is sidebardata in subs subs : ', sideBarData);
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
-              this.getDetailsInsurance()
+              // this.getDetailsInsurance();
+              this.outputChange.emit({id : this.inputData.id});
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
             rightSideDataSub.unsubscribe();

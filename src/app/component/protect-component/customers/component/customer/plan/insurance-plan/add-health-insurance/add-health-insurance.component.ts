@@ -386,18 +386,23 @@ export class AddHealthInsuranceComponent implements OnInit {
     }
   }
   saveExistingPolicy(input){
-    const obj={
-    "id":this.inputData.id,
-    "insuranceIds": JSON.stringify(this.needAnalysis)
+    if (this.isChecked){
+      const obj={
+        "id":this.inputData.id,
+        "insuranceIds": JSON.stringify(this.needAnalysis)
+        }
+        this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+          data => {
+              this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+    }else{
+      this.showError = true;
     }
-    this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
-      data => {
-          this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+
   }
 }
 
