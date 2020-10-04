@@ -292,4 +292,7 @@ export class PlanService {
   addSuggestNew(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SUGGEST_NEW, data)
   }
+  addGenralInsurancePlan(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE_PLAN, data)
+  }
 }
