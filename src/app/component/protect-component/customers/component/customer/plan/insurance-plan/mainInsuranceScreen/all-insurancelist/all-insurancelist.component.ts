@@ -60,6 +60,7 @@ export class AllInsurancelistComponent implements OnInit {
   isLoadingInInsurance: any;
   id = 0;
   index: any;
+  selectedId:any;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private eventService: EventService,) {
@@ -74,6 +75,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.getInsuranceList()
   }
   openDetailsInsurance(insurance) {
+    this.selectedId = insurance.id
     console.log('insurance',insurance)
     this.detailsInsurance = insurance
     this.showIsurance = true
@@ -155,6 +157,9 @@ export class AllInsurancelistComponent implements OnInit {
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
       this.insurancePlanningList =this.dataSource;
+      if(!this.selectedId){
+        this.selectedId=this.dataSource[0].id;
+      }
       if(this.id){
         this.index = this.dataSource.findIndex(x => x.id ===this.id);
         this.detailsInsurance = this.insuranceList[this.index]
