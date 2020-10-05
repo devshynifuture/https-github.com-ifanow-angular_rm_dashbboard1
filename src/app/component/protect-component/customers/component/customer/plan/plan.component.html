@@ -9,7 +9,7 @@
   <div class="col-md-8 p-0">
     <nav mat-align-tabs="center" mat-tab-nav-bar>
       <a [routerLink]="['/customer/detail/plan/summary']" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY" mat-tab-link routerLinkActive="active">SUMMARY</a>
-      <a [routerLink]="['/customer/detail/plan/profile']" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY" mat-tab-link routerLinkActive="active">PROFILE</a>
+      <a [routerLink]="['/customer/detail/plan/profile']"  mat-tab-link routerLinkActive="active">PROFILE</a>
       <a [routerLink]="['/customer/detail/plan/insurance']" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY" class="width110" mat-tab-link
          routerLinkActive="active">INSURANCE</a>
       <a [routerLink]="['/customer/detail/plan/goals']" class="width70" mat-tab-link

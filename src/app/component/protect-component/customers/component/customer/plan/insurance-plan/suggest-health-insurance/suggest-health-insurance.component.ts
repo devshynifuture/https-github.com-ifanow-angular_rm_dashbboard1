@@ -138,10 +138,11 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
   }]
   insuranceType: number;
+    plannerNotes: any;
   constructor(private planService:PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog ) { }
 
   ngOnInit() {
-    this.storeData = 'Here you can write recommendations';
+    this.storeData = '';
     console.log('heder', this.inputData)
     this.insuranceData.forEach(element => {
       if (element.value == this.inputData.value) {
@@ -154,7 +155,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   }
 
   saveData(data) {
-
+    this.plannerNotes = data;
   }
   checkRecommendation(value) {
     if (!value) {
@@ -792,6 +793,7 @@ saveHealthInsurance() {
             'id': (this.id) ? this.id : null,
             'addOns': [],
             'realOrFictitious':2,
+            'suggestion':this.plannerNotes,
             insuredMembers: memberList,
             nominees: this.healthInsuranceForm.value.getNomineeName,
         };
@@ -853,6 +855,9 @@ saveHealthInsurance() {
                         insuranceSubTypeId: this.inputData.insuranceSubTypeId
                     };
                     this.close(insuranceData);
+                },
+                err=>{
+                    this.close('');
                 }
             );
         }

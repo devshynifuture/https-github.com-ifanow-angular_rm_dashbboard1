@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../../plan.service';
 
 @Component({
 	selector: 'app-householders-insurance',
@@ -125,7 +126,8 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
 	}]
 	showRecommendation: boolean;
-	constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+	plannerNotes: any;
+	constructor(private planService :PlanService,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
 	validatorType = ValidatorType
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
 	@Output() sendOutput = new EventEmitter<any>();
@@ -171,7 +173,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		}
 	}
 	saveData(data) {
-
+		this.plannerNotes = data;
 	}
 
 	disabledMember(value, type) {
@@ -442,7 +444,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		// this.familyMemberId = data.familyMemberId;
 	}
 	ngOnInit() {
-		this.storeData = 'Here you can write recommendations';
+		this.storeData = '';
 		console.log('heder', this.inputData)
 		this.insuranceData.forEach(element => {
 			if (element.value == this.inputData.value) {
@@ -606,6 +608,8 @@ export class HouseholdersInsuranceComponent implements OnInit {
 				"id": (this.id) ? this.id : null,
 				"policyFeatures": featureList,
 				"addOns": addOns,
+				'realOrFictitious':2,
+            	'suggestion':this.plannerNotes,
 				nominees: this.homeInsuranceForm.value.getNomineeName,
 			}
 
@@ -644,7 +648,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 					}
 				);
 			} else {
-				this.customerService.addGeneralInsurance(obj).subscribe(
+				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
@@ -655,6 +659,8 @@ export class HouseholdersInsuranceComponent implements OnInit {
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
 						this.close(insuranceData)
+					},err=>{
+						this.close('');
 					}
 				);
 			}
