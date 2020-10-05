@@ -851,8 +851,8 @@
 
     <!-- next page ends -->
 
-    <div class="bottomCommentBox bg-grey lter" *ngIf="data!==null">
-        <div class="row pt-16 align-items-center">
+    <div class="bottomCommentBox bg-grey lter">
+        <div class="row pt-16 align-items-center" *ngIf="data!==null">
             <div class="col-md-1 pl-30">
                 <img [src]='userProfilePicUrl' class="c-p avatarImg">
             </div>
@@ -889,12 +889,12 @@
                     </mat-menu>
                 </span>
 
-                <span *ngIf="data">
+                <span>
                     <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" [matMenuTriggerFor]="menu2">
                     <!-- (click)="onAddingCollaborator(null)" -->
                     <mat-menu #menu2="matMenu">
                         <button mat-menu-item *ngFor="let item of teamMemberList" (click)="onAddingCollaborator(item)"
-                            [disabled]="isCollabotatorPresent(item)">
+                            [disabled]="isCollaboratorPresent(item)">
                             {{ item.fullName }}
                         </button>
                     </mat-menu>
