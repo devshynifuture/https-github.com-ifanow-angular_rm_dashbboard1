@@ -50,7 +50,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'summary',
+      redirectTo: 'profile',
       pathMatch: 'full'
     }
   ]
