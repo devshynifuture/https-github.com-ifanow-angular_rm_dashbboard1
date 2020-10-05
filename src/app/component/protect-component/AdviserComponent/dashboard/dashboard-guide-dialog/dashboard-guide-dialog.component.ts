@@ -116,7 +116,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   rtaCredentialsChoiceList = [
-    { name: 'Sure, let’s set-up auto forward', value: false, option: 'A', id: 1 },
+    { name: 'Sure, let’s add RTA credentials', value: false, option: 'A', id: 1 },
     { name: 'I’ll do this later', value: false, option: 'B', id: 2 },
   ]
 
@@ -139,40 +139,40 @@ export class DashboardGuideDialogComponent implements OnInit {
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
-  step2SelectedId: number;
+  step2SelectedId: number = 0;
   step3Flag = 0;
   step4Flag = 0;
   step5Flag = 0
-  step6SelectedId: number;
-  step7SelectedId: number;
+  step6SelectedId: number = 0;
+  step7SelectedId: number = 0;
   editPictureFlag;
-  step8Flag: boolean;
+  step8Selected: number = 0;
   doItLater
-  step9Flag: boolean;
-  step10Flag: boolean;
+  step9SelectedId: number = 0;
+  step10SelectedId: number = 0;
   globalData: any;
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
-  valueArnRIaChoice: any;
+  selectedArnRIaChoice: any;
   basicDetailsChoice: any;
   selctedRtaDataChoice: any = {};
   valueTeamMemberChoice: any;
-  step11Flag: boolean;
+  step11SelectedId: number = 0;
   teamOrAloneSelectedData;
   selctedArmOrRia: any;
-  valueArmOrRiaIndex: any;
+  selectedArmOrRiaIndex: any;
   arnRiaList = [];
   ArnRiaIndex: any;
   valueArnRIa: any;
   formPlaceHolders
-  stepRoleChoice: boolean;
+  stepRoleChoiceID: number = 0;
   rolesFlag: boolean = true;
   addTeamMember;
   teamMemberForm: FormGroup;
   adminAdvisorId: any;
   selctedRoleChoice: any;
-  step15Flag;
+  step15SelectedId: number = 0;
   selctedRtaDataChoice1: any;
   camsFlag: boolean = false;
   karvyFlag: boolean = false;
@@ -180,7 +180,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   emailDetails: any;
   emailList: any;
   isLoading: boolean;
-  step17Flag: boolean;
+  step17Selected: number = 0;
   valueMfOption: any;
   finalImage: any;
   imageUploadEvent: any;
@@ -192,6 +192,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   userInfo: any;
   questionData: any;
   answerObj: any;
+  addArnRiaFlag: boolean;
+  saveCreds: boolean;
+  addTeamMemberflag: boolean;
 
 
   constructor(private fb: FormBuilder,
@@ -215,7 +218,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
     this.step = 1;
-    this.valueArmOrRiaIndex = 0
+    this.selectedArmOrRiaIndex = 0
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
@@ -255,6 +258,7 @@ export class DashboardGuideDialogComponent implements OnInit {
       data => {
         if (data) {
           this.answerObj = data;
+          this.getAdvisorStepWhereLeft(data.nextStep);
           // Object.entries(data).forEach(([key, value], index) => {
           //   console.log(`${index}: ${key} = ${value}`);
           //   if(value.val)
@@ -343,7 +347,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectAddTeamMemberChoice(selectChoice) {
-    this.step8Flag = true
+    this.step8Selected = selectChoice.id;
     this.valueTeamMemberChoice = selectChoice
     this.addTeamMemberChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
@@ -351,15 +355,15 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectarnRiaChoice(selectChoice) {
-    this.step9Flag = true
-    this.valueArnRIaChoice = selectChoice;
+    this.step9SelectedId = selectChoice.id
+    this.selectedArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
     })
   }
 
   selectbasicDetailsChoice(selectChoice) {
-    this.step10Flag = true
+    this.step10SelectedId = selectChoice.id;
     this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
@@ -367,7 +371,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectrtaCredentialsChoice(selectChoice) {
-    this.step11Flag = true
+    this.step11SelectedId = selectChoice.id;
     this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
@@ -375,7 +379,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectrtaCredentialsChoice1(selectChoice) {
-    this.step15Flag = true
+    this.step15SelectedId = selectChoice.id
     this.selctedRtaDataChoice1 = selectChoice;
     this.rtaCredentialsChoiceList1.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
@@ -383,7 +387,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectRoles(valueRole) {
-    this.stepRoleChoice = true;
+    this.stepRoleChoiceID = valueRole.id;
     this.editPictureFlag = true
     this.selctedRoleChoice = valueRole;
     this.rolesList.map(element => {
@@ -392,7 +396,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectUploadMfOption(selectChoice) {
-    this.step17Flag = true
+    this.step17Selected = selectChoice.id
     this.valueMfOption = selectChoice;
     this.uploadMfFIleOption.map(element => {
       (selectChoice.id == element.id) ? element.value = true : element.value = false
@@ -461,7 +465,8 @@ export class DashboardGuideDialogComponent implements OnInit {
       }
       else {
         this.getRtaDetails();
-        this.step++;
+        this.addArnRiaFlag = true;
+        this.insertOnboardingSteps(null, null);
       }
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
@@ -483,7 +488,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectArnRia(data, valueIndex) {
-    this.valueArmOrRiaIndex = valueIndex;
+    this.selectedArmOrRiaIndex = valueIndex;
     this.selctedArmOrRia = data;
     this.arnRtaData.forEach((element, index) => {
       (valueIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
@@ -570,13 +575,14 @@ export class DashboardGuideDialogComponent implements OnInit {
   loaderFun(index) {
     if (!this.camsFlag && !this.karvyFlag && !this.franklinFlag) {
       if (index == this.arnRtaData.length - 1) {
-        this.step = 15;
+        this.saveCreds = true;
+        this.insertOnboardingSteps(null, null)
       }
       else {
-        this.valueArmOrRiaIndex = index + 1
+        this.selectedArmOrRiaIndex = index + 1
         this.selctedArmOrRia = this.arnRtaData[index + 1];
         this.arnRtaData.forEach((element, index) => {
-          if (this.valueArmOrRiaIndex == index) {
+          if (this.selectedArmOrRiaIndex == index) {
             element.colorFlag = true;
           } else {
             element.colorFlag = false;
@@ -636,7 +642,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.step = 8.5;
         this.addTeamMember = false;
         this.selctedRoleChoice = undefined;
-        this.stepRoleChoice = undefined;
+        this.stepRoleChoiceID = 0;
         this.teamMemberForm.controls.fullName.setValue('')
         this.teamMemberForm.controls.emailId.setValue('');
         this.teamMemberForm.controls.mobileNo.setValue('')
@@ -645,7 +651,10 @@ export class DashboardGuideDialogComponent implements OnInit {
       else {
         this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
         this.step = 9
-        this.editPictureFlag = true
+        this.editPictureFlag = true;
+        this.addTeamMember = false;
+        this.addTeamMemberflag = true;
+        this.insertOnboardingSteps(9, null);
       }
     }, (err) => {
       console.error(err);
@@ -744,73 +753,73 @@ export class DashboardGuideDialogComponent implements OnInit {
       ],
       "step4": [
         {
-          "name": "UHNI investors",
+          "name": "id",
           "value": this.answerObj.step4[0] ? this.answerObj.step4[0].value : 0
         },
       ],
       "step5": {
         "name": "step5",
-        "value": this.answerObj.step5 ? this.answerObj.step5.value : (this.step6SelectedId) ? this.step6SelectedId : null
+        "value": this.answerObj.step5 && this.answerObj.step5.value != 0 ? this.answerObj.step5.value : (this.step6SelectedId) ? this.step6SelectedId : 0
       },
       "step6": {
         "name": "step6",
-        "value": this.answerObj.step6 ? this.answerObj.step6.value : (this.step7SelectedId) ? this.step7SelectedId : null
+        "value": this.answerObj.step6 && this.answerObj.step6.value != 0 ? this.answerObj.step6.value : (this.step7SelectedId) ? this.step7SelectedId : 0
       },
       "step7": {
         "name": "step7",
-        "value": this.answerObj.step7 ? this.answerObj.step7.value : (this.teamOrAloneSelectedData) ? this.teamOrAloneSelectedData.id : null
+        "value": this.answerObj.step7 && this.answerObj.step7.value != 0 ? this.answerObj.step7.value : (this.step8Selected) ? this.step8Selected : 0
       },
       "step8": {
         "name": "step8",
-        "value": null
+        "value": this.answerObj.step8 && this.answerObj.step8.value != 0 ? this.answerObj.step8.value : (this.stepRoleChoiceID) ? this.stepRoleChoiceID : 0
       },
       "step9": {
         "name": "step9",
-        "value": null
+        "value": this.answerObj.step9 && this.answerObj.step9.value != 0 ? this.answerObj.step9.value : (this.addTeamMemberflag) ? 1 : 0
       },
       "step10": {
         "name": "step10",
-        "value": null
+        "value": this.answerObj.step10 && this.answerObj.step10.value != 0 ? this.answerObj.step10.value : (this.doItLater) ? 1 : 0
       },
       "step11": {
         "name": "step11",
-        "value": null
+        "value": this.answerObj.step11 && this.answerObj.step11.value != 0 ? this.answerObj.step11.value : (this.step9SelectedId) ? this.step9SelectedId : 0
       },
       "step12": {
         "name": "step12",
-        "value": null
+        "value": this.answerObj.step12 && this.answerObj.step12.value != 0 ? this.answerObj.step12.value : (this.step10SelectedId) ? this.step10SelectedId : 0
       },
       "step13": {
         "name": "step13",
-        "value": null
+        "value": this.answerObj.step13 && this.answerObj.step13.value != 0 ? this.answerObj.step13.value : (this.addArnRiaFlag) ? 1 : 0
       },
       "step14": {
         "name": "step14",
-        "value": null
+        "value": this.answerObj.step14 && this.answerObj.step14.value != 0 ? this.answerObj.step14.value : (this.step11SelectedId) ? this.step11SelectedId : 0
       },
       "step15": {
         "name": "step15",
-        "value": null
+        "value": this.answerObj.step15 && this.answerObj.step15.value != 0 ? this.answerObj.step15.value : (this.saveCreds) ? 1 : 0
       },
       "step16": {
         "name": "step16",
-        "value": null
+        "value": this.answerObj.step16 && this.answerObj.step16.value != 0 ? this.answerObj.step16.value : (this.step15SelectedId) ? this.step15SelectedId : 0
       },
       "step17": {
         "name": "step17",
-        "value": null
+        "value": this.answerObj.step16 && this.answerObj.step16.value != 0 ? this.answerObj.step16.value : (valueData == 'doneDown') ? 1 : 0
       },
       "step18": {
         "name": "step18",
-        "value": null
+        "value": this.answerObj.step17 && this.answerObj.step17.value != 0 ? this.answerObj.step17.value : (this.step17Selected) ? this.step17Selected : 0
       },
       "step19": {
         "name": "step19",
-        "value": null
+        "value": (valueData == 'finish') ? 1 : 0
       },
       "step20": {
         "name": "step20",
-        "value": null
+        "value": (valueData == 'close') ? 1 : 0
       },
       "isActive": 0,
       "createdDate": null,
@@ -844,12 +853,90 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.dashService.onBoardingQuestionAnswer(obj).subscribe(
       data => {
         if (data) {
-          this.step++;
+          this.answerObj = data;
+          if (valueData != 'close') {
+            // if (this.editPictureFlag) {
+            //   this.step = 9
+            // }
+            // else {
+            if (stepFlag == undefined) {
+              this.step++;
+            }
+            // }
+          } else {
+            this.step = 19
+          }
+
+          if (stepFlag) {
+            this.step = stepFlag;
+          }
         }
       }, err => {
         this.eventService.openSnackBar(err, "Dimiss");
       }
     )
+  }
+
+  getAdvisorStepWhereLeft(flag) {
+    switch (true) {
+      case flag == 'step1':
+        this.step = 1;
+        break;
+      case flag == 'step2':
+        this.step = 2;
+        break;
+      case flag == 'step3':
+        this.step = 3;
+        break;
+      case flag == 'step4':
+        this.step = 4;
+        break;
+      case flag == 'step5':
+        this.step = 5;
+        break;
+      case flag == 'step6':
+        this.step = 6;
+        break;
+      case flag == 'step7':
+        this.step = 8;
+        break;
+      case flag == 'step8':
+        this.step = 8.5;
+        this.rolesFlag = true;
+        break;
+      case flag == 'step9':
+        this.step = 9.5;
+        this.addTeamMember = true;
+        this.rolesFlag == false
+        break;
+      case flag == 'step10':
+        this.step = 9;
+        this.editPictureFlag = true;
+        break;
+      case flag == 'step11':
+        this.step = 10;
+        break;
+      case flag == 'step12':
+        this.step = 11;
+        break;
+      case flag == 'step13':
+        this.step = 12;
+        break;
+      case flag == 'step14':
+        this.step = 13;
+        break;
+      case flag == 'step15':
+        this.step = 14;
+        break;
+      case flag == 'step16':
+        this.step = 15;
+        break;
+      case flag == 'step17':
+        this.step = 16;
+        break;
+      default:
+        this.step = 17;
+    }
   }
 
 
