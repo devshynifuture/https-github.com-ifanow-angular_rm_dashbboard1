@@ -34,13 +34,17 @@
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
             <div class="pt-20">
                 <div class="row ">
-                    <span class="col-md-3 f-14 f-500">Select main dependent</span>
-                    <i class="material-icons"
-                        matTooltip="The dependant should ideally be the spouse or parents of the person whose insurance is being planned. While kids are dependants too, but they are typically dependant on the main earning member only untill they start earning or get married. Hence making them dependants will inflate the insurance requirement as their living years will be greater than the spouse’s or the parent’s living years.">
-                        info
-                    </i>
-                    <div class="col-md-3">
-                        <div class="form-group ">
+                    <div class="col-md-3 f-14 p-0 f-500 d-flex align-items-center justify-content-between">
+                        Select main dependent
+
+
+                        <img matTooltip="The dependant should ideally be the spouse or parents of the person whose insurance is being planned. While kids are dependants too, but they are typically dependant on the main earning member only untill they start earning or get married. Hence making them dependants will inflate the insurance requirement as their living years will be greater than the spouse’s or the parent’s living years." src="/assets/images/svg/info.svg">
+
+                         
+                    </div>
+                   
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select [(ngModel)]="selectedFamily" class="form-control br-0">
                                     <mat-option disabled value=''>Select one</mat-option>
@@ -51,8 +55,8 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group ">
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
                                     aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"
@@ -70,7 +74,7 @@
 
 
                 </div>
-                <div >
+                <div class="mt-16" >
                     <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb" *ngIf="!isLodingNeedAnalysis">
                         <div class="col-md-6 f-14 pl-15 f-500">Particulars</div>
                         <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>

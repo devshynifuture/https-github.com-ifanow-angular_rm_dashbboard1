@@ -19,6 +19,7 @@
       <a [routerLink]="['/customer/detail/plan/cash-flow']" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY" class="width120" mat-tab-link
          routerLinkActive="active">CASH
         FLOWS</a>
+        
       <!-- <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link routerLinkActive="active">DEPLOYMENTS</a> -->
       <a [routerLink]="['/customer/detail/plan/scenarios']" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY" class="width110" mat-tab-link
          routerLinkActive="active">SCENARIOS</a>

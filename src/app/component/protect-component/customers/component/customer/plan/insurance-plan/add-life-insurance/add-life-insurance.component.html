@@ -11,30 +11,35 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" >
   <div *ngIf="!isLoadingLifeInsurance">
-    <div>
+     
+    <p>
       Select family members for whom you wish to do the planning.
-  
+    </p>
+      
+    <p>
       For your ready reference, we have provided the list of family members along with the status of their current sum
       assured.
+    </p>
   
+     <p>
       We have also pulled in details of their current incomes (income from Rental and Pension have been ignored). Ideally,
       you should plan for those members who are actively earning income and have dependant(s).
-    </div>
-    <div class="wrapper-20 pt-0">
-      <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+     </p>
+  
+       <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
         <ng-container matColumnDef="client">
-          <th mat-header-cell *matHeaderCellDef class="w-30"> Family member name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <th mat-header-cell *matHeaderCellDef class="w-30 br"> Family member name </th>
+          <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
         </ng-container>
         <ng-container matColumnDef="cat">
-          <th mat-header-cell *matHeaderCellDef class="w-25"> Current sum assured </th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="w-25 br text-right"> Current sum assured </th>
+          <td mat-cell *matCellDef="let element" class="text-right br">
               {{element.totalSumAssured ? '₹' : ''}}<span appFormatNumber>{{element.totalSumAssured ? element.totalSumAssured : '-'}} </span>
           </td>
         </ng-container>
         <ng-container matColumnDef="des">
-          <th mat-header-cell *matHeaderCellDef class="w-25"> Current monthly income </th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="w-25 text-right br"> Current monthly income </th>
+          <td mat-cell *matCellDef="let element" class="text-right br">
             {{element.totalIncome ? '₹' : ''}}<span appFormatNumber>{{element.totalIncome ? element.totalIncome : '-'}}</span> </td>
         </ng-container>
         <ng-container matColumnDef="checkbox" class="w-20">
@@ -57,10 +62,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <div>
+
         <p class="text-danger" *ngIf="addplan">Please select at least one plan</p>
-      </div>
-    </div>
+       
+     
   </div>
   <div *ngIf="isLoadingLifeInsurance" class="bg-white p-20">Loading data...</div>
 
