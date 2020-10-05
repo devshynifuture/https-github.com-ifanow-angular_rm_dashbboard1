@@ -10,6 +10,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PlanService } from '../../../plan.service';
 
 @Component({
 	selector: 'app-travel-insurance',
@@ -127,7 +128,8 @@ export class TravelInsuranceComponent implements OnInit {
 	storeData: string;
 	insuranceType: number;
 	showInsurance: { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
-	constructor(private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
+	plannerNotes: any;
+	constructor(private planService :PlanService,private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
 	validatorType = ValidatorType
 	@Output() sendOutput = new EventEmitter<any>();
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -241,7 +243,7 @@ export class TravelInsuranceComponent implements OnInit {
 
 	}
     saveData(data) {
-
+		this.plannerNotes = data;
     }
     checkRecommendation(value) {
         if (!value) {
@@ -513,7 +515,7 @@ export class TravelInsuranceComponent implements OnInit {
 		// this.familyMemberId = data.familyMemberId;
 	}
 	ngOnInit() {
-		this.storeData = 'Here you can write recommendations';
+		this.storeData = '';
 		console.log('heder', this.inputData)
 		this.insuranceData.forEach(element => {
 			if (element.value == this.inputData.value) {
@@ -683,6 +685,8 @@ export class TravelInsuranceComponent implements OnInit {
 				'linkedBankAccount': this.travelInsuranceForm.get('bankAccount').value,
 				"policyFeatures": featureList,
 				"id": (this.id) ? this.id : null,
+				'realOrFictitious':2,
+            	'suggestion':this.plannerNotes,
 				insuredMembers: memberList,
 				nominees: this.travelInsuranceForm.value.getNomineeName,
 			}
@@ -729,7 +733,7 @@ export class TravelInsuranceComponent implements OnInit {
 					}
 				);
 			} else {
-				this.customerService.addGeneralInsurance(obj).subscribe(
+				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
@@ -740,6 +744,8 @@ export class TravelInsuranceComponent implements OnInit {
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
 						this.close(insuranceData)
+					},err=>{
+						this.close('');
 					}
 				);
 			}

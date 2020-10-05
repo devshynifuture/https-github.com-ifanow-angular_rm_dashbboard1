@@ -57,7 +57,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
   // dataSource2 = ELEMENT_DATA2;
   showExisting = false;
-  selectPolicy='1'
+  selectPolicy=''
   insuranceData = [{
     value: '1',
     header: 'Add Health Insurance',
@@ -212,8 +212,9 @@ export class AddHealthInsuranceComponent implements OnInit {
               const firstName = (singleInsuranceData.insurance.insuredMembers[i].name as string).split(' ')[0];
               singleInsuranceData.displayHolderName += ', ' + firstName;
               if(singleInsuranceData.insurance.insuredMembers[i].sumInsured){
+                singleInsuranceData.insurance.insuredMembers[i].sumInsured = singleInsuranceData.insurance.insuredMembers[i].sumInsured.toString();
                 const firstSumInsured = (singleInsuranceData.insurance.insuredMembers[i].sumInsured as string).split(' ')[0];
-                singleInsuranceData.displayHolderSumInsured += ', ' + firstSumInsured;
+                singleInsuranceData.displayHolderSumInsured += ', ₹' + firstSumInsured;
               }else{
                 singleInsuranceData.displayHolderSumInsured = 0;
               }
@@ -231,7 +232,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.showNewPolicy = false;
   }
   openExistingPolicy() {
-    this.selectPolicy = "1"
+    this.selectPolicy = ""
     console.log(this.selectPolicy)
     this.showExisting = true
     this.getReviewExistingPolicy();
@@ -386,18 +387,23 @@ export class AddHealthInsuranceComponent implements OnInit {
     }
   }
   saveExistingPolicy(input){
-    const obj={
-    "id":this.inputData.id,
-    "insuranceIds": JSON.stringify(this.needAnalysis)
+    if (this.isChecked){
+      const obj={
+        "id":this.inputData.id,
+        "insuranceIds": JSON.stringify(this.needAnalysis)
+        }
+        this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+          data => {
+              this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+    }else{
+      this.showError = true;
     }
-    this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
-      data => {
-          this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+
   }
 }
 

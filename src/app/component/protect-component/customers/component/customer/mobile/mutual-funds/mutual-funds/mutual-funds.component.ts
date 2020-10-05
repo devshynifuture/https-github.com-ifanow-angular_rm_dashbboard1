@@ -69,6 +69,8 @@ export class MutualFundsComponent implements OnInit {
   mfDetailsData
   showDetails: boolean;
   mutualFundList: any;
+  parentId: any;
+  adminAdvisorIds=[];
 
   constructor(
     public mfServiceService: MfServiceService,
@@ -80,6 +82,7 @@ export class MutualFundsComponent implements OnInit {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
+    this.parentId = AuthService.getAdminAdvisorId();
   }
   mfAllocationData: any[] = [
     {
@@ -185,9 +188,32 @@ export class MutualFundsComponent implements OnInit {
     }
   };
   ngOnInit() {
+    this.teamMemberListGet();
     this.initializePieChart()
-    this.getMFPortfolioData();
 
+  }
+  //get subadvisorList
+  teamMemberListGet(){
+    this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.getMFPortfolioData();
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.getMFPortfolioData();
+    });
   }
   showDetailsFun(flag, mf) {
     this.mutualFundList = mf.mutualFundSchemeMaster[0].mutualFund;
@@ -205,7 +231,8 @@ export class MutualFundsComponent implements OnInit {
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
     this.loaderFn.increaseCounter();

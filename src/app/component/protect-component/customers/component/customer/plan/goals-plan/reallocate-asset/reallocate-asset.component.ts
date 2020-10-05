@@ -57,7 +57,7 @@ export class ReallocateAssetComponent implements OnInit {
     this.allocated = this.dialogData.allocated
     this.allocation = this.dialogData.allocation
     if (this.allocationData) {
-      if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
+      if (this.allocationData.assetName == 'Mutual Funds') {
         this.showMf = true
       }
     } else if (this.allocated.assetType == 5) {
@@ -68,16 +68,13 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.allocated && this.showMf == true) {
-      this.availableAllocation = this.allocated.allocatedToOtherGoal;
-      if (this.allocated && this.allocationData.lumpsumOrSip == 2 && this.allocationData.sipPercent != 0) {
-        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent);
-      } else if (this.allocated && this.allocationData.lumpsumOrSip == 1 && this.allocationData.lumpsumPercent != 0) {
-        this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent);
-      } else {
-        this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
-        this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
-      }
+
+    if (this.showMf == true && this.allocated && this.allocationData.lumpsumOrSip == 2 && this.allocationData.sipPercent != 0) {
+      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
+      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.sipPercent : this.allocationData.sipPercent);
+    } else if (this.showMf == true && this.allocated && this.allocationData.lumpsumOrSip == 1 && this.allocationData.lumpsumPercent != 0) {
+      this.availableAllocation = 100 - this.allocated.allocatedToOtherGoal;
+      this.remainingAllocation = 100 - this.allocated.allocatedToOtherGoal - ((this.allocated) ? this.allocated.lumpsumPercent : this.allocationData.lumpsumPercent);
     } else {
       this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
       this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
@@ -92,15 +89,33 @@ export class ReallocateAssetComponent implements OnInit {
       this.reallocationFG.controls.allocatedPercentage.setValue(this.availableAllocation)
     }
 
-    // this.subscriber.add(
-    //   this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
-    //     if(value) {
-    //       this.remainingAllocation = (this.availableAllocation - parseFloat(value));
-    //     } else {
-    //       this.remainingAllocation = 0;
-    //     }
-    //   })
-    // )
+    this.subscriber.add(
+      this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value: string) => {
+        if (value) {
+          this.remainingAllocation = (this.availableAllocation - parseFloat(value));
+        } else {
+          this.remainingAllocation = 0;
+        }
+      })
+    )
+    this.subscriber.add(
+      this.reallocationFG.controls.lumpsumPercent.valueChanges.subscribe((value: string) => {
+        if (value) {
+          this.remainingAllocation = (this.availableAllocation - parseFloat(value));
+        } else {
+          this.remainingAllocation = 0;
+        }
+      })
+    )
+    this.subscriber.add(
+      this.reallocationFG.controls.sipPercent.valueChanges.subscribe((value: string) => {
+        if (value) {
+          this.remainingAllocation = (this.availableAllocation - parseFloat(value));
+        } else {
+          this.remainingAllocation = 0;
+        }
+      })
+    )
   }
 
   reallocate() {
@@ -122,7 +137,7 @@ export class ReallocateAssetComponent implements OnInit {
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }
-    if (this.allocationData.assetName == 'MUTUAL_FUNDS') {
+    if (this.allocationData.assetName == 'Mutual Funds') {
       obj.lumpsumPercent = parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2));
       obj.sipPercent = parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2));
     }

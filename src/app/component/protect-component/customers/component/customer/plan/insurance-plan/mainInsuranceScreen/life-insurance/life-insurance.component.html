@@ -225,8 +225,8 @@
                                 <div class="col-md-2 f-14 p-0 f-500 text-right">Total amount</div>
                                 <div class="col-md-1 f-14"> </div>
                             </div>
-                            <mat-accordion *ngIf="!isLoadingPlan && needAnalysisLoaded" #firstAccordion="matAccordion" [multi]="true">
-                                <div class="br bl">
+                            <mat-accordion  #firstAccordion="matAccordion" [multi]="true">
+                                <div class="br bl" *ngIf="!isLoadingPlan && needAnalysisLoaded">
                                     <mat-expansion-panel  (click)="panelOpenState = true" [expanded]="false">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title class="f-500 w-60">

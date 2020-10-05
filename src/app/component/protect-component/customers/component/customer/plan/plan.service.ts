@@ -233,7 +233,7 @@ export class PlanService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_ANALYSIS_ADD, data);
   }
   removeLifeInsuranceAnalysisMapToPlan(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_LIFE_NEED_ANALYSIS_MAP, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_LIFE_NEED_ANALYSIS_MAP+ 'id=' + data, '');
   }
   getDetailsInsurance(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETAILED_INSURANCE, data);
@@ -291,5 +291,8 @@ export class PlanService {
   }
   addSuggestNew(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SUGGEST_NEW, data)
+  }
+  addGenralInsurancePlan(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE_PLAN, data)
   }
 }

@@ -95,6 +95,7 @@ export class AddSuggestPolicyComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
   findPolicyName(data){
+    let value = data.target.value;
     const inpValue = this.suggestPolicyForm.get('policyName').value;
     const obj = {
       policyName: inpValue,
@@ -104,7 +105,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         data => {
            if(data.policyDetails.length>0){
             this.options = data.policyDetails;
-            this.checkValidPolicy(data,inpValue);
+            this.checkValidPolicy(data,inpValue,value);
           }else{
             this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
             this.suggestPolicyForm.get('policyName').markAsTouched();
@@ -122,9 +123,9 @@ export class AddSuggestPolicyComponent implements OnInit {
     this.selectedVal = value;
     this.policyDetails = value;
   }
-  checkValidPolicy(value,input){
+  checkValidPolicy(value,input,typeValue){
     if(this.selectedVal){
-      if(this.selectedVal){
+      if(this.selectedVal.policyName != typeValue){
         this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
         this.suggestPolicyForm.get('policyName').markAsTouched();
       }
@@ -147,7 +148,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       const obj = {
         'clientId': this.clientId,
         'advisorId': this.advisorId,
-        'familyMemberIdLifeAssured':this.insuranceData.familyMemberId || this.insuranceData.familyMemberId == 0 ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
+        'familyMemberIdLifeAssured':this.insuranceData.familyMemberId == 0 ? this.clientId : this.insuranceData.familyMemberId  ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
         'insuranceTypeId':this.policyDetails.insuranceTypeId,
         'insuranceSubTypeId':this.policyDetails.insuranceSubTypeId,
         'policyNumber':this.policyDetails.policyNumber,

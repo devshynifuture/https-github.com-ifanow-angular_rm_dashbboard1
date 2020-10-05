@@ -99,6 +99,8 @@ export class AddPlaninsuranceComponent implements OnInit {
   blockExpansion = true;
   @ViewChild('accordion', { static: true }) Accordion: MatAccordion
   plannerNotes: any;
+  isLodingNeedAnalysis = true;
+  dependent = false;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
@@ -197,8 +199,10 @@ export class AddPlaninsuranceComponent implements OnInit {
       lifeExpectancy: lifeExpectancy
     }
     this.loader(1);
+    this.isLodingNeedAnalysis = true;
     this.planService.getNeedBasedAnalysis(obj).subscribe(
       data => {
+        this.isLodingNeedAnalysis = false;
         this.Accordion.closeAll();
         this.plannerObj = this.setAll(this.plannerObj, 0);
         this.needAnalysis = data;
@@ -220,6 +224,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.loader(-1);
+        this.isLodingNeedAnalysis = false;
       }
     );
   }
@@ -257,8 +262,11 @@ export class AddPlaninsuranceComponent implements OnInit {
 
     return array;
   }
-  selectDependent(value) {
-    this.familyMemberId = value ? value : null;
+  selectDependent(value,name) {
+    this.dependent = true;
+    if(name == 'familyMemberId'){
+      this.familyMemberId = value || value  == 0  ? value : this.familyMemberId;
+    }
     if (this.selectedFamily && this.selectedExpectancy) {
       this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy)
     }
@@ -381,16 +389,17 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.sendObj = {
         lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
         needTypeId: 1,
-        adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : null),
-        plannerNotes: this.needBase ? this.needBase.plannerNotes : this.plannerNotes,
+        id:this.needBase ? this.needBase.id : 0,
+        adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
+        plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
         needBasedObject: needBasedAnalysis
       }
     } else {
       this.sendObj = {
         lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
         needTypeId: 2,
-        adviceAmount: this.manualForm.get('insuranceAmount').value,
-        plannerNotes: this.plannerNotes,
+        adviceAmount: this.manualForm.get('insuranceAmount').value ?this.manualForm.get('insuranceAmount').value : 0,
+        plannerNotes: this.manualObj ?( this.manualObj.plannerNotes ?  this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
       }
     }
     this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
@@ -417,7 +426,11 @@ export class AddPlaninsuranceComponent implements OnInit {
     }
     this.loader(1);
     this.planService.addLifeInsuranceAnalysisMapToPlan(this.id).subscribe(
-      data => data,
+      data => {
+        console.log(data);
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data: true });
+
+      },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.loader(-1);
@@ -433,7 +446,10 @@ export class AddPlaninsuranceComponent implements OnInit {
     }
     this.loader(1);
     this.planService.removeLifeInsuranceAnalysisMapToPlan(this.id).subscribe(
-      data => data,
+      data => {
+        console.log(data);
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data: true });
+      },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.loader(-1);

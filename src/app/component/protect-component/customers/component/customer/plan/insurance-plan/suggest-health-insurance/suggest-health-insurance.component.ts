@@ -10,6 +10,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth-service/authService';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PlanService } from '../../plan.service';
 
 @Component({
   selector: 'app-suggest-health-insurance',
@@ -137,10 +138,11 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
   }]
   insuranceType: number;
-  constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog ) { }
+    plannerNotes: any;
+  constructor(private planService:PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog ) { }
 
   ngOnInit() {
-    this.storeData = 'Here you can write recommendations';
+    this.storeData = '';
     console.log('heder', this.inputData)
     this.insuranceData.forEach(element => {
       if (element.value == this.inputData.value) {
@@ -153,7 +155,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
   }
 
   saveData(data) {
-
+    this.plannerNotes = data;
   }
   checkRecommendation(value) {
     if (!value) {
@@ -790,6 +792,8 @@ saveHealthInsurance() {
             'sumInsuredIdv': this.healthInsuranceForm.get('sumAssuredIdv').value,
             'id': (this.id) ? this.id : null,
             'addOns': [],
+            'realOrFictitious':2,
+            'suggestion':this.plannerNotes,
             insuredMembers: memberList,
             nominees: this.healthInsuranceForm.value.getNomineeName,
         };
@@ -840,7 +844,7 @@ saveHealthInsurance() {
                 }
             );
         } else {
-            this.customerService.addGeneralInsurance(obj).subscribe(
+            this.planService.addGenralInsurancePlan(obj).subscribe(
                 data => {
                     this.barButtonOptions.active = false;
                     console.log(data);
@@ -851,6 +855,9 @@ saveHealthInsurance() {
                         insuranceSubTypeId: this.inputData.insuranceSubTypeId
                     };
                     this.close(insuranceData);
+                },
+                err=>{
+                    this.close('');
                 }
             );
         }

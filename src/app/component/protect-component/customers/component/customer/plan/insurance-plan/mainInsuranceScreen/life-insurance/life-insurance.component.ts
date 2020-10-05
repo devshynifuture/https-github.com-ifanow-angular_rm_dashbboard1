@@ -248,8 +248,8 @@ export class LifeInsuranceComponent implements OnInit {
     this.dataSouce3 = [{}, {}, {}];
     this.insuranceDetails = '';
     let obj = {
-      clientId: this.clientId,
-      familyMemberId: [],
+      // clientId: this.clientId,
+      // familyMemberId: [],
       id: this.inputData.id,
     }
     let obj2 = {
@@ -258,7 +258,7 @@ export class LifeInsuranceComponent implements OnInit {
       advisorId: this.advisorId,
     }
     this.inputData.owners.forEach(element => {
-      obj.familyMemberId.push(element.ownerId);
+      // obj.familyMemberId.push(element.ownerId);
       obj2.familyMemberId.push(element.ownerId);
     });
     this.loader(1);
@@ -440,7 +440,8 @@ export class LifeInsuranceComponent implements OnInit {
           console.log('this is sidebardata in subs subs : ', sideBarData);
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
-              this.getDetailsInsurance()
+              // this.getDetailsInsurance();
+              this.outputChange.emit({id : this.inputData.id});
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
             rightSideDataSub.unsubscribe();

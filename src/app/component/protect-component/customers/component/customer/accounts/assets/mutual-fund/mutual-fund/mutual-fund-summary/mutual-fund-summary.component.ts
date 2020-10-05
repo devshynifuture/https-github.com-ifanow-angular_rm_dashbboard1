@@ -130,6 +130,8 @@ export class MutualFundSummaryComponent implements OnInit {
   cashFlowXirr: any;
   msg: string;
   copyOfData: any;
+  adminAdvisorIds: any;
+  parentId: any;
   // setTrueKey = false;
 
 
@@ -160,8 +162,9 @@ export class MutualFundSummaryComponent implements OnInit {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
-        this.clientId = parseInt(param1.clientId)
-        this.advisorId = parseInt(param1.advisorId)
+        this.clientId = parseInt(param1.clientId);
+        this.advisorId = parseInt(param1.advisorId);
+        this.parentId = AuthService.getAdminAdvisorId();
         //this.setDefaultFilterData.toDate = param1.toDate;
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
@@ -172,6 +175,7 @@ export class MutualFundSummaryComponent implements OnInit {
       else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.parentId = AuthService.getAdminAdvisorId();
         this.isClient = AuthService.getUserInfo().clientId ? true : false;
       }
     });
@@ -259,6 +263,10 @@ export class MutualFundSummaryComponent implements OnInit {
 
     this.isLoading = true;
     this.changeInput.emit(true);
+    this.mfService.getadvisorList()
+    .subscribe(res => {
+      this.adminAdvisorIds = res;
+    });
     this.mfService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
@@ -344,7 +352,11 @@ export class MutualFundSummaryComponent implements OnInit {
           } else if (this.mutualFund) {
             this.getMutualFundResponse(this.mutualFund)
           } else {
-            this.getMutualFund();
+            if(this.adminAdvisorIds.length > 0){ 
+              this.getMutualFund();
+            }else{
+              this.teamMemberListGet();
+            }
           }
         }
       },
@@ -376,13 +388,43 @@ export class MutualFundSummaryComponent implements OnInit {
         } else if (this.mutualFund) {
           this.getMutualFundResponse(this.mutualFund)
         } else {
-          this.getMutualFund();
+          if(this.adminAdvisorIds.length > 0){ 
+            this.getMutualFund();
+          }else{
+            this.teamMemberListGet();
+          }
         }
       }
 
 
     );
 
+  }
+  teamMemberListGet(){
+    this.adminAdvisorIds =[];
+    this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        console.log('team members: ', data);
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element);
+        });
+        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+        if (!isIncludeID) {
+          this.adminAdvisorIds.unshift(this.advisorId);
+        }
+        console.log(this.adminAdvisorIds);
+      } else {
+        this.adminAdvisorIds = [this.advisorId];
+      }
+      this.getMutualFund();
+      this.mfService.setadvisorList(this.mutualFund);
+    }, err => {
+      this.adminAdvisorIds = [this.advisorId];
+      this.mfService.setadvisorList(this.mutualFund);
+      this.getMutualFund();
+
+    });
   }
   styleObject(header, ind): Object {
 
@@ -1031,7 +1073,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -1098,7 +1141,8 @@ export class MutualFundSummaryComponent implements OnInit {
         categoryWiseMfList.push(element.id)
       });
       const obj = {
-        advisorId: this.advisorId,
+        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,

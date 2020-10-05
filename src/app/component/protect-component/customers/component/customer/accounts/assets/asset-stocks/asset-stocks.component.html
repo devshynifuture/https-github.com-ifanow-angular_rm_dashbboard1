@@ -360,9 +360,9 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div  [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
-                <div class="col-md-12 p-0">
+        <div *ngIf="portfolioData.length > 0">
+            <div   *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
+                <div class="col-md-12 p-0" *ngIf="singlePortfolio.portfolioName">
                     <div class="bg-white">
                         <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} |
                             {{singlePortfolio.ownerList.length > 0?singlePortfolio.ownerList[0].name:''}}
@@ -607,7 +607,7 @@
     </div>
 </div>
 
-<div id="template" style="display: none;" >
+<div id="template" style="display: none;"  *ngIf="portfolioData.length > 0">
     <table cellpadding="0" cellspacing="0" border="0"
         style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
@@ -622,7 +622,7 @@
                         <div *ngIf="getOrgData.reportLogoUrl">
                             <img width="140px" [src]="getOrgData.reportLogoUrl">
                         </div>
-                        <div *ngIf="getOrgData.logoUrl">
+                        <div *ngIf="!getOrgData.reportLogoUrl && getOrgData.logoUrl">
                             <img width="200px" [src]="getOrgData.logoUrl">
                         </div>
                         <div *ngIf="getOrgData.companyName">
@@ -651,7 +651,7 @@
                         <p style="margin-bottom: 10px; font-weight: 700; font-size: 14px; padding-top: 4px;" *ngIf="clientData">
                             Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
                         <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;"
-                            *ngIf="clientData && showSummaryBar ">
+                            *ngIf="clientData">
                             Summary</p>
                     </td>
                 </tr>
@@ -675,7 +675,7 @@
                                 appFormatNumber>{{grandTotalCurrentValue}}</span></h3>
                             </div>
                             <table style="width: 100%;   background: #f8f9fa; border-top: 1px solid #dee5e7; padding: 10px;">
-                                <tr>
+                                <tr *ngIf="assetStockData">
                                     <td style="padding: 8px 0px;">
                                         <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">Amount invested </p>
                                         <h5 style="margin: 0px; font-size: 16px;">
@@ -774,7 +774,7 @@
         </tr>
          
         <tr *ngFor="let singlePortfolio of portfolioData">
-            <td>
+            <td *ngIf="singlePortfolio.portfolioName">
                 <p style="margin: 30px 0px 0px 0px; padding: 8px; color: #008FFF; border: 1px solid #dee5e7; border-bottom: transparent; ">{{singlePortfolio.portfolioName}} |
                     {{singlePortfolio.ownerList.length > 0?singlePortfolio.ownerList[0].name:''}}</p>
                 <table style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;" cellpadding="0" cellspacing="0"  >

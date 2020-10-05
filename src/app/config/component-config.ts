@@ -324,7 +324,7 @@ export const appConfig = {
   GET_FAMILYMEMBER_DETAILS: 'insurance/planning/family-member/info/get',
   GET_LIFE_NEED_ANALYSIS: 'insurance/planning/life/insurance/need/analysis/get',
   ADD_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/life/insurance/need/analysis/map/to/plan',
-  REMOVE_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/insurance/delete',
+  REMOVE_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/insurance/delete?',
   LIFE_ANALYSIS_ADD: 'insurance/planning/life/insurance/need/analysis/save',
   GET_DETAILED_INSURANCE: 'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
   DELETE_INSURANCE_INPLANNING: 'insurance/planning/insurance/delete?',
@@ -343,6 +343,7 @@ export const appConfig = {
   LIFE_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/life/insurance/recommendation/status/update',
   GEN_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/gen/insurance/recommendation/status/update',
   ADD_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/add',
+  ADD_GENERAL_INSURANCE_PLAN:'insurance/planning/general/insurance/suggest/policy/new/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
