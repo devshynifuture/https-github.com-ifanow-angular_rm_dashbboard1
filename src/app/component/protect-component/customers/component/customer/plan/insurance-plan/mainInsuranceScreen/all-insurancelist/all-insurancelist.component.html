@@ -21,7 +21,7 @@
                 <div class="row pt-10 skeletonAnimation" *ngFor="let insurance of insurancePlanningList" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
                     <div  *ngIf="!isLoadingPlan" class="col-md-12 p-0 c-p b-primitive br-4 h-105 overflow-hidden" (click)="openDetailsInsurance(insurance)">
                             <div class="bg-grey lter p-8">
-                                <p class="m-0 f-500 roboto">{{insurance.heading}}</p>
+                                <p class="m-0 f-500 roboto">{{insurance.heading}}</p> 
                                 <div class="row pt-4">
                                     <div class="col-md-3 p-0">
                                         <img src={{insurance.logo}}>
