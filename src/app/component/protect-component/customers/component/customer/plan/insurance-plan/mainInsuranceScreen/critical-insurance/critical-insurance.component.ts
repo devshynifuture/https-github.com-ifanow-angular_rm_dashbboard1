@@ -10,6 +10,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PlanService } from '../../../plan.service';
 
 @Component({
     selector: 'app-critical-insurance',
@@ -132,9 +133,10 @@ export class CriticalInsuranceComponent implements OnInit {
         heading: 'Motor insurance',
         subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
       }]
+    plannerNotes: any;
 
 
-    constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
+    constructor(private planService :PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
     validatorType = ValidatorType
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -159,7 +161,7 @@ export class CriticalInsuranceComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.storeData = 'Here you can write recommendations';
+        this.storeData = '';
         console.log('heder', this.inputData)
         this.insuranceData.forEach(element => {
             if (element.value == this.inputData.value) {
@@ -172,7 +174,7 @@ export class CriticalInsuranceComponent implements OnInit {
     }
 
     saveData(data) {
-
+		this.plannerNotes = data;
     }
     checkRecommendation(value) {
         if (!value) {
@@ -717,6 +719,8 @@ export class CriticalInsuranceComponent implements OnInit {
                 "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
                 'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
                 "id": (this.id) ? this.id : null,
+                'realOrFictitious':2,
+            	'suggestion':this.plannerNotes,
                 insuredMembers: memberList,
                 nominees: this.critialIllnessForm.value.getNomineeName,
             }
@@ -760,10 +764,12 @@ export class CriticalInsuranceComponent implements OnInit {
                             insuranceSubTypeId: this.inputData.insuranceSubTypeId
                         }
                         this.close(insuranceData)
-                    }
+                    },err=>{
+						this.close('');
+					}
                 );
             } else {
-                this.customerService.addGeneralInsurance(obj).subscribe(
+                this.planService.addGenralInsurancePlan(obj).subscribe(
                     data => {
                         this.barButtonOptions.active = false;
                         console.log(data);

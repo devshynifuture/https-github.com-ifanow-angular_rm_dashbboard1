@@ -90,7 +90,7 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right  amt">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
                                     {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
@@ -99,7 +99,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -110,7 +110,7 @@
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status</th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">
+                                <div class="bar d-flex align-items-center justify-content-between">
                                     <span *ngIf="!isLoadingPlan">{{element.status ? element.status : '-'}} </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_down
@@ -164,7 +164,7 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight"  class="w-20" *matHeaderCellDef> Sum assured </th>
+                            <th mat-header-cell  class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right w-20 amt">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
@@ -172,7 +172,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -181,7 +181,7 @@
 
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="returns">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}} </div>
                             </td>
@@ -621,8 +621,8 @@
         </div>
 
         <div class="col-width-31">
-            <div class="fix-sticky skeletonAnimation align-items-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 pl-90">
+            <div class="fix-sticky skeletonAnimation align-items-center text-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 ">
                 <div class="relClass" [hidden]="!isLoadingPlan">
                     <div class="bar289" [ngClass]="{'height289': isLoadingPlan}">
 
@@ -646,7 +646,7 @@
                     <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
+                <div class="d-flex align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
                     <button (click)="recommendationsPolicy(null)" mat-stroked-button
                         class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies

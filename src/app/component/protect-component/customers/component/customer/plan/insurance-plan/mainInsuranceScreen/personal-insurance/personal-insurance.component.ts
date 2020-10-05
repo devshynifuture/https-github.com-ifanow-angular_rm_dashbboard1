@@ -10,6 +10,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PlanService } from '../../../plan.service';
 
 @Component({
 	selector: 'app-personal-insurance',
@@ -127,8 +128,9 @@ export class PersonalInsuranceComponent implements OnInit {
 		subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
 	}]
 	showRecommendation: boolean;
+	plannerNotes: any;
 
-	constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
 	validatorType = ValidatorType
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
 	@Input() set data(data) {
@@ -154,7 +156,7 @@ export class PersonalInsuranceComponent implements OnInit {
 		this.familyMemberId = value.familyMemberId
 	}
 	saveData(data) {
-
+		this.plannerNotes = data;
 	}
     checkRecommendation(value) {
         if (!value) {
@@ -502,7 +504,7 @@ export class PersonalInsuranceComponent implements OnInit {
 		}
 	}
 	ngOnInit() {
-		this.storeData = 'Here you can write recommendations';
+		this.storeData = '';
 		console.log('heder', this.inputData)
 		this.insuranceData.forEach(element => {
 			if (element.value == this.inputData.value) {
@@ -666,6 +668,8 @@ export class PersonalInsuranceComponent implements OnInit {
 				"insurerName": this.personalAccidentForm.get('insurerName').value,
 				"insuranceSubTypeId": this.inputData.insuranceSubTypeId,
 				"id": (this.id) ? this.id : null,
+				'realOrFictitious':2,
+            	'suggestion':this.plannerNotes,
 				insuredMembers: memberList,
 				nominees: this.personalAccidentForm.value.getNomineeName,
 			}
@@ -705,7 +709,7 @@ export class PersonalInsuranceComponent implements OnInit {
 					}
 				);
 			} else {
-				this.customerService.addGeneralInsurance(obj).subscribe(
+				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
@@ -716,6 +720,8 @@ export class PersonalInsuranceComponent implements OnInit {
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
 						this.close(insuranceData)
+					},err=>{
+						this.close('');
 					}
 				);
 			}

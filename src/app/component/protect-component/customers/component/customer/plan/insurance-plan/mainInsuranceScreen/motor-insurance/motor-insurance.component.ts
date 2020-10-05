@@ -10,6 +10,7 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PlanService } from '../../../plan.service';
 
 @Component({
 	selector: 'app-motor-insurance',
@@ -134,8 +135,9 @@ export class MotorInsuranceComponent implements OnInit {
 	insuranceType: number;
 	storeData: string;
 	showInsurance: { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
+	plannerNotes: any;
 
-	constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
+	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
 	}
 
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -449,7 +451,7 @@ export class MotorInsuranceComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.storeData = 'Here you can write recommendations';
+		this.storeData = '';
         console.log('heder', this.inputData)
         this.insuranceData.forEach(element => {
             if (element.value == this.inputData.value) {
@@ -651,6 +653,8 @@ export class MotorInsuranceComponent implements OnInit {
 				linkedBankAccount: this.motorInsuranceForm.get('bankAccount').value,
 				insuranceSubTypeId: this.inputData.insuranceSubTypeId,
 				id: (this.id) ? this.id : null,
+				realOrFictitious:2,
+            	suggestion:this.plannerNotes,
 				addOns: addOns,
 				nominees: this.motorInsuranceForm.value.getNomineeName,
 			};
@@ -688,7 +692,7 @@ export class MotorInsuranceComponent implements OnInit {
 					}
 				);
 			} else {
-				this.customerService.addGeneralInsurance(obj).subscribe(
+				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
@@ -698,13 +702,15 @@ export class MotorInsuranceComponent implements OnInit {
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						};
 						this.close(insuranceData);
+					},err=>{
+						this.close('');
 					}
 				);
 			}
 		}
 	}
 	saveData(data) {
-
+		this.plannerNotes = data;
 	}
 	checkRecommendation(value) {
 		if (!value) {
