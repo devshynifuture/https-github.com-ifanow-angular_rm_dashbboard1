@@ -571,10 +571,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         this.adminAdvisorIds = [this.advisorId];
       }
       this.getMutualFund();
-      this.mfService.setadvisorList(this.mutualFund);
+      this.mfService.setadvisorList(this.adminAdvisorIds);
     }, err => {
       this.adminAdvisorIds = [this.advisorId];
-      this.mfService.setadvisorList(this.mutualFund);
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
 
     });

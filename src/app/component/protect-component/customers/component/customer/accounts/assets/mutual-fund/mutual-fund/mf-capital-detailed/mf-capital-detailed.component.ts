@@ -208,10 +208,10 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.adminAdvisorIds = [this.advisorId];
       }
           this.getCapitalgain();
-      this.MfServiceService.setadvisorList(this.mutualFund);
+      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
     }, err => {
       this.adminAdvisorIds = [this.advisorId];
-      this.MfServiceService.setadvisorList(this.mutualFund);
+      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
           this.getCapitalgain();
     });
   }
