@@ -932,11 +932,11 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm()
         break;
       case flag == 'step14':
-        this.selectedArmOrRiaIndex = 0;
-        this.getRtaDetails();
         this.step = 13;
         break;
       case flag == 'step15':
+        this.selectedArmOrRiaIndex = 0;
+        this.getRtaDetails();
         this.step = 14;
         break;
       case flag == 'step16':
