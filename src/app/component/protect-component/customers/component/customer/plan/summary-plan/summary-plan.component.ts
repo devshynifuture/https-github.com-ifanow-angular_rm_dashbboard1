@@ -27,6 +27,7 @@ export class SummaryPlanComponent implements OnInit {
 
   ngOnInit() {
     this.getGoalSummaryValues();
+    this.getSummeryInsurance();
   }
 
   ngAfterViewInit() {
@@ -124,7 +125,15 @@ export class SummaryPlanComponent implements OnInit {
   }
 
   getSummeryInsurance(){
-    
+    let data = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.planService.getSummeryInsurance(data)
+    .subscribe(res=>{
+      console.log(res, "insurance");
+      
+    })
   }
 
 }
