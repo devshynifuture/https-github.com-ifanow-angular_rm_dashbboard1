@@ -675,7 +675,7 @@
                     <mat-select class="form-control br-0" formControlName="assignedTo">
                         <mat-option value="" disabled>Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item.userId)">
+                            (click)="setTeamMember(item)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
