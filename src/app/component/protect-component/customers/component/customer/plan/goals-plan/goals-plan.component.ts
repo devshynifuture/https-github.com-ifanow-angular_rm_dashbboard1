@@ -265,7 +265,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   afterDataLoadMethod() {
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
-
+    console.log('allGoals',this.allGoals)
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
       element.dashboardData.futureValue = UtilService.getNumberToWord(element.dashboardData.futureValue)
@@ -295,6 +295,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()).toString();
+      if(mapData.goalType == 1){
+        mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate).getFullYear()) : '-';
+      }
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
