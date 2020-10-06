@@ -473,6 +473,7 @@ export class DashboardComponent implements OnInit {
     this.initPointForTask();
     this.getMisData();
     this.getChartData()
+    
   }
 
   initPointForTask() {
