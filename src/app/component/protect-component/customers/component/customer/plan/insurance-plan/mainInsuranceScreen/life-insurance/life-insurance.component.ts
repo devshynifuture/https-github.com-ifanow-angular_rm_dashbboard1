@@ -369,7 +369,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.GrossLifeinsurance = data[4][0].total_amount;
       this.dataSourceIncome = this.getFilterData(data[5], 'incomeSource', 'name', 'amount')
       this.plannerObj.existingLifeInsurance = data[6][0].total_amount;
-      this.dataSourceAsset = this.getFilterData(data[7], 'incomeSource', 'ownerName', 'currentValue')
+      this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = data[8][0].total_amount;
     } else {
       this.needAnalysisLoaded = '';

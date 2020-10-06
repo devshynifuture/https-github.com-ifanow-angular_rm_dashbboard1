@@ -71,6 +71,7 @@
             behalf. What say?</h3>
           <h3 *ngIf="step==8.5" class=" m-0 f-500 pb-20 text-diff">Good choice. I will help you add team member. Select
             a role first.</h3>
+          <h3 *ngIf=" addTeamMember && rolesFlag==false" class=" m-0 f-500 pb-20 text-diff">Adding team member now.</h3>
           <h3 *ngIf="step==9" class=" m-0 f-500 pb-20 text-diff">We’ve got this far and I’m yet to get a glimpse of you!
             Should we add a profile pic of
             yours?</h3>
@@ -147,7 +148,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 d-flex align-items-center  ">
-            <button *ngIf="step2SelectedId" (click)="insertOnboardingSteps(step,step2SelectedId)" mat-stroked-button
+            <button *ngIf="step2SelectedId" (click)="insertOnboardingSteps(null,step2SelectedId)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -184,7 +185,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step3Flag>0" (click)="insertOnboardingSteps(step,null)" mat-stroked-button
+            <button *ngIf="step3Flag>0" (click)="insertOnboardingSteps(null,null)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
@@ -221,7 +222,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step4Flag>0" (click)="insertOnboardingSteps(step,null)" mat-stroked-button
+            <button *ngIf="step4Flag>0" (click)="insertOnboardingSteps(null,null)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
@@ -257,7 +258,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step5Flag" (click)="insertOnboardingSteps(step,null)" mat-stroked-button
+            <button *ngIf="step5Flag" (click)="insertOnboardingSteps(null,null)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
@@ -296,7 +297,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6">
-            <button *ngIf="step6SelectedId" (click)="insertOnboardingSteps(step,step6SelectedId)" mat-stroked-button
+            <button *ngIf="step6SelectedId" (click)="insertOnboardingSteps(null,step6SelectedId)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -335,28 +336,29 @@
         </div>
 
         <div class="col-md-4">
-          <p *ngIf="teamOrAloneSelectedData.id==1" class="mb-40">Fret not. As I said, we’re in this together :) </p>
+          <div *ngIf="teamOrAloneSelectedData">
+            <p *ngIf="teamOrAloneSelectedData.id==1" class="mb-40">Fret not. As I said, we’re in this together :) </p>
 
-          <p *ngIf="teamOrAloneSelectedData.id==1">Shhhh… we’ll give you superpowers
-            Now, let that be a secret</p>
+            <p *ngIf="teamOrAloneSelectedData.id==1">Shhhh… we’ll give you superpowers
+              Now, let that be a secret</p>
 
-          <p *ngIf="teamOrAloneSelectedData.id==2">
-            Great. We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on
-            IFANOW. For starters,
-            - You can assign specific roles to your team
-            members based on your practice
-            - You can set up hierarchies
-            - You can collaborate on tasks
-            - Assign clients and do much more</p>
+            <p *ngIf="teamOrAloneSelectedData.id==2">
+              Great. We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on
+              IFANOW. For starters,
+              - You can assign specific roles to your team
+              members based on your practice
+              - You can set up hierarchies
+              - You can collaborate on tasks
+              - Assign clients and do much more</p>
+          </div>
         </div>
-
       </div>
 
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="step7SelectedId" (click)="editPictureFlag?step=9:step=8" mat-stroked-button
-              class="btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step7SelectedId" (click)="insertOnboardingSteps(teamOrAloneSelectedData.id==1?9:8,nulll)"
+              mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
@@ -390,8 +392,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="step8Flag" (click)="selectedTeamMemberChoice.id==1?step=8.5:step=10" mat-stroked-button
-              class=" btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step8Selected>0" (click)="insertOnboardingSteps(step8Selected==1?8.5:10,null)"
+              mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
@@ -494,7 +496,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="doItLater" (click)="step=10" mat-stroked-button
+            <button *ngIf="doItLater" (click)="insertOnboardingSteps(10,null)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18  br-4 ">Next question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -529,8 +531,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="stepRoleChoice"
-              (click)="selectedTeamMemberChoice.id==1?addTeamMember=true:step=9;rolesFlag=false" mat-stroked-button
+            <button *ngIf="stepRoleChoiceID>0"
+              (click)="addTeamMember=true;insertOnboardingSteps(null,9);rolesFlag=false;step=9.5" mat-stroked-button
               class=" btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -539,73 +541,6 @@
 
     </div>
   </div>
-
-
-  <div *ngIf="step==10" class="bg-modal-height">
-    <div class="contentGuideBox mt-40">
-      <div class="row">
-        <div class="col-md-12 d-flex">
-          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList">
-            <div [ngClass]="{'select-active-border': choice.value}" class="box-1 boxDescribes mr-20 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
-              </h5>
-              <div class="hw-40 bg-grey lt br-2 bottomPost">
-                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
-              </div>
-              <div *ngIf="choice.value" class="ribbon ribbon-bottom-right"><span><img
-                    src="/assets/images/svg/right-white.svg"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottomFooterDasb">
-        <div class="row">
-          <div class="col-md-12 ">
-            <button *ngIf="step9Flag" (click)="selectedArnRIaChoice.id==1?step=11:step=19" mat-stroked-button
-              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
-              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div *ngIf="step==11" class="bg-modal-height">
-    <div class="contentGuideBox mt-40">
-      <div class="row">
-        <div class="col-md-12 d-flex">
-          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList">
-            <div [ngClass]="{'select-active-border': choice.value}" class="box-1 boxDescribes mr-20 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
-              </h5>
-              <div class="hw-40 bg-grey lt br-2 bottomPost">
-                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
-              </div>
-              <div *ngIf="choice.value" class="ribbon ribbon-bottom-right"><span><img
-                    src="/assets/images/svg/right-white.svg"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottomFooterDasb">
-        <div class="row">
-          <div class="col-md-12 ">
-            <button *ngIf="step10Flag" (click)="basicDetailsChoice.id==1?step=12:step=19;ArnRiaIndex=0"
-              mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
-              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- eight silder -->
-
-  <!-- nine slider -->
 
   <div *ngIf="addTeamMember && rolesFlag==false" class="bg-modal-height">
     <div>
@@ -662,6 +597,77 @@
       </div>
     </div>
   </div>
+
+
+  <div *ngIf="step==10" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList">
+            <div [ngClass]="{'select-active-border': choice.value}" class="box-1 boxDescribes mr-20 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 bottomPost">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+              </div>
+              <div *ngIf="choice.value" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step9SelectedId>0"
+              (click)="editPictureFlag=false;insertOnboardingSteps(null,selectedArnRIaChoice.id==1?null:'close')"
+              mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="step==11" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList">
+            <div [ngClass]="{'select-active-border': choice.value}" class="box-1 boxDescribes mr-20 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 bottomPost">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+              </div>
+              <div *ngIf="choice.value" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step10SelectedId>0"
+              (click)="ArnRiaIndex=0;insertOnboardingSteps(null,basicDetailsChoice.id==1?null:'close')"
+              mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- eight silder -->
+
+  <!-- nine slider -->
+
+
 
   <div *ngIf="step==12" class="bg-modal-height">
     <div [formGroup]="ArnRiaForm">
@@ -785,7 +791,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step11Flag" (click)="selctedRtaDataChoice.id==1?step=14:step=19" mat-stroked-button
+            <button *ngIf="step11SelectedId>0" (click)="selctedRtaDataChoice.id==1?step=14:step=19" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -1022,7 +1028,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step15Flag" (click)="selctedRtaDataChoice1.id==1?step=16:step=19" mat-stroked-button
+            <button *ngIf="step15SelectedId>0"
+              (click)="insertOnboardingSteps(null,selctedRtaDataChoice1.id==1?null:'close')" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -1144,7 +1151,8 @@
               </div>
 
               <div class="col-md-12 pl-0 pb-20">
-                <button (click)="step=17" mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">I’m done
+                <button (click)="insertOnboardingSteps(null,'doneDown')" mat-stroked-button
+                  class="btn-primary h-48 lh-48 f-18  br-4">I’m done
                   uploading the filters
                   <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
 
@@ -1217,7 +1225,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step17Flag" (click)="step=18" mat-stroked-button
+            <button *ngIf="step17Selected>0" (click)="insertOnboardingSteps(null,null)" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -1267,7 +1275,8 @@
 
       <div class="row">
         <div class="col-md-12 pb-24">
-          <button (click)="step=19" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
+          <button (click)="insertOnboardingSteps(null,'finish')" mat-stroked-button
+            class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
             <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
 
         </div>

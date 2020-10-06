@@ -3,7 +3,7 @@
         <div class="col-width-21 br-grey zIndex2 pb-44">
             <div class="row insuListFixedHeader pt-20 pb-10 bb-grey">
                 <div class="col-md-5 p-0">
-                    <h3 class="m-0 text-black pt-4">Insurance </h3>
+                    <h3 class="m-0 text-black pt-4">Insurance  </h3>
                 </div>
                 <div class="col-md-6 text-right p-0">
                     <!-- right side  -->
@@ -17,11 +17,11 @@
 
 
             <!-- Life insurance - Rahul Jain -->
-            <div class="mt-70 leftScroll " >
+            <div class="mt-70   " >
                 <div class="row pt-10 skeletonAnimation" *ngFor="let insurance of insurancePlanningList" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-                    <div  *ngIf="!isLoadingPlan" class="col-md-12 p-0 c-p ba-2x br-4 h-105 overflow-hidden" (click)="openDetailsInsurance(insurance)">
+                    <div  *ngIf="!isLoadingPlan" class="col-md-12 p-0 c-p br-4 h-105 overflow-hidden" [ngClass]="{'b-primitive': insurance.id == selectedId}" (click)="openDetailsInsurance(insurance)">
                             <div class="bg-grey lter p-8">
-                                <p class="m-0 f-500 roboto">{{insurance.heading}}</p>
+                                <p class="m-0 f-500 roboto">{{insurance.heading}}</p> 
                                 <div class="row pt-4">
                                     <div class="col-md-3 p-0">
                                         <img src={{insurance.logo}}>

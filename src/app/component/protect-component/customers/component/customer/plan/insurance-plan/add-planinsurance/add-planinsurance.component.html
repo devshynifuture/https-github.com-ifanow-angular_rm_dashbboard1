@@ -34,25 +34,31 @@
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
             <div class="pt-20">
                 <div class="row ">
-                    <span class="col-md-3 f-14 f-500">Select main dependent</span>
-                    <i class="material-icons"
-                        matTooltip="The dependant should ideally be the spouse or parents of the person whose insurance is being planned. While kids are dependants too, but they are typically dependant on the main earning member only untill they start earning or get married. Hence making them dependants will inflate the insurance requirement as their living years will be greater than the spouse’s or the parent’s living years.">
-                        info
-                    </i>
-                    <div class="col-md-3">
-                        <div class="form-group ">
+                    <div class="col-md-3 f-14 p-0 f-500 d-flex align-items-center justify-content-between">
+                        Select main dependent
+
+
+                        <img matTooltip="The dependant should ideally be the spouse or parents of the person whose insurance is being planned. While kids are dependants too, but they are typically dependant on the main earning member only untill they start earning or get married. Hence making them dependants will inflate the insurance requirement as their living years will be greater than the spouse’s or the parent’s living years."
+                            src="/assets/images/svg/info.svg">
+
+
+                    </div>
+
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select [(ngModel)]="selectedFamily" class="form-control br-0">
                                     <mat-option disabled value=''>Select one</mat-option>
-                                    <mat-option [value]="option.name" (click)="selectDependent(option.familyMemberId,'familyMemberId')"
+                                    <mat-option [value]="option.name"
+                                        (click)="selectDependent(option.familyMemberId,'familyMemberId')"
                                         *ngFor="let option of familyList">{{ option.name }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group ">
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
                                     aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"
@@ -70,7 +76,7 @@
 
 
                 </div>
-                <div >
+                <div class="mt-16">
                     <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb" *ngIf="!isLodingNeedAnalysis">
                         <div class="col-md-6 f-14 pl-15 f-500">Particulars</div>
                         <div class="col-md-3 f-14 p-0 text-right f-500">Annual amount</div>
@@ -84,25 +90,26 @@
                                     <mat-panel-title class="f-500 w-60">
                                         1. Liabilities
                                     </mat-panel-title>
-    
+
                                     <mat-panel-description class="w-20">
                                         -
                                     </mat-panel-description>
-    
+
                                     <mat-panel-description class="w-20">
-                                        <span appFormatNumber [value]="plannerObj.liabilities"></span>
+                                        {{plannerObj.liabilities ? '₹' : ''}} <span appFormatNumber
+                                            [value]="plannerObj.liabilities ? plannerObj.liabilities : '-'"></span>
                                     </mat-panel-description>
-    
+
                                 </mat-expansion-panel-header>
-    
+
                                 <div class="row p-20" *ngIf="panelOpenState == true">
                                     <div class="col-md-10 pl-0 insurancePlanTable">
                                         <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
                                             id="table-low" class=" ">
-    
+
                                             <!--- Note that these columns can be defined in any order.
                                                   The actual rendered columns are set as a property on the row definition" -->
-    
+
                                             <!-- Position Column -->
                                             <ng-container matColumnDef="details">
                                                 <th mat-header-cell *matHeaderCellDef> Liability details</th>
@@ -112,14 +119,14 @@
                                                     </mat-checkbox>{{element.name}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <!-- Weight Column -->
                                             <ng-container matColumnDef="outstanding">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Principal
                                                     outstanding
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    <span>{{formatNumber(element.total_loan_outstanding,0)}}</span>
+                                                    {{element.total_loan_outstanding ? '₹' : ''}}<span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) : '-'}}</span>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="consider">
@@ -129,7 +136,7 @@
                                                     {{element.percent}}%
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="edit">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element"
@@ -140,14 +147,15 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="dataSource.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                             <h4 class="text-center pt-12">No data found</h4>
                                         </div>
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
-    
+
                             </mat-expansion-panel>
                             <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
                                 <mat-expansion-panel-header>
@@ -158,36 +166,40 @@
                                         -
                                     </mat-panel-description>
                                     <mat-panel-description class="w-20">
-                                        <span appFormatNumber [value]="plannerObj.dependantNeeds"></span>
+                                        {{plannerObj.dependantNeeds ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.dependantNeeds ? plannerObj.dependantNeeds : '-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-    
+
                                 <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
                                     <div class="col-md-1">2.1</div>
                                     <div class="col-md-6 p-0">Life Insurance Premiums</div>
                                     <div class="col-md-3 text-right">
-                                        <span>{{formatNumber(plannerObj.lifeInsurancePremiums,0)}}</span></div>
+                                        {{plannerObj.lifeInsurancePremiums ? '₹' : ''}}<span>{{plannerObj.lifeInsurancePremiums ? formatNumber(plannerObj.lifeInsurancePremiums,0) : '-'}}</span>
+                                    </div>
                                     <div class="col-md-2 text-center"> - </div>
                                 </div>
                                 <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
                                     <div class="col-md-1">2.2</div>
                                     <div class="col-md-6 p-0"> Living expenses </div>
-                                    <div class="col-md-3 text-right"><span appFormatNumber
-                                            [value]="plannerObj.livingExpense"></span> </div>
+                                    <div class="col-md-3 text-right">
+                                        {{plannerObj.livingExpense ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.livingExpense ? plannerObj.livingExpense : '-'"></span>
+                                    </div>
                                     <div class="col-md-2 text-center"> - </div>
                                 </div>
-    
+
                                 <div class="row p-20" *ngIf="panelOpenState == true">
                                     <div class="col-md-10 pl-0 insurancePlanTable">
                                         <table mat-table *ngIf="dataSource1.length > 0" [dataSource]="dataSource1"
                                             id="table-low" class=" ">
-    
+
                                             <!--- Note that these columns can be defined in any order.
                                                               The actual rendered columns are set as a property on the row definition" -->
-    
+
                                             <!-- Position Column -->
-    
-    
+
+
                                             <!-- Name Column -->
                                             <ng-container matColumnDef="details">
                                                 <th mat-header-cell *matHeaderCellDef> Expense details </th>
@@ -197,16 +209,16 @@
                                                     </mat-checkbox> {{element.name}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <!-- Weight Column -->
                                             <ng-container matColumnDef="amount">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Annual amount
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{formatNumber(element.amount,0)}}
+                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="consider">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider
                                                 </th>
@@ -214,7 +226,7 @@
                                                     {{element.percent}}%
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="edit">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element"
@@ -225,16 +237,17 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource1.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="dataSource1.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                             <h4 class="text-center pt-12">No data found</h4>
                                         </div>
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
-    
+
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -244,21 +257,22 @@
                                         -
                                     </mat-panel-description>
                                     <mat-panel-description class="w-20">
-                                        <span appFormatNumber [value]="plannerObj.goalsMeet"></span>
+                                        {{plannerObj.goalsMeet ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.goalsMeet ? plannerObj.goalsMeet : '-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-    
+
                                 <div class="row p-20" *ngIf="panelOpenState == true">
                                     <div class="col-md-10 pl-0 insurancePlanTable">
                                         <table *ngIf="dataSource3.length > 0" mat-table [dataSource]="dataSource3"
                                             id="table-low" class=" ">
-    
+
                                             <!--- Note that these columns can be defined in any order.
                                                           The actual rendered columns are set as a property on the row definition" -->
-    
+
                                             <!-- Position Column -->
-    
-    
+
+
                                             <!-- Name Column -->
                                             <ng-container matColumnDef="details">
                                                 <th mat-header-cell *matHeaderCellDef> Goal details </th>
@@ -268,16 +282,17 @@
                                                     </mat-checkbox> {{element.goalName}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <!-- Weight Column -->
                                             <ng-container matColumnDef="amount">
-                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Goal amount(PV)
+                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Goal
+                                                    amount(PV)
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    <span>{{formatNumber(element.goalFV,0)}}</span>
+                                                    {{element.goalFV ? '₹' : ''}}<span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span>
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="consider">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider
                                                 </th>
@@ -285,7 +300,7 @@
                                                     {{element.percent}}%
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="edit">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element"
@@ -293,21 +308,22 @@
                                                     <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p">
                                                 </td>
                                             </ng-container>
-    
+
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="dataSource3.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                             <h4 class="text-center pt-12">No data found</h4>
                                         </div>
-    
+
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
-    
+
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -316,12 +332,13 @@
                                     <mat-panel-description class="pr-48">
                                         -
                                     </mat-panel-description>
-                                    <mat-panel-description >
-                                        <span appFormatNumber [value]="plannerObj.GrossLifeinsurance"></span>
+                                    <mat-panel-description>
+                                        {{plannerObj.GrossLifeinsurance ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.GrossLifeinsurance ? plannerObj.GrossLifeinsurance :'-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -331,21 +348,22 @@
                                         -
                                     </mat-panel-description>
                                     <mat-panel-description class="w-20">
-                                        <span appFormatNumber [value]="plannerObj.incomeSource"></span>
+                                        {{plannerObj.incomeSource ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.incomeSource ? plannerObj.incomeSource : '-' "></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-    
+
                                 <div class="row p-20" *ngIf="panelOpenState == true">
                                     <div class="col-md-10 pl-0 insurancePlanTable">
                                         <table mat-table *ngIf="dataSource4.length > 0" [dataSource]="dataSource4"
                                             id="table-low" class=" ">
-    
+
                                             <!--- Note that these columns can be defined in any order.
                                                               The actual rendered columns are set as a property on the row definition" -->
-    
+
                                             <!-- Position Column -->
-    
-    
+
+
                                             <!-- Name Column -->
                                             <ng-container matColumnDef="details">
                                                 <th mat-header-cell *matHeaderCellDef> Income details </th>
@@ -356,7 +374,8 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="type">
-                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Income type</th>
+                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Income type
+                                                </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
                                                     {{element.incomeType}}
                                                 </td>
@@ -366,10 +385,10 @@
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Annual income
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{formatNumber(element.amount,0)}}
+                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="consider">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider
                                                 </th>
@@ -377,7 +396,7 @@
                                                     {{element.percent}}%
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="edit">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element"
@@ -385,21 +404,22 @@
                                                     <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p">
                                                 </td>
                                             </ng-container>
-    
+
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="dataSource4.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                             <h4 class="text-center pt-12">No data found</h4>
                                         </div>
-    
+
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
-    
+
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -408,12 +428,13 @@
                                     <mat-panel-description class="pr-32">
                                         -
                                     </mat-panel-description>
-                                    <mat-panel-description > 
-                                        <span appFormatNumber [value]="plannerObj.existingLifeInsurance"></span>
+                                    <mat-panel-description>
+                                        {{plannerObj.existingLifeInsurance ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.existingLifeInsurance ? plannerObj.existingLifeInsurance : '-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
-    
+
                             <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -423,21 +444,22 @@
                                         -
                                     </mat-panel-description>
                                     <mat-panel-description class="w-20">
-                                        <span appFormatNumber [value]="plannerObj.existingAsset"></span>
+                                        {{plannerObj.existingAsset ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.existingAsset ? plannerObj.existingAsset : '-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-    
+
                                 <div class="row p-20" *ngIf="panelOpenState == true">
                                     <div class="col-md-10 pl-0 insurancePlanTable">
                                         <table mat-table *ngIf="dataSource2.length > 0" [dataSource]="dataSource2"
                                             id="table-low" class=" ">
-    
+
                                             <!--- Note that these columns can be defined in any order.
                                                                   The actual rendered columns are set as a property on the row definition" -->
-    
+
                                             <!-- Position Column -->
-    
-    
+
+
                                             <!-- Name Column -->
                                             <ng-container matColumnDef="details">
                                                 <th mat-header-cell *matHeaderCellDef> Asset details </th>
@@ -447,15 +469,16 @@
                                                     </mat-checkbox> {{element.ownerName}}
                                                 </td>
                                             </ng-container>
-    
+
                                             <!-- Weight Column -->
                                             <ng-container matColumnDef="amount">
-                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Total amount </th>
+                                                <th class="text-right" mat-header-cell *matHeaderCellDef> Total amount
+                                                </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    <span>{{formatNumber(element.currentValue,0)}}</span>
+                                                    {{element.currentValue ? '₹' : ''}}<span>{{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}</span>
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="consider">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> % to consider
                                                 </th>
@@ -463,7 +486,7 @@
                                                     {{element.percent}}%
                                                 </td>
                                             </ng-container>
-    
+
                                             <ng-container matColumnDef="edit">
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element"
@@ -471,21 +494,22 @@
                                                     <img src="assets/images/svg/edit-insurance-plan.svg" class="c-p">
                                                 </td>
                                             </ng-container>
-    
+
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center">
+                                        <div *ngIf="dataSource2.length == 0"
+                                            class="d-flex flex-column align-items-center">
                                             <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                                             <h4 class="text-center pt-12">No data found</h4>
                                         </div>
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>
-    
+
                             </mat-expansion-panel>
-    
-    
+
+
                             <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
@@ -494,15 +518,16 @@
                                     <mat-panel-description class="pr-24">
                                         -
                                     </mat-panel-description>
-                                    <mat-panel-description >
-                                        <span appFormatNumber [value]="plannerObj.additionalLifeIns"></span>
+                                    <mat-panel-description>
+                                        {{plannerObj.additionalLifeIns ? '₹' : ''}}<span appFormatNumber
+                                            [value]="plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : '-'"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
                         </div>
                     </mat-accordion>
-    
-                    <div class="row pt-20" *ngIf="!isLodingNeedAnalysis"> 
+
+                    <div class="row pt-20" *ngIf="!isLodingNeedAnalysis">
                         <div class="col-md-11 p-0">
                             Planner notes
                         </div>

@@ -433,7 +433,8 @@ export class InsuranceComponent implements OnInit {
 
   getStatusId(data) {
     data.forEach(obj => {
-      if (obj.policyExpiryDate < new Date()) {
+
+      if (new Date(obj.maturityDate ? obj.maturityDate : obj.policyExpiryDate) < new Date()) {
         obj.statusId = (this.insuranceTypeId == 1) ? 'MATURED' : 'EXPIRED';
       } else {
         obj.statusId = 'LIVE';

@@ -717,7 +717,7 @@
                 appFormatNumber>
                 {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{item.totalAmount}}</td>
+                appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</td>
 
 
         </tr>
@@ -898,7 +898,7 @@
                 {{item.expenseType}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
                 appFormatNumber>
-                {{item.totalAmount}}
+                {{item.totalAmount ? item.totalAmount : '-'}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">

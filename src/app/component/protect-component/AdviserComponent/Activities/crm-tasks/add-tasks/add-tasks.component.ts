@@ -371,6 +371,7 @@ export class AddTasksComponent implements OnInit {
           this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
               if (value.length >= 0) {
+                console.log("client search", responseArray);
                 this.clientList = responseArray;
                 this.showDefaultDropDownOnSearch = false;
                 this.isLoading = false;
@@ -686,6 +687,17 @@ export class AddTasksComponent implements OnInit {
   setTeamMember(data) {
     console.log("teamMember id or assignedTo idd", data);
     this.selectedTeamMemberId = data;
+    if(this.teamMemberList && this.teamMemberList.length>0){
+      let obj = this.teamMemberList.find(i => i.userId === data);
+      if(this.canAddCollaborators(data)){
+        this.collaboratorList.push({
+          name: obj.fullName,
+          default: true,
+          userId: obj.userId,
+          profilePicUrl: obj.profilePicUrl
+        })
+      }
+    }
   }
 
   getTeamMemberList() {
@@ -693,8 +705,8 @@ export class AddTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.teamMemberList = res;
-          console.log(res, "team member list")
-
+          console.log(res, "team member list");
+          this.defaultCollaboratorsArray();
         }
       }, err => {
         console.log(err);
@@ -737,6 +749,17 @@ export class AddTasksComponent implements OnInit {
     })
   }
 
+  updateCollaboratorList(){
+    if(this.canAddCollaborators(this.selectedClient.userId)){
+      this.collaboratorList.push({
+        userId: this.selectedClient.userId,
+        name: this.selectedClient.fullName,
+        default: true,
+        profilePicUrl: this.selectedClient.profilePicUrl
+      });
+    }
+  }
+
   selectClient(singleClientData) {
     this.selectedClient = singleClientData;
     console.log("selected client Data", singleClientData);
@@ -744,7 +767,6 @@ export class AddTasksComponent implements OnInit {
       .setValue(singleClientData.displayName,
         { emitEvent: false }
       );
-
 
     const obj = {
       clientId: singleClientData.clientId
@@ -1110,24 +1132,35 @@ export class AddTasksComponent implements OnInit {
 
   onAddingCollaborator(data) {
     console.log(data);
-    if (this.data !== null) {
-      if (this.canAddCollaborators(data.userId)) {
-        const obj = {
-          taskId: this.data.id,
-          userId: data.userId
+    // if (this.data !== null) {
+      if(data.hasOwnProperty('id')){
+        if (this.canAddCollaborators(data.userId)) {
+          const obj = {
+            taskId: this.data.id,
+            userId: data.userId
+          }
+          this.crmTaskService.addCollaboratorToTask(obj)
+            .subscribe(res => {
+              if (res) {
+                console.log('this is added res of collaborator', res);
+                this.collaboratorList.push(res);
+                this.eventService.openSnackBar("Collaborator added successfully", "DISMISS");
+              }
+            })
+        } else {
+          this.eventService.openSnackBar("Collaborator already exists!", "DISMISS");
         }
-        this.crmTaskService.addCollaboratorToTask(obj)
-          .subscribe(res => {
-            if (res) {
-              console.log('this is added res of collaborator', res);
-              this.collaboratorList.push(res);
-              this.eventService.openSnackBar("Collaborator added successfully", "DISMISS");
-            }
-          })
       } else {
-        this.eventService.openSnackBar("Collaborator already exists!", "DISMISS");
+        if(this.canAddCollaborators(data.userId)){
+          this.collaboratorList.push({
+            name: data.fullName,
+            userId: data.userId,
+            default: false,
+            profilePicUrl: data.profilePicUrl,
+          })
+        }
       }
-    }
+    // }
   }
 
   onAddReplyOnCommentTaskSubTask(data, choice){
@@ -1236,7 +1269,7 @@ export class AddTasksComponent implements OnInit {
     console.log(this.subTaskList);
   }
 
-  isCollabotatorPresent(item){
+  isCollaboratorPresent(item){
     return this.collaboratorList.some(c => c.userId === item.userId);
   }
 
@@ -1267,6 +1300,62 @@ export class AddTasksComponent implements OnInit {
       this.addTaskForm.markAllAsTouched();
       this.eventService.openSnackBar("Please fill required fields", "DISMISS");
     }
+  }
+
+  defaultCollaboratorsArray(){
+    // loggedInUser and taskAssignedTo user
+    let arr = [
+      { userId: this.userId, isDefault: true }, 
+      { userId: this.addTaskForm.get('assignedTo').value, isDefault: true }
+    ];
+    if(this.canAddCollaborators(this.userId)){
+      this.collaboratorList.push({
+        profilePicUrl: this.authService.profilePic,
+        name: AuthService.getUserInfo().name,
+        default: true,
+        // id: '',
+        // taskId: 10436,
+        userId: this.userId,
+      });
+    }
+
+    // all sub task assigned to user ids
+    if(this.subTask.value.length>0){
+      this.subTask.value.forEach(element => {
+        arr.push({
+          userId: element.assignedTo,
+          isDefault: true
+        });
+        if(this.canAddCollaborators(element.assignedTo)){
+          this.collaboratorList.push({
+            profilePicUrl: element.assignedToProfileUrl,
+            name: element.assignedToName,
+            default: true,
+            userId: element.assignedTo,
+          })
+        }
+      });
+    }
+    //  clientOwner
+    if(this.teamMemberList.length>0 && this.selectedClient){
+      this.teamMemberList.forEach(element=> {
+        if(element.adminAdvisorId == this.selectedClient.advisorId){
+          arr.push({
+            userId: element.userId,
+            isDefault: true
+          });
+          if(this.canAddCollaborators(element.userId)){
+            this.collaboratorList.push({
+              profilePicUrl: element.profilePicUrl,
+              name: element.fullName,
+              default: true,
+              userId: element.userId,
+            })
+          }
+        }
+      });
+    }
+    // return arr;
   }
 
   onCreateTask() {
@@ -1373,6 +1462,15 @@ export class AddTasksComponent implements OnInit {
       
       
     } else {
+      let collaboratorArr = [];
+      if(this.collaboratorList.length>0){
+        this.collaboratorList.forEach(item=>{
+          collaboratorArr.push({
+            isDefault:item.default,
+            userId: item.userId
+          })
+        })
+      }
       // add new task
       let data = {
         advisorId: this.advisorId,
@@ -1385,6 +1483,7 @@ export class AddTasksComponent implements OnInit {
         subSubCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
         adviceTypeId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
         subTasks: subTaskArr,
+        collaborators: collaboratorArr
       }
 
       if(this.addTaskForm.get('familyMemberId').value && this.addTaskForm.get('familyMemberId').value !== '' && this.familyMemberList.length!==0) {

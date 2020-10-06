@@ -206,6 +206,7 @@ export class DashboardComponent implements OnInit {
   keyMatrixFlag: boolean = true;
   newchartData: any[];
   mfAumValue: any;
+  answerObj: any = {};
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -449,6 +450,7 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
+    this.getAnswerData();
     // this.getAssetAllocationData();
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
@@ -476,6 +478,21 @@ export class DashboardComponent implements OnInit {
   initPointForTask() {
     this.getTaskDashboardCount();
     this.getTodaysTaskList();
+  }
+
+
+  getAnswerData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getOnBoardingQuestionAnswer(obj).subscribe(
+      data => {
+        if (data) {
+          this.answerObj = data;
+        }
+      }), err => {
+        this.answerObj.nextStep = 'start'
+      }
   }
 
   getChartData() {

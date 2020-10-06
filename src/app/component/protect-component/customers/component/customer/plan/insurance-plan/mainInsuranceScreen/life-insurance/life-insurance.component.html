@@ -90,7 +90,7 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Sum assured </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right  amt">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
                                     {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
@@ -99,7 +99,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -110,7 +110,7 @@
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status</th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar">
+                                <div class="bar d-flex align-items-center justify-content-between">
                                     <span *ngIf="!isLoadingPlan">{{element.status ? element.status : '-'}} </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_down
@@ -164,7 +164,7 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
-                            <th mat-header-cell class="textRight"  class="w-20" *matHeaderCellDef> Sum assured </th>
+                            <th mat-header-cell  class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right w-20 amt">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
@@ -172,7 +172,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Annual premium </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -181,7 +181,7 @@
 
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="returns">
-                            <th mat-header-cell class="textRight" *matHeaderCellDef> Returns </th>
+                            <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">{{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}} </div>
                             </td>
@@ -238,7 +238,7 @@
                                             </mat-panel-description>
                 
                                             <mat-panel-description class="w-20">
-                                               <span appFormatNumber [value]="plannerObj.liabilities"></span>
+                                                    {{plannerObj.liabilities ? '₹' : ''}} <span appFormatNumber [value]="plannerObj.liabilities ? plannerObj.liabilities : '-'"></span>
                                             </mat-panel-description>
                 
                                         </mat-expansion-panel-header>
@@ -263,7 +263,7 @@
                                                         <th class="text-right" mat-header-cell *matHeaderCellDef> Principal outstanding
                                                         </th>
                                                         <td class="text-right" mat-cell *matCellDef="let element" >
-                                                           <span>{{formatNumber(element.total_loan_outstanding,0)}}</span> 
+                                                                {{element.total_loan_outstanding ? '₹' : ''}}<span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) :'-'}}</span> 
                                                         </td>
                                                     </ng-container>
                                                     <ng-container matColumnDef="consider">
@@ -299,20 +299,21 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.dependantNeeds"></span>
+                                                    {{plannerObj.dependantNeeds ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.dependantNeeds ? plannerObj.dependantNeeds : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                 
                                         <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
                                             <div class="col-md-1">2.1</div>
                                             <div class="col-md-6 p-0">Life Insurance Premiums</div>
-                                            <div class="col-md-3 text-right" ><span>{{formatNumber(plannerObj.lifeInsurancePremiums,0)}}</span></div>
+                                            <div class="col-md-3 text-right" >{{plannerObj.lifeInsurancePremiums ? '₹' : ''}}<span>{{plannerObj.lifeInsurancePremiums ? formatNumber(plannerObj.lifeInsurancePremiums,0) :'-'}}</span></div>
                                             <div class="col-md-2 text-center"> - </div>
                                         </div>
                                         <div class="row  p-9 pl-20 pr-0 bb" *ngIf="panelOpenState == true">
                                             <div class="col-md-1">2.2</div>
-                                            <div class="col-md-6 p-0"> Living expenses </div>
-                                            <div class="col-md-3 text-right" ><span appFormatNumber [value]="plannerObj.livingExpense"></span> </div>
+                                            <div class="col-md-6 p-0"> Living expenses</div>
+                                            <div class="col-md-3 text-right" >
+                                                    {{plannerObj.livingExpense ? '₹' : ''}}<span>{{ plannerObj.livingExpense ? formatNumber(plannerObj.livingExpense,0) : '-'}}</span> </div>
                                             <div class="col-md-2 text-center"> - </div>
                                         </div>
                 
@@ -337,7 +338,7 @@
                                                     <!-- Weight Column -->
                                                     <ng-container matColumnDef="outstanding">
                                                         <th class="text-right" mat-header-cell *matHeaderCellDef> Annual amount </th>
-                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{formatNumber(element.amount,0)}}
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                         </td>
                                                     </ng-container>
                 
@@ -375,7 +376,7 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.goalsMeet"></span>
+                                                    {{plannerObj.goalsMeet ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.goalsMeet ? plannerObj.goalsMeet : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                 
@@ -401,7 +402,7 @@
                                                     <ng-container matColumnDef="outstanding">
                                                         <th class="text-right" mat-header-cell *matHeaderCellDef> Goal amount(PV) </th>
                                                         <td class="text-right" mat-cell *matCellDef="let element">
-                                                            <span>{{formatNumber(element.goalFV,0)}}</span> 
+                                                                {{element.goalFV ? '₹' : ''}} <span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span> 
                                                         </td>
                                                     </ng-container>
                 
@@ -442,7 +443,7 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.GrossLifeinsurance"></span>
+                                                    {{plannerObj.GrossLifeinsurance ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.GrossLifeinsurance ? plannerObj.GrossLifeinsurance : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                                     </mat-expansion-panel>
@@ -456,7 +457,7 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.incomeSource"></span>
+                                                    {{plannerObj.incomeSource ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.incomeSource ? plannerObj.incomeSource : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                 
@@ -480,7 +481,8 @@
                                                     <!-- Weight Column -->
                                                     <ng-container matColumnDef="outstanding">
                                                         <th class="text-right" mat-header-cell *matHeaderCellDef> Annual income </th>
-                                                        <td class="text-right" mat-cell *matCellDef="let element"> {{formatNumber(element.amount,0)}}
+                                                        <td class="text-right" mat-cell *matCellDef="let element"> 
+                                                                {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                         </td>
                                                     </ng-container>
                                                    
@@ -519,7 +521,7 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.existingLifeInsurance"></span>
+                                                    {{plannerObj.existingLifeInsurance ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.existingLifeInsurance ? plannerObj.existingLifeInsurance : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                                     </mat-expansion-panel>
@@ -533,7 +535,8 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                               <span appFormatNumber [value]="plannerObj.existingAsset"></span>
+                                                    {{plannerObj.existingAsset ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.existingAsset ? plannerObj.existingAsset : '-'">
+                                                    </span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                 
@@ -559,7 +562,7 @@
                                                     <ng-container matColumnDef="outstanding">
                                                         <th class="text-right" mat-header-cell *matHeaderCellDef> Total amount </th>
                                                         <td class="text-right" mat-cell *matCellDef="let element">  
-                                                            <span  >{{formatNumber(element.currentValue,0)}}</span>
+                                                                {{element.currentValue ? '₹' : ''}}<span>{{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}</span>
                                                         </td>
                                                     </ng-container>
                 
@@ -599,7 +602,7 @@
                                                 -
                                             </mat-panel-description>
                                             <mat-panel-description class="w-20">
-                                                <span appFormatNumber [value]="plannerObj.additionalLifeIns"></span>
+                                                    {{plannerObj.additionalLifeIns ? '₹' : ''}}<span appFormatNumber [value]="plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : '-'"></span>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
                                     </mat-expansion-panel>
@@ -621,8 +624,8 @@
         </div>
 
         <div class="col-width-31">
-            <div class="fix-sticky skeletonAnimation align-items-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 pl-90">
+            <div class="fix-sticky skeletonAnimation align-items-center text-center" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                <img  src={{logo}} [hidden]="isLoadingPlan" class="mt-20 ">
                 <div class="relClass" [hidden]="!isLoadingPlan">
                     <div class="bar289" [ngClass]="{'height289': isLoadingPlan}">
 
@@ -646,7 +649,7 @@
                     <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
+                <div class="d-flex align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
                     <button (click)="recommendationsPolicy(null)" mat-stroked-button
                         class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies
