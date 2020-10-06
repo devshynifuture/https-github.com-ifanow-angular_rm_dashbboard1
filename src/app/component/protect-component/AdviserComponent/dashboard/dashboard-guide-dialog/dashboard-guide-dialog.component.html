@@ -791,7 +791,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step11SelectedId>0" (click)="selctedRtaDataChoice.id==1?step=14:step=19" mat-stroked-button
+            <button *ngIf="step11SelectedId>0"
+              (click)="insertOnboardingSteps(null,selctedRtaDataChoice.id==1?null:'close')" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
