@@ -34,7 +34,6 @@ export class SummaryPlanComponent implements OnInit {
   }
 
   getGoalSummaryValues(){
-    // 'http://dev.ifanow.in:8080/futurewise/api/v1/%7BdeviceType%7D/goal-planning/goal/plan/summary?advisorId=2808&clientId=95955'
     let data = {
       advisorId: this.advisorId,
       clientId: this.clientId
