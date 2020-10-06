@@ -195,7 +195,7 @@
                         [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select team member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item.userId)">
+                            (click)="setTeamMember(item)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
