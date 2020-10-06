@@ -40,6 +40,10 @@
             <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
             <span *ngIf="showTabs" class="title" mat-line>People</span>
           </a>
+          <a class="sidenav-link" *ngIf="enumDataService.PRODUCTION" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
+            <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
+          </a>
+
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
   <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
   <span *ngIf="showTabs" class="title" mat-line>People</span>

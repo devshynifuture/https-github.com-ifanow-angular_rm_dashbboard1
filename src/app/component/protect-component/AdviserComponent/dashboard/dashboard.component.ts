@@ -1433,11 +1433,12 @@ export class DashboardComponent implements OnInit {
           const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
             maxWidth: '100vw',
             width: '90vw',
-            data: { userData: this.userData, masterGet: data }
+            data: { userData: this.userData, masterGet: data, stepFlag: this.answerObj.nextStep }
           });
 
           dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
+            this.getAnswerData();
           });
         }
       }
