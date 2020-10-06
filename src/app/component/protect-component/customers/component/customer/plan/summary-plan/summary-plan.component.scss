@@ -63,3 +63,6 @@
   flex-direction: column;
   justify-content: flex-end;
 }
+::ng-deep .mat-paginator-range-label {
+  display: none;
+}

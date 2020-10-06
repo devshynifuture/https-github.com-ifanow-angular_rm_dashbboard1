@@ -138,14 +138,14 @@
                                         <div class="col-md-12 p-0 mb-16">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Total goals</p>
-                                                <h1 class="text-primary f-400 roboto">5</h1>
+                                                <h1 class="text-primary f-400 roboto">{{ goalSummaryCountObj && goalSummaryCountObj.totalGoals }}</h1>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 p-0">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Upcoming</p>
-                                                <h1 class="text-primary f-400 roboto">5</h1>
+                                                <h1 class="text-primary f-400 roboto">{{ goalSummaryCountObj && goalSummaryCountObj.upcomingGoalsCount }}</h1>
                                             </div>
                                         </div>
                                     </div>
@@ -157,15 +157,15 @@
                                         <span class="linebr"></span>
 
                                         <p class="f-14 mb-0 roboto f-400">Monthly</p>
-                                        <h4 class="text-primary roboto f-400">₹57,000</h4>
+                                        <h4 class="text-primary roboto f-400">{{ goalSummaryCountObj && goalSummaryCountObj.monthlyInvestmentMappedToGoals }}</h4>
 
                                         <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
-                                        <h4 class="text-primary roboto f-400">₹22,92,500</h4>
+                                        <h4 class="text-primary roboto f-400">{{ goalSummaryCountObj && goalSummaryCountObj.lumpsumInvestmentMappedToGoals }}</h4>
 
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 pl-8 pr-0">
+                                <!-- <div class="col-md-4 pl-8 pr-0">
                                     <div class="investmentBox text-center">
                                         <p class="f-14 mb-10 l-18 roboto f-400">Additional <br> suggestions</p>
 
@@ -178,26 +178,28 @@
                                         <h4 class="text-primary roboto f-400">₹5,75,000</h4>
 
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="row pt-20">
 
                                 <div class="col-md-12 p-0">
                                     <p class="f-14 left m-0 roboto f-400">Quick view</p>
-                                    <p class="f-14 right m-0">
+                                    <!-- <p class="f-14 right m-0">
                                         <i class="material-icons">
                                             keyboard_arrow_left
                                         </i>
                                         <i class="material-icons">
                                             keyboard_arrow_right
                                         </i>
-                                    </p>
+                                    </p> -->
                                 </div>
 
 
                                 <div class="col-md-12 planTable p-0">
-                                    <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+                                    <mat-paginator [hidePageSize]="true"
+                                    [pageSize]="1"></mat-paginator>
+                                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" [appSkeletonLoading]="isLoading">
 
                                         <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -207,15 +209,14 @@
                                             <th mat-header-cell *matHeaderCellDef> Goal details </th>
                                             <td mat-cell *matCellDef="let element">
                                                 <div
-                                                    class="d-flex align-items-center justify-content-around bg-primary-progress">
+                                                    class="d-flex align-items-center justify-content-around bg-primary-progress bar">
                                                     <div>
-                                                        <img src="assets/images/svg/planGoalsIcon.svg">
+                                                        <img [src]="element.imageUrl" *ngIf="element.imageUrl" class="h-50 w-auto">
                                                     </div>
                                                     <div class="">
-                                                        <p class="f-14 m-0"> Shreya’s higher education </p>
-                                                        <mat-progress-bar mode="determinate" value="40">
+                                                        <p class="f-14 m-0"> {{ element.details }} </p>
+                                                        <mat-progress-bar mode="determinate" [value]="element.percentCompleted">
                                                         </mat-progress-bar>
-
                                                     </div>
                                                 </div>
                                             </td>
@@ -224,19 +225,31 @@
                                         <!-- Name Column -->
                                         <ng-container matColumnDef="value">
                                             <th mat-header-cell *matHeaderCellDef> Goal value </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.value">
+                                                    {{element.value}} 
+                                                </div> 
+                                            </td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
                                         <ng-container matColumnDef="month">
                                             <th mat-header-cell *matHeaderCellDef> Monthly </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.month}} </td>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.month">
+                                                    {{element.month}} 
+                                                </div>
+                                            </td>
                                         </ng-container>
 
                                         <!-- Symbol Column -->
                                         <ng-container matColumnDef="lumpsum">
                                             <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.lumpsum}} </td>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.lumpsum">
+                                                    {{element.lumpsum}} 
+                                                </div> 
+                                            </td>
                                         </ng-container>
 
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
