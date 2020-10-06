@@ -236,7 +236,8 @@
                                     <p class="roboto m-0 text-black f-500">Allocated %</p>
                                 </div>
                             </div>
-                            <div class="row height40 bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
+
+                            <div class="row  bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
                                 [appSkeletonLoading]="loaderFn.loading">
                                 <div class="col-md-3 d-flex align-items-center relClass">
                                     <div class="bar height24"></div>
@@ -259,7 +260,7 @@
                             </div>
 
                             <ng-container *ngFor="let allocation of allocatedList">
-                                <div class="row height40 bl-1 bb-1 br bg-white">
+                                <div class="row   bl-1 bb-1 br bg-white">
                                     <div class="col-md-3 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">{{!loaderFn.loading? "" : ""}}
@@ -319,7 +320,7 @@
                                 </div>
                             </ng-container>
 
-                            <div class="row height40 bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
+                            <div class="row height40  bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
                                 <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
                                     <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No asset
                                         allocated</span>
