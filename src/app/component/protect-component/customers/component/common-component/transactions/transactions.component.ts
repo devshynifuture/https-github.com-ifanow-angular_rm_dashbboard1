@@ -24,7 +24,7 @@ export class TransactionsComponent implements OnInit {
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
-  parentId = AuthService.getAdminAdvisorId();
+  parentId=AuthService.getParentId();
   investorName: any;
   isLoading = false;
   mfList: any;

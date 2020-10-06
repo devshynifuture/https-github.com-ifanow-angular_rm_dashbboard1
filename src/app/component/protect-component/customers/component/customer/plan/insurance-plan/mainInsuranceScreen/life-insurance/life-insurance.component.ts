@@ -219,14 +219,25 @@ export class LifeInsuranceComponent implements OnInit {
     return data;
   }
   deleteInsurance() {
+    const obj={
+        id:this.inputData.id,
+        clientId :this.clientId,
+        familyMemberId:[],
+        insuranceTypeId:this.inputData.heading == 'Life insurance' ? 1 : 2,
+        insuranceSubTypeId:this.inputData.insuranceType
+    }
+    this.inputData.owners.forEach(element => {
+      obj.familyMemberId.push(element.ownerId);
+    });
     const dialogData = {
       header: 'DELETE INSURANCE',
       body: 'Are you sure you want to delete this insurance?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
+    
       positiveMethod: () => {
-        this.planService.deleteInsurancePlanning(this.inputData.id).subscribe((data) => {
+        this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
           this.outputChange.emit(true);
           // this.getDetailsInsurance()
