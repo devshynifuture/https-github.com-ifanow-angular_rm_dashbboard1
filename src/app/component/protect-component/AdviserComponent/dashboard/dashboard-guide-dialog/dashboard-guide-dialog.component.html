@@ -357,7 +357,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="step7SelectedId" (click)="insertOnboardingSteps(teamOrAloneSelectedData.id==1?9:8,nulll)"
+            <button *ngIf="step7SelectedId" (click)="insertOnboardingSteps(teamOrAloneSelectedData.id==1?9:8,null)"
               mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -467,7 +467,7 @@
           <div class="row pt-24">
             <button mat-stroked-button class="btn-primary mr-10" (click)="cropImg(imgURL)">EDIT
               IMAGE</button>
-            <button mat-stroked-button (click)="editImage()">CANCEL</button>
+            <button mat-stroked-button (click)="editImage()">BACK</button>
           </div>
         </div>
       </div>
@@ -476,20 +476,21 @@
           <div class="col-md-12">
             <div (click)="editImage()" class="editDasImg">
               <img class="c-p" [src]="imgURL">
-              <div class="avisor-caption">
-                <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+              <div class="middleOneDash">
+                <p class="text-white mb-0 mt-16 roboto f-400  ">Edit picture</p>
               </div>
             </div>
 
-            <div class="avisor-caption">
+            <!-- <div class="avisor-caption">
               <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
-            </div>
+            </div> -->
 
           </div>
         </div>
         <div class="row pt-10">
           <div class="col-md-12">
-            <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
+            <mat-checkbox *ngIf="hideWillDoLater" [(ngModel)]="doItLater" class="text-diff">I will do this later
+            </mat-checkbox>
           </div>
         </div>
       </div>
@@ -791,7 +792,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step11SelectedId>0" (click)="selctedRtaDataChoice.id==1?step=14:step=19" mat-stroked-button
+            <button *ngIf="step11SelectedId>0"
+              (click)="insertOnboardingSteps(null,selctedRtaDataChoice.id==1?null:'close')" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>

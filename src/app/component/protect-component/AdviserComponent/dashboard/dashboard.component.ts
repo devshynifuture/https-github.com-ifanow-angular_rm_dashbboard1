@@ -30,6 +30,7 @@ import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
 import { element } from 'protractor';
 import { EnumDataService } from "../../../../services/enum-data.service";
+import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 export interface PeriodicElement {
   name: string;
@@ -207,6 +208,7 @@ export class DashboardComponent implements OnInit {
   newchartData: any[];
   mfAumValue: any;
   answerObj: any = {};
+  answerFlag: boolean;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -222,7 +224,8 @@ export class DashboardComponent implements OnInit {
     private datePipe: DatePipe,
     private crmTaskService: CrmTaskService,
     private customerService: CustomerService,
-    public enumDataService: EnumDataService
+    public enumDataService: EnumDataService,
+    private cancelFlagService: CancelFlagService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -473,6 +476,7 @@ export class DashboardComponent implements OnInit {
     this.initPointForTask();
     this.getMisData();
     this.getChartData()
+
   }
 
   initPointForTask() {
@@ -482,15 +486,18 @@ export class DashboardComponent implements OnInit {
 
 
   getAnswerData() {
+    this.answerFlag = true;
     const obj = {
       advisorId: this.advisorId
     }
     this.dashboardService.getOnBoardingQuestionAnswer(obj).subscribe(
       data => {
         if (data) {
+          this.answerFlag = false;
           this.answerObj = data;
         }
       }), err => {
+        this.answerFlag = false;
         this.answerObj.nextStep = 'start'
       }
   }
@@ -1433,11 +1440,15 @@ export class DashboardComponent implements OnInit {
           const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
             maxWidth: '100vw',
             width: '90vw',
-            data: { userData: this.userData, masterGet: data }
+            data: { userData: this.userData, masterGet: data, stepFlag: this.answerObj.nextStep }
           });
 
           dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
+            if (this.cancelFlagService.getCancelFlag()) {
+              this.cancelFlagService.setCancelFlag(undefined)
+              this.getAnswerData();
+            }
           });
         }
       }

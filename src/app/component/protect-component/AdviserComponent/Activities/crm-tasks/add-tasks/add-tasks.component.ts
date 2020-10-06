@@ -686,15 +686,14 @@ export class AddTasksComponent implements OnInit {
 
   setTeamMember(data) {
     console.log("teamMember id or assignedTo idd", data);
-    this.selectedTeamMemberId = data;
+    this.selectedTeamMemberId = data.userId;
     if(this.teamMemberList && this.teamMemberList.length>0){
-      let obj = this.teamMemberList.find(i => i.userId === data);
-      if(this.canAddCollaborators(data)){
+      if(this.canAddCollaborators(data.userId)){
         this.collaboratorList.push({
-          name: obj.fullName,
+          name: data.fullName,
           default: true,
-          userId: obj.userId,
-          profilePicUrl: obj.profilePicUrl
+          userId: data.userId,
+          profilePicUrl: data.profilePicUrl
         })
       }
     }
@@ -1133,7 +1132,7 @@ export class AddTasksComponent implements OnInit {
   onAddingCollaborator(data) {
     console.log(data);
     // if (this.data !== null) {
-      if(data.hasOwnProperty('id')){
+      if(data.hasOwnProperty('id') && this.data){
         if (this.canAddCollaborators(data.userId)) {
           const obj = {
             taskId: this.data.id,
