@@ -24,7 +24,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   filteredOptions: Observable<any[]>;
   _inputData: any;
   displayedColumns: string[] = ['details', 'outstanding', 'consider', 'edit'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [];
   displayedColumns1: string[] = ['details', 'amount', 'consider', 'edit'];
   dataSource1 = [];
   displayedColumns2: string[] = ['details', 'amount', 'consider', 'edit'];
