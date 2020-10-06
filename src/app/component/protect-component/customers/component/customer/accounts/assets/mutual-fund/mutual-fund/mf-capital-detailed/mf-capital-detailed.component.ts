@@ -84,7 +84,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=parseInt(param1.parentId);
         this.familyMemberId = parseInt(param1.familyMemberId)
 
         this.fromDateYear = param1.from,
@@ -98,7 +98,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=AuthService.getParentId();
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.getOrgData = AuthService.getOrgDetails();

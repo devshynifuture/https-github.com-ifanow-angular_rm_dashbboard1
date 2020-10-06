@@ -245,7 +245,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.EXPENSE_ALL_GET, data)
   }
   deleteInsurancePlanning(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_INPLANNING+ 'id=' + data, '')
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_INPLANNING,data)
   }
   getInsuranceRecommendation(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.RECOMMENDATION_LIST_GET+ 'id=' + data, '')
