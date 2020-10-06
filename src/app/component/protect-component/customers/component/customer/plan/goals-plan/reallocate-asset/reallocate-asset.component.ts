@@ -57,7 +57,7 @@ export class ReallocateAssetComponent implements OnInit {
     this.allocated = this.dialogData.allocated
     this.allocation = this.dialogData.allocation
     if (this.allocationData) {
-      if (this.allocationData.assetName == 'Mutual Funds') {
+      if (this.allocationData.assetType == 5) {
         this.showMf = true
       }
     } else if (this.allocated.assetType == 5) {
@@ -137,7 +137,7 @@ export class ReallocateAssetComponent implements OnInit {
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }
-    if (this.allocationData.assetName == 'Mutual Funds') {
+    if (this.allocationData.assetType == 5) {
       obj.lumpsumPercent = parseInt(parseFloat(this.reallocationFG.controls.lumpsumPercent.value).toFixed(2));
       obj.sipPercent = parseInt(parseFloat(this.reallocationFG.controls.sipPercent.value).toFixed(2));
     }
