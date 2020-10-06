@@ -160,9 +160,11 @@ export class AssetStocksComponent implements OnInit {
   getDetailsClientAdvisorRes(data) {
     console.log('data', data);
     this.clientDetails = data;
-    this.clientData = data.clientData;
-    this.getOrgData = data.advisorData
-    this.userInfo = data.advisorData;
+    if(data){
+      this.clientData = data.clientData;
+      this.getOrgData = data.advisorData
+      this.userInfo = data.advisorData;
+    }
   }
 
   generatePdf() {
