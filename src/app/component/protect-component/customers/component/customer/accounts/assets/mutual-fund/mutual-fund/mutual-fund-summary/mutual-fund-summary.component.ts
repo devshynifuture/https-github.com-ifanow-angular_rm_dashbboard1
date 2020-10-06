@@ -164,7 +164,7 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=parseInt(param1.parentId);
         //this.setDefaultFilterData.toDate = param1.toDate;
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
@@ -175,7 +175,7 @@ export class MutualFundSummaryComponent implements OnInit {
       else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=AuthService.getParentId();
         this.isClient = AuthService.getUserInfo().clientId ? true : false;
       }
     });
@@ -209,7 +209,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
-
+        this.toDate = this.datePipe.transform(new Date(param1.toDate), 'yyyy-MM-dd');
         this.addedData = true;
         console.log('2423425', param1)
         this.isBulkEmailing = true
@@ -417,11 +417,12 @@ export class MutualFundSummaryComponent implements OnInit {
       } else {
         this.adminAdvisorIds = [this.advisorId];
       }
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
-      this.mfService.setadvisorList(this.mutualFund);
     }, err => {
       this.adminAdvisorIds = [this.advisorId];
-      this.mfService.setadvisorList(this.mutualFund);
+
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
 
     });

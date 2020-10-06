@@ -82,7 +82,7 @@ export class MutualFundsComponent implements OnInit {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
-    this.parentId = AuthService.getAdminAdvisorId();
+    this.parentId=AuthService.getParentId();
   }
   mfAllocationData: any[] = [
     {

@@ -183,7 +183,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     // }
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
-    this.parentId = AuthService.getAdminAdvisorId();
+    this.parentId=AuthService.getParentId();
     this.advisorImg = this.advisorInfo.profilePic;
     this.greeter();
     this.greeterFnID = setInterval(() => this.greeter(), 1000);

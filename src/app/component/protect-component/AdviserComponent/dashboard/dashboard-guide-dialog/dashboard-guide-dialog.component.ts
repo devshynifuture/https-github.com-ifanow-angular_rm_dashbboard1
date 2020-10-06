@@ -10,6 +10,7 @@ import { OrgSettingServiceService } from '../../setting/org-setting-service.serv
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { DashboardService } from '../dashboard.service';
+import { CancelFlagService } from '../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 export interface PeriodicElement {
   name: string;
@@ -21,6 +22,7 @@ export interface PeriodicElement {
 export interface DialogData {
   userData: any;
   masterGet: any;
+  stepFlag: any;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -34,16 +36,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./dashboard-guide-dialog.component.scss']
 })
 export class DashboardGuideDialogComponent implements OnInit {
+  stepFlag: any;
+  insertFlag: boolean;
 
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private settingService: SettingsService,
     private eventService: EventService,
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private orgSetting: OrgSettingServiceService,
     private utilService: UtilService,
-    private dashService: DashboardService
+    private dashService: DashboardService,
+    private cancelFlagService: CancelFlagService
   ) {
   }
 
@@ -244,6 +250,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   ngOnInit() {
     this.userInfo = this.data.userData;
     this.questionData = this.data.masterGet;
+    this.stepFlag = this.data.stepFlag;
     this.formPlaceHolders = AppConstants.formPlaceHolders;
     this.validatorType = ValidatorType;
     this.advisorId = AuthService.getAdvisorId();
@@ -277,6 +284,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.getPersonalInfo();
     // this.getRtaDetails();
     this.getEmailVerification();
+    this.getAdvisorStepWhereLeft(this.stepFlag);
     this.getAnswerData();
   }
 
@@ -288,11 +296,6 @@ export class DashboardGuideDialogComponent implements OnInit {
       data => {
         if (data) {
           this.answerObj = data;
-          this.getAdvisorStepWhereLeft(data.nextStep);
-          // Object.entries(data).forEach(([key, value], index) => {
-          //   console.log(`${index}: ${key} = ${value}`);
-          //   if(value.val)
-          // });
         }
       });
   }
@@ -718,7 +721,18 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   editImage() {
-    (this.showEditOption) ? this.showEditOption = false : this.showEditOption = true;
+    if (this.showEditOption) {
+      this.showEditOption = false;
+      if (this.imgURL == 'http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png') {
+        this.hideWillDoLater = true;
+      } else {
+        this.hideWillDoLater = false;
+        this.doItLater = true;
+      }
+    } else {
+      this.showEditOption = true;
+      this.doItLater = false;
+    }
   }
 
   getPersonalInfo() {
@@ -728,6 +742,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.hideWillDoLater = true;
       } else {
         this.hideWillDoLater = false;
+        this.doItLater = true;
       }
     });
   }
@@ -740,6 +755,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   insertOnboardingSteps(stepFlag, valueData) {
+    this.cancelFlagService.setCancelFlag(true)
+    this.insertFlag = true;
     const obj = {
       id: {
         name: 'id',
@@ -751,7 +768,7 @@ export class DashboardGuideDialogComponent implements OnInit {
       },
       step1: {
         name: 'step1',
-        value: this.answerObj.step1 ? this.answerObj.step1.value : (this.step2SelectedId) ? this.step2SelectedId : 0
+        value: this.answerObj.step1 && this.answerObj.step1.value != 0 ? this.answerObj.step1.value : (this.step2SelectedId) ? this.step2SelectedId : 0
       },
       step2: [
         {
@@ -845,24 +862,18 @@ export class DashboardGuideDialogComponent implements OnInit {
     obj.step2 = obj.step2.concat(this.serviceList);
     obj.step3 = obj.step3.concat(this.clientsWorkWithList);
     obj.step4 = obj.step4.concat(this.productList);
-    if (this.answerObj.id != 0) {
-      obj.step2 = obj.step2.concat({
-        name: 'modified',
-        value: true
-      });
-    }
-    if (this.answerObj.id != 0) {
-      obj.step3 = obj.step3.concat({
-        name: 'modified',
-        value: true
-      });
-    }
-    if (this.answerObj.id != 0) {
-      obj.step4 = obj.step4.concat({
-        name: 'modified',
-        value: true
-      });
-    }
+    obj.step2 = obj.step2.concat({
+      name: 'modified',
+      value: this.step3Flag > 0 ? true : false
+    });
+    obj.step3 = obj.step3.concat({
+      name: 'modified',
+      value: this.step4Flag > 0 ? true : false
+    });
+    obj.step4 = obj.step4.concat({
+      name: 'modified',
+      value: this.step5Flag > 0 ? true : false
+    });
     console.log(obj);
     this.dashService.onBoardingQuestionAnswer(obj).subscribe(
       data => {
@@ -897,19 +908,19 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.step = 1;
         break;
       case flag == 'step2':
-        this.step = 2;
-        break;
-      case flag == 'step3':
         this.step = 3;
         break;
-      case flag == 'step4':
+      case flag == 'step3':
         this.step = 4;
         break;
-      case flag == 'step5':
+      case flag == 'step4':
         this.step = 5;
         break;
-      case flag == 'step6':
+      case flag == 'step5':
         this.step = 6;
+        break;
+      case flag == 'step6':
+        this.step = 7;
         break;
       case flag == 'step7':
         this.step = 8;
@@ -935,11 +946,15 @@ export class DashboardGuideDialogComponent implements OnInit {
         break;
       case flag == 'step13':
         this.step = 12;
+        this.ArnRiaIndex = 0
+        this.addArnRiaForm()
         break;
       case flag == 'step14':
         this.step = 13;
         break;
       case flag == 'step15':
+        this.selectedArmOrRiaIndex = 0;
+        this.getRtaDetails();
         this.step = 14;
         break;
       case flag == 'step16':

@@ -168,7 +168,7 @@
                 {{inputData?.flag == 'suggestExistingPolicy' ? 'Cancel' : showExisting ? 'Previous'  : 'Cancel'}}</h5>
         </div>
         <div class="col-md-8 right text-right" *ngIf="showExisting">
-            <button *ngIf="inputData?.flag != 'suggestExistingPolicy'" mat-button class="btn-bottom br-0 text-inherit"
+            <button *ngIf="inputData?.flag != 'suggestExistingPolicy' && dataSource2?.length > 0" mat-button class="btn-bottom br-0 text-inherit"
                 (click)="showHealthInsurance(showInsurance)">Procced</button>
             <button mat-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" class="btn-bottom br-0 text-inherit"
                 (click)="saveExistingPolicy(showInsurance)">Save</button>

@@ -233,7 +233,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
 
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=parseInt(param1.parentId);
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
         // this.toDate = param1.toDate;
         // this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
@@ -243,7 +243,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
       } else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=AuthService.getParentId();
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.details = AuthService.getProfileDetails();
@@ -571,10 +571,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         this.adminAdvisorIds = [this.advisorId];
       }
       this.getMutualFund();
-      this.mfService.setadvisorList(this.mutualFund);
+      this.mfService.setadvisorList(this.adminAdvisorIds);
     }, err => {
       this.adminAdvisorIds = [this.advisorId];
-      this.mfService.setadvisorList(this.mutualFund);
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
 
     });

@@ -124,12 +124,13 @@ export class MutualFundOverviewComponent implements OnInit {
         const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
-        this.parentId = AuthService.getAdminAdvisorId();
+        // this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=parseInt(param1.parentId);
         console.log('2423425', param1);
       } else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-        this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId=AuthService.getParentId();
       }
     });
     this.userInfo = AuthService.getUserInfo();

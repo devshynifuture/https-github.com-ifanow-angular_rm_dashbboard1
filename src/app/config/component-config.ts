@@ -327,7 +327,7 @@ export const appConfig = {
   REMOVE_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/insurance/delete?',
   LIFE_ANALYSIS_ADD: 'insurance/planning/life/insurance/need/analysis/save',
   GET_DETAILED_INSURANCE: 'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
-  DELETE_INSURANCE_INPLANNING: 'insurance/planning/insurance/delete?',
+  DELETE_INSURANCE_INPLANNING: 'insurance/planning/insurance/delete',
   NEED_BASED_ANALYSIS: 'insurance/planning/life/insurance/need/based/analysis/get',
   RECOMMENDATION_LIST_GET: 'insurance/planning/life/insurance/recommendation/list/get?',
   INSURANCE_ADVICE_GET: 'insurance/planning/life/insurance/advice/get',
