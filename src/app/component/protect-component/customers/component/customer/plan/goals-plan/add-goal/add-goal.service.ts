@@ -24,7 +24,7 @@ export class AddGoalService {
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     } else {
       let asset: any = event.item.data;
-      if (asset.maturityDate > selectedGoal.goalStartDate) {
+      if (asset.maturityDate > selectedGoal.goalEndDate) {
         this.eventService.openSnackBar("Asset allocation unsuccessful !! Asset maturing after goal date.", "Dismiss");
       } else {
 
