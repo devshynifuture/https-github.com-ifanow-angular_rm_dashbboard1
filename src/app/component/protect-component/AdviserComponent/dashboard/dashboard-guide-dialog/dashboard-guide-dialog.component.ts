@@ -10,6 +10,7 @@ import { OrgSettingServiceService } from '../../setting/org-setting-service.serv
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { DashboardService } from '../dashboard.service';
+import { CancelFlagService } from '../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 export interface PeriodicElement {
   name: string;
@@ -36,16 +37,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardGuideDialogComponent implements OnInit {
   stepFlag: any;
+  insertFlag: boolean;
 
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private settingService: SettingsService,
     private eventService: EventService,
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private orgSetting: OrgSettingServiceService,
     private utilService: UtilService,
-    private dashService: DashboardService
+    private dashService: DashboardService,
+    private cancelFlagService: CancelFlagService
   ) {
   }
 
@@ -751,6 +755,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   insertOnboardingSteps(stepFlag, valueData) {
+    this.cancelFlagService.setCancelFlag(true)
+    this.insertFlag = true;
     const obj = {
       id: {
         name: 'id',
