@@ -17,6 +17,9 @@ export class PlanService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('addMonthlyDistribution', data.addMonthlyDistribution);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_LIST, httpParams)
   }
+  getGoalSummaryPlanData(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOAL_SUMMARY_PLAN, data);
+  }
   addIncomeData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INCOME_LIST, data)
   }

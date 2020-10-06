@@ -920,6 +920,7 @@ export const appConfig = {
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
+  GET_GOAL_SUMMARY_PLAN: 'goal-planning/goal/plan/summary', 
   GET_TASK_DASHBOARD_COUNT: 'admin/dashboard/task/metrics/get',
   QUESTION_MASTER: 'admin/dashboard/on-boarding/question-master',
   QUESTION_ANSWER_ADD: 'admin/dashboard/on-boarding/question-answer/add',

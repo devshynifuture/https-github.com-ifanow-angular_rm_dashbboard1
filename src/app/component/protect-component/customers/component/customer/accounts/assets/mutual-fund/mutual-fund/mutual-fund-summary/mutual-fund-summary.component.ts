@@ -417,11 +417,12 @@ export class MutualFundSummaryComponent implements OnInit {
       } else {
         this.adminAdvisorIds = [this.advisorId];
       }
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
-      this.mfService.setadvisorList(this.mutualFund);
     }, err => {
       this.adminAdvisorIds = [this.advisorId];
-      this.mfService.setadvisorList(this.mutualFund);
+
+      this.mfService.setadvisorList(this.adminAdvisorIds);
       this.getMutualFund();
 
     });
