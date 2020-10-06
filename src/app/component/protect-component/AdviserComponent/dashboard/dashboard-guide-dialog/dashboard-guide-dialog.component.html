@@ -467,7 +467,7 @@
           <div class="row pt-24">
             <button mat-stroked-button class="btn-primary mr-10" (click)="cropImg(imgURL)">EDIT
               IMAGE</button>
-            <button mat-stroked-button (click)="editImage()">CANCEL</button>
+            <button mat-stroked-button (click)="editImage()">BACK</button>
           </div>
         </div>
       </div>
@@ -489,7 +489,8 @@
         </div>
         <div class="row pt-10">
           <div class="col-md-12">
-            <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
+            <mat-checkbox *ngIf="hideWillDoLater" [(ngModel)]="doItLater" class="text-diff">I will do this later
+            </mat-checkbox>
           </div>
         </div>
       </div>

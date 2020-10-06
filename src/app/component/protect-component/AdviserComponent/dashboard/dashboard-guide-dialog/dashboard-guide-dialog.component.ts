@@ -717,7 +717,18 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   editImage() {
-    (this.showEditOption) ? this.showEditOption = false : this.showEditOption = true;
+    if (this.showEditOption) {
+      this.showEditOption = false;
+      if (this.imgURL == 'http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png') {
+        this.hideWillDoLater = true;
+      } else {
+        this.hideWillDoLater = false;
+        this.doItLater = true;
+      }
+    } else {
+      this.showEditOption = true;
+      this.doItLater = false;
+    }
   }
 
   getPersonalInfo() {
@@ -727,6 +738,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.hideWillDoLater = true;
       } else {
         this.hideWillDoLater = false;
+        this.doItLater = true;
       }
     });
   }
