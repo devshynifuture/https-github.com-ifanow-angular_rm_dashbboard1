@@ -13,6 +13,10 @@ export class SummaryPlanComponent implements OnInit {
   ngOnInit() {
   }
 
+  getSummeryInsurance(){
+    
+  }
+
 }
 
 export interface PeriodicElement {
