@@ -50,10 +50,18 @@ export class PeopleClientsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
 
-    this.hasEndReached = true;
-    this.clientDatasource.data = [{}, {}, {}];
-    this.isLoading = true;
-    this.getClientList(0);
+    if (AuthService.getClientList()) {
+      this.hasEndReached = false;
+      this.finalClientList = AuthService.getClientList()
+      this.clientDatasource.data = this.finalClientList;
+      this.clientDatasource.sort = this.clientTableSort;
+      this.isLoading = false;
+    } else {
+      this.hasEndReached = true;
+      this.clientDatasource.data = [{}, {}, {}];
+      this.isLoading = true;
+      this.getClientList(0);
+    }
   }
 
 
@@ -94,6 +102,7 @@ export class PeopleClientsComponent implements OnInit {
           this.clientDatasource.sort = this.clientTableSort;
           this.hasEndReached = false;
           this.infiniteScrollingFlag = false;
+          (offsetValue == 0) ? AuthService.setClientList(data) : '';
         } else {
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
