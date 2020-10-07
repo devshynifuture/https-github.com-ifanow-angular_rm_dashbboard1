@@ -56,6 +56,10 @@ export class AuthService {
     }
   }
 
+  static setClientList(data) {
+    sessionStorage.setItem('clientList', JSON.stringify(data));
+  }
+
   static setClientRolesSettings(data) {
     sessionStorage.setItem('clientRoles', JSON.stringify(data));
   }
@@ -70,6 +74,10 @@ export class AuthService {
 
   static setUserRoleType(roleObj) {
     localStorage.setItem('roleObj', JSON.stringify(roleObj));
+  }
+
+  static getClientList() {
+    return JSON.parse(sessionStorage.getItem('clientList'));
   }
 
   static getUserRoleType() {
@@ -193,7 +201,7 @@ export class AuthService {
     localStorage.removeItem('roleObj');
     localStorage.removeItem('successStoringToken');
     localStorage.removeItem('googleOAuthToken');
-
+    sessionStorage.removeItem('clientList');
     // this.myRoute.navigate(['login']);
   }
 
