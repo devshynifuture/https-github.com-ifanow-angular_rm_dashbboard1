@@ -7,6 +7,7 @@ import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -40,14 +41,16 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   heading: string;
   fragmentData: any;
   popupHeaderText;
+  emailLists: any;
   constructor(private eventService: EventService, public authService: AuthService,
     public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2,
-    private subInjectService: SubscriptionInject) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService) {
 
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.getEmailList();
   }
 
   get data() {
@@ -59,6 +62,26 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     this.popupHeaderText = data.title;
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
     this.storeData = this.fragmentData.data;
+  }
+
+  getEmailList() {
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.peopleService.getEmailList(obj).subscribe(
+      data => this.getEmailListRes(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
+
+  getEmailListRes(data) {
+    if (data && data.length > 0) {
+      this.emailLists = data;
+      this.storeData.fromEmail = data[0].emailAddress;
+    }
+    console.log('getEmailList', data)
   }
 
   copyName(value) {
@@ -114,7 +137,8 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
       subject: data.subject,
       body: data.body,
       advisorId: this.advisorId,
-
+      fromEmail: this.storeData.fromEmail,
+      id: this.storeData.id,
       // "advisorId":2727,
       emailTemplateId: this.storeData.emailTemplateId
     };
