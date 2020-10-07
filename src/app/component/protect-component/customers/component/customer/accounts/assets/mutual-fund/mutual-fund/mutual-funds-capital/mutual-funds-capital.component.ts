@@ -300,8 +300,8 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
-      advisorIds: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      parentId:this.parentId ? this.parentId : this.advisorId,
+      advisorIds:this.advisorId,
       clientId: this.clientId,
 
     };
