@@ -262,7 +262,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
                     arrWithTransactionCheckedTrue.forEach(element => {
                       // check  and compare date object and can delete value
-                      arrayValue.push({
+                      let obj = {
                         id: element.id,
                         name: element.shemeName,
                         folioNumber: element.folioNumber,
@@ -277,11 +277,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         isFreezeClicked: false,
                         mutualFundTransaction: element.mutualFundTransaction,
                         aumDate: element.aumDate
-                      });
+                      }
+
+                      if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&  
+                          element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
+                          element.id === 0) {
+                            //rta
+                            obj.unitsRta = '-';
+                      } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+                        element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
+                          //ifanow
+                          obj.unitsIfanow = '-';
+                      }
+                      arrayValue.push(obj);
                     });
                     if (arrayValue.length !== 0) {
                       this.dataSource1.data = arrayValue;
-
                     } else {
                       this.dataSource1.data = null;
                     }
@@ -816,8 +827,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
-        if((element.calculatedUnits - element.aumUnits) > 0.009){
-          excelData.push(Object.assign(data));
+        // mutialFundId and aumId is not 0
+        if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') && 
+          element.mutualFundId !==0 && element.mutualFundId !== null && 
+          element.id!==0 && element.id !==null){
+          if((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009){
+            excelData.push(Object.assign(data));
+          }
+        } else if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') &&  
+            element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
+            element.id === 0) {
+              data[8] = '-';
+              excelData.push(Object.assign(data));
+        } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+          element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
+            data[7] = '-';
+            excelData.push(Object.assign(data));
         }
       });
       ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
@@ -839,8 +864,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
-          if((element.calculatedUnits - element.aumUnits)> 0.009){
-            excelData.push(Object.assign(data));
+            // mutialFundId and aumId is not 0
+          if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') && 
+            element.mutualFundId !==0 && element.mutualFundId !== null && 
+            element.id!==0 && element.id !==null){
+            if((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009){
+              excelData.push(Object.assign(data));
+            }
+          } else if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') &&  
+              element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
+              element.id === 0) {
+                data[8] = '-';
+                excelData.push(Object.assign(data));
+          } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+            element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
+              data[7] = '-';
+              excelData.push(Object.assign(data));
           }
         });
 
@@ -1151,7 +1190,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           })
           console.log('this is aum report ismap -1 and transac check true::', reportListWithIsMapMinusOneAndTransacCheckTrue);
           reportListWithIsMapMinusOneAndTransacCheckTrue.forEach(element => {
-            arrayValue.push({
+            let obj = {
               id: element.id,
               name: element.shemeName,
               folioNumber: element.folioNumber,
@@ -1166,7 +1205,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
               isFreezeClicked: false,
               mutualFundTransaction: element.mutualFundTransaction,
               aumDate: element.aumDate
-            });
+            }
+            if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&  
+                element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
+                element.id === 0) {
+                  //rta
+                  obj.unitsRta = '-';
+            } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+              element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
+                //ifanow
+                obj.unitsIfanow = '-';
+            }
+            arrayValue.push(obj);
           });
           if (arrayValue.length === 0) {
             this.dataSource1.data = null;
