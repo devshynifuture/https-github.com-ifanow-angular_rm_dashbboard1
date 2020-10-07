@@ -426,7 +426,7 @@
                   </h5>
                 </div>
                 <div class="col-md-3 p-0">
-                  <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
+                  <button *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'" mat-stroked-button
                     class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
                   </button>
                 </div>
@@ -447,10 +447,13 @@
                       {{singleMember.daysToGo}}
                     </span>
                   </h5>
-                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'">
                     {{singleMember.dateOfBirth | date:'dd/MM/yyyy'}}
                   </p>
-                  <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'">
+                    {{ singleMember.anniversaryDate | date: 'dd/MM/yyyy' }}
+                  </p>
+                  <p *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
                     {{singleMember.age}} years
                   </p>
                 </div>

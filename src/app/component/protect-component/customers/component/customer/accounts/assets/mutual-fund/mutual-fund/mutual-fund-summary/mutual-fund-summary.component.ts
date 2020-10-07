@@ -1030,7 +1030,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // this.getSchemeWise(); // get scheme wise list
       // this.mfSchemes(); // get mutualFund list
       // for displaying table values as per category
-      // this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
+       this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
       // const input = {
       // mutualFundList: this.mutualFundList,
@@ -1074,8 +1074,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
-      parentId:this.parentId ? this.parentId : this.advisorId,
-      advisorId:this.adminAdvisorIds,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -1142,8 +1142,8 @@ export class MutualFundSummaryComponent implements OnInit {
         categoryWiseMfList.push(element.id)
       });
       const obj = {
-        parentId:this.parentId,
-        advisorId: this.adminAdvisorIds,
+        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,
@@ -1272,7 +1272,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         
-        // this.summary.data = data.customDataSourceData;
+         this.customDataSource.data = data.customDataSourceData;
 
         const myArray = data.customDataSourceData;
         let list = [];
@@ -1392,13 +1392,16 @@ export class MutualFundSummaryComponent implements OnInit {
             .subscribe(res => {
               this.getObj = res; //used for getting mutual fund data coming from main gain call
               console.log('yeeeeeeeee', res)
+              console.log('summary',this.summary)
               if (this.getObj.customDataSourceData) {
 
               } else {
                 this.mfService.setSummaryData(this.dataSummary)
-                if (this.router.url.split('?')[0] == '/pdf/summary') {
-                  this.showDownload = true
-                  this.generatePdfBulk()
+                this.showDownload = true
+                if (this.router.url.split('?')[0] == '/pdf/summary' && res !="") {
+                  setTimeout(() => {
+                    this.generatePdfBulk()
+                  }, 200);
                 }
               }
             })
@@ -1957,7 +1960,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openUpperFragment(flag, element) {
     console.log("this is what element is:::", element);
-    // if (flag == 'addTransaction') {
+    if (flag == 'addTransaction') {
       const fragmentData = {
         flag: 'app-upper-customer',
         id: 1,
@@ -1993,7 +1996,7 @@ export class MutualFundSummaryComponent implements OnInit {
           }
         }
       );
-    // }
+    }
 
   }
   generatePdfBulk() {
