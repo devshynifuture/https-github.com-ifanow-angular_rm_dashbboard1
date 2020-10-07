@@ -306,9 +306,9 @@
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
                     {{(item.growthRate) ? item.growthRate : '-'}}%</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
+                    <span style="color: #007bff" *ngIf="item.status == 'LIVE'">
                         {{'LIVE'}} </span>
-                    <span class="text-success" *ngIf="item.statusId == 'CLOSED'">
+                    <span style="color: #00ff6a" *ngIf="item.status == 'CLOSED'">
                         {{'CLOSED'}} </span>
                 </td>
     
