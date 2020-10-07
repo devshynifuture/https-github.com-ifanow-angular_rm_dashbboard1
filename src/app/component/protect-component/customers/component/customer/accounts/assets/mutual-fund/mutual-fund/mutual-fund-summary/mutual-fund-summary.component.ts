@@ -1260,7 +1260,7 @@ export class MutualFundSummaryComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         // mutualFund: this.mfData,
-        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
+        mutualFund: (this.reponseData) ? this.reponseData : this.mfData,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
