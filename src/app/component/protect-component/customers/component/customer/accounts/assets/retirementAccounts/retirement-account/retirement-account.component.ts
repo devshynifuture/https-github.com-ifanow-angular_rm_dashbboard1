@@ -75,7 +75,9 @@ export class RetirementAccountComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
-
+  epfDatalist:any;
+  npsDatalist:any;
+  gratuityDatalist:any;
   // async ExportTOExcel(value) {
   //   this.excelData = []
   //   var data = []
@@ -273,13 +275,21 @@ export class RetirementAccountComponent implements OnInit {
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
-    this.isLoading = true;
+    // this.isLoading = true;
     if (value == '2') {
-      this.dataSource = new MatTableDataSource([{}, {}, {}]);
-      this.getListNPS()
+      if(this.npsDatalist){
+        this.dataSource.data = this.npsDatalist;
+      }else{
+        this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        this.getListNPS()
+      }
     } else if (value == '3') {
-      this.dataSource = new MatTableDataSource([{}, {}, {}]);
-      this.getListGratuity()
+      if(this.gratuityDatalist){
+        this.dataSource.data = this.gratuityDatalist;
+      }else{
+        this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        this.getListGratuity()
+      }
     } else if (value == '4') {
       this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListSuperannuation()
@@ -287,8 +297,12 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListEPS()
     } else {
-      this.getListEPF();
-      this.dataSource = new MatTableDataSource(this.data);
+      if(this.epfDatalist){
+        this.dataSource.data = this.epfDatalist;
+      }else{
+        this.getListEPF();
+        this.dataSource = new MatTableDataSource(this.data);
+      }
     }
   }
 
@@ -416,7 +430,7 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -426,34 +440,40 @@ export class RetirementAccountComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'EPF') {
-          this.custumService.deleteEPF_EPS(data.id).subscribe(
+          this.custumService.deleteEPF_EPS(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListEPF();
+              // this.getListEPF();
+              this.epfDatalist = this.epfDatalist.filter(x => x.id != element.id);
+              this.dataSource.data = this.epfDatalist;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'NPS') {
-          this.custumService.deleteNPS(data.id).subscribe(
+          this.custumService.deleteNPS(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListNPS();
+              // this.getListNPS();
+              this.npsDatalist = this.npsDatalist.filter(x => x.id != element.id);
+              this.dataSource.data = this.npsDatalist;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'GRATUITY') {
-          this.custumService.deleteGratuity(data.id).subscribe(
+          this.custumService.deleteGratuity(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListGratuity();
+              // this.getListGratuity();
+              this.gratuityDatalist = this.gratuityDatalist.filter(x => x.id != element.id);
+              this.dataSource.data = this.gratuityDatalist;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'SUPERANNUATION') {
-          this.custumService.deleteSuperAnnuation(data.id).subscribe(
+          this.custumService.deleteSuperAnnuation(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getListSuperannuation();
@@ -462,7 +482,7 @@ export class RetirementAccountComponent implements OnInit {
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.custumService.deleteEPS(data.id).subscribe(
+          this.custumService.deleteEPS(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getListEPS();
@@ -508,7 +528,8 @@ export class RetirementAccountComponent implements OnInit {
         this.sumOfcurrentValue = data.sumOfcurrentValue;
         this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
         this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
-        this.dataSource.data = data.assetList;
+        this.epfDatalist = data.assetList;
+        this.dataSource.data = this.epfDatalist;
         this.dataSource.sort = this.epfListTableSort;
         var d = new Date();
         const n = d.getFullYear();
@@ -550,7 +571,8 @@ export class RetirementAccountComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getGrauityRes =', data);
-        this.dataSource.data = data.assetList;
+        this.gratuityDatalist = data.assetList;
+        this.dataSource.data = this.gratuityDatalist;
         this.dataSource.sort = this.gratuityListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
@@ -580,7 +602,8 @@ export class RetirementAccountComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getNPSRes =', data);
-        this.dataSource.data = data.assetList;
+        this.npsDatalist = data.assetList
+        this.dataSource.data = this.npsDatalist;
         this.dataSource.sort = this.npsListTableSort;
         this.totalContribution = data.sumOfAmountInvested;
         this.totalCurrentValue = data.sumOfCurrentValue;

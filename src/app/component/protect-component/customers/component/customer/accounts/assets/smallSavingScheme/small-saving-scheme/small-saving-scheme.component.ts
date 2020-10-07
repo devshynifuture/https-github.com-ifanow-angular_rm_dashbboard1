@@ -11,12 +11,52 @@ export class SmallSavingSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
   constructor(private excel: ExcelService, ) {
   }
-
+  ppfDataList: any;
+  nscDataList: any;
+  ssyDataList: any;
+  kvpDataList: any;
+  scssDataList: any;
+  poDataList: any;
+  pordDataList: any;
+  potdDataList: any;
+  pomisDataList: any;
   ngOnInit() {
     this.selectedTab = 1;
   }
 
-  getAssetCountGLobalData(){
+  getAssetCountGLobalData() {
     // this.changeCount.emit("call");
+  }
+
+  getDataList(asset, event) {
+    switch (asset) {
+      case 'ppf':
+        this.ppfDataList = event;
+        break;
+      case 'nsc':
+        this.nscDataList = event;
+        break;
+      case 'ssy':
+        this.ssyDataList = event;
+        break;
+      case 'kvp':
+        this.kvpDataList = event;
+        break;
+      case 'scss':
+        this.scssDataList = event;
+        break;
+      case 'po':
+        this.poDataList = event;
+        break;
+      case 'pord':
+        this.pordDataList = event;
+        break;
+      case 'potd':
+        this.nscDataList = event;
+        break;
+      case 'pomis':
+        this.nscDataList = event;
+        break;
+    }
   }
 }

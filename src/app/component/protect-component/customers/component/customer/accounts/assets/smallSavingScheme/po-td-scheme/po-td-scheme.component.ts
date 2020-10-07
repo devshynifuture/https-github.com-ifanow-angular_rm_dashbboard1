@@ -1,5 +1,5 @@
 import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -24,6 +24,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class PoTdSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() potdDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -60,7 +62,11 @@ export class PoTdSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPoTdSchemedata();
+    if(!this.dataList){
+      this.getPoTdSchemedata();
+      }else{
+        this.getPoTdSchemedataResponse(this.dataList);
+      }
   }
 
   fetchData(value, fileName, element) {
@@ -145,6 +151,9 @@ export class PoTdSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoTdSchemedataResponse', data);
+        if(!this.dataList){
+          this.potdDataList.emit(data);
+        }
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
         this.sumOfCurrentValue = data.sumOfCurrentValue;

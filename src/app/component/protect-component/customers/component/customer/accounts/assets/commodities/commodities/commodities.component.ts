@@ -155,19 +155,32 @@ export class CommoditiesComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-
+goldDataList:any;
+otherDataList:any;
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
     if (value == '1') {
-      this.goldList = new MatTableDataSource(this.data);
-      this.getGoldList()
+      if(this.goldDataList){
+        this.isLoading = false;
+        this.getGoldRes(this.goldDataList);
+      }
+      else{
+        this.goldList = new MatTableDataSource(this.data);
+        this.getGoldList();
+      }
     } else {
-      this.otherCommodityList = new MatTableDataSource(this.data);
-      this.getOtherList()
+      if(this.otherDataList){
+        this.isLoading = false;
+        this.getOthersRes(this.otherDataList);
+      }
+      else{
+        this.otherCommodityList = new MatTableDataSource(this.data);
+        this.getOtherList();
+      }
     }
   }
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -177,18 +190,22 @@ export class CommoditiesComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'GOLD') {
-          this.custumService.deleteGold(data.id).subscribe(
+          this.custumService.deleteGold(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getGoldList()
+              this.goldDataList.assetList = this.goldDataList.assetList.filter(x => x.id != element.id);
+              this.goldList.data = this.goldDataList.assetList;
+              // this.getGoldList()
             },
             error => this.eventService.showErrorMessage(error)
           )
         } else {
-          this.custumService.deleteOther(data.id).subscribe(
+          this.custumService.deleteOther(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getOtherList()
+              this.otherDataList.assetList = this.otherDataList.assetList.filter(x => x.id != element.id);
+              this.otherCommodityList.data = this.otherDataList.assetList;
+              // this.getOtherList()
             },
             error => this.eventService.showErrorMessage(error)
           )
@@ -237,7 +254,8 @@ export class CommoditiesComponent implements OnInit {
       this.goldList.data = []
     }
     else if (data.assetList.length != 0) {
-      this.goldList.data = data.assetList;
+      this.goldDataList = data;
+      this.goldList.data = this.goldDataList.assetList;
       this.goldList.sort = this.goldListTableSort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfPurchaseValue = data.sumOfPurchaseValue;
@@ -266,7 +284,8 @@ export class CommoditiesComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
         console.log('getOthersRes @@@@', data);
-        this.otherCommodityList.data = data.assetList;
+        this.otherDataList =  data;
+        this.otherCommodityList.data = this.otherDataList.assetList;
         this.otherCommodityList.sort = this.otherListTableSort;
         this.sumOfMarketValueOther = data.sumOfMarketValue;
         this.sumOfPurchaseValueOther = data.sumOfPurchaseValue;

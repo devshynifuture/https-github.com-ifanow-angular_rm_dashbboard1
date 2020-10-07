@@ -164,7 +164,7 @@ export class RealEstateComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -173,11 +173,13 @@ export class RealEstateComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteRealEstate(data.id).subscribe(
+        this.cusService.deleteRealEstate(element.id).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.getRealEstate();
+            this.dataList = this.dataList.filter(x => x.id != element.id);
+              this.datasource3.data = this.dataList;
+            // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
         );

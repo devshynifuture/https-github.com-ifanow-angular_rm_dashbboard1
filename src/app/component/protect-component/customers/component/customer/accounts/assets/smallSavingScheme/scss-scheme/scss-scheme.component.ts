@@ -1,5 +1,5 @@
 import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -27,7 +27,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class ScssSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
-
+  @Output() scssDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -65,7 +66,11 @@ export class ScssSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getScssSchemedata();
+    if(!this.dataList){
+      this.getScssSchemedata();
+      }else{
+        this.getKvpSchemedataResponse(this.dataList);
+      }
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -187,6 +192,9 @@ export class ScssSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
+        if(!this.dataList){
+          this.scssDataList.emit(data);
+        }
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);

@@ -1,5 +1,5 @@
 import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input  } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -23,6 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class PoSavingsComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() poDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -61,7 +63,11 @@ export class PoSavingsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPoSavingSchemedata();
+    if(!this.dataList){
+      this.getPoSavingSchemedata();
+      }else{
+        this.getPoSavingSchemedataResponse(this.dataList);
+      }
   }
 
   Excel(tableTitle){
@@ -141,6 +147,9 @@ export class PoSavingsComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoSavingSchemedataResponse', data);
+        if(!this.dataList){
+          this.poDataList.emit(data);
+        }
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);

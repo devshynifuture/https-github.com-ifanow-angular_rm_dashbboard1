@@ -1,5 +1,5 @@
 import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -23,7 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class NscSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
-
+  @Output() nscDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -65,6 +66,11 @@ export class NscSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getNscSchemedata();
+    if(!this.dataList){
+      this.getNscSchemedata();
+      }else{
+        this.getNscSchemedataResponse(this.dataList);
+      }
     this.footer = [];
   }
   Excel(tableTitle){
@@ -146,6 +152,9 @@ export class NscSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log(data, 'getNscSchemedataResponse');
+        if(!this.dataList){
+          this.nscDataList.emit(data);
+        }
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
