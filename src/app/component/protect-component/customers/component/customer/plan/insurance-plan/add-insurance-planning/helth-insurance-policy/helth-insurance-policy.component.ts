@@ -33,13 +33,13 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-  adviceData = [{ value: 1, advice: 'Continue' },
-  {value: 2, advice:'Discontinue'},
-  {value: 3, advice:'Port policy'},
-  {value: 4, advice:'Increase sum assured'},
-  {value: 5, advice:'Decrease sum assured'},
-  {value: 6, advice:'Add members'},
-  {value: 7, advice:'Remove members'}]
+  adviceData = [{ value: 1, advice: 'Continue' , selected : true},
+  {value: 2, advice:'Discontinue', selected : false},
+  {value: 3, advice:'Port policy', selected : false},
+  {value: 4, advice:'Increase sum assured', selected : false},
+  {value: 5, advice:'Decrease sum assured', selected : false},
+  {value: 6, advice:'Add members', selected : false},
+  {value: 7, advice:'Remove members', selected : false}]
   ngOnInit() {
     this.getdataForm('')
     this.showInsurance = this.data.data
