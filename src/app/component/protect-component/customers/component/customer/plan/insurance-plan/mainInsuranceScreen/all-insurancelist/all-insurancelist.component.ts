@@ -109,6 +109,7 @@ export class AllInsurancelistComponent implements OnInit {
     }
   }
   getInsurancePlaningListRes(data) {
+    this.selectedId='';
     this.loader(-1);
     if(data){
       data.forEach(singleInsuranceData => {

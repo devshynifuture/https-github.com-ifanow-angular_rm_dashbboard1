@@ -16,7 +16,7 @@
         <app-progress-button *ngIf="manualObj && manualObj.isMapped == 1" class=".btn-danger br-0 right"
             (btnClick)="removeToPlan()" [options]="barButtonOptions2">
         </app-progress-button>
-        <app-progress-button *ngIf="manualObj && manualObj.isMapped == 0" class="btn-primary br-0 right"
+        <app-progress-button  class="btn-primary br-0 right"
             (btnClick)="addToPlan()" [options]="barButtonOptions">
         </app-progress-button>
     </div>
