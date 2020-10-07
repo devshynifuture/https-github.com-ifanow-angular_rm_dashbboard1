@@ -1030,7 +1030,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // this.getSchemeWise(); // get scheme wise list
       // this.mfSchemes(); // get mutualFund list
       // for displaying table values as per category
-      // this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
+       this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
       // const input = {
       // mutualFundList: this.mutualFundList,
@@ -1272,7 +1272,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         
-        // this.summary.data = data.customDataSourceData;
+         this.customDataSource.data = data.customDataSourceData;
 
         const myArray = data.customDataSourceData;
         let list = [];
@@ -1392,6 +1392,7 @@ export class MutualFundSummaryComponent implements OnInit {
             .subscribe(res => {
               this.getObj = res; //used for getting mutual fund data coming from main gain call
               console.log('yeeeeeeeee', res)
+              console.log('summary',this.summary)
               if (this.getObj.customDataSourceData) {
 
               } else {
