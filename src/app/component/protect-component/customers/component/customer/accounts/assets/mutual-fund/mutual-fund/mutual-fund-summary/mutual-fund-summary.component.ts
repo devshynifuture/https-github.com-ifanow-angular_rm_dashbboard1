@@ -1074,8 +1074,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
-      parentId:this.parentId ? this.parentId : this.advisorId,
-      advisorId:this.adminAdvisorIds,
+      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -1142,8 +1142,8 @@ export class MutualFundSummaryComponent implements OnInit {
         categoryWiseMfList.push(element.id)
       });
       const obj = {
-        parentId:this.parentId,
-        advisorId: this.adminAdvisorIds,
+        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,
@@ -1396,9 +1396,11 @@ export class MutualFundSummaryComponent implements OnInit {
 
               } else {
                 this.mfService.setSummaryData(this.dataSummary)
-                if (this.router.url.split('?')[0] == '/pdf/summary') {
-                  this.showDownload = true
-                  this.generatePdfBulk()
+                this.showDownload = true
+                if (this.router.url.split('?')[0] == '/pdf/summary' && res !="") {
+                  setTimeout(() => {
+                    this.generatePdfBulk()
+                  }, 200);
                 }
               }
             })
@@ -1957,7 +1959,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openUpperFragment(flag, element) {
     console.log("this is what element is:::", element);
-    // if (flag == 'addTransaction') {
+    if (flag == 'addTransaction') {
       const fragmentData = {
         flag: 'app-upper-customer',
         id: 1,
@@ -1993,7 +1995,7 @@ export class MutualFundSummaryComponent implements OnInit {
           }
         }
       );
-    // }
+    }
 
   }
   generatePdfBulk() {
