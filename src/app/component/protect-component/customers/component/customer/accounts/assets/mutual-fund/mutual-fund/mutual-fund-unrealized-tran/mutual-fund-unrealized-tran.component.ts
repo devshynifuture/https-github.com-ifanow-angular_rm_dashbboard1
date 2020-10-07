@@ -974,7 +974,7 @@ export class MutualFundUnrealizedTranComponent {
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         // nav: this.mutualFund.nav,
         // mutualFund:this.mfData,
-        mutualFund: (this.reponseData) ? this.reponseData : this.mfData,
+        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         transactionType: this.rightFilterData.transactionType,
         viewMode: this.viewMode,
         showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
