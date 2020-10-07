@@ -738,8 +738,8 @@ export class MutualFundUnrealizedTranComponent {
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
-      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      parentId:this.parentId ? this.parentId : this.advisorId,
+      advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -836,8 +836,8 @@ export class MutualFundUnrealizedTranComponent {
         categoryWiseMfList.push(element.id);
       });
       const obj = {
-        parentId:this.parentId === this.advisorId ? this.parentId : 0,
-        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+        parentId:this.parentId,
+        advisorId:this.adminAdvisorIds,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,

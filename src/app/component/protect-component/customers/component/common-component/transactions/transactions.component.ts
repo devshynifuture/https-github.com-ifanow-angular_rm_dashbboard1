@@ -119,7 +119,7 @@ export class TransactionsComponent implements OnInit {
             //  mutualfund get call  
             this.isLoading = true;
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.cusService.getMutualFund({ parentId:this.parentId === this.advisorId ? this.parentId : 0,advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0, clientId: this.clientId })
+            this.cusService.getMutualFund({ parentId:this.parentId ? this.parentId : this.advisorId,advisorId: this.adminAdvisorIds , clientId: this.clientId })
               .subscribe(res => {
                 if (res) {
                   this.isLoading = false;
@@ -209,7 +209,7 @@ export class TransactionsComponent implements OnInit {
             if (res) {
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-              this.cusService.getMutualFund({ parentId:this.parentId === this.advisorId ? this.parentId : 0,advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0, clientId: this.clientId  })
+              this.cusService.getMutualFund({ parentId:this.parentId ? this.parentId : this.advisorId,advisorId: this.adminAdvisorIds, clientId: this.clientId  })
                 .subscribe(res => {
                   if (res) {
                     this.getTransactionDataBasedOnMf(res);

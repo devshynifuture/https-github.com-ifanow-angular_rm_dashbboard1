@@ -37,7 +37,7 @@
                         EQUITY
                     </h5>
                 </div>
-                <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
+                <div [ngClass]="{'table-height-capital':isLoading==false && dataSource.data.length>0 }" class="">
                     <table #tableEl mat-table [dataSource]="dataSource" id="table-low"
                         class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
@@ -189,7 +189,7 @@
                         DEBT
                     </h5>
                 </div>
-                <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
+                <div [ngClass]="{'table-height-capital':isLoading==false && dataSource1.data.length>0 }" class="">
                     <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low"
                         class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
@@ -340,7 +340,7 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <div [ngClass]="{'table-height-capital':isLoading==false }" class="">
+                <div [ngClass]="{'table-height-capital':isLoading==false && dataSource2.data.length>0 }" class="">
                     <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
                         class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
