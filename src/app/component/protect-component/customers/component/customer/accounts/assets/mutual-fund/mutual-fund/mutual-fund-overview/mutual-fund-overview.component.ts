@@ -406,8 +406,8 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundData() {
     const obj = {
       // advisorId: 2753,
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
-      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      parentId:this.parentId ? this.parentId : this.advisorId,
+      advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
       showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       // clientId: this.clientId
@@ -1073,8 +1073,8 @@ export class MutualFundOverviewComponent implements OnInit {
     }
     this.isLoading = true;
     const obj = {
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
-      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      parentId:this.parentId ,
+      advisorId:this.adminAdvisorIds,
       clientId: this.clientId,
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {

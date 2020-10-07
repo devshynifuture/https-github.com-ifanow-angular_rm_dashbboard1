@@ -1738,8 +1738,8 @@ export class RightFilterDuplicateComponent implements OnInit {
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        parentId:this.parentId === this.advisorId ? this.parentId : 0,
-        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+        parentId:this.parentId ? this.parentId : this.advisorId,
+        advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
         toDate:this._data.name == 'SUMMARY REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
