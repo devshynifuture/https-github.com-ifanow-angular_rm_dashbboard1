@@ -227,7 +227,7 @@ export class LifeInsuranceComponent implements OnInit {
         insuranceSubTypeId:this.inputData.insuranceType
     }
     this.inputData.owners.forEach(element => {
-      obj.familyMemberId.push(element.ownerId);
+      obj.familyMemberId.push(element.ownerId ? element.ownerId : this.clientId);
     });
     const dialogData = {
       header: 'DELETE INSURANCE',

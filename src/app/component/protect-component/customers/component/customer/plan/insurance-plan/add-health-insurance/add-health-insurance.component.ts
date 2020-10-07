@@ -245,7 +245,7 @@ export class AddHealthInsuranceComponent implements OnInit {
       if(element.insurance.insuredMembers.length > 0){
         element.insurance.insuredMembers.forEach(ele => {
           this.ownerIds.push({
-            'ownerId': ele.familyMemberId
+            'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
           })
         });
       }else{
