@@ -991,7 +991,7 @@ export class MutualFundUnrealizedTranComponent {
         this.customDataSource = [];
         this.customDataSource.data = [];
         // this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
-        // this.unrealisedData.allData = data.customDataSourceData;
+        this.unrealisedData = data.customDataSourceData;
         this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource.data.arrayTran = [];
         this.customDataSource.data.arrayUnrealised = [];
@@ -1010,6 +1010,7 @@ export class MutualFundUnrealizedTranComponent {
         }
         this.setUnrealizedDataSource(data.customDataSourceData);
         this.dataSource.data = (data.dataSourceData);
+        console.log('datdataSource',this.unrealisedData)
         this.isLoading = false;
         this.mfService.setTransactionData(this.dataTransaction);
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
