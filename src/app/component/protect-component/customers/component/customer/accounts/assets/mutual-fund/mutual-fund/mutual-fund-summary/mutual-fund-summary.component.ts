@@ -1272,7 +1272,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         
-         this.customDataSource.data = data.customDataSourceData;
+         //this.customDataSource.data = data.customDataSourceData;
 
         const myArray = data.customDataSourceData;
         let list = [];
@@ -1398,10 +1398,8 @@ export class MutualFundSummaryComponent implements OnInit {
               } else {
                 this.mfService.setSummaryData(this.dataSummary)
                 this.showDownload = true
-                if (this.router.url.split('?')[0] == '/pdf/summary' && res !="") {
-                  setTimeout(() => {
+                if (this.router.url.split('?')[0] == '/pdf/summary') {
                     this.generatePdfBulk()
-                  }, 200);
                 }
               }
             })
