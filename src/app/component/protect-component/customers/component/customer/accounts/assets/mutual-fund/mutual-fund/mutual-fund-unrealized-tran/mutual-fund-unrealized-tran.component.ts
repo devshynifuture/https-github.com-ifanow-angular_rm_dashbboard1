@@ -97,7 +97,7 @@ export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy 
   // changeDetection: ChangeDetectionStrategy.OnPush
   providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy}],
 })
-export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit {
+export class MutualFundUnrealizedTranComponent {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
   displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
@@ -360,24 +360,24 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
     this.dataTransaction.displayedColumns = this.displayedColumns;
   }
 
-  ngAfterViewInit() {
-    this.unrealisedData = new GridTableDataSource(this.unrealisedArray, this.viewport, this.unrealisedArray.length);
-    this.unrealisedData.offsetChange.subscribe(offset => {
-      this.placeholderHeight = offset;
-      // console.log(' this.placeholderHeight ', this.placeholderHeight);
-    });
-    const para = document.getElementById('template');
-    if (para.innerHTML) {
-      if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
-        this.showDownload = true;
-        this.generatePdfBulk();
-      }
-      if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
-        this.showDownload = true;
-        this.generatePdfBulk();
-      }
-    }
-  }
+  // ngAfterViewInit() {
+  //   this.unrealisedData = new GridTableDataSource(this.unrealisedArray, this.viewport, this.unrealisedArray.length);
+  //   this.unrealisedData.offsetChange.subscribe(offset => {
+  //     this.placeholderHeight = offset;
+  //     // console.log(' this.placeholderHeight ', this.placeholderHeight);
+  //   });
+  //   const para = document.getElementById('template');
+  //   if (para.innerHTML) {
+  //     if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
+  //       this.showDownload = true;
+  //       this.generatePdfBulk();
+  //     }
+  //     if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
+  //       this.showDownload = true;
+  //       this.generatePdfBulk();
+  //     }
+  //   }
+  // }
 
   getFilterData(value) {
     this.mfService.getadvisorList()
@@ -738,8 +738,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
-      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      parentId:this.parentId ? this.parentId : this.advisorId,
+      advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -836,8 +836,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         categoryWiseMfList.push(element.id);
       });
       const obj = {
-        parentId:this.parentId === this.advisorId ? this.parentId : 0,
-        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+        parentId:this.parentId,
+        advisorId:this.adminAdvisorIds,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,
