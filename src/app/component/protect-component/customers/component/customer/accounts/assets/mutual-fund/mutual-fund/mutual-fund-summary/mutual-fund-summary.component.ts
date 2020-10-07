@@ -1030,7 +1030,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // this.getSchemeWise(); // get scheme wise list
       // this.mfSchemes(); // get mutualFund list
       // for displaying table values as per category
-       this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
+      // this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
       // const input = {
       // mutualFundList: this.mutualFundList,
