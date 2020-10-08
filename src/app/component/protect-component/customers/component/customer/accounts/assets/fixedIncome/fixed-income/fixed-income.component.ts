@@ -311,15 +311,15 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   activeFilter: any = 'All';
-  filterFixedIncome(key: string, value: any) {
+  filterFixedIncome(key: string, value: any, type:any) {
 
     let dataFiltered = [];
     this.activeFilter = value;
     if (value == "All") {
-      dataFiltered = this.fixDataList;
+      dataFiltered = type;
     }
     else {
-      dataFiltered = this.fixDataList.filter(function (item) {
+      dataFiltered = type.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length <= 0) {

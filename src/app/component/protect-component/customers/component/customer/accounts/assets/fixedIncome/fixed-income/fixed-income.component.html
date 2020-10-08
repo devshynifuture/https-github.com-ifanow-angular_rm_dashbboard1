@@ -72,15 +72,15 @@
                 CORPORATE FD
               </button> -->
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
-                        (click)="filterFixedIncome(null, 'All')">
+                        (click)="filterFixedIncome(null, 'All', fixDataList)">
                         All
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'LIVE')">
+                        (click)="filterFixedIncome('statusId', 'LIVE', fixDataList)">
                         STATUS - LIVE
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'MATURED')">
+                        (click)="filterFixedIncome('statusId', 'MATURED', fixDataList)">
                         STATUS - Matured
                     </button>
                 </mat-menu>
@@ -298,15 +298,15 @@
                 </button>
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
-                        (click)="filterFixedIncome(null, 'All')">
+                        (click)="filterFixedIncome(null, 'All', recDataList)">
                         All
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'LIVE')">
+                        (click)="filterFixedIncome('statusId', 'LIVE', recDataList)">
                         STATUS - LIVE
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'MATURED')">
+                        (click)="filterFixedIncome('statusId', 'MATURED', recDataList)">
                         STATUS - MATURED
                     </button>
                 </mat-menu>
@@ -497,15 +497,15 @@
                 </button>
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
-                        (click)="filterFixedIncome(null, 'All')">
+                        (click)="filterFixedIncome(null, 'All', bondDataList)">
                         All
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'LIVE')">
+                        (click)="filterFixedIncome('statusId', 'LIVE', bondDataList)">
                         STATUS - LIVE
                     </button>
                     <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
-                        (click)="filterFixedIncome('statusId', 'MATURED')">
+                        (click)="filterFixedIncome('statusId', 'MATURED', bondDataList)">
                         STATUS - MATURED
                     </button>
                 </mat-menu>
