@@ -644,7 +644,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 							insuranceTypeId: this.inputData.insuranceTypeId,
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
-						this.close(insuranceData)
+						this.close(insuranceData,true)
 					}
 				);
 			} else {
@@ -658,19 +658,19 @@ export class HouseholdersInsuranceComponent implements OnInit {
 							insuranceTypeId: this.inputData.insuranceTypeId,
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
-						this.close(insuranceData)
+						this.close(insuranceData,true)
 					},err=>{
-						this.close('');
+						this.close('',true);
 					}
 				);
 			}
 		}
 	}
 
-	close(data) {
+	close(data,flag) {
 		this.addMoreFlag = false;
 		if (this.inputData.id) {
-			this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
 		} else {
 			this.sendOutput.emit(true);
 		}

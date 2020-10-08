@@ -194,6 +194,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            // this.addGeneralInsurance(sideBarData.id);
             this.getStepOneAndTwoData();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -205,6 +206,46 @@ export class ShowHealthPlanningComponent implements OnInit {
   getOutput(value){
     this.showNewPolicy = false;
   }
+  // addGeneralInsurance(id){
+  //   let obj = {
+  //     "planningList":
+  //       JSON.stringify({
+  //         "advisorId": this.advisorId,
+  //         "clientId": this.clientId,
+  //         "insuranceType": this.inputData.insuranceType,
+  //         "owners": this.ownerIds
+  //       }),
+  //     "needAnalysis": JSON.stringify(id)
+  //   }
+
+  //   this.planService.addGeneralInsurance(obj).subscribe(
+  //     data => {
+  //       if (data) {
+  //         this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  //         const fragmentData = {
+  //           flag: 'app-customer',
+  //           id: 1,
+  //           data: input,
+  //           direction: 'top',
+  //           componentName: ShowHealthPlanningComponent,
+  //           state: 'open'
+  //         };
+  //         fragmentData.data.id=data;
+  //         const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //           upperSliderData => {
+  //             if (UtilService.isDialogClose(upperSliderData)) {
+  //               // this.getClientSubscriptionList();
+  //               subscription.unsubscribe();
+  //             }
+  //           }
+  //         );
+  //       }
+  //     },
+  //     err => {
+  //       this.eventService.openSnackBar(err, 'Dismiss');
+  //     }
+  //   );
+  // }
   openHelthInsurance(data) {
     if (data == null) {
       data = {}
