@@ -299,6 +299,5 @@ export class PoMisSchemeComponent implements OnInit {
     this.isFixedIncomeFiltered = true;
     this.datasource.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
-    this.datasource.sort = this.tableEl;
   }
 }

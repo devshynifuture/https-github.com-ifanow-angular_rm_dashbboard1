@@ -55,9 +55,23 @@
                     <button mat-menu-item>Option 3</button>
                 </mat-menu> -->
 
-                <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"><i
+                <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle" [matMenuTriggerFor]="filterRecurring"><i
                         class="material-icons c-p">filter_list</i>FILTERS
                 </button>
+                <mat-menu #filterRecurring>
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All', epfDatalist, 'EPF')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE', epfDatalist, 'EPF')">
+                        STATUS - LIVE
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED', epfDatalist, 'EPF')">
+                        STATUS - MATURED
+                    </button>
+                </mat-menu>
                 <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
                     mat-stroked-button> ADD NEW
                 </button>
@@ -257,9 +271,23 @@
                 <!-- </mat-menu> -->
 
                 <!-- <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6"> -->
-                <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                <button class="btn-default addon mr-8 v-middle" [matMenuTriggerFor]="filterRecurring" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
+                <mat-menu #filterRecurring>
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All', npsDatalist, 'NPS')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE', npsDatalist, 'NPS')">
+                        STATUS - LIVE
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED', npsDatalist, 'NPS')">
+                        STATUS - MATURED
+                    </button>
+                </mat-menu>
                 <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
                 <mat-menu #menu1="matMenu" class="add-new">
@@ -428,7 +456,7 @@
                                     more_vert
                                 </i> -->
                             <img class="" src="/assets/images/svg/dot-menu.svg">
-                            <mat-menu #menubank="matMenu">
+                            <mat-menu #menubank="matMenu" >
                                 <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
                                     (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                 </button>
@@ -573,9 +601,23 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu> -->
-                <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                <button class="btn-default addon mr-8 v-middle" [matMenuTriggerFor]="filterRecurring" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
+                <mat-menu #filterRecurring>
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All', gratuityDatalist, 'gratuity')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE', gratuityDatalist, 'gratuity')">
+                        STATUS - LIVE
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED', gratuityDatalist, 'gratuity')">
+                        STATUS - MATURED
+                    </button>
+                </mat-menu>
                 <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle  "
                     mat-stroked-button>ADD NEW
                 </button>
@@ -657,7 +699,7 @@
                 </ng-container>
                 <ng-container matColumnDef="salary">
                     <th *matHeaderCellDef class="br  right-hcb  hide-arrow " mat-header-cell
-                        mat-sort-header="amountReceived">
+                        mat-sort-header="salary">
                         Last drawn Salary<br /> (Basic + DA)
 
                     </th>
