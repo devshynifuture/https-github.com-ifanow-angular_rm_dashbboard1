@@ -49,28 +49,31 @@ export class ScssSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  scssList: any[];
+  isFixedIncomeFiltered: boolean;
+  hideFilter: boolean;
 
-  constructor(private excel:ExcelGenService, 
-    private fileUpload : FileUploadServiceService,
-    private _bottomSheet : MatBottomSheet,
-     private pdfGen:PdfGenService, public dialog: MatDialog,
-     private assetValidation: AssetValidationService, 
-     private eventService: EventService, private cusService: CustomerService, 
-     private subInjectService: SubscriptionInject) {
-      this.clientData = AuthService.getClientData()
-    }
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
+    private _bottomSheet: MatBottomSheet,
+    private pdfGen: PdfGenService, public dialog: MatDialog,
+    private assetValidation: AssetValidationService,
+    private eventService: EventService, private cusService: CustomerService,
+    private subInjectService: SubscriptionInject) {
+    this.clientData = AuthService.getClientData()
+  }
 
-  displayedColumns19 = ['no', 'owner','cValue', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
+  displayedColumns19 = ['no', 'owner', 'cValue', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if(!this.dataList){
+    if (!this.dataList) {
       this.getScssSchemedata();
-      }else{
-        this.getKvpSchemedataResponse(this.dataList);
-      }
+    } else {
+      this.getKvpSchemedataResponse(this.dataList);
+    }
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -96,12 +99,12 @@ export class ScssSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -185,16 +188,17 @@ export class ScssSchemeComponent implements OnInit {
 
     });
   }
-  sumOfMaturityValue:any;
+  sumOfMaturityValue: any;
   getKvpSchemedataResponse(data: any) {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
-        if(!this.dataList){
+        if (!this.dataList) {
           this.scssDataList.emit(data);
         }
+        this.scssList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
@@ -237,5 +241,41 @@ export class ScssSchemeComponent implements OnInit {
 
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+
+  filterScss(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.scssList;
+    }
+    else {
+      dataFiltered = this.scssList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfAmountInvested = 0;
+    this.sumOfQuarterlyPayout = 0;
+    this.sumOfTotalAmountReceived = 0;
+    this.sumOfMaturityValue = 0
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfAmountInvested += element.amountInvested;
+        this.sumOfQuarterlyPayout += element.quarterlyPayout;
+        this.sumOfTotalAmountReceived += element.totalAmountReceived;
+        this.sumOfMaturityValue += element.maturityValue;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.datasource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.datasource.sort = this.tableEl;
   }
 }

@@ -1,6 +1,6 @@
 import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild, ViewChildren , Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -46,15 +46,18 @@ export class PoRdSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  pordList: any[];
+  hideFilter: boolean;
+  isFixedIncomeFiltered: boolean;
 
-  constructor(private excel:ExcelGenService, 
-    private fileUpload : FileUploadServiceService,
-    private _bottomSheet : MatBottomSheet,
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
+    private _bottomSheet: MatBottomSheet,
     private assetValidation: AssetValidationService,
-    private datePipe: DatePipe,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+    private datePipe: DatePipe, private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-      this.clientData = AuthService.getClientData()
-    }
+    this.clientData = AuthService.getClientData()
+  }
 
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -62,11 +65,11 @@ export class PoRdSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if(!this.dataList){
+    if (!this.dataList) {
       this.getPoRdSchemedata();
-      }else{
-        this.getPoRdSchemedataResponse(this.dataList);
-      }
+    } else {
+      this.getPoRdSchemedataResponse(this.dataList);
+    }
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -92,16 +95,16 @@ export class PoRdSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
-  
+
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
@@ -154,9 +157,10 @@ export class PoRdSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
-        if(!this.dataList){
+        if (!this.dataList) {
           this.pordDataList.emit(data);
         }
+        this.pordList = data.assetList;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -164,7 +168,7 @@ export class PoRdSchemeComponent implements OnInit {
         this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
         this.sumOfMaturityValue = data.sumOfMaturityValue;
         this.pordData = data;
-    } 
+      }
     } else {
       this.dataSource.data = [];
       this.noData = 'No scheme found';
@@ -256,5 +260,38 @@ export class PoRdSchemeComponent implements OnInit {
         }
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+  filterPord(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.pordList;
+    }
+    else {
+      dataFiltered = this.pordList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfCurrentValue = 0;
+    this.sumOfMonthlyDeposit = 0;
+    this.sumOfMaturityValue = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfCurrentValue += element.currentValue;
+        this.sumOfMonthlyDeposit += element.monthlyContribution;
+        this.sumOfMaturityValue += element.maturityValue;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.dataSource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.dataSource.sort = this.tableEl;
   }
 }
