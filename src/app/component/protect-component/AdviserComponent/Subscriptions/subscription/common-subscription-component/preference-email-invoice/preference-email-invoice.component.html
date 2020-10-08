@@ -16,6 +16,20 @@
     <div class="col-md-9 pl-0">
       <div class="row pt-20">
         <div class="col-md-12 p-0">
+          <h3 class="m-0 pt-4 f-16">From</h3>
+        </div>
+        <div class="col-md-12 p-0">
+          <mat-form-field>
+            <mat-select class="form-control" [(ngModel)]="storeData.fromEmail">
+              <!-- <mat-option value="" disabled>Select Email</mat-option> -->
+              <mat-option *ngFor="let verifiedEmail of emailLists" [value]="verifiedEmail.emailAddress">
+                {{verifiedEmail.emailAddress}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row pt-20">
+        <div class="col-md-12 p-0">
           <h3 class="m-0 pt-4 f-16">Subject </h3>
         </div>
         <div class="col-md-12 p-0">

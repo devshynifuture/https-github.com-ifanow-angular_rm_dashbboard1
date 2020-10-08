@@ -1,5 +1,5 @@
 import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -24,6 +24,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class PoTdSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() potdDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -41,18 +43,21 @@ export class PoTdSchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   clientData: any;
-  isLoadingUpload:any;
+  isLoadingUpload: any;
   myFiles: any;
+  potdList: any;
+  hideFilter: boolean;
+  isFixedIncomeFiltered: boolean;
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
-    private fileUpload : FileUploadServiceService,
+    private fileUpload: FileUploadServiceService,
     private eventService: EventService,
     private cusService: CustomerService,
     private assetValidation: AssetValidationService,
-    private _bottomSheet : MatBottomSheet,
+    private _bottomSheet: MatBottomSheet,
     private subInjectService: SubscriptionInject) {
-      this.clientData = AuthService.getClientData()
-    }
+    this.clientData = AuthService.getClientData()
+  }
 
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -60,7 +65,11 @@ export class PoTdSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPoTdSchemedata();
+    if (!this.dataList) {
+      this.getPoTdSchemedata();
+    } else {
+      this.getPoTdSchemedataResponse(this.dataList);
+    }
   }
 
   fetchData(value, fileName, element) {
@@ -145,6 +154,10 @@ export class PoTdSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoTdSchemedataResponse', data);
+        if (!this.dataList) {
+          this.potdDataList.emit(data);
+        }
+        this.potdList = data.assetList;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
         this.sumOfCurrentValue = data.sumOfCurrentValue;
@@ -246,5 +259,36 @@ export class PoTdSchemeComponent implements OnInit {
 
       }
     );
+  }
+  activeFilter: any = 'All';
+
+  filterPotd(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.potdList;
+    }
+    else {
+      dataFiltered = this.potdList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfCurrentValue = 0;
+    this.sumOfMaturityValue = 0;
+    this.sumOfAmountInvested = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfCurrentValue += element.currentValue;
+        this.sumOfMaturityValue += element.maturityValue;
+        this.sumOfAmountInvested += element.amountInvested;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.dataSource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
   }
 }

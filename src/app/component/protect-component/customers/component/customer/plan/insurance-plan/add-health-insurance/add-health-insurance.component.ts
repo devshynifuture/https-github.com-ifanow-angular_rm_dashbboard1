@@ -17,6 +17,7 @@ import { AddTravelInsuranceInAssetComponent } from '../../../accounts/insurance/
 import { AddHomeInsuranceInAssetComponent } from '../../../accounts/insurance/add-home-insurance-in-asset/add-home-insurance-in-asset.component';
 import { AddFireAndPerilsInsuranceInAssetComponent } from '../../../accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
 import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -25,6 +26,32 @@ import { AddInsuranceComponent } from '../../../../common-component/add-insuranc
 })
 
 export class AddHealthInsuranceComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+
+  };
+  barButtonOptions2: MatProgressButtonOptions = {
+    active: false,
+    text: 'Procced',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+
+  };
   inputData: any;
   showInsurance: { value: string; header: string; heading: string; subHeading: string, logo: string, smallHeading: string };
   isChecked: any;
@@ -245,7 +272,7 @@ export class AddHealthInsuranceComponent implements OnInit {
       if(element.insurance.insuredMembers.length > 0){
         element.insurance.insuredMembers.forEach(ele => {
           this.ownerIds.push({
-            'ownerId': ele.familyMemberId
+            'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
           })
         });
       }else{
@@ -343,6 +370,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   }
   showHealthInsurance(input) {
     if (this.isChecked) {
+      this.barButtonOptions2.active = true;
       let obj = {
         "planningList":
           JSON.stringify({
@@ -357,6 +385,7 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.planService.addGeneralInsurance(obj).subscribe(
         data => {
           if (data) {
+            this.barButtonOptions2.active = false;
             this.subInjectService.changeNewRightSliderState({ state: 'close' });
             const fragmentData = {
               flag: 'app-customer',
@@ -383,17 +412,21 @@ export class AddHealthInsuranceComponent implements OnInit {
       );
 
     } else {
-      this.showError = true;
+      // this.showError = true;
+      this.eventService.openSnackBar('Please select at least one policy', 'OK');
+
     }
   }
   saveExistingPolicy(input){
     if (this.isChecked){
+      this.barButtonOptions.active = true;
       const obj={
         "id":this.inputData.id,
         "insuranceIds": JSON.stringify(this.needAnalysis)
         }
         this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
           data => {
+              this.barButtonOptions.active = false;
               this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
           },
           err => {
@@ -401,7 +434,9 @@ export class AddHealthInsuranceComponent implements OnInit {
           }
         );
     }else{
-      this.showError = true;
+      // this.showError = true;
+      this.eventService.openSnackBar('Please select at least one policy', 'OK');
+
     }
 
   }

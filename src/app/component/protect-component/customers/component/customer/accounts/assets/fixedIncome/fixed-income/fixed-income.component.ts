@@ -36,7 +36,7 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvested: any;
   sumCurrentValue: any;
   sumMaturityValue: any;
-  totalCurrentValue = 0;
+  totalCurrentValue :any;
   totalMarketValue = 0;
   sumAmountInvestedB: any;
   sumCouponAmount: any;
@@ -52,7 +52,9 @@ export class FixedIncomeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   hidePdf: boolean;
   noData: string;
-  dataList: any;
+  fixDataList: any;
+  recDataList: any;
+  bondDataList: any;
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
@@ -146,11 +148,29 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     if (value == '2') {
+      if(this.recDataList){
+        this.isLoading = false;
+        this.getRecurringDepositRes(this.recDataList);
+      }
+      else{
       this.getRecurringDepositList();
+      }
     } else if (value == '3') {
+      if(this.bondDataList){
+        this.isLoading = false;
+        this.getBondsRes(this.bondDataList);
+      }
+      else{
       this.getBondsList();
+      }
     } else {
-      this.getFixedDepositList();
+      if(this.fixDataList){
+        this.isLoading = false;
+        this.getFixedDepositRes(this.fixDataList);
+      }
+      else{
+        this.getFixedDepositList();
+      }
     }
 
   }
@@ -182,8 +202,8 @@ export class FixedIncomeComponent implements OnInit {
     } else if (data.assetList) {
       this.assetValidation.getAssetCountGLobalData()
 
-      this.dataList = data.assetList;
-      this.dataSource.data = data.assetList;
+      this.fixDataList = data;
+      this.dataSource.data = this.fixDataList.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumCurrentValue = 0;
@@ -193,9 +213,9 @@ export class FixedIncomeComponent implements OnInit {
         }
 
       });
-      this.sumAmountInvested = data.sumOfAmountInvested;
-      this.sumCurrentValue = data.sumOfCurrentValue;
-      this.sumMaturityValue = data.sumOfMaturityValue;
+      this.sumAmountInvested = this.fixDataList.sumOfAmountInvested;
+      this.sumCurrentValue = this.fixDataList.sumOfCurrentValue;
+      this.sumMaturityValue = this.fixDataList.sumOfMaturityValue;
       console.log('sumCurrentValue', this.sumCurrentValue);
     } else {
       this.noData = 'No scheme found';
@@ -231,14 +251,14 @@ export class FixedIncomeComponent implements OnInit {
         this.assetValidation.getAssetCountGLobalData()
 
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
-        this.dataList = data.assetList;
+        this.recDataList = data;
         this.hideFilter = false;
-        this.dataSource.data = data.assetList;
+        this.dataSource.data = this.recDataList.assetList;
         this.dataSource.sort = this.recurringDepositTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
-        this.totalCurrentValue = data.totalCurrentValue;
-        this.sumOfMonthlyContribution = data.sumOfMonthlyContribution;
-        this.sumOfMaturityValue = data.sumOfMaturityValue;
+        this.totalCurrentValue = this.recDataList.totalCurrentValue;
+        this.sumOfMonthlyContribution = this.recDataList.sumOfMonthlyContribution;
+        this.sumOfMaturityValue = this.recDataList.sumOfMaturityValue;
       }
     }
     else {
@@ -273,15 +293,15 @@ export class FixedIncomeComponent implements OnInit {
          this.assetValidation.getAssetCountGLobalData();
 
         console.log('getBondsRes ******** ', data);
-        this.dataList = data.assetList;
+        this.bondDataList = data;
         this.hideFilter = false;
-        this.dataSource.data = data.assetList;
+        this.dataSource.data = this.bondDataList.assetList;
         this.dataSource.sort = this.bondListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
-        this.sumAmountInvestedB = data.sumOfAmountInvested;
-        this.sumCouponAmount = data.sumOfCouponAmount;
-        this.sumCurrentValueB = data.sumOfCurrentValue;
-        this.sumMaturityValue = data.sumOfMaturityValue;
+        this.sumAmountInvestedB = this.bondDataList.sumOfAmountInvested;
+        this.sumCouponAmount = this.bondDataList.sumOfCouponAmount;
+        this.sumCurrentValueB = this.bondDataList.sumOfCurrentValue;
+        this.sumMaturityValue = this.bondDataList.sumOfMaturityValue;
       }
     } else {
       this.noData = 'No scheme found';
@@ -291,29 +311,75 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   activeFilter: any = 'All';
-  filterFixedIncome(key: string, value: any) {
+  filterFixedIncome(key: string, value: any, data:any, type:string ) {
+    this.sumAmountInvested = 0;
+    this.sumCurrentValue = 0;
+    this.sumMaturityValue = 0;
+
+    this.totalCurrentValue = 0;
+    this.sumOfMonthlyContribution = 0;
+    this.sumOfMaturityValue = 0;
+
+    this.sumAmountInvestedB = 0;
+    this.sumCouponAmount = 0;
+    this.sumCurrentValueB = 0;
+    // this.sumMaturityValue = 0;
 
     let dataFiltered = [];
     this.activeFilter = value;
     if (value == "All") {
-      dataFiltered = this.dataList;
+      if(type == 'fix'){
+      this.getFixedDepositRes(data)
+      }
+      else if(type == 'bond'){
+        this.getBondsRes(data)
+      }
+      else{
+        this.getRecurringDepositRes(data)
+      }
     }
     else {
-      dataFiltered = this.dataList.filter(function (item) {
+      data.assetList.forEach(item => {
+        if(item[key] === value){
+          if(item.currentValue){
+            this.sumCurrentValue += item.currentValue;
+            this.totalCurrentValue += item.currentValue;
+            this.sumCurrentValueB += item.currentValue;
+          }
+          if(item.amountInvested){
+            this.sumAmountInvested += item.amountInvested;
+            this.sumAmountInvestedB += item.amountInvested;
+          }
+          if(item.monthlyContribution){
+            this.sumOfMonthlyContribution += item.monthlyContribution;
+          }
+          if(item.maturityValue){
+            this.sumMaturityValue += item.maturityValue;
+            this.sumOfMaturityValue += item.maturityValue;
+          }
+          if(item.couponAmount){
+            this.sumCouponAmount +=item.couponAmount
+          }
+        }
+      });
+      dataFiltered = data.assetList.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length <= 0) {
         this.hideFilter = false;
       }
+      this.dataSource.data = dataFiltered;
     }
 
     this.isFixedIncomeFiltered = true;
-    this.dataSource.data = dataFiltered;
+    
     // this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.fixedIncomeTableSort;
   }
 
-  deleteModal(value, data) {
+  
+
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -323,26 +389,32 @@ export class FixedIncomeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'FIXED DEPOSIT') {
-          this.customerService.deleteFixedDeposite(data.id).subscribe(
+          this.customerService.deleteFixedDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getFixedDepositList();
+              // this.getFixedDepositList();
+              this.fixDataList.assetList = this.fixDataList.assetList.filter(x => x.id != element.id);
+              this.dataSource.data = this.fixDataList.assetList;
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'RECURRING DEPOSIT') {
-          this.customerService.deleteRecurringDeposite(data.id).subscribe(
+          this.customerService.deleteRecurringDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getRecurringDepositList();
+              // this.getRecurringDepositList();
+              this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
+              this.dataSource.data = this.recDataList.assetList;
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.customerService.deleteBond(data.id).subscribe(
+          this.customerService.deleteBond(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getBondsList();
+              // this.getBondsList();
+              this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);
+              this.dataSource.data = this.bondDataList.assetList;
             },
             error => this.eventService.showErrorMessage(error)
           );

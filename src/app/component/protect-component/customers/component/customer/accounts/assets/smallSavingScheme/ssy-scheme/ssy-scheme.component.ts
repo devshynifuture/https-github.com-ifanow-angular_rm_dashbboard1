@@ -1,5 +1,5 @@
 import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -23,6 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class SsySchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() ssyDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -43,14 +45,17 @@ export class SsySchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  isFixedIncomeFiltered: boolean;
+  hideFilter: boolean;
+  ssyList: any[];
 
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private cusService: CustomerService,
-    private _bottomSheet : MatBottomSheet,
+    private _bottomSheet: MatBottomSheet,
     private assetValidation: AssetValidationService,
-     private subInjectService: SubscriptionInject,
+    private subInjectService: SubscriptionInject,
     private eventService: EventService) {
     this.clientData = AuthService.getClientData()
   }
@@ -60,7 +65,12 @@ export class SsySchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getSsySchemedata();
+    if (!this.dataList) {
+      this.getSsySchemedata();
+    } else {
+      this.getSsySchemedataResponse(this.dataList);
+    }
+
   }
 
   Excel(tableTitle) {
@@ -137,13 +147,17 @@ export class SsySchemeComponent implements OnInit {
     );
   }
 
-  sumOfAccountBalance:any;
+  sumOfAccountBalance: any;
   getSsySchemedataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getSsySchemedataResponse', data);
+        if (!this.dataList) {
+          this.ssyDataList.emit(data);
+        }
+        this.ssyList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
@@ -220,5 +234,36 @@ export class SsySchemeComponent implements OnInit {
         }
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+  filterSsy(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.ssyList;
+    }
+    else {
+      dataFiltered = this.ssyList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfCurrentValue = 0;
+    this.sumOfAccountBalance = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfCurrentValue += element.currentValue;
+        this.sumOfAccountBalance += element.accountBalance;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.datasource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.datasource.sort = this.tableEl;
   }
 }

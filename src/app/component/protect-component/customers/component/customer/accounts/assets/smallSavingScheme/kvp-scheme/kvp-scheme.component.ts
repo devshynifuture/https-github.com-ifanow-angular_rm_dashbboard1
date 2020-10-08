@@ -1,5 +1,5 @@
 import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -23,6 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class KvpSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() kvpDataList = new EventEmitter();
+  @Input() dataList;
   clientId: number;
   advisorId: any;
   noData: string;
@@ -42,15 +44,18 @@ export class KvpSchemeComponent implements OnInit {
   isLoadingUpload: boolean;
   clientData: any;
   myFiles;
-  
-  constructor(private excel:ExcelGenService,
-    private fileUpload : FileUploadServiceService,
+  hideFilter: boolean;
+  isFixedIncomeFiltered: boolean;
+  kvpList: any[];
+
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
     private assetValidation: AssetValidationService,
-    private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
-     private cusService: CustomerService, private subInjectService: SubscriptionInject,
-     private _bottomSheet: MatBottomSheet) {
-      this.clientData = AuthService.getClientData()
-    }
+    private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
+    private cusService: CustomerService, private subInjectService: SubscriptionInject,
+    private _bottomSheet: MatBottomSheet) {
+    this.clientData = AuthService.getClientData()
+  }
 
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'certificateNo', 'desc', 'status', 'icons'];
 
@@ -58,12 +63,17 @@ export class KvpSchemeComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getKvpSchemedata();
+    if (!this.dataList) {
+      this.getKvpSchemedata();
+    } else {
+      this.getKvpSchemedataResponse(this.dataList);
+    }
+
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -89,7 +99,7 @@ export class KvpSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -134,13 +144,17 @@ export class KvpSchemeComponent implements OnInit {
       }
     );
   }
-  sumOfmaturityValue:any;
+  sumOfmaturityValue: any;
   getKvpSchemedataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
+        if (!this.dataList) {
+          this.kvpDataList.emit(data);
+        }
+        this.kvpList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
@@ -149,7 +163,7 @@ export class KvpSchemeComponent implements OnInit {
         this.sumOfmaturityValue = data.sumOfMaturityValue;
         this.kvpData = data;
       }
-    }  else {
+    } else {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }
@@ -217,5 +231,38 @@ export class KvpSchemeComponent implements OnInit {
 
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+  filterKvp(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.kvpList;
+    }
+    else {
+      dataFiltered = this.kvpList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfCurrentValue = 0;
+    this.sumOfAmountInvested = 0;
+    this.sumOfmaturityValue = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfCurrentValue += element.currentValue;
+        this.sumOfAmountInvested += element.amountInvested;
+        this.sumOfmaturityValue += element.maturityValue;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.datasource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.datasource.sort = this.tableEl;
   }
 }

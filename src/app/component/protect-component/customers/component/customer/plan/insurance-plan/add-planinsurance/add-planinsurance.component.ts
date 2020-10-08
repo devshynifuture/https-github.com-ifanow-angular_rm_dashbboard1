@@ -12,6 +12,7 @@ import { MatDialog, MatAccordion } from '@angular/material';
 import { EditPercentComponent } from '../edit-percent/edit-percent.component';
 import { arrayMax } from 'highcharts';
 import { startWith, map } from 'rxjs/operators';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-planinsurance',
@@ -101,6 +102,8 @@ export class AddPlaninsuranceComponent implements OnInit {
   plannerNotes: any;
   isLodingNeedAnalysis = true;
   dependent = false;
+  isAddtoPlan = false;
+  validatorType = ValidatorType;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
@@ -262,10 +265,10 @@ export class AddPlaninsuranceComponent implements OnInit {
 
     return array;
   }
-  selectDependent(value,name) {
+  selectDependent(value, name) {
     this.dependent = true;
-    if(name == 'familyMemberId'){
-      this.familyMemberId = value || value  == 0  ? value : this.familyMemberId;
+    if (name == 'familyMemberId') {
+      this.familyMemberId = value || value == 0 ? value : this.familyMemberId;
     }
     if (this.selectedFamily && this.selectedExpectancy) {
       this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy)
@@ -355,6 +358,9 @@ export class AddPlaninsuranceComponent implements OnInit {
 
       }
     });
+    if(this.isAddtoPlan){
+      this.addToPlan()
+    }
   }
   getNeedBasedObj() {
     let array = [];
@@ -384,32 +390,39 @@ export class AddPlaninsuranceComponent implements OnInit {
     return mainArray;
   }
   saveAnalysis() {
-    let needBasedAnalysis = this.getNeedBasedObj();
-    if (this.tab == 0) {
-      this.sendObj = {
-        lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
-        needTypeId: 1,
-        id:this.needBase ? this.needBase.id : 0,
-        adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
-        plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
-        needBasedObject: needBasedAnalysis
-      }
+    if (this.manualForm.invalid) {
+      this.manualForm.markAllAsTouched();
     } else {
-      this.sendObj = {
-        lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
-        needTypeId: 2,
-        adviceAmount: this.manualForm.get('insuranceAmount').value ?this.manualForm.get('insuranceAmount').value : 0,
-        plannerNotes: this.manualObj ?( this.manualObj.plannerNotes ?  this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+      this.barButtonOptions3.active = true;
+      let needBasedAnalysis = this.getNeedBasedObj();
+      if (this.tab == 0) {
+        this.sendObj = {
+          lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
+          needTypeId: 1,
+          id: this.needBase ? this.needBase.id : 0,
+          adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
+          plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+          needBasedObject: needBasedAnalysis
+        }
+      } else {
+        this.sendObj = {
+          lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
+          needTypeId: 2,
+          adviceAmount: this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0,
+          plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+        }
       }
+      this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
+        data => this.saveLifeInsuranceAnalysisRes(data),
+        err => {
+          this.barButtonOptions3.active = false;
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
     }
-    this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
-      data => this.saveLifeInsuranceAnalysisRes(data),
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
   }
   saveLifeInsuranceAnalysisRes(data) {
+    this.barButtonOptions3.active = false;
     // this.close();
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: true });
     console.log('saveLifeInsuranceAnalysisRes', data)
@@ -418,7 +431,8 @@ export class AddPlaninsuranceComponent implements OnInit {
     console.log('tabChanged', event)
     this.tab = event.index
   }
-  addToPlan() {
+  addToPlan(){
+    this.barButtonOptions.active = true;
     if (this.tab == 1) {
       this.id = this.manualObj.id
     } else {
@@ -428,6 +442,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.planService.addLifeInsuranceAnalysisMapToPlan(this.id).subscribe(
       data => {
         console.log(data);
+        this.barButtonOptions.active = false;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data: true });
 
       },
@@ -436,6 +451,28 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.loader(-1);
       }
     );
+  }
+  saveAndAddToPlan() {
+    this.isAddtoPlan =true;
+    if (this.manualForm.invalid) {
+      this.manualForm.markAllAsTouched();
+    } else {
+      this.sendObj = {
+        lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
+        needTypeId: 2,
+        adviceAmount: this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0,
+        plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+      }
+      this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
+        data => {
+          this.getAnalysis();
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }
+   
   }
   removeToPlan() {
 

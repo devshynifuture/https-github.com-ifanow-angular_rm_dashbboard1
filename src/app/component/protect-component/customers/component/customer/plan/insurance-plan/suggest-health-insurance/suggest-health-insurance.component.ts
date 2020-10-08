@@ -840,7 +840,7 @@ saveHealthInsurance() {
                         insuranceTypeId: this.inputData.insuranceTypeId,
                         insuranceSubTypeId: this.inputData.insuranceSubTypeId
                     };
-                    this.close(insuranceData);
+                    this.close(insuranceData,true);
                 }
             );
         } else {
@@ -852,21 +852,22 @@ saveHealthInsurance() {
                     const insuranceData =
                     {
                         insuranceTypeId: this.inputData.insuranceTypeId,
-                        insuranceSubTypeId: this.inputData.insuranceSubTypeId
+                        insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+                        id:data ? data : null
                     };
-                    this.close(insuranceData);
+                    this.close(insuranceData,true);
                 },
                 err=>{
-                    this.close('');
+                    this.close('',true);
                 }
             );
         }
     }
 }
 
-close(data) {
+close(data,flag) {
   if(this.inputData.id){
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
   }else{
     this.sendOutput.emit(true);
   }

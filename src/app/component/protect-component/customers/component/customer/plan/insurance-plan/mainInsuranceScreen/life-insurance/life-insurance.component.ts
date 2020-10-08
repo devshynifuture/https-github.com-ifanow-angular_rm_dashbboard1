@@ -227,7 +227,7 @@ export class LifeInsuranceComponent implements OnInit {
         insuranceSubTypeId:this.inputData.insuranceType
     }
     this.inputData.owners.forEach(element => {
-      obj.familyMemberId.push(element.ownerId);
+      obj.familyMemberId.push(element.ownerId ? element.ownerId : this.clientId);
     });
     const dialogData = {
       header: 'DELETE INSURANCE',
@@ -239,7 +239,7 @@ export class LifeInsuranceComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
-          this.outputChange.emit(true);
+          this.outputChange.emit({id : ''});
           // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })

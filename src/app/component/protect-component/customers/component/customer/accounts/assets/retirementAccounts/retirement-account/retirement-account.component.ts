@@ -75,7 +75,9 @@ export class RetirementAccountComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
-
+  epfDatalist:any;
+  npsDatalist:any;
+  gratuityDatalist:any;
   // async ExportTOExcel(value) {
   //   this.excelData = []
   //   var data = []
@@ -273,13 +275,23 @@ export class RetirementAccountComponent implements OnInit {
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
-    this.isLoading = true;
+    // this.isLoading = true;
     if (value == '2') {
-      this.dataSource = new MatTableDataSource([{}, {}, {}]);
-      this.getListNPS()
+      if(this.npsDatalist){
+        this.getNPSRes(this.npsDatalist);
+        // this.dataSource.data = this.npsDatalist;
+      }else{
+        this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        this.getListNPS()
+      }
     } else if (value == '3') {
-      this.dataSource = new MatTableDataSource([{}, {}, {}]);
-      this.getListGratuity()
+      if(this.gratuityDatalist){
+        // this.dataSource.data = this.gratuityDatalist;
+        this.getGrauityRes(this.gratuityDatalist);
+      }else{
+        this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        this.getListGratuity()
+      }
     } else if (value == '4') {
       this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListSuperannuation()
@@ -287,8 +299,13 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.getListEPS()
     } else {
-      this.getListEPF();
-      this.dataSource = new MatTableDataSource(this.data);
+      if(this.epfDatalist){
+        // this.dataSource.data = this.epfDatalist;
+        this.getEPFRes(this.epfDatalist);
+      }else{
+        this.getListEPF();
+        this.dataSource = new MatTableDataSource(this.data);
+      }
     }
   }
 
@@ -416,7 +433,7 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -426,34 +443,40 @@ export class RetirementAccountComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'EPF') {
-          this.custumService.deleteEPF_EPS(data.id).subscribe(
+          this.custumService.deleteEPF_EPS(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListEPF();
+              // this.getListEPF();
+              this.epfDatalist.assetList = this.epfDatalist.assetList.filter(x => x.id != element.id);
+              this.dataSource.data = this.epfDatalist.assetList;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'NPS') {
-          this.custumService.deleteNPS(data.id).subscribe(
+          this.custumService.deleteNPS(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListNPS();
+              // this.getListNPS();
+              this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != element.id);
+              this.dataSource.data = this.npsDatalist.assetList;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'GRATUITY') {
-          this.custumService.deleteGratuity(data.id).subscribe(
+          this.custumService.deleteGratuity(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getListGratuity();
+              // this.getListGratuity();
+              this.gratuityDatalist = this.gratuityDatalist.filter(x => x.id != element.id);
+              this.dataSource.data = this.gratuityDatalist;
               this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'SUPERANNUATION') {
-          this.custumService.deleteSuperAnnuation(data.id).subscribe(
+          this.custumService.deleteSuperAnnuation(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getListSuperannuation();
@@ -462,7 +485,7 @@ export class RetirementAccountComponent implements OnInit {
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.custumService.deleteEPS(data.id).subscribe(
+          this.custumService.deleteEPS(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getListEPS();
@@ -502,13 +525,13 @@ export class RetirementAccountComponent implements OnInit {
       if (data.assetList) {
         console.log('getEPFRes =', data);
         this.assetValidation.getAssetCountGLobalData();
-
-        this.sumOfcurrentEpfBalance = data.sumOfEpfBalanceTillToday;
-        this.sumOfcurrentEpsBalance = data.sumOfEpsBalanceTillToday;
-        this.sumOfcurrentValue = data.sumOfcurrentValue;
-        this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
-        this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
-        this.dataSource.data = data.assetList;
+        this.epfDatalist = data;
+        this.sumOfcurrentEpfBalance = this.epfDatalist.sumOfEpfBalanceTillToday;
+        this.sumOfcurrentEpsBalance = this.epfDatalist.sumOfEpsBalanceTillToday;
+        this.sumOfcurrentValue = this.epfDatalist.sumOfcurrentValue;
+        this.sumOfemployeesMonthlyContribution = this.epfDatalist.sumOfemployeesMonthlyContribution;
+        this.sumOfemployersMonthlyContribution = this.epfDatalist.sumOfemployersMonthlyContribution;
+        this.dataSource.data = this.epfDatalist.assetList;
         this.dataSource.sort = this.epfListTableSort;
         var d = new Date();
         const n = d.getFullYear();
@@ -545,12 +568,13 @@ export class RetirementAccountComponent implements OnInit {
   getGrauityRes(data) {
     this.isLoading = false;
     if (data != undefined) {
-      this.sumOfAmountReceived = data.sumOfAmountReceived;
-      this.sumOfGratuityReceived = data.sumOfGratuityReceived;
+      this.gratuityDatalist = data;
+      this.sumOfAmountReceived = this.gratuityDatalist.sumOfAmountReceived;
+      this.sumOfGratuityReceived = this.gratuityDatalist.sumOfGratuityReceived;
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getGrauityRes =', data);
-        this.dataSource.data = data.assetList;
+        this.dataSource.data = this.gratuityDatalist.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
@@ -580,10 +604,11 @@ export class RetirementAccountComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getNPSRes =', data);
-        this.dataSource.data = data.assetList;
+        this.npsDatalist = data
+        this.dataSource.data = this.npsDatalist.assetList;
         this.dataSource.sort = this.npsListTableSort;
-        this.totalContribution = data.sumOfAmountInvested;
-        this.totalCurrentValue = data.sumOfCurrentValue;
+        this.totalContribution = this.npsDatalist.sumOfAmountInvested;
+        this.totalCurrentValue = this.npsDatalist.sumOfCurrentValue;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
     }
@@ -652,6 +677,80 @@ export class RetirementAccountComponent implements OnInit {
       this.noData = "No EPS found";
       this.dataSource.data = [];
     }
+  }
+
+  activeFilter: any = 'All';
+  filterFixedIncome(key: string, value: any, data:any, type:string ) {
+    this.sumOfcurrentEpfBalance = 0;
+    this.sumOfcurrentEpsBalance = 0;
+    this.sumOfcurrentValue = 0;
+    this.sumOfemployeesMonthlyContribution = 0;
+    this.sumOfemployersMonthlyContribution = 0;
+    // this.sumMaturityValue = 0;
+
+    this.totalContribution = 0;
+    this.totalCurrentValue = 0;
+
+    this.sumOfAmountReceived = 0;
+    this.sumOfGratuityReceived = 0;
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      if(type == 'EPF'){
+      this.getEPFRes(data)
+      }
+      else if(type == 'NPS'){
+        this.getNPSRes(data)
+      }
+      else{
+        this.getGrauityRes(data)
+      }
+    }
+    else {
+      data.assetList.forEach(item => {
+        if(item[key] === value){
+          if(item.currentValue){
+            this.sumOfcurrentValue += item.currentValue;
+            this.totalCurrentValue += item.currentValue;
+          }
+          if(item.currentEpfValue){
+            this.sumOfcurrentEpfBalance += item.currentEpfValue;
+          }
+
+          if(item.currentEpsValue){
+            this.sumOfcurrentEpsBalance += item.currentEpsValue;
+          }
+          if(item.employeesMonthlyContribution){
+            this.sumOfemployeesMonthlyContribution  += item.employeesMonthlyContribution;
+          }
+          if(item.employersMonthlyContribution){
+            this.sumOfemployersMonthlyContribution += item.employersMonthlyContribution;
+          }
+          if(item.totalAmountInvested){
+            this.totalContribution += item.totalAmountInvested;
+          }
+          if(item.amountReceived){
+            this.sumOfAmountReceived += item.amountReceived
+          }
+          if(item.gratuityReceived){
+            this.sumOfGratuityReceived += item.gratuityReceived
+          }
+        }
+      });
+      dataFiltered = data.assetList.filter(function (item) {
+        return item[key] === value;
+      });
+      // if (dataFiltered.length <= 0) {
+      //   this.hideFilter = false;
+      // }
+      this.dataSource.data = dataFiltered;
+    }
+
+    // this.isFixedIncomeFiltered = true;
+    
+    // this.dataSource = new MatTableDataSource(data);
+    // this.dataSource.sort = this.fixedIncomeTableSort;
   }
 }
 export interface PeriodicElement11 {

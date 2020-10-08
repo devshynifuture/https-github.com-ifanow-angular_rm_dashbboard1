@@ -104,11 +104,14 @@ export class AllInsurancelistComponent implements OnInit {
     if(value){
       if(value.id){
         this.id = value.id;
+      }else{
+        this.selectedId ='';
       }
       this.getInsuranceList()
     }
   }
   getInsurancePlaningListRes(data) {
+    // this.selectedId='';
     this.loader(-1);
     if(data){
       data.forEach(singleInsuranceData => {
@@ -256,6 +259,7 @@ export class AllInsurancelistComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           if(upperSliderData['data']){
+            this.selectedId = '';
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

@@ -1,5 +1,5 @@
 import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -14,6 +14,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -23,6 +24,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 
 export class PPFSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() ppfDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -38,26 +41,33 @@ export class PPFSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
-    private fileUpload : FileUploadServiceService,
-    private _bottomSheet : MatBottomSheet,
+  ppfList: any;
+  isFixedIncomeFiltered: boolean;
+  hideFilter: boolean;
+  constructor(private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private fileUpload: FileUploadServiceService,
+    private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog, private cusService: CustomerService,
     private assetValidation: AssetValidationService,
-    private eventService: EventService, private subInjectService: SubscriptionInject) { 
+    private eventService: EventService, private subInjectService: SubscriptionInject) {
 
-      this.clientData = AuthService.getClientData()
-    }
+    this.clientData = AuthService.getClientData()
+  }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPpfSchemeData();
+    if (!this.dataList) {
+      this.getPpfSchemeData();
+    } else {
+      this.getPpfSchemeDataResponse(this.dataList);
+    }
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -83,7 +93,7 @@ export class PPFSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -103,14 +113,19 @@ export class PPFSchemeComponent implements OnInit {
         this.isLoading = false;
       });
   }
-  sumOfAmountInvested:any;
-  sumOfAccountBalance:any;
+  sumOfAmountInvested: any;
+  sumOfAccountBalance: any;
+
   getPpfSchemeDataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPpfSchemeDataResponse', data);
+        if (!this.dataList) {
+          this.ppfDataList.emit(data);
+        }
+        this.ppfList = data.assetList;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -123,7 +138,7 @@ export class PPFSchemeComponent implements OnInit {
       this.dataSource.data = []
     }
   }
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -132,11 +147,14 @@ export class PPFSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deletePPF(data.id).subscribe(
+        this.cusService.deletePPF(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            // this.getPpfSchemeData();
+            this.dataList.data = this.dataList.data.filter(x => x.id != element.id);
+            this.dataSource.data = this.dataList;
             dialogRef.close();
-            this.getPpfSchemeData();
+
           },
           error => this.eventService.showErrorMessage(error)
         )
@@ -207,6 +225,37 @@ export class PPFSchemeComponent implements OnInit {
 
       }
     );
+  }
+  activeFilter: any = 'All';
+
+
+  filterPPF(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.ppfList;
+    }
+    else {
+      dataFiltered = this.ppfList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.SumOfCurrentValue = 0;
+    this.sumOfAccountBalance = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.SumOfCurrentValue += element.currentValue;
+        this.sumOfAccountBalance += element.accountBalance;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.dataSource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.dataSource.sort = this.tableEl;
   }
 }
 export interface PeriodicElement16 {
