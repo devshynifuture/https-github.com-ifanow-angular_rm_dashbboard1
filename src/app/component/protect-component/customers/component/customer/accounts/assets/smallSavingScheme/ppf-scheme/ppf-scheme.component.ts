@@ -255,7 +255,7 @@ export class PPFSchemeComponent implements OnInit {
     this.isFixedIncomeFiltered = true;
     this.dataSource.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.tableEl;
+    // this.dataSource.sort = this.tableEl;
   }
 }
 export interface PeriodicElement16 {

@@ -290,6 +290,5 @@ export class PoTdSchemeComponent implements OnInit {
     this.isFixedIncomeFiltered = true;
     this.dataSource.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.tableEl;
   }
 }
