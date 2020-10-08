@@ -705,12 +705,15 @@ export class PersonalInsuranceComponent implements OnInit {
 							insuranceTypeId: this.inputData.insuranceTypeId,
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
-						this.close(insuranceData)
+						this.close(insuranceData,true)
 					}
 				);
 			} else {
 				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
+
+						
+
 						this.barButtonOptions.active = false;
 						console.log(data);
 						this.eventService.openSnackBar("Added successfully!", 'Dismiss');
@@ -719,18 +722,18 @@ export class PersonalInsuranceComponent implements OnInit {
 							insuranceTypeId: this.inputData.insuranceTypeId,
 							insuranceSubTypeId: this.inputData.insuranceSubTypeId
 						}
-						this.close(insuranceData)
+						this.close(insuranceData,true)
 					},err=>{
-						this.close('');
+						this.close('',true);
 					}
 				);
 			}
 		}
 	}
-	close(data) {
+	close(data,flag) {
 		this.addMoreFlag = false;
 		if (this.inputData.id) {
-			this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
 		} else {
 			this.sendOutput.emit(true);
 		}

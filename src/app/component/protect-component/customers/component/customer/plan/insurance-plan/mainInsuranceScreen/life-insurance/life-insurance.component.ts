@@ -239,7 +239,7 @@ export class LifeInsuranceComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
-          this.outputChange.emit(true);
+          this.outputChange.emit({id : ''});
           // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
