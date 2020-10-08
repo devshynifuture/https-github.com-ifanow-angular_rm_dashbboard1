@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
     </div>
-    <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="dataSource.filteredData.length > 0">
+    <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
@@ -30,8 +30,30 @@
             <button mat-menu-item>Option 3</button>
         </mat-menu> -->
 
-        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+        <button mat-stroked-button [matMenuTriggerFor]="potd" class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
+        <mat-menu #potd>
+            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                                                        Vinayak Nerlekar
+                                                    </button>
+                                                    <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                                                        BANK FD
+                                                    </button> -->
+            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                                                CORPORATE FD
+                                              </button> -->
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterPotd(null, 'All')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                (click)="filterPotd('statusId', 'LIVE')">
+                STATUS - LIVE
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterPotd('statusId', 'MATURED')">
+                STATUS - Matured
+            </button>
+        </mat-menu>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
         <mat-menu #menu1="matMenu" class="add-new">
             <button mat-menu-item class="b-b">

@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black roboto pt-8">Post office monthly income scheme (PO MIS)</h4>
     </div>
 
-    <div *ngIf="datasource.filteredData.length > 0" class="col-md-6 p-0 d-flex align-items-center justify-content-end">
+    <div class="col-md-6 p-0 d-flex align-items-center justify-content-end">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
@@ -33,9 +33,32 @@
             <button mat-menu-item>Option 3</button>
         </mat-menu> -->
 
-        <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+        <button [matMenuTriggerFor]="pomis" class="btn-default addon mr-8 v-middle" mat-stroked-button><i
                 class="material-icons">filter_list</i>FILTERS
         </button>
+        <mat-menu #pomis>
+            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                                                        Vinayak Nerlekar
+                                                    </button>
+                                                    <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                                                        BANK FD
+                                                    </button> -->
+            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                                                CORPORATE FD
+                                              </button> -->
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                (click)="filterPomis(null, 'All')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                (click)="filterPomis('statusId', 'LIVE')">
+                STATUS - LIVE
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterPomis('statusId', 'MATURED')">
+                STATUS - Matured
+            </button>
+        </mat-menu>
         <button (click)="openAddPOMIS(null)" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW</button>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -48,16 +48,19 @@ export class PoMisSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  pomisList: any[];
+  hideFilter: boolean;
+  isFixedIncomeFiltered: boolean;
 
-  constructor(private excel:ExcelGenService,
-    private fileUpload :FileUploadServiceService,
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
     private assetValidation: AssetValidationService,
-    private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+    private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     public util: UtilService,
-    private _bottomSheet : MatBottomSheet) {
-      this.clientData = AuthService.getClientData()
-    }
+    private _bottomSheet: MatBottomSheet) {
+    this.clientData = AuthService.getClientData()
+  }
 
   displayedColumns = ['no', 'owner', 'cvalue', 'payoutTill', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'poMisNo', 'desc', 'status', 'icons'];
 
@@ -66,16 +69,16 @@ export class PoMisSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPoMisSchemedata();
-    if(!this.dataList){
+    if (!this.dataList) {
       this.getPoMisSchemedata();
-      }else{
-        this.getPoMisSchemedataResponse(this.dataList);
-      }
+    } else {
+      this.getPoMisSchemedataResponse(this.dataList);
+    }
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -101,7 +104,7 @@ export class PoMisSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -157,9 +160,10 @@ export class PoMisSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoMisSchemedataResponse', data);
-        if(!this.dataList){
+        if (!this.dataList) {
           this.pomisDataList.emit(data);
         }
+        this.pomisList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
@@ -168,7 +172,7 @@ export class PoMisSchemeComponent implements OnInit {
         this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;
         this.sumOfAmountInvested = data.sumOfAmountInvested;
         this.sumOfPayoutTillToday = data.sumOfPayoutTillToday;
-        this.pomisData = data; 
+        this.pomisData = data;
       }
     } else {
 
@@ -259,5 +263,42 @@ export class PoMisSchemeComponent implements OnInit {
 
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+  filterPomis(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.pomisList;
+    }
+    else {
+      dataFiltered = this.pomisList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.sumOfCurrentValue = 0;
+    this.sumOfMonthlyPayout = 0;
+    this.sumOfPayoutTillToday = 0;
+    this.sumOfMaturityValue = 0;
+    this.sumOfAmountInvested = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.sumOfCurrentValue += element.currentValue;
+        this.sumOfMaturityValue += element.maturityValue;
+        this.sumOfMonthlyPayout += element.monthlyPayout;
+        this.sumOfPayoutTillToday += element.totalPayoutTillToday;
+        this.sumOfAmountInvested += element.amountInvested;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.datasource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    this.datasource.sort = this.tableEl;
   }
 }
