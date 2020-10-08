@@ -52,7 +52,9 @@ export class FixedIncomeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   hidePdf: boolean;
   noData: string;
-  dataList: any;
+  fixDataList: any;
+  recDataList: any;
+  bondDataList: any;
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
@@ -146,11 +148,29 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     if (value == '2') {
+      if(this.recDataList){
+        this.isLoading = false;
+        this.dataSource.data = this.recDataList;
+      }
+      else{
       this.getRecurringDepositList();
+      }
     } else if (value == '3') {
+      if(this.bondDataList){
+        this.isLoading = false;
+        this.dataSource.data = this.bondDataList;
+      }
+      else{
       this.getBondsList();
+      }
     } else {
-      this.getFixedDepositList();
+      if(this.fixDataList){
+        this.isLoading = false;
+        this.dataSource.data = this.fixDataList;
+      }
+      else{
+        this.getFixedDepositList();
+      }
     }
 
   }
@@ -182,7 +202,7 @@ export class FixedIncomeComponent implements OnInit {
     } else if (data.assetList) {
       this.assetValidation.getAssetCountGLobalData()
 
-      this.dataList = data.assetList;
+      this.fixDataList = data.assetList;
       this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
@@ -231,7 +251,7 @@ export class FixedIncomeComponent implements OnInit {
         this.assetValidation.getAssetCountGLobalData()
 
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
-        this.dataList = data.assetList;
+        this.recDataList = data.assetList;
         this.hideFilter = false;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.recurringDepositTableSort;
@@ -273,7 +293,7 @@ export class FixedIncomeComponent implements OnInit {
          this.assetValidation.getAssetCountGLobalData();
 
         console.log('getBondsRes ******** ', data);
-        this.dataList = data.assetList;
+        this.bondDataList = data.assetList;
         this.hideFilter = false;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.bondListTableSort;
@@ -291,15 +311,15 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   activeFilter: any = 'All';
-  filterFixedIncome(key: string, value: any) {
+  filterFixedIncome(key: string, value: any, type:any) {
 
     let dataFiltered = [];
     this.activeFilter = value;
     if (value == "All") {
-      dataFiltered = this.dataList;
+      dataFiltered = type;
     }
     else {
-      dataFiltered = this.dataList.filter(function (item) {
+      dataFiltered = type.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length <= 0) {
@@ -313,7 +333,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSource.sort = this.fixedIncomeTableSort;
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -323,26 +343,32 @@ export class FixedIncomeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'FIXED DEPOSIT') {
-          this.customerService.deleteFixedDeposite(data.id).subscribe(
+          this.customerService.deleteFixedDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getFixedDepositList();
+              // this.getFixedDepositList();
+              this.fixDataList = this.fixDataList.filter(x => x.id != element.id);
+              this.dataSource.data = this.fixDataList;
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'RECURRING DEPOSIT') {
-          this.customerService.deleteRecurringDeposite(data.id).subscribe(
+          this.customerService.deleteRecurringDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getRecurringDepositList();
+              // this.getRecurringDepositList();
+              this.recDataList = this.recDataList.filter(x => x.id != element.id);
+              this.dataSource.data = this.recDataList;
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.customerService.deleteBond(data.id).subscribe(
+          this.customerService.deleteBond(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getBondsList();
+              // this.getBondsList();
+              this.bondDataList = this.bondDataList.filter(x => x.id != element.id);
+              this.dataSource.data = this.bondDataList;
             },
             error => this.eventService.showErrorMessage(error)
           );

@@ -1,5 +1,5 @@
 import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input} from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -23,6 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class PoMisSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() pomisDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   isLoading = false;
@@ -64,6 +66,11 @@ export class PoMisSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPoMisSchemedata();
+    if(!this.dataList){
+      this.getPoMisSchemedata();
+      }else{
+        this.getPoMisSchemedataResponse(this.dataList);
+      }
   }
 
   Excel(tableTitle){
@@ -150,6 +157,9 @@ export class PoMisSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoMisSchemedataResponse', data);
+        if(!this.dataList){
+          this.pomisDataList.emit(data);
+        }
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);

@@ -27,7 +27,8 @@ import { Subscription } from 'rxjs';
 })
 export class CashAndBankComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
-  
+  bankDataList:any;
+  cashDataList:any;
   showRequring: string;
   advisorId: any;
   clientId: any;
@@ -185,21 +186,33 @@ export class CashAndBankComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   // }
-
+  recDataList
   getfixedIncomeData(value) {
     console.log('value++++++', value);
     this.isLoading = true;
     this.showRequring = value;
     if (value == '2') {
+      if(this.cashDataList){
+        this.isLoading = false;
+        this.cashInHandList.data = this.cashDataList;
+      }
+      else{
       this.getCashInHandList();
       this.cashInHandList = new MatTableDataSource(this.data);
+      }
     } else {
-      this.getBankAccountList();
-      this.bankAccountList = new MatTableDataSource(this.data);
+      if(this.bankDataList){
+        this.isLoading = false;
+        this.bankAccountList.data = this.bankDataList;
+      }
+      else{
+        this.getBankAccountList();
+        this.bankAccountList = new MatTableDataSource(this.data);
+      }
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -209,23 +222,27 @@ export class CashAndBankComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'BANK') {
-          this.custumService.deleteBankAccount(data.id).subscribe(
+          this.custumService.deleteBankAccount(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getBankAccountList();
+              this.bankDataList = this.bankDataList.filter(x => x.id != element.id);
+              this.bankAccountList.data = this.bankDataList;
+              // this.getBankAccountList();
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.custumService.deleteCashInHand(data.id).subscribe(
+          this.custumService.deleteCashInHand(element.id).subscribe(
             data => {
               dialogRef.close();
-              this.getCashInHandList();
+              this.cashDataList = this.cashDataList.filter(x => x.id != element.id);
+              this.cashInHandList.data = this.cashDataList;
+              // this.getCashInHandList();
             },
             error => this.eventService.showErrorMessage(error)
           );
         }
-        (value == "BANK ACCOUNT") ? this.getBankAccountList() : this.getCashInHandList();
+        // (value == "BANK ACCOUNT") ? this.getBankAccountList() : this.getCashInHandList();
         this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
 
       },
@@ -268,7 +285,8 @@ export class CashAndBankComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       this.assetValidation.getAssetCountGLobalData()
-      this.bankAccountList.data = data.assetList;
+      this.bankDataList = data.assetList
+      this.bankAccountList.data = this.bankDataList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.sumOfAccountBalance;
     } else {
@@ -302,7 +320,8 @@ export class CashAndBankComponent implements OnInit {
     }
     else if (data.assetList.length != 0) {
       this.assetValidation.getAssetCountGLobalData()
-      this.cashInHandList.data = data.assetList;
+      this.cashDataList = data.assetList;
+      this.cashInHandList.data = this.cashDataList;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {

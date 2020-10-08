@@ -1,5 +1,5 @@
 import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -23,6 +23,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class KvpSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() kvpDataList = new EventEmitter();
+  @Input() dataList;
   clientId: number;
   advisorId: any;
   noData: string;
@@ -58,7 +60,12 @@ export class KvpSchemeComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getKvpSchemedata();
+    if(!this.dataList){
+      this.getKvpSchemedata();
+      }else{
+        this.getKvpSchemedataResponse(this.dataList);
+      }
+    
   }
 
   Excel(tableTitle){
@@ -141,6 +148,9 @@ export class KvpSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
+        if(!this.dataList){
+          this.kvpDataList.emit(data);
+        }
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);

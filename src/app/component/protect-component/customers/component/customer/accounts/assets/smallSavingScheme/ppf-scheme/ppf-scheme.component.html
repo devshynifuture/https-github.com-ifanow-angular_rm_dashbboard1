@@ -2,7 +2,7 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Public provident fund (PPF)</h4>
     </div>
-    <div class="col-md-7 p-0  d-flex align-items-center justify-content-end" *ngIf="dataSource.data.length > 0">
+    <div class="col-md-7 p-0  d-flex align-items-center justify-content-end">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
@@ -24,8 +24,30 @@
         <!-- </mat-menu>
         <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
 
-        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+        <button mat-stroked-button [matMenuTriggerFor]="ppf" class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
+        <mat-menu #ppf>
+            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                        Vinayak Nerlekar
+                    </button>
+                    <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                        BANK FD
+                    </button> -->
+            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                CORPORATE FD
+              </button> -->
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterPPF(null, 'All')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                (click)="filterPPF('statusId', 'LIVE')">
+                STATUS - LIVE
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterPPF('statusId', 'MATURED')">
+                STATUS - Matured
+            </button>
+        </mat-menu>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPPF(null)">ADD NEW</button>
     </div>
 </div>

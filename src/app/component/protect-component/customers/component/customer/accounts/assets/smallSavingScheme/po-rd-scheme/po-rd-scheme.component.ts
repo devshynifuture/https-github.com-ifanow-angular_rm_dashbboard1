@@ -1,6 +1,6 @@
 import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild, ViewChildren , Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren , Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -24,6 +24,8 @@ import { AssetValidationService } from '../../asset-validation.service';
 })
 export class PoRdSchemeComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
+  @Output() pordDataList = new EventEmitter();
+  @Input() dataList;
   advisorId: any;
   clientId: number;
   noData: string;
@@ -60,7 +62,11 @@ export class PoRdSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPoRdSchemedata();
+    if(!this.dataList){
+      this.getPoRdSchemedata();
+      }else{
+        this.getPoRdSchemedataResponse(this.dataList);
+      }
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -148,6 +154,9 @@ export class PoRdSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
+        if(!this.dataList){
+          this.pordDataList.emit(data);
+        }
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
         UtilService.checkStatusId(this.dataSource.filteredData);
