@@ -16,9 +16,12 @@
         <app-progress-button *ngIf="manualObj && manualObj.isMapped == 1" class=".btn-danger br-0 right"
             (btnClick)="removeToPlan()" [options]="barButtonOptions2">
         </app-progress-button>
-        <app-progress-button  class="btn-primary br-0 right"
+        <app-progress-button *ngIf="manualObj && manualObj.isMapped == 0" class="btn-primary br-0 right"
             (btnClick)="addToPlan()" [options]="barButtonOptions">
         </app-progress-button>
+        <app-progress-button *ngIf="!manualObj" class="btn-primary br-0 right"
+        (btnClick)="saveAndAddToPlan()" [options]="barButtonOptions">
+    </app-progress-button>
     </div>
     <!-- <div *ngIf="tab == 0">
         <app-progress-button *ngIf="needBase && needBase.isMapped == 1" class=".btn-danger br-0 right"
@@ -556,7 +559,10 @@
                         <h5 class="m-0">Suggest insurance amount</h5>
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input matInput class="form-control br-0 rupess" formControlName="insuranceAmount">
+                                <input matInput [inputValidator]="validatorType.NUMBER_ONLY" #insuranceAmount [maxLength]="10" appInputValueValidation class="form-control br-0 rupess" formControlName="insuranceAmount">
+                                <mat-hint align="end" class="f-12">{{insuranceAmount.value.length}}/10</mat-hint>
+                                <mat-error>This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>

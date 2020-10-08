@@ -355,6 +355,7 @@ export class CalculatorsComponent implements OnInit {
       savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT_DASHED),
       savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT_DASHED),
       yearStepUps: [0],
+      returnsAssumptions: subData.returnsAssumptions
     }
 
     let formValue: Object = this.delayFG.value;

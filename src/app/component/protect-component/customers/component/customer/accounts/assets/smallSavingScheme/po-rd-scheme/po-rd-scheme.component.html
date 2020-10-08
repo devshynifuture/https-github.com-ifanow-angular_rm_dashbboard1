@@ -2,7 +2,7 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office recurring deposit (PO RD)</h4>
     </div>
-    <div *ngIf="dataSource.data.length > 0" class="col-md-7 p-0  d-flex align-items-center justify-content-end">
+    <div class="col-md-7 p-0  d-flex align-items-center justify-content-end">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
@@ -29,8 +29,30 @@
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
         </mat-menu> -->
-        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+        <button mat-stroked-button [matMenuTriggerFor]="pord" class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
+        <mat-menu #pord>
+            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                                                Vinayak Nerlekar
+                                            </button>
+                                            <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                                                BANK FD
+                                            </button> -->
+            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                                        CORPORATE FD
+                                      </button> -->
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterPord(null, 'All')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                (click)="filterPord('statusId', 'LIVE')">
+                STATUS - LIVE
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterPord('statusId', 'MATURED')">
+                STATUS - Matured
+            </button>
+        </mat-menu>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPORD(null)">
             ADD NEW</button>
     </div>
