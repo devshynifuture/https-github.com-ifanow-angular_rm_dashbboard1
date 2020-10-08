@@ -49,15 +49,18 @@ export class NscSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  nscList: any[];
+  hideFilter: boolean;
+  isFixedIncomeFiltered: boolean;
 
-  constructor( private excel:ExcelGenService, 
-    private fileUpload : FileUploadServiceService,
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
     private assetValidation: AssetValidationService,
-    private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+    private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
-    private _bottomSheet : MatBottomSheet) {
-      this.clientData = AuthService.getClientData()
-    }
+    private _bottomSheet: MatBottomSheet) {
+    this.clientData = AuthService.getClientData()
+  }
 
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'invested', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -66,16 +69,16 @@ export class NscSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getNscSchemedata();
-    if(!this.dataList){
+    if (!this.dataList) {
       this.getNscSchemedata();
-      }else{
-        this.getNscSchemedataResponse(this.dataList);
-      }
+    } else {
+      this.getNscSchemedataResponse(this.dataList);
+    }
     this.footer = [];
   }
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
@@ -101,7 +104,7 @@ export class NscSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -152,16 +155,17 @@ export class NscSchemeComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log(data, 'getNscSchemedataResponse');
-        if(!this.dataList){
+        if (!this.dataList) {
           this.nscDataList.emit(data);
         }
+        this.nscList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
         this.SumOfCurrentValue = data.sumOfCurrentValue;
         this.SumOfMaturityValue = data.sumOfMaturityValue
         this.nscData = data;
-      } 
+      }
     } else {
       this.noData = 'No scheme found';
       this.datasource.data = []
@@ -229,5 +233,37 @@ export class NscSchemeComponent implements OnInit {
 
       }
     );
+  }
+
+  activeFilter: any = 'All';
+
+
+  filterNsc(key: string, value: any) {
+
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      dataFiltered = this.nscList;
+    }
+    else {
+      dataFiltered = this.nscList.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+    }
+    this.SumOfCurrentValue = 0;
+    this.SumOfMaturityValue = 0;
+    if (dataFiltered.length > 0) {
+      dataFiltered.forEach(element => {
+        this.SumOfCurrentValue += element.currentValue;
+        this.SumOfMaturityValue += element.maturityValue;
+      })
+    }
+    this.isFixedIncomeFiltered = true;
+    this.datasource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    this.datasource.sort = this.tableEl;
   }
 }
