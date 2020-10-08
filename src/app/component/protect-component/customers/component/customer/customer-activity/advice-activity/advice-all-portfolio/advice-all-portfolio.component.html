@@ -45,16 +45,36 @@
         <app-advice-action [ngClass]="{'v-h': selectedAssetId.length==0}" [data]="selectedAssetId"></app-advice-action>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+             <button mat-button [matMenuTriggerFor]="menu1" class="b-a br-0 pr-8">Action<i
+                    class="material-icons pl-8 text-light">
+                    keyboard_arrow_down
+                </i></button>
+            <mat-menu #menu1="matMenu">
+    
+                <button mat-menu-item (click)="openEmailAdvice('null')">
+                    Request for consent
+                </button>
+                <button mat-menu-item>
+                    Bypass consent request
+                </button>
+                 
+            </mat-menu>
+    </div>
+</div>
+
 <div class="row pt-12">
     <div class="col-md-6">
         <h5 class="m-0 text-black pt-8">Cash flows</h5>
     </div>
     <div class="col-md-6 text-right">
-        <button mat-stroked-button class="br-0 pl-8 text-custom"><img src="/assets/images/svg/addon-three.svg"
+        <button mat-stroked-button class="br-0 mb-10 pl-8 text-custom"><img src="/assets/images/svg/addon-three.svg"
                 class="pr-8">Filters</button>
     </div>
 </div>
-<div class="wrapper-16 cash-flow-advice">
+<div class="wrapper-16 pt-0 cash-flow-advice">
     <table #tableOne="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
