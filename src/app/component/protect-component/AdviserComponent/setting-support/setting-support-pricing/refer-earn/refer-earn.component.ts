@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ReferEarnService } from '../refer-earn.service';
 
 @Component({
   selector: 'app-refer-earn',
@@ -8,9 +12,39 @@ import { Component, OnInit } from '@angular/core';
 export class ReferEarnComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
-
+  advisorId: any; referedUsers:
+    any; userData: any;
+  referralCode = new FormControl();
+  totalCreditEarn = new FormControl();
+  isLoading: boolean;
+  constructor(private referEarnService: ReferEarnService, private eventService: EventService) { }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.userData = AuthService.getUserInfo();
+    this.referralCode.setValue(this.userData.referralCode)
+    this.getReferredusers();
+  }
+  getReferredusers() {
+    this.isLoading = true;
+    const obj = { advisorId: this.advisorId }
+    this.referEarnService.getReferredusersData(obj)
+      .subscribe(data => {
+        this.isLoading = false;
+        if (data) {
+          this.referedUsers = data;
+          let totalCreditEarn = 0
+          this.referedUsers.forEach(element => {
+            totalCreditEarn += element.referralCredit;
+          });
+          this.totalCreditEarn.setValue(totalCreditEarn);
+        }
+      })
+  }
+  copyInputMessage(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+    this.eventService.openSnackBar("Referral code is copied", "Dismiss");
   }
 
 }
