@@ -477,21 +477,9 @@ export class DashboardComponent implements OnInit {
     this.initPointForTask();
     this.getMisData();
     this.getChartData()
-    this.openDialog()
 
   }
-  openDialog() {
-    const dialogRef = this.dialog.open(ReferAndEarnPopupsComponent, {
-      width: '40%',
-    }
 
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-    });
-  }
   initPointForTask() {
     this.getTaskDashboardCount();
     this.getTodaysTaskList();

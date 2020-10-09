@@ -31,6 +31,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ReferAndEarnPopupsComponent } from './component/no-protected/login/refer-and-earn-popups/refer-and-earn-popups.component';
 // import { AgmCoreModule } from '@agm/core'
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -50,7 +51,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     FormTestComponent,
-    BackofficeDashboardComponent, 
+    BackofficeDashboardComponent,
+    ReferAndEarnPopupsComponent
 
   ],
   imports: [
@@ -99,7 +101,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     // { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true }
   ],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ReferAndEarnPopupsComponent]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

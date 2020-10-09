@@ -15,7 +15,6 @@ import { ReferAndEarnPopupsComponent } from 'src/app/component/no-protected/logi
 @NgModule({
   declarations: [
     DashboardComponent,
-    ReferAndEarnPopupsComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +29,7 @@ import { ReferAndEarnPopupsComponent } from 'src/app/component/no-protected/logi
   ],
   exports: [],
   providers: [DashboardService],
-  entryComponents: [ReferAndEarnPopupsComponent]
+  entryComponents: []
 })
 export class DashboardModule {
   constructor() { }
