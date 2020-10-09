@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0" *ngIf="!isFormSubmitted">
     <div class="row h-100vh">
         <div class="col-md-12 col-lg-6 imgBoxloginFlex mobileNone  bg-grey lter  ">
             <!-- <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" alt="logo" class="pb-40 h-120"> -->
@@ -68,8 +68,8 @@
               <div class="col-md-12 form-group remove-top-flex">
                 <p class="mb-4 text-primitive">Referral code</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input type="text" matInput class="form-control"  formControlName=" ">
-                    <mat-hint class="ml-12 text-primitive">Optional</mat-hint>
+                    <input type="text" matInput class="form-control"  [formControl]="referralCodeFC" placeholder="Eg. IFANOW2020">
+                    <mat-hint class="text-primitive">Optional</mat-hint>
                     <mat-error>
                       This field is required
                     </mat-error>
@@ -124,6 +124,7 @@
               <div class="col-md-12 form-group remove-top-flex mb-24">
                 <mat-form-field floatLabel="never" appearance="standard">
                 <textarea matInput class="form-control" name="description"   placeholder="About you" formControlName="description"></textarea> 
+                <mat-hint class="text-primitive">Optional</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -143,4 +144,12 @@
           </div>
         </div>
     </div>
+</div>
+
+<div class="container" *ngIf="isFormSubmitted">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-12">
+      <!-- <img src="" alt=""> -->
+    </div>
+  </div>
 </div>

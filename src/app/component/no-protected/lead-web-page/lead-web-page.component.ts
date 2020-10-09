@@ -37,6 +37,8 @@ export class LeadWebPageComponent implements OnInit {
   optionsFC: FormControl = new FormControl('', Validators.required);
   userDetailForm;
   otherOptionFC: FormControl = new FormControl('');
+  referralCodeFC: FormControl = new FormControl('');
+  isFormSubmitted: boolean = false;
 
   ngOnInit() {
     this.userDetailForm = this.fb.group({
@@ -68,18 +70,25 @@ export class LeadWebPageComponent implements OnInit {
       if(this.userDetailForm.get('description').value !== ''){
         data['description'] = this.userDetailForm.get('description').value;
       }
-      // this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
-      //   .subscribe(res=>{
-      //     if(res){
-      //       console.log(res);
-      //     }
-      //   }, err => {
-      //     this.eventService.openSnackBar('Something went wrong', "DISMISS")
-      //   })
+      if(this.referralCodeFC.value !==''){
+        data['referralCode'] = this.referralCodeFC.value;
+      }
+      if(+this.optionsFC.value === 5){
+        data['sourceDescription'] = this.otherOptionFC.value;
+      }
+      this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
+        .subscribe(res=>{
+          if(res){
+            console.log(res);
+            this.isFormSubmitted = true;
+          }
+        }, err => {
+          this.eventService.openSnackBar('Something went wrong', "DISMISS")
+        })
 
     } else {
       this.optionsFC.markAsTouched();
-      this.userDetailForm.markAsTouched();
+      this.userDetailForm.markAllAsTouched();
     }
   }
 
