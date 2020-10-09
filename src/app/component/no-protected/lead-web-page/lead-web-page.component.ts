@@ -1,6 +1,10 @@
+import { EventService } from './../../../Data-service/event.service';
+import { HttpService } from './../../../http-service/http-service';
+import { apiConfig } from './../../../config/main-config';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { appConfig } from 'src/app/config/component-config';
 
 @Component({
   selector: 'app-lead-web-page',
@@ -10,7 +14,9 @@ import { Component, OnInit } from '@angular/core';
 export class LeadWebPageComponent implements OnInit {
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpService,
+    private eventService: EventService
   ) { }
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,6 +36,7 @@ export class LeadWebPageComponent implements OnInit {
   };
   optionsFC: FormControl = new FormControl('', Validators.required);
   userDetailForm;
+  otherOptionFC: FormControl = new FormControl('');
 
   ngOnInit() {
     this.userDetailForm = this.fb.group({
@@ -39,10 +46,37 @@ export class LeadWebPageComponent implements OnInit {
       description:['']
     });
   }
+  
+  toggleErrorOfFC(event){
+    let value = event.value;
+    if(+value === 5){
+      this.otherOptionFC.setErrors(Validators.required);
+    } else {
+      this.otherOptionFC.setErrors(null);
+    }
+  }
 
   onSubmitForm(){
     if(this.userDetailForm.valid && this.optionsFC.valid){
-      
+      console.log("look into it", this.optionsFC.value, this.userDetailForm.value);
+      let data = {
+        name : this.userDetailForm.get('name').value,
+        mobileNumber: this.userDetailForm.get('mobNo').value,
+        email: this.userDetailForm.get('email').value,
+        sourceId: +this.optionsFC.value
+      }
+      if(this.userDetailForm.get('description').value !== ''){
+        data['description'] = this.userDetailForm.get('description').value;
+      }
+      // this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
+      //   .subscribe(res=>{
+      //     if(res){
+      //       console.log(res);
+      //     }
+      //   }, err => {
+      //     this.eventService.openSnackBar('Something went wrong', "DISMISS")
+      //   })
+
     } else {
       this.optionsFC.markAsTouched();
       this.userDetailForm.markAsTouched();

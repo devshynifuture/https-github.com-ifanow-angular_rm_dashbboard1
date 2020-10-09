@@ -1,6 +1,6 @@
 <div class="container-fluid p-0">
     <div class="row h-100vh">
-        <div class="col-md-6 imgBoxlogin mobileNone p-0 bg-grey lter pt-200 p-44">
+        <div class="col-md-6 imgBoxlogin mobileNone p-0 bg-grey lter pt-120 p-44">
             <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" alt="logo" class="pb-40 h-120">
             <h4 class="f-30 pb-10">
               How did you come to know about us?
@@ -20,7 +20,7 @@
                 From where did you found us?
               </mat-label>
               <mat-form-field>
-                <mat-select class="form-control" [formControl]="optionsFC">
+                <mat-select class="form-control" [formControl]="optionsFC" (selectionChange)="toggleErrorOfFC($event)">
                   <mat-option value="">
                     Please Select your option
                   </mat-option>
@@ -40,6 +40,14 @@
                     Other
                   </mat-option>
                 </mat-select>
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12 pt-20" *ngIf="optionsFC.value==='5'">
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input type="text" matInput class="form-control" [formControl]="otherOptionFC" placeholder="Please specify">
                 <mat-error>
                   This field is required
                 </mat-error>
