@@ -52,10 +52,10 @@ export class SmallSavingSchemeComponent implements OnInit {
         this.pordDataList = event;
         break;
       case 'potd':
-        this.nscDataList = event;
+        this.potdDataList = event;
         break;
       case 'pomis':
-        this.nscDataList = event;
+        this.pomisDataList = event;
         break;
     }
   }

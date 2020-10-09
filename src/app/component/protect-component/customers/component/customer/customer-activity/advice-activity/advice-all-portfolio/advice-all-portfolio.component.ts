@@ -5,6 +5,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../customer.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { AdviceUtilsService } from '../advice-utils.service';
+import { EventService } from 'src/app/Data-service/event.service';
+
 
 @Component({
   selector: 'app-advice-all-portfolio',
@@ -17,7 +19,8 @@ export class AdviceAllPortfolioComponent implements OnInit {
   selectedAssetId = [];
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource1: any = new MatTableDataSource(ELEMENT_DATA1);
-  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  
+  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
   @ViewChild("tableOne", { static: true }) sort1: MatSort;
   @ViewChild("tableTwo", { static: true }) sort2: MatSort;
   isLoading: boolean = false;
@@ -35,6 +38,29 @@ export class AdviceAllPortfolioComponent implements OnInit {
     (flag.checked) ? this.selectedAssetId.push(selectedData.id) : this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     console.log(this.selectedAssetId)
   }
+
+
+  openEmailAdvice(data) {
+    const fragmentData = {
+      data,
+      id: 1,
+      state: 'open',
+      componentName: EmailAdviceComponent,
+
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.eventService.openSnackBar('Bank added successfully', 'Ok');
+         // this.getAccountList();
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
+
 }
 export interface PeriodicElement {
   name: string;
