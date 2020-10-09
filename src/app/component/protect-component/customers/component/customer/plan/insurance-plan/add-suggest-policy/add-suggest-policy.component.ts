@@ -145,6 +145,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.suggestPolicyForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         'clientId': this.clientId,
         'advisorId': this.advisorId,
@@ -165,6 +166,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       this.planService.addSuggestNew(obj).subscribe(
         data => {
             console.log(data);
+            this.barButtonOptions.active = false;
             this.close(true);
         },
         err => {
