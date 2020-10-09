@@ -94,21 +94,31 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     this.arnRiaCode = this.data.arnRiaCode;
     if(this.router.url.includes('folio-query')){
       let temArr = [];
-      this.data.tableData.forEach(element => {     
-        if(element.transactionDate <= this.data.aumDate){
-          temArr.push(element);
-        }
+      this.data.tableData.forEach(element => { 
+        if(this.data.aumDate && element.transactionDate){
+          if(element.transactionDate <= this.data.aumDate){
+            temArr.push(element);
+          }
+        }    
       });
 
       this.freezeDate = this.data.freezeDate;
+      let tableArr: PeriodicElement[];
+      if(temArr.length>0){
+        tableArr = [{
+          unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+          unitOne: temArr[temArr.length-1].balanceUnits,
+          difference: (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3),
+        }];
+        this.data.difference = (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3);
+      } else {
+        tableArr = [{
+          unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+          unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
+          difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
+        }];
+      }
 
-      const tableArr: PeriodicElement[] = [{
-        unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
-        unitOne: temArr[temArr.length-1].balanceUnits,
-        difference: (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3),
-      }];
-
-      this.data.difference = (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3);
       this.dataSource.data = tableArr;
       this.upperTableArr = tableArr;
 

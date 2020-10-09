@@ -941,7 +941,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       componentName: ReconciliationDetailsViewComponent
     };
 
-    if (tableData && tableData.length !== 0 && element.id !== 0 && element.id !==null) {
+    if (tableData && tableData.length !== 0) {
       const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
           console.log('this is sidebardata in subs subs : ', sideBarData);
