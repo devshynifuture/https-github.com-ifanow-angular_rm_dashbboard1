@@ -937,6 +937,9 @@ export const appConfig = {
   GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
   PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
 
+  //////////////////////////// Lead interaction ///////////////////////
+  POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
+
 };
 
 
