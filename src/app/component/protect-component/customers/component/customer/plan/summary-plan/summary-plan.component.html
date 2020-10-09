@@ -363,37 +363,37 @@
                         <div class="bg-white p-20">
                             <div class="row d-flex align-items-center justify-content-between b-b">
                                 <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
-                                <p class="f-14 text-primitive mb-10"> 2019-20 </p>
+                                <p class="f-14 text-primitive mb-10">{{ yearToShow }}</p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Incomes</p>
-                                <p class="f-14 m-0">28,30,500</p>
+                                <p class="f-14 m-0">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Expenses</p>
-                                <p class="f-14 m-0">12,78,000</p>
+                                <p class="f-14 m-0">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Assets</p>
-                                <p class="f-14 m-0">0</p>
+                                <p class="f-14 m-0">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Insurance</p>
-                                <p class="f-14 m-0">3,57,000</p>
+                                <p class="f-14 m-0">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Liabilities</p>
-                                <p class="f-14 m-0">1,09,000</p>
+                                <p class="f-14 m-0">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 f-600 m-0">Surplus</p>
-                                <p class="f-14 f-600 m-0">8,73,500</p>
+                                <p class="f-14 f-600 m-0">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
                             </div>
 
 
