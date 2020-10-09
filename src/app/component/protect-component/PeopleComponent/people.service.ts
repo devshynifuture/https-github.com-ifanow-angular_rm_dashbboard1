@@ -20,6 +20,10 @@ export class PeopleService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);
   }
 
+  getClientLogo(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LOGO, data);
+  }
+
   addClient(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data);
   }

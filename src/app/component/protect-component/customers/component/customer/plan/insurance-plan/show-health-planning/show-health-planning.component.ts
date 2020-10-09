@@ -14,6 +14,8 @@ import { MotorInsuranceComponent } from '../mainInsuranceScreen/motor-insurance/
 import { TravelInsuranceComponent } from '../mainInsuranceScreen/travel-insurance/travel-insurance.component';
 import { HouseholdersInsuranceComponent } from '../mainInsuranceScreen/householders-insurance/householders-insurance.component';
 import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fire-insurance.component';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -21,7 +23,7 @@ import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fi
   styleUrls: ['./show-health-planning.component.scss']
 })
 export class ShowHealthPlanningComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'advice', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'advice'];
   dataSource :any;
   inputData: any;
   showInsurance: any;
@@ -41,7 +43,8 @@ export class ShowHealthPlanningComponent implements OnInit {
     private custumService: CustomerService,
     private utils: UtilService,
     private eventService: EventService,
-    private planService:PlanService
+    private planService:PlanService,
+    public dialog: MatDialog
   ) { }
 
 
@@ -134,6 +137,43 @@ export class ShowHealthPlanningComponent implements OnInit {
 
     return array;
   }
+    deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+          this.planService.deleteSuggestNew(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+              dialogRef.close();
+              this.getStepOneAndTwoData();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   close(data) {
     const fragmentData = {
       direction: 'top',
@@ -163,8 +203,8 @@ export class ShowHealthPlanningComponent implements OnInit {
       }
     );
   }
-  openSuggestHealth(data) {
-      data.data= null;
+  openSuggestHealth(data,value) {
+      data.data= value;
       data.insuranceTypeId=  2;
       data.insuranceSubTypeId=  data.insuranceType;
       data.displayList=  this.displayList;

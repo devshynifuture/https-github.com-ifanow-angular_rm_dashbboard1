@@ -345,6 +345,7 @@ export const appConfig = {
   ADD_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/add',
   ADD_GENERAL_INSURANCE_PLAN: 'insurance/planning/general/insurance/suggest/policy/new/add',
   GET_INSURANCE_PLANNING_PLAN_SUMMARY: 'insurance/planning/plan/summary/insurance/get',
+  DELETE_SUGGEST_NEW:'account/insurance/general-insurance/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -841,6 +842,7 @@ export const appConfig = {
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
+  GET_CLIENT_LOGO: 'web/setting/organisation/domain/data/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -936,6 +938,7 @@ export const appConfig = {
   ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
   GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
   PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
+  
 
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
