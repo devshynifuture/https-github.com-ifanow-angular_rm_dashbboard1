@@ -307,4 +307,8 @@ export class PlanService {
   addGenralInsurancePlan(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE_PLAN, data)
   }
+  deleteSuggestNew(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGEST_NEW, data);
+  }
+
 }

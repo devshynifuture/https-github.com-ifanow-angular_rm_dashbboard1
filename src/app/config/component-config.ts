@@ -345,6 +345,7 @@ export const appConfig = {
   ADD_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/add',
   ADD_GENERAL_INSURANCE_PLAN:'insurance/planning/general/insurance/suggest/policy/new/add',
   GET_INSURANCE_PLANNING_PLAN_SUMMARY: 'insurance/planning/plan/summary/insurance/get',
+  DELETE_SUGGEST_NEW:'account/insurance/general-insurance/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
