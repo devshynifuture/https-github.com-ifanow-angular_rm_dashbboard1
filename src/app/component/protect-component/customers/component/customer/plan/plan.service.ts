@@ -310,5 +310,8 @@ export class PlanService {
   deleteSuggestNew(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGEST_NEW, data);
   }
+  getCashFlow(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW, data)
+  }
 
 }

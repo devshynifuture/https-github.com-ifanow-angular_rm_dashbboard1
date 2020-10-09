@@ -931,7 +931,8 @@ export const appConfig = {
 
   QUESTION_ANSWER_ADD: 'admin/dashboard/on-boarding/question-answer/add',
   QUESTION_ANSWER_GET: 'admin/dashboard/on-boarding/question-answer/get',
-
+////////////////////////plan-summary///////////////////////////////////////
+  GET_CASHFLOW:'plan/cash-flow/summary/get',
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
   ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
