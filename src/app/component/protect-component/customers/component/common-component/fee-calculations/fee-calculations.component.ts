@@ -68,6 +68,7 @@ export class FeeCalculationsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.feeAmount,"feeAmount");
   }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;

@@ -104,6 +104,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.showErr = false;
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -135,6 +136,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   initFormsAndVariable(data) {
+    if(!this.advisorId){
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId();
+    }
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false;
     }

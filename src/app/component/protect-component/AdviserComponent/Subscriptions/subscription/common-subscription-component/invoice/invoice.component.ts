@@ -660,6 +660,7 @@ export class InvoiceComponent implements OnInit {
 
   selectedInvRecord: any;
   passInvoice(data, index, event) {
+    
     if (data.balanceDue == 0 || data.status == 1) {
       this.rpyment = false;
     } else {
