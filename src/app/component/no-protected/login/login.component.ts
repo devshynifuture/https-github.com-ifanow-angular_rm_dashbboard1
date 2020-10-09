@@ -100,6 +100,7 @@ export class LoginComponent implements OnInit {
   showTimeRemaing: number;
   resendOtpFlag: any;
   logoUrl: any;
+  isBetaDomain: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -118,6 +119,12 @@ export class LoginComponent implements OnInit {
     this.getLogoUrl();
     this.createForm();
     // }
+    let hostName = window.location.hostname;
+    if(hostName.split('.').includes('beta')){
+      this.isBetaDomain = true;
+    } else {
+      this.isBetaDomain = false;
+    }
     this.btnProgressData = 'state1';
   }
 
