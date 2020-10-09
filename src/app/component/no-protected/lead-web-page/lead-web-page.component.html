@@ -68,8 +68,8 @@
               <div class="col-md-12 form-group remove-top-flex">
                 <p class="mb-4 text-primitive">Referral code</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input type="text" matInput class="form-control"  [formControl]="referralCodeFC">
-                    <mat-hint class="ml-12 text-primitive">Optional</mat-hint>
+                    <input type="text" matInput class="form-control"  [formControl]="referralCodeFC" placeholder="Eg. IFANOW2020">
+                    <mat-hint class="text-primitive">Optional</mat-hint>
                     <mat-error>
                       This field is required
                     </mat-error>
@@ -124,6 +124,7 @@
               <div class="col-md-12 form-group remove-top-flex mb-24">
                 <mat-form-field floatLabel="never" appearance="standard">
                 <textarea matInput class="form-control" name="description"   placeholder="About you" formControlName="description"></textarea> 
+                <mat-hint class="text-primitive">Optional</mat-hint>
                 </mat-form-field>
               </div>
             </div>

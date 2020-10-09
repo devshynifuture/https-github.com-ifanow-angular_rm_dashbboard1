@@ -71,16 +71,20 @@ export class LeadWebPageComponent implements OnInit {
         data['description'] = this.userDetailForm.get('description').value;
       }
       if(this.referralCodeFC.value !==''){
-        data['referral'] = this.referralCodeFC.value;
+        data['referralCode'] = this.referralCodeFC.value;
       }
-      // this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
-      //   .subscribe(res=>{
-      //     if(res){
-      //       console.log(res);
-      //     }
-      //   }, err => {
-      //     this.eventService.openSnackBar('Something went wrong', "DISMISS")
-      //   })
+      if(+this.optionsFC.value === 5){
+        data['sourceDescription'] = this.otherOptionFC.value;
+      }
+      this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
+        .subscribe(res=>{
+          if(res){
+            console.log(res);
+            this.isFormSubmitted = true;
+          }
+        }, err => {
+          this.eventService.openSnackBar('Something went wrong', "DISMISS")
+        })
 
     } else {
       this.optionsFC.markAsTouched();
