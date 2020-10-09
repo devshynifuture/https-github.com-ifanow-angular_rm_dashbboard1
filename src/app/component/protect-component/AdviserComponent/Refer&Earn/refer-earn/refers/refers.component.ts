@@ -11,5 +11,7 @@ export class RefersComponent implements OnInit {
 
   ngOnInit() {
   }
+  tabClick(event) {
 
+  }
 }

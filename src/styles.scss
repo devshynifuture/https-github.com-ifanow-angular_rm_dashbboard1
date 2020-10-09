@@ -261,6 +261,7 @@
 #uiTransactions,
 #ui-setting,
 #ui-people,
+#ui-refers,
 #ui-setting-supports,
 #ui-mareketplace-advisor,
 #ui-advisor-dashboard-header {
@@ -458,6 +459,7 @@
 #ui-settingsHeaders,
 #ui-settingsplan,
 #ui-people,
+#ui-refers,
 #ui-setting-supports {
   @extend .mt-64;
 
@@ -572,7 +574,9 @@
 }
 
 #ui-subscriptions,
-#uiTransactions {
+#uiTransactions,
+#ui-refers,
+#ui-setting-supports {
   .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
     display: none;
   }
@@ -580,8 +584,10 @@
 
 #ui-subscriptions,
 #ui-setting,
+#ui-refers,
 #ui-mareketplace-advisor,
 #uiTransactions,
+#ui-refers,
 #ui-setting-supports {
   .mat-tab-link {
     color: #595252 !important;
@@ -2011,16 +2017,17 @@ ngx-slick-carousel>.slick-disabled {
 }
 
 
-.logoWrap  {
+.logoWrap {
   width: 220px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-    .logo {
+
+  .logo {
     max-width: 100%;
     max-height: 100%;
     padding: 5px;
     margin: 0px auto;
-}
+  }
 }

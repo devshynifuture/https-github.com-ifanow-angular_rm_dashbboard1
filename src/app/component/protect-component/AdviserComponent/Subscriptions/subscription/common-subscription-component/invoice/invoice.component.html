@@ -640,7 +640,7 @@
                 </div>
                 <!--Fee calculation Div start-->
                 <div *ngIf="feeCalc==true">
-                    <app-fee-calculations [feeAmount]="storeData.subTotal" [feeCalculationData]="invoiceFeeCalculations"
+                    <app-fee-calculations [feeAmount]="storeData" [feeCalculationData]="invoiceFeeCalculations"
                         [padding]="false">
                     </app-fee-calculations>
                 </div>
