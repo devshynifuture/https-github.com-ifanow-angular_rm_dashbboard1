@@ -50,9 +50,9 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu> -->
-                <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                <!-- <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
-                </button>
+                </button> -->
                 <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
                     mat-stroked-button>ADD
                     NEW
@@ -133,7 +133,7 @@
                         <div class="bar">
                             <div *ngIf="element.accountNo" [ngSwitch]="element.accountNo">
                                 <div *ngFor="let bank of clientFamilybankList">
-                                    <div  *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
+                                    <div *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
                                 </div>
                             </div>
                             <div *ngIf="!element.accountNo">
@@ -241,9 +241,9 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu> -->
-                <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                <!-- <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
-                </button>
+                </button> -->
                 <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>

@@ -181,7 +181,7 @@
                                 </div> -->
                             </div>
 
-                            <div class="row pt-20">
+                            <div class="row pt-20" *ngIf="dataSource && dataSource.hasOwnProperty('data') && dataSource.data.length>0">
 
                                 <div class="col-md-12 p-0">
                                     <p class="f-14 left m-0 roboto f-400">Quick view</p>
@@ -265,53 +265,26 @@
                         <div class="bg-white p-20">
                             <h5 class="f-500 mb-10"> Insurance summary</h5>
 
-                            <div class="row b-b pt-14">
+                            <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
                                 <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-life-insurance.svg">
+                                    <img src="assets/images/svg/plan-life-insurance.svg" *ngIf="item.insuranceName ==='life'">
+                                    <img src="assets/images/svg/plan-health-insurance.svg" *ngIf="item.insuranceName ==='HEALTH'">
+                                    <img src="assets/images/svg/plan-accident-insu.svg"  *ngIf="item.insuranceName ==='accident'">
+                                    <img src="assets/images/svg/plan-critical-insu.svg" *ngIf="item.insuranceName ==='critical'">
+                                    <img src="assets/images/svg/plan-cancer-insu.svg" *ngIf="item.insuranceName ==='cancer'">
                                 </div>
                                 <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">Life insurance</p>
-                                    <p class="f-14 mb-16 f-600">₹5,75,000 </p>
+                                    <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }} insurance</p>
+                                    <p class="f-14 mb-16 f-600" appFormatNumber [value]="item.amount" [shouldRoundOff]="false">₹ {{ item.amount }}</p>
                                 </div>
                             </div>
 
-                            <div class="row b-b pt-14">
-                                <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-health-insurance.svg">
+                            <div class="row b-b pt-14 skeletonAnimation" *ngIf="isLoading" [appSkeletonLoading]="isLoading">
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
                                 </div>
-                                <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">Health insurance</p>
-                                    <p class="f-14 mb-16 f-600">₹25,00,000 </p>
-                                </div>
-                            </div>
-
-                            <div class="row b-b pt-14">
-                                <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-accident-insu.svg">
-                                </div>
-                                <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">Personal accident</p>
-                                    <p class="f-14 mb-16 f-600">₹25,00,000 </p>
-                                </div>
-                            </div>
-
-                            <div class="row b-b pt-14">
-                                <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-critical-insu.svg">
-                                </div>
-                                <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">Critical illness</p>
-                                    <p class="f-14 mb-16 f-600">₹25,00,000 </p>
-                                </div>
-                            </div>
-
-                            <div class="row b-b pt-14">
-                                <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-cancer-insu.svg">
-                                </div>
-                                <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">Cancer care</p>
-                                    <p class="f-14 mb-16 f-600">₹25,00,000 </p>
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
                                 </div>
                             </div>
 

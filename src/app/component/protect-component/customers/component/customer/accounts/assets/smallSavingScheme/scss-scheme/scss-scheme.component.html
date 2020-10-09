@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
     </div>
     <!-- *ngIf="datasource.filteredData > 0" -->
-    <div class="col-md-6 p-0 d-flex align-items-center justify-content-end" *ngIf="datasource.filteredData.length > 0">
+    <div class="col-md-6 p-0 d-flex align-items-center justify-content-end">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
@@ -31,8 +31,30 @@
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
         </mat-menu> -->
-        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+        <button mat-stroked-button [matMenuTriggerFor]="scss" class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
+        <mat-menu #scss>
+            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                                                Vinayak Nerlekar
+                                            </button>
+                                            <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                                                BANK FD
+                                            </button> -->
+            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                                        CORPORATE FD
+                                      </button> -->
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterScss(null, 'All')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                (click)="filterScss('statusId', 'LIVE')">
+                STATUS - LIVE
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterScss('statusId', 'MATURED')">
+                STATUS - Matured
+            </button>
+        </mat-menu>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')">ADD
             NEW</button>
     </div>
@@ -63,7 +85,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cValue">
-            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
                 class="br  right-hc w-13 text-right hide-arrow">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
