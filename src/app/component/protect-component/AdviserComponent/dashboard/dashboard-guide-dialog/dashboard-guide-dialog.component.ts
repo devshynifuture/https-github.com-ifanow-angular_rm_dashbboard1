@@ -86,7 +86,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Real estate advisory', value: false },
     { name: 'Will writing', value: false },
     { name: 'Estate planning', value: false },
-    { name: 'Raising capital or debt', value: false },
+    { name: 'Raising capital or Debt', value: false },
     { name: 'Personal leding', value: false },
 
   ];
