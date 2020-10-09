@@ -37,6 +37,8 @@ export class LeadWebPageComponent implements OnInit {
   optionsFC: FormControl = new FormControl('', Validators.required);
   userDetailForm;
   otherOptionFC: FormControl = new FormControl('');
+  referralCodeFC: FormControl = new FormControl('');
+  isFormSubmitted: boolean = false;
 
   ngOnInit() {
     this.userDetailForm = this.fb.group({
@@ -68,6 +70,9 @@ export class LeadWebPageComponent implements OnInit {
       if(this.userDetailForm.get('description').value !== ''){
         data['description'] = this.userDetailForm.get('description').value;
       }
+      if(this.referralCodeFC.value !==''){
+        data['referral'] = this.referralCodeFC.value;
+      }
       // this.http.post(apiConfig.MAIN_URL + appConfig.POST_LEAD_INTERACTION_RESPONSE, data)
       //   .subscribe(res=>{
       //     if(res){
@@ -79,7 +84,7 @@ export class LeadWebPageComponent implements OnInit {
 
     } else {
       this.optionsFC.markAsTouched();
-      this.userDetailForm.markAsTouched();
+      this.userDetailForm.markAllAsTouched();
     }
   }
 
