@@ -21,6 +21,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
 import { SignupProgressBarComponent } from './signup-progress-bar/signup-progress-bar.component';
 import { SupportLoginComponent } from './support-login/support-login.component';
 import { SetTeamMemberPasswordComponent } from './set-team-member-password/set-team-member-password.component';
+import { ReferAndEarnPopupsComponent } from './refer-and-earn-popups/refer-and-earn-popups.component';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { SetTeamMemberPasswordComponent } from './set-team-member-password/set-t
     TermsConditionsComponent,
     SignupProgressBarComponent,
     SupportLoginComponent,
-    SetTeamMemberPasswordComponent,
+    SetTeamMemberPasswordComponent
     // OtpInputComponent,
   ],
   imports: [
