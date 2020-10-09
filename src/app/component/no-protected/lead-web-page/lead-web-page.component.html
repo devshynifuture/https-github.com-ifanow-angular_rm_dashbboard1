@@ -146,10 +146,12 @@
     </div>
 </div>
 
-<div class="container" *ngIf="isFormSubmitted">
-  <div class="row justify-content-center align-items-center">
-    <div class="col-md-12">
-      <!-- <img src="" alt=""> -->
+<div class="row h-100vh" *ngIf="isFormSubmitted">
+  
+    <div class="col-md-12 justify-content-center align-items-center d-flex flex-column">
+      <img class="thnkYouIMG" src="assets/images/svg/happy_news_thank_you.svg">
+      <h2 class="f-20 roboto mt-20 f-500"> Thank You </h2>
+      <button mat-button class="bg-primary text-white"> Back to login </button>
     </div>
   </div>
-</div>
+ 
