@@ -50,7 +50,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     FormTestComponent,
-    BackofficeDashboardComponent,
+    BackofficeDashboardComponent, 
 
   ],
   imports: [

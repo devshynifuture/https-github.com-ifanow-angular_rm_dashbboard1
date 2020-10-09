@@ -264,6 +264,6 @@ export class SsySchemeComponent implements OnInit {
     this.isFixedIncomeFiltered = true;
     this.datasource.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
-    this.datasource.sort = this.tableEl;
+    // this.datasource.sort = this.tableEl;
   }
 }

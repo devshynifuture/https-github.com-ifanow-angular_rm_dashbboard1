@@ -18,6 +18,7 @@ export class SummaryPlanComponent implements OnInit {
   isLoading: boolean;
   goalSummaryCountObj: any;
   goalList: any;
+  insurancePlanList: any[] = [];
   constructor(
     private planService: PlanService,
     private eventService: EventService
@@ -129,10 +130,37 @@ export class SummaryPlanComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     }
-    this.planService.getSummeryInsurance(data)
+    this.isLoading = true;
+    this.planService.getInsurancePlanningPlanSummary({clientId: 95955, advisorId: 5122})
     .subscribe(res=>{
-      console.log(res, "insurance");
-      
+      this.isLoading = false;
+      console.log(res, "values to see");      
+      if(!!res && res !==null){
+        for (const key in res) {
+          if (Object.prototype.hasOwnProperty.call(res, key)) {
+            const element = res[key];
+            if(element && element.length>0){
+              let arr = [],
+                insuranceName;
+              
+              let amt = element.reduce((acc, curr)=>{
+                acc = acc + curr.premiumAmount;
+                insuranceName = curr.planName;
+                return acc;
+              }, 0);
+
+              arr.push({
+                insuranceName: key,
+                amount: amt,
+              });
+
+              this.insurancePlanList = arr;
+            }
+          }
+        }
+      }
+    }, err=> {
+      console.error(err);
     })
   }
 

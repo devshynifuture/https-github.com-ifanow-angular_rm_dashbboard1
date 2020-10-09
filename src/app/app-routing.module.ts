@@ -11,6 +11,11 @@ import {AdvisorGuard} from './guards/advisor.guard';
 
 const routes: Routes = [
   {
+    path: 'landing-page',
+    loadChildren: () => import('./component/no-protected/lead-web-page/lead-web-page.module').then(m => m.LeadWebPageModule),
+    // outlet: 'mainrouter'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./component/no-protected/login/login.module').then(m => m.LoginModule),
     canActivate: [AuthGuard],
