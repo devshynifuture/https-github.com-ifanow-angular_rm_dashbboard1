@@ -2,7 +2,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { MaterialModule } from 'src/app/material/material';
-import { LandingWebPageRoutingModule } from './landing-web-page-routing.module';
+import { LeadWebPageRoutingModule } from './lead-web-page-routing.module';
 import { LeadWebPageComponent } from './lead-web-page.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
     CustomDirectiveModule,
     FormsModule,
     ReactiveFormsModule,
-    LandingWebPageRoutingModule,
+    LeadWebPageRoutingModule,
     CustomCommonModule, 
   ]
 })
