@@ -79,7 +79,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Insurance planning', value: false },
     { name: 'Investment management', value: false },
     { name: 'Investment consulting', value: false },
-    { name: 'Retiremental planning', value: false },
+    { name: 'Retirement planning', value: false },
     { name: 'Asset allocation', value: false },
     { name: 'Tax planning', value: false },
     { name: 'Cash flow planning', value: false },
@@ -87,7 +87,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Will writing', value: false },
     { name: 'Estate planning', value: false },
     { name: 'Raising capital or debt', value: false },
-    { name: 'Personal leading', value: false },
+    { name: 'Personal leding', value: false },
 
   ];
 
