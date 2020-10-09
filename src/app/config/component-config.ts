@@ -841,6 +841,7 @@ export const appConfig = {
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
+  GET_CLIENT_LOGO: 'web/setting/organisation/domain/data/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -936,6 +937,7 @@ export const appConfig = {
   ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
   GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
   PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
+  
 
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',

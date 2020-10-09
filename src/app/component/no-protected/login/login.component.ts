@@ -99,6 +99,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   showTimeRemaing: number;
   resendOtpFlag: any;
+  logoUrl: any;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -113,9 +114,25 @@ export class LoginComponent implements OnInit {
     // if (this.authService.isLoggedIn()) {
     //   this.router.navigate(['admin', 'subscription', 'dashboard']);
     // } else {
+
+    this.getLogoUrl();
     this.createForm();
     // }
     this.btnProgressData = 'state1';
+  }
+
+  getLogoUrl(){
+    let data = {
+      hostName: window.location.hostname
+    }
+    this.peopleService.getClientLogo(data)
+      .subscribe(res=>{
+        if(res){
+          this.logoUrl = res.logoUrl;
+        }
+      }, err=>{
+        console.error(err);
+      })
   }
 
   getOtp(resendFlag) {
