@@ -22,27 +22,37 @@
                 <h5 class="f-500 roboto text-dark pb-10 m-0">Invite your friends by email</h5>
                 <div class="add-money">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput class="form-control b-a-custom br-0"
-                            placeholder="Enter email addresses, separated by commas">
+                        <app-email-domain-auto-suggest [formControl]="emailAddress" placeholder="Enter email">
+                        </app-email-domain-auto-suggest>
+                        <mat-error *ngIf="emailAddress.errors?.required">This field is required</mat-error>
+                        <mat-error *ngIf="emailAddress.errors?.pattern">Email is invalid</mat-error>
                     </mat-form-field>
-                    <button mat-stroked-button class="btn-primary w-15 h-40 br-0 pl-12">Email</button>
+                    <button (click)="openEmailPopup()" mat-stroked-button
+                        class="btn-primary w-15 h-40 br-0 pl-12">Email</button>
                 </div>
             </div>
         </div>
         <div class="bt-1 pl-20 pr-20 refer-users pb-48">
             <h5 class="pt-20 m-0 roboto f-400 pb-10">Referred users</h5>
-            <table mat-table [dataSource]="referedUsers" id="table-low">
+            <table appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" mat-table
+                [dataSource]="referedUsers" id="table-low">
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef class="br"> Name </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name?element.name:''}}</div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name?element.name:''}}</div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef class="br"> Credits earned </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.referralCredit}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">₹{{element.referralCredit}}</span></div>
+                    </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -54,11 +64,11 @@
             <img src="/assets/images/svg/refer-earn.svg" class="pt-44">
         </div>
 
-        <div class="row pt-32">
+        <div class="row pt-32 event-none">
             <div class="col-md-6 pr-10">
                 <h5 class="m-0 f-500 roboto pb-10">Credits earned</h5>
                 <mat-form-field>
-                    <input matInput class="form-control b-a-custom" value="₹6,000.00">
+                    <input matInput readonly class="form-control b-a-custom " [formControl]="totalCreditEarn">
                 </mat-form-field>
                 <p class="text-custom m-0 roboto pt-4 f-400 f-12">Lifetime summary of
                     your total credits earned</p>
@@ -66,7 +76,7 @@
             <div class="col-md-6 pl-10">
                 <h5 class="m-0 f-500 roboto pb-10">Unused credits</h5>
                 <mat-form-field>
-                    <input matInput class="form-control b-a-custom" value="₹3,890.42">
+                    <input matInput class="form-control b-a-custom">
                 </mat-form-field>
                 <p class="text-custom m-0 roboto pt-4 f-400 f-12">These credits are adjusted
                     towards future billings</p>
