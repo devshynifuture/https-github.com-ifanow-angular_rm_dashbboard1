@@ -853,7 +853,7 @@ saveHealthInsurance() {
                     {
                         insuranceTypeId: this.inputData.insuranceTypeId,
                         insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-                        id:data.id
+                        id:data ? data : null
                     };
                     this.close(insuranceData,true);
                 },

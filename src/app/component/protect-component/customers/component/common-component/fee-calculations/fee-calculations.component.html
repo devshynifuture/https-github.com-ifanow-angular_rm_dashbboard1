@@ -12,11 +12,11 @@
   <div class="row pt-32 pb-28 bb-1">
     <div class="col-md-9">
       <p class="text-custom m-0 f-16 pl-8">Invoice Period</p>
-      <p class="f-18 m-0 pt-4 pl-8">21-09-2018 to 20-09-2019</p>
+      <p class="f-18 m-0 pt-4 pl-8">{{feeAmount.fromDate | date: 'dd-MM-yyyy'}} to {{feeAmount.toDate | date: 'dd-MM-yyyy'}}</p>
     </div>
     <div class="col-md-3 pr-0">
       <p class="text-custom m-0 f-16">Fee Amount</p>
-      <p class="f-18 m-0 pt-4">Rs.<span appFormatNumber [value]="feeAmount">{{feeAmount}}</span></p>
+      <p class="f-18 m-0 pt-4">Rs.<span appFormatNumber [value]="feeAmount.subTotal">{{feeAmount.subTotal}}</span></p>
     </div>
   </div>
   <div class="wrapper-20">
