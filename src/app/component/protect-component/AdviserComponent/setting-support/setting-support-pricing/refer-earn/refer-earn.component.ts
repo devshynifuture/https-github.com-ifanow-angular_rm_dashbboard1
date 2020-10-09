@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -26,7 +26,8 @@ export class ReferEarnComponent implements OnInit {
   constructor(
     private referEarnService: ReferEarnService,
     private eventService: EventService,
-    private subInjectService: SubscriptionInject) { }
+    private subInjectService: SubscriptionInject,
+    private render: Renderer2) { }
 
 
   ngOnInit() {
@@ -56,9 +57,14 @@ export class ReferEarnComponent implements OnInit {
       })
   }
   copyInputMessage(inputElement) {
-    inputElement.select();
+    const text = inputElement.value;
+    const tag = this.render.createElement('input');
+    tag.value = text;
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
     document.execCommand('copy');
-    inputElement.setSelectionRange(0, 0);
+    document.body.removeChild(tag);
     this.eventService.openSnackBar("Referral code is copied", "Dismiss");
   }
 
