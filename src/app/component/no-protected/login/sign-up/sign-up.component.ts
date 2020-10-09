@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { LoginService } from '../login.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -19,15 +19,16 @@ export class SignUpComponent implements OnInit {
   duplicateTableDtaFlag: boolean;
   termsAndCondition: any;
   typeOfRegister: string;
+  referralCode: string;
 
   constructor(
-    private fb: FormBuilder, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     public routerActive: ActivatedRoute,
-    private router: Router, 
-    private loginService: LoginService, 
-    private eventService: EventService, 
-    public dialog: MatDialog
+    private router: Router,
+    private loginService: LoginService,
+    private eventService: EventService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -37,7 +38,7 @@ export class SignUpComponent implements OnInit {
     { name: "VERIFY MOBILE", flag: false },
     { name: "SET PASSWORD", flag: false }
   ]
-  signUpForm:FormGroup;
+  signUpForm: FormGroup;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -56,12 +57,13 @@ export class SignUpComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has('advisorId')) {
-        // this.clientSignUp = true;
+
+    this.routerActive.queryParams.subscribe((params) => {
+      if (params.code) {
+        this.referralCode = params.code;
       }
     });
-    
+
     this.typeOfRegister = '1'
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
@@ -69,6 +71,7 @@ export class SignUpComponent implements OnInit {
       email: [, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      referralCode: [this.referralCode],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
@@ -114,7 +117,8 @@ export class SignUpComponent implements OnInit {
         ],
         userType: 1,
         companyName: (this.typeOfRegister == '2') ? this.signUpForm.get('companyName').value : null,
-        forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null
+        forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null,
+        referralCode: this.signUpForm.get('referralCode').value
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
