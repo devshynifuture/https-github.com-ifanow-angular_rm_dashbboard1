@@ -8,8 +8,8 @@
         <div class="col-md-6 col-sm-12 p-0 bg-white mobileLoginUi flexLogin">
             <div *ngIf="!otpNumber" class="loginBox">
                 <p class="f-16 mb-12 mobileNone">
-                    <img class="advisorLogo"
-                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    <img class="advisorLogo" 
+                        [src]="logoUrl? logoUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png'">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details
@@ -102,7 +102,7 @@
 
                     <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="[ '/login/signup']"
                             class="text-primary c-p"> Sign up </span></h5>
-                    <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span
+                    <h5 *ngIf="!isBetaDomain" class="mt-32 mobileNone mb-24">Login into Support section? <span
                             [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                         </span>
                     </h5>
@@ -113,7 +113,7 @@
             <div *ngIf="otpNumber" class="loginBox">
                 <p class="f-16 mobileNone mb-12">
                     <img class="advisorLogo"
-                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    [src]="logoUrl? logoUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png'">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">

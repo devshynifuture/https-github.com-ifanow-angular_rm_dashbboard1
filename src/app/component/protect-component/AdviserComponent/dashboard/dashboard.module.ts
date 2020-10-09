@@ -10,10 +10,12 @@ import { DashboardService } from './dashboard.service';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ChartModule } from 'angular-highcharts';
+import { ReferAndEarnPopupsComponent } from 'src/app/component/no-protected/login/refer-and-earn-popups/refer-and-earn-popups.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
+    ReferAndEarnPopupsComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { ChartModule } from 'angular-highcharts';
     ChartModule
   ],
   exports: [],
-  providers: [DashboardService]
+  providers: [DashboardService],
+  entryComponents: [ReferAndEarnPopupsComponent]
 })
 export class DashboardModule {
   constructor() { }

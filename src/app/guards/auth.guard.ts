@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthService} from '../auth-service/authService';
-import {RoleService} from "../auth-service/role.service";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../auth-service/authService';
+import { RoleService } from "../auth-service/role.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private myRoute: Router, private authService: AuthService,
-              private roleService: RoleService) {
+    private roleService: RoleService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -26,8 +26,8 @@ export class AuthGuard implements CanActivate {
           this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
         }
         return false;
-      } else if(state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')){
-        if(AuthService.getUserInfo().isRmLogin){
+      } else if (state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')) {
+        if (AuthService.getUserInfo().isRmLogin) {
           return true;
         } else {
           this.myRoute.navigate(['/']);
@@ -47,6 +47,11 @@ export class AuthGuard implements CanActivate {
     } else {
 
       if (state && state.url.split('/').includes('login')) {
+        return true;
+      }
+      if (state && state.url.split('/').includes('invite')) {
+        console.log(next, this.myRoute)
+        this.myRoute.navigate(['/login/signup'], { queryParams: { code: next.params ? next.params.param : '' } });
         return true;
       }
       this.myRoute.navigate(['/login']);

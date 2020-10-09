@@ -1,0 +1,169 @@
+<div class="row bb-1 popup-header-fix-60">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">NEW SIP</h4>
+    </div>
+    <div class="col-md-2 text-right full-end">
+        <i (click)="Close(false)" class="material-icons c-p pr-16">
+            clear
+        </i>
+    </div>
+</div>
+
+
+<div class="pt-80 pl-20 pr-28 pb-100">
+   
+    <div style="display: none;" class="row">
+        <div class="col-md-12 text-center">
+            <button mat-button class="b-primitive text-primitive mr-10">
+                 <span class="material-icons"> add </span> Add SIP individually 
+            </button>
+                <button mat-button class="b-primitive text-primitive"> 
+                    <span class="material-icons"> add </span> Add via model portfolio 
+                </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 pl-0">
+            <span class="material-icons"> arrow_back </span>
+        </div>
+    </div>
+
+
+    <div class="row pt-24 pb-24">
+        <div class="col-md-5 pl-0">
+            <h5 class="f-14 mb-4">Select investor</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                       
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row pb-32">
+        <div class="col-md-7 pl-0">
+            <h5 class="f-14 mb-4">Select a scheme to invest in</h5>
+            <div class="form-group remove-top-flex ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input class="form-control" matInput placeholder="Start typing to see scheme names"  >
+                    <mat-hint class="f-12 text-primitive ml-12">Last closing NAV: 390.27</mat-hint>
+                   </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pb-32">
+        <div class="col-md-3 pl-0">
+            <h5 class="f-14 mb-4"> SIP amount </h5>
+            <div class="form-group remove-top-flex iconRupess">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input class="form-control rupess" matInput >
+                   </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-3 pl-0">
+            <h5 class="f-14 mb-4"> 1st SIP date </h5>
+            <div class="form-group remove-top-flex iconRupess">
+                <mat-form-field class="ba-date" floatLabel="never" appearance="standard">
+                    <input matInput [matDatepicker]="picker" class="form-control br-0 b-0">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pb-32">
+        <div class="col-md-12 pl-0">
+            <h5 class="f-14 mb-4">SIP frequency</h5>
+            <div class="form-group remove-top-flex ">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button class="b-a-custom radioBtn text-primary custom-radio" value="1">Monthly</mat-radio-button>
+                    <mat-radio-button class="b-primitive radioBtn " value="2">Weekly</mat-radio-button>
+                    <mat-radio-button class="b-primitive radioBtn" value="3">Quarterly </mat-radio-button>
+                  </mat-radio-group>
+            </div>
+        </div>
+    </div>
+
+    <div class="row  pb-24">
+        <div class="col-md-5 pl-0">
+            <h5 class="f-14 mb-4">SIP tenure</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                       
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row  pb-24">
+        <div class="col-md-5 pl-0">
+            <h5 class="f-14 mb-4">  Select bank account</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control">
+                       
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row  pb-40">
+        <div class="col-md-7 pl-0">
+            <h5 class="f-14 mb-4"> Rationale  </h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <textarea matInput class="form-control"></textarea>
+                    <mat-hint class="f-12 text-primitive ml-12">Optional</mat-hint>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pb-24">
+        <div class="col-md-7 pl-0">
+            <h5 class="f-14 mb-4"> Consent option <img class="c-p" src="/assets/images/svg/info.svg"> </h5>
+            <div class="form-group">
+                <mat-radio-group aria-label="Select an option">
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <mat-radio-button value="1">Take client consent</mat-radio-button>
+                            <p class="ml-16 mb-0"> If this option is selected, further action this advice is possible <br>
+                                only after your client gives explicit consent via email</p>  
+                        </div>
+                    </div>
+                     
+                   </mat-radio-group>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="bottom-fixed wrapper-12 w-60">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <!-- <div class="col-md-8 text-right">
+            <button mat-stroked-button class="btn-bottom">SAVE</button>
+        </div> -->
+    </div>
+</div>

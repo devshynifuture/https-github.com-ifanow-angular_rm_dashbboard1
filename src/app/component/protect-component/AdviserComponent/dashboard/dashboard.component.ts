@@ -31,6 +31,7 @@ import * as Highcharts from 'highcharts';
 import { element } from 'protractor';
 import { EnumDataService } from "../../../../services/enum-data.service";
 import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { ReferAndEarnPopupsComponent } from 'src/app/component/no-protected/login/refer-and-earn-popups/refer-and-earn-popups.component';
 
 export interface PeriodicElement {
   name: string;
@@ -476,9 +477,21 @@ export class DashboardComponent implements OnInit {
     this.initPointForTask();
     this.getMisData();
     this.getChartData()
+    this.openDialog()
 
   }
+  openDialog() {
+    const dialogRef = this.dialog.open(ReferAndEarnPopupsComponent, {
+      width: '40%',
+    }
 
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+    });
+  }
   initPointForTask() {
     this.getTaskDashboardCount();
     this.getTodaysTaskList();
@@ -1015,7 +1028,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          console.log("birthday or aniversary",data);
+          console.log("birthday or aniversary", data);
           this.isBirhtdayLoader = false;
           // data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
           // data.forEach(element => {
@@ -1027,21 +1040,21 @@ export class DashboardComponent implements OnInit {
           //   }
           // });
           let arr = [];
-          if(data && data.length>0){
+          if (data && data.length > 0) {
             data.forEach(element => {
-              if(!!element.birthDayOrAnniversary && element.birthDayOrAnniversary){
+              if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
                 let shortName,
                   daysToGo;
                 if (element.displayName.length > 15) {
                   shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
                 }
-                if(!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate){
+                if (!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate) {
                   let daysToGoAnniversary;
                   let daysToGoBirthDate;
                   if (element.dateOfBirth && element.dateOfBirth != 0) {
                     daysToGoBirthDate = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
                   }
-                  if(element.anniversaryDate && element.anniversaryDate != 0){
+                  if (element.anniversaryDate && element.anniversaryDate != 0) {
                     daysToGoAnniversary = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
                   }
                   arr.push({
@@ -1060,7 +1073,7 @@ export class DashboardComponent implements OnInit {
                     isAnniversaryOrBirthDay: 'anniversary',
                     anniversaryDate: element.anniversaryDate,
                   });
-                } else if(!!element.dateOfBirth && element.dateOfBirth){
+                } else if (!!element.dateOfBirth && element.dateOfBirth) {
                   if (element.dateOfBirth && element.dateOfBirth != 0) {
                     daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
                   }
@@ -1073,7 +1086,7 @@ export class DashboardComponent implements OnInit {
                     dateOfBirth: element.dateOfBirth,
                   });
 
-                } else if (!!element.anniversaryDate && element.anniversaryDate){
+                } else if (!!element.anniversaryDate && element.anniversaryDate) {
                   if (element.anniversaryDate && element.anniversaryDate != 0) {
                     daysToGo = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
                   }
@@ -1087,18 +1100,18 @@ export class DashboardComponent implements OnInit {
                   });
                 }
               } else {
-                if(!!element.familyMemberList && element.familyMemberList.length>0){
-                  
+                if (!!element.familyMemberList && element.familyMemberList.length > 0) {
+
                   element.familyMemberList.forEach(item => {
-                    if(!!item.birthDayOrAnniversary && item.birthDayOrAnniversary){
+                    if (!!item.birthDayOrAnniversary && item.birthDayOrAnniversary) {
                       let shortName,
-                          daysToGo;
+                        daysToGo;
                       if (item.displayName.length > 15) {
                         shortName = item.displayName.substr(0, this.getPosition(item.displayName, ' ', 2));
-                      }                    
-                      if(!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate){
+                      }
+                      if (!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate) {
                         let daysToGoAnniversary,
-                            daysToGoBirthDate;
+                          daysToGoBirthDate;
                         if (item.dateOfBirth && item.dateOfBirth != 0) {
                           daysToGoBirthDate = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
                         }
@@ -1121,7 +1134,7 @@ export class DashboardComponent implements OnInit {
                           isAnniversaryOrBirthDay: 'anniversary',
                           anniversaryDate: item.anniversaryDate,
                         });
-                      } else if(!!item.dateOfBirth && item.dateOfBirth){
+                      } else if (!!item.dateOfBirth && item.dateOfBirth) {
                         if (item.dateOfBirth && item.dateOfBirth != 0) {
                           daysToGo = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
                         }
@@ -1133,8 +1146,8 @@ export class DashboardComponent implements OnInit {
                           isAnniversaryOrBirthDay: 'birthday',
                           dateOfBirth: item.dateOfBirth,
                         });
-      
-                      } else if (!!item.anniversaryDate && item.anniversaryDate){
+
+                      } else if (!!item.anniversaryDate && item.anniversaryDate) {
                         if (item.anniversaryDate && item.anniversaryDate != 0) {
                           daysToGo = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
                         }

@@ -1,7 +1,7 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0" *ngIf="!isFormSubmitted">
     <div class="row h-100vh">
-        <div class="col-md-6 imgBoxlogin mobileNone p-0 bg-grey lter pt-200 p-44">
-            <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" alt="logo" class="pb-40 h-120">
+        <div class="col-md-12 col-lg-6 imgBoxloginFlex mobileNone  bg-grey lter  ">
+            <!-- <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" alt="logo" class="pb-40 h-120"> -->
             <h4 class="f-30 pb-10">
               How did you come to know about us?
             </h4>
@@ -10,56 +10,95 @@
             </p>
             <img src="/assets/images/svg/calander-empty.svg" alt="image">
         </div>
-        <div class="col-md-6 col-sm-12 p-0 bg-white mobileLoginUi flexLogin pt-130 p-44">
-          <div class="row">
+
+        <div class="col-md-12 col-lg-6  bg-white flexLoginInform  ">
+          <div class="informationFrom">
+          
+            <div class="row">
             <div class="col-md-12">
-              <h4 class="text-primitive f-20 roboto pb-20">
+              <h4 class="f-20 roboto pb-20">
                 Please provide some information
               </h4>
-              <mat-label>
+              <p class="mb-4 f-14 text-primitive">
                 From where did you found us?
-              </mat-label>
-              <mat-form-field>
-                <mat-select class="form-control" [formControl]="optionsFC">
-                  <mat-option value="">
-                    Please Select your option
-                  </mat-option>
-                  <mat-option value='1'>
-                    Friends
-                  </mat-option>
-                  <mat-option value='2'>
-                    Email
-                  </mat-option>
-                  <mat-option value='3'>
-                    SMS
-                  </mat-option>
-                  <mat-option value='4'>
-                    Webinar
-                  </mat-option>
-                  <mat-option value='5'>
-                    Other
-                  </mat-option>
-                </mat-select>
-                <mat-error>
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 pt-20" [formGroup]="userDetailForm">
-              <p class="mb-0 text-primitive roboto">
-                Contact details
               </p>
-              <div class="pb-20">
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input type="text" matInput class="form-control" placeholder="Full name" formControlName="name">
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-select class="form-control" [formControl]="optionsFC" (selectionChange)="toggleErrorOfFC($event)">
+                    <mat-option value="">
+                      Please Select your option
+                    </mat-option>
+                    <mat-option value='1'>
+                      Friends
+                    </mat-option>
+                    <mat-option value='2'>
+                      Email
+                    </mat-option>
+                    <mat-option value='3'>
+                      SMS
+                    </mat-option>
+                    <mat-option value='4'>
+                      Webinar
+                    </mat-option>
+                    <mat-option value='5'>
+                      Other
+                    </mat-option>
+                  </mat-select>
                   <mat-error>
                     This field is required
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="pb-20">
+             
+            </div>
+            <div class="col-md-12 pb-20" *ngIf="optionsFC.value==='5'">
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input type="text" matInput class="form-control" [formControl]="otherOptionFC" placeholder="Please specify">
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            </div>
+            
+          <div [formGroup]="userDetailForm">
+
+            <div class="row">
+              
+              <div class="col-md-12 form-group remove-top-flex">
+                <p class="mb-4 text-primitive">Referral code</p>
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input type="text" matInput class="form-control"  [formControl]="referralCodeFC" placeholder="Eg. IFANOW2020">
+                    <mat-hint class="text-primitive">Optional</mat-hint>
+                    <mat-error>
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <p class="mb-4 mt-20 text-primitive roboto"> Contact details </p>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12 form-group remove-top-flex mb-24">
+                  <mat-form-field floatLabel="never" appearance="standard">
+                    <input type="text" matInput class="form-control" placeholder="Full name" formControlName="name">
+                    <mat-error>
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 form-group remove-top-flex mb-24">
                 <mat-form-field floatLabel="never" appearance="standard">
                   <input type="number" matInput class="form-control" placeholder="Mobile number" formControlName="mobNo">
                   <mat-error>
@@ -67,7 +106,10 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="pb-20">
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 form-group remove-top-flex mb-24">
                 <mat-form-field floatLabel="never" appearance="standard">
                   <input type="text" matInput class="form-control" placeholder="your email" formControlName="email">
                   <mat-error>
@@ -75,18 +117,41 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="pt-10">
-                <textarea matInput class="form-control" name="description" rows="4" placeholder="About you" formControlName="description"></textarea> 
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12 form-group remove-top-flex mb-24">
+                <mat-form-field floatLabel="never" appearance="standard">
+                <textarea matInput class="form-control" name="description"   placeholder="About you" formControlName="description"></textarea> 
+                <mat-hint class="text-primitive">Optional</mat-hint>
+                </mat-form-field>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <app-progress-button class="br-0 text-inherit ml-12" (click)="onSubmitForm()"
+
+            <div class="row">
+              <div class="col-md-12  ">
+                <app-progress-button class="br-0 text-inherit ml-12" (click)="onSubmitForm()"
                 [options]="barButtonOptions">
               </app-progress-button>
+              </div>
             </div>
+
+          </div>
+
+          
+          
           </div>
         </div>
     </div>
 </div>
+
+<div class="row h-100vh" *ngIf="isFormSubmitted">
+  
+    <div class="col-md-12 justify-content-center align-items-center d-flex flex-column">
+      <img class="thnkYouIMG" src="assets/images/svg/happy_news_thank_you.svg">
+      <h2 class="f-20 roboto mt-20 f-500"> Thank You </h2>
+      <button mat-button class="bg-primary text-white"> Back to login </button>
+    </div>
+  </div>
+ 
