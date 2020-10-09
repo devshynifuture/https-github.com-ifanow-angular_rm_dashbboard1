@@ -17,6 +17,10 @@
     justify-content: center;
 }
 
+.thnkYouIMG {
+    width: 500px;
+}
+
 
 @media (max-width: 767px) {
     .mobileNone {
@@ -30,6 +34,10 @@
 
     .flexLoginInform {
         justify-content: flex-start;
+    }
+
+    .thnkYouIMG {
+        width: 300px;
     }
 
 

@@ -7,6 +7,7 @@ import { BillsComponent } from "./bills/bills.component";
 import { ReferEarnComponent } from "./refer-earn/refer-earn.component";
 import { SettingSupportPricingSettingComponent } from "./setting-support-pricing-setting/setting-support-pricing-setting.component";
 import { SettingSupportPricingHomeComponent } from "./setting-support-pricing-home/setting-support-pricing-home.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { SettingSupportPricingHomeComponent } from "./setting-support-pricing-ho
     SettingSupportPricingHomeComponent,
 
   ],
-  imports: [CommonModule, MaterialModule, SettingSupportPricingRoutingModule],
+  imports: [CommonModule, MaterialModule, SettingSupportPricingRoutingModule, ReactiveFormsModule, FormsModule],
   exports: [],
 })
 export class SettingSupportPricingModule { }
