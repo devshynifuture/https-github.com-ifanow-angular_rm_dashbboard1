@@ -312,7 +312,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
           
-          this.freezeDate = this.data.freezeDate;
+          this.freezeDate = res;
 
           if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
             this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);

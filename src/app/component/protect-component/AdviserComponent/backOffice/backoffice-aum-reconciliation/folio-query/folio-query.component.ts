@@ -219,7 +219,6 @@ export class FolioQueryComponent implements OnInit {
       } else {
         this.shouldCheckValidation = false;
       }
-
       const data = {
         flag_search: flag,
         advisorId: this.parentId > 0 ? this.advisorId: -1,
