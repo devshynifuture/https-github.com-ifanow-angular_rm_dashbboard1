@@ -1,0 +1,75 @@
+<div [formGroup]="emailForm" class="custom-email">
+    <div class="wrapper-16 bb-1 popup-header-fix w-60">
+        <div class="row">
+            <div class="col-md-11 pl-0">
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400">Email</h5>
+            </div>
+            <div class="col-md-1 full-end">
+                <i (click)="close(false)" class="material-icons text-black c-p">
+                    clear
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12 pt-90">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
+                <p class="m-0 text-black roboto f-400">From</p>
+            </div>
+            <div class="col-md-9 col-lg-9 pr-0">
+                <mat-select formControlName="from" class="form-control">
+                    <mat-option *ngFor="let verifiedEmail of emailLists" [value]="verifiedEmail.emailAddress">
+                        {{verifiedEmail.emailAddress}}</mat-option>
+                </mat-select>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12 pt-24 new-email-chips-height">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
+                <p class="m-0 text-black roboto f-400">To</p>
+            </div>
+
+            <div class="col-md-9 col-lg-9  pr-0" id="new-mail-chips">
+                <mat-form-field>
+                    <input readonly matInput formControlName="To" class="form-control h-40" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="pl-28 pb-12 pt-24">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 d-flex align-items-center justify-content-end pr-0">
+                <p class="m-0 text-black roboto f-400 pt-8">Subject</p>
+            </div>
+            <div class="col-md-9 col-lg-9 pr-0">
+                <mat-form-field>
+                    <input matInput formControlName="subject" class="form-control h-40">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12">
+        <div class="row pt-24">
+            <div class="col-md-12 pl-0">
+                <div class="form-group mb-0 mt-8">
+                    <!-- build issue -->
+                    <!-- <app-froala [(model)]="emailForm.get('body').value"></app-froala> -->
+                    <!-- / build issue -->
+                </div>
+                <!-- <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
+                    style="min-height: 550px;"></div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 w-60">
+    <div class="row">
+        <div class="col-md-12 text-right full-end">
+            <app-progress-button (btnClick)="sendEmail()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
+        </div>
+    </div>
+</div>

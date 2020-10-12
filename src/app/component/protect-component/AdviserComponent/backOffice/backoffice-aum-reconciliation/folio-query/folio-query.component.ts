@@ -209,6 +209,9 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
+    if(flag === undefined){
+      flag = this.searchedObj.flag;
+    }
       this.searchedObj = {
         flag,
         value,
@@ -216,8 +219,13 @@ export class FolioQueryComponent implements OnInit {
       }
       if(searchFrom === 'navInputSearch'){
         this.shouldCheckValidation = true;
+      } else {
+        this.folioOption.patchValue(this.searchedObj.flag, { emitEvent: false });
+        this.inputSearchFC.patchValue(this.searchedObj.value, { emitEvent: false });
+        this.folioOption.markAsUntouched();
+        this.inputSearchFC.markAsUntouched();
+        this.shouldCheckValidation = false;
       }
-
       const data = {
         flag_search: flag,
         advisorId: this.parentId > 0 ? this.advisorId: -1,
@@ -297,6 +305,10 @@ export class FolioQueryComponent implements OnInit {
 
             if (sideBarData.refreshRequired) {
               this.isSearchDone = !this.isSearchDone;
+              this.folioOption.patchValue(this.searchedObj.flag, { emitEvent: false });
+              this.inputSearchFC.patchValue(this.searchedObj.value, { emitEvent: false });
+              this.folioOption.markAsUntouched();
+              this.inputSearchFC.markAsUntouched();
               this.search(this.searchedObj.flag, this.searchedObj.value, this.searchedObj.searchFrom);
               // this.getDataFromObsAfterDeletingTransacn();
               // this.isSearchDone = !this.isSearchDone;
@@ -312,6 +324,10 @@ export class FolioQueryComponent implements OnInit {
   toggleFolioDetailList() {
     if (this.isSearchDone) {
       this.isSearchDone = false;
+      this.folioOption.patchValue('', { emitEvent: false });
+      this.inputSearchFC.patchValue('', { emitEvent: false });
+      this.folioOption.markAsUntouched();
+      this.inputSearchFC.markAsUntouched();
     }
   }
 

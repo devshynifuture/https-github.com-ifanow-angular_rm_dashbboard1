@@ -30,6 +30,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from '../../../constants/date-format.constant';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DashboardEntryModule } from '../../protect-component/AdviserComponent/dashboard/dashboard-entry.module';
+import { SettingSupportPricingEntryModule } from '../../protect-component/AdviserComponent/setting-support/setting-support-pricing/setting-support-pricing-entry.module';
 
 @NgModule({
   declarations: [LeftsidebarComponent],
@@ -56,6 +57,7 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     CustomDirectiveModule,
     DashboardEntryModule,
     SettingSupportEntryModule,
+    SettingSupportPricingEntryModule
   ],
   entryComponents: [
     SubscriptionEntry.getComponentList(),
@@ -65,6 +67,7 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     MarketPlaceEntryModule.getComponentList(),
     DashboardEntryModule.getComponentList(),
     SettingSupportEntryModule.getEntryComponentList(),
+    SettingSupportPricingEntryModule.getComponentList()
   ],
   providers: [
     DynamicComponentService,
@@ -76,4 +79,4 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
-export class LeftsidebarModule {}
+export class LeftsidebarModule { }

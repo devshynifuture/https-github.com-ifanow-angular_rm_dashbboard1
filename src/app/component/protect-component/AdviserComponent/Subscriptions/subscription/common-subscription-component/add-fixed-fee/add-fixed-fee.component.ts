@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -36,7 +36,7 @@ export class AddFixedFeeComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private eventService: EventService) {
+    private subService: SubscriptionService, private eventService: EventService) {
   }
 
   isServiceValid;
@@ -108,7 +108,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.getFormControl().billEvery.updateValueAndValidity();
 
     } else {
-      this.getFormControl().billEvery.setValidators([Validators.requiredTrue]);
+      this.getFormControl().billEvery.setValidators([Validators.required]);
       this.getFormControl().billEvery.updateValueAndValidity();
     }
   }
@@ -143,7 +143,7 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     this.setValidation(false);
     this.createFixedFeeForm('');
   }
@@ -187,7 +187,7 @@ export class AddFixedFeeComponent implements OnInit {
         }
       };
       this.dataToSend = obj;
-      Object.assign(this.dataToSend, {id: this.serviceId});
+      Object.assign(this.dataToSend, { id: this.serviceId });
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => {
@@ -216,12 +216,12 @@ export class AddFixedFeeComponent implements OnInit {
   saveFeeTypeDataResponse(data, state) {
     // this.outputFixedData.emit(data)
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   saveFeeTypeDataEditResponse(data, state) {
     // this.outputFixedData.emit(this.dataToSend)
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.dataToSend});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 }

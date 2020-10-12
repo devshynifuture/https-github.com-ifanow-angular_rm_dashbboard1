@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {OrgSettingServiceService} from '../../org-setting-service.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { OrgSettingServiceService } from '../../org-setting-service.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -17,7 +17,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
   clientList: any = [];
   dataSource = new MatTableDataSource();
-  @ViewChild('clientTableSort', {static: false}) sort: MatSort;
+  @ViewChild('clientTableSort', { static: false }) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
   isLoading = false;
   dataCount = 0;
@@ -79,12 +79,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     </a>
       <p>
           <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">If
-              the above does not work, please click on the following URL -&nbsp;</span>
-                  <a data-sk="tooltip_parent"
-              data-stringify-link="https://www.ifanow.com"
-              href="https://www.ifanow.com" rel="noopener noreferrer"
-              style="box-sizing: inherit; color: #008FFF; text-decoration: none; font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248);"
-              target="_blank">www.ifanow.com</a>
+              the above does not work, please click on the following URL -&nbsp;$Website</span>
       </p>
       <p>
           <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">We
@@ -240,7 +235,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       btnNo: 'PROCEED',
       positiveMethod: () => {
         dialogRef.close();
-        this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true, tab2view: true});
+        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, tab2view: true });
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -267,7 +262,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   }
 
   close(flag) {
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: flag});
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
   }
 }
 

@@ -14,12 +14,12 @@
 <div class="pt-80 pl-24 pr-24 pb-48 mb-48">
     <div *ngIf="tab == 1">
             <button mat-button *ngIf="manualObj && manualObj.isMapped == 1" class="btn-danger br-0 right"
-            (btnClick)="removeToPlan()">REMOVE TO PLAN</button>
+            (click)="addToPlan()">REMOVE TO PLAN</button>
         <app-progress-button *ngIf="manualObj && manualObj.isMapped == 0" class="btn-primary br-0 right"
-            (btnClick)="addToPlan()" [options]="barButtonOptions">
+            (click)="addToPlan()" [options]="barButtonOptions">
         </app-progress-button>
         <app-progress-button *ngIf="!manualObj" class="btn-primary br-0 right"
-        (btnClick)="saveAndAddToPlan()" [options]="barButtonOptions">
+        (click)="saveAndAddToPlan()" [options]="barButtonOptions">
     </app-progress-button>
     </div>
     <div *ngIf="tab == 0">
@@ -27,7 +27,7 @@
             [options]="barButtonOptions2">
         </app-progress-button> -->
         <button mat-button *ngIf="needBase && needBase.isMapped == 1" class="btn-danger br-0 right"
-        (btnClick)="removeToPlan()">REMOVE TO PLAN</button>
+        (click)="addToPlan()">REMOVE TO PLAN</button>
         <app-progress-button *ngIf="needBase && needBase.isMapped == 0" class="btn-primary br-0 right"
             [options]="barButtonOptions">
         </app-progress-button>

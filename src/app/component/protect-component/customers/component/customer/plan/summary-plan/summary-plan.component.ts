@@ -4,6 +4,8 @@ import { AuthService } from './../../../../../../../auth-service/authService';
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { PlanService } from './../plan.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary-plan',
@@ -19,20 +21,44 @@ export class SummaryPlanComponent implements OnInit {
   goalSummaryCountObj: any;
   goalList: any;
   insurancePlanList: any[] = [];
+  clientDob: any;
+  familyList: any[];
+  startDate: any;
+  endDate: any;
+  cashFlowData: any;
+  yearToShow: string;
   constructor(
     private planService: PlanService,
-    private eventService: EventService
+    private eventService: EventService,
+    private peopleService:PeopleService,
+    private datePipe: DatePipe
   ) { }
 
   @ViewChild(MatPaginator, { static: false }) paginator;
 
   ngOnInit() {
+    this.getStartAndEndDate();
     this.getGoalSummaryValues();
     this.getSummeryInsurance();
+    this.getListFamilyMem();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+  getStartAndEndDate(){
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), 0, 1);
+    var lastDay= new Date(date.getFullYear(), 11, 31);
+    this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
+    this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+    var startYear =firstDay.getFullYear()-1;
+    var endYear = lastDay.getFullYear().toString().substr(-2);
+    this.yearToShow = startYear+'-'+endYear;
+    console.log('startYearddddddddddddddddddddd',startYear);
+    console.log('endYearddddddddddddddddddddd',endYear);
+    
+
   }
 
   getGoalSummaryValues(){
@@ -162,6 +188,65 @@ export class SummaryPlanComponent implements OnInit {
     }, err=> {
       console.error(err);
     })
+  }
+  getListFamilyMem() {
+    this.isLoading = true;
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data) {
+          let array = [];
+          data.forEach(element => {
+            if (element.familyMemberId == 0) {
+              this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+            } else {
+              const obj = {
+                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                'id': element.familyMemberId
+              }
+              array.push(obj);
+            }
+
+          });
+          this.familyList = array.map(function (obj, ind) {
+            let val = obj.id;
+            obj[val] = obj['dob']
+            delete obj['dob'];
+            delete obj['id'];
+            return obj;
+          });
+          this.getCashflowData();
+        } else {
+          this.getCashflowData();
+        }
+      },err=>{
+        this.getCashflowData();
+      }
+    );
+  }
+  getCashflowData() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      clientDob: this.clientDob,
+      fmDobList: JSON.stringify(this.familyList)
+    };
+    this.planService.getCashFlow(obj).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.cashFlowData = data;
+        }else{
+          this.cashFlowData = '';
+        }
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
   }
 
 }

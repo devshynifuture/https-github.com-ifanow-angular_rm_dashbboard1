@@ -99,6 +99,8 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   showTimeRemaing: number;
   resendOtpFlag: any;
+  logoUrl: any;
+  isBetaDomain: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -113,9 +115,31 @@ export class LoginComponent implements OnInit {
     // if (this.authService.isLoggedIn()) {
     //   this.router.navigate(['admin', 'subscription', 'dashboard']);
     // } else {
+
+    this.getLogoUrl();
     this.createForm();
     // }
+    let hostName = window.location.hostname;
+    if(hostName.split('.').includes('beta')){
+      this.isBetaDomain = true;
+    } else {
+      this.isBetaDomain = false;
+    }
     this.btnProgressData = 'state1';
+  }
+
+  getLogoUrl(){
+    let data = {
+      hostName: window.location.hostname
+    }
+    this.peopleService.getClientLogo(data)
+      .subscribe(res=>{
+        if(res){
+          this.logoUrl = res.logoUrl;
+        }
+      }, err=>{
+        console.error(err);
+      })
   }
 
   getOtp(resendFlag) {

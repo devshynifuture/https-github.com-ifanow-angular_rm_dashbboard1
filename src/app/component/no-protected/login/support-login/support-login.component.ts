@@ -108,6 +108,11 @@ export class SupportLoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    let domainUrl = window.location.hostname;
+    let domainUrlArr = domainUrl.split('.');
+    if(!domainUrlArr.includes('beta')){
+      this.router.navigate(['/login']);
+    }
     this.userName = new FormControl('', [Validators.required]);
     // if (this.authService.isLoggedIn()) {
     //   this.router.navigate(['admin', 'subscription', 'dashboard']);

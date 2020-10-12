@@ -343,8 +343,9 @@ export const appConfig = {
   LIFE_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/life/insurance/recommendation/status/update',
   GEN_INSURANCE_RECOMMENDATION_UPDATE: 'insurance/planning/gen/insurance/recommendation/status/update',
   ADD_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/add',
-  ADD_GENERAL_INSURANCE_PLAN:'insurance/planning/general/insurance/suggest/policy/new/add',
+  ADD_GENERAL_INSURANCE_PLAN: 'insurance/planning/general/insurance/suggest/policy/new/add',
   GET_INSURANCE_PLANNING_PLAN_SUMMARY: 'insurance/planning/plan/summary/insurance/get',
+  DELETE_SUGGEST_NEW:'account/insurance/general-insurance/delete',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -841,6 +842,7 @@ export const appConfig = {
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
+  GET_CLIENT_LOGO: 'web/setting/organisation/domain/data/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -921,25 +923,27 @@ export const appConfig = {
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
-  GET_GOAL_SUMMARY_PLAN: 'goal-planning/goal/plan/summary', 
-  GET_INSURANCE_SUMMARY_PLAN: 'insurance/planning/list/get', 
+  GET_GOAL_SUMMARY_PLAN: 'goal-planning/goal/plan/summary',
+  GET_INSURANCE_SUMMARY_PLAN: 'insurance/planning/list/get',
   GET_TASK_DASHBOARD_COUNT: 'admin/dashboard/task/metrics/get',
 
   QUESTION_MASTER: 'admin/dashboard/on-boarding/question-master',
 
   QUESTION_ANSWER_ADD: 'admin/dashboard/on-boarding/question-answer/add',
   QUESTION_ANSWER_GET: 'admin/dashboard/on-boarding/question-answer/get',
-
+////////////////////////plan-summary///////////////////////////////////////
+  GET_CASHFLOW:'plan/cash-flow/summary/get',
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
   ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
   ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
   GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
   PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
+  
 
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
-
+  REFERRED_USERS: 'user/advisor/referrals/get'
 };
 
 

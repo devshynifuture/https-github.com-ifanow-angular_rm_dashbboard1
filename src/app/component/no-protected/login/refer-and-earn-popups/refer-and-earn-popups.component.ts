@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 
 @Component({
   selector: 'app-refer-and-earn-popups',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReferAndEarnPopupsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<ReferAndEarnPopupsComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() {
   }
 
+  close() {
+    this.dialogRef.close();
+  }
 }

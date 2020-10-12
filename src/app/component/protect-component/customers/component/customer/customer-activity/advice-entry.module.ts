@@ -6,11 +6,13 @@ import { SuggestAdviceComponent } from './advice-activity/suggest-advice/suggest
 import { MaterialModule } from 'src/app/material/material';
 import { GiveAdviceComponent } from './advice-activity/give-advice/give-advice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdviceSIPComponent } from './advice-activity/advice-sip/advice-sip.component';
+import { MiscellaneousAdviceComponent } from './advice-activity/miscellaneous-advice/miscellaneous-advice.component';
 
 export const componentList = [
   EmailAdviceComponent,
   SuggestAdviceComponent,
-  GiveAdviceComponent
+  GiveAdviceComponent,AdviceSIPComponent,MiscellaneousAdviceComponent
 ];
 
 
