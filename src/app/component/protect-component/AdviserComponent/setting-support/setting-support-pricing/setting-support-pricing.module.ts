@@ -8,6 +8,9 @@ import { ReferEarnComponent } from "./refer-earn/refer-earn.component";
 import { SettingSupportPricingSettingComponent } from "./setting-support-pricing-setting/setting-support-pricing-setting.component";
 import { SettingSupportPricingHomeComponent } from "./setting-support-pricing-home/setting-support-pricing-home.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { SettingSupportPricingEntryModule } from './setting-support-pricing-entry.module';
 
 
 @NgModule({
@@ -18,7 +21,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SettingSupportPricingHomeComponent,
 
   ],
-  imports: [CommonModule, MaterialModule, SettingSupportPricingRoutingModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule, MaterialModule, SettingSupportPricingRoutingModule, ReactiveFormsModule, FormsModule, CustomDirectiveModule, CustomCommonModule
+    , SettingSupportPricingEntryModule
+  ],
   exports: [],
+  entryComponents: []
 })
 export class SettingSupportPricingModule { }
