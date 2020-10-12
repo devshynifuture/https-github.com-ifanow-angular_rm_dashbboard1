@@ -253,7 +253,7 @@ export class HttpService {
   }
 
 
-  getEncoded(url: string, params, requestAge: number): Observable<any> {
+  getEncoded(url: string, params, requestAge?: number): Observable<any> {
     if (!requestAge) {
       requestAge = DEFAULT_AGE;
     }

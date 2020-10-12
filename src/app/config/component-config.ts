@@ -842,7 +842,7 @@ export const appConfig = {
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
-  GET_CLIENT_LOGO: 'web/setting/organisation/domain/data/get',
+  GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
