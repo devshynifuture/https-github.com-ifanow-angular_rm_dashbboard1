@@ -274,6 +274,7 @@ export class AssetStocksComponent implements OnInit {
             if (s.stockListForEditView) {
               s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
             }
+            s.stockList[index].ownerList = p.ownerList
             s.stockList[index]['nomineeList']= p.nomineeList;
             s.stockList[index]['linkedBankAccount']= p.linkedBankAccount;
             s.stockList[index]['linkedDematAccount']= p.linkedDematAccount;
