@@ -125,7 +125,7 @@
         </div>
 
 
-        <div matTooltip="You cannot freeze Folio, as difference is not zero" [matTooltipDisabled]="!disableFreezeBtn">
+        <div [matTooltip]="disableUnfreezeBtn ? 'You cannot freeze Folio as difference is not zero': 'You cannot freeze Folio as freeze date is already applied'" [matTooltipDisabled]="!disableFreezeBtn">
             <button class="ba-black" mat-button [disabled]="disableFreezeBtn"
                 [ngClass]="disableFreezeBtn ? 'disableClass':''" (click)="freezeFolioData()">
                 Freeze
