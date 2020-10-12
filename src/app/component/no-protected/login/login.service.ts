@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { AuthService } from '../../../auth-service/authService';
-import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
-import { RoleService } from "../../../auth-service/role.service";
-import { ReferAndEarnPopupsComponent } from './refer-and-earn-popups/refer-and-earn-popups.component';
-import { MatDialog } from '@angular/material';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {AuthService} from '../../../auth-service/authService';
+import {Router} from '@angular/router';
+import {HttpParams} from '@angular/common/http';
+import {RoleService} from "../../../auth-service/role.service";
+import {ReferAndEarnPopupsComponent} from './refer-and-earn-popups/refer-and-earn-popups.component';
+import {MatDialog} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpService, private roleService: RoleService, public dialog: MatDialog, ) {
+  constructor(private http: HttpService, private roleService: RoleService, public dialog: MatDialog,) {
   }
 
   generateOtp(data) {
@@ -74,7 +74,9 @@ export class LoginService {
     if (userData.userType == 1 || userData.userType == 8) {
       this.roleService.getRoleDetails(userData.roleId);
       router.navigate(['admin', 'dashboard']);
-      this.openDialog();
+      if (userData.showReferPopup) {
+        this.openDialog();
+      }
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
       router.navigate(['support', 'dashboard']);
@@ -98,9 +100,8 @@ export class LoginService {
 
   openDialog() {
     const dialogRef = this.dialog.open(ReferAndEarnPopupsComponent, {
-      width: '40%',
-    }
-
+        width: '40%',
+      }
     );
 
     dialogRef.afterClosed().subscribe(result => {
