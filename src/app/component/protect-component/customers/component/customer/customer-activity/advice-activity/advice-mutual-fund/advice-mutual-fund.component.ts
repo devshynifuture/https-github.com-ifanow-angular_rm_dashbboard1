@@ -6,6 +6,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { constructor } from 'moment';
 import { GiveAdviceComponent } from '../give-advice/give-advice.component';
 import { AdviceSIPComponent } from '../advice-sip/advice-sip.component';
+import { MiscellaneousAdviceComponent } from '../miscellaneous-advice/miscellaneous-advice.component';
 
 @Component({
   selector: 'app-advice-mutual-fund',
@@ -46,6 +47,29 @@ export class AdviceMutualFundComponent implements OnInit {
       }
     );
   }
+
+
+  opnMiscellaneous(data) {
+    const fragmentData = {
+      flag: 'openselectAdvice',
+      data,
+      componentName: MiscellaneousAdviceComponent,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+
+
   
   openselectAdvice(data) {
     const fragmentData = {
