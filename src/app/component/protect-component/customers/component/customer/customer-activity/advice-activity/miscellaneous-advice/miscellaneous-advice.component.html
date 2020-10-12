@@ -11,8 +11,154 @@
 
 
 <div class="pt-80 pl-20 pr-28 pb-100">  
+    <div class="row give-adivce pt-20">
+        <div class="w-28 pl-0">
+            <p class="m-0 roboto f-400 pb-8">Select non financial advice <img src="/assets/images/svg/info.svg" class="c-p"></p>
+             
+            <div class="b-ua mb-16 w-90 pb-10">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" class="mt-12 text-custom">
+                        Registration
+                    </mat-radio-button>
+                    <div class="form-group b-0 b-ua w-85 m-auto">
+                        <mat-form-field class="">
+                            <mat-select class="form-control b-0">
+                                <mat-option value="option">Add nominee</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-radio-group>
+            </div>
 
-</div>
+            <div class="b-ua mb-16 w-90 pb-10">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" class="mt-12 text-custom">
+                        Updation
+                    </mat-radio-button>
+                    <div class="form-group b-0 b-ua w-85 m-auto">
+                        <mat-form-field class="">
+                            <mat-select class="form-control b-0">
+                                <mat-option value="option">Add nominee</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-radio-group>
+            </div>
+
+            <div class="b-ua mb-16 w-90 pb-10">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" class="mt-12 text-custom">
+                        Cancellation
+                    </mat-radio-button>
+                    <div class="form-group b-0 b-ua w-85 m-auto">
+                        <mat-form-field class="">
+                            <mat-select class="form-control b-0">
+                                <mat-option value="option">Add nominee</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-radio-group>
+            </div>
+
+            <div class="b-ua mb-16 w-90 pb-10">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" class="mt-12 text-custom">
+                        Others
+                    </mat-radio-button>
+                    <div class="form-group b-0 b-ua w-85 m-auto">
+                        <mat-form-field class="">
+                            <mat-select class="form-control b-0">
+                                <mat-option value="option">Add nominee</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-radio-group>
+            </div>
+
+        </div>
+        <div class="w-70 bl-1 pr-0 pl-8">
+            <div class="row ">
+                <div class="col-md-8">
+                    <p class="m-0 roboto text-black pb-8">Advice header</p>
+                    <div class="form-group  ">
+                        <mat-form-field>
+                            <input matInput class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 p-0">
+                    <p class="m-0 pb-8 roboto text-black">Advice given on</p>
+                    <div class="form-group ">
+                        <mat-form-field class="ba-date">
+                            <input matInput [matDatepicker]="picker" class="form-control b-0">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-8">
+                    <p class="m-0 roboto text-black">Advice rationale</p>
+                    <div class="form-group ">
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 p-0">
+                    <p class="m-0 pb-8 roboto text-black"> Implementation date</p>
+                    <div class="form-group ">
+                        <mat-form-field class="ba-date">
+                            <input matInput [matDatepicker]="picker1" class="form-control b-0">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                
+
+            </div>
+    
+                 
+                 
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="m-0 roboto text-black pt-44">Consent option <img src="/assets/images/svg/info.svg"></p>
+                        <mat-radio-group aria-label="Select an option">
+                            <mat-radio-button value="1">Take client consent
+        
+                            </mat-radio-button>
+                            <p class="f-12 m-0 roboto text-custom pl-44">If this option is selected,
+                                further
+                                action on this advice is possible only after your client gives
+                                explicit
+                                consent via email.</p>
+                            <mat-radio-button value="2">Bypass client consent
+        
+                            </mat-radio-button>
+                            <p class="f-12 m-0 roboto text-custom pl-44">If this option is selected,
+                                you
+                                can
+                                directly start further work on this advice without taking any
+                                explicit
+                                consent from your client.</p>
+                        </mat-radio-group>
+                    </div>
+                </div>
+               
+            </div>
+    
+        </div>
+    </div>
+ 
+
 
 
 
