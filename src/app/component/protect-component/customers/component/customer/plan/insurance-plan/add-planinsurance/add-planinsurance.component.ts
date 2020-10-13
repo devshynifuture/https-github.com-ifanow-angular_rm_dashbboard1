@@ -104,6 +104,9 @@ export class AddPlaninsuranceComponent implements OnInit {
   dependent = false;
   isAddtoPlan = false;
   validatorType = ValidatorType;
+  age: number;
+  showError: boolean;
+  dependantYearsSelection: any;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
@@ -210,7 +213,11 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.plannerObj = this.setAll(this.plannerObj, 0);
         this.needAnalysis = data;
         this.inflationAdjustedRate = this.needAnalysis.inflationAdjustedRate;
-        this.dependantYears = this.needAnalysis.dependantYears;
+        if(!this.dependantYearsSelection){
+          this.dependantYears = this.needAnalysis.dependantYears; 
+        }else{
+          this.dependantYears = this.dependantYearsSelection;
+        }
         this.dataSource = this.getDataForTable(this.needAnalysis.liabilities, 'total_loan_outstanding');
         this.dataSource1 = this.getDataForTable(this.needAnalysis.livingExpenses, 'amount');
         this.dataSource2 = this.getDataForTable(this.needAnalysis.assets, 'currentValue');
@@ -230,6 +237,28 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.isLodingNeedAnalysis = false;
       }
     );
+  }
+  getDependantYears(){
+    let dependentYear;
+    if(this.dependent && this.selectedExpectancy){
+      this.familyList.forEach(element => {
+        if(element.familyMemberId == this.familyMemberId){
+          let dob = element.dateOfBirth;
+          const bdate = new Date(dob);
+          const timeDiff = Math.abs(Date.now() - bdate.getTime() );
+          this.age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+          dependentYear = parseInt(this.selectedExpectancy) - this.age
+          let expectancy = parseInt(this.selectedExpectancy);
+          if(expectancy < this.age){
+            this.showError = true;
+          }else{
+            this.showError = false;
+          }
+          console.log('ageeeeeeeeeeeeeeeeeeeeeeeeee',dependentYear)
+        }
+      });
+    }
+    return dependentYear;
   }
   setAll(obj, val) {
     Object.keys(obj).forEach(function (index) {
@@ -271,8 +300,14 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.familyMemberId = value || value == 0 ? value : this.familyMemberId;
     }
     if (this.selectedFamily && this.selectedExpectancy) {
-      this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy)
+      this.dependantYearsSelection = this.getDependantYears();
+      if(!this.showError){
+        this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy)
+      }
     }
+  }
+  calculateAge(){
+
   }
   calculateGrossAndadditional() {
 

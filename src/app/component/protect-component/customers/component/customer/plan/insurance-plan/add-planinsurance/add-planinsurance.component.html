@@ -73,9 +73,13 @@
                                         {{option.value}}
                                     </mat-option>
                                 </mat-autocomplete>
+                                
                             </mat-form-field>
                         </div>
+                        <h5 *ngIf="showError" class="text-danger">Life expectancy should be less than dependent's age
+                        </h5>
                     </div>
+                    
 
 
 
