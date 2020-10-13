@@ -416,6 +416,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "id":this.editApiData?this.editApiData.id:null,
+            "portfolioId": this.portfolioData.id,
             "transactionOrHoldingSummaryList": []
           }
         this.transactionArray.controls.forEach(element => {
@@ -451,22 +452,27 @@ export class StockScripLevelTransactionComponent implements OnInit {
                 // });
               });
             }
-        
+            if(this.editApiData && this.portfolioData.id == 0){
+              transObj.ownerList[0].id = null;
+            }
       finalStocks.push(transObj)
       console.log(finalStocks)
       const obj =
       {
-        "id": this.editApiData ? this.editApiData.portfolioId : this.portfolioData.id,
+        "id": this.editApiData && this.portfolioData.id != 0? this.editApiData.portfolioId : this.portfolioData.id,
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
-        "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
+        "ownerList": this.editApiData && this.portfolioData.id != 0 ?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.portfolioData ? this.portfolioData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
         "nomineeList": this.optionForm.value.getNomineeName,
         "linkedBankAccount": this.optionForm.value.linkedBankAccount,
         "linkedDematAccount": this.optionForm.value.linkedDematAccount,
         "description": this.optionForm.value.description,
         "stockList": finalStocks
+      }
+      if(this.editApiData && this.portfolioData.id == 0){
+        obj.ownerList[0].id = null;
       }
       console.log(obj)
       if (this.editApiData) {

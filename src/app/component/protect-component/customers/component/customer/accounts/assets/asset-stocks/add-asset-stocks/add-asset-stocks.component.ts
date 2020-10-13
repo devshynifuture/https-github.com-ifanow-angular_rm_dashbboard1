@@ -328,7 +328,7 @@ addNewNominee(data) {
           // "ownerName": this.editApiData.portfolioOwner,
           "portfolioName": this.assetForm.get('portfolioName').value,
           "id": this.editApiData.portfolioId,
-          "ownerList": this.editApiData.portfolioOwner,
+          "ownerList": this.getCoOwner.value,
           "nomineeList": this.assetForm.value.getNomineeName,
           "linkedBankAccount": this.assetForm.value.linkedBankAccount,
           "linkedDematAccount": this.assetForm.value.linkedDematAccount,
