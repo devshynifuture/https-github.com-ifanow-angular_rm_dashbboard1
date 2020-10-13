@@ -13,14 +13,5 @@ export class MiscellaneousAdviceComponent implements OnInit {
   }
   Close(state){
 
-<<<<<<< HEAD
-  Close(flag){
-    if(flag){
-      
-    }
   }
-
-=======
-  }
->>>>>>> 295be24b14ede9926e8c87f672d40c97478da684
 }
