@@ -201,7 +201,9 @@ export class AuthService {
     localStorage.removeItem('roleObj');
     localStorage.removeItem('successStoringToken');
     localStorage.removeItem('googleOAuthToken');
+    localStorage.clear();
     sessionStorage.removeItem('clientList');
+    sessionStorage.clear();
     // this.myRoute.navigate(['login']);
   }
 

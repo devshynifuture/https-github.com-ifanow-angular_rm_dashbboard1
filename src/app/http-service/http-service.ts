@@ -38,7 +38,7 @@ export class HttpService {
   });
 
   /**
-   * @description - This method will send back payload/response or throw error as per the status received 
+   * @description - This method will send back payload/response or throw error as per the status received
    * @param res - the response object received from the api calls
    */
   sendSuccessResponse(res) {
@@ -335,7 +335,7 @@ export class HttpService {
       });
   }
 
-  getWithoutAuth(url: string, params, requestAge: number): Observable<any> {
+  getWithoutAuth(url: string, params, requestAge: number=undefined): Observable<any> {
     if (!requestAge) {
       requestAge = DEFAULT_AGE;
     }

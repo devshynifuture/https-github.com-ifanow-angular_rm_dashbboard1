@@ -1,9 +1,9 @@
-import { AuthService } from './../../../auth-service/authService';
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import {AuthService} from './../../../auth-service/authService';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpParams, HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +24,9 @@ export class PeopleService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);
   }
 
-  getClientLogo(data){
-    this.authService.setToken('data');
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LOGO, data);
+  getClientLogo(data) {
+    // this.authService.setToken('data');
+    return this.http.getWithoutAuth(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LOGO, data);
   }
 
   addClient(data) {
