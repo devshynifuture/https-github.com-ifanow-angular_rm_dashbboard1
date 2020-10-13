@@ -1087,7 +1087,7 @@
                                             style="width: 15px; height: 15px; background: #83959D; display: inline-block;">
                                         </span> </td>
                                     <td style="font-size: 13px;"> Others </td>
-                                    <td style="font-size: 13px;"><span  *ngIf="this.otherCurrentValue">
+                                    <td style="font-size: 13px;"><span>
                                             {{(this.otherCurrentValue) ? (this.otherCurrentValue) : '0'}}</span>
                                         </td>
                                     <td style="font-size: 13px;">
@@ -1342,7 +1342,7 @@
                         </td>
                         <td
                             style="font-size: 13px; border-bottom: 1px solid #dee5e7;padding: 5px;padding-left: 8px; text-align: right;">
-                            {{(cashFlowXirr) ? (cashFlowXirr | number:'1.2-2') : 0}}%</td>
+                            {{(cashFlowObj) ? (cashFlowObj.cashFlowLifetimeXirr | number:'1.2-2') : 0}}%</td>
                     </tr>
 
                 </table>
