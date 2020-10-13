@@ -261,7 +261,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }, [Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
-      gender: [(data.genderId) ? String(data.genderId) : '1'],
+      gender: [(data.genderId) ? String(data.genderId) : '', [Validators.required]],
       relationType: [(data.relationshipId != 0) ? data.relationshipId : ''],
       leadSource: [(data.leadSource) ? data.leadSource : ''],
       leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
@@ -503,6 +503,10 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   saveNextClient(flag) {
     this.emailData.markAllAsTouched();
+    if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
+      this.eventService.openSnackBar("Please select gender", "Dimiss");
+      return
+    }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
@@ -699,6 +703,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.get('role').updateValueAndValidity();
     }
     let gardianObj = [];
+    if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
+      this.eventService.openSnackBar("Please select gender", "Dimiss");
+      return
+    }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.emailData.markAllAsTouched()
       this.basicDetails.markAllAsTouched();
