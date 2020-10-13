@@ -9,7 +9,7 @@
             <div *ngIf="!otpNumber" class="loginBox">
                 <p class="f-16 mb-12 mobileNone">
                     <img class="advisorLogo" 
-                        [src]="logoUrl? logoUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png'">
+                        [src]="logoUrl">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details
@@ -35,7 +35,7 @@
                                 <mat-form-field appearance="standard" floatLabel="never">
                                     <input autofocus (keypress)="enterEvent($event)" class="form-control br-0"
                                         formControlName="name" matInput placeholder="Enter username" tabindex="1">
-                                    <mat-error *ngIf="loginForm.controls.name.touched" class="mobilerightText">Username
+                                    <mat-error *ngIf="loginForm && loginForm.controls.name.touched" class="mobilerightText">Username
                                         required
                                     </mat-error>
                                 </mat-form-field>
@@ -113,7 +113,7 @@
             <div *ngIf="otpNumber" class="loginBox">
                 <p class="f-16 mobileNone mb-12">
                     <img class="advisorLogo"
-                    [src]="logoUrl? logoUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png'">
+                    [src]="logoUrl">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">

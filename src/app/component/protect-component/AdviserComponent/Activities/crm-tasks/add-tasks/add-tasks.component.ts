@@ -1197,6 +1197,7 @@ export class AddTasksComponent implements OnInit {
     }).subscribe(res => {
       if (res) {
         this.isPrefilled = true;
+        this.addTaskForm.get('taskDescription').setErrors(null);
         console.log("individual task name:::", res);
         this.prefillValue = res;
         if(res.hasOwnProperty('subTaskList')){

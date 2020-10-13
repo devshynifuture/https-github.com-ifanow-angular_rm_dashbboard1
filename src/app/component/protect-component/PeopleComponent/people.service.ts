@@ -1,15 +1,19 @@
+import { AuthService } from './../../../auth-service/authService';
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeopleService {
 
-  constructor(private http: HttpService) {
+  constructor(
+    private httpService: HttpClient,
+    private http: HttpService,
+    private authService: AuthService) {
   }
 
 
@@ -21,6 +25,7 @@ export class PeopleService {
   }
 
   getClientLogo(data){
+    this.authService.setToken('data');
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LOGO, data);
   }
 
