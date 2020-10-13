@@ -501,7 +501,17 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-      }
+        if(data.length>0){
+            this.options = data;
+          }else{
+            this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+            this.travelInsuranceForm.get('insurerName').markAsTouched();
+          }
+    },
+    err=>{
+        this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+        this.travelInsuranceForm.get('insurerName').markAsTouched();
+    }
     );
   }
 

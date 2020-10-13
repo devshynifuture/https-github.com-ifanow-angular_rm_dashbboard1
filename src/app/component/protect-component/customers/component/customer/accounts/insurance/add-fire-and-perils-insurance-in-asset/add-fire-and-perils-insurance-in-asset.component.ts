@@ -451,7 +451,17 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-      }
+        if(data.length>0){
+            this.options = data;
+          }else{
+            this.fireInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+            this.fireInsuranceForm.get('insurerName').markAsTouched();
+          }
+    },
+    err=>{
+        this.fireInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+        this.fireInsuranceForm.get('insurerName').markAsTouched();
+    }
     );
   }
   getOwnerData(value, data) {
