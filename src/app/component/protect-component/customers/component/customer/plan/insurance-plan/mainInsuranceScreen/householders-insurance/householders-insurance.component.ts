@@ -460,6 +460,16 @@ export class HouseholdersInsuranceComponent implements OnInit {
 			data => {
 				console.log(data);
 				this.options = data;
+				if(data.length>0){
+					this.options = data;
+				  }else{
+					this.homeInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+					this.homeInsuranceForm.get('insurerName').markAsTouched();
+				  }
+			},
+			err=>{
+				this.homeInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+				this.homeInsuranceForm.get('insurerName').markAsTouched();
 			}
 		);
 	}

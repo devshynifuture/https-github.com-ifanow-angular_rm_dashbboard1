@@ -16,6 +16,8 @@ import { HouseholdersInsuranceComponent } from '../mainInsuranceScreen/household
 import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fire-insurance.component';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -38,13 +40,15 @@ export class ShowHealthPlanningComponent implements OnInit {
   showNewPolicy = false;
   insuranceType: any;
   ownerIds =[];
+  familyMemberList: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
     private utils: UtilService,
     private eventService: EventService,
     private planService:PlanService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public peopleService:PeopleService
   ) { }
 
 
@@ -73,38 +77,75 @@ export class ShowHealthPlanningComponent implements OnInit {
       id: this.inputData.id,
       insuranceType:this.inputData.insuranceType
     }
-    this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
-      data => {
-        if(data){
-          if (data) {
-            this.dataSource =this.getFilterData(data.current) ;
-            this.dataSource1 =this.getFilterData(data.suggested) ;
-            this.isLoading = false;
-            console.log(data);
-          }
-          this.dataSource = data.current;  
-          if(data.current){
-            data.current.forEach(element => {
-              if(element.insuranceDetails.insuredMembers.length > 0){
-                element.insuranceDetails.insuredMembers.forEach(ele => {
-                  this.ownerIds.push({
-                    'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
-                  })
-                });
-              }else{
+    const obj2 = {
+      clientId: this.clientId
+    };
+    const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj);
+    const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    // this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
+    //   data => {
+    //     if(data){
+    //       if (data) {
+    //         this.dataSource =this.getFilterData(data.current) ;
+    //         this.dataSource1 =this.getFilterData(data.suggested) ;
+    //         this.isLoading = false;
+    //         console.log(data);
+    //       }
+    //       this.dataSource = data.current;  
+    //       if(data.current){
+    //         data.current.forEach(element => {
+    //           if(element.insuranceDetails.insuredMembers.length > 0){
+    //             element.insuranceDetails.insuredMembers.forEach(ele => {
+    //               this.ownerIds.push({
+    //                 'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
+    //               })
+    //             });
+    //           }else{
+    //             this.ownerIds.push({
+    //               'ownerId': element.insurance.policyHolderId
+    //             })
+    //           }
+    //         });
+    //       }                                                                                                                                                                                                                                                                                                                                                                                                           
+    //     }                                                                                                                                                                                                                                                                                                                                                                                                             
+    //   },
+    //   err => {
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //   }
+    // );
+    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+      this.familyMemberList = result[1];
+      if(result[0]){
+        let data = result[0];
+          this.dataSource =this.getFilterData(data.current) ;
+          this.dataSource1 =this.getFilterData(data.suggested) ;
+          this.isLoading = false;
+        this.dataSource = data.current;  
+        if(data.current){
+          data.current.forEach(element => {
+            if(element.insuranceDetails.insuredMembers.length > 0){
+              element.insuranceDetails.insuredMembers.forEach(ele => {
                 this.ownerIds.push({
-                  'ownerId': element.insurance.policyHolderId
+                  'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
                 })
-              }
-            });
-          }                                                                                                                                                                                                                                                                                                                                                                                                           
-        }                                                                                                                                                                                                                                                                                                                                                                                                             
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+              });
+            }else{
+              this.ownerIds.push({
+                'ownerId': element.insurance.policyHolderId
+              })
+            }
+          });
+        }                                                                                                                                                                                                                                                                                                                                                                                                           
+      }    
+
+    }, err => {
+      this.eventService.openSnackBar(err, 'Dismiss');
+    })
   }
+  getPolicyHolderName(data){
+    let finalData =  this.familyMemberList.filter(item => item.familyMemberId === data.policyHolderId);
+    return finalData[0].name
+   }
   getFilterData(array){
     if(array){
       array.forEach(singleInsuranceData => {
@@ -127,8 +168,8 @@ export class ShowHealthPlanningComponent implements OnInit {
             }
           }
         } else {
-          singleInsuranceData.displayHolderName = '';
-          singleInsuranceData.displayHolderSumInsured = 0;
+          singleInsuranceData.displayHolderName =this.getPolicyHolderName(singleInsuranceData.insuranceDetails);
+          singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.sumInsuredIdv;;
         }
       });
     }else{

@@ -51,7 +51,7 @@ export class PortfolioFieldComponent implements OnInit {
     if(this.portfolioName != undefined){
      
         this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
-      
+        
     }
   };
 
@@ -76,6 +76,9 @@ export class PortfolioFieldComponent implements OnInit {
     // this.familyWisePortfolio = data;
     // this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
     data.forEach(element => {
+      if(element.portfolioName == this.portfolioName.value && element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId){
+          this.selectPortfolio(element);
+      }
       if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
         checkOwnerId = true;
         this.familyWisePortfolio.push(element);
@@ -85,20 +88,33 @@ export class PortfolioFieldComponent implements OnInit {
         this.othersWisePortfolio.push(element);
       }
     });
+
     console.log(this.familyWisePortfolio,this.othersWisePortfolio, "porfolio list", data);
-
-    this.familyWisePortfolio.forEach(f=> {
-      this.othersWisePortfolio.forEach((o,i) => {
-
+    let arr1;
+    let arr2;
+    if(this.familyWisePortfolio.length < this.othersWisePortfolio.length){
+      arr1 = this.familyWisePortfolio;
+      arr2 = this.othersWisePortfolio;
+    }else{
+      arr1 = this.othersWisePortfolio;
+      arr2 = this.familyWisePortfolio;
+    }
+    arr1.forEach(f=> {
+      arr2.forEach((o,i) => {
         if(f.portfolioName == o.portfolioName){
-          this.othersWisePortfolio.splice(i, 1);
+          arr2.splice(i, 1);
         }
       });
     });
     let margeArry = [];
-    margeArry = this.familyWisePortfolio.concat(this.othersWisePortfolio);
+    margeArry = arr1.concat(arr2);
     this.familyWisePortfolio = margeArry;
     // (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
+    this.familyWisePortfolio.forEach(element => {
+      if(element.portfolioName == this.portfolioName.value){
+        this.selectPortfolio(element);
+      }
+    })
     console.log(this.familyWisePortfolio);
   }
 

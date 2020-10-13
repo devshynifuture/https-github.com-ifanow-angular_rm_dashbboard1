@@ -570,6 +570,16 @@ export class PersonalInsuranceComponent implements OnInit {
 			data => {
 				console.log(data);
 				this.options = data;
+				if(data.length>0){
+					this.options = data;
+				  }else{
+					this.personalAccidentForm.controls.insurerName.setErrors({ erroInPolicy: true });
+					this.personalAccidentForm.get('insurerName').markAsTouched();
+				  }
+			},
+			err=>{
+				this.personalAccidentForm.controls.insurerName.setErrors({ erroInPolicy: true });
+				this.personalAccidentForm.get('insurerName').markAsTouched();
 			}
 		);
 	}
