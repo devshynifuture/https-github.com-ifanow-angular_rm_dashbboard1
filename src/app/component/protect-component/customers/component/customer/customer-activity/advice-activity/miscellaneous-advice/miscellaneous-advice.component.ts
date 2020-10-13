@@ -11,5 +11,7 @@ export class MiscellaneousAdviceComponent implements OnInit {
 
   ngOnInit() {
   }
+  Close(state){
 
+  }
 }
