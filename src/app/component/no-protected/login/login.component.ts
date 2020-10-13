@@ -1,3 +1,4 @@
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -128,16 +129,18 @@ export class LoginComponent implements OnInit {
     this.btnProgressData = 'state1';
   }
 
-  getLogoUrl(){
-    let data = {
-      hostName: window.location.hostname
-    }
-    this.peopleService.getClientLogo(data)
+  getLogoUrl(){ 
+    this.peopleService.getClientLogo({hostName: window.location.hostname})
       .subscribe(res=>{
         if(res){
+          localStorage.removeItem('token');
+          console.log(res);
           this.logoUrl = res.logoUrl;
+        } else {
+          this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
         }
       }, err=>{
+        this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
         console.error(err);
       })
   }
