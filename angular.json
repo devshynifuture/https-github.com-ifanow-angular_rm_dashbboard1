@@ -71,7 +71,7 @@
               "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
               "budgets": [
                 {
@@ -80,8 +80,6 @@
                   "maximumError": "8mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json",
               "scripts": [
                 "src/app/offline/offline.js"
               ]

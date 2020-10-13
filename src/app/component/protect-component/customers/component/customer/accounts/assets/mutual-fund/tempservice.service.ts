@@ -7,7 +7,7 @@ export class TempserviceService {
     let array = [];
     let sortedData = [];
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Investor wise') ? reportType = 'ownerName' :reportType = 'ownerName';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Investor wise') ? reportType = 'ownerName' : reportType = 'ownerName';
     const filteredArray = [];
 
     let catObj;
@@ -18,11 +18,14 @@ export class TempserviceService {
         catObj = this.categoryFilterForInvestorWise(mutualFundList, 'familyMemberId', allData);
       }
       Object.keys(catObj).map(key => {
-        (reportType == 'ownerName') ? filteredArray.push({groupName: key, pan: catObj[key][0].pan}) : filteredArray.push({groupName: key});
+        (reportType == 'ownerName') ? filteredArray.push({
+          groupName: key,
+          pan: catObj[key][0].pan
+        }) : filteredArray.push({groupName: key});
         let totalObj: any = {};
-        const isgreatorThanZero = (number)=> number.balanceUnit <= 0
+        const isgreatorThanZero = (number) => number.balanceUnit <= 0
         let emptyObjOrNot = catObj[key].every(isgreatorThanZero);
-        if(!emptyObjOrNot){
+        if (!emptyObjOrNot) {
           catObj[key].forEach((singleData) => {
             if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
               array.push(singleData);
@@ -30,20 +33,20 @@ export class TempserviceService {
               const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
               totalObj.totalXirr = obj.xirr;
               totalObj.totalAbsoluteReturn = obj.absoluteReturn;
-              totalObj.totalBalanceUnit = catObj[key][catObj[key].length -1].balanceUnit;
+              totalObj.totalBalanceUnit = catObj[key][catObj[key].length - 1].balanceUnit;
             } else {
               if (filteredArray.length > 0 && array.length == 0) {
-                  if (filteredArray[filteredArray.length - 1].groupName) {
-                    if(catObj[key].length < 2){
-                      filteredArray.pop();
-                    }
+                if (filteredArray[filteredArray.length - 1].groupName) {
+                  if (catObj[key].length < 2) {
+                    filteredArray.pop();
                   }
-                
+                }
+
               }
             }
-  
+
           });
-        }else{
+        } else {
           if (filteredArray.length > 0 && array.length == 0) {
             if (filteredArray[filteredArray.length - 1].groupName) {
               filteredArray.pop();
@@ -161,7 +164,10 @@ export class TempserviceService {
       // this.initializeValues(); // for initializing total values object
       let totalObj: any = {};
       if (reportType != 'schemeName') {
-        (reportType == 'ownerName') ? filteredData.push({groupName: key, pan: catObj[key][0].pan}) : filteredData.push({groupName: key});
+        (reportType == 'ownerName') ? filteredData.push({
+          groupName: key,
+          pan: catObj[key][0].pan
+        }) : filteredData.push({groupName: key});
 
       }
       catObj[key].forEach((singleData) => {
@@ -169,7 +175,7 @@ export class TempserviceService {
           if (viewMode == 'All Transactions') {
             if (trnType) {
               totalObj = {};
-              let result = trnType.every(function(e) {
+              let result = trnType.every(function (e) {
                 return e.selected == false;
               });
               if (!result) {
@@ -197,7 +203,7 @@ export class TempserviceService {
             };
             if (reportType == 'ownerName') {
               obj.folioNumber = singleData.folioNumber;
-             obj.pan = singleData.pan;
+              obj.pan = singleData.pan;
             }
             filteredData.push(obj);
             if (reportType != 'ownerName') {
@@ -217,7 +223,7 @@ export class TempserviceService {
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
             totalObj.totalCagr = data.xirr;
             totalObj.trnAbsoluteReturn = data.absoluteReturn;
-            totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length-1].balanceUnits
+            totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length - 1].balanceUnits
             filteredData.push(totalObj);
           } else {
             if (filteredData.length > 0) {
@@ -596,6 +602,7 @@ export class TempserviceService {
 
     return roundedValue;
   }
+
   convertInTitleCase(input) {
     if (!input) {
       return '';
@@ -603,6 +610,7 @@ export class TempserviceService {
       return input.replace(/\w\S*/g, (txt => txt[0].toUpperCase() + txt.substr(1).toLowerCase()));
     }
   }
+
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
       data = parseFloat(data)
@@ -610,7 +618,10 @@ export class TempserviceService {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', {
+          'minimumFractionDigits': noOfPlaces,
+          'maximumFractionDigits': noOfPlaces
+        });
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }

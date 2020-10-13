@@ -11,8 +11,8 @@ addEventListener('message', ({data}) => {
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList,data.type,data.mutualFund,data.showFolio);
-  const customDataHolder=[];
+  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList, data.type, data.mutualFund, data.showFolio);
+  const customDataHolder = [];
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
     element.balanceUnitOrg = element.balanceUnit;
@@ -37,27 +37,18 @@ addEventListener('message', ({data}) => {
     element.totalSipAmount = mfService.mutualFundRoundAndFormat(element.totalSipAmount, 0);
     element.nav = mfService.mutualFundRoundAndFormat(element.nav, 3);
 
-    element.navDate =  element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : '';
-    if(element && element.hasOwnProperty('mutualFundTransactions') && element.mutualFundTransactions.length > 0){
-      element.investedDate =  element.mutualFundTransactions ? new Date(element.mutualFundTransactions[0].transactionDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
-    }else{
-      element.investedDate =  ''
+    element.navDate = element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-') : '';
+    if (element && element.hasOwnProperty('mutualFundTransactions') && element.mutualFundTransactions.length > 0) {
+      element.investedDate = element.mutualFundTransactions ? new Date(element.mutualFundTransactions[0].transactionDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-') : '';
+    } else {
+      element.investedDate = ''
     }
- 
-    
+
+
   });
 
 
-
-
-
-
-
-
-
-
-
-  const output = {customDataSourceData ,totalValue,customDataHolder};
+  const output = {customDataSourceData, totalValue, customDataHolder};
   // console.log('Mutual fund script output: ', output);
   postMessage(output);
   // postMessage(response);
