@@ -152,8 +152,11 @@
                         {{option.name}}
                     </mat-option>
                 </mat-autocomplete>
-                <mat-error>This field is required
+                <mat-error *ngIf="(personalAccidentForm.get('insurerName').errors?.required)">This field is required
                 </mat-error>
+                <mat-error class="f-12" *ngIf="(personalAccidentForm.get('insurerName').errors?.erroInPolicy)">
+                    Enter valid policy name
+                 </mat-error>
             </mat-form-field>
         </div>
     </div>

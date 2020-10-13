@@ -163,9 +163,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             data => {
                 console.log(data);
                 this.options = data;
+                if(data.length>0){
+                    this.options = data;
+                  }else{
+                    this.healthInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+                    this.healthInsuranceForm.get('insurerName').markAsTouched();
+                  }
             },
-            (error) => {
-                console.log(error);
+            err=>{
+                this.healthInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+                this.healthInsuranceForm.get('insurerName').markAsTouched();
             }
         );
     }

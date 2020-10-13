@@ -561,7 +561,18 @@ export class MotorInsuranceComponent implements OnInit {
 			data => {
 				console.log(data);
 				this.options = data;
+				if(data.length>0){
+					this.options = data;
+				  }else{
+					this.motorInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+					this.motorInsuranceForm.get('insurerName').markAsTouched();
+				  }
+			},
+			err=>{
+				this.motorInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+				this.motorInsuranceForm.get('insurerName').markAsTouched();
 			}
+		
 		);
 	}
 

@@ -18,6 +18,8 @@ import { AddHomeInsuranceInAssetComponent } from '../../../accounts/insurance/ad
 import { AddFireAndPerilsInsuranceInAssetComponent } from '../../../accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
 import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { forkJoin } from 'rxjs';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -65,6 +67,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   isLoading = false;
   dislayList: any;
   newPolicyData: any;
+  familyMemberList:any;
 
   @Input()
   set data(data) {
@@ -152,7 +155,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
   }]
 
-  constructor(public planService: PlanService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
+  constructor(private peopleService:PeopleService,public planService: PlanService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
   openDialog(value, data): void {
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
@@ -184,24 +187,46 @@ export class AddHealthInsuranceComponent implements OnInit {
       id: this.inputData.id,
       insuranceType: this.inputData.insuranceType
     }
-    this.planService.getCurrentPolicyAddMore(obj).subscribe(
-      data => {
-        if (data) {
-          data = this.getHolderNameAndSumAssured(data);
-          this.dataSource2 = data;
-          this.isLoading = false;
-          console.log(data);
-        }else{
-          this.dataSource2=[];
-          this.isLoading = false;
-        }
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+    const obj2 = {
+      clientId: this.clientId
+    };
+    const getCurrentPolicy = this.planService.getCurrentPolicyAddMore(obj);
+    const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    // this.planService.getCurrentPolicyAddMore(obj).subscribe(
+    //   data => {
+    //     if (data) {
+    //       data = this.getHolderNameAndSumAssured(data);
+    //       this.dataSource2 = data;
+    //       this.isLoading = false;
+    //       console.log(data);
+    //     }else{
+    //       this.dataSource2=[];
+    //       this.isLoading = false;
+    //     }
+    //   },
+    //   err => {
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //     this.isLoading = false;
+    //     this.dataSource2=[];
+    //   }
+    // );
+    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+      this.familyMemberList = result[1];
+      if(result[0]){
+        let data = this.getHolderNameAndSumAssured(result[0]);
+        this.dataSource2 = data;
         this.isLoading = false;
+        console.log('data cvcccccccccccccccccccccccccccccccccccccccc',this.familyMemberList);
+      }else{
         this.dataSource2=[];
+        this.isLoading = false;
       }
-    );
+
+    }, err => {
+      this.eventService.openSnackBar(err, 'Dismiss');
+      this.isLoading = false;
+      this.dataSource2=[];
+    })
   }
   getReviewExistingPolicy() {
     this.isLoading = true;
@@ -209,24 +234,46 @@ export class AddHealthInsuranceComponent implements OnInit {
       clientId: this.clientId,
       insuranceType: this.insuranceType
     }
-    this.planService.getGeneralInsuranceReview(obj).subscribe(
-      data => {
-        if (data) {
-          data = this.getHolderNameAndSumAssured(data);
-          this.dataSource2 = data;
-          this.isLoading = false;
-          console.log(data);
-        }else{
-          this.dataSource2=[];
-          this.isLoading = false;
-        }
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+    const obj2 = {
+      clientId: this.clientId
+    };
+    const getCurrentPolicy = this.planService.getGeneralInsuranceReview(obj);
+    const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    // this.planService.getGeneralInsuranceReview(obj).subscribe(
+    //   data => {
+    //     if (data) {
+    //       data = this.getHolderNameAndSumAssured(data);
+    //       this.dataSource2 = data;
+    //       this.isLoading = false;
+    //       console.log(data);
+    //     }else{
+    //       this.dataSource2=[];
+    //       this.isLoading = false;
+    //     }
+    //   },
+    //   err => {
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //     this.isLoading = false;
+    //     this.dataSource2=[];
+    //   }
+    // );
+    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+      this.familyMemberList = result[1];
+      if(result[0]){
+       let data = this.getHolderNameAndSumAssured(result[0]);
+        this.dataSource2 = data;
         this.isLoading = false;
+        console.log('data cvcccccccccccccccccccccccccccccccccccccccc',this.familyMemberList);
+      }else{
         this.dataSource2=[];
+        this.isLoading = false;
       }
-    );
+
+    }, err => {
+      this.eventService.openSnackBar(err, 'Dismiss');
+      this.isLoading = false;
+      this.dataSource2=[];
+    })
   }
   getHolderNameAndSumAssured(data){
     data.forEach(singleInsuranceData => {
@@ -249,11 +296,15 @@ export class AddHealthInsuranceComponent implements OnInit {
           }
         }
       } else {
-        singleInsuranceData.displayHolderName = '';
-        singleInsuranceData.displayHolderSumInsured = 0;
+        singleInsuranceData.displayHolderName = this.getPolicyHolderName(singleInsuranceData.insurance);
+        singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insurance.sumInsuredIdv;
       }
     });
     return data;
+  }
+  getPolicyHolderName(data){
+   let finalData =  this.familyMemberList.filter(item => item.familyMemberId === data.policyHolderId);
+   return finalData[0].name
   }
   getOutput(value){
     this.showNewPolicy = false;

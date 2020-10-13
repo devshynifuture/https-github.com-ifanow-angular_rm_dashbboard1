@@ -475,7 +475,17 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-      }
+        if(data.length>0){
+            this.options = data;
+          }else{
+            this.critialIllnessForm.controls.insurerName.setErrors({ erroInPolicy: true });
+            this.critialIllnessForm.get('insurerName').markAsTouched();
+          }
+    },
+    err=>{
+        this.critialIllnessForm.controls.insurerName.setErrors({ erroInPolicy: true });
+        this.critialIllnessForm.get('insurerName').markAsTouched();
+    }
     );
   }
 
