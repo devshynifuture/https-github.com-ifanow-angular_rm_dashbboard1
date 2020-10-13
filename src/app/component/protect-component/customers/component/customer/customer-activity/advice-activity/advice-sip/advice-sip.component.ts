@@ -12,4 +12,10 @@ export class AdviceSIPComponent implements OnInit {
   ngOnInit() {
   }
 
+  Close(flag){
+    if(flag){
+      
+    }
+  }
+
 }

@@ -1,7 +1,6 @@
 <div id="investmentPlan">
     <div class="row" style="  height: calc(100vh - 126px);">
-        <div
-            class="col-xl-2 col-lg-2 col-md-12 bg-grey lter p-0 pt-8 responsive-left-side-top responsive-flex-auto d-none-992">
+        <div class="col-xl-2 col-lg-2 col-md-12 bg-grey lter p-0 pt-8 responsive-left-side-top responsive-flex-auto d-none-992">
             <ul class="vertical-menu responsive-left-side">
                 <li class="c-p f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
                     [ngClass]="{'activeColor': type==1}">
@@ -73,39 +72,7 @@
             <div class="row">
 
                 <div class="col-xl-10 col-lg-10 col-md-12 deployment" *ngIf="dataSource">
-
-                    <!-- use this table for header  -->
-                    <!-- <div class="deployment-top">
-                        <table mat-table [dataSource]="dataSourceT" id="table-low">
-                            <ng-container matColumnDef="position1">
-                                <th mat-header-cell *matHeaderCellDef class="bg-white">
-                                    <mat-form-field>
-                                        <mat-select class="form-control h-33">
-                                            <mat-option value="option">Actions</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </th>
-
-                            </ng-container>
-                            <ng-container matColumnDef="name1">
-                                <th mat-header-cell *matHeaderCellDef
-                                    class="bg-white br bt-1 bl-1 text-center f-500 roboto"> Amount details
-                                </th>
-
-                            </ng-container>
-                            <ng-container matColumnDef="weight1">
-                                <th mat-header-cell *matHeaderCellDef class="bg-white br bt-1 text-center f-500 roboto">
-                                    Deployment breakup </th>
-
-                            </ng-container>
-                            <ng-container matColumnDef="symbol1">
-                                <th mat-header-cell *matHeaderCellDef class="bg-white text-right"> <button
-                                        mat-stroked-button class="br-0 pl-8 text-custom"><img
-                                            src="/assets/images/svg/addon-three.svg" class="pr-8">Filters</button> </th>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                        </table>
-                    </div> -->
+ 
                     <table *ngIf="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
                         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
 

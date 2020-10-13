@@ -65,7 +65,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
 
  
   getPortfolioData(data) {
-    console.log("", data)
+    console.log("getPortfolioData", data)
     this.portfolioData = data;
     this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
   }
@@ -397,7 +397,8 @@ addNewNominee(data) {
               "amountInvested": 0,
               "valueAsOn": null,
               "isDeleted":false,
-               "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
+              "portfolioId": this.portfolioData.id,
+               "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
               "transactionOrHoldingSummaryList": [
                   {
                     "holdingOrTransaction": 1,
@@ -418,6 +419,10 @@ addNewNominee(data) {
                 if(objStock.id == null){
                   objStock.ownerList[0].id = null;
                 }
+
+                if(this.editApiData && this.portfolioData.id == 0){
+                  objStock.ownerList[0].id = null;
+                }
           
           finalStocks.push(objStock);
         })
@@ -433,6 +438,7 @@ addNewNominee(data) {
                 "amountInvested": 0,
                 "valueAsOn": null,
                 "isDeleted":true,
+                "portfolioId": this.portfolioData.id,
                  "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
                 "transactionOrHoldingSummaryList": [
                   {
@@ -462,17 +468,21 @@ addNewNominee(data) {
     }
         const obj =
         {
-          "id": this.editApiData?this.editApiData.portfolioId : this.portfolioData.id,
+          "id": this.editApiData && this.portfolioData.id != 0?this.editApiData.portfolioId:this.portfolioData.id,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
-          "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelHoldingForm.value.getCoOwnerName,
-          "portfolioName": this.scipLevelHoldingForm.value.portfolioName,
+          "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
+          "portfolioName": this.portfolioData.portfolioName,
           "stockList": finalStocks,
           "nomineeList": this.optionForm.value.getNomineeName,
           "linkedBankAccount": this.optionForm.value.linkedBankAccount,
           "linkedDematAccount": this.optionForm.value.linkedDematAccount,
           "description": this.optionForm.value.description,
+        }
+
+        if(this.editApiData && this.portfolioData.id == 0){
+          obj.ownerList[0].id = null;
         }
 
         if (this.editApiData) {

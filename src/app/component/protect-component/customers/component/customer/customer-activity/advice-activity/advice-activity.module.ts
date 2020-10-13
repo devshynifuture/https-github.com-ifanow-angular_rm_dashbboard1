@@ -27,6 +27,7 @@ import { AllAdviceCommoditiesComponent } from './advice-commodities/all-advice-c
 import { AllAdviceStocksComponent } from './advice-stocks/all-advice-stocks/all-advice-stocks.component';
 import { AdviceActionComponent } from './advice-action/advice-action.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+//import { MiscellaneousAdviceComponent } from './miscellaneous-advice/miscellaneous-advice.component';
 //import { AdviceSIPComponent } from './advice-sip/advice-sip.component';
 //import { EmailAdviceComponent } from './email-advice/email-advice.component';
 
@@ -55,6 +56,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     AllAdviceCommoditiesComponent,
     AllAdviceStocksComponent,
     AdviceActionComponent,
+   // MiscellaneousAdviceComponent,
     //AdviceSIPComponent,
    // EmailAdviceComponent
   ],

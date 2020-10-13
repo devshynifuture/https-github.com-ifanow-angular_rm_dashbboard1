@@ -71,8 +71,8 @@
             <h5 class="f-14 mb-4"> 1st SIP date </h5>
             <div class="form-group remove-top-flex iconRupess">
                 <mat-form-field class="ba-date" floatLabel="never" appearance="standard">
-                    <input matInput [matDatepicker]="picker" class="form-control br-0 b-0">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <input matInput [matDatepicker]="picker2" class="form-control br-0 b-0">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2 color="primary"></mat-datepicker>
                   </mat-form-field>
             </div>
@@ -141,8 +141,23 @@
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <mat-radio-button value="1">Take client consent</mat-radio-button>
-                            <p class="ml-16 mb-0"> If this option is selected, further action this advice is possible <br>
+                            <p class="ml-16 mb-0 f-12 text-primitive"> If this option is selected, further action this advice is possible <br>
                                 only after your client gives explicit consent via email</p>  
+                                <ul class="ulClassSip">
+                                    <li>
+                                        <mat-checkbox class="example-margin f-14"  >Create a linked task</mat-checkbox>
+                                    </li>
+                                     <li>
+                                        <mat-checkbox class="example-margin f-14">Create a linked transaction</mat-checkbox>
+                                        <p class="ml-20 mb-0 f-12 text-primitive">Transaction will be immediately created under IIN 5011102595 and consend email/SMS will be sent to client for confirmation</p>
+                                     </li>
+                                </ul>
+ 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <mat-radio-button value="2"> Bypass client consent </mat-radio-button>
                         </div>
                     </div>
                      
