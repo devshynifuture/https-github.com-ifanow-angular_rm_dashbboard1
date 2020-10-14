@@ -341,7 +341,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.removeAt(i);
   }
-
+  
+  getSumOfJsonMap(json: Object = {}) {
+    let sum = 0;
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
+      }
+    }
+    return sum;
+  }
   createStage(eq = '', db = '', timeline = '') {
     return this.fb.group({
       stageTime: [timeline, Validators.required],
