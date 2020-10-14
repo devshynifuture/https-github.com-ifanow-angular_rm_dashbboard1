@@ -11,7 +11,6 @@ import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {LoginService} from './login.service';
 import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 import {interval} from 'rxjs';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -109,8 +108,7 @@ export class LoginComponent implements OnInit {
     public backOfficeService: BackOfficeService,
     public router: Router,
     private authService: AuthService, private eleRef: ElementRef, private loginService: LoginService,
-    private peopleService: PeopleService,
-    @Inject(DOCUMENT) private _document: HTMLDocument) {
+    private peopleService: PeopleService) {
   }
 
   ngOnInit() {
@@ -138,20 +136,11 @@ export class LoginComponent implements OnInit {
           localStorage.removeItem('token');
           console.log(res);
           this.logoUrl = res.logoUrl;
-          this._document.getElementById('appAppleTouchIcon').setAttribute('href', this.logoUrl);
-          this._document.getElementById('appIcon32').setAttribute('href', this.logoUrl);
-          this._document.getElementById('appIcon').setAttribute('href', this.logoUrl);
         } else {
           this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
-          this._document.getElementById('appAppleTouchIcon').setAttribute('href', this.logoUrl);
-          this._document.getElementById('appIcon32').setAttribute('href', this.logoUrl);
-          this._document.getElementById('appIcon').setAttribute('href', this.logoUrl);
         }
       }, err => {
         this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
-        this._document.getElementById('appAppleTouchIcon').setAttribute('href', this.logoUrl);
-        this._document.getElementById('appIcon32').setAttribute('href', this.logoUrl);
-        this._document.getElementById('appIcon').setAttribute('href', this.logoUrl);
         console.error(err);
       });
   }
