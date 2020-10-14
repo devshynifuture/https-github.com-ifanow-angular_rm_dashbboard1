@@ -580,7 +580,7 @@
                                         *ngIf="element.data != 'i. Lifetime XIRR (All Transactions)' && !isLoading"
                                         [value]="element.amts"></span>
                                     <span
-                                        *ngIf="element.data == 'i. Lifetime XIRR (All Transactions)'">{{element.amts | number:'1.2-2'}}{{(isLoading) ? '' : '%'}}</span>
+                                        *ngIf="element.data == 'i. Lifetime XIRR (All Transactions)' &&  !isLoading">{{element.amts | number:'1.2-2'}}{{(isLoading) ? '' : '%'}}</span>
                                     <span *ngIf="isLoading">{{''}} </span>
 
                                 </div>
@@ -1031,7 +1031,7 @@
                                     <td style="font-size: 13px; width: 240px; border-bottom: 1px solid #dee5e7;"> Equity
                                     </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; width: 250px;"><span
-                                         *ngIf="this.equityCurrentValue"> {{this.equityCurrentValue}}
+                                         > {{this.equityCurrentValue ? this.equityCurrentValue : '0'}}
                                         </span></td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.equityPercentage) ? (this.equityPercentage):'0'}}%</td>
@@ -1043,8 +1043,7 @@
                                             style="width: 15px; height: 15px; background: #00B294; display: inline-block;">
                                         </span> </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Debt </td>
-                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> <span 
-                                            *ngIf="this.debtCurrentValue">{{this.debtCurrentValue}}</span>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> <span>{{this.debtCurrentValue ? this.debtCurrentValue : '0'}}</span>
                                     </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2'):'0'}}%</td>
@@ -1057,9 +1056,8 @@
                                             style="width: 15px; height: 15px; background: #FFC100; display: inline-block;">
                                         </span> </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Hybrid </td>
-                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span 
-                                            *ngIf="this.hybridCurrentValue">
-                                            {{this.hybridCurrentValue}}</span>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span>
+                                            {{this.hybridCurrentValue ? this.hybridCurrentValue : '0'}}</span>
                                     </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2'):'0'}}%
@@ -1074,8 +1072,8 @@
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Solution oriented
                                     </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span 
-                                            *ngIf="this.solution_OrientedCurrentValue">
-                                            {{this.solution_OrientedCurrentValue}}</span></td>
+                                            >
+                                            {{this.solution_OrientedCurrentValue ? this.solution_OrientedCurrentValue : '0'}}</span></td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2'):'0'}}%
                                     </td>

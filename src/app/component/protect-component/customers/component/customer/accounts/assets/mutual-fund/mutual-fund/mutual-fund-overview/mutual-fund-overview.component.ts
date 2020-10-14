@@ -386,7 +386,7 @@ export class MutualFundOverviewComponent implements OnInit {
         }
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
-        this.isLoading = false;
+        // this.isLoading = false;
         if (this.router.url.split('?')[0] == '/pdf/overview') {
           this.generatePdfBulk();
         }
@@ -514,30 +514,9 @@ export class MutualFundOverviewComponent implements OnInit {
       //   }
       // }
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment);
-      let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category');
-      if(!this.showZeroFolio){
-        sortedData = sortedData.filter((item: any) =>
-        item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
-      );
-      }
-      this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
-      this.sendaata.dataSource4 = this.dataSource4;
-
-      this.MfServiceService.setSendData(this.sendaata);
-      if (this.dataSource4.data.length == 0) {
-        this.showCategory = false;
-      }
-      this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
+      
       this.schemeWiseAllocation(data); // for shemeWiseAllocation
-      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
-      this.isLoading = false;
-      this.changeInput.emit(false);
-      if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
-        this.showSummaryBar = false;
-        this.showCashFlow =false;
-        this.showSchemeWise=false
-        this.datasource1.data =[];
-      }
+
     } else {
       this.showSummaryBar = false;
       this.dataSource.data = [];
@@ -640,7 +619,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getsubCategorywiseAllocation(data) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if (this.dataSource3.data.length > 0) {
@@ -657,14 +636,14 @@ export class MutualFundOverviewComponent implements OnInit {
       if (this.dataSource3.data.length == 0) {
         this.showSubCategory = false;
       }
-      this.isLoading = false;
+      // this.isLoading = false;
       this.changeInput.emit(false);
 
     }
   }
 
   getFamilyMemberWiseAllocation(data) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.changeInput.emit(true);
     if (this.dataSource.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(data.family_member_list, 'name');
@@ -680,19 +659,26 @@ export class MutualFundOverviewComponent implements OnInit {
       if (this.dataSource.data.length == 0) {
         this.showFamilyMember = false;
       }
-      this.isLoading = false;
+      // this.isLoading = false;
       this.changeInput.emit(false);
 
     }
   }
 
   schemeWiseAllocation(data) {
+    let mutualFundData = data;
     const dataToShow = [];
     this.changeInput.emit(true);
-    this.dataSource2.data = [];
+    let schemeData = [];
+    // this.dataSource2.data = [];
+    let loadReportCall;
+    this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.filteredArray = this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
-    this.filteredArray.forEach(element => {
+    let counter=0;
+    let counter1=0;
+    this.filteredArray.forEach((element,ind) => {
       if (element.mutualFund.length > 1) {
+        loadReportCall = true;
         const catObj = this.MfServiceService.categoryFilter(element.mutualFund, 'schemeCode');
         Object.keys(catObj).map(key => {
           catObj[key].forEach((singleData) => {
@@ -708,8 +694,10 @@ export class MutualFundOverviewComponent implements OnInit {
           clientId: this.clientId,
           request: catObj
         };
+        counter++;
         this.custumService.getReportWiseCalculations(obj).subscribe(
           data => {
+            counter1++;
             Object.keys(catObj).map(key => {
               catObj[key] = data[key];
               element.xirr = catObj[key].xirr;
@@ -721,16 +709,20 @@ export class MutualFundOverviewComponent implements OnInit {
                 item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
               );
               }
-              this.dataSource2 = new MatTableDataSource(sortedData);
-              this.sendaata.dataSource2 = this.dataSource2;
-              if(this.dataSource2.data.length > 0){
-                this.showSchemeWise = true;
-              }
-              this.MfServiceService.setSendData(this.sendaata);
+              schemeData = sortedData;
               // if(this.dataSource2.data.length == 0){
               //   this.showSchemeWise=false
               // }
-              this.isLoading = false;
+              if(counter > 0 && counter1 > 0 && counter == counter1){
+                this.getAllData(mutualFundData);
+                this.dataSource2 = new MatTableDataSource(schemeData);
+                this.sendaata.dataSource2 = this.dataSource2;
+                if(this.dataSource2.data.length > 0){
+                  this.showSchemeWise = true;
+                }
+                this.MfServiceService.setSendData(this.sendaata);
+                this.isLoading = false;
+               }
               this.changeInput.emit(false);
             });
           }, (error) => {
@@ -747,22 +739,59 @@ export class MutualFundOverviewComponent implements OnInit {
           item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
         );
         }
-        this.dataSource2 = new MatTableDataSource(sortedData);
-        this.sendaata.dataSource2 = this.dataSource2;
-        if(this.dataSource2.data.length > 0){
-          this.showSchemeWise = true;
-        }
-        this.MfServiceService.setSendData(this.sendaata);
+        schemeData = sortedData;
+        // this.dataSource2 = new MatTableDataSource(sortedData);
+        // this.sendaata.dataSource2 = this.dataSource2;
+        // if(this.dataSource2.data.length > 0){
+        //   this.showSchemeWise = true;
+        // }
+        // this.MfServiceService.setSendData(this.sendaata);
         // if(this.dataSource2.data.length == 0){
         //   this.showSchemeWise=false
         // }
+        // this.isLoading = false;
+       
         this.changeInput.emit(false);
       }
+      
     });
-    this.isLoading = false;
-
+    // this.isLoading = false;
+    if(!loadReportCall){
+      this.getAllData(mutualFundData);
+      this.dataSource2 = new MatTableDataSource(schemeData);
+      this.sendaata.dataSource2 = this.dataSource2;
+      if(this.dataSource2.data.length > 0){
+        this.showSchemeWise = true;
+      }
+      this.MfServiceService.setSendData(this.sendaata);
+      this.isLoading = false;
+     }
   }
+  getAllData(data){
+    let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category');
+    if(!this.showZeroFolio){
+      sortedData = sortedData.filter((item: any) =>
+      item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
+    );
+    }
+    this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
+    this.sendaata.dataSource4 = this.dataSource4;
 
+    this.MfServiceService.setSendData(this.sendaata);
+    if (this.dataSource4.data.length == 0) {
+      this.showCategory = false;
+    }
+    this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
+    this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
+    // this.isLoading = false;
+    this.changeInput.emit(false);
+    if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+      this.showSummaryBar = false;
+      this.showCashFlow =false;
+      this.showSchemeWise=false
+      this.datasource1.data =[];
+    }
+  }
   generatePdf() {
     this.svg = this.chart.getSVG();
     this.fragmentData.isSpinner = true;
