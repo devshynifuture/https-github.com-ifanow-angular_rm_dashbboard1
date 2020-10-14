@@ -606,12 +606,47 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if (event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
-    this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
-     this.loadAllAssets();
-    // this.loadAllGoals();
-    this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
+    if(this.selectedGoal.remainingData.freezed ==  true){
+      this.Unfreezed()
+    }else{
+      this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
+      this.loadAllAssets();
+     // this.loadAllGoals();
+     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
+    }
+    
   }
-
+  Unfreezed() {
+    const dialogData = {
+      header: 'UNFREEZE GOAL',
+      body: 'You have frozen the calculations for additional savings required. Allocating an asset will unfreeze the calculations. Are you sure you want to unfreeze?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNFREEZE',
+      positiveMethod: () => {
+        let obj = {
+          lumpSumAmountDebt:this.selectedGoal.remainingData.lumpSumAmountEquity,
+          lumpSumAmountEquity:this.selectedGoal.remainingData.lumpSumAmountEquity,
+          id:this.selectedGoal.remainingData.id,
+          goalType:this.selectedGoal.goalType,
+          freeze : false,
+        }
+        this.plansService.freezCalculation(obj).subscribe(res => {
+          //this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadAllAssets();
+          this.eventService.openSnackBar("Goal unfreeze successfully");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   removeAllocation(allocation) {
     const dialogData = {
       header: 'UNALLOCATE ASSET',

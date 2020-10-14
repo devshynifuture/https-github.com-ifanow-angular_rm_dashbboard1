@@ -298,7 +298,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row pt-10 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
@@ -309,13 +309,14 @@
                             </p>
                         </div>
                         <div class="col-md-1 p-0 mt-6">
-                            <mat-checkbox id="custom-checkbox" formControlName="freezeCalculation"></mat-checkbox>
+                            <mat-checkbox id="custom-checkbox" formControlName="freezeCalculation"
+                            (change)="freezeCalculation($event)"></mat-checkbox>
                         </div>
                         <div class="col-md-7 pr-0 text-right">
                             <p class="m-0 text-primitive mt-4">Last Freeze date:
                                 {{data.remainingData.lastFreezedDate | date: 'dd/MM/yyyy'}}</p>
                         </div>
-                    </div> -->
+                    </div>
 
 
                     <div class="row pt-20 btl-1 pb-20">

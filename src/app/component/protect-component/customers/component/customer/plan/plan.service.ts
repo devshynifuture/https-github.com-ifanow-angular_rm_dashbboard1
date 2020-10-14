@@ -313,5 +313,7 @@ export class PlanService {
   getCashFlow(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW, data)
   }
-
+  freezCalculation(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.FREEZE_CAL, data);
+  }
 }
