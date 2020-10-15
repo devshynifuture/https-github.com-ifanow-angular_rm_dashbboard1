@@ -37,7 +37,7 @@
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
             <div class="pt-20">
-                <div class="row ">
+                <div class="row pb-20">
                     <div class="col-md-3 f-14 p-0 f-500 d-flex align-items-center justify-content-between">
                         Select main dependent
 
@@ -51,13 +51,15 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select [(ngModel)]="selectedFamily" class="form-control br-0">
+                                <mat-select [(ngModel)]="selectedFamily" [formControl]="mainDependent" class="form-control br-0">
                                     <mat-option disabled value=''>Select one</mat-option>
                                     <mat-option [value]="option.name"
                                         (click)="selectDependent(option.familyMemberId,'familyMemberId')"
                                         *ngFor="let option of familyList">{{ option.name }}
                                     </mat-option>
                                 </mat-select>
+                                 <mat-error>This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -65,7 +67,7 @@
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
-                                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                                    aria-label="Number" matInput [formControl]="expectancy" [matAutocomplete]="auto"
                                     class="form-control br-0">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option *ngFor="let option of filteredOptions | async"
@@ -73,11 +75,22 @@
                                         {{option.value}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                
+                                <mat-error>This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <h5 *ngIf="showError" class="text-danger">Life expectancy should be less than dependent's age
                         </h5>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0 remove-padding-matfield">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <input  [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange($event);selectDependent('','retirementAge')" [formControl]="retirementAgeControl"  [maxLength]="10" placeholder="Enter retirement age" appInputValueValidation autocomplete="true" class="form-control rupess br-0"[(ngModel)]="retirementAge"  matInput type="number">
+                                <!-- <mat-hint align="end" class="f-12">{{retirementAge.value.length}}/10</mat-hint> -->
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                     
 

@@ -1041,6 +1041,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mutualFundList.forEach(element => {
           element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
         });
+        console.log('Start time ', new Date());
         this.asyncFilter(this.mutualFundList);
       }
     } else {
@@ -1292,7 +1293,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mfData.sip = this.grandTotal.sip
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
         this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
-
+        console.log('End time ', new Date());
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];

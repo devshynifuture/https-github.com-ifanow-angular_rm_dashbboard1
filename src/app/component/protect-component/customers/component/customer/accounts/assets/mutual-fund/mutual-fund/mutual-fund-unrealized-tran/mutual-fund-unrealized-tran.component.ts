@@ -820,6 +820,7 @@ export class MutualFundUnrealizedTranComponent {
           element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
         });
         this.asyncFilter(this.mfData.mutualFundList);
+        console.log('startTime ', new Date());
       }
 
       // this.initValueOnInit();
@@ -983,7 +984,6 @@ export class MutualFundUnrealizedTranComponent {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
-        console.log('startTime ', new Date());
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
         this.dataTransaction.dataSource = data.dataSourceData;
@@ -1012,6 +1012,9 @@ export class MutualFundUnrealizedTranComponent {
         this.dataSource.data = (data.dataSourceData);
         console.log('datdataSource',this.unrealisedData)
         this.isLoading = false;
+        console.log('datasource............',this.dataSource.data)
+        console.log('isLoadingfalse',this.isLoading)
+        console.log('endTime ', new Date());
         this.mfService.setTransactionData(this.dataTransaction);
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
           this.displayedColumns.forEach((element, ind) => {

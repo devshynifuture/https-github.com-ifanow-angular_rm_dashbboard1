@@ -122,6 +122,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
    
   }
+
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = 100;
@@ -331,7 +332,22 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       })
     )
   }
-
+  freezeCalculation(event) {
+        let obj = {
+          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+          lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+          id: this.data.remainingData.id,
+          goalType: this.data.goalType,
+          freeze: event.checked,
+        }
+        this.planService.freezCalculation(obj).subscribe(res => {
+          //this.loadMFData();
+          this.eventService.openSnackBar("Goal freezed successfully");
+          //dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+  }
   addStages() {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.push(this.createStage());
@@ -341,7 +357,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.removeAt(i);
   }
-
+  
+  getSumOfJsonMap(json: Object = {}) {
+    let sum = 0;
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
+      }
+    }
+    return sum;
+  }
   createStage(eq = '', db = '', timeline = '') {
     return this.fb.group({
       stageTime: [timeline, Validators.required],

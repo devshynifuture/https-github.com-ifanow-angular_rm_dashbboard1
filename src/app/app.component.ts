@@ -36,7 +36,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   setNewTime: any;
 
   ngOnInit() {
-    this.getDoaminData(document.location.host)
+    this.getDoaminData(document.location.hostname)
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'
@@ -60,9 +60,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   setValuesAsPerDomain(data) {
-    this.document.getElementById('appAppleTouchIcon').setAttribute('href', data.feviconUrl);
-    this.document.getElementById('appIcon32').setAttribute('href', data.feviconUrl);
-    this.document.getElementById('appIcon').setAttribute('href', data.feviconUrl);
+    this.document.getElementById('appAppleTouchIcon').setAttribute('href', data.logoUrl);
+    this.document.getElementById('appIcon32').setAttribute('href', data.logoUrl);
+    this.document.getElementById('appIcon').setAttribute('href', data.logoUrl);
     // console.log('titleElement', this.document.getElementById('appTitle'));
     this.document.title = data.siteTitle;
     // this.document.getElementById('appTitle').setAttribute('title', data.appTitle);

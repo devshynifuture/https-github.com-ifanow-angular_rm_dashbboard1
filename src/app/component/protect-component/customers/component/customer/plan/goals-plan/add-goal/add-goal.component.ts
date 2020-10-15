@@ -8,6 +8,8 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { Subscriber, Subscription } from 'rxjs';
 import { AddGoalService } from './add-goal.service';
 import { filter } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-goal',
@@ -90,6 +92,7 @@ export class AddGoalComponent implements OnInit {
     private peopleService: PeopleService,
     private planService: PlanService,
     private allocateService: AddGoalService,
+    private dialog: MatDialog,
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
