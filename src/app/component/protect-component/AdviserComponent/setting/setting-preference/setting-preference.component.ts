@@ -1,21 +1,21 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OrgSettingServiceService} from '../org-setting-service.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {OpenEmailVerificationComponent} from './open-email-verification/open-email-verification.component';
-import {MatDialog} from '@angular/material';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {ConfirmDialogComponent} from '../../../common-component/confirm-dialog/confirm-dialog.component';
-import {Subscription} from 'rxjs';
-import {BulkEmailReviewSendComponent} from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
-import {PeopleService} from '../../../PeopleComponent/people.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {DomainSettingPopupComponent} from './domain-setting-popup/domain-setting-popup.component';
-import {SettingsService} from '../settings.service';
-import {PreferenceEmailInvoiceComponent} from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OrgSettingServiceService } from '../org-setting-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
+import { MatDialog } from '@angular/material';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { Subscription } from 'rxjs';
+import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
+import { PeopleService } from '../../../PeopleComponent/people.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
+import { SettingsService } from '../settings.service';
+import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -24,11 +24,11 @@ import {PreferenceEmailInvoiceComponent} from '../../Subscriptions/subscription/
 })
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
-              public subInjectService: SubscriptionInject,
-              private eventService: EventService,
-              public dialog: MatDialog,
-              private fb: FormBuilder,
-              private peopleService: PeopleService, private settingsService: SettingsService) {
+    public subInjectService: SubscriptionInject,
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private peopleService: PeopleService, private settingsService: SettingsService) {
 
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
@@ -95,9 +95,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   isDomain = new FormControl('1');
 
   loaderArray = [
-    {isLoader: false},
-    {isLoader: false},
-    {isLoader: false}
+    { isLoader: false },
+    { isLoader: false },
+    { isLoader: false }
   ];
 
   ngOnInit() {
@@ -173,7 +173,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '');
     this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '');
     this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '');
-    this.domainS.controls.feviconUrl.setValue(data.feviconUrl ? data.feviconUrl : data.reportLogoUrl);
+    this.domainS.controls.feviconUrl.setValue(data.feviconUrl != 'NA' ? data.feviconUrl : data.reportLogoUrl);
     this.isDomain.setValue(data.hasDomain ? String(data.hasDomain) : '1');
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
@@ -360,7 +360,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
       width: '400px',
-      data: {bank: value, animal: this.element}
+      data: { bank: value, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -673,7 +673,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       btnYes: 'CANCEL',
       btnNo: 'SEND',
       positiveMethod: () => {
-        this.orgSetting.bulkEmailPassWord({advisorId: this.advisorId}).subscribe(
+        this.orgSetting.bulkEmailPassWord({ advisorId: this.advisorId }).subscribe(
           data => {
             this.eventService.openSnackBar(data, 'Dismiss');
             dialogRef.close();
