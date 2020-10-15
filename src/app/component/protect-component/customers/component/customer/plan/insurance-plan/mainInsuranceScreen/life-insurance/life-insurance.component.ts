@@ -397,6 +397,7 @@ export class LifeInsuranceComponent implements OnInit {
         element.percent = element.percentage;
         element.selected = element.is_selected ? true : false;
       });
+      data = data.filter(item => item[amount] > 0)
       this.plannerObj[totalAmount] = data[0].total_amount
     } else {
       data = [];

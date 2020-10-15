@@ -286,6 +286,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         element.currentValueDupl = element[value];
         element.selected = false;
         element.percent = 100;
+        array = array.filter(item => item[value] > 0)
       });
     } else {
       array = [];
@@ -301,6 +302,8 @@ export class AddPlaninsuranceComponent implements OnInit {
         element.currentValueDupl = element[value];
         element.selected = false;
         element.percent = 100;
+        array = array.filter(item => item[value] > 0)
+
       });
     } else {
       array = [];
