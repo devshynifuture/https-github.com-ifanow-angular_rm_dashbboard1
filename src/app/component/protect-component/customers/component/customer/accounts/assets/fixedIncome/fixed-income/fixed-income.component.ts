@@ -98,7 +98,7 @@ export class FixedIncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId: element.familyMemberId,
+      familyMemberId:  (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -204,6 +204,7 @@ export class FixedIncomeComponent implements OnInit {
 
       this.fixDataList = data;
       this.dataSource.data = this.fixDataList.assetList;
+      console.log('fixed deposite',this.dataSource.data)
       this.dataSource.sort = this.fixedIncomeTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumCurrentValue = 0;

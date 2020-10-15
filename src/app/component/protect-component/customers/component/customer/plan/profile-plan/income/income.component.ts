@@ -90,7 +90,7 @@ export class IncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: element.familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1)?element.ownerList[0].familyMemberId:0,
       asset: value
     }
     this.myFiles = [];

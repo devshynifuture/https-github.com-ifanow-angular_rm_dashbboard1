@@ -77,7 +77,7 @@ export class PoTdSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId: element.familyMemberId,
+      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
