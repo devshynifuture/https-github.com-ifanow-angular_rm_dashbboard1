@@ -60,13 +60,38 @@ export class AllSipComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
-    this.getAllSip(0);
+    this.getAllSip(0, 20);
+  }
+
+  getAllSIPdataThenCreateExcel(){
+    this.getAllSip(0, 50000);
+
+  } 
+
+  formatDataForExcel(data){
+    let arr = [];
+    if(data.length>0){
+      data.forEach((element, index) => {
+        const data = [
+          index + 1,
+          element.investorName,
+          element.schemeName,
+          element.folioNumber,
+          new Date(element.from_date).toLocaleDateString(),
+          new Date(element.to_date).toLocaleDateString(),
+          element.frequency,
+          element.amount,
+          element.status
+        ];
+        arr.push(data);
+      });
+    }
+    this.excelGen.generateAllSipExcel(arr, 'Sip');
   }
 
   Excel(tableTitle) {
     const rows = this.tableEl._elementRef.nativeElement.rows;
-    const data = this.excelGen.generateExcel(rows, tableTitle);
-
+    this.excelGen.generateExcel(rows, tableTitle);
   }
 
   // Excel(tableTitle) {
@@ -86,11 +111,11 @@ export class AllSipComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  getAllSip(offset) {
+  getAllSip(offset, limit) {
     // this.isLoading = true;
     // this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
-      limit: 20,
+      limit,
       offset,
       advisorId: (this.parentId > 0 )? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
@@ -102,7 +127,12 @@ export class AllSipComponent implements OnInit {
           (this.finalSipList.length > 0) ? '' : this.isLoading = false;
           this.isLoading = false;
           if (data) {
-            this.response(data);
+            console.log("this is all sip table data, ------",data)
+            if(limit > 20){
+              this.formatDataForExcel(data);
+            } else {
+              this.response(data);
+            }
           } else {
             this.dataSource.filteredData = [];
             this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
@@ -166,7 +196,7 @@ export class AllSipComponent implements OnInit {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
         this.infiniteScrollingFlag = true;
-        this.getAllSip(this.finalSipList.length);
+        this.getAllSip(this.finalSipList.length, 20);
         // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
       }
 
@@ -184,6 +214,8 @@ export class AllSipComponent implements OnInit {
     this.hasEndReached = false;
     this.infiniteScrollingFlag = false;
   }
+
+
 
   aumReport() {
     this.changedValue.emit({

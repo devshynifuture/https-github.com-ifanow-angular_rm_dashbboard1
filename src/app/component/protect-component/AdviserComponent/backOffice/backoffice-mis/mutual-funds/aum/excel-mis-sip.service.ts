@@ -1541,4 +1541,59 @@ export class ExcelMisSipService {
         return data;
     }
 
+    generateAllSipExcel(excelData, title){
+        // Create workbook and worksheet
+        const workbook = new Workbook();
+        const worksheet = workbook.addWorksheet(this.advisor.name + '_' + title + '_' + 'Data');
+
+
+        // Add Row and formatting
+        worksheet.addRow([]);
+        const titleRow = worksheet.addRow([title]);
+        titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
+        worksheet.addRow([]);
+
+        worksheet.addRow(['Advisor', this.advisor.name]);
+        worksheet.addRow(['Client', this.client ? this.client.name : '']);
+        worksheet.addRow([]);
+        const header = ['Index', 'Applicant Name', 'Scheme Name','Folio Number', 'From Date', 'To Date','Frequency','Amount','Status'];
+        // Add Header Row
+        const headerRow = worksheet.addRow(header);
+
+        // Cell Style : Fill and Border
+        headerRow.eachCell((cell, indexNumber) => {
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFFFF00' },
+                bgColor: { argb: 'FF0000FF' }
+            };
+            cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        });
+        // worksheet.addRows(data);
+
+
+        // Add Data and Conditional Formatting
+        excelData.forEach(d => {
+            worksheet.addRow(d);
+            // let qty = row.getCell(5);
+        });
+
+        worksheet.getColumn(2).width = 30;
+        // const footerRow = worksheet.addRow(footer);
+
+
+        // footerRow.eachCell((cell, indexNumber) => {
+        //     footerRow.fill = {
+        //         type: 'pattern',
+        //         pattern: 'solid',
+        //         fgColor: { argb: 'FFCCFFE5' }
+        //     };
+        //     cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        // });
+        workbook.xlsx.writeBuffer().then((data) => {
+            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            fs.saveAs(blob, title + '.xlsx');
+        });
+    }
 }

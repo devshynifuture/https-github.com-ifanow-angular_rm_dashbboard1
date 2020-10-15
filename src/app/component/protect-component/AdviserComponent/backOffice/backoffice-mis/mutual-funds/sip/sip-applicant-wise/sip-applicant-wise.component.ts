@@ -367,7 +367,7 @@ export class SipApplicantWiseComponent implements OnInit {
         index: index1 + 1,
         name: element.name,
         // sipAmount: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-        sipAmount: element.sipAmount,
+        sipAmount: element.totalAum,
         weightInPerc: element.weightInPercentage,
         investorList: [],
       };
