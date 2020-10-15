@@ -337,7 +337,22 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       })
     )
   }
-
+  freezeCalculation(event) {
+        let obj = {
+          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+          lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+          id: this.data.remainingData.id,
+          goalType: this.data.goalType,
+          freeze: event.checked,
+        }
+        this.planService.freezCalculation(obj).subscribe(res => {
+          //this.loadMFData();
+          this.eventService.openSnackBar("Goal freezed successfully");
+          //dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+  }
   addStages() {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.push(this.createStage());
