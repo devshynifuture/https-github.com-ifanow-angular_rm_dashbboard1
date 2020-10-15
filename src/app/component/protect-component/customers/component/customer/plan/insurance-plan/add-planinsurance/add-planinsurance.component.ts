@@ -20,7 +20,6 @@ import { ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./add-planinsurance.component.scss']
 })
 export class AddPlaninsuranceComponent implements OnInit {
-  myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<any[]>;
   _inputData: any;
@@ -132,8 +131,8 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.years = this.constantService.yearsMap;
     this.getdataForm(null)
     this.getAnalysis()
-    this.getNeedBasedAnalysis(0, 0);
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.getNeedBasedAnalysis(0,0,0);
+    this.filteredOptions = this.expectancy.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
@@ -210,12 +209,13 @@ export class AddPlaninsuranceComponent implements OnInit {
   getFormControl(): any {
     return this.manualForm.controls;
   }
-  getNeedBasedAnalysis(familyId, lifeExpectancy) {
+  getNeedBasedAnalysis(familyId, lifeExpectancy ,retirementAge) {
     let obj = {
       id: this.insuranceData.id,
       clientId: this.clientId,
       familyMemberId: familyId,
-      lifeExpectancy: lifeExpectancy
+      lifeExpectancy: lifeExpectancy,
+      retirementAge:retirementAge
     }
     this.loader(1);
     this.isLodingNeedAnalysis = true;
@@ -313,10 +313,16 @@ export class AddPlaninsuranceComponent implements OnInit {
     if (name == 'familyMemberId') {
       this.familyMemberId = value || value == 0 ? value : this.familyMemberId;
     }
-    if (this.selectedFamily && this.selectedExpectancy) {
-      this.dependantYearsSelection = this.getDependantYears();
+    this.dependantYearsSelection = this.getDependantYears();
+    if (this.selectedFamily && this.selectedExpectancy && this.retirementAgeControl.value > 10) {
       if(!this.showError){
-        this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy)
+        this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy,this.retirementAgeControl.value)
+      }
+    }else{
+      if(this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid){
+        this.expectancy.markAllAsTouched();
+        this.mainDependent.markAllAsTouched();
+        this.retirementAgeControl.markAllAsTouched();
       }
     }
   }
@@ -411,6 +417,12 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.addToPlan()
     }
   }
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      this.retirementAgeControl.setValue(event.target.value);
+    }
+  }
   getNeedBasedObj() {
     let array = [];
     array = this.getFilteredObj(array, this.dataSource, '1', this.plannerObj.liabilities, 'total_loan_outstanding', 'name')
@@ -444,7 +456,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.expectancy.markAllAsTouched();
         this.mainDependent.markAllAsTouched();
         this.retirementAgeControl.markAllAsTouched();
-       }else{
+      }else{
         this.barButtonOptions3.active = true;
         let needBasedAnalysis = this.getNeedBasedObj();
         this.sendObj = {
@@ -453,7 +465,8 @@ export class AddPlaninsuranceComponent implements OnInit {
           id: this.needBase ? this.needBase.id : 0,
           adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
           plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
-          needBasedObject: needBasedAnalysis
+          needBasedObject: needBasedAnalysis,
+          retirementAge:this.retirementAgeControl.value
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),

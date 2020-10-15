@@ -37,7 +37,7 @@
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
             <div class="pt-20">
-                <div class="row ">
+                <div class="row pb-20">
                     <div class="col-md-3 f-14 p-0 f-500 d-flex align-items-center justify-content-between">
                         Select main dependent
 
@@ -85,7 +85,7 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input  [inputValidator]="validatorType.NUMBER_ONLY" [formControl]="retirementAgeControl"  [maxLength]="10" placeholder="Enter retirement age" appInputValueValidation autocomplete="true" class="form-control rupess br-0"[(ngModel)]="retirementAge"  matInput type="number">
+                                <input  [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange($event);selectDependent('','retirementAge')" [formControl]="retirementAgeControl"  [maxLength]="10" placeholder="Enter retirement age" appInputValueValidation autocomplete="true" class="form-control rupess br-0"[(ngModel)]="retirementAge"  matInput type="number">
                                 <!-- <mat-hint align="end" class="f-12">{{retirementAge.value.length}}/10</mat-hint> -->
                                 <mat-error>This field is required
                                 </mat-error>
