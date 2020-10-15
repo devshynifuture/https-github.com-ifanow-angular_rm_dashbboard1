@@ -133,7 +133,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       }
     );
   }
-  reallocateAsset(allocation,allo) {
+  reallocateAsset(allocation, allo) {
     this.data.goalAssetAllocation.forEach(element => {
       allocation.goalAssetMapping.forEach(element1 => {
         if (element.id == element1.id) {
@@ -145,7 +145,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     const dialogData = {
       goalData: this.data,
       allocationData: this.selectedAllocation,
-      allocation : allocation,
+      allocation: allocation,
       allocated: allo,
     }
     this.dialog.open(ReallocateAssetComponent, {
@@ -262,7 +262,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   }
 
   allocateAssetToGoal(data) {
-    
+
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -272,8 +272,44 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       lumpsumPercent: data.lumpsumPercent,
     }
     this.disableAllocate = true
-    this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
-    this.disableAllocate = false
+    if (this.data.remainingData.freezed == true) {
+      this.Unfreezed()
+    } else {
+      this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
+      this.disableAllocate = false
+    }
+
+  }
+  Unfreezed() {
+    const dialogData = {
+      header: 'UNFREEZE GOAL',
+      body: 'You have frozen the calculations for additional savings required. Allocating an asset will unfreeze the calculations. Are you sure you want to unfreeze?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNFREEZE',
+      positiveMethod: () => {
+        let obj = {
+          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+          lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+          id: this.data.remainingData.id,
+          goalType: this.data.goalType,
+          freeze: false,
+        }
+        this.planService.freezCalculation(obj).subscribe(res => {
+          //this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadMFData();
+          this.eventService.openSnackBar("Goal unfreeze successfully");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
   }
   restrictFrom100(event, ele, mf, flag) {
     let add = 0
