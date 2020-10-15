@@ -697,7 +697,8 @@ export class MotorInsuranceComponent implements OnInit {
 						this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 						const insuranceData = {
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId
+							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							id:data ? data : null
 						};
 						this.close(insuranceData,true);
 					}
@@ -710,7 +711,8 @@ export class MotorInsuranceComponent implements OnInit {
 						this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 						const insuranceData = {
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId
+							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							id:data ? data : null
 						};
 						this.close(insuranceData,true);
 					},err=>{

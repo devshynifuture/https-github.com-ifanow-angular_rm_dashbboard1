@@ -656,7 +656,8 @@ export class FireInsuranceComponent implements OnInit {
 						const insuranceData =
 						{
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId
+							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							id:data ? data : null
 						}
 						this.close(insuranceData,true)
 					}
@@ -670,7 +671,8 @@ export class FireInsuranceComponent implements OnInit {
 						const insuranceData =
 						{
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId
+							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							id:data ? data : null
 						}
 						this.close(insuranceData,true)
 					},err=>{

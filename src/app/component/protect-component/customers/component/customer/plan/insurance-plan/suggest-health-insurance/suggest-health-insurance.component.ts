@@ -845,7 +845,8 @@ saveHealthInsurance() {
                     const insuranceData =
                     {
                         insuranceTypeId: this.inputData.insuranceTypeId,
-                        insuranceSubTypeId: this.inputData.insuranceSubTypeId
+                        insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+                        id:data ? data : null
                     };
                     this.close(insuranceData,true);
                 }
