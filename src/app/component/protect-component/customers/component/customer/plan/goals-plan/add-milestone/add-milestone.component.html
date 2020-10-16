@@ -10,7 +10,7 @@
         <div class="col-md-12 p-0">
             <h5 class="pb-6 m-0 text-black">Milestones you'd also like to plan for?</h5>
             <div formArrayName="getMilestoneName">
-                <div class="row" *ngFor="let obj of getMilestone.controls; let pointIndex=index"
+                <div class="row" *ngFor="let obj of getMilestoneName.controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
                     <div class="row w-100">
                         <div class="col-md-4 p-0">
@@ -71,7 +71,7 @@
                                 class=" material-icons
                             f-20 c-p" (click)="addMilestone(undefined)">add</i>
                             <i *ngIf=" singleYearGoalForm.value.getMilestoneName.length>1" class=" material-icons
-                            f-20 c-p" (click)="removeMilestone(pointIndex)">remove</i>
+                            f-20 c-p" (click)="removeMilestone(pointIndex,obj)">remove</i>
                         </div>
                     </div>
                 </div>
