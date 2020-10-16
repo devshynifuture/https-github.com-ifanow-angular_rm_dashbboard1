@@ -351,7 +351,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
           id: this.data.remainingData.id,
           goalType: this.data.goalType,
-          freeze: event.checked,
+          freezed: event.checked,
         }
         this.planService.freezCalculation(obj).subscribe(res => {
           //this.loadMFData();

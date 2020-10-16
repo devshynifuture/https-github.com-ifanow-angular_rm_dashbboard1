@@ -629,7 +629,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           lumpSumAmountEquity:this.selectedGoal.remainingData.lumpSumAmountEquity,
           id:this.selectedGoal.remainingData.id,
           goalType:this.selectedGoal.goalType,
-          freeze : false,
+          freezed : false,
         }
         this.plansService.freezCalculation(obj).subscribe(res => {
           //this.allocateOtherAssetService.refreshAssetList.next();
