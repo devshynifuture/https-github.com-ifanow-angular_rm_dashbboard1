@@ -41,11 +41,13 @@ export class AddMilestoneComponent implements OnInit {
   }
   initializeForm() {
     this.singleYearGoalForm = this.fb.group({
-      getMilestoneName: this.fb.array([]),
+     // getMilestoneName: this.fb.array([]),
 
     });
     if(this.dialogData.data.length > 0){
+      
       this.dialogData.data.forEach(element => {
+        this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array([]),)
         this.getMilestoneName.push(this.fb.group({
           onRetirementOrDemise: [(element.onRetirementOrDemise), [Validators.required]],
           milestoneTypeId: [element.milestoneTypeId, [Validators.required]],
