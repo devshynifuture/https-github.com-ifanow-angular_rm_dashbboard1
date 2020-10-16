@@ -173,7 +173,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.domainS.controls.normalLable.setValue(data.partialWhiteLabel ? data.partialWhiteLabel : '');
     this.domainS.controls.whiteLable.setValue(data.completeWhiteLabel ? data.completeWhiteLabel : '');
     this.domainS.controls.brandVisible.setValue(data.siteTitle ? data.siteTitle : '');
-    this.domainS.controls.feviconUrl.setValue(data.feviconUrl != 'NA' ? data.feviconUrl : data.reportLogoUrl);
+    this.domainS.controls.feviconUrl.setValue(data.feviconUrl != 'NA' ? data.feviconUrl : data.logoUrl);
     this.isDomain.setValue(data.hasDomain ? String(data.hasDomain) : '1');
     this.domainS.controls.normalLable.disable();
     this.domainS.controls.whiteLable.disable();
