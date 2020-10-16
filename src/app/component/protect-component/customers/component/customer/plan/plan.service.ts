@@ -201,7 +201,9 @@ export class PlanService {
   getMFList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_DATA, data);
   }
-
+  saveMileStone(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_MILESTONE, data);
+  }
   allocateOtherAssetToGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
   }
