@@ -37,7 +37,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE',
+    text: 'SAVE & NEXT',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -48,6 +48,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     fullWidth: false,
   };
   obj: any;
+  selectedTab: number = 0;
 
 
   constructor(
@@ -252,6 +253,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
 
     observer.subscribe(res => {
+      this.switchToTab(++this.selectedTab);
       this.eventService.openSnackBar("Preference saved", "Dismiss");
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
@@ -261,7 +263,18 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
   // ----------------- key params ----------------------------
 
-
+  switchToTab(nextIndex) {
+    if (nextIndex > 2) {
+      this.close();
+    } else {
+      if (nextIndex == 2) {
+        this.barButtonOptions.text = 'SAVE & CLOSE'
+      } else {
+        this.barButtonOptions.text = 'SAVE & NEXT'
+      }
+      this.selectedTab = nextIndex;
+    }
+  }
 
   // ----------------- asset allocation ----------------------
   today = new Date();
@@ -437,6 +450,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     obj.postRetirementEquityAssetAllocation = parseInt(obj.postequityAllocation),
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
+      this.switchToTab(++this.selectedTab);
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
@@ -476,7 +490,13 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         break;
     }
   }
-
+  resetPageVariables() {
+    if (this.selectedTab == 2) {
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+    } else {
+      this.barButtonOptions.text = 'SAVE & NEXT';
+    }
+  }
   close() {
     // this.addMoreFlag = false;
     this.subInjectService.closeNewRightSlider({ state: 'close' });
