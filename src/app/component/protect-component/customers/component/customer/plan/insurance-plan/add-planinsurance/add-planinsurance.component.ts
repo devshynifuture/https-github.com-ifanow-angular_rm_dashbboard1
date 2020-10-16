@@ -42,7 +42,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   livingExpense: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'ADD TO PLAN',
+    text: 'SAVE & ADD TO PLAN',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -110,6 +110,8 @@ export class AddPlaninsuranceComponent implements OnInit {
   retirementAgeControl = new FormControl('', [Validators.required]);
   mainDependent = new FormControl('', [Validators.required]);
   expectancy = new FormControl('', [Validators.required]);
+  showErrorRetirement = false;
+  showErrorExpectancy = false;
 
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
@@ -201,6 +203,8 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => {
         this.familyList = data;
+        let familyMemberId = this.insuranceData.owners[0].ownerId
+        this.familyList = this.familyList.filter(item => item.familyMemberId != familyMemberId)
 
       }
     );
@@ -244,9 +248,15 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.plannerObj.lifeInsurancePremiums = this.needAnalysis.lifeInsurancePremiums
         this.calculateGrossAndadditional();
         console.log(data);
+        if(!lifeExpectancy && !retirementAge){
+          this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
+        }
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar('No data found', 'Dismiss');
+        if(!lifeExpectancy && !retirementAge){
+          this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
+        }
         this.loader(-1);
         this.isLodingNeedAnalysis = false;
       }
@@ -286,8 +296,8 @@ export class AddPlaninsuranceComponent implements OnInit {
         element.currentValueDupl = element[value];
         element.selected = false;
         element.percent = 100;
-        array = array.filter(item => item[value] > 0)
       });
+      array = array.filter(item => item[value] > 0)
     } else {
       array = [];
     }
@@ -298,13 +308,12 @@ export class AddPlaninsuranceComponent implements OnInit {
     if (array && array.length > 0) {
       array.forEach(element => {
         element.amount = element[value]
-        element[value] = this.PMT(element[value], element.inflationAdjustedIncome, this.dependantYears)
+        element[value] = this.PMT(element[value], element.inflationAdjustedIncome, element.dependentYears)
         element.currentValueDupl = element[value];
         element.selected = false;
         element.percent = 100;
-        array = array.filter(item => item[value] > 0)
-
       });
+      array = array.filter(item => item[value] > 0)
     } else {
       array = [];
     }
@@ -318,7 +327,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     }
     this.dependantYearsSelection = this.getDependantYears();
     if (this.selectedFamily && this.selectedExpectancy && this.retirementAgeControl.value > 10) {
-      if(!this.showError){
+      if(!this.showError && !this.showErrorExpectancy && !this.showErrorRetirement){
         this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy,this.retirementAgeControl.value)
       }
     }else{
@@ -420,10 +429,33 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.addToPlan()
     }
   }
-  onChange(event) {
+  onChange(event,value) {
+    if(value == 'retirement'){
+      if(parseInt(this.retirementAgeControl.value) > parseInt(this.expectancy.value)){
+        this.showErrorRetirement = true;
+      }else{
+        this.showErrorRetirement = false;
+      }
+    }else{
+      if(parseInt(this.retirementAgeControl.value) > parseInt(this.expectancy.value)){
+        this.showErrorExpectancy = true;
+      }else{
+        this.showErrorExpectancy = false;
+      }
+    }
+
     if (parseInt(event.target.value) > 100) {
       event.target.value = '100';
-      this.retirementAgeControl.setValue(event.target.value);
+      if(value == 'retirement'){
+        this.retirementAgeControl.setValue(event.target.value);
+      }else{
+        // if(event.target.value > this.expectancy.value){
+        //   this.showErrorRetirement = true;
+        // }else{
+        //   this.showErrorRetirement = false;
+        // }
+        this.expectancy.setValue(event.target.value);
+      }
     }
   }
   getNeedBasedObj() {
@@ -455,7 +487,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   saveAnalysis() {
     if(this.tab == 0){
-      if (this.expectancy.invalid && this.mainDependent.invalid && this.retirementAgeControl.invalid) {
+      if (this.showError || this.showErrorRetirement || this.showErrorExpectancy || this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid) {
         this.expectancy.markAllAsTouched();
         this.mainDependent.markAllAsTouched();
         this.retirementAgeControl.markAllAsTouched();

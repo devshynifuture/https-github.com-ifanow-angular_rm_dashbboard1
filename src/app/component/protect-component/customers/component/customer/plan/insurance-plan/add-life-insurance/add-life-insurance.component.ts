@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class AddLifeInsuranceComponent implements OnInit {
   displayedColumns: string[] = ['client', 'cat', 'des', 'checkbox'];
-  dataSource: any = new MatTableDataSource();
+  dataSource = new MatTableDataSource([]);
 
   counter: number;
   isLoading = true;
@@ -77,7 +77,8 @@ export class AddLifeInsuranceComponent implements OnInit {
     console.log('shgshgjhkf')
     let obj = {
       clientId: this.clientId,
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      insuranceTypeId:1
     }
     this.loader(1);
     this.isLoadingLifeInsurance = true;
@@ -94,7 +95,11 @@ export class AddLifeInsuranceComponent implements OnInit {
     this.loader(-1);
     this.isLoadingLifeInsurance = false;
     console.log('getFamilyDetailsInsuranceRes', data)
-    this.dataSource = data
+    if(data){
+      this.dataSource.data = data
+    }else{
+      this.dataSource.data = []
+    }
   }
   loader(increamenter) {
     this.counter += increamenter;
