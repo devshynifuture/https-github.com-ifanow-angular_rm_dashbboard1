@@ -36,7 +36,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   setNewTime: any;
 
   ngOnInit() {
-    this.getDoaminData("portfolio.finapian.com")
+    this.getDoaminData(document.location.hostname)
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'

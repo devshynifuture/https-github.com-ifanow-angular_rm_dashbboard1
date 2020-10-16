@@ -9,7 +9,7 @@
 </div>
 <div class="row" id="goal-preferences">
     <div class="col-md-12 p-0">
-        <mat-tab-group animationDuration="0ms" mat-align-tabs="center" [(selectedIndex)]="selected">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
             <mat-tab label="Key parameters">
                 <div class="wrapper-28" [formGroup]="goalDetailsFG">
                     <div class="row pb-20">
