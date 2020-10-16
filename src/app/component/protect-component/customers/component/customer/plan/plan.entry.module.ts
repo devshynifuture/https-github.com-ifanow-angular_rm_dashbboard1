@@ -67,6 +67,7 @@ import { RecurringCommitmentsDetailedViewComponent } from '../../common-componen
 import { EditPercentComponent } from './insurance-plan/edit-percent/edit-percent.component';
 import { TravelInsuranceComponent } from './insurance-plan/mainInsuranceScreen/travel-insurance/travel-insurance.component';
 import { MotorInsuranceComponent } from './insurance-plan/mainInsuranceScreen/motor-insurance/motor-insurance.component';
+import { AddMilestoneComponent } from './goals-plan/add-milestone/add-milestone.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -110,6 +111,7 @@ export const componentList = [
   SearchSchemeComponent,
   AddAmountComponent,
   ReallocateAssetComponent,
+  AddMilestoneComponent,
   RecurringCommitmentsDetailedViewComponent,
   EditPercentComponent,
   TravelInsuranceComponent,

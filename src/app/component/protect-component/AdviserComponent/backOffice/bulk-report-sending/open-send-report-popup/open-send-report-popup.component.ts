@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -11,7 +11,9 @@ import { AuthService } from 'src/app/auth-service/authService';
   templateUrl: './open-send-report-popup.component.html',
   styleUrls: ['./open-send-report-popup.component.scss'],
 })
+
 export class OpenSendReportPopupComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'mfoverview',];
   sendReport: any;
   clientsSend: any;
   advisorId: any;
@@ -20,28 +22,41 @@ export class OpenSendReportPopupComponent implements OnInit {
   callBulk: boolean = false;
   reportType: any;
   clientCount: any;
+  saveSettingMfClients: any;
+  isLoading: boolean;
+  data: Array<any> = [{}, {}, {}];
+  clientDetails = new MatTableDataSource(this.data);
+  overviewAll: any;
+  summaryAll: any;
+  transactionAll: any;
+  unrealisedAll: any;
+  capitalGainAll: any;
+  capitalGainDetailedAll: any;
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
+    @Inject(MAT_DIALOG_DATA) public data1: DialogData, private eventService: EventService, private backOffice: BackOfficeService) {
 
     this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
+    this.isLoading = false
+    this.saveSettingMfClients = []
+    this.clientDetails.data = [{}, {}, {}];
     console.log('reportType', this.data)
-    if (this.data.reportType == 'overview') {
+    if (this.data1.reportType == 'overview') {
       this.reportType = 1
-    } else if (this.data.reportType == 'summary') {
+    } else if (this.data1.reportType == 'summary') {
       this.reportType = 2
-    } else if (this.data.reportType == 'allTransactions') {
+    } else if (this.data1.reportType == 'allTransactions') {
       this.reportType = 3
-    } else if (this.data.reportType == 'unrealisedTransactions') {
+    } else if (this.data1.reportType == 'unrealisedTransactions') {
       this.reportType = 4
-    } else if (this.data.reportType == 'capitalGainSummary') {
+    } else if (this.data1.reportType == 'capitalGainSummary') {
       this.reportType = 5
-    } else if (this.data.reportType == 'capitalGainDetails') {
+    } else if (this.data1.reportType == 'capitalGainDetails') {
       this.reportType = 6
     }
     this.sendNowCount()
@@ -49,49 +64,49 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   sendClientId() {
     this.callBulk = true
-    if (this.data.reportType == 'overview') {
+    if (this.data1.reportType == 'overview') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 1
       }
       this.reportType = 1
-    } else if (this.data.reportType == 'summary') {
+    } else if (this.data1.reportType == 'summary') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 2,
-        toDate: this.data.selectedElement.toDate
+        toDate: this.data1.selectedElement.toDate
       }
       this.reportType = 2
-    } else if (this.data.reportType == 'allTransactions') {
+    } else if (this.data1.reportType == 'allTransactions') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 3,
-        fromDate: this.data.selectedElement.fromDate,
-        toDate: this.data.selectedElement.toDate
+        fromDate: this.data1.selectedElement.fromDate,
+        toDate: this.data1.selectedElement.toDate
       }
       this.reportType = 3
-    } else if (this.data.reportType == 'unrealisedTransactions') {
+    } else if (this.data1.reportType == 'unrealisedTransactions') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 4,
-        fromDate: this.data.selectedElement.fromDate,
-        toDate: this.data.selectedElement.toDate
+        fromDate: this.data1.selectedElement.fromDate,
+        toDate: this.data1.selectedElement.toDate
       }
       this.reportType = 4
-    } else if (this.data.reportType == 'capitalGainSummary') {
+    } else if (this.data1.reportType == 'capitalGainSummary') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 5,
-        from: this.data.selectedElement.from,
-        to: this.data.selectedElement.to,
+        from: this.data1.selectedElement.from,
+        to: this.data1.selectedElement.to,
       }
       this.reportType = 5
-    } else if (this.data.reportType == 'capitalGainDetails') {
+    } else if (this.data1.reportType == 'capitalGainDetails') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 6,
-        from: this.data.selectedElement.from,
-        to: this.data.selectedElement.to,
+        from: this.data1.selectedElement.from,
+        to: this.data1.selectedElement.to,
       }
       this.reportType = 6
     }
@@ -111,6 +126,7 @@ export class OpenSendReportPopupComponent implements OnInit {
     this.getDetails(this.dataClients)
   }
   sendNowCount() {
+    this.isLoading = true
     const obj = {
       advisorId: this.advisorId,
       reportTypeId: this.reportType
@@ -120,8 +136,47 @@ export class OpenSendReportPopupComponent implements OnInit {
     );
   }
   clientCountRes(data) {
+    this.isLoading = false
     this.clientCount = data
-    console.log('client count',this.clientCount)
+    if(data.clientDetails){
+      this.clientDetails = data.clientDetails
+      console.log('client count', this.clientCount)
+    }else{
+      this.clientDetails.data  = []
+    }
+
+  }
+  selectReportAll(event, reportType) {
+    this.isLoading = true
+    let obj = {
+      advisorId: this.advisorId,
+      reportTypeId: reportType,
+      selected: event.checked
+    }
+    console.log(obj)
+    this.backOffice.saveSettingAll(obj).subscribe(
+      data => this.saveSettingAllRes(data, event, reportType)
+    );
+  }
+  saveSettingAllRes(data, event, reportType) {
+    this.sendNowCount()
+    this.isLoading = false
+    //this.getMutualFundClient(0)
+    //this.saveEvent = event
+    this.reportType = reportType
+    if (reportType == 1) {
+      this.overviewAll = event.checked
+    } else if (reportType == 2) {
+      this.summaryAll = event.checked
+    } else if (reportType == 3) {
+      this.transactionAll = event.checked
+    } else if (reportType == 4) {
+      this.unrealisedAll = event.checked
+    } else if (reportType == 5) {
+      this.capitalGainAll = event.checked
+    } else if (reportType == 6) {
+      this.capitalGainDetailedAll = event.checked
+    }
   }
   getDetails(data) {
     const obj = {
@@ -133,15 +188,16 @@ export class OpenSendReportPopupComponent implements OnInit {
     );
   }
   getDetailsClientAdvisorRes(data) {
+
     console.log('data', data)
     this.clientsSend = {
       userInfo: data,
       clientId: this.dataClients.clientId,
-      mode: this.data.reportType,
-      fromDate: this.data.selectedElement.fromDate,
-      toDate: this.data.selectedElement.toDate,
-      from: this.data.selectedElement.from,
-      to: this.data.selectedElement.to,
+      mode: this.data1.reportType,
+      fromDate: this.data1.selectedElement.fromDate,
+      toDate: this.data1.selectedElement.toDate,
+      from: this.data1.selectedElement.from,
+      to: this.data1.selectedElement.to,
     }
   }
   procced() {
@@ -152,5 +208,30 @@ export class OpenSendReportPopupComponent implements OnInit {
     this.dialogRef.close('');
 
   }
+  selectReport(event, element, reportType) {
 
+    console.log('element', element)
+    if (reportType == 1) {
+      element.overview = event.checked
+    } else if (reportType == 2) {
+      element.summary = event.checked
+    } else if (reportType == 3) {
+      element.allTransaction = event.checked
+    } else if (reportType == 4) {
+      element.unrealizedTransaction = event.checked
+    } else if (reportType == 5) {
+      element.capitalGainSummary = event.checked
+    } else {
+      element.capitalGainDetailed = event.checked
+    }
+    this.saveSettingMfClients.push(element)
+
+    console.log('saveSettingMfClients', this.saveSettingMfClients)
+    this.backOffice.saveSetting(element).subscribe(
+      data => this.saveSettingRes(data)
+    );
+  }
+  saveSettingRes(data) {
+
+  }
 }

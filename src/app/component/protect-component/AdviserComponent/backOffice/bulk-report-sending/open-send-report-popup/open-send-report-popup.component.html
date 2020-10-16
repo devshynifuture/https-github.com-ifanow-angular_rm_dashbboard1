@@ -11,8 +11,41 @@
 
         </div>
     </div>
-    <div class="text-center">
-        <img src="assets/images/svg/loader-optimize.gif">
+    <div class="row">
+        <div class="col-md-12">
+            <div  (scroll)="onWindowScroll($event)"
+                class="people-table-scroll">
+                <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
+                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                    <ng-container matColumnDef="name">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="mfoverview">
+                        <th  class="br" mat-header-cell *matHeaderCellDef sticky> {{(reportType == 1)? 'MF overview':(reportType == 2)?'MF summary':(reportType == 3)?'MF transaction':(reportType == 4)?'MF unrealised transactions':(reportType == 5)?'MF capital gain summary': 'MF capital gain details'}}
+                            <mat-checkbox *ngIf="!isLoading" [checked]="overviewAll" class="example-margin ml-2"
+                            (change)="selectReportAll($event,reportType)"></mat-checkbox>
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.overview"
+                                    (change)="selectReport($event,element,reportType)"
+                                    class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- <div *ngIf="callBulk == true && data.reportType == 'overview'">
@@ -32,10 +65,14 @@
 <div *ngIf="callBulk == true && data.reportType == 'capitalGainDetails'">
     <app-bulk-capital-gain-detailed [data]="clientsSend"></app-bulk-capital-gain-detailed>
 </div> -->
-
+    <div *ngIf="!isLoading && !clientDetails">
+        <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
+            <span class="pl-10 full-center w-100 f-14" >No client selected</span>
+        </div>
+    </div>
     <div class="row posAbsulateClass pt-16 pb-16">
         <div class="col-md-12 text-right">
-            <button class="br-0 text-primitive f-14" mat-button [mat-dialog-close]="data.investor">
+            <button class="br-0 text-primitive f-14" mat-button [mat-dialog-close]="data1.investor">
                 CANCEL
             </button>
             <button class="text-primary f-14 ml-12 sendNowBtn " (click)="sendClientId()" mat-stroked-button cdkFocusInitial>
