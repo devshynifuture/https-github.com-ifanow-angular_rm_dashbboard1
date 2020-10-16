@@ -291,8 +291,8 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
-            this.addGeneralInsurance(sideBarData.data.id);
-            // this.getStepOneAndTwoData();
+            // this.addGeneralInsurance(sideBarData.data.id);
+             this.getStepOneAndTwoData();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
