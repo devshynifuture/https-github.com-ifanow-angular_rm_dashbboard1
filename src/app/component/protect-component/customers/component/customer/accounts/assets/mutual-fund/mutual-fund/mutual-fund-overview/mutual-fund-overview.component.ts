@@ -714,13 +714,13 @@ export class MutualFundOverviewComponent implements OnInit {
               //   this.showSchemeWise=false
               // }
               if(counter > 0 && counter1 > 0 && counter == counter1){
-                this.getAllData(mutualFundData);
                 this.dataSource2 = new MatTableDataSource(schemeData);
                 this.sendaata.dataSource2 = this.dataSource2;
                 if(this.dataSource2.data.length > 0){
                   this.showSchemeWise = true;
                 }
                 this.MfServiceService.setSendData(this.sendaata);
+                this.getAllData(mutualFundData);
                 this.isLoading = false;
                }
               this.changeInput.emit(false);
@@ -757,13 +757,13 @@ export class MutualFundOverviewComponent implements OnInit {
     });
     // this.isLoading = false;
     if(!loadReportCall){
-      this.getAllData(mutualFundData);
       this.dataSource2 = new MatTableDataSource(schemeData);
       this.sendaata.dataSource2 = this.dataSource2;
       if(this.dataSource2.data.length > 0){
         this.showSchemeWise = true;
       }
       this.MfServiceService.setSendData(this.sendaata);
+      this.getAllData(mutualFundData);
       this.isLoading = false;
      }
   }
