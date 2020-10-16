@@ -26,12 +26,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   isLoading: boolean;
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
-  overviewAll: any;
-  summaryAll: any;
-  transactionAll: any;
-  unrealisedAll: any;
-  capitalGainAll: any;
-  capitalGainDetailedAll: any;
+  checkFlag: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
@@ -164,19 +159,7 @@ export class OpenSendReportPopupComponent implements OnInit {
     //this.getMutualFundClient(0)
     //this.saveEvent = event
     this.reportType = reportType
-    if (reportType == 1) {
-      this.overviewAll = event.checked
-    } else if (reportType == 2) {
-      this.summaryAll = event.checked
-    } else if (reportType == 3) {
-      this.transactionAll = event.checked
-    } else if (reportType == 4) {
-      this.unrealisedAll = event.checked
-    } else if (reportType == 5) {
-      this.capitalGainAll = event.checked
-    } else if (reportType == 6) {
-      this.capitalGainDetailedAll = event.checked
-    }
+      this.checkFlag = event.checked
   }
   getDetails(data) {
     const obj = {
