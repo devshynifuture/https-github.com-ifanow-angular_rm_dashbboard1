@@ -687,11 +687,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-  addMilestone(data,obj){
+  addMilestone(data,obj,flag){
     const dialogData = {
       data,
       otherData:this.selectedGoal,
-      flag : 'Edit',
+      flag : flag,
       singleObj : obj
     }
     this.dialog.open(AddMilestoneComponent, {
