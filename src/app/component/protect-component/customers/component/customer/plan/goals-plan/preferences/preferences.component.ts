@@ -476,7 +476,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   // ----------------- asset allocation ----------------------
 
   save() {
-    switch (this.selected) {
+    switch (this.selectedTab) {
       case 0:
         this.savePreference();
         break;

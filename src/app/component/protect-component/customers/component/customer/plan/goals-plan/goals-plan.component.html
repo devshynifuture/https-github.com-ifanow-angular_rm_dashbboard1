@@ -207,19 +207,20 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row pt-40">
+                    <!--  -->
+                    <div [ngClass]="highlight == true ?'borderDrag':''" class=" mt-40"> 
+                    <div class="row  ">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
 
-                    <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
+                    <div  cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
                         [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" class="hide-placeholder"
                         (cdkDropListEntered)="inDropZoneMethod($event)" (cdkDropListExited)="inDropZoneMethod($event)">
 
                         <div [ngClass]="{'drop-zone': inDropZone}">
-                            <div class="row b-a bg-grey height40 lter">
+                            <div  class="row b-a bg-grey height40 lter">
                                 <div class="col-md-3 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Description </p>
                                 </div>
@@ -330,6 +331,7 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
                     <div class="row pt-28" [hidden]="!hasCostOfDelay || loaderFn.loading">
                         <div class="col-md-12 p-0">
@@ -389,9 +391,9 @@
                                 <td mat-cell *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p">
                                     <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item *ngIf="dataSource1.length == 1"(click)="deleteMilestone(element)">Delete
+                                        <button mat-menu-item (click)="deleteMilestone(element)">Delete
                                             milestone</button>
-                                            <button mat-menu-item (click)="addMilestone(dataSource1)">Edit
+                                            <button mat-menu-item (click)="addMilestone(dataSource1,element,'Edit')">Edit
                                                 milestone</button>
                                     </mat-menu>
                                 </td>
@@ -406,7 +408,7 @@
                             
                             </div>
                             <div class="col-md-12 p-0 d-flex align-items-center justify-content-center" *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
-                                <span class="pl-10 full-center w-100 f-14 text-primary c-p" (click)="addMilestone(dataSource1)">Add milestone</span>
+                                <span class="pl-10 full-center w-100 f-14 text-primary c-p" (click)="addMilestone(dataSource1,'','add')">Add milestone</span>
                             </div>
                             
                         </div>
