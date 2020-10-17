@@ -112,7 +112,7 @@ export class AddMilestoneComponent implements OnInit {
    this.plansService.saveMileStone(obj).subscribe(res => {
     // this.loadAllGoals();
     this.allocateOtherAssetService.refreshAssetList.next();
-    this.eventService.openSnackBar("Asset unallocated");
+    this.eventService.openSnackBar("Milestone added successfully");
     this.dialogRef.close();
   }, err => {
     this.eventService.openSnackBar(err);
