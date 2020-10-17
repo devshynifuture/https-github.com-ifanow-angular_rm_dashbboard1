@@ -170,11 +170,11 @@
         <div class="col-md-8 right text-right" *ngIf="showExisting">
             <!-- <button *ngIf="inputData?.flag != 'suggestExistingPolicy' && dataSource2?.length > 0" mat-button class="btn-bottom br-0 text-inherit"
                 (click)="showHealthInsurance(showInsurance)">Procced</button> -->
-                <app-progress-button *ngIf="inputData?.flag != 'suggestExistingPolicy' && dataSource2?.length > 0" [options]="barButtonOptions2" (click)="showHealthInsurance(showInsurance)">
+                <app-progress-button *ngIf="inputData?.flag != 'suggestExistingPolicy' && dataSource2?.length > 0" [options]="barButtonOptions2" (click)="showHealthInsurance(showInsurance,'proceed')">
                 </app-progress-button>
             <!-- <button mat-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" class="btn-bottom br-0 text-inherit"
                 (click)="saveExistingPolicy(showInsurance)">Save</button> -->
-                <app-progress-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" [options]="barButtonOptions" (click)="saveExistingPolicy(showInsurance)">
+                <app-progress-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" [options]="barButtonOptions" (click)="showHealthInsurance(showInsurance,'save')">
                 </app-progress-button>
         </div>
     </div>

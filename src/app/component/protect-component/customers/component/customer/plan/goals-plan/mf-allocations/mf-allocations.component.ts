@@ -293,7 +293,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
           id: this.data.remainingData.id,
           goalType: this.data.goalType,
-          freeze: false,
+          freezed: false,
         }
         this.planService.freezCalculation(obj).subscribe(res => {
           //this.allocateOtherAssetService.refreshAssetList.next();

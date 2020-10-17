@@ -404,7 +404,7 @@
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    <span appFormatNumber [value]="totalValue.allocationPer"></span>
+                                    <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span>
                                 </div>
                             </td>
                         </ng-container>
@@ -529,7 +529,7 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 c-p proximaFont text-right">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer"></span>
+                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -690,7 +690,7 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer"></span>
+                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -812,7 +812,7 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer"></span>
+                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -1235,7 +1235,7 @@
                             {{mfData.total_xirr | number:'1.2-2'}}</td>
                         <td
                             style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
-                            <span appFormatNumber [value]="totalValue.allocationPer"></span></td>
+                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
                 </table>
@@ -1419,7 +1419,7 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;">
-                            <span appFormatNumber [value]="totalValue.allocationPer"></span></td>
+                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
 
@@ -1506,7 +1506,7 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;">
-                            <span appFormatNumber [value]="totalValue.allocationPer"></span></td>
+                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span></td>
                     </tr>
 
 
@@ -1591,7 +1591,7 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
-                            <span appFormatNumber [value]="totalValue.allocationPer"></span></td>
+                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
 

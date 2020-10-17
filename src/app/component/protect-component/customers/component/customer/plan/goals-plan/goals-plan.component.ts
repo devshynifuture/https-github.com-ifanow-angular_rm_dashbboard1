@@ -22,6 +22,7 @@ import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 import { AddGoalService } from './add-goal/add-goal.service';
 import { ReallocateAssetComponent } from './reallocate-asset/reallocate-asset.component';
 import { element } from 'protractor';
+import { AddMilestoneComponent } from './add-milestone/add-milestone.component';
 
 
 
@@ -524,7 +525,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.deleteMilestone({ milestoneId: milestone.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.loadAllGoals();
-          this.eventService.openSnackBar("Asset unallocated");
+          this.eventService.openSnackBar("Milestone deleted successfully");
           dialogRef.close();
         }, err => {
           this.eventService.openSnackBar(err);
@@ -629,7 +630,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           lumpSumAmountEquity:this.selectedGoal.remainingData.lumpSumAmountEquity,
           id:this.selectedGoal.remainingData.id,
           goalType:this.selectedGoal.goalType,
-          freeze : false,
+          freezed : false,
         }
         this.plansService.freezCalculation(obj).subscribe(res => {
           //this.allocateOtherAssetService.refreshAssetList.next();
@@ -683,7 +684,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-
+  addMilestone(data){
+    const dialogData = {
+      data,
+      otherData:this.selectedGoal
+    }
+    this.dialog.open(AddMilestoneComponent, {
+      width: '600px',
+      height: '300px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   reallocateAsset(allocation) {
     const dialogData = {
       goalData: this.selectedGoal,
