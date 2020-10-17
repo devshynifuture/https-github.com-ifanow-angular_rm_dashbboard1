@@ -72,7 +72,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   criteriaDate: Date;
   adminAdvisorIds: any;
   parentId: any;
-  loadinDone: boolean = false;
+  loadingDone: boolean = false;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
@@ -721,7 +721,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     // }
   }
   generatePdfBulk() {
-    this.loadinDone = true
+    this.loadingDone = true
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
