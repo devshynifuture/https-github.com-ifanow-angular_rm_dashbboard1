@@ -402,8 +402,11 @@
 
                         <div class="row height40  bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
                             <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No milestone added</span>
-                                <span (click)="addMilestone(dataSource1)">Add milestone</span>
+                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No milestone added</span>         
+                            
+                            </div>
+                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-center" *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
+                                <span class="pl-10 full-center w-100 f-14 text-primary c-p" (click)="addMilestone(dataSource1)">Add milestone</span>
                             </div>
                             
                         </div>

@@ -525,7 +525,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.deleteMilestone({ milestoneId: milestone.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.loadAllGoals();
-          this.eventService.openSnackBar("Asset unallocated");
+          this.eventService.openSnackBar("Milestone deleted successfully");
           dialogRef.close();
         }, err => {
           this.eventService.openSnackBar(err);
