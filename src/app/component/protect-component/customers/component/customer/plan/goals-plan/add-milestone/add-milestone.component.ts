@@ -41,26 +41,48 @@ export class AddMilestoneComponent implements OnInit {
   }
   initializeForm() {
     this.singleYearGoalForm = this.fb.group({
-    
-    });
-    if (this.dialogData.otherData.goalType === 1) {
-      this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array(
-        [this.fb.group({
-          onRetirementOrDemise: [0],
-          milestoneTypeId: [0],
-          amount: [0],
-        })]),
+     // getMilestoneName: this.fb.array([]),
 
-      )
-    }
+    });
+    if(this.dialogData.data.length > 0){
+      
+      this.dialogData.data.forEach(element => {
+        this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array([]),)
+        this.getMilestoneName.push(this.fb.group({
+          onRetirementOrDemise: [(element.onRetirementOrDemise), [Validators.required]],
+          milestoneTypeId: [element.milestoneTypeId, [Validators.required]],
+          amount: [element.amount, Validators.required],
+          id: element.id
+        }));
+      });
+    }else{
+      if (this.dialogData.otherData.goalType === 1) {
+        this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array(
+          [this.fb.group({
+            onRetirementOrDemise: [0],
+            milestoneTypeId: [0],
+            amount: [0],
+          })]),
+  
+        )
+      }
+    }  
   }
 
-  get getMilestone() {
+  get getMilestoneName() {
     return this.singleYearGoalForm.get('getMilestoneName') as FormArray;
   }
-  removeMilestone(item) {
+  removeMilestone(item,obj1) {
     this.disabledMember(null, null);
-    this.getMilestone.removeAt(item);
+    this.getMilestoneName.removeAt(item);
+    let obj = {
+      milestoneId: obj1.value.id,
+    }
+    this.plansService.deleteMilestone({ milestoneId: obj1.value.id }).subscribe(res => {
+      this.allocateOtherAssetService.refreshAssetList.next();
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
   }
   disabledMember(value, type) {
     this.callMethod = {
@@ -70,7 +92,7 @@ export class AddMilestoneComponent implements OnInit {
     };
   }
   addMilestone(data) {
-    this.getMilestone.push(this.fb.group({
+    this.getMilestoneName.push(this.fb.group({
       onRetirementOrDemise: [0],
       milestoneTypeId: [0],
       amount: [0],
@@ -79,9 +101,10 @@ export class AddMilestoneComponent implements OnInit {
   saveMilestone(){
     let obj ={}
      obj['milestoneModels'] = [];
+     obj['id'] = this.dialogData.otherData.remainingData.id
     this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
       if(element.onRetirementOrDemise != 0){
-        element.goalId = this.dialogData.otherData.remainingData.id
+        element.id = this.dialogData.otherData.remainingData.id
        obj['milestoneModels'].push(element)
       }
    });
