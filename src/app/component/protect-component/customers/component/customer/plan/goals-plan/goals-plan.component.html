@@ -208,18 +208,19 @@
                         </div>
                     </div>
 
-                    <div class="row pt-40">
+                    <div class="borderDrag mt-40"> 
+                    <div class="row  ">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
 
-                    <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
+                    <div  cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
                         [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" class="hide-placeholder"
                         (cdkDropListEntered)="inDropZoneMethod($event)" (cdkDropListExited)="inDropZoneMethod($event)">
 
                         <div [ngClass]="{'drop-zone': inDropZone}">
-                            <div class="row b-a bg-grey height40 lter">
+                            <div  class="row b-a bg-grey height40 lter">
                                 <div class="col-md-3 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Description </p>
                                 </div>
@@ -329,6 +330,7 @@
                                 
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <div class="row pt-28" [hidden]="!hasCostOfDelay || loaderFn.loading">
