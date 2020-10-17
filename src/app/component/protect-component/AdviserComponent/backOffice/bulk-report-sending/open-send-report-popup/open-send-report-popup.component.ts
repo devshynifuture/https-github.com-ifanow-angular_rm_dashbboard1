@@ -27,6 +27,12 @@ export class OpenSendReportPopupComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   checkFlag: boolean = false;
+  // build issues
+  overviewAll;
+
+  onWindowScroll(event){
+
+  }
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
