@@ -11,7 +11,10 @@
                 <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
-
+                <div class="hide" id="loadingDone" *ngIf="loadinDone == true">
+                    <button>Loading Done</button>
+                    <!-- DOne for bulk email -->
+                </div>
                 <mat-menu #menu1="matMenu">
                     <button mat-menu-item (click)="generatePdf()">PDF</button>
                     <button mat-menu-item (click)="Excel('Capital Gain')">XLS</button>
