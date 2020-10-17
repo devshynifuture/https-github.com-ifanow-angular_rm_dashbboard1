@@ -27,7 +27,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   checkFlag: boolean = false;
-
+  overviewAll : boolean = false
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
