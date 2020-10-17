@@ -9,6 +9,9 @@
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
+                <div class="hide" id="loadingDone" *ngIf="loadinDone == true">
+                    <button>Loading Done</button>
+                </div>
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
@@ -468,9 +471,6 @@
     </table>
 </div>
 <div #summaryTemplate id="template" class="hide" *ngIf="showDownload == true">
-    <div class="hide" style="display: none;" id="loadingDone" *ngIf="loadinDone == true">
-        <button>Loading Done</button>
-    </div>
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;border-collapse: separate;">
