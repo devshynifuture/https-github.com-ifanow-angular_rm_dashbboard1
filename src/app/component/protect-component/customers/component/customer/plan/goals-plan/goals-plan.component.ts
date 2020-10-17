@@ -690,7 +690,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       otherData:this.selectedGoal
     }
     this.dialog.open(AddMilestoneComponent, {
-      width: '600px',
+      width: '650px',
       height: '300px',
       data: dialogData,
       autoFocus: false,

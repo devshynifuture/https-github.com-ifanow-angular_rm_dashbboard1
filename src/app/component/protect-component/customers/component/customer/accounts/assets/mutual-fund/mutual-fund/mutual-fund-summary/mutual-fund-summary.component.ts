@@ -132,6 +132,7 @@ export class MutualFundSummaryComponent implements OnInit {
   copyOfData: any;
   adminAdvisorIds: any;
   parentId: any;
+  loadinDone: boolean = false;
   // setTrueKey = false;
 
 
@@ -2003,6 +2004,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
     this.customDataSource.data.array3 = []
+    this.loadinDone = true
     this.customDataSource.data.forEach(element => {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName

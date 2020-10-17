@@ -421,7 +421,9 @@
     </div>
 </div>
 
-
+<div *ngIf="loadinDone == true">
+    <button>Loading Done</button>
+</div>
 <div #summaryTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
     <table id="FakeHeaders" cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
