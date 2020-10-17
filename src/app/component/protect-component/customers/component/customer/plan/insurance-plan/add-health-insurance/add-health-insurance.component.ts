@@ -232,7 +232,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.isLoading = true;
     let obj = {
       clientId: this.clientId,
-      insuranceType: this.insuranceType
+      insuranceType: this.insuranceType,
+      realOrFictious:1
     }
     const obj2 = {
       clientId: this.clientId
@@ -419,8 +420,9 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.showExisting = false;
     }
   }
-  showHealthInsurance(input) {
+  showHealthInsurance(input,value) {
     if (this.isChecked) {
+      this.barButtonOptions.active = true;
       this.barButtonOptions2.active = true;
       let obj = {
         "planningList":
@@ -436,25 +438,30 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.planService.addGeneralInsurance(obj).subscribe(
         data => {
           if (data) {
+            this.barButtonOptions.active = false;
             this.barButtonOptions2.active = false;
-            this.subInjectService.changeNewRightSliderState({ state: 'close' });
-            const fragmentData = {
-              flag: 'app-customer',
-              id: 1,
-              data: input,
-              direction: 'top',
-              componentName: ShowHealthPlanningComponent,
-              state: 'open'
-            };
-            fragmentData.data.id=data;
-            const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-              upperSliderData => {
-                if (UtilService.isDialogClose(upperSliderData)) {
-                  // this.getClientSubscriptionList();
-                  subscription.unsubscribe();
+            if(value == 'proceed'){
+              this.subInjectService.changeNewRightSliderState({ state: 'close' });
+              const fragmentData = {
+                flag: 'app-customer',
+                id: 1,
+                data: input,
+                direction: 'top',
+                componentName: ShowHealthPlanningComponent,
+                state: 'open'
+              };
+              fragmentData.data.id=data;
+              const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+                upperSliderData => {
+                  if (UtilService.isDialogClose(upperSliderData)) {
+                    // this.getClientSubscriptionList();
+                    subscription.unsubscribe();
+                  }
                 }
-              }
-            );
+              );
+            }else{
+              this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+            }
           }
         },
         err => {
