@@ -141,7 +141,7 @@ export class OpenSendReportPopupComponent implements OnInit {
         } else if (this.reportType == 2) {
           element.checkFlag = element.summary
         } else if (this.reportType == 3) {
-          element.checkFlag = element.allTransactions
+          element.checkFlag = element.allTransaction
         } else if (this.reportType == 4) {
           element.checkFlag = element.unrealizedTransaction
         } else if (this.reportType == 5) {
