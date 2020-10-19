@@ -230,6 +230,6 @@ export class OpenSendReportPopupComponent implements OnInit {
     );
   }
   saveSettingRes(data) {
-
+    this.sendNowCount()
   }
 }
