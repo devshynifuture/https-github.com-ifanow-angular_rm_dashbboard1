@@ -189,7 +189,7 @@ get insuredMembersForm() {
     return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
 }
 
-/***nominee***/
+/***nominee***/                     
 
 get getNominee() {
     return this.healthInsuranceForm.get('getNomineeName') as FormArray;
@@ -877,7 +877,7 @@ close(data,flag) {
   if(this.inputData.id){
     this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
   }else{
-    this.sendOutput.emit(true);
+    this.sendOutput.emit(false);
   }
 }
 }

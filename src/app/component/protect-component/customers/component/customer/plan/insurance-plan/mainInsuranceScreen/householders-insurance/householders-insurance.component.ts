@@ -684,7 +684,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		if (this.inputData.id) {
 			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
 		} else {
-			this.sendOutput.emit(true);
+			this.sendOutput.emit(false);
 		}
 	}
 

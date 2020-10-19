@@ -398,7 +398,7 @@ addNewNominee(data) {
               "valueAsOn": null,
               "isDeleted":false,
               "portfolioId": this.portfolioData.id,
-               "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
+              //  "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
               "transactionOrHoldingSummaryList": [
                   {
                     "holdingOrTransaction": 1,
@@ -414,14 +414,14 @@ addNewNominee(data) {
             }
                 if(element.get('id').value != null){
                   objStock.id = this.editApiData.stockListForEditView[i].id;
-                  objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
+                  // objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
                 }
                 if(objStock.id == null){
-                  objStock.ownerList[0].id = null;
+                  // objStock.ownerList[0].id = null;
                 }
 
                 if(this.editApiData && this.portfolioData.id == 0){
-                  objStock.ownerList[0].id = null;
+                  // objStock.ownerList[0].id = null;
                 }
           
           finalStocks.push(objStock);
@@ -439,7 +439,7 @@ addNewNominee(data) {
                 "valueAsOn": null,
                 "isDeleted":true,
                 "portfolioId": this.portfolioData.id,
-                 "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
+                //  "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
                 "transactionOrHoldingSummaryList": [
                   {
                     "id": d.id,

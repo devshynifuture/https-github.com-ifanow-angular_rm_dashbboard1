@@ -41,6 +41,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   insuranceType: any;
   ownerIds =[];
   familyMemberList: any;
+  insuranceIds =[];
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -66,22 +67,45 @@ export class ShowHealthPlanningComponent implements OnInit {
   ngOnInit() {
     console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
+    this.insuranceIds.push(this.inputData.id);
     this.getStepOneAndTwoData();
     this.getGlobalDataInsurance();
+  }
+  formatNumber(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
+    return data;
   }
   getStepOneAndTwoData(){
     this.dataSource =[{},{},{}];
     this.dataSource1 =[{},{},{}];
     this.isLoading = true;
     let obj = {
-      id: this.inputData.id,
+      id:this.insuranceIds,
       insuranceType:this.inputData.insuranceType
     }
     const obj2 = {
       clientId: this.clientId
     };
+    const obj3 = {
+      clientId: this.clientId,
+      insuranceType: this.insuranceType,
+      realOrFictious:2
+    };
     const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj);
     const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    const suggestNewGet = this.planService.getGeneralInsuranceReview(obj3)
     // this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
     //   data => {
     //     if(data){
@@ -113,12 +137,12 @@ export class ShowHealthPlanningComponent implements OnInit {
     //     this.eventService.openSnackBar(err, 'Dismiss');
     //   }
     // );
-    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+    forkJoin(getCurrentPolicy, familyMemberList,suggestNewGet).subscribe(result => {
       this.familyMemberList = result[1];
       if(result[0]){
         let data = result[0];
           this.dataSource =this.getFilterData(data.current) ;
-          this.dataSource1 =this.getFilterData(data.suggested) ;
+          this.dataSource1 =this.getFilterData(result[2]) ;
           this.isLoading = false;
         this.dataSource = data.current;  
         if(data.current){
@@ -149,16 +173,17 @@ export class ShowHealthPlanningComponent implements OnInit {
   getFilterData(array){
     if(array){
       array.forEach(singleInsuranceData => {
+        singleInsuranceData.insuranceDetails = singleInsuranceData.insurance ? singleInsuranceData.insurance : singleInsuranceData.insuranceDetails;
         if (singleInsuranceData.insuranceDetails && singleInsuranceData.insuranceDetails.insuredMembers.length > 0) {
           singleInsuranceData.displayHolderName = singleInsuranceData.insuranceDetails.insuredMembers[0].name;
-          singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured;
+          singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured);
           if (singleInsuranceData.insuranceDetails.insuredMembers.length > 1) {
             for (let i = 1; i < singleInsuranceData.insuranceDetails.insuredMembers.length; i++) {
               if (singleInsuranceData.insuranceDetails.insuredMembers[i].name) {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
                 if(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured){
-                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured.toString();
+                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured,0);
                   const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
                   singleInsuranceData.displayHolderSumInsured +=', ₹ ' + firstSumInsured;
                 }else{
@@ -346,6 +371,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            this.insuranceIds.push(sideBarData.data)
             this.getStepOneAndTwoData();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

@@ -473,6 +473,7 @@ export class LifeInsuranceComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             // this.getClientSubscriptionList();
+            this.outputChange.emit({id : this.inputData.id});
             subscription.unsubscribe();
           }
         }
