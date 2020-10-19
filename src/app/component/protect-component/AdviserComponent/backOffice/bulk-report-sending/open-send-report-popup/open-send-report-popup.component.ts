@@ -134,7 +134,22 @@ export class OpenSendReportPopupComponent implements OnInit {
     this.isLoading = false
     this.clientCount = data
     if(data.clientDetails){
-      this.clientDetails = data.clientDetails
+      this.clientDetails.data = data.clientDetails
+      this.clientDetails.data.forEach(element => {
+        if (this.reportType == 1) {
+          element.checkFlag = element.overview
+        } else if (this.reportType == 2) {
+          element.checkFlag = element.summary
+        } else if (this.reportType == 3) {
+          element.checkFlag = element.allTransactions
+        } else if (this.reportType == 4) {
+          element.checkFlag = element.unrealizedTransaction
+        } else if (this.reportType == 5) {
+          element.checkFlag = element.capitalGainSummary
+        } else {
+          element.checkFlag = element.capitalGainDetailed
+        }
+      });
       console.log('client count', this.clientCount)
     }else{
       this.clientDetails.data  = []
