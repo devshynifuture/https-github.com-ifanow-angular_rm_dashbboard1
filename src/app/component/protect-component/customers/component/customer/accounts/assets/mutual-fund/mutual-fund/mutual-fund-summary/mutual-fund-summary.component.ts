@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
@@ -158,7 +158,8 @@ export class MutualFundSummaryComponent implements OnInit {
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
     private onlineTransact: OnlineTransactionService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private cd: ChangeDetectorRef) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
@@ -1407,6 +1408,8 @@ export class MutualFundSummaryComponent implements OnInit {
         }
 
         this.changeInput.emit(false);
+        this.cd.markForCheck();
+        this.cd.detectChanges();
       };
       worker.postMessage(input);
 

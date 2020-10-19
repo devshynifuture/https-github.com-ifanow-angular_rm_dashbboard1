@@ -55,7 +55,7 @@ export class AddHealthInsuranceComponent implements OnInit {
 
   };
   inputData: any;
-  showInsurance: { value: string; header: string; heading: string; subHeading: string, logo: string, smallHeading: string };
+  showInsurance: any;
   isChecked: any;
   showError: boolean;
   advisorId: any;
@@ -181,16 +181,34 @@ export class AddHealthInsuranceComponent implements OnInit {
     });
 
   }
+  formatNumber(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
+    return data;
+  }
   getAddMore(){
     this.isLoading = true;
     let obj = {
-      id: this.inputData.id,
-      insuranceType: this.inputData.insuranceType
+      clientId: this.clientId,
+      insuranceType: this.inputData.insuranceType,
+      realOrFictious:1
     }
     const obj2 = {
       clientId: this.clientId
     };
-    const getCurrentPolicy = this.planService.getCurrentPolicyAddMore(obj);
+    // const getCurrentPolicy = this.planService.getCurrentPolicyAddMore(obj);
+    const getCurrentPolicy = this.planService.getGeneralInsuranceReview(obj);
     const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
     // this.planService.getCurrentPolicyAddMore(obj).subscribe(
     //   data => {
@@ -280,14 +298,14 @@ export class AddHealthInsuranceComponent implements OnInit {
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
-        singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insurance.insuredMembers[0].sumInsured;
+        singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
           for (let i = 1; i < singleInsuranceData.insurance.insuredMembers.length; i++) {
             if (singleInsuranceData.insurance.insuredMembers[i].name) {
               const firstName = (singleInsuranceData.insurance.insuredMembers[i].name as string).split(' ')[0];
               singleInsuranceData.displayHolderName += ', ' + firstName;
               if(singleInsuranceData.insurance.insuredMembers[i].sumInsured){
-                singleInsuranceData.insurance.insuredMembers[i].sumInsured = singleInsuranceData.insurance.insuredMembers[i].sumInsured.toString();
+                singleInsuranceData.insurance.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[i].sumInsured);
                 const firstSumInsured = (singleInsuranceData.insurance.insuredMembers[i].sumInsured as string).split(' ')[0];
                 singleInsuranceData.displayHolderSumInsured += ', ₹ ' + firstSumInsured;
               }else{
@@ -308,7 +326,28 @@ export class AddHealthInsuranceComponent implements OnInit {
    return finalData[0].name
   }
   getOutput(value){
-    this.showNewPolicy = false;
+    if(value == true){
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      const fragmentData = {
+        flag: 'app-customer',
+        id: 1,
+        data: this.showInsurance,
+        direction: 'top',
+        componentName: ShowHealthPlanningComponent,
+        state: 'open'
+      };
+      this.showInsurance.id=null;
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
+        }
+      );
+    }else{
+          this.showNewPolicy = false;
+    }
   }
   openExistingPolicy() {
     this.selectPolicy = ""
@@ -460,7 +499,7 @@ export class AddHealthInsuranceComponent implements OnInit {
                 }
               );
             }else{
-              this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+              this.subInjectService.changeNewRightSliderState({ state: 'close' ,data:data,refreshRequired: true});
             }
           }
         },

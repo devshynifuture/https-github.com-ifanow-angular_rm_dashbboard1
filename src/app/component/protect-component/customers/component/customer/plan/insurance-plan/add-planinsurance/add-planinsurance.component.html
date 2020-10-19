@@ -491,7 +491,7 @@
                                                 <td mat-cell *matCellDef="let element">
                                                     <mat-checkbox [value]="element.selected" #check
                                                         (click)="changeValue(element,check.checked,dataSource2,'existingAsset')">
-                                                    </mat-checkbox> {{element.ownerName}}
+                                                    </mat-checkbox>{{(element.isRealEstate) ? 'Real estate' : element.ownerName +' | (All assets except real estate)'}}
                                                 </td>
                                             </ng-container>
 
