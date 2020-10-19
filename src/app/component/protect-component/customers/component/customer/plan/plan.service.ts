@@ -204,6 +204,9 @@ export class PlanService {
   saveMileStone(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_MILESTONE, data);
   }
+  EditMilstone(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_MILESTONE, data)
+  }
   allocateOtherAssetToGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
   }

@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div  (scroll)="onWindowScroll($event)"
+            <div
                 class="people-table-scroll">
                 <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">

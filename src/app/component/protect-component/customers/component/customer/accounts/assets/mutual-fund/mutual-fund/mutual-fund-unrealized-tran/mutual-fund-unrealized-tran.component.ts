@@ -216,6 +216,7 @@ export class MutualFundUnrealizedTranComponent {
   fromDate: any;
   adminAdvisorIds:any;
   parentId: any;
+  loadingDone: boolean = false;
 
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
@@ -1709,6 +1710,7 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   generatePdfBulk() {
+    this.loadingDone = true;
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
