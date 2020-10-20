@@ -119,11 +119,11 @@
                         </mat-error>
                       </mat-form-field> -->
                     <mat-form-field>
-                        <input autocomplete="off" matInput aria-label="State" #name [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)" class="form-control br-0 pl-8" formControlName="schemeName">
-                        <mat-autocomplete #auto="matAutocomplete">
+                        <input  matInput aria-label="State"   (click)="schemeDialog(creds)" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <!-- <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" (click)="setGroupValue({scheme:s, index: i})" [value]="s.name">{{s.name}}
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
                         <!-- <mat-select matInput formControlName="schemeId" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
