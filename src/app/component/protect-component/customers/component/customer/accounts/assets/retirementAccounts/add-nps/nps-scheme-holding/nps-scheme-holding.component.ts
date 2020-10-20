@@ -15,6 +15,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 
 import {map, startWith} from 'rxjs/operators';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { SchemeListComponent } from './scheme-list/scheme-list.component';
 @Component({
   selector: 'app-nps-scheme-holding',
   templateUrl: './nps-scheme-holding.component.html',
@@ -629,4 +630,19 @@ addNewNominee(data) {
 
   }
 //link bank
+
+schemeDialog(holding): void {
+  const dialogRef = this.dialog.open(SchemeListComponent, {
+    width: '421px',
+    // height: '300px',
+    data: this.schemeListData
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if(result){
+      holding.get('schemeName').setValue(result.name);
+    }
+  });
+
+}
 }

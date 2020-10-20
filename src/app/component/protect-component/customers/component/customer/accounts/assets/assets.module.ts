@@ -36,6 +36,7 @@ import {MutualFundGoalLinkageComponent} from './mutual-fund/mutual-fund/mutual-f
 import {MfCapitalDetailedComponent} from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { StockTransactionDetailsComponent } from './asset-stocks/stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent } from './asset-stocks/stock-holding-details/stock-holding-details.component';
+
 // import { StockDetailsViewComponent } from './stock-details-view/stock-details-view.component';
 
 
@@ -66,6 +67,7 @@ import { StockHoldingDetailsComponent } from './asset-stocks/stock-holding-detai
     PoTdSchemeComponent,
     PoMisSchemeComponent,
     MfCapitalDetailedComponent,
+    
     
     
   ],

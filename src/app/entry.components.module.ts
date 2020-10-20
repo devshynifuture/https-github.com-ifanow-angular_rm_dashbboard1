@@ -126,6 +126,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { VerifiedMailsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/verified-mails/verified-mails.component';
 import { VerifyAddEmailComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/verify-add-email/verify-add-email.component';
 import { AlertTitleComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/alert-title/alert-title.component';
+import { SchemeListComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/scheme-list/scheme-list.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -142,6 +143,7 @@ export const componentList = [
   CashInHandComponent,
   BankAccountsComponent,
   HistoryRiskProfileComponent,
+  SchemeListComponent,
   NpsSchemeHoldingComponent,
   NpsSummaryPortfolioComponent,
   AddGratuityComponent,
