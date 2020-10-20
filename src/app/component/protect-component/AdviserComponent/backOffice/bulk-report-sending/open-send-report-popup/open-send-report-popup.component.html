@@ -68,14 +68,17 @@
             <span class="pl-10 full-center w-100 f-14" >No client selected</span>
         </div>
     </div>
-    <div class="row posAbsulateClass pt-16 pb-16">
-        <div class="col-md-12 text-right">
-            <button class="br-0 text-primitive f-14" mat-button [mat-dialog-close]="data1.investor">
+    
+    <div class="row pt-16 pb-16">
+        <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <p class="br-0 text-primitive mb-0 mr-20 f-14" (click)="close()">
                 CANCEL
-            </button>
-            <button class="text-primary f-14 ml-12 sendNowBtn " (click)="sendClientId()" mat-stroked-button cdkFocusInitial>
+            </p>
+            <!-- <button class="text-primary f-14 ml-12 sendNowBtn " (click)="()" mat-stroked-button cdkFocusInitial>
                 SEND NOW
-            </button>
+            </button> -->
+            <app-progress-button (btnClick)="sendClientId()" class="br-0 text-inherit  " [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 

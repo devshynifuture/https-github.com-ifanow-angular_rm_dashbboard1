@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-open-send-report-popup',
@@ -13,6 +14,18 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 
 export class OpenSendReportPopupComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND NOW',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
   displayedColumns: string[] = ['name', 'mfoverview',];
   sendReport: any;
   clientsSend: any;
@@ -56,7 +69,9 @@ export class OpenSendReportPopupComponent implements OnInit {
     }
     this.sendNowCount()
   }
-
+  close(){
+    this.dialogRef.close()
+  }
   sendClientId() {
     this.callBulk = true
     if (this.data1.reportType == 'overview') {
