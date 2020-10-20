@@ -21,7 +21,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{element.name}}
+                                {{(isLoading) ? '':element.name}}
                             </div>
                         </td>
                     </ng-container>
@@ -29,12 +29,10 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="mfoverview">
                         <th  class="br" mat-header-cell *matHeaderCellDef sticky> {{(reportType == 1)? 'MF overview':(reportType == 2)?'MF summary':(reportType == 3)?'MF transaction':(reportType == 4)?'MF unrealised transactions':(reportType == 5)?'MF capital gain summary': 'MF capital gain details'}}
-                            <mat-checkbox *ngIf="!isLoading" [checked]="overviewAll" class="example-margin ml-2"
-                            (change)="selectReportAll($event,reportType)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox *ngIf="!isLoading" [checked]="checkFlag"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.checkFlag"
                                     (change)="selectReport($event,element,reportType)"
                                     class="example-margin"></mat-checkbox>
                             </div>
