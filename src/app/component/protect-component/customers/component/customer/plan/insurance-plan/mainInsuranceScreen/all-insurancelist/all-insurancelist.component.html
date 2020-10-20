@@ -29,7 +29,7 @@
                                     <div class="col-md-9 pl-10 pr-0">
                                         <p class="m-0 text-black roboto">
                                             <span>{{insurance.displayHolderName}}</span></p>
-                                        <p class="m-0 text-black roboto pt-6"><span class="f-500 pb-20">Advice: </span> {{insurance.adviceAmount}}
+                                        <p class="m-0 text-black roboto pt-6"><span class="f-500 pb-20">Advice: </span>{{insurance.adviceAmount ? '₹' : ''}}<span appFormatNumber>{{insurance.adviceAmount ? insurance.adviceAmount :0}}</span> 
                                         </p>
                                     </div>
                                 </div>

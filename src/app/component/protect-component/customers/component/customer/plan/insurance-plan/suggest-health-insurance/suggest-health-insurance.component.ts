@@ -874,9 +874,11 @@ saveHealthInsurance() {
 }
 
 close(data,flag) {
-  if(this.inputData.id){
+  if(data){
     this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
+    this.sendOutput.emit(true);
   }else{
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
     this.sendOutput.emit(false);
   }
 }
