@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, SimpleChanges, EventEmitter, Output, Input, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -49,7 +49,7 @@ export class MutualFundComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
     public routerActive: ActivatedRoute, private assetValidation: AssetValidationService,
-    private mfService: MfServiceService, private settingService: SettingsService) {
+    private mfService: MfServiceService, private settingService: SettingsService,private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -145,6 +145,8 @@ export class MutualFundComponent implements OnInit {
 
   changeInput(value) {
     this.isShow = value;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
   OutputData(data) {
     this.viewMode = data.viewMode;

@@ -1741,7 +1741,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         parentId:this.parentId ? this.parentId : this.advisorId,
         advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
-        toDate:this._data.name == 'SUMMARY REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
+        toDate:this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
         showFolio:(this.finalFilterData.showFolio == '2')? false:true
       };

@@ -295,6 +295,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     })
   }
   getHolderNameAndSumAssured(data){
+    this.getSumAssured(data);
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
@@ -320,6 +321,29 @@ export class AddHealthInsuranceComponent implements OnInit {
       }
     });
     return data;
+  }
+  getSumAssured(data){
+    data.forEach(element => {
+       element.sumAssured = 0;
+          if (element.insurance.insuredMembers.length > 0) {
+            element.insurance.insuredMembers.forEach(ele => {
+              ele.sumAssured += ele.sumInsured;
+            });
+          } else if (element.insurance && element.insurance.hasOwnProperty('policyFeatures') && element.insurance.policyFeatures.length > 0) {
+            element.insurance.policyFeatures.forEach(ele => {
+              element.insurance.sumInsuredIdv += ele.featureSumInsured;
+            });
+          } else {
+            element.insurance.sumInsuredIdv= element.insurance.sumInsuredIdv;
+          }
+
+          if (element.insurance && element.insurance.hasOwnProperty('addOns') && element.insurance.addOns.length > 0) {
+            element.insurance.addOns.forEach(ele => {
+              element.insurance.sumInsuredIdv += ele.addOnSumInsured;
+            });
+          }
+    });
+
   }
   getPolicyHolderName(data){
    let finalData =  this.familyMemberList.filter(item => item.familyMemberId === data.policyHolderId);
