@@ -97,6 +97,7 @@ export class SendNowReportsComponent implements OnInit {
       if (result == undefined) {
         return
       }
+      this.close()
       console.log('The dialog was closed');
       this.element = result;
       console.log('result -==', this.element)
