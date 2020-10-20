@@ -12,7 +12,7 @@
             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <div class="hide" id="loadingDone" *ngIf="loadinDone == true">
+            <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
                <button>Loading Done</button>
                <!-- DOne for bulk email -->
            </div>
@@ -30,9 +30,9 @@
    </div>
    <div class="row">
       <div class="col-md-12 p-0 mb-8">
-         <div *ngIf="dataSource.data.length>0">
+         <div *ngIf="dataSource?.data?.length>0">
             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
+               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table *ngIf="isTableShow">
                <ng-container matColumnDef="categoryName">
                   <th *matHeaderCellDef class="br" mat-header-cell>
                      {{(columnHeader) ? columnHeader : 'Sub Category Name'}}

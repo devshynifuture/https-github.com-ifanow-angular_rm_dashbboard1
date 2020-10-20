@@ -197,7 +197,7 @@
         </mat-expansion-panel> -->
 
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
-            *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
+            *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                 [expandedHeight]="customExpandedHeight">
                 <mat-panel-title>
@@ -306,7 +306,7 @@
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
         <div class="col-md-4 pl-0"
-            *ngIf="_data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT' ">
+            *ngIf="_data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' ">
             <h5 class="m-0 pb-8">Report as on</h5>
             <div class="col-md-12 p-0">
                 <div class="from-group  ">
@@ -323,7 +323,7 @@
             </div>
         </div>
         <div class="col-md-4 pl-0"
-            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
+            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">From date</h5>
             <div class="col-md-12 p-0">
                 <mat-form-field class="ba-date">
@@ -339,7 +339,7 @@
             </div>
         </div>
         <div class="col-md-4 p-0"
-            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
+            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">To date</h5>
             <div class="col-md-12 p-0">
                 <mat-form-field class="ba-date">

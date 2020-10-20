@@ -31,31 +31,31 @@ export class AddMilestoneComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private fb: FormBuilder,
     private plansService: PlanService,
-    private eventService :EventService,
+    private eventService: EventService,
     private allocateOtherAssetService: AddGoalService
 
-    ) { }
+  ) { }
 
   ngOnInit() {
+    console.log('singleObj',this.dialogData.singleObj)
     this.initializeForm()
   }
   initializeForm() {
     this.singleYearGoalForm = this.fb.group({
-     // getMilestoneName: this.fb.array([]),
+      // getMilestoneName: this.fb.array([]),
 
     });
-    if(this.dialogData.data.length > 0){
+    if (this.dialogData.data.length > 0) {
+
       
-      this.dialogData.data.forEach(element => {
-        this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array([]),)
+        this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array([]))
         this.getMilestoneName.push(this.fb.group({
-          onRetirementOrDemise: [(element.onRetirementOrDemise), [Validators.required]],
-          milestoneTypeId: [element.milestoneTypeId, [Validators.required]],
-          amount: [element.amount, Validators.required],
-          id: element.id
+          onRetirementOrDemise: [(this.dialogData.singleObj.onRetirementOrDemise), [Validators.required]],
+          milestoneTypeId: [this.dialogData.singleObj.milestoneTypeId, [Validators.required]],
+          amount: [this.dialogData.singleObj.amount, Validators.required],
+          id: this.dialogData.singleObj.id
         }));
-      });
-    }else{
+    } else {
       if (this.dialogData.otherData.goalType === 1) {
         this.singleYearGoalForm.addControl('getMilestoneName', this.fb.array(
           [this.fb.group({
@@ -63,16 +63,16 @@ export class AddMilestoneComponent implements OnInit {
             milestoneTypeId: [0],
             amount: [0],
           })]),
-  
+
         )
       }
-    }  
+    }
   }
 
   get getMilestoneName() {
     return this.singleYearGoalForm.get('getMilestoneName') as FormArray;
   }
-  removeMilestone(item,obj1) {
+  removeMilestone(item, obj1) {
     this.disabledMember(null, null);
     this.getMilestoneName.removeAt(item);
     let obj = {
@@ -98,24 +98,43 @@ export class AddMilestoneComponent implements OnInit {
       amount: [0],
     }));
   }
-  saveMilestone(){
-    let obj ={}
-     obj['milestoneModels'] = [];
-     obj['id'] = this.dialogData.otherData.remainingData.id
-    this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
-      if(element.onRetirementOrDemise != 0){
-        element.id = this.dialogData.otherData.remainingData.id
-       obj['milestoneModels'].push(element)
+  saveMilestone() {
+
+    if (this.dialogData.flag == 'Edit') {
+      let obj = {
+        onRetirementOrDemise: this.singleYearGoalForm.value.getMilestoneName[0].onRetirementOrDemise,
+        milestoneTypeId: this.singleYearGoalForm.value.getMilestoneName[0].milestoneTypeId,
+        amount: this.singleYearGoalForm.value.getMilestoneName[0].amount,
+        id:this.singleYearGoalForm.value.getMilestoneName[0].id,
       }
-   });
-   
-   this.plansService.saveMileStone(obj).subscribe(res => {
-    // this.loadAllGoals();
-    this.allocateOtherAssetService.refreshAssetList.next();
-    this.eventService.openSnackBar("Milestone added successfully");
-    this.dialogRef.close();
-  }, err => {
-    this.eventService.openSnackBar(err);
-  })
+      this.plansService.saveMileStone('obj').subscribe(res => {
+        // this.loadAllGoals();
+        this.allocateOtherAssetService.refreshAssetList.next();
+        this.eventService.openSnackBar("Milestone updated successfully");
+        this.dialogRef.close();
+      }, err => {
+        this.eventService.openSnackBar(err);
+      })
+    } else {
+      let obj = {}
+      obj['milestoneModels'] = [];
+      obj['id'] = this.dialogData.otherData.remainingData.id
+      this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
+        if (element.onRetirementOrDemise != 0) {
+          element.id = this.dialogData.otherData.remainingData.id
+          obj['milestoneModels'].push(element)
+        }
+      });
+
+      this.plansService.saveMileStone(obj).subscribe(res => {
+        // this.loadAllGoals();
+        this.allocateOtherAssetService.refreshObservable.next();
+        this.eventService.openSnackBar("Milestone added successfully");
+        this.dialogRef.close();
+      }, err => {
+        this.eventService.openSnackBar(err);
+      })
+    }
   }
+
 }

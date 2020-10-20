@@ -427,6 +427,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     console.log('Asset inflamation', this.obj)
     this.planService.saveAssetPreference(this.obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.close()
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
@@ -476,7 +477,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   // ----------------- asset allocation ----------------------
 
   save() {
-    switch (this.selected) {
+    switch (this.selectedTab) {
       case 0:
         this.savePreference();
         break;

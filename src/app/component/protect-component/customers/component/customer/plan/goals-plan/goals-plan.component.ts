@@ -126,6 +126,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   assetError = false;
   selectedGoalId: any = null;
   subscriber = new Subscriber();
+  highlight: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -265,6 +266,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   afterDataLoadMethod() {
+    this.highlight = false
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
     console.log('allGoals',this.allGoals)
     this.allGoals.map(element => {
@@ -604,6 +606,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
+    this.highlight = false
     if (event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
@@ -684,10 +687,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-  addMilestone(data){
+  addMilestone(data,obj,flag){
     const dialogData = {
       data,
-      otherData:this.selectedGoal
+      otherData:this.selectedGoal,
+      flag : flag,
+      singleObj : obj
     }
     this.dialog.open(AddMilestoneComponent, {
       width: '650px',
@@ -710,6 +715,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   inDropZoneMethod(e) {
+    this.highlight = true
     console.log(e, 'dz method')
   }
 

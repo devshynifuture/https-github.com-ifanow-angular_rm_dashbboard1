@@ -89,7 +89,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   familyList =[];
   mfBulkEmailRequestId: number;
   criteriaDate: Date;
-  loadinDone: boolean = false;
+  loadingDone: boolean = false;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -662,7 +662,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.pdfGen.generatePdf(rows, tableTitle);
   }
   generatePdfBulk() {
-    this.loadinDone = true
+    this.loadingDone = true
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
 

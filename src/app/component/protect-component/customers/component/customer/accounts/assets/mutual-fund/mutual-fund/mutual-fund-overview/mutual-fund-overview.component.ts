@@ -103,7 +103,7 @@ export class MutualFundOverviewComponent implements OnInit {
   genObj: { htmlInput: string; name: string; landscape: boolean; key: string; svg: string; };
   sendaata: any;
   clientDetails: any;
-  loadinDone: boolean = false;
+  loadingDone: boolean = false;
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
@@ -1152,7 +1152,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   generatePdfBulk() {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-    this.loadinDone = true
+    this.loadingDone = true
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
     

@@ -411,7 +411,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             "valueAsOn": null,
             "currentMarketValue": 0,
             "amountInvested": 0,
-            "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
+            // "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
             "scripNameId": this.scripData?this.scripData.id:this.editApiData.scripNameId,
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
@@ -453,7 +453,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
               });
             }
             if(this.editApiData && this.portfolioData.id == 0){
-              transObj.ownerList[0].id = null;
+              // transObj.ownerList[0].id = null;
             }
       finalStocks.push(transObj)
       console.log(finalStocks)

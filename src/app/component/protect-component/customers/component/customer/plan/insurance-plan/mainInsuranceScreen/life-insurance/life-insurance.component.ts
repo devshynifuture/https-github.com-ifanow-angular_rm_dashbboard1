@@ -268,6 +268,11 @@ export class LifeInsuranceComponent implements OnInit {
       familyMemberId: [],
       advisorId: this.advisorId,
     }
+    let obj3={
+      clientId: this.clientId,
+      insuranceType: this.inputData.insuranceType,
+      realOrFictious:2
+    }
     this.inputData.owners.forEach(element => {
       // obj.familyMemberId.push(element.ownerId);
       obj2.familyMemberId.push(element.ownerId);
@@ -283,7 +288,8 @@ export class LifeInsuranceComponent implements OnInit {
     //   }
     // );
     const detailofInsurance = this.planService.getDetailsInsurance(obj);
-    const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
+    // const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
+    const suggestPolicyGetGi = this.planService.getGeneralInsuranceReview(obj3);
     const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
     const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
     const recommndationGet = this.planService.getInsuranceAdvice(obj2);
@@ -473,6 +479,7 @@ export class LifeInsuranceComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             // this.getClientSubscriptionList();
+            this.outputChange.emit({id : this.inputData.id});
             subscription.unsubscribe();
           }
         }

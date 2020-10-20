@@ -48,7 +48,7 @@
                                         </mat-option>
                                         <mat-option class="" [value]="4">New business</mat-option>
                                         <mat-option class="" [value]="5">Others</mat-option>
-                                        <mat-option class="" [value]="6">Healthcare</mat-option>
+                                        <mat-option class="" [value]="6">Medical emergency</mat-option>
                                     </mat-select>
                                     <mat-error class="f-12">This field is required</mat-error>
                                 </mat-form-field>
@@ -66,7 +66,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-1 col-1 pr-0 pt-40">
+                        <div class="col-md-1 col-1 pr-0 pt-40" *ngIf="dialogData.flag != 'Edit'">
                             <i *ngIf=" pointIndex+1==singleYearGoalForm.value.getMilestoneName.length && pointIndex<2"
                                 class=" material-icons
                             f-20 c-p" (click)="addMilestone(undefined)">add</i>
