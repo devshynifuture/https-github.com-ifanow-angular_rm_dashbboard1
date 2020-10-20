@@ -1036,6 +1036,9 @@ export class MutualFundUnrealizedTranComponent {
         }else{
           this.isTableShow = true;
         }
+        if(this.isBulkEmailing && this.fromDate && this.toDate){
+          this.isTableShow = false;
+        }
         this.isLoading = false;
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
