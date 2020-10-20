@@ -176,9 +176,9 @@
                         </mat-form-field>
 
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-4 d-flex flex-column justify-content-center p-0" *ngIf="unrealisedTransactions == true">
-                    <h5 class="m-0">To date</h5>
+                    <h5 class="m-0">Report as on</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
                             <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" readonly [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
@@ -187,7 +187,7 @@
                         </mat-form-field>
 
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <div class="row h-80 borderDasd" *ngIf="capitalGainSummary == true">
