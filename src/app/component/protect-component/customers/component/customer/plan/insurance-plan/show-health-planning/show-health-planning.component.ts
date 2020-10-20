@@ -172,6 +172,7 @@ export class ShowHealthPlanningComponent implements OnInit {
    }
   getFilterData(array){
     if(array){
+      this.getSumAssured(array);
       array.forEach(singleInsuranceData => {
         singleInsuranceData.insuranceDetails = singleInsuranceData.insurance ? singleInsuranceData.insurance : singleInsuranceData.insuranceDetails;
         if (singleInsuranceData.insuranceDetails && singleInsuranceData.insuranceDetails.insuredMembers.length > 0) {
@@ -202,6 +203,29 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
 
     return array;
+  }
+  getSumAssured(data){
+    data.forEach(element => {
+       element.sumAssured = 0;
+          if (element.insuranceDetails.insuredMembers.length > 0) {
+            element.insuranceDetails.insuredMembers.forEach(ele => {
+              ele.sumAssured += ele.sumInsured;
+            });
+          } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
+            element.insuranceDetails.policyFeatures.forEach(ele => {
+              element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
+            });
+          } else {
+            element.insuranceDetails.sumInsuredIdv= element.insuranceDetails.sumInsuredIdv;
+          }
+
+          if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+            element.insuranceDetails.addOns.forEach(ele => {
+              element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
+            });
+          }
+    });
+
   }
     deleteModal(value, data) {
     const dialogData = {

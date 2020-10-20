@@ -217,6 +217,7 @@ export class MutualFundUnrealizedTranComponent {
   adminAdvisorIds:any;
   parentId: any;
   loadingDone: boolean = false;
+  isTableShow = true;
 
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
@@ -1030,6 +1031,14 @@ export class MutualFundUnrealizedTranComponent {
             this.styleObjectUnrealised(element, ind);
           });
         }
+        if(this.rightFilterData.transactionPeriodCheck ? this.rightFilterData.transactionPeriodCheck : this.setDefaultFilterData.transactionPeriodCheck && this.viewMode == 'All Transactions'){
+          this.isTableShow = false;
+        }else{
+          this.isTableShow = true;
+        }
+        if(this.isBulkEmailing && this.fromDate && this.toDate){
+          this.isTableShow = false;
+        }
         this.isLoading = false;
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
@@ -1388,6 +1397,7 @@ export class MutualFundUnrealizedTranComponent {
             // this.unrealisedData = new TableVirtualScrollDataSource([]);
             this.setUnrealizedDataSource([]);
             this.isLoading = true;
+            this.isTableShow = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             // this.setTrueKey = this.rightFilterData.setTrueKey;
@@ -1413,15 +1423,19 @@ export class MutualFundUnrealizedTranComponent {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             }
             if(this.rightFilterData.transactionPeriodCheck){
-              if(this.viewMode == 'Unrealized Transactions'){
-                this.reponseData.mutualFundList.forEach(element => {
-                  element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
-                });
-              }else{
+              if(this.viewMode != 'Unrealized Transactions'){
+                // this.reponseData.mutualFundList.forEach(element => {
+                //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
+                // });
                 this.reponseData.mutualFundList.forEach(element => {
                   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
                 });
               }
+              // else{
+              //   this.reponseData.mutualFundList.forEach(element => {
+              //     element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
+              //   });
+              // }
             }
             
             this.mfData = this.reponseData;
