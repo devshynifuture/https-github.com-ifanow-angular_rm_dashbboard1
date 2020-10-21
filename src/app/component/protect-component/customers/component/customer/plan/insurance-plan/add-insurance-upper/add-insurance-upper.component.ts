@@ -22,7 +22,7 @@ export class AddInsuranceUpperComponent implements OnInit {
       direction: 'top',
       componentName: AddInsuranceUpperComponent,
       state: 'close',
-      data:false
+      data:true
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
