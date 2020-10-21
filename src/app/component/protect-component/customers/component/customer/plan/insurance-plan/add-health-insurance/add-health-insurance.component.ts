@@ -299,7 +299,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
-        singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured);
+        singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured ? singleInsuranceData.insurance.insuredMembers[0].sumInsured : singleInsuranceData.insurance.sumInsuredIdv);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
           for (let i = 1; i < singleInsuranceData.insurance.insuredMembers.length; i++) {
             if (singleInsuranceData.insurance.insuredMembers[i].name) {
@@ -310,7 +310,7 @@ export class AddHealthInsuranceComponent implements OnInit {
                 const firstSumInsured = (singleInsuranceData.insurance.insuredMembers[i].sumInsured as string).split(' ')[0];
                 singleInsuranceData.displayHolderSumInsured += ', ₹ ' + firstSumInsured;
               }else{
-                singleInsuranceData.displayHolderSumInsured = 0;
+                singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insurance.sumInsuredIdv ? singleInsuranceData.insurance.sumInsuredIdv : 0;
               }
             }
           }

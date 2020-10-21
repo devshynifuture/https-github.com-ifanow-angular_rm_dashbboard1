@@ -680,12 +680,13 @@ export class HouseholdersInsuranceComponent implements OnInit {
 	}
 
 	close(data,flag) {
-		this.addMoreFlag = false;
-		if (this.inputData.id) {
-			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
-		} else {
-			this.sendOutput.emit(false);
+		if(data){
+		  this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
+		  this.sendOutput.emit(true);
+		}else{
+		  this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
+		  this.sendOutput.emit(false);
 		}
-	}
+	  }
 
 }
