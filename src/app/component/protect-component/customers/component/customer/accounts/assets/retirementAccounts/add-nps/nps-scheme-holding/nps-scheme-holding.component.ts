@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
@@ -42,6 +42,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  @ViewChild('unit', {static: false}) unit;
+
   validatorType = ValidatorType
   inputData: any;
   familyMemberId: any;
@@ -633,14 +635,15 @@ addNewNominee(data) {
 
 schemeDialog(holding): void {
   const dialogRef = this.dialog.open(SchemeListComponent, {
-    width: '421px',
-    // height: '300px',
+    width: '700px',
+    height: '500px',
     data: this.schemeListData
   });
 
   dialogRef.afterClosed().subscribe(result => {
     if(result){
       holding.get('schemeName').setValue(result.name);
+      this.unit.nativeElement.focus();
     }
   });
 
