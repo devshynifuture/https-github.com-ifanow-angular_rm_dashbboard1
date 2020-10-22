@@ -133,4 +133,14 @@ export class MisAumDataStorageService {
   setCallApiData(value){
     this.getDataFromApiObs.next(value);
   }
+
+  clearStorage(){
+    this.obj = {
+      graphData: null,
+      totalAum: null,
+      clientWithoutMf: null,
+      subCatAum: null,
+      misData1: null
+    }
+  }
 }
