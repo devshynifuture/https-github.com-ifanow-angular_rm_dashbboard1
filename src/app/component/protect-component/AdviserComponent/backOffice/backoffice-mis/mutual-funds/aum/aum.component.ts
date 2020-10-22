@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs';
+import { MisAumDataStorageService } from './mis-aum-data-storage.service';
 import {Component, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {BackOfficeService} from '../../../back-office.service';
@@ -30,18 +32,20 @@ export class AumComponent implements OnInit {
   arnRiaList: any;
   aumGraph: any;
   parentId;
-  isLoading = true;
+  isLoading = false;
   adminAdvisorIds = [];
   objTosend: any;
-  isLoadingTopClients = true;
-  isLoadingCategory = true;
+  isLoadingTopClients = false;
+  isLoadingCategory = false;
   clientWithoutMF: number;
+  misDataStoreSubs:Subscription;
+  callApiDataSubs: Subscription;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
-    private fb: FormBuilder, private reconService: ReconciliationService
-  ) {
-  }
+    private fb: FormBuilder, private reconService: ReconciliationService,
+    private misAumDataStorageService: MisAumDataStorageService
+  ) {}
 
   teamMemberId = 2929;
   arnRiaValue = -1;
@@ -50,11 +54,25 @@ export class AumComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.teamMemberListGet();
-    this.viewMode = 'All';
-    this.arnRiaValue = -1;
+    
 
     // if parentId = 0 arnRiaDetails selection will be disabled
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
+  }
+  getDataFromStore(){
+    this.misDataStoreSubs = this.misAumDataStorageService.getAllMisData().subscribe(res=>{
+      this.setValuesFromDataStore(res);
+    });
+    this.callApiDataSubs = this.misAumDataStorageService.canWeGetDataFromApi().subscribe(res=>{
+      if(res){
+        this.getGraphData();
+        this.getTotalAum();
+        // this.getSubCatScheme();
+        this.getClientWithoutMf();
+        this.getSubCatAum();
+        this.getMisData();
+      }
+    })
   }
 
   teamMemberListGet() {
@@ -62,13 +80,16 @@ export class AumComponent implements OnInit {
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
+          this.getDataFromStore();
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
           if (this.parentId !== 0) {
             this.getArnRiaList();
           } else {
-            this.initPoint();
+            if(this.misAumDataStorageService.doDataExist()){
+              this.misAumDataStorageService.callApiData();
+            }
           }
           // this.handlingDataVariable();
         } else {
@@ -76,7 +97,9 @@ export class AumComponent implements OnInit {
           if (this.parentId !== 0) {
             this.getArnRiaList();
           } else {
-            this.initPoint();
+            if(this.misAumDataStorageService.doDataExist()){
+              this.misAumDataStorageService.callApiData();
+            }
           }
           // this.handlingDataVariable();
           // this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
@@ -85,20 +108,39 @@ export class AumComponent implements OnInit {
         if (this.parentId !== 0) {
           this.getArnRiaList();
         } else {
-          this.initPoint();
+          if(this.misAumDataStorageService.doDataExist()){
+            this.misAumDataStorageService.callApiData();
+          }
         }
         // console.log(err);
       });
   }
 
-  initPoint() {
-
-    this.getGraphData();
-    this.getTotalAum();
-    // this.getSubCatScheme();
-    this.getClientWithoutMf();
-    this.getSubCatAum();
-    this.getMisData();
+  setValuesFromDataStore(res){
+    if(res){
+      this.isLoadingTopClients = false;
+      this.isLoading = false;
+      this.isLoadingCategory = false;
+      if(res.graphData){
+        this.aumGraph = res.graphData;
+        this.pieChart('pieChartAum', res.graphData);
+      }
+      if(res.totalAum){
+        this.clientTotalAum = res.totalAum['clientTotalAum'];
+        this.amcTotalAum = res.totalAum['amcTotalAum'];
+      }
+      if(res.clientWithoutMf){
+        this.calculateClientWithoutMf(res.clientWithoutMf);
+      }
+      if(res.subCatAum){
+        this.category = res.subCatAum['category'];
+        this.subcategory = res.subCatAum['subcategory'];
+      }
+      if(res.misData1){
+        this.MiscData1 = res.misData1;
+      }
+      this.misAumDataStorageService.setCallApiData(false);
+    }
   }
 
   changeValueOfArnRia(item) {
@@ -110,11 +152,14 @@ export class AumComponent implements OnInit {
     this.viewMode = item.number;
     if (item.number != 'All') {
       this.arnRiaValue = item.id;
-
+      this.misAumDataStorageService.setArnRiaDetail(item.id);
     } else {
       this.arnRiaValue = -1;
+      this.misAumDataStorageService.setArnRiaDetail(item.id);
     }
-    this.initPoint();
+    if(this.misAumDataStorageService.doDataExist()){
+      this.misAumDataStorageService.callApiData();
+    }
   }
 
   showMainWrapper() {
@@ -133,20 +178,36 @@ export class AumComponent implements OnInit {
         if (data) {
           // this.advisorId = 0;
           this.arnRiaList = data;
-
+          
           const obj = {
             number: 'All',
             id: -1
           };
           this.arnRiaList.unshift(obj);
-          this.initPoint();
+
+          if(!this.misAumDataStorageService.isArnRiaValueMinusOne()){
+            this.arnRiaValue = this.misAumDataStorageService.arnRiaValue;
+            this.viewMode = this.arnRiaList.find(item => item.id === this.arnRiaValue).number;
+          } else {
+            this.arnRiaValue = -1;
+            this.viewMode = 'All';
+          }
+          if(!this.misAumDataStorageService.doDataExist()){
+            this.misAumDataStorageService.callApiData();
+          }
         } else {
-          this.initPoint();
+          if(!this.misAumDataStorageService.doDataExist()){
+            this.misAumDataStorageService.callApiData();
+          }
 
           // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
     );
+  }
+
+  refreshData(){
+    this.misAumDataStorageService.callApiData();
   }
 
   showSubTableList() {
@@ -160,7 +221,9 @@ export class AumComponent implements OnInit {
     this.aumComponent = true;
     this.viewMode = value.viewMode;
     this.arnRiaValue = value.arnRiaValue;
-    this.initPoint();
+    if(!this.misAumDataStorageService.doDataExist()){
+      this.misAumDataStorageService.callApiData();
+    }
     // setTimeout(() => {
     //   this.pieChart('pieChartAum', this.aumGraph);
     // }, 600);
@@ -182,7 +245,10 @@ export class AumComponent implements OnInit {
       parentId: this.parentId
     };
     this.backoffice.getClientTotalAUM(obj).subscribe(
-      data => this.getFileResponseDataAum(data),
+      data => {
+        this.getFileResponseDataAum(data);
+        this.misAumDataStorageService.setTotalAumData(data);
+      },
       err => {
         this.isLoadingTopClients = false;
         this.clientTotalAum = [];
@@ -202,10 +268,10 @@ export class AumComponent implements OnInit {
     this.backoffice.getclientWithoutMf(obj).subscribe(
       data => {
         if (data) {
+          this.isLoading = false;
           console.log(data);
-          this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
-          this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
-          (this.clientWithoutMF > 100) ? this.clientWithoutMF = 100 : this.clientWithoutMF;
+          this.misAumDataStorageService.setClientWithoutMfData(data);
+          this.calculateClientWithoutMf(data);
         } else {
           this.clientWithoutMF = 0;
         }
@@ -218,6 +284,12 @@ export class AumComponent implements OnInit {
     );
   }
 
+  calculateClientWithoutMf(data){
+    this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
+    this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
+    (this.clientWithoutMF > 100) ? this.clientWithoutMF = 100 : this.clientWithoutMF;
+  }
+
   getMisData() {
     this.isLoading = true;
     const obj = {
@@ -226,8 +298,10 @@ export class AumComponent implements OnInit {
       parentId: this.parentId
     };
     this.backoffice.getMisData(obj).subscribe(
-      data => this.getFileResponseDataForMis(data),
-      err => {
+      data => {
+        this.getFileResponseDataForMis(data);
+        this.misAumDataStorageService.setMisData1(data);
+      },err => {
         this.isLoading = false;
         this.MiscData1 = '';
         this.getFilerrorResponse(err);
@@ -244,8 +318,10 @@ export class AumComponent implements OnInit {
       parentId: this.parentId
     };
     this.backoffice.getSubCatAum(obj).subscribe(
-      data => this.getFileResponseDataForSub(data),
-      err => {
+      data => {
+        this.getFileResponseDataForSub(data);
+        this.misAumDataStorageService.setSubCatAumData(data);
+      },err => {
         this.isLoadingCategory = false;
         this.category = [];
         this.subcategory = [];
@@ -316,6 +392,7 @@ export class AumComponent implements OnInit {
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
         this.aumGraph = data;
+        this.misAumDataStorageService.setGraphData(data);
         setTimeout(() => {
           this.pieChart('pieChartAum', data);
         }, 1000);
@@ -362,6 +439,11 @@ export class AumComponent implements OnInit {
         data: [obj1.GrossSale + obj1.Redemption, obj2.GrossSale + obj2.Redemption, obj3.GrossSale + obj3.Redemption, obj4.GrossSale + obj4.Redemption]
       }]
     });
+  }
+
+  ngOnDestroy(): void {
+    this.callApiDataSubs.unsubscribe()
+    this.misDataStoreSubs.unsubscribe();
   }
 }
 
