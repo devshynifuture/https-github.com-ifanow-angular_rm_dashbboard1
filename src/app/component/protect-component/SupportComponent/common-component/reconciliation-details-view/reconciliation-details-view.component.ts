@@ -483,7 +483,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
         }
 
-        if(this.dataSource){
+        if(this.dataSource && this.dataSource.data){
           this.dataSource.data.map(item => {
             item.unitOne = String(res.units);
             this.changesInUnitOne = String(res.units);
