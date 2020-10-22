@@ -397,6 +397,11 @@ export class RetirementAccountComponent implements OnInit {
               this.getListNPS();
               break;
             case 'addEPF':
+              // this.epfDatalist.assetList.push(sideBarData.data)
+              // this.epfDatalist.sumOfEpfBalanceTillToday+=;
+              // this.epfDatalist.sumOfEpsBalanceTillToday+=;
+              
+              // this.getEPFRes(this.epfDatalist);
               this.getListEPF();
               break;
             case 'addSchemeHolding':

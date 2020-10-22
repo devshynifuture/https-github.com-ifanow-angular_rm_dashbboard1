@@ -636,11 +636,11 @@ export class AddRealEstateComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data});
       this.eventService.openSnackBar('Added successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data});
     }
     this.barButtonOptions.active = false;
 

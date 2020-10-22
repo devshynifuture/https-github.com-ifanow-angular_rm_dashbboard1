@@ -150,14 +150,14 @@ export class RealEstateComponent implements OnInit {
       this.assetValidation.getAssetCountGLobalData()
 
       console.log('getRealEstateRes', data);
-      this.dataList = data.assetList;
-      this.datasource3.data = data.assetList;
+      this.dataList = data;
+      this.datasource3.data = this.dataList.assetList;
       data.assetList.forEach(singleAsset => {
         singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
       });
       this.datasource3.sort = this.sort;
-      this.sumOfMarketValue = data.sumOfMarketValue;
-      this.sumOfpurchasedValue = data.sumOfPurchaseValue;
+      this.sumOfMarketValue = this.dataList.sumOfMarketValue;
+      this.sumOfpurchasedValue = this.dataList.sumOfPurchaseValue;
     } else {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
@@ -177,8 +177,11 @@ export class RealEstateComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.dataList = this.dataList.filter(x => x.id != element.id);
-              this.datasource3.data = this.dataList;
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfMarketValue -= element.marketValue;
+              // this.dataList.sumOfPurchaseValue += element.amountInvested;
+              this.getRealEstateRes(this.dataList);
+              // this.datasource3.data = this.dataList;
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
@@ -217,7 +220,15 @@ export class RealEstateComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getRealEstate();
+            if(data){
+              this.getRealEstate();
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data)
+              this.dataList.sumOfMarketValue += sideBarData.data.marketValue;
+              this.dataList.sumOfPurchaseValue += sideBarData.data.amountInvested;
+              this.getRealEstateRes(this.dataList);
+            }
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
