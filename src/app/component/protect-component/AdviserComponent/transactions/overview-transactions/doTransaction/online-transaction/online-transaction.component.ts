@@ -135,10 +135,12 @@ export class OnlineTransactionComponent implements OnInit {
           this.familyMemberList = data;
           this.filteredStates = of(this.familyMemberList);
           this.familyMemberList.forEach(element => {
-            if (this.mutualFundData.familyMemberId == element.familyMemberId) {
-              this.stateCtrl.setValue(element)
-              this.valid = true
-              this.ownerDetails(element)
+            if(this.mutualFundData){
+              if (this.mutualFundData.familyMemberId == element.familyMemberId) {
+                this.stateCtrl.setValue(element)
+                this.valid = true
+                this.ownerDetails(element)
+              }
             }
           });
 
