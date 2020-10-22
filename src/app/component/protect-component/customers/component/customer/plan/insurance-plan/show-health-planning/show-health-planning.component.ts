@@ -42,6 +42,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   ownerIds =[];
   familyMemberList: any;
   insuranceIds =[];
+  isRefreshRequired =false;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -250,6 +251,7 @@ export class ShowHealthPlanningComponent implements OnInit {
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
               dialogRef.close();
               this.getStepOneAndTwoData();
+              this.isRefreshRequired = true;
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -274,11 +276,12 @@ export class ShowHealthPlanningComponent implements OnInit {
     });
   }
   close(data) {
+    data.isRefreshRequired = this.isRefreshRequired
     const fragmentData = {
       direction: 'top',
       componentName: ShowHealthPlanningComponent,
       state: 'close',
-      data,
+      data:data
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
@@ -349,8 +352,11 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            this.isRefreshRequired = true;
             // this.addGeneralInsurance(sideBarData.data.id);
              this.getStepOneAndTwoData();
+          }else{
+            this.isRefreshRequired = false;
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -404,8 +410,11 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            this.isRefreshRequired = true;
             // this.insuranceIds.push(sideBarData.data)
             this.getStepOneAndTwoData();
+          }else{
+            this.isRefreshRequired = false;
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
