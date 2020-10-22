@@ -168,6 +168,7 @@ export class SelectFolioMapComponent implements OnInit {
           console.log(res);
           // update call responds with 200 refresh or else no refresh
           if(res.statusCode === 200){
+            this.misAumDataStorageService.clearStorage();
             this.misAumDataStorageService.callApiData();
             this.dialogClose(true);
           } else {

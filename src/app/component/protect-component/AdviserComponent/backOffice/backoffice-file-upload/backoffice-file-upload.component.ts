@@ -194,6 +194,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       // this.barWidth = "100%";
       this.addbarWidth(100);
       this.targetFile = null;
+      this.misAumDataStorageService.clearStorage();
       this.misAumDataStorageService.callApiData();
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload

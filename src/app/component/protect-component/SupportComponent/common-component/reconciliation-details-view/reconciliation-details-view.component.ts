@@ -470,28 +470,32 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
         value.shift();
+        this.misAumDataStorageService.clearStorage();
         this.misAumDataStorageService.callApiData();
-        this.dataSource1.data = this.tableData1.filter(item => {
-          return (!value.includes(String(item.id))) ? item : null;
-        });
-
-        this.tableData1 = [...this.dataSource1.data];
+        if(this.dataSource1 && this.dataSource1.data.length>0){
+          this.dataSource1.data = this.tableData1.filter(item => {
+            return (!value.includes(String(item.id))) ? item : null;
+          });
+          this.tableData1 = [...this.dataSource1.data];
+        }
 
         if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
         }
 
-        this.dataSource.data.map(item => {
-          item.unitOne = String(res.units);
-          this.changesInUnitOne = String(res.units);
-          item.difference = String((parseFloat(res.units) - parseFloat(item.unitsRta)).toFixed(3));
-          this.data.difference = String((parseFloat(item.unitOne) - parseFloat(item.unitsRta)).toFixed(3));
-          if (this.data && (parseFloat(item.difference) === 0.000)) {
-            this.disableFreezeBtn = false;
-          } else {
-            this.disableFreezeBtn = true;
-          }
-        });
+        if(this.dataSource){
+          this.dataSource.data.map(item => {
+            item.unitOne = String(res.units);
+            this.changesInUnitOne = String(res.units);
+            item.difference = String((parseFloat(res.units) - parseFloat(item.unitsRta)).toFixed(3));
+            this.data.difference = String((parseFloat(item.unitOne) - parseFloat(item.unitsRta)).toFixed(3));
+            if (this.data && (parseFloat(item.difference) === 0.000)) {
+              this.disableFreezeBtn = false;
+            } else {
+              this.disableFreezeBtn = true;
+            }
+          });
+        }
 
         this.deleteMultipleTransactionArray = [];
 
@@ -509,6 +513,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.shouldShowMultipleDelete = false;
 
         this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
+
         this.sendValueToParent();
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
         // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
@@ -762,6 +767,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.dataSource2.data.forEach(item => {
           this.keepStatus.push(item.keep);
         });
+        this.misAumDataStorageService.clearStorage();
         this.misAumDataStorageService.callApiData();
 
         if (this.filterBasedOn && this.filterOnWhichTable) {
