@@ -78,6 +78,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.selectedId = insurance.id
     console.log('insurance',insurance)
     this.detailsInsurance = insurance
+    this.detailsInsurance.dataLoaded = true;
     this.showIsurance = true
   }
   getInsuranceList() {
@@ -145,7 +146,7 @@ export class AllInsurancelistComponent implements OnInit {
         }  else if (element.insuranceType == 10) {
           element.heading = 'Fire insurance'
           element.logo = '/assets/images/svg/FIsmall.svg'
-        } else if (element.insuranceType == 11) {
+        } else if (element.insuranceType == 9) {
           element.heading = 'Home insurance'
           element.logo = '/assets/images/svg/Hsmall.svg'
         } else if (element.insuranceType == 7) {
@@ -171,6 +172,7 @@ export class AllInsurancelistComponent implements OnInit {
       }else{
         this.detailsInsurance = this.insuranceList[0]
       }
+      this.detailsInsurance.dataLoaded = true;
 
       this.showIsurance = true;
     }else{
@@ -262,6 +264,7 @@ export class AllInsurancelistComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if(upperSliderData['data']){
             this.selectedId = '';
+            this.detailsInsurance.dataLoaded = false;
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

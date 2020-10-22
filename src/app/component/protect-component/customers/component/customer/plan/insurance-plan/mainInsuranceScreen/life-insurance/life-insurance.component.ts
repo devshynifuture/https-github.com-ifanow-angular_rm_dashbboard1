@@ -199,7 +199,9 @@ export class LifeInsuranceComponent implements OnInit {
           //Object.assign( this.needAnalysisData, {id: data.id});
         }
       });
-      this.getDetailsInsurance()
+      if(data.dataLoaded){
+        this.getDetailsInsurance()
+      }
     }
   }
   formatNumber(data, noOfPlaces: number = 0) {
@@ -305,7 +307,7 @@ export class LifeInsuranceComponent implements OnInit {
         if(this.inputData.insuranceType != 1){
           let current = suggestedData.current.length > 0 ? suggestedData.current[0] : [];
           let suggested = suggestedData.suggested.length > 0 ? suggestedData.suggested[0] : []
-          let mergeArray = [...current, ...suggested];
+          let mergeArray = [...suggested];
           mergeArray.forEach(element => {
             element.insurance = element.insuranceDetails
             element.expanded = false;
@@ -393,7 +395,7 @@ export class LifeInsuranceComponent implements OnInit {
             element.insuranceDetails.sumInsuredIdv= element.insuranceDetails.sumInsuredIdv;
           }
 
-          if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+          if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
             element.insuranceDetails.addOns.forEach(ele => {
               element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
             });
@@ -527,7 +529,7 @@ export class LifeInsuranceComponent implements OnInit {
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
               // this.getDetailsInsurance();
-              this.outputChange.emit({id : this.inputData.id,isRefreshRequired:true});
+              this.outputChange.emit({id : this.inputData.id,isRefreshRequired:sideBarData.data.isRefreshRequired});
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
             rightSideDataSub.unsubscribe();
@@ -547,7 +549,7 @@ export class LifeInsuranceComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             // this.getClientSubscriptionList();
-            this.outputChange.emit({id : this.inputData.id,isRefreshRequired:true});
+            this.outputChange.emit({id : this.inputData.id,isRefreshRequired:upperSliderData['data'].isRefreshRequired});
             subscription.unsubscribe();
           }
         }

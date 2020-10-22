@@ -108,15 +108,25 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.getTransactionTypeData();
     this.transactionListForm.valueChanges.subscribe(res => console.log("this is transactionForm values::::", res))
   }
+  callFunctions(){
+    this.checkValidation();
+    this.setValueChangeForScheme();
 
+  }
   setValueChangeForScheme() {
-    this.schemeNameControl.valueChanges
+    // if(this.schemeNameControl.value && this.schemeNameControl.hasOwnProperty('value') &&this.schemeNameControl.value.length > 1 ){
+    //   if(this.schemeNameControl.value.length > 2){
+    //     this.isLoadingForDropDown = true;
+    //   }
+      this.schemeNameControl.valueChanges
       .pipe(
         debounceTime(500),
         tap(() => {
           this.errorMsg = "";
           this.filteredSchemes = [];
-          this.isLoadingForDropDown = true;
+         if(this.schemeNameControl.value && this.schemeNameControl.hasOwnProperty('value') &&this.schemeNameControl.value.length > 2 ){
+        this.isLoadingForDropDown = true;
+        }
         }),
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
@@ -136,13 +146,17 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         // this.schemeLevelHoldingForm.get('schemeName').setValue(this.filteredSchemes[0].name);
         if (data) {
           this.filteredSchemeError = false;
+          this.isLoadingForDropDown = false;
         } else {
           this.filteredSchemeError = true;
+          this.isLoadingForDropDown = false;
           this.errorMsg = "No scheme Found";
         }
         console.log(this.filteredSchemes);
       });
     // this.getFamilyMemberList();
+    // }
+   
   }
 
   getRtTypeIdList() {
@@ -163,7 +177,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
   getFilteredSchemesList(value) {
     if (value !== '' && (typeof value === 'string')) {
-      return this.customerService.getSchemeNameList({ schemeName: value })
+      if(value.length > 2){
+        return this.customerService.getSchemeNameList({ schemeName: value })
+      }
     } else if (typeof (value) === 'object') {
       return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
     }
@@ -386,7 +402,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
-  checkValidation(value){
+  checkValidation(){
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
     if(this.errorMsgForScheme){
       this.filteredSchemeError = false;

@@ -7,7 +7,7 @@ import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.com
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, switchMap } from 'rxjs/operators';
-import { SwPush } from '@angular/service-worker';
+// import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-backoffice-folio-mapping',

@@ -1,3 +1,4 @@
+import { MisAumDataStorageService } from './../backoffice-mis/mutual-funds/aum/mis-aum-data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { ReconciliationService } from '../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -39,7 +40,8 @@ export class BackofficeFileUploadComponent implements OnInit {
     private BackOffice: BackofficeFileUploadService,
     private settingService: SettingsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private misAumDataStorageService: MisAumDataStorageService
   ) {
   }
 
@@ -192,6 +194,8 @@ export class BackofficeFileUploadComponent implements OnInit {
       // this.barWidth = "100%";
       this.addbarWidth(100);
       this.targetFile = null;
+      this.misAumDataStorageService.clearStorage();
+      this.misAumDataStorageService.callApiData();
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload
       var { value } = this.fileType[0];
