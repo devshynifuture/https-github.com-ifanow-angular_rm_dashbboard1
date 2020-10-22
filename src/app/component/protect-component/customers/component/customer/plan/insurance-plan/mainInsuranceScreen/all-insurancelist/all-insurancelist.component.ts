@@ -107,7 +107,9 @@ export class AllInsurancelistComponent implements OnInit {
       }else{
         this.selectedId ='';
       }
-      this.getInsuranceList()
+      if(value.isRefreshRequired){
+        this.getInsuranceList()
+      }
     }
   }
   getInsurancePlaningListRes(data) {

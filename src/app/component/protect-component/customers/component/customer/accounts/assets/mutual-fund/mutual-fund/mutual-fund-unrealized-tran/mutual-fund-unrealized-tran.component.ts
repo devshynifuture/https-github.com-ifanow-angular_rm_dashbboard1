@@ -238,7 +238,7 @@ export class MutualFundUnrealizedTranComponent {
         this.advisorId = parseInt(param1.advisorId);
         this.parentId=parseInt(param1.parentId);
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
-        // this.toDate = param1.toDate;
+        this.toDate = param1.toDate;
         // this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
         this.addedData = true;
         this.isRouterLink = true;
@@ -809,10 +809,11 @@ export class MutualFundUnrealizedTranComponent {
 
         this.mfService.setDataForMfGet(this.mfData);
         if (this.isBulkEmailing && this.viewMode == 'All Transactions') {
-          //  this.filterForBulkEmailing(data.mutualFundList);
-          this.getUnrealizedData();
+           this.filterForBulkEmailing(data.mutualFundList);
+          // this.getUnrealizedData();
         } else {
-          this.getUnrealizedData();
+          this.filterForBulkEmailing(data.mutualFundList);
+          // this.getUnrealizedData();
         }
         this.mfService.setMfData(this.mfData);
         this.mfService.setFilterValues(this.setDefaultFilterData);
@@ -857,14 +858,20 @@ export class MutualFundUnrealizedTranComponent {
         data => {
           console.log(data);
           const response = this.mfService.doFiltering(data);
-            // response.mutualFundList.forEach(element => {
-            //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
-            // });
+          this.mutualFund = response;
           Object.assign(response.mutualFundList, {flag: true});
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
           });
-          this.asyncFilter(response.mutualFundList);
+            // response.mutualFundList.forEach(element => {
+            //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+            // });
+            if (this.viewMode == 'All Transactions') {
+              this.asyncFilter(response.mutualFundList);
+           } else {
+            this.getUnrealizedData()
+           }
+        
         }
       );
     }

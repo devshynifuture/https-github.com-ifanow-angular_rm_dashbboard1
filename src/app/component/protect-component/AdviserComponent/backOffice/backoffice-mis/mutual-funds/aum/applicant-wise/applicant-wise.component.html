@@ -413,7 +413,7 @@
 
                                                                                         <!-- [appSkeletonLoading]="isLoadingApplicant" prod build -->
                                                                                         <table
-                                                                                            *ngIf="client.showFolio == false && client.schemeList?.length > 0"
+                                                                                            *ngIf="client.showFolio == false"
                                                                                             class="skeletonAnimation table95 mt-16 mb-8"
                                                                                             appSkeletonLoading
                                                                                             id="table-low">
@@ -465,7 +465,7 @@
                                                                                                     <th class="w-15 f-500 c-p"
                                                                                                         (click)="sortByBalanceUnit(sub.schemeList,'balanceUnit')">
                                                                                                         <span
-                                                                                                            class="d-flex align-items-center">
+                                                                                                            class="d-flex justify-content-end align-items-center">
                                                                                                             Balance unit
                                                                                                             <i class="material-icons ml-4 f-14 text-primitive"
                                                                                                                 *ngIf="propertyName5=='balanceUnit' && !reverse5">
@@ -515,7 +515,7 @@
                                                                                                                 [value]="client.totalAum"></span>
                                                                                                         </div>
                                                                                                     </td>
-                                                                                                    <td>
+                                                                                                    <td class="text-right">
                                                                                                         <div
                                                                                                             class="bar">
                                                                                                             <!--                                                                                                            {{'₹ '}}-->
@@ -538,7 +538,7 @@
                                                                                         <!-- !isLoadingApplicant && brod build -->
                                                                                         <!-- *ngIf="subCatList.length == 0" brod build -->
                                                                                         <div
-                                                                                            *ngIf="client.showFolio == false && client.schemeList === null ||client.showFolio == false && client.schemeList?.length == 0">
+                                                                                            *ngIf="client.showFolio == false && sub?.schemeList === null ||client.showFolio == false && sub?.schemeList?.length == 0">
                                                                                             <div
                                                                                                 class="d-flex flex-column align-items-center">
                                                                                                 <h4

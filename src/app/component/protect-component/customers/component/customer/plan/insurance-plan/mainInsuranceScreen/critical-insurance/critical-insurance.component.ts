@@ -134,6 +134,8 @@ export class CriticalInsuranceComponent implements OnInit {
         subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
       }]
     plannerNotes: any;
+    ownerIds =[];
+    insData: any;
 
 
     constructor(private planService :PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
@@ -143,6 +145,7 @@ export class CriticalInsuranceComponent implements OnInit {
     @Input() set data(data) {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId();
+        this.insData = data;
         this.inputData = data.inputData;
         this.policyList = data.displayList.policyTypes;
         this.addOns = data.displayList.addOns;
@@ -686,6 +689,7 @@ export class CriticalInsuranceComponent implements OnInit {
     saveCriticalIllness() {
         this.getClientId();
         let memberList = [];
+        let suggestNewData;
         let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray
         finalMemberList.controls.forEach(element => {
             let obj =
@@ -726,7 +730,7 @@ export class CriticalInsuranceComponent implements OnInit {
                 "advisorName": this.critialIllnessForm.get('advisorName').value,
                 "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
                 "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
-                "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+                "insuranceSubTypeId": this.insuranceType,
                 'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
                 "id": (this.id) ? this.id : null,
                 'realOrFictitious':2,
@@ -758,12 +762,23 @@ export class CriticalInsuranceComponent implements OnInit {
                     }
                 });
             }
+            if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+                obj.insuredMembers.forEach(ele => {
+                    this.ownerIds.push({
+                        'ownerId': ele.familyMemberId
+                    })
+                });
+            } else {
+                this.ownerIds.push({
+                    'ownerId': obj.policyHolderId
+                })
+            }
             console.log(obj);
 
 
 
             if (this.dataForEdit) {
-                this.customerService.editGeneralInsuranceData(obj).subscribe(
+                this.planService.editGenralInsurancePlan(obj).subscribe(
                     data => {
                         this.barButtonOptions.active = false;
                         console.log(data);
@@ -771,7 +786,7 @@ export class CriticalInsuranceComponent implements OnInit {
                         const insuranceData =
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
-                            insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+                            insuranceSubTypeId: this.insuranceType,
                             id:data ? data : null
                         }
                         this.close(insuranceData,true)
@@ -782,28 +797,77 @@ export class CriticalInsuranceComponent implements OnInit {
             } else {
                 this.planService.addGenralInsurancePlan(obj).subscribe(
                     data => {
-                        this.barButtonOptions.active = false;
                         console.log(data);
-                        this.eventService.openSnackBar("Added successfully!", 'Dismiss');
-                        const insuranceData =
-                        {
-                            insuranceTypeId: this.inputData.insuranceTypeId,
-                            insuranceSubypeId: this.inputData.insuranceSubTypeId,
-                            id:data ? data : null
+                        if (this.inputData.flag == 'ExistingSuggestNew') {
+                            const obj = {
+                                "id": this.inputData.id,
+                                "insuranceIds": JSON.stringify([data])
+                            }
+                            this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
+                        } else {
+                            let obj = {
+                                "planningList":
+                                    JSON.stringify({
+                                        "advisorId": this.advisorId,
+                                        "clientId": this.clientId,
+                                        "insuranceType": this.insuranceType,
+                                        "owners": this.ownerIds
+                                    }),
+                                "needAnalysis": JSON.stringify([data])
+                            }
+                            this.planService.addGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    suggestNewData = data;
+                                    //   this.barButtonOptions.active = false;
+                                    //   this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
                         }
-                        this.close(insuranceData,true)
                     }
                 );
             }
         }
     }
 
-    close(data,flag) {
-        this.addMoreFlag = false;
-        if (this.inputData.id) {
-            this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
+    close(data, flag) {
+        if (data.id) {
+            this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            this.sendOutput.emit(data);
         } else {
-            this.sendOutput.emit(false);
+            if (data.flag == 'SuggestNew') {
+                this.sendOutput.emit(false);
+            } else {
+                this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            }
         }
     }
 
