@@ -1,4 +1,4 @@
-import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
+// import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
 import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
@@ -47,7 +47,7 @@ export class CrmTasksComponent implements OnInit {
     private crmTaskService: CrmTaskService,
     private eventService: EventService,
     private dialog: MatDialog,
-    private webPushNotify: WebPushNotifyService,
+    // private webPushNotify: WebPushNotifyService,
   ) { }
 
   ngOnInit() {
@@ -65,9 +65,9 @@ export class CrmTasksComponent implements OnInit {
     // this.registerForPushNotification();
   }
 
-  registerForPushNotification() {
-    this.webPushNotify.enableWebPushNotification();
-  }
+  // registerForPushNotification() {
+  //   this.webPushNotify.enableWebPushNotification();
+  // }
 
   setFilterValue() {
     this.isFilterSet = true;
