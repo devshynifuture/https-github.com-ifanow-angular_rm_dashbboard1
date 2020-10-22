@@ -46,7 +46,7 @@
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
               <ng-container *ngIf="!isLoadingForDropDown">
-                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme.schemeName"
+                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme?.schemeName"
                   matTooltipPosition="after">
                   <div (click)="mapSchemeWithForm(scheme)">
                     <strong>{{scheme.schemeName}}</strong>
