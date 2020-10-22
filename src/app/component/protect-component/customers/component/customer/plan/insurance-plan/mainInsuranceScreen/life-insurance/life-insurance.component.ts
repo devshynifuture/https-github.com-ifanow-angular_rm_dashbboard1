@@ -393,7 +393,7 @@ export class LifeInsuranceComponent implements OnInit {
             element.insuranceDetails.sumInsuredIdv= element.insuranceDetails.sumInsuredIdv;
           }
 
-          if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+          if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
             element.insuranceDetails.addOns.forEach(ele => {
               element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
             });

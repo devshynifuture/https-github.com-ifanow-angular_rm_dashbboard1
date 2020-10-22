@@ -765,12 +765,12 @@ export class CriticalInsuranceComponent implements OnInit {
             if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
                 obj.insuredMembers.forEach(ele => {
                     this.ownerIds.push({
-                        'ownerId': ele.familyMemberId
+                        'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
                     })
                 });
             } else {
                 this.ownerIds.push({
-                    'ownerId': obj.policyHolderId
+                    'ownerId': obj.policyHolderId == this.clientId ? 0 : obj.policyHolderId
                 })
             }
             console.log(obj);
