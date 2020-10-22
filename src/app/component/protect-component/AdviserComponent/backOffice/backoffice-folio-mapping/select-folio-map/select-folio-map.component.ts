@@ -1,3 +1,4 @@
+import { MisAumDataStorageService } from './../../backoffice-mis/mutual-funds/aum/mis-aum-data-storage.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from './../../../../../../common/link-bank/link-bank.component';
 import { AuthService } from './../../../../../../auth-service/authService';
@@ -37,7 +38,8 @@ export class SelectFolioMapComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private fb: FormBuilder,
     private eventService: EventService,
-    private backOfcFolioMappingService: BackofficeFolioMappingService
+    private backOfcFolioMappingService: BackofficeFolioMappingService,
+    private misAumDataStorageService: MisAumDataStorageService
   ) { }
 
 
@@ -166,6 +168,7 @@ export class SelectFolioMapComponent implements OnInit {
           console.log(res);
           // update call responds with 200 refresh or else no refresh
           if(res.statusCode === 200){
+            this.misAumDataStorageService.callApiData();
             this.dialogClose(true);
           } else {
             this.dialogClose(false);

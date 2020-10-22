@@ -101,12 +101,14 @@ export class EnumDataService {
     if (userData != null) {
       self.userData = userData;
     }
-
-    userData.forEach(u => {
-      if (u.familyMemberAge < 18) {
-        self.getAll = true;
-      }
-    });
+    if(userData){
+      userData.forEach(u => {
+        if (u.familyMemberAge < 18) {
+          self.getAll = true;
+        }
+      });
+    }
+   
     return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
@@ -127,13 +129,16 @@ export class EnumDataService {
           });
       } else {
         let obj = [];
-        userData.forEach(u => {
-          let user = {
-            userId: u.id == 0 ? u.clientId : u.id,
-            userType: u.userType
-          };
-          obj.push(user);
-        });
+        if(userData){
+          userData.forEach(u => {
+            let user = {
+              userId: u.id == 0 ? u.clientId : u.id,
+              userType: u.userType
+            };
+            obj.push(user);
+          });
+        }
+       
 
         self.custumService.getJointBankList(obj).subscribe(
           (data) => {

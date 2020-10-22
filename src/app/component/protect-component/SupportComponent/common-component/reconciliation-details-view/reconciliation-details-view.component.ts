@@ -1,3 +1,4 @@
+import { MisAumDataStorageService } from './../../../AdviserComponent/backOffice/backoffice-mis/mutual-funds/aum/mis-aum-data-storage.service';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { style } from '@angular/animations';
@@ -73,7 +74,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     private reconService: ReconciliationService,
     private eventService: EventService,
     private supportService: SupportService,
-    private router: Router
+    private router: Router,
+    private misAumDataStorageService: MisAumDataStorageService
   ) { }
 
   ngOnInit() {
@@ -468,6 +470,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
         value.shift();
+        this.misAumDataStorageService.callApiData();
         this.dataSource1.data = this.tableData1.filter(item => {
           return (!value.includes(String(item.id))) ? item : null;
         });
@@ -759,6 +762,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.dataSource2.data.forEach(item => {
           this.keepStatus.push(item.keep);
         });
+        this.misAumDataStorageService.callApiData();
 
         if (this.filterBasedOn && this.filterOnWhichTable) {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
