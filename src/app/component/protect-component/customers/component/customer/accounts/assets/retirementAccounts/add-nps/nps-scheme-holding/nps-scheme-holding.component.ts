@@ -643,6 +643,7 @@ schemeDialog(holding): void {
   dialogRef.afterClosed().subscribe(result => {
     if(result){
       holding.get('schemeName').setValue(result.name);
+      holding.get('schemeId').setValue(result.id);
       this.unit.nativeElement.focus();
     }
   });

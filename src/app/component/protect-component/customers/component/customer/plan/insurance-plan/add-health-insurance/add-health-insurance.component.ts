@@ -472,7 +472,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   //   );
   // }
   }
-  
+
   close(flag) {
     if(this.showNewPolicy){
       this.showNewPolicy = false;
@@ -539,7 +539,7 @@ export class AddHealthInsuranceComponent implements OnInit {
 
     }
   }
-  saveExistingPolicy(input){
+  saveExistingPolicy(){
     if (this.isChecked){
       this.barButtonOptions.active = true;
       const obj={
