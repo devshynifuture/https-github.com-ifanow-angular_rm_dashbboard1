@@ -13,6 +13,7 @@ import { MatDialog, MatAccordion } from '@angular/material';
 import { forkJoin } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ShowHealthPlanningComponent } from '../../show-health-planning/show-health-planning.component';
+import { InsurancePlanningServiceService } from '../../insurance-planning-service.service';
 
 @Component({
   selector: 'app-life-insurance',
@@ -147,6 +148,10 @@ export class LifeInsuranceComponent implements OnInit {
   dataSourceAsset: any;
   needAnalysisLoaded: any;
   clicked =false;
+  pushArray =[];
+  storedData: any;
+  isRefreshRequired=false;
+  loadedData: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -154,6 +159,7 @@ export class LifeInsuranceComponent implements OnInit {
     private eventService: EventService,
     private planService: PlanService,
     private dialog: MatDialog,
+    private ipService:InsurancePlanningServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -163,6 +169,11 @@ export class LifeInsuranceComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('this life insurance', data)
+    this.ipService.getIpData()
+    .subscribe(res => {
+      this.storedData = '';
+      this.storedData = res;
+    })
     this.setDetails(data)
   }
 
@@ -200,9 +211,31 @@ export class LifeInsuranceComponent implements OnInit {
         }
       });
       if(data.dataLoaded){
-        this.getDetailsInsurance()
+        if(this.callApiData(data)){
+          this.getDetailsInsurance()
+        }else{
+          this.getForkJoinResponse(this.loadedData)
+          this.loadedData ='';
+        }
       }
     }
+  }
+  callApiData(data){
+    // if(this.isRefreshRequired){
+    //   return true
+    // }else{
+      if(this.storedData){
+        this.storedData.forEach(element => {
+          if(element.id == this.inputData.id){
+            this.loadedData = element
+          }
+          });
+      }
+      let refreshData = this.isRefreshRequired;
+      this.isRefreshRequired = false;
+      return this.loadedData && refreshData ? true  : this.loadedData ? false:  true
+    // }
+
   }
   formatNumber(data, noOfPlaces: number = 0) {
     if (data) {
@@ -241,6 +274,7 @@ export class LifeInsuranceComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
+          this.isRefreshRequired = true;
           this.outputChange.emit({id : '',isRefreshRequired:true});
           // this.getDetailsInsurance()
           dialogRef.close()
@@ -298,44 +332,10 @@ export class LifeInsuranceComponent implements OnInit {
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;
     forkJoin(detailofInsurance, sendPolicy, sendRecommendation, needAnalysis).subscribe(result => {
-      this.panelOpenState = false;
-
-      this.getNeedAnalysisData(result[3]);
-      this.getDetailsInsuranceRes(result[0])
-      let suggestedData = result[1];
-      if (suggestedData) {
-        if(this.inputData.insuranceType != 1){
-          let current = suggestedData.current.length > 0 ? suggestedData.current[0] : [];
-          let suggested = suggestedData.suggested.length > 0 ? suggestedData.suggested[0] : []
-          let mergeArray = [...suggested];
-          mergeArray.forEach(element => {
-            element.insurance = element.insuranceDetails
-            element.expanded = false;
-          });
-          this.dataSouce3 =this.getFilterDataNeedAnalysis(mergeArray) ;
-        }else{
-          suggestedData.forEach(element => {
-            element.expanded = false;
-            element.displayHolderSumInsured = element.insurance.sumAssured ? element.insurance.sumAssured : element.insurance.sumInsuredIdv
-          });
-          this.dataSouce3 = suggestedData;
-        }
-
-      } else {
-        this.dataSouce3 = [];
-      }
-      if (result[2]) {
-        this.dataSource1 = result[2];
-      } else {
-        this.dataSource1 = [];
-      }
-      this.stopLoaderWhenReponse.emit(true);
-      this.isLoadingPlan = false;
-      if (this.inputData.insuranceType == 1) {
-        this.firstAccordion.closeAll();
-      }
-      // this.allAssets = [...otherAssetRes, ...mfAssetRes];
-      // this.loaderFn.decreaseCounter();
+      result['id'] = this.inputData.id;
+      this.pushArray.push(result);
+      this.ipService.setIpData(this.pushArray);
+      this.getForkJoinResponse(result);
     }, err => {
       this.eventService.openSnackBar(err, 'Dismiss');
       this.stopLoaderWhenReponse.emit(true);
@@ -345,6 +345,43 @@ export class LifeInsuranceComponent implements OnInit {
       this.loader(-1);
       this.isLoadingPlan = false;
     })
+  }
+  getForkJoinResponse(result){
+    this.panelOpenState = false;
+    this.getNeedAnalysisData(result[3]);
+    this.getDetailsInsuranceRes(result[0])
+    let suggestedData = result[1];
+    if (suggestedData) {
+      if(this.inputData.insuranceType != 1){
+        let current = suggestedData.current.length > 0 ? suggestedData.current[0] : [];
+        let suggested = suggestedData.suggested.length > 0 ? suggestedData.suggested : []
+        let mergeArray = [...suggested];
+        mergeArray.forEach(element => {
+          element.insurance = element.insuranceDetails
+          element.expanded = false;
+        });
+        this.dataSouce3 =this.getFilterDataNeedAnalysis(mergeArray) ;
+      }else{
+        suggestedData.forEach(element => {
+          element.expanded = false;
+          element.displayHolderSumInsured = element.insurance.sumAssured ? element.insurance.sumAssured : element.insurance.sumInsuredIdv
+        });
+        this.dataSouce3 = suggestedData;
+      }
+
+    } else {
+      this.dataSouce3 = [];
+    }
+    if (result[2]) {
+      this.dataSource1 = result[2];
+    } else {
+      this.dataSource1 = [];
+    }
+    this.stopLoaderWhenReponse.emit(true);
+    this.isLoadingPlan = false;
+    if (this.inputData.insuranceType == 1) {
+      this.firstAccordion ? this.firstAccordion.closeAll() : '';
+    }
   }
   getFilterDataNeedAnalysis(array){
     if(array){
@@ -529,7 +566,8 @@ export class LifeInsuranceComponent implements OnInit {
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
               // this.getDetailsInsurance();
-              this.outputChange.emit({id : this.inputData.id,isRefreshRequired:sideBarData.data.isRefreshRequired});
+              this.isRefreshRequired = sideBarData.data;
+              this.outputChange.emit({id : this.inputData.id,isRefreshRequired:sideBarData.data});
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
             rightSideDataSub.unsubscribe();
@@ -549,6 +587,7 @@ export class LifeInsuranceComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             // this.getClientSubscriptionList();
+            this.isRefreshRequired = upperSliderData['data'].isRefreshRequired;
             this.outputChange.emit({id : this.inputData.id,isRefreshRequired:upperSliderData['data'].isRefreshRequired});
             subscription.unsubscribe();
           }
@@ -573,6 +612,7 @@ export class LifeInsuranceComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.isRefreshRequired = true;
             this.getDetailsInsurance();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

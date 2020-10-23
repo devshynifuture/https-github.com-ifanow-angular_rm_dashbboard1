@@ -172,7 +172,11 @@ export class AllInsurancelistComponent implements OnInit {
       }else{
         this.detailsInsurance = this.insuranceList[0]
       }
-      this.detailsInsurance.dataLoaded = true;
+      if(this.detailsInsurance){
+        this.detailsInsurance.dataLoaded = true;
+      }else{
+        this.detailsInsurance={dataLoaded : true}
+      }
 
       this.showIsurance = true;
     }else{
