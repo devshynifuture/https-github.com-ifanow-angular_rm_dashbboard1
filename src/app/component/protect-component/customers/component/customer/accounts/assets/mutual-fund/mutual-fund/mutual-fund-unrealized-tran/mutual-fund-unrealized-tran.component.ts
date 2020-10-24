@@ -1038,7 +1038,12 @@ export class MutualFundUnrealizedTranComponent {
             this.styleObjectUnrealised(element, ind);
           });
         }
-        if(this.rightFilterData.transactionPeriodCheck ? this.rightFilterData.transactionPeriodCheck : this.setDefaultFilterData.transactionPeriodCheck && this.viewMode == 'All Transactions'){
+        // if(this.rightFilterData.transactionPeriodCheck ? this.rightFilterData.transactionPeriodCheck : this.setDefaultFilterData.transactionPeriodCheck && this.viewMode == 'All Transactions'){
+        //   this.isTableShow = false;
+        // }else{
+        //   this.isTableShow = true;
+        // }
+        if(this.viewMode == 'All Transactions'){
           this.isTableShow = false;
         }else{
           this.isTableShow = true;
