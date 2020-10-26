@@ -16,6 +16,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DomainSettingPopupComponent } from './domain-setting-popup/domain-setting-popup.component';
 import { SettingsService } from '../settings.service';
 import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
+import { FeviconUrlComponent } from './fevicon-url/fevicon-url.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -788,5 +790,25 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  openFeviconUrl(data, flag) {
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: FeviconUrlComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getOrgProfiles();
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 }
