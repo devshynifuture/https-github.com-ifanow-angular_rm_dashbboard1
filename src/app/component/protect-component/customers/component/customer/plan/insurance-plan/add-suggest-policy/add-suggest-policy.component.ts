@@ -38,14 +38,15 @@ export class AddSuggestPolicyComponent implements OnInit {
   options =[];
   selectedVal: any;
   policyDetails: any;
+  isRecommended = false;
   constructor(private eventService:EventService,private planService:PlanService,private subInjectService: SubscriptionInject, private fb: FormBuilder,private customerService:CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.insuranceData = data;
-    this.getHolderNames(this.insuranceData);
-    this.getdataForm(data);
+    this.insuranceData = data.inputData;
+    this.getHolderNames(data.inputData);
+    this.getdataForm(data.insurance);
     console.log(data);
   }
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -74,17 +75,23 @@ export class AddSuggestPolicyComponent implements OnInit {
     }
   }
   getdataForm(data) {
-    this.dataForEdit = data.data;
+    this.dataForEdit = data;
     this.suggestPolicyForm = this.fb.group({
       policyName: [(this.dataForEdit ? this.dataForEdit.policyName : null), [Validators.required]],
-      premiumAmount: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
+      premiumAmount: [(this.dataForEdit ? this.dataForEdit.premiumPay : null), [Validators.required]],
       frequency: [(this.dataForEdit ? this.dataForEdit.frequency + '' : ''), [Validators.required]],
-      insuranceAmount: [(this.dataForEdit ? this.dataForEdit.insuranceAmount : null), [Validators.required]],
-      tenure: [(this.dataForEdit ? this.dataForEdit.tenure : null), [Validators.required]],
+      insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
+      tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
     })
+    if(this.dataForEdit){
+      this.storeData = this.dataForEdit.suggestion;
+      this.isRecommended = this.dataForEdit ? (this.dataForEdit.suggestion ? true : false) : false 
+      this.showRecommendation = this.isRecommended;
+    }
+    
   }
   checkRecommendation(value) {
-    if (!value) {
+    if (value) {
       this.showRecommendation = true;
     } else {
       this.showRecommendation = false;
@@ -147,32 +154,47 @@ export class AddSuggestPolicyComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
       const obj = {
+        'id':this.dataForEdit.id ? this.dataForEdit.id : null,
         'clientId': this.clientId,
         'advisorId': this.advisorId,
         'familyMemberIdLifeAssured':this.insuranceData.familyMemberId == 0 ? this.clientId : this.insuranceData.familyMemberId  ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
-        'insuranceTypeId':this.policyDetails.insuranceTypeId,
-        'insuranceSubTypeId':this.policyDetails.insuranceSubTypeId,
-        'policyNumber':this.policyDetails.policyNumber,
-        'policyId':this.policyDetails.id,
-        'policyTypeId':this.policyDetails.policyTypeId,
+        'insuranceTypeId':this.policyDetails ? this.policyDetails.insuranceTypeId :this.dataForEdit.insuranceTypeId,
+        'insuranceSubTypeId':this.policyDetails ? this.policyDetails.insuranceSubTypeId :this.dataForEdit.insuranceSubTypeId,
+        'policyNumber':this.policyDetails ? this.policyDetails.policyNumber :this.dataForEdit.policyNumber ,
+        'policyId':this.policyDetails ? this.policyDetails.id :this.dataForEdit.policyId ,
+        'policyTypeId':this.policyDetails ? this.policyDetails.policyTypeId : this.dataForEdit.policyTypeId,
         'policyName': this.suggestPolicyForm.get('policyName').value,
         'premiumAmount': this.suggestPolicyForm.get('premiumAmount').value,
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
         'realOrFictitious':2,
-        'suggestion': this.storeData ? this.storeData : null
+        'suggestion':this.showRecommendation?(this.storeData ? this.storeData : ""):""
       }
-      this.planService.addSuggestNew(obj).subscribe(
-        data => {
-            console.log(data);
-            this.barButtonOptions.active = false;
-            this.close(true);
-        },
-        err => {
-          this.eventService.openSnackBar(err, 'Dismiss');
-        }
-      );
+      if(this.dataForEdit){
+        this.planService.editSuggestNew(obj).subscribe(
+          data => {
+              console.log(data);
+              this.barButtonOptions.active = false;
+              this.close(true);
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+      }else{
+        this.planService.addSuggestNew(obj).subscribe(
+          data => {
+              console.log(data);
+              this.barButtonOptions.active = false;
+              this.close(true);
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+      }
+
     }
   }
 }
