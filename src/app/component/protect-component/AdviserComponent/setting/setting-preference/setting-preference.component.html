@@ -359,6 +359,18 @@
 
                                     </div>
                                 </div>
+                                <div class="col-md-12 pb-28 domain-favicon pl-0 pt-28">
+                                    <p class="m-0 text-black roboto f-500"> Site logo </p>
+                                    <div class="profilePhoto containerOne">
+                                        <img *ngIf="domainSetting.feviconUrl=='NA'"
+                                            src="https://www.my-planner.in/img/logo.ico">
+                                        <img *ngIf="domainSetting.feviconUrl!='NA'" [src]="domainSetting.feviconUrl">
+                                        <div (click)="openFeviconUrl(domainSetting,'feviconUrl')" class="middleOne">
+                                            <p class="c-p"> Edit Image </p>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="col-md-7 pr-0">
                                 <div *ngIf="isDomain.value=='1'">
