@@ -59,12 +59,17 @@ export class FeviconUrlComponent implements OnInit {
   @Input() data: any = {};
 
   ngOnInit() {
-
+    this.imgURL = this.data.feviconUrl;
   }
 
   cropImg() {
     this.cropImage = true;
     this.showCropper = true;
+  }
+
+  editImage(event) {
+    this.imageUploadEvent = event;
+    this.cropImg();
   }
 
   uploadImageForCorping(event) {
@@ -77,30 +82,31 @@ export class FeviconUrlComponent implements OnInit {
       this.barButtonOptions.active = true;
       // if (this.barButtonOptions.active) return;
       // this.loaderFn.increaseCounter();
-      const tags = this.clientId + ',client_profile_logo,';
+      const tags = this.clientId + ',fevicon_url,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
-      PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'client_profile_logo', tags,
+      PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'fevicon_url', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
             const obj = {
               advisorId: this.advisorId,
               completeWhiteLabel: this.data.completeWhiteLabel,
-              feviconUrl: responseObject,
+              feviconUrl: responseObject.secure_url,
               partialWhiteLabel: this.data.partialWhiteLabel,
               siteTitle: this.data.siteTitle,
               hasDomain: this.data.hasDomain
             };
             this.orgSetting.updateDomainSetting(obj).subscribe(
               data => {
-                this.Close();
+                this.eventService.openSnackBar("Uploaded sucessfully!", "Dimiss");
+                this.Close(true);
               },
               err => this.eventService.openSnackBar(err, 'Dismiss')
             );
           }
         });
     } else {
-      this.Close();
+      this.Close(false);
     }
   }
 
@@ -131,8 +137,8 @@ export class FeviconUrlComponent implements OnInit {
     }
   }
 
-  Close() {
-    this.subInjectService.closeNewRightSlider({ state: 'close' });
+  Close(flag) {
+    this.subInjectService.closeNewRightSlider({ state: 'close', refreshRequired: flag });
   }
 
 }

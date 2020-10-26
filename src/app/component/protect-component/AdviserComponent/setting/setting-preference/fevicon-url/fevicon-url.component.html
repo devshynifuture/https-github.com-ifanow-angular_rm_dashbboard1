@@ -61,8 +61,9 @@
                         <img [src]="imgURL">
                     </div>
                     <div class="row pt-24">
-                        <button mat-stroked-button class="btn-primary" (click)="cropImg()">EDIT
+                        <button mat-stroked-button class="btn-primary" (click)="file.click()">EDIT
                             IMAGE</button>
+                        <input [hidden]="true" accept="image/*" #file (change)="editImage($event)" type="file">
                     </div>
                 </div>
             </div>
@@ -73,7 +74,7 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "

@@ -793,6 +793,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   openFeviconUrl(data, flag) {
+    if (data.feviconUrl == 'NA') {
+      data['feviconUrl'] = "https://www.my-planner.in/img/logo.ico";
+    }
     const fragmentData = {
       flag,
       data,
