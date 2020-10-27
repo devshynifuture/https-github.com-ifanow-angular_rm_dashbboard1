@@ -135,8 +135,8 @@
                                     <p class="m-0 text-black roboto p-12 br pt-6 pb-6">Debt</p>
                                 </div>
                                 <div class="col-md-3  p-0">
-                                    <p class="m-0 text-black roboto p-12 f-500  bb pt-8 pb-8">Monthly</p>
-                                    <p class="m-0 relClass text-black roboto p-12 bg-white  bb pt-6 pb-6">
+                                    <p class="m-0 text-black roboto p-12 f-500 text-right bb pt-8 pb-8">Monthly</p>
+                                    <p class="m-0 relClass text-black roboto p-12 bg-white text-right bb pt-6 pb-6">
                                         <span appFormatNumber [value]="selectedGoal?.dashboardData?.equity_monthly">
                                         </span>
 
@@ -145,7 +145,7 @@
                                         </span>
                                     </p>
 
-                                    <p class="m-0 text-black relClass roboto p-12 bg-white pt-6 pb-6">
+                                    <p class="m-0 text-black relClass roboto p-12 text-right bg-white pt-6 pb-6">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
 
@@ -155,8 +155,8 @@
                                     </p>
                                 </div>
                                 <div class="col-md-3   p-0">
-                                    <p class="m-0 text-black roboto p-12 f-500 bb pt-8 pb-8">Lumpsum</p>
-                                    <p class="m-0 text-black relClass roboto p-12 bg-white bb pt-6 pb-6">
+                                    <p class="m-0 text-black roboto p-12 text-right f-500 bb pt-8 pb-8">Lumpsum</p>
+                                    <p class="m-0 text-black relClass roboto text-right p-12 bg-white bb pt-6 pb-6">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
 
@@ -164,7 +164,7 @@
                                             *ngIf="loaderFn.loading">
                                         </span>
                                     </p>
-                                    <p class="m-0 text-black relClass roboto p-12 bg-white pt-6 pb-6">
+                                    <p class="m-0 text-black relClass text-right roboto p-12 bg-white pt-6 pb-6">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
                                         <span class="bar height24" style="display: inline-block;"
@@ -227,10 +227,10 @@
                                 <div class="col-md-3 d-flex align-items-center">
                                     <p class="roboto m-0 text-black f-500">Advice </p>
                                 </div>
-                                <div class="col-md-2 pl-0 d-flex align-items-center">
+                                <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
                                     <p class="roboto m-0 text-black f-500">Current value </p>
                                 </div>
-                                <div class="col-md-2 d-flex align-items-center pr-0">
+                                <div class="col-md-2 d-flex align-items-center justify-content-end pr-0">
                                     <p class="roboto m-0 text-black f-500">Maturity value </p>
                                 </div>
                                 <div class="col-md-2 d-flex align-items-center">
@@ -238,7 +238,7 @@
                                 </div>
                             </div>
 
-                            <div class="row  bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
+                            <div class="row pt-5 pb-5 bl-1 bb-1 br bg-white vai" *ngIf="loaderFn.loading" appSkeletonLoading
                                 [appSkeletonLoading]="loaderFn.loading">
                                 <div class="col-md-3 d-flex align-items-center relClass">
                                     <div class="bar height24"></div>
@@ -261,7 +261,7 @@
                             </div>
 
                             <ng-container *ngFor="let allocation of allocatedList">
-                                <div class="row   bl-1 bb-1 br bg-white">
+                                <div class="row pt-5 pb-5  bl-1 bb-1 br bg-white">
                                     <div class="col-md-3 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">{{!loaderFn.loading? "" : ""}}
@@ -278,7 +278,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-2 d-flex align-items-center">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-end">
                                         <div class="relClass">
                                             <div class="bar">
                                                 <p class="mb-0 roboto" appFormatNumber
@@ -286,7 +286,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 d-flex align-items-center">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-end pr-0">
                                         <div class="relClass">
                                             <div class="bar">
                                                 <p class="m-0 roboto" appFormatNumber
