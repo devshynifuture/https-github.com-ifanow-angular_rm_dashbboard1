@@ -153,7 +153,6 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   private _filter(value) {
     const filterValue = value.toLowerCase();
-
     return this.years.filter(option => option.value.toLowerCase().indexOf(filterValue) === 0);
   }
   // getErrorMessage() {
@@ -195,6 +194,10 @@ export class AddPlaninsuranceComponent implements OnInit {
       const needSavedData = JSON.parse(JSON.stringify(data.needAnalysisSaved));
       this.dependent =true;
       this.selectedExpectancy = needSavedData[2.1][0].life_expectency;
+      this.filteredOptions = this.expectancy.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
       this.familyMemberId = needSavedData[2.1][0].main_dependent_id;
       this.dependantYears = this.getDependantYears();
       this.inflationAdjustedRate = needSavedData['dependent'][4].inflationAdjustedRate;
@@ -505,12 +508,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.addToPlan()
     }
   }
-  changes(){
-    this.filteredOptions = this.expectancy.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  }
+
   onChange(event,value) {
     if(value == 'retirement'){
       if(parseInt(this.retirementAgeControl.value) > parseInt(this.expectancy.value)){

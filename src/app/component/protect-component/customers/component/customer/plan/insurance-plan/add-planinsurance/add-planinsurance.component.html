@@ -73,7 +73,7 @@
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
-                                    aria-label="Number" matInput (keyup)="changes();onChange($event,'expectancy')"
+                                    aria-label="Number" matInput (keyup)="onChange($event,'expectancy')"
                                     [formControl]="expectancy" [matAutocomplete]="auto" class="form-control br-0">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option *ngFor="let option of filteredOptions | async"
