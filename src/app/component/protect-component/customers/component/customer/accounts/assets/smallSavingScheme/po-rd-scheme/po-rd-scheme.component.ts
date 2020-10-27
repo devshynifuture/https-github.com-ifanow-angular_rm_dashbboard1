@@ -46,7 +46,7 @@ export class PoRdSchemeComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
-  pordList: any[];
+  pordList: any;
   hideFilter: boolean;
   isFixedIncomeFiltered: boolean;
 
@@ -160,13 +160,13 @@ export class PoRdSchemeComponent implements OnInit {
         if (!this.dataList) {
           this.pordDataList.emit(data);
         }
-        this.pordList = data.assetList;
-        this.dataSource.data = data.assetList;
+        this.pordList = data;
+        this.dataSource.data = this.pordList.assetList;
         this.dataSource.sort = this.sort;
         UtilService.checkStatusId(this.dataSource.filteredData);
-        this.sumOfCurrentValue = data.sumOfCurrentValue;
-        this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
-        this.sumOfMaturityValue = data.sumOfMaturityValue;
+        this.sumOfCurrentValue = this.pordList.sumOfCurrentValue;
+        this.sumOfMonthlyDeposit = this.pordList.sumOfMonthlyDeposit;
+        this.sumOfMaturityValue = this.pordList.sumOfMaturityValue;
         this.pordData = data;
       }
     } else {
@@ -176,7 +176,7 @@ export class PoRdSchemeComponent implements OnInit {
 
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -185,9 +185,14 @@ export class PoRdSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deletePORD(data.id).subscribe(
+        this.cusService.deletePORD(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            this.pordList.assetList= this.pordList.assetList.filter(x => x.id != element.id);;
+            this.pordList.sumOfCurrentValue -= element.currentValue;
+            this.pordList.sumOfMonthlyDeposit -= element.monthlyContribution;
+            this.pordList.sumOfMaturityValue -= element.maturityValue;
+            this.getPoRdSchemedataResponse(this.pordList)
             dialogRef.close();
             this.getPoRdSchemedata();
           },
@@ -225,7 +230,12 @@ export class PoRdSchemeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.isLoading = true;
-            this.getPoRdSchemedata();
+            // this.getPoRdSchemedata();
+            this.pordList.assetList.push(sideBarData.data);
+            this.pordList.sumOfCurrentValue += sideBarData.data.currentValue;
+            this.pordList.sumOfMonthlyDeposit += sideBarData.data.monthlyContribution;
+            this.pordList.sumOfMaturityValue += sideBarData.data.maturityValue;
+            this.getPoRdSchemedataResponse(this.pordList)
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -269,10 +279,10 @@ export class PoRdSchemeComponent implements OnInit {
     let dataFiltered = [];
     this.activeFilter = value;
     if (value == "All") {
-      dataFiltered = this.pordList;
+      dataFiltered = this.pordList.assetList;
     }
     else {
-      dataFiltered = this.pordList.filter(function (item) {
+      dataFiltered = this.pordList.assetList.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length <= 0) {
