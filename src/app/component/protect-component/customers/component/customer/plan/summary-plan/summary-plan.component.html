@@ -3,7 +3,7 @@
 
         <div class="col-md-2 p-0 bg-white pb-44">
             <div class="wrapper-16 bb-2 c-p">
-                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span class="text-primitive f-12">2019-20</span>
+                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span class="text-primitive f-12">{{ yearToShow }}</span>
                 </p>
                 <h1 class="f-35 m-0 text-black pt-8">₹1,25,35,470</h1>
 
@@ -12,7 +12,8 @@
                         <p class="text-black f-12 m-0 roboto f-400">INCOME</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 text-right roboto f-400">₹28,30,500</p>
+                        <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹28,30,500</p> -->
+                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-progress-bar class="light-blue" mode="determinate" value="40"></mat-progress-bar>
@@ -24,7 +25,8 @@
                         <p class="text-black f-12 m-0 roboto f-400">EXPENSES</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 text-right roboto f-400">₹19,77,000</p>
+                        <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹19,77,000</p> -->
+                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-progress-bar class="light-red" mode="determinate" value="40"></mat-progress-bar>
@@ -34,7 +36,7 @@
 
             <div class="row pt-20">
                 <div class="col-md-10 pr-0">
-                    <p class="mb-0 f-16 roboto f-400"> Budget status <span class="text-primitive f-12"> Dec-20 </span>
+                    <p class="mb-0 f-16 roboto f-400"> Budget status <span class="text-primitive f-12">{{yearToShow}} </span>
                     </p>
                 </div>
                 <div class="col-md-2 pl-0  ">
@@ -44,18 +46,21 @@
                 </div>
             </div>
 
-
-            <div class="row bb c-p pt-10">
-                <div class="col-md-9 pr-0">
-                    <p class="mb-0 f-14 text-black roboto f-400"> Groceries </p>
-                    <p class="mb-10 f-14 roboto text-custom f-400"> ₹9,000 / 8,400</p>
-                </div>
-                <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
-                    <p class="mb-10 f-14 text-success roboto f-400"> 83% </p>
+            <div *ngIf="budgetData?.length > 0">
+                <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
+                    <div class="col-md-9 pr-0">
+                        <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
+                        <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> / <span appFormatNumber>{{item.spent}}</span></p>
+                    </div>
+                    <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
+                        <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100"> {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                        <p class="mb-10 f-14 text-danger roboto f-400" *ngIf="item.progressPercent > 100"> {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="row bb c-p pt-10">
+
+            <!-- <div class="row bb c-p pt-10">
                 <div class="col-md-9 pr-0">
                     <p class="mb-0 f-14 text-black  roboto f-400"> Transportation </p>
                     <p class="mb-10 f-14 roboto text-custom f-400"> ₹8,000 / 7,200 </p>
@@ -63,10 +68,10 @@
                 <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
                     <p class="mb-10 f-14 text-success roboto f-400"> 80% </p>
                 </div>
-            </div>
+            </div> -->
 
 
-            <div class="row bb c-p pt-10">
+            <!-- <div class="row bb c-p pt-10">
                 <div class="col-md-9 pr-0">
                     <p class="mb-0 f-14 text-black  roboto f-400"> School fees </p>
                     <p class="mb-10 f-14 roboto text-custom f-400">₹5,600 / 5,600 </p>
@@ -105,7 +110,7 @@
                 <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
                     <p class="mb-10 f-14 text-primary roboto f-400 f-400"> 80% </p>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
