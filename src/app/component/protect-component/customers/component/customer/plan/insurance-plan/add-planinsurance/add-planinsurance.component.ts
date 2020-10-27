@@ -36,9 +36,6 @@ export class AddPlaninsuranceComponent implements OnInit {
   isLoading: boolean;
   counter: any;
   manualForm: any;
-  selectedExpectancy = '';
-  selectedFamily = '';
-  retirementAge ='';
   livingExpense: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -152,7 +149,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     );
   }
   private _filter(value) {
-    const filterValue = value.toLowerCase();
+    const filterValue = String(value).toLowerCase();
     return this.years.filter(option => option.value.toLowerCase().indexOf(filterValue) === 0);
   }
   // getErrorMessage() {
@@ -193,7 +190,9 @@ export class AddPlaninsuranceComponent implements OnInit {
     if (data.needAnalysisSaved) {
       const needSavedData = JSON.parse(JSON.stringify(data.needAnalysisSaved));
       this.dependent =true;
-      this.selectedExpectancy = needSavedData[2.1][0].life_expectency;
+      this.expectancy.setValue(needSavedData[2.1][0].life_expectency ? needSavedData[2.1][0].life_expectency : '');
+
+      // this.expectancy.value = needSavedData[2.1][0].life_expectency;
       this.filteredOptions = this.expectancy.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
@@ -327,13 +326,13 @@ export class AddPlaninsuranceComponent implements OnInit {
         this.plannerObj.lifeInsurancePremiums = this.needAnalysis.lifeInsurancePremiums
         this.calculateGrossAndadditional();
         console.log(data);
-        if(!lifeExpectancy && !retirementAge && this.mainDependent.value && this.retirementAgeControl.value && this.expectancy.value){
+        if(!lifeExpectancy  && this.mainDependent.value && this.retirementAgeControl.value && this.expectancy.value){
           this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
         }
       },
       err => {
         // this.eventService.openSnackBar('No data found', 'Dismiss');
-        if(!lifeExpectancy && !retirementAge && this.mainDependent.value && this.retirementAgeControl.value && this.expectancy.value){
+        if(!lifeExpectancy && this.mainDependent.value && this.retirementAgeControl.value && this.expectancy.value){
           this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
         }
         this.loader(-1);
@@ -343,15 +342,15 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   getDependantYears(){
     let dependentYear;
-    if(this.dependent && this.selectedExpectancy){
+    if(this.dependent && this.expectancy.value){
       this.familyList.forEach(element => {
         if(element.familyMemberId == this.familyMemberId){
           let dob = element.dateOfBirth;
           const bdate = new Date(dob);
           const timeDiff = Math.abs(Date.now() - bdate.getTime() );
           this.age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-          dependentYear = parseInt(this.selectedExpectancy) - this.age
-          let expectancy = parseInt(this.selectedExpectancy);
+          dependentYear = parseInt(this.expectancy.value) - this.age
+          let expectancy = parseInt(this.expectancy.value);
           if(expectancy < this.age){
             this.showError = true;
           }else{
@@ -405,9 +404,9 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.familyMemberId = value || value == 0 ? value : this.familyMemberId;
     }
     this.dependantYearsSelection = this.getDependantYears();
-    if (this.selectedFamily && this.selectedExpectancy && this.retirementAgeControl.value > 10) {
+    if (this.mainDependent.value && this.expectancy.value && this.retirementAgeControl.value > 10) {
       if(!this.showError && !this.showErrorExpectancy && !this.showErrorRetirement){
-        this.getNeedBasedAnalysis(this.familyMemberId, this.selectedExpectancy,this.retirementAgeControl.value)
+        this.getNeedBasedAnalysis(this.familyMemberId, this.expectancy.value,this.retirementAgeControl.value)
       }
     }else{
       if(this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid){

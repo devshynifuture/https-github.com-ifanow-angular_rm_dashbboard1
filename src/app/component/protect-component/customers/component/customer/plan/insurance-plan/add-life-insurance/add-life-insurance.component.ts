@@ -112,6 +112,7 @@ export class AddLifeInsuranceComponent implements OnInit {
   saveInsurance() {
     let obj = this.familyMemberSend
     if(this.familyMemberSend.length > 0){
+      this.barButtonOptions.active = true;
       this.loader(1);
       this.planService.addInsurance(obj).subscribe(
         data => this.addInsuranceRes(data),
@@ -125,6 +126,7 @@ export class AddLifeInsuranceComponent implements OnInit {
     }
   }
   addInsuranceRes(data) {
+    this.barButtonOptions.active = false;
     this.close(false,true);
     console.log(data)
   }

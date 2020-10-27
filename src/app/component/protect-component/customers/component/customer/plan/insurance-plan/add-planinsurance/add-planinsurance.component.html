@@ -56,7 +56,7 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select [(ngModel)]="selectedFamily" [formControl]="mainDependent"
+                                <mat-select  [formControl]="mainDependent"
                                     class="form-control br-0">
                                     <mat-option disabled value=''>Select one</mat-option>
                                     <mat-option [value]="option.name"
@@ -72,7 +72,7 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
+                                <input type="text" placeholder="Select life expectancy"
                                     aria-label="Number" matInput (keyup)="onChange($event,'expectancy')"
                                     [formControl]="expectancy" [matAutocomplete]="auto" class="form-control br-0">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -98,7 +98,7 @@
                                     (keyup)="onChange($event,'retirement');selectDependent('','retirementAge')"
                                     [formControl]="retirementAgeControl" [maxLength]="10"
                                     placeholder="Enter retirement age" appInputValueValidation autocomplete="true"
-                                    class="form-control rupess br-0" [(ngModel)]="retirementAge" matInput type="number">
+                                    class="form-control rupess br-0"  matInput type="number">
                                 <!-- <mat-hint align="end" class="f-12">{{retirementAge.value.length}}/10</mat-hint> -->
                                 <mat-error>This field is required
                                 </mat-error>
