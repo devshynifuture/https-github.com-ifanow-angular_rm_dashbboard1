@@ -311,7 +311,7 @@
             <div class="col-md-12 p-0">
                 <div class="from-group  ">
                     <mat-form-field class="ba-date">
-                        <input class="form-control br-0 b-0" matInput [matDatepicker]="picker"
+                        <input class="form-control br-0 b-0" matInput [min]="minDate" [matDatepicker]="picker"
                             formControlName="reportAsOn" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -354,7 +354,7 @@
 
             </div>
         </div>
-        <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
+        <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
                 <mat-radio-button value="1"

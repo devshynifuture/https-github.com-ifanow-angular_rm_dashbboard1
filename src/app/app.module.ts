@@ -34,6 +34,7 @@ import {ReferAndEarnPopupsComponent} from './component/no-protected/login/refer-
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {ReferAndEarnPopupsComponent} from './component/no-protected/login/refer-
     EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
+    SlickCarouselModule,
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyADyxccMFAm_qzOE6slO2jHrKjQPlN_KG4',

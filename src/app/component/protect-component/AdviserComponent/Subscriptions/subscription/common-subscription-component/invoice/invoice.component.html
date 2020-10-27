@@ -968,7 +968,7 @@
     </div>
     <!--fee calc in client invoice-->
     <div *ngIf="feeCalc==true">
-        <app-fee-calculations [feeAmount]="storeData.subTotal" [feeCalculationData]="invoiceFeeCalculations"
+        <app-fee-calculations [feeAmount]="storeData" [feeCalculationData]="invoiceFeeCalculations"
             [padding]="true"></app-fee-calculations>
     </div>
     <!-- <div class="bottom-fixed wrapper-12">

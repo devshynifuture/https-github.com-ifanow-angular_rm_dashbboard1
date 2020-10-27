@@ -8,8 +8,6 @@ import {CustomerService} from '../component/protect-component/customers/componen
 import {OrgSettingServiceService} from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
 import {SubscriptionInject} from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {rejects} from 'assert';
-import {element} from 'protractor';
 import {apiConfig} from '../config/main-config';
 import {Subject} from 'rxjs';
 
@@ -108,7 +106,7 @@ export class EnumDataService {
         }
       });
     }
-   
+
     return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
@@ -138,7 +136,7 @@ export class EnumDataService {
             obj.push(user);
           });
         }
-       
+
 
         self.custumService.getJointBankList(obj).subscribe(
           (data) => {

@@ -11,13 +11,14 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EnumDataService} from '../../../../../services/enum-data.service';
 import {ChangeClientPasswordComponent} from './customer-overview/overview-profile/change-client-password/change-client-password.component';
 import {UtilService} from 'src/app/services/util.service';
-import {RoleService} from "../../../../../auth-service/role.service";
+import {RoleService} from '../../../../../auth-service/role.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   // templateUrl: './customer.mobile.component.html',
-  //templateUrl: './transact-mob.html',
+  // templateUrl: './transact-mob.html',
   // templateUrl: './goal.mobile.component.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
@@ -34,6 +35,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   status = false;
   loading: boolean;
   user: any;
+  jQuery: any;
+
 
   organizationLogo = 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png';
   advisorName: any;
@@ -91,6 +94,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
+    this.jQuery = $;
+    if (!this.jQuery) {
+      console.log('JQUERY is not defined');
+    }
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });

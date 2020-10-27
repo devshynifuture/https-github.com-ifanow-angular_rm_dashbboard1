@@ -1577,7 +1577,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.getFilterData(2)
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
-          rightSideDataSub.unsubscribe();
+          // rightSideDataSub.unsubscribe();
         }
       }
     );
