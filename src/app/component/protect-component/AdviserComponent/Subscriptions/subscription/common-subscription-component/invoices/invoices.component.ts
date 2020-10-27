@@ -206,7 +206,7 @@ export class InvoicesComponent implements OnInit {
     data['showBottomBar'] = true;
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: InvoiceComponent
