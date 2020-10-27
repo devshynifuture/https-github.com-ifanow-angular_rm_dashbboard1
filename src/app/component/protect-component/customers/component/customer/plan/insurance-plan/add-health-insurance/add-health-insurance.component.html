@@ -88,7 +88,7 @@
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Annual premium </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar">
-                            {{element?.insurance?.premiumAmount  ? '₹' :''}} <span
+                            {{element?.insurance?.premiumAmount ? '₹' :''}} <span
                                 appFormatNumber>{{element?.insurance?.premiumAmount ? element?.insurance?.premiumAmount : '-'}}</span>
                         </div>
                     </td>
@@ -104,7 +104,7 @@
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Sum insured </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar">
-                            {{element.displayHolderSumInsured  ? '₹' :''}} <span
+                            {{element.displayHolderSumInsured ? '₹' :''}} <span
                                 appFormatNumber>{{element.displayHolderSumInsured ? element.displayHolderSumInsured :'-'}}</span>
                         </div>
                     </td>
@@ -156,9 +156,9 @@
     <app-critical-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 6"></app-critical-insurance>
     <app-personal-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 7"></app-personal-insurance>
     <app-householders-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 9"></app-householders-insurance>
-    <app-fire-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 10"></app-fire-insurance>    
-    <app-travel-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 8"></app-travel-insurance>    
-    <app-motor-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 4"></app-motor-insurance>    
+    <app-fire-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 10"></app-fire-insurance>
+    <app-travel-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 8"></app-travel-insurance>
+    <app-motor-insurance [data]="this.newPolicyData" (sendOutput)="getOutput($event)" *ngIf="insuranceType == 4"></app-motor-insurance>
 
 </div>
 <div class="bottom-fixed wrapper-12 pt-16" *ngIf="!showNewPolicy">
@@ -174,7 +174,7 @@
                 </app-progress-button>
             <!-- <button mat-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" class="btn-bottom br-0 text-inherit"
                 (click)="saveExistingPolicy(showInsurance)">Save</button> -->
-                <app-progress-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" [options]="barButtonOptions" (click)="showHealthInsurance(showInsurance,'save')">
+                <app-progress-button *ngIf="inputData?.flag == 'suggestExistingPolicy'" [options]="barButtonOptions" (click)="saveExistingPolicy()">
                 </app-progress-button>
         </div>
     </div>

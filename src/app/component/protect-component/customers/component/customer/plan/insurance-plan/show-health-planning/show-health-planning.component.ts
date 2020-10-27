@@ -41,6 +41,8 @@ export class ShowHealthPlanningComponent implements OnInit {
   insuranceType: any;
   ownerIds =[];
   familyMemberList: any;
+  insuranceIds =[];
+  isRefreshRequired =false;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -66,22 +68,45 @@ export class ShowHealthPlanningComponent implements OnInit {
   ngOnInit() {
     console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
+    this.insuranceIds.push(this.inputData.id);
     this.getStepOneAndTwoData();
     this.getGlobalDataInsurance();
+  }
+  formatNumber(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
+    return data;
   }
   getStepOneAndTwoData(){
     this.dataSource =[{},{},{}];
     this.dataSource1 =[{},{},{}];
     this.isLoading = true;
     let obj = {
-      id: this.inputData.id,
+      id:this.insuranceIds[0] == null ? -1 : this.insuranceIds  ,
       insuranceType:this.inputData.insuranceType
     }
     const obj2 = {
       clientId: this.clientId
     };
+    const obj3 = {
+      clientId: this.clientId,
+      insuranceType: this.insuranceType,
+      realOrFictious:2
+    };
     const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj);
     const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    const suggestNewGet = this.planService.getGeneralInsuranceReview(obj3)
     // this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
     //   data => {
     //     if(data){
@@ -113,29 +138,37 @@ export class ShowHealthPlanningComponent implements OnInit {
     //     this.eventService.openSnackBar(err, 'Dismiss');
     //   }
     // );
-    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+    forkJoin(getCurrentPolicy, familyMemberList,suggestNewGet).subscribe(result => {
       this.familyMemberList = result[1];
-      if(result[0]){
+      if(result){
         let data = result[0];
+        if(data){
           this.dataSource =this.getFilterData(data.current) ;
-          this.dataSource1 =this.getFilterData(data.suggested) ;
-          this.isLoading = false;
-        this.dataSource = data.current;  
-        if(data.current){
-          data.current.forEach(element => {
-            if(element.insuranceDetails.insuredMembers.length > 0){
-              element.insuranceDetails.insuredMembers.forEach(ele => {
+          this.dataSource = data.current;  
+          if(data.current){
+            data.current.forEach(element => {
+              if(element.insuranceDetails.insuredMembers.length > 0){
+                element.insuranceDetails.insuredMembers.forEach(ele => {
+                  this.ownerIds.push({
+                    'ownerId': ele.familyMemberId
+                  })
+                });
+              }else{
                 this.ownerIds.push({
-                  'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
+                  'ownerId': element.insuranceDetails.policyHolderId
                 })
-              });
-            }else{
-              this.ownerIds.push({
-                'ownerId': element.insurance.policyHolderId
-              })
-            }
-          });
-        }                                                                                                                                                                                                                                                                                                                                                                                                           
+              }
+            });
+          }   
+        }else{
+          this.dataSource =[] ;
+        }
+        if(data.suggested){
+          this.dataSource1 =this.getFilterData(data.suggested) ;
+        }else{
+          this.dataSource1=[];
+        }
+          this.isLoading = false;                                                                                                                                                                                                                                                                                                                                                                                       
       }    
 
     }, err => {
@@ -143,26 +176,28 @@ export class ShowHealthPlanningComponent implements OnInit {
     })
   }
   getPolicyHolderName(data){
-    let finalData =  this.familyMemberList.filter(item => item.familyMemberId === data.policyHolderId);
+    let finalData =  this.familyMemberList.filter(item => item.familyMemberId === (data.policyHolderId == this.clientId ? 0 : data.policyHolderId));
     return finalData[0].name
    }
   getFilterData(array){
     if(array){
+      this.getSumAssured(array);
       array.forEach(singleInsuranceData => {
+        singleInsuranceData.insuranceDetails = singleInsuranceData.insurance ? singleInsuranceData.insurance : singleInsuranceData.insuranceDetails;
         if (singleInsuranceData.insuranceDetails && singleInsuranceData.insuranceDetails.insuredMembers.length > 0) {
           singleInsuranceData.displayHolderName = singleInsuranceData.insuranceDetails.insuredMembers[0].name;
-          singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured;
+          singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured ? singleInsuranceData.insuranceDetails.insuredMembers[0].sumInsured : singleInsuranceData.insuranceDetails.sumInsuredIdv);
           if (singleInsuranceData.insuranceDetails.insuredMembers.length > 1) {
             for (let i = 1; i < singleInsuranceData.insuranceDetails.insuredMembers.length; i++) {
               if (singleInsuranceData.insuranceDetails.insuredMembers[i].name) {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
                 if(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured){
-                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured.toString();
+                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured,0);
                   const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
-                  singleInsuranceData.displayHolderSumInsured +=', ₹ ' + firstSumInsured;
+                  singleInsuranceData.displayHolderSumInsured +=', ₹' + firstSumInsured;
                 }else{
-                  singleInsuranceData.displayHolderSumInsured = 0;
+                  singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.sumInsuredIdv ? singleInsuranceData.insuranceDetails.sumInsuredIdv : 0;
                 }
               }
             }
@@ -178,6 +213,30 @@ export class ShowHealthPlanningComponent implements OnInit {
 
     return array;
   }
+  getSumAssured(data){
+    data.forEach(element => {
+      element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
+       element.sumAssured = 0;
+          if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
+            element.insuranceDetails.insuredMembers.forEach(ele => {
+              ele.sumAssured += ele.sumInsured;
+            });
+          } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
+            element.insuranceDetails.policyFeatures.forEach(ele => {
+              element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
+            });
+          } else {
+            element.insuranceDetails.sumInsuredIdv= element.insuranceDetails.sumInsuredIdv;
+          }
+
+          if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+            element.insuranceDetails.addOns.forEach(ele => {
+              element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
+            });
+          }
+    });
+
+  }
     deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -192,6 +251,7 @@ export class ShowHealthPlanningComponent implements OnInit {
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
               dialogRef.close();
               this.getStepOneAndTwoData();
+              this.isRefreshRequired = true;
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -216,11 +276,12 @@ export class ShowHealthPlanningComponent implements OnInit {
     });
   }
   close(data) {
+    data.isRefreshRequired = this.isRefreshRequired
     const fragmentData = {
       direction: 'top',
       componentName: ShowHealthPlanningComponent,
       state: 'close',
-      data,
+      data:data
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
@@ -251,7 +312,7 @@ export class ShowHealthPlanningComponent implements OnInit {
       data.displayList=  this.displayList;
       data.showInsurance=  this.showInsurance;
       data.inputData = this.inputData;
-
+      data.flag='ExistingSuggestNew';
     const fragmentData = {
       flag: 'suggestExistingPolicy',
       data:data,
@@ -291,8 +352,11 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            this.isRefreshRequired = true;
             // this.addGeneralInsurance(sideBarData.data.id);
              this.getStepOneAndTwoData();
+          }else{
+            this.isRefreshRequired = false;
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -346,7 +410,11 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(sideBarData.refreshRequired){
+            this.isRefreshRequired = true;
+            // this.insuranceIds.push(sideBarData.data)
             this.getStepOneAndTwoData();
+          }else{
+            this.isRefreshRequired = false;
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

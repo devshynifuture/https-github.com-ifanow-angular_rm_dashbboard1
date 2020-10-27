@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
@@ -159,7 +159,8 @@ export class MutualFundSummaryComponent implements OnInit {
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
     private onlineTransact: OnlineTransactionService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private cd: ChangeDetectorRef) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
@@ -1076,7 +1077,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
-      parentId:this.parentId === this.advisorId ? this.parentId : 0,
+      parentId: this.parentId ? this.parentId : this.advisorId,
       advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
@@ -1144,7 +1145,7 @@ export class MutualFundSummaryComponent implements OnInit {
         categoryWiseMfList.push(element.id)
       });
       const obj = {
-        parentId:this.parentId === this.advisorId ? this.parentId : 0,
+        parentId:this.parentId ? this.parentId : this.advisorId,
         advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
@@ -1408,6 +1409,8 @@ export class MutualFundSummaryComponent implements OnInit {
         }
 
         this.changeInput.emit(false);
+        this.cd.markForCheck();
+        this.cd.detectChanges();
       };
       worker.postMessage(input);
 
@@ -1574,7 +1577,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.getFilterData(2)
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
-          rightSideDataSub.unsubscribe();
+          // rightSideDataSub.unsubscribe();
         }
       }
     );

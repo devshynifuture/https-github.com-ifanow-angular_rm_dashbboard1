@@ -28,24 +28,31 @@ export class AllInsurancelistComponent implements OnInit {
   dataSource: any = new MatTableDataSource();
   insurancePlanningList=[{},{},{}]
   insuranceList = [{
+    header: 'Add Life insurance',
     heading: 'Life insurance',
     logo: '/assets/images/svg/LIsmall.svg',
   }, {
+    header: 'Add Health insurance',
     heading: 'Health insurance',
     logo: '/assets/images/svg/HIsmall.svg',
   }, {
+    header: 'Add Critical Insurance',
     heading: 'Critical illness',
     logo: '/assets/images/svg/CIsmall.svg',
   }, {
+    header: 'Add Cancer Insurance',
     heading: 'Cancer care',
     logo: '/assets/images/svg/CCsmall.svg',
   }, {
+    header: 'Add Personal accident',
     heading: 'Personal accident',
     logo: '/assets/images/svg/PAsmall.svg',
   }, {
+    header: 'Add Fire Insurance',
     heading: 'Fire insurance',
     logo: '/assets/images/svg/FIsmall.svg',
   }, {
+    header: 'Add Householders Insurance',
     heading: 'Householders',
     logo: '/assets/images/svg/Hsmall.svg',
   }]
@@ -78,6 +85,7 @@ export class AllInsurancelistComponent implements OnInit {
     this.selectedId = insurance.id
     console.log('insurance',insurance)
     this.detailsInsurance = insurance
+    this.detailsInsurance.dataLoaded = true;
     this.showIsurance = true
   }
   getInsuranceList() {
@@ -107,7 +115,9 @@ export class AllInsurancelistComponent implements OnInit {
       }else{
         this.selectedId ='';
       }
-      this.getInsuranceList()
+      if(value.isRefreshRequired){
+        this.getInsuranceList()
+      }
     }
   }
   getInsurancePlaningListRes(data) {
@@ -132,27 +142,42 @@ export class AllInsurancelistComponent implements OnInit {
       this.dataSource = data
       this.dataSource.forEach(element => {
         if (element.insuranceType == 1) {
+          element.header = 'Add Life insurance'
           element.heading = 'Life insurance'
           element.logo = '/assets/images/svg/LIsmall.svg'
         } else if (element.insuranceType == 5) {
+          element.value = '1';
+          element.header = 'Add Health insurance'
           element.heading = 'Health insurance'
           element.logo = '/assets/images/svg/HIsmall.svg'
         } else if (element.insuranceType == 6) {
+          element.value = '2';
+          element.header = 'Add Critical insurance'
           element.heading = 'Critical illness'
           element.logo = '/assets/images/svg/CIsmall.svg'
         }  else if (element.insuranceType == 10) {
+          element.value = '6';
+          element.header = 'Add Fire insurance'
           element.heading = 'Fire insurance'
           element.logo = '/assets/images/svg/FIsmall.svg'
-        } else if (element.insuranceType == 11) {
+        } else if (element.insuranceType == 9) {
+          element.value = '5';
+          element.header = 'Add Home insurance'
           element.heading = 'Home insurance'
           element.logo = '/assets/images/svg/Hsmall.svg'
         } else if (element.insuranceType == 7) {
+          element.value = '4';
+          element.header = 'Add Personal accident'
           element.heading = 'Personal accident'
           element.logo = '/assets/images/svg/PAsmall.svg'
         }else if (element.insuranceType == 8) {
+          element.value = '7';
+          element.header = 'Add Travel insurance'
           element.heading = 'Travel insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
         }else if (element.insuranceType == 4) {
+          element.value = '8';
+          element.header = 'Add Motor insurance'
           element.heading = 'Motor insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
         }
@@ -168,6 +193,11 @@ export class AllInsurancelistComponent implements OnInit {
         this.detailsInsurance = this.insuranceList[this.index]
       }else{
         this.detailsInsurance = this.insuranceList[0]
+      }
+      if(this.detailsInsurance){
+        this.detailsInsurance.dataLoaded = true;
+      }else{
+        this.detailsInsurance={dataLoaded : true}
       }
 
       this.showIsurance = true;
@@ -260,6 +290,7 @@ export class AllInsurancelistComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if(upperSliderData['data']){
             this.selectedId = '';
+            this.detailsInsurance.dataLoaded = false;
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

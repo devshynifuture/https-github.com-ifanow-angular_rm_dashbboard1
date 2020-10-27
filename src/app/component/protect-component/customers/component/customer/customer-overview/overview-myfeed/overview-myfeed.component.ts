@@ -1124,17 +1124,23 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
-      const obj = {
-        assetType: 5,
-        investedAmount: this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0,
-        gainAmount: this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,
-        currentValue: this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,
-        assetTypeString: 'Mutual funds'
+      if(this.mutualFund.total_amount_invested || this.mutualFund.total_current_value || this.mutualFund.total_balance_units){
+        const obj = {
+          assetType: 5,
+          investedAmount: this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0,
+          gainAmount: this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,
+          currentValue: this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,
+          assetTypeString: 'Mutual funds'
+        }
+        this.portFolioData.push(obj);
+        this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
+  
+        this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
+      }else{
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+        this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
       }
-      this.portFolioData.push(obj);
-      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
-
-      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
+      
     }
   }
 

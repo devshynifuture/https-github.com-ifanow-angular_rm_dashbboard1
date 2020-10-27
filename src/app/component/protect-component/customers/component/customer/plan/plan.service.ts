@@ -309,8 +309,17 @@ export class PlanService {
   addSuggestNew(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SUGGEST_NEW, data)
   }
+  editSuggestNew(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.Edit_SUGGEST_NEW, data)
+  }
+  deleteSuggestPolicy(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGESTED_POLICY+ 'id=' + data, '')
+  }
   addGenralInsurancePlan(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE_PLAN, data)
+  }
+  editGenralInsurancePlan(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_GENERAL_INSURANCE_PLAN, data)
   }
   deleteSuggestNew(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGEST_NEW, data);

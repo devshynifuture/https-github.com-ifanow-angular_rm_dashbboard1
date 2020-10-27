@@ -129,6 +129,8 @@ export class PersonalInsuranceComponent implements OnInit {
 	}]
 	showRecommendation: boolean;
 	plannerNotes: any;
+	ownerIds =[];
+	insData: any;
 
 	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
 	validatorType = ValidatorType
@@ -136,6 +138,7 @@ export class PersonalInsuranceComponent implements OnInit {
 	@Input() set data(data) {
 		this.advisorId = AuthService.getAdvisorId();
 		this.clientId = AuthService.getClientId();
+		this.insData = data;
 		this.inputData = data.inputData;
 		this.policyFeature = data.displayList.policyFeature;
 		this.addOns = data.displayList.addOns;
@@ -627,6 +630,7 @@ export class PersonalInsuranceComponent implements OnInit {
 	savePersonalAccident() {
 		this.getClientId();
 		let memberList = [];
+		let suggestNewData;
 		let finalMemberList = this.personalAccidentForm.get('InsuredMemberForm') as FormArray
 		finalMemberList.controls.forEach(element => {
 			let obj =
@@ -676,7 +680,7 @@ export class PersonalInsuranceComponent implements OnInit {
 				"policyInceptionDate": this.datePipe.transform(this.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
 				"policyFeatures": featureList,
 				"insurerName": this.personalAccidentForm.get('insurerName').value,
-				"insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+				"insuranceSubTypeId": this.insuranceType,
 				"id": (this.id) ? this.id : null,
 				'realOrFictitious':2,
             	'suggestion':this.plannerNotes,
@@ -702,10 +706,20 @@ export class PersonalInsuranceComponent implements OnInit {
 			}
 			console.log(obj);
 
-
+			if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+                obj.insuredMembers.forEach(ele => {
+                    this.ownerIds.push({
+                        'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
+                    })
+                });
+            } else {
+                this.ownerIds.push({
+                    'ownerId': obj.policyHolderId == this.clientId ? 0 : obj.policyHolderId
+                })
+            }
 
 			if (this.dataForEdit) {
-				this.customerService.editGeneralInsuranceData(obj).subscribe(
+				this.planService.editGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
@@ -713,7 +727,7 @@ export class PersonalInsuranceComponent implements OnInit {
 						const insuranceData =
 						{
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							insuranceSubTypeId: this.insuranceType,
 							id:data ? data : null
 						}
 						this.close(insuranceData,true)
@@ -721,20 +735,63 @@ export class PersonalInsuranceComponent implements OnInit {
 				);
 			} else {
 				this.planService.addGenralInsurancePlan(obj).subscribe(
-					data => {
-
+					data => {                  
 						
-
-						this.barButtonOptions.active = false;
 						console.log(data);
-						this.eventService.openSnackBar("Added successfully!", 'Dismiss');
-						const insuranceData =
-						{
-							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-							id:data ? data : null
-						}
-						this.close(insuranceData,true)
+                        if (this.inputData.flag == 'ExistingSuggestNew') {
+                            const obj = {
+                                "id": this.inputData.id,
+                                "insuranceIds": JSON.stringify([data])
+                            }
+                            this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
+                        } else {
+                            let obj = {
+                                "planningList":
+                                    JSON.stringify({
+                                        "advisorId": this.advisorId,
+                                        "clientId": this.clientId,
+                                        "insuranceType": this.insuranceType,
+                                        "owners": this.ownerIds
+                                    }),
+                                "needAnalysis": JSON.stringify([data])
+                            }
+                            this.planService.addGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    suggestNewData = data;
+                                    //   this.barButtonOptions.active = false;
+                                    //   this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
+                        }
 					},err=>{
 						this.close('',true);
 					}
@@ -742,12 +799,16 @@ export class PersonalInsuranceComponent implements OnInit {
 			}
 		}
 	}
-	close(data,flag) {
-		this.addMoreFlag = false;
-		if (this.inputData.id) {
-			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
-		} else {
-			this.sendOutput.emit(true);
-		}
-	}
+    close(data, flag) {
+        if (data.id) {
+            this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            this.sendOutput.emit(data);
+        } else {
+            if (data.flag == 'SuggestNew') {
+                this.sendOutput.emit(false);
+            } else {
+                this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            }
+        }
+    }
 }

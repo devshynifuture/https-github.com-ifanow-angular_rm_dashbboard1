@@ -106,7 +106,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   setTrueKey =false;
   parentId: any;
   adminAdvisorIds: string;
-
+  minDate = new Date();
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
@@ -127,6 +127,8 @@ export class RightFilterDuplicateComponent implements OnInit {
     .subscribe(res => {
       this.adminAdvisorIds = res;
     });
+    this.minDate = new Date((this.minDate.getFullYear() - 3),0,1);
+
     this.setTrueKey =this._data.setTrueKey;
     this.showZeroFolio = this._data.showFolio == '2' ? false : true;
     this.panelOpenState = false;
@@ -1741,7 +1743,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         parentId:this.parentId ? this.parentId : this.advisorId,
         advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
-        toDate:this._data.name == 'SUMMARY REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
+        toDate:this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
         showFolio:(this.finalFilterData.showFolio == '2')? false:true
       };

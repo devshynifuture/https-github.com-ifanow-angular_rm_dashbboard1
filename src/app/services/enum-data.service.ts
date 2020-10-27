@@ -8,8 +8,6 @@ import {CustomerService} from '../component/protect-component/customers/componen
 import {OrgSettingServiceService} from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
 import {SubscriptionInject} from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {rejects} from 'assert';
-import {element} from 'protractor';
 import {apiConfig} from '../config/main-config';
 import {Subject} from 'rxjs';
 
@@ -101,12 +99,14 @@ export class EnumDataService {
     if (userData != null) {
       self.userData = userData;
     }
+    if(userData){
+      userData.forEach(u => {
+        if (u.familyMemberAge < 18) {
+          self.getAll = true;
+        }
+      });
+    }
 
-    userData.forEach(u => {
-      if (u.familyMemberAge < 18) {
-        self.getAll = true;
-      }
-    });
     return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
@@ -127,13 +127,16 @@ export class EnumDataService {
           });
       } else {
         let obj = [];
-        userData.forEach(u => {
-          let user = {
-            userId: u.id == 0 ? u.clientId : u.id,
-            userType: u.userType
-          };
-          obj.push(user);
-        });
+        if(userData){
+          userData.forEach(u => {
+            let user = {
+              userId: u.id == 0 ? u.clientId : u.id,
+              userType: u.userType
+            };
+            obj.push(user);
+          });
+        }
+
 
         self.custumService.getJointBankList(obj).subscribe(
           (data) => {

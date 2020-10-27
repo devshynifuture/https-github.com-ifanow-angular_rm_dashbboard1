@@ -136,6 +136,8 @@ export class MotorInsuranceComponent implements OnInit {
 	storeData: string;
 	showInsurance: { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
 	plannerNotes: any;
+	ownerIds =[];
+	insData: any;
 
 	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
 	}
@@ -146,6 +148,7 @@ export class MotorInsuranceComponent implements OnInit {
 	@Input() set data(data) {
 		this.advisorId = AuthService.getAdvisorId();
 		this.clientId = AuthService.getClientId();
+		this.insData = data;
 		this.inputData = data.inputData;
 		this.policyList = data.displayList.policyTypes;
 		this.addOns = data.displayList.addOns;
@@ -617,6 +620,7 @@ export class MotorInsuranceComponent implements OnInit {
 	saveMotorInsurance() {
 		this.getClientId();
 		let addOns = [];
+		let suggestNewData;
 		const addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray;
 		addOnList.controls.forEach(element => {
 			if (element.get('additionalCovers').value) {
@@ -646,7 +650,7 @@ export class MotorInsuranceComponent implements OnInit {
 				policyStartDate: this.datePipe.transform(this.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
 				policyExpiryDate: this.datePipe.transform(this.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
 				ccGvw: this.motorInsuranceForm.get('cgGvw').value,
-				sumInsuredIdv: this.motorInsuranceForm.get('declaredValue').value,
+				sumInsuredIdv: parseInt(this.motorInsuranceForm.get('declaredValue').value),
 				premiumAmount: this.motorInsuranceForm.get('premium').value,
 				vehicleTypeId: this.motorInsuranceForm.get('vehicleType').value,
 				vehicleRegNo: this.motorInsuranceForm.get('registrationNumber').value,
@@ -662,11 +666,12 @@ export class MotorInsuranceComponent implements OnInit {
 				advisorName: this.motorInsuranceForm.get('advisorName').value,
 				serviceBranch: this.motorInsuranceForm.get('serviceBranch').value,
 				linkedBankAccount: this.motorInsuranceForm.get('bankAccount').value,
-				insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+				insuranceSubTypeId: this.insuranceType,
 				id: (this.id) ? this.id : null,
 				realOrFictitious:2,
             	suggestion:this.plannerNotes,
 				addOns: addOns,
+				insuredMembers:[],
 				nominees: this.motorInsuranceForm.value.getNomineeName,
 			};
 
@@ -687,17 +692,27 @@ export class MotorInsuranceComponent implements OnInit {
 				obj.nominees = [];
 			}
 			console.log(obj);
-
+            if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+                obj.insuredMembers.forEach(ele => {
+                    this.ownerIds.push({
+                        'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
+                    })
+                });
+            } else {
+                this.ownerIds.push({
+                    'ownerId': obj.policyHolderId == this.clientId ? 0 : obj.policyHolderId
+                })
+            }
 
 			if (this.dataForEdit) {
-				this.customerService.editGeneralInsuranceData(obj).subscribe(
+				this.planService.editGenralInsurancePlan(obj).subscribe(
 					data => {
 						this.barButtonOptions.active = false;
 						console.log(data);
 						this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 						const insuranceData = {
 							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+							insuranceSubTypeId: this.insuranceType,
 							id:data ? data : null
 						};
 						this.close(insuranceData,true);
@@ -706,15 +721,61 @@ export class MotorInsuranceComponent implements OnInit {
 			} else {
 				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
-						this.barButtonOptions.active = false;
 						console.log(data);
-						this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-						const insuranceData = {
-							insuranceTypeId: this.inputData.insuranceTypeId,
-							insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-							id:data ? data : null
-						};
-						this.close(insuranceData,true);
+                        if (this.inputData.flag == 'ExistingSuggestNew') {
+                            const obj = {
+                                "id": this.inputData.id,
+                                "insuranceIds": JSON.stringify([data])
+                            }
+                            this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
+                        } else {
+                            let obj = {
+                                "planningList":
+                                    JSON.stringify({
+                                        "advisorId": this.advisorId,
+                                        "clientId": this.clientId,
+                                        "insuranceType": this.insuranceType,
+                                        "owners": this.ownerIds
+                                    }),
+                                "needAnalysis": JSON.stringify([data])
+                            }
+                            this.planService.addGeneralInsurance(obj).subscribe(
+                                data => {
+                                    this.barButtonOptions.active = false;
+                                    suggestNewData = data;
+                                    //   this.barButtonOptions.active = false;
+                                    //   this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+                                    console.log(data);
+                                    const insuranceData =
+                                    {
+                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+                                        insuranceSubTypeId: this.insuranceType,
+                                        id: data ? data : null
+                                    };
+                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+                                    this.close(insuranceData, true);
+                                },
+                                err => {
+                                    this.eventService.openSnackBar(err, 'Dismiss');
+                                }
+                            );
+                        }
 					},err=>{
 						this.close('',true);
 					}
@@ -732,14 +793,18 @@ export class MotorInsuranceComponent implements OnInit {
 			this.showRecommendation = false
 		}
 	}
-	close(data,flag) {
-		this.addMoreFlag = false;
-		if (this.inputData.id) {
-			this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag });
-		} else {
-			this.sendOutput.emit(true);
-		}
-	}
+    close(data, flag) {
+        if (data.id) {
+            this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            this.sendOutput.emit(data);
+        } else {
+            if (data.flag == 'SuggestNew') {
+                this.sendOutput.emit(false);
+            } else {
+                this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+            }
+        }
+    }
 
 
 }

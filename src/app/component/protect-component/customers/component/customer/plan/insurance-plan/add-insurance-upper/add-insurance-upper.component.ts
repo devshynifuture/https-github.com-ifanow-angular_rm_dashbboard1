@@ -17,12 +17,12 @@ export class AddInsuranceUpperComponent implements OnInit {
 
   ngOnInit() {
   }
-  close(){
+  close(flag){
     const fragmentData = {
       direction: 'top',
       componentName: AddInsuranceUpperComponent,
       state: 'close',
-      data:false
+      data:flag
     };
 
     this.eventService.changeUpperSliderState(fragmentData);

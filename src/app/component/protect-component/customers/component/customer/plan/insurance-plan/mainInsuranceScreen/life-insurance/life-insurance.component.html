@@ -33,9 +33,13 @@
                     <p class="f-12 m-0 text-primitive">ADVICE</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
-                            <h3 class="m-0  ">
+                            <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                    [value]="insuranceDetails?.advice"></span>
+                                     [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                            </h3>
+                            <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
+                                <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
+                                     [value]="insuranceDetails?.advice"></span>
                             </h3>
                         </div>
                     </div>
@@ -83,7 +87,7 @@
 
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
                                 <div class="bar">{{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}} </div>
                             </td>
                         </ng-container>
@@ -91,16 +95,16 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right  amt">
-                                <div class="bar">{{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
-                                    {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }} </span></div>
+                            <td mat-cell *matCellDef="let element" class="text-right  amt" (click)="isClick = false;expandedElement=null">
+                                <div class="bar">{{!isLoadingPlan || element.displayHolderSumInsured ? "₹" : ""}}<span appFormatNumber>
+                                    {{element.displayHolderSumInsured}} </span></div>
                             </td>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element">
+                            <td mat-cell class="text-right amt" *matCellDef="let element" (click)="isClick = false;expandedElement=null">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
                             </td>
@@ -109,19 +113,30 @@
 
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status</th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
                                 <div class="bar d-flex align-items-center justify-content-between">
                                     <span *ngIf="!isLoadingPlan">{{element?.insurance?.suggestion ? 'Recommended' : '-'}} </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
-                                        keyboard_arrow_down
+                                        keyboard_arrow_up
                                     </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && !element.expanded">
-                                        keyboard_arrow_up
+                                            keyboard_arrow_down
                                     </span>
                                 </div>
                             </td>
                         </ng-container>
-
+                        <ng-container matColumnDef="icons">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu"  (click)="isClick = true;expandedElement=null" *ngIf="!isLoadingPlan">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item  (click)="inputData?.insuranceType == 1 ? suggestPolicy(element) : suggestPolicyGi(inputData,element.insurance)">Edit</button>
+                                        <button mat-menu-item (click)="deleteModal('INSURANCE',element.insurance)">Delete</button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
                         <ng-container matColumnDef="expandedDetail" >
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns3.length" [hidden]="!element.expanded">
                                 <div class="example-element-detail" *ngIf="clicked"
@@ -136,7 +151,7 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns3" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element ? null : element;changeValue(dataSouce3,element)" >
+                            (click)="expandedElement = expandedElement === element  ? null : element;changeValue(dataSouce3,element)" >
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
@@ -649,7 +664,7 @@
                     <div class="bar36" [ngClass]="{'height36': isLoadingPlan}">
                     </div>
                 </div>
-                <div class="d-flex align-items-center" *ngIf="!isLoadingPlan && inputData.insuranceType == 1">
+                <div class="d-flex align-items-center" *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                     <button (click)="recommendationsPolicy(null)" mat-stroked-button
                         class="w-100 p-0 text-primary br-2 recommendations">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Recommendations on current policies

@@ -82,11 +82,14 @@ export class ClientMoreInfoComponent implements OnInit {
         return;
       } else {
         this.occupationList = [
-          { name: 'Government', value: 1 },
+          { name: 'Goverment', value: 1 },
           { name: 'Service', value: 2 },
-          { name: 'Private sector', value: 3 },
+          { name: 'Private', value: 3 },
           { name: 'Business', value: 4 },
           { name: 'Self employed', value: 5 },
+          { name: 'Home maker', value: 6 },
+          { name: 'Student', value: 7 },
+          { name: 'Retired', value: 8 }
         ];
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
           this.moreInfoData.categoryTypeflag = 'Individual';

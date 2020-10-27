@@ -25,7 +25,7 @@ export class TempserviceService {
         let totalObj: any = {};
         const isgreatorThanZero = (number) => number.balanceUnit <= 0
         let emptyObjOrNot = catObj[key].every(isgreatorThanZero);
-        if (!emptyObjOrNot) {
+        if (!emptyObjOrNot || folio == '1') {
           catObj[key].forEach((singleData) => {
             if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
               array.push(singleData);

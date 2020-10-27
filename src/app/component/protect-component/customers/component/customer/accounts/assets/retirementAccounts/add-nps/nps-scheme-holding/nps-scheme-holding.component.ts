@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
@@ -15,6 +15,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 
 import {map, startWith} from 'rxjs/operators';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { SchemeListComponent } from './scheme-list/scheme-list.component';
 @Component({
   selector: 'app-nps-scheme-holding',
   templateUrl: './nps-scheme-holding.component.html',
@@ -41,6 +42,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  @ViewChild('unit', {static: false}) unit;
+
   validatorType = ValidatorType
   inputData: any;
   familyMemberId: any;
@@ -629,4 +632,21 @@ addNewNominee(data) {
 
   }
 //link bank
+
+schemeDialog(holding): void {
+  const dialogRef = this.dialog.open(SchemeListComponent, {
+    width: '700px',
+    height: '500px',
+    data: this.schemeListData
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if(result){
+      holding.get('schemeName').setValue(result.name);
+      holding.get('schemeId').setValue(result.id);
+      this.unit.nativeElement.focus();
+    }
+  });
+
+}
 }

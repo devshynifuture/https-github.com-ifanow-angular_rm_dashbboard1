@@ -119,11 +119,11 @@
                         </mat-error>
                       </mat-form-field> -->
                     <mat-form-field>
-                        <input autocomplete="off" matInput aria-label="State" #name [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)" class="form-control br-0 pl-8" formControlName="schemeName">
-                        <mat-autocomplete #auto="matAutocomplete">
+                        <input  matInput aria-label="State"   (click)="schemeDialog(creds)" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <!-- <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" (click)="setGroupValue({scheme:s, index: i})" [value]="s.name">{{s.name}}
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
                         <!-- <mat-select matInput formControlName="schemeId" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
@@ -141,7 +141,7 @@
                     <div class="col-md-3 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #totalUnits type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalUnits">
+                                <input autocomplete="off" #unit matInput #totalUnits type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalUnits">
                                 <mat-hint align="start" class="mb-0 ml-8 f-11 text-custom pt-4">As in statement
                                 </mat-hint>
                                 <!-- <mat-hint align="end" class="f-12">{{totalUnits.value.length}}/10</mat-hint> -->

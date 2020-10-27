@@ -2,8 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h4 class="mb-0 wrapper-20">
-        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund
-                and'}} scheme level transactions
+        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund'}} scheme level transactions
       </h4>
     </div>
     <div class="col-md-4 text-right">
@@ -40,13 +39,13 @@
         <div class="form-group widthBig">
           <mat-form-field floatLabel="never" appearance="standard">
             <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
-              (keyup)="checkValidation($event.value);setValueChangeForScheme()" aria-label="schemeName" [matAutocomplete]="auto"
+              (keyup)="checkValidation();setValueChangeForScheme()" aria-label="schemeName" [matAutocomplete]="auto"
               [formControl]="schemeNameControl">
 
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
               <ng-container *ngIf="!isLoadingForDropDown">
-                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme.schemeName"
+                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme?.schemeName"
                   matTooltipPosition="after">
                   <div (click)="mapSchemeWithForm(scheme)">
                     <strong>{{scheme.schemeName}}</strong>
@@ -274,24 +273,24 @@
     <div class="row pt-28">
       <div class="col-md-3 pl-0">
         <h5 class="m-0 ">Transaction type</h5>
-  
+
       </div>
       <div class="col-md-3">
         <h5 class="m-0 ">Date</h5>
       </div>
       <div class="col-md-3 pl-0">
         <h5 class="m-0 ">Transaction amount</h5>
-  
+
       </div>
       <div class="col-md-2 pl-0">
         <h5 class="m-0 ">Units</h5>
-  
+
       </div>
-  
+
     </div>
     <div class="row pb-36">
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <select class="form-control br-0" id="sel1">
             <option>1</option>
@@ -302,16 +301,16 @@
         </div>
       </div>
       <div class="col-md-3">
-  
+
       </div>
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>
       </div>
       <div class="col-md-2 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>
@@ -329,7 +328,7 @@
     </div>
     <div class="row pb-36">
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <select class="form-control br-0" id="sel1">
             <option>1</option>
@@ -340,16 +339,16 @@
         </div>
       </div>
       <div class="col-md-3">
-  
+
       </div>
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>
       </div>
       <div class="col-md-2 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>
@@ -367,7 +366,7 @@
     </div>
     <div class="row pb-36">
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <select class="form-control br-0" id="sel1">
             <option>1</option>
@@ -378,16 +377,16 @@
         </div>
       </div>
       <div class="col-md-3">
-  
+
       </div>
       <div class="col-md-3 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>
       </div>
       <div class="col-md-2 pl-0">
-  
+
         <div class="form-group mb-0">
           <input type="text" class="form-control br-0">
         </div>

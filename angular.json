@@ -42,9 +42,10 @@
               "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/slick-carousel/slick/slick.min.js",
-              "src/app/offline/offline.js"
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/slick-carousel/slick/slick.min.js",
+              "./node_modules/froala-editor/js/froala_editor.min.js",
+              "./src/app/offline/offline.js"
             ],
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
@@ -71,7 +72,7 @@
               "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
+              "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
@@ -79,9 +80,6 @@
                   "maximumWarning": "2mb",
                   "maximumError": "8mb"
                 }
-              ],
-              "scripts": [
-                "src/app/offline/offline.js"
               ]
             },
             "devifanow": {
@@ -116,13 +114,13 @@
                 }
               ],
               "optimization": false,
-              "outputHashing": "none",
+              "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": false,
-              "vendorChunk": true,
+              "vendorChunk": false,
               "buildOptimizer": false,
               "budgets": [
                 {
@@ -154,9 +152,6 @@
                   "maximumWarning": "2mb",
                   "maximumError": "8mb"
                 }
-              ],
-              "scripts": [
-                "src/app/offline/offline.js"
               ]
             }
           }

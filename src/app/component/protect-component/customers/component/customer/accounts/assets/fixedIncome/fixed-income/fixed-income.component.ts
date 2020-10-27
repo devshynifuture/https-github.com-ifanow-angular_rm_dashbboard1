@@ -395,7 +395,13 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               // this.getFixedDepositList();
               this.fixDataList.assetList = this.fixDataList.assetList.filter(x => x.id != element.id);
-              this.dataSource.data = this.fixDataList.assetList;
+              // this.dataSource.data = this.fixDataList.assetList;
+
+            // this.fixDataList.assetList.push(sideBarData.data);
+            this.fixDataList.sumOfAmountInvested -= element.amountInvested;
+            this.fixDataList.sumOfCurrentValue -= element.currentValue;
+            this.fixDataList.sumOfMaturityValue -= element.maturityValue;
+            this.getFixedDepositRes(this.fixDataList);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -405,7 +411,12 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               // this.getRecurringDepositList();
               this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
-              this.dataSource.data = this.recDataList.assetList;
+              
+              this.recDataList.totalCurrentValue -= element.currentValue;
+              this.recDataList.sumOfMonthlyContribution -= element.monthlyContribution;
+              this.recDataList.sumOfMaturityValue -= element.maturityValue;
+              this.getRecurringDepositRes(this.recDataList);
+              
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -415,7 +426,11 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               // this.getBondsList();
               this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);
-              this.dataSource.data = this.bondDataList.assetList;
+              this.bondDataList.sumOfAmountInvested  -= element.amountInvested;
+              this.bondDataList.sumOfCouponAmount  -= element.couponAmount;
+              this.bondDataList.sumOfCurrentValue  -= element.currentValue;
+              this.bondDataList.sumOfMaturityValue  -= element.maturityValue;
+              this.getBondsRes(this.bondDataList);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -453,7 +468,16 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getFixedDepositList();
+            if(!data){
+              this.fixDataList.assetList.push(sideBarData.data);
+              this.fixDataList.sumOfAmountInvested += sideBarData.data.amountInvested;
+              this.fixDataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.fixDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              this.getFixedDepositRes(this.fixDataList);
+            }
+            else{
+              this.getFixedDepositList();
+            }
           }
           rightSideDataSub.unsubscribe();
         }
@@ -505,7 +529,16 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getRecurringDepositList();
+            if(data){
+              this.getRecurringDepositList();
+            }
+            else{
+              this.recDataList.assetList.push(sideBarData.data);
+              this.recDataList.totalCurrentValue += sideBarData.data.currentValue;
+              this.recDataList.sumOfMonthlyContribution += sideBarData.data.monthlyContribution;
+              this.recDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              this.getRecurringDepositRes(this.recDataList);
+            }
           }
           rightSideDataSub.unsubscribe();
         }
@@ -528,7 +561,17 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getBondsList();
+            if(data){
+              this.getBondsList();
+            }
+            else{
+              this.bondDataList.assetList.push(sideBarData.data);
+              this.bondDataList.sumOfAmountInvested  += sideBarData.data.amountInvested;
+              this.bondDataList.sumOfCouponAmount  += sideBarData.data.couponAmount;
+              this.bondDataList.sumOfCurrentValue  += sideBarData.data.currentValue;
+              this.bondDataList.sumOfMaturityValue  += sideBarData.data.maturityValue;
+              this.getBondsRes(this.bondDataList);
+            }
           }
           rightSideDataSub.unsubscribe();
         }
