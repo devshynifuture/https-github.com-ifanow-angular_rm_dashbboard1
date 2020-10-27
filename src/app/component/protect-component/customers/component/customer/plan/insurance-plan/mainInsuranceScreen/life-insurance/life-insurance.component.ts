@@ -442,10 +442,15 @@ export class LifeInsuranceComponent implements OnInit {
       id:[this.inputData.id],
       insuranceType:this.inputData.insuranceType
     }
-    this.inputData.owners.forEach(element => {
-      // obj.familyMemberId.push(element.ownerId);
-      obj2.familyMemberId.push(element.ownerId);
-    });
+    if(this.inputData.owners){
+      this.inputData.owners.forEach(element => {
+        // obj.familyMemberId.push(element.ownerId);
+        obj2.familyMemberId.push(element.ownerId);
+      });
+    }else{
+      obj2.familyMemberId.push(0);
+    }
+
     this.loader(1);
     this.isLoadingPlan = true;
     // this.planService.getDetailsInsurance(obj).subscribe(
@@ -623,7 +628,7 @@ export class LifeInsuranceComponent implements OnInit {
     if (data) {
       this.needAnalysisLoaded = data;
       this.dataSourceLiability = this.getFilterData(data[1], 'liabilities', 'name', 'total_loan_outstanding');
-      this.plannerObj.lifeInsurancePremiums = data[2.1][0].total_amount;
+      this.plannerObj.lifeInsurancePremiums = data[2.1]? data[2.1][0].total_amount : 0;
       this.dataSourceLifeInsurance = this.getFilterData(data[2.2], 'dependantNeeds', 'name', 'amount');
       this.plannerObj.livingExpense = 0;
       this.dataSourceLifeInsurance.forEach(element => {
@@ -632,11 +637,11 @@ export class LifeInsuranceComponent implements OnInit {
         }
       });
       this.dataSourceGoals = this.getFilterData(data[3], 'goalsMeet', 'goalName', 'goalFV')
-      this.plannerObj.GrossLifeinsurance = data[4][0].total_amount;
+      this.plannerObj.GrossLifeinsurance =data[4] ? data[4][0].total_amount : 0;
       this.dataSourceIncome = this.getFilterData(data[5], 'incomeSource', 'name', 'amount')
-      this.plannerObj.existingLifeInsurance = data[6][0].total_amount;
+      this.plannerObj.existingLifeInsurance = data[6] ? data[6][0].total_amount : 0;
       this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
-      this.plannerObj.additionalLifeIns = data[8][0].total_amount;
+      this.plannerObj.additionalLifeIns = data[8] ?data[8][0].total_amount : 0;
     } else {
       this.plannerObj = this.setAll(this.plannerObj, 0);
       this.needAnalysisLoaded = '';
@@ -748,7 +753,7 @@ export class LifeInsuranceComponent implements OnInit {
     if(data){
       data.inputData = this.inputData
     }else{
-      data = this.inputData
+      data ={inputData : this.inputData};
     }
     const fragmentData = {
       flag: 'opencurrentpolicies',

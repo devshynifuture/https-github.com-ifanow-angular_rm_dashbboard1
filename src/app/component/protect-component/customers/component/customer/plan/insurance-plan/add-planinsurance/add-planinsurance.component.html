@@ -73,7 +73,7 @@
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input type="text" [(ngModel)]="selectedExpectancy" placeholder="Select life expectancy"
-                                    aria-label="Number" matInput (keyup)="onChange($event,'expectancy')"
+                                    aria-label="Number" matInput (keyup)="changes();onChange($event,'expectancy')"
                                     [formControl]="expectancy" [matAutocomplete]="auto" class="form-control br-0">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option *ngFor="let option of filteredOptions | async"
@@ -605,18 +605,18 @@
                     </div>
                 </div>
                 <div class="row pt-20">
-                    <div class="col-md-11 p-0">
-                        Planner notes
-                    </div>
-                    <div class="col-md-1 text-right">
+                 
+                    <!-- <div class="col-md-1 text-right">
                         <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img"
                             class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
-                    </div>
-                    <div class="col-md-12 p-0">
-                        <!-- <mat-form-field> -->
-                        <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
-                        <!-- <input matInput class="form-control br-0" formControlName="plannerNote"> -->
-                        <!-- </mat-form-field> -->
+                    </div> -->
+                    <div class="col-md-12" id="email-froala">
+                            <div class="col-md-11 p-0">
+                                    Planner notes
+                                </div>
+                        <div class="mt-16">
+                            <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -154,7 +154,7 @@ export class AddSuggestPolicyComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
       const obj = {
-        'id':this.dataForEdit.id ? this.dataForEdit.id : null,
+        'id':this.dataForEdit ? this.dataForEdit.id : null,
         'clientId': this.clientId,
         'advisorId': this.advisorId,
         'familyMemberIdLifeAssured':this.insuranceData.familyMemberId == 0 ? this.clientId : this.insuranceData.familyMemberId  ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
