@@ -99,16 +99,40 @@ export class PortfolioFieldComponent implements OnInit {
       arr1 = this.othersWisePortfolio;
       arr2 = this.familyWisePortfolio;
     }
-    arr1.forEach(f=> {
-      arr2.forEach((o,i) => {
-        if(f.portfolioName == o.portfolioName){
-          arr2.splice(i, 1);
-        }
+    arr2 = this.uniqueArr(arr2);
+    
+    if(arr1.length > 0){
+      arr1.forEach(f=> {
+        arr2.forEach((o,i) => {
+          if(f.portfolioName != o.portfolioName){
+            this.familyWisePortfolio.push(o);
+          }
+        });
       });
-    });
-    let margeArry = [];
-    margeArry = arr1.concat(arr2);
-    this.familyWisePortfolio = margeArry;
+    }
+    else{
+      this.familyWisePortfolio = this.uniqueArr(arr2);
+    //   let arryName = [];
+    //   let indesArr = [];
+    //   arr2.forEach(p => {
+    //     arryName.push(p.portfolioName);
+    //   });
+
+    //   arryName.forEach(i => {
+    //     indesArr.push(arryName.indexOf(i));
+    //   })
+    //   let uniqueChars = [...new Set(indesArr)];
+
+    //   console.log(uniqueChars, "uniqueChars");
+
+    //   uniqueChars.forEach(u => {
+    //     this.familyWisePortfolio.push(arr2[u]);
+    //   });
+    }
+    //////////////
+    // let margeArry = [];
+    // margeArry = arr1.concat(arr2);
+    // this.familyWisePortfolio = margeArry;
     // (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
     this.familyWisePortfolio.forEach(element => {
       if(element.portfolioName == this.portfolioName.value){
@@ -118,7 +142,26 @@ export class PortfolioFieldComponent implements OnInit {
     console.log(this.familyWisePortfolio);
   }
 
+uniqueArr(arr){
+  let arryName = [];
+      let indesArr = [];
+      let uniqueArr = [];
+      arr.forEach(p => {
+        arryName.push(p.portfolioName);
+      });
 
+      arryName.forEach(i => {
+        indesArr.push(arryName.indexOf(i));
+      })
+      let uniqueChars = [...new Set(indesArr)];
+
+      console.log(uniqueChars, "uniqueChars");
+      uniqueChars.forEach(u => {
+        uniqueArr.push(arr[u]);
+      });
+
+      return uniqueArr;
+}
 
   delete(value, data) {
     const dialogData = {
