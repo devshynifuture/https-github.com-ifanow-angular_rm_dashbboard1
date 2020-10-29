@@ -1015,3 +1015,8 @@
     display: none !important;
   }
 }
+.overflow-myfeed{
+  // width: 1200px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}

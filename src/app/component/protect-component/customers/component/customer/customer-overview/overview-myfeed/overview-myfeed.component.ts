@@ -576,7 +576,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
 
       this.tabsLoaded.portfolioData.isLoading = false;
-      this.tabsLoaded.portfolioData.dataLoaded = true;
+      // this.tabsLoaded.portfolioData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -1060,6 +1060,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           // this.eventService.openSnackBar(error, 'DISMISS');
           this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
           this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+          this.tabsLoaded.portfolioData.dataLoaded = true;
+          this.tabsLoaded.portfolioData.isLoading = false;
+
         }
       );
     }
@@ -1130,17 +1133,29 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           investedAmount: this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0,
           gainAmount: this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,
           currentValue: this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,
-          assetTypeString: 'Mutual funds'
+          assetTypeString: 'Mutual funds',
+          path : '/customer/detail/account/assets/mutual'
         }
-        this.portFolioData.push(obj);
+
+        // this.portFolioData[0].investedAmount = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0, 0);
+        // this.portFolioData[0].gainAmount = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,0)
+        // this.portFolioData[0].currentValue = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,0),
+        this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
+        this.portFolioData.unshift(obj);
         this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
   
         this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
       }else{
         this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
         this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+        this.tabsLoaded.portfolioData.dataLoaded = true;
+        this.tabsLoaded.portfolioData.isLoading = false;
       }
-      
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
+    }else{
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
     }
   }
 

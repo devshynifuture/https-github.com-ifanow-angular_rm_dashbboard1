@@ -277,7 +277,7 @@ export class PlanService {
   }
 
   getInsurancePlanningPlanSummary(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_PLANNING_PLAN_SUMMARY, data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_PLAN_SUMMARY, data);
   }
   getGeneralInsuranceSuggestPolicy(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_SUGGEST_POLICY+ 'id=' + data, '')

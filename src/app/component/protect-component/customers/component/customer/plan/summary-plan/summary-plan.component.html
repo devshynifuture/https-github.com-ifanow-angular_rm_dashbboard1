@@ -1,11 +1,12 @@
 <div id="ui-plan-summary">
     <div class="row">
 
-        <div class="col-md-2 p-0 bg-white pb-44">
+        <div class="col-md-2 p-0 bg-white pb-44 skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
             <div class="wrapper-16 bb-2 c-p">
-                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span class="text-primitive f-12">{{ yearToShow }}</span>
+                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span
+                        class="text-primitive f-12">{{ yearToShow }}</span>
                 </p>
-                <h1 class="f-35 m-0 text-black pt-8">₹1,25,35,470</h1>
+                <h1 class="f-35 m-0 text-black pt-8">₹<span appFormatNumber [value]="annualSurplus ? annualSurplus : 0"></span></h1>
 
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
@@ -13,10 +14,12 @@
                     </div>
                     <div class="col-md-6 p-0">
                         <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹28,30,500</p> -->
-                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
+                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.income ? "₹" : ""}}<span
+                                appFormatNumber [shouldRoundOff]="true"
+                                [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-progress-bar class="light-blue" mode="determinate" value="40"></mat-progress-bar>
+                        <mat-progress-bar class="light-blue" mode="determinate" [matTooltip]="incomePercent+'%'" [value]="incomePercent"></mat-progress-bar>
                     </div>
                 </div>
 
@@ -26,40 +29,61 @@
                     </div>
                     <div class="col-md-6 p-0">
                         <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹19,77,000</p> -->
-                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
+                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.expense ? "₹" : ""}}<span
+                                appFormatNumber [shouldRoundOff]="true"
+                                [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-progress-bar class="light-red" mode="determinate" value="40"></mat-progress-bar>
+                        <mat-progress-bar class="light-red" mode="determinate" [matTooltip]="expensePercent+'%'" [value]="expensePercent"></mat-progress-bar>
                     </div>
                 </div>
             </div>
 
             <div class="row pt-20">
                 <div class="col-md-10 pr-0">
-                    <p class="mb-0 f-16 roboto f-400"> Budget status <span class="text-primitive f-12">{{yearToShow}} </span>
+                    <p class="mb-0 f-16 roboto f-400"> Budget status <span class="text-primitive f-12">{{yearToShow}}
+                        </span>
                     </p>
                 </div>
-                <div class="col-md-2 pl-0  ">
+                <!-- <div class="col-md-2 pl-0  ">
                     <i class="material-icons c-p">
                         more_horiz
                     </i>
-                </div>
+                </div> -->
             </div>
 
-            <div *ngIf="budgetData?.length > 0">
+            <div *ngIf="budgetData?.length > 0 && !isLoadingBudget" >
                 <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
-                    <div class="col-md-9 pr-0">
-                        <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
-                        <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> / <span appFormatNumber>{{item.spent}}</span></p>
-                    </div>
-                    <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
-                        <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100"> {{item.progressPercent ? item.progressPercent : 0}}% </p>
-                        <p class="mb-10 f-14 text-danger roboto f-400" *ngIf="item.progressPercent > 100"> {{item.progressPercent ? item.progressPercent : 0}}% </p>
-                    </div>
+                            <div class="col-md-9 pr-0">
+                                    <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
+                                    <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> /
+                                        <span appFormatNumber>{{item.spent}}</span></p>
+                                </div>
+                        <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
+                            <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100">
+                                {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                            <p class="mb-10 f-14 text-danger roboto f-400" *ngIf="item.progressPercent > 100">
+                                {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                        </div>
                 </div>
             </div>
+            <div *ngIf="budgetData?.length > 0 && isLoadingBudget" class="relClass">
+                    <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
+                        <div [ngClass]="{'height23': isLoadingBudget}" class="bar">
+                            <div class="col-md-9 pr-0">
+                                <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
+                                <p class="mb-10 f-14 roboto text-custom f-400"> <span appFormatNumber>{{item.amount}}</span> 
+                                    <span appFormatNumber>{{item.spent}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
+            <div *ngIf="budgetData?.length == 0">
+                <h4 class="d-flex justify-content-center b-a p-44">
+                    No Data Found
+                </h4>
+            </div>
             <!-- <div class="row bb c-p pt-10">
                 <div class="col-md-9 pr-0">
                     <p class="mb-0 f-14 text-black  roboto f-400"> Transportation </p>
@@ -120,7 +144,7 @@
                 <div class="col-md-8 p-0">
                     <h3 class="m-0 roboto wrapper-20 f-500 text-black">Plan summary</h3>
                 </div>
-                <div class="col-md-4 pl-0">
+                <!-- <div class="col-md-4 pl-0">
                     <button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0" mat-button>
                         Scenario 2 <i class="material-icons text-custom">
                             keyboard_arrow_down
@@ -129,7 +153,7 @@
                         <button mat-menu-item>Item 1</button>
                         <button mat-menu-item>Item 2</button>
                     </mat-menu>
-                </div>
+                </div> -->
             </div>
 
             <div class="bg-grey lter">
@@ -143,14 +167,17 @@
                                         <div class="col-md-12 p-0 mb-16">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Total goals</p>
-                                                <h1 class="text-primary f-400 roboto">{{ goalSummaryCountObj && goalSummaryCountObj.totalGoals }}</h1>
+                                                <h1 class="text-primary f-400 roboto">
+                                                    {{ goalSummaryCountObj && goalSummaryCountObj?.totalGoals }}</h1>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 p-0">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Upcoming</p>
-                                                <h1 class="text-primary f-400 roboto">{{ goalSummaryCountObj && goalSummaryCountObj.upcomingGoalsCount }}</h1>
+                                                <h1 class="text-primary f-400 roboto">
+                                                    {{ goalSummaryCountObj && goalSummaryCountObj?.upcomingGoalsCount }}
+                                                </h1>
                                             </div>
                                         </div>
                                     </div>
@@ -162,10 +189,16 @@
                                         <span class="linebr"></span>
 
                                         <p class="f-14 mb-0 roboto f-400">Monthly</p>
-                                        <h4 class="text-primary roboto f-400">{{ goalSummaryCountObj && goalSummaryCountObj.monthlyInvestmentMappedToGoals }}</h4>
+                                        <h4 class="text-primary roboto f-400"><span appFormatNumber
+                                                [shouldRoundOff]="true"
+                                                [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals"></span>
+                                        </h4>
 
                                         <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
-                                        <h4 class="text-primary roboto f-400">{{ goalSummaryCountObj && goalSummaryCountObj.lumpsumInvestmentMappedToGoals }}</h4>
+                                        <h4 class="text-primary roboto f-400"><span appFormatNumber
+                                                [shouldRoundOff]="true"
+                                                [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals"></span>
+                                        </h4>
 
                                     </div>
                                 </div>
@@ -186,7 +219,8 @@
                                 </div> -->
                             </div>
 
-                            <div class="row pt-20" *ngIf="dataSource && dataSource.hasOwnProperty('data') && dataSource.data.length>0">
+                            <div class="row pt-20"
+                                *ngIf="dataSource?.data?.length>0">
 
                                 <div class="col-md-12 p-0">
                                     <p class="f-14 left m-0 roboto f-400">Quick view</p>
@@ -202,9 +236,9 @@
 
 
                                 <div class="col-md-12 planTable p-0">
-                                    <mat-paginator [hidePageSize]="true"
-                                    [pageSize]="1"></mat-paginator>
-                                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" [appSkeletonLoading]="isLoading">
+                                    <mat-paginator [hidePageSize]="true" [pageSize]="1"></mat-paginator>
+                                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                                        [appSkeletonLoading]="isLoading">
 
                                         <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -216,11 +250,13 @@
                                                 <div
                                                     class="d-flex align-items-center justify-content-around bg-primary-progress bar">
                                                     <div>
-                                                        <img [src]="element.imageUrl" *ngIf="element.imageUrl" class="h-50 w-auto">
+                                                        <img [src]="element.imageUrl" *ngIf="element.imageUrl"
+                                                            class="h-50 w-auto">
                                                     </div>
                                                     <div class="">
                                                         <p class="f-14 m-0"> {{ element.details }} </p>
-                                                        <mat-progress-bar mode="determinate" [value]="element.percentCompleted">
+                                                        <mat-progress-bar mode="determinate"
+                                                            [value]="element.percentCompleted">
                                                         </mat-progress-bar>
                                                     </div>
                                                 </div>
@@ -231,18 +267,20 @@
                                         <ng-container matColumnDef="value">
                                             <th mat-header-cell *matHeaderCellDef> Goal value </th>
                                             <td mat-cell *matCellDef="let element">
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.value">
-                                                    {{element.value}} 
-                                                </div> 
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                    [value]="element.value">
+                                                    {{element.value}}
+                                                </div>
                                             </td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
                                         <ng-container matColumnDef="month">
                                             <th mat-header-cell *matHeaderCellDef> Monthly </th>
-                                            <td mat-cell *matCellDef="let element"> 
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.month">
-                                                    {{element.month}} 
+                                            <td mat-cell *matCellDef="let element">
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                    [value]="element.month">
+                                                    {{element.month}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -251,9 +289,10 @@
                                         <ng-container matColumnDef="lumpsum">
                                             <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
                                             <td mat-cell *matCellDef="let element">
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false" [value]="element.lumpsum">
-                                                    {{element.lumpsum}} 
-                                                </div> 
+                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                    [value]="element.lumpsum">
+                                                    {{element.lumpsum}}
+                                                </div>
                                             </td>
                                         </ng-container>
 
@@ -272,19 +311,16 @@
 
                             <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
                                 <div class="col-md-2 p-0">
-                                    <img src="assets/images/svg/plan-life-insurance.svg" *ngIf="item.insuranceName ==='life'">
-                                    <img src="assets/images/svg/plan-health-insurance.svg" *ngIf="item.insuranceName ==='HEALTH'">
-                                    <img src="assets/images/svg/plan-accident-insu.svg"  *ngIf="item.insuranceName ==='accident'">
-                                    <img src="assets/images/svg/plan-critical-insu.svg" *ngIf="item.insuranceName ==='critical'">
-                                    <img src="assets/images/svg/plan-cancer-insu.svg" *ngIf="item.insuranceName ==='cancer'">
+                                    <img [src]="item.img">
                                 </div>
                                 <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }} insurance</p>
-                                    <p class="f-14 mb-16 f-600" appFormatNumber [value]="item.amount" [shouldRoundOff]="false">₹ {{ item.amount }}</p>
+                                    <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
+                                    <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true" [value]="item?.amount"></span></p>
                                 </div>
                             </div>
 
-                            <div class="row b-b pt-14 skeletonAnimation" *ngIf="isLoading" [appSkeletonLoading]="isLoading">
+                            <div class="row b-b pt-14 skeletonAnimation" *ngIf="isLoading"
+                                [appSkeletonLoading]="isLoading">
                                 <div class="relClass">
                                     <div class="bar height24"></div>
                                 </div>
@@ -298,7 +334,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-8 mt-16 pr-8">
                         <div class="bg-white p-20">
                             <h5 class="f-500 mb-20">Ratios</h5>
@@ -373,32 +409,44 @@
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Incomes</p>
-                                <p class="f-14 m-0">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
+                                <p class="f-14 m-0">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Expenses</p>
-                                <p class="f-14 m-0">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
+                                <p class="f-14 m-0">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Assets</p>
-                                <p class="f-14 m-0">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                <p class="f-14 m-0">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Insurance</p>
-                                <p class="f-14 m-0">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
+                                <p class="f-14 m-0">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Liabilities</p>
-                                <p class="f-14 m-0">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
+                                <p class="f-14 m-0">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 f-600 m-0">Surplus</p>
-                                <p class="f-14 f-600 m-0">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true" [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
+                                <p class="f-14 f-600 m-0">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
+                                        [shouldRoundOff]="true"
+                                        [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
                             </div>
 
 
@@ -408,7 +456,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
 
@@ -428,9 +476,9 @@
                     </div>
                 </div>
                 <div class="b-b pl-12">
-                    <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
+                    <h5 class="roboto mt-16 mb-10 f-500" >Financial plan</h5>
                     <div class="d-flex mb-20">
-                        <img src="assets/images/svg/financial-plan.svg">
+                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf()">
                         <div class="detailsPDF">
                             <p class="f-12 l-18 f-500 roboto mb-10">Financial plan.pdf</p>
                             <p class="f-12 l-18 mb-0">980 KB</p>
@@ -443,7 +491,7 @@
                 </div>
 
 
-                <div class="">
+                <!-- <div class="">
                     <div class="wrapper-20 pl-12 pr-12">
                         <div class="row">
                             <div class="col-md-12 p-0">
@@ -490,9 +538,213 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
 
     </div>
 </div>
+<!-------------------------------pdf-------------------------------->
+<!-- <div #summaryPlan id="planSummary">
+        <div >
+            <h1>{{'helooo'}}{{loopEle}}</h1>
+               
+              </div>
+</div> -->
+
+<!-- <html #summaryPlan id="planSummary">
+    <head>
+    </head>
+    <body>
+        <table cellpadding="0" cellspacing="0" border="0"
+        style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        align="center; page-break-before: always;">
+        
+            <tr>
+                <td>
+                    <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                        <tr>
+                            <td>
+                                <h3 style="margin: 0px; font-size: 16px;">
+                                    Abhay Bhosle's Financial Plan
+                                </h3>
+                            </td>
+                            <td style="text-align: right;">
+                                <p style="margin: 0px 0px 5px 0px; font-size: 14px;">
+                                    Prepared by
+                                </p>
+                                <h3 style="margin: 0px; font-size: 16px;">
+                                    Manek Financial Advisors Pvt Ltd
+                                </h3>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table style="width: 100%; border: 0px; padding-top: 30px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                        
+                        <tr>
+                            <td>
+                                <h3 style="margin: 0px; font-size: 16px;">
+                                    Shivali A Bhosle's Marriage   
+                                </h3>
+                            </td>
+
+                            <td style="text-align: right;">
+                                <h3 style="margin: 0px; font-weight: 400; font-size: 16px;">
+                                    2034
+                                </h3>
+                            </td>
+                        </tr>
+                    
+                    </table>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <table style="border: 0px; margin-top: 20px; width: 100%;">
+                        <tr>
+                            <td style="width: 265px;">
+                                <img style="width: 265px; height: 265px;" src="https://res.cloudinary.com/futurewise/image/upload/v1594125749/goal-default-image/car-goal_v2.0.svg">
+                            </td>
+
+                            <td style="vertical-align: top; padding-left: 15px;">
+                                <table style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 5px;">
+                                    <tr>
+                                        <td>
+                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                                Goal Amount  </p>
+                                                <h5 style="font-size: 16px; margin: 0px;">
+                                                    Rs.35,12,057
+                                                </h5>
+                                        </td>
+
+                                        
+                                        <td>
+                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                                Achieved  </p>
+                                                <h5 style="font-size: 16px; margin: 0px;">
+                                                    Rs.15,00,000
+                                                </h5>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <table style="margin: 20px 0px 20px 0px; width: 100%; ">
+                                    <tr>
+                                        <td>
+                                            <div style="width: 100%; line-height: 30px; font-size: 12px; background:#f5f7f7; height: 30px;">
+                                                0%
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <p style="margin: 0px; font-size: 14px; font-weight: 600;">Additional Required</p>
+                                
+                                <table  cellpadding="0" cellspacing="0" style="margin: 10px 0px 0px 0px; font-size: 14px; width: 100%; border: 1px solid #dee5e7;">
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #dee5e7;">
+
+                                        </td>
+
+                                        <td style="border-bottom: 1px solid #dee5e7; padding: 10px; text-align: right;">
+                                            Monthly
+                                        </td>
+
+                                        <td style="border-bottom: 1px solid #dee5e7;padding: 10px; text-align: right;">
+                                            Lumpsum
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7;"> Equity</td>
+                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">12,860 <span style="font-size: 12px;"> 0%</span></td>
+                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">5,00,165</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding: 10px;"> Debt</td>
+                                        <td style="padding: 10px; text-align: right;">12,860 <span style="font-size: 12px;"> 0%</span></td>
+                                            <td style="padding: 10px; text-align: right;">5,00,165</td>
+                                    </tr>
+
+                                </table>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                    
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
+                        <tr>
+                            <td>
+                                <p style=" font-size: 15px; font-weight: 600;">Assets allocated to this goal</p>
+
+                                <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;"> 
+                                    <tr>
+                                        <td style="padding: 8px;background: #f5f7f7;">Assets</td>
+                                        <td style="padding: 8px;background: #f5f7f7;">Current Value</td>
+                                        <td style="padding: 8px;background: #f5f7f7;">Maturity Value</td>
+                                        <td style="padding: 8px;background: #f5f7f7;">Recommmendation</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"> No assets allocated to this goal </td>
+                                        
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td>
+                    <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%;">
+                        <tr>
+                            <td>
+                                <p style=" font-size: 15px; font-weight: 600;">Goal year wise details</p>
+
+                                <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;"> 
+                                    <tr>
+                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal Year</td>
+                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">Goal FV</td>
+                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">FV of assets allocated </td>
+                                        <td style="padding: 8px;background: #f5f7f7;">Status</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding: 8px; border-right: 1px solid #dee5e7;">2025</td>
+                                        <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">  35,12,057  </td>
+                                        <td style="padding: 8px; border-right: 1px solid #dee5e7; text-align: right;">0</td>
+                                        <td style="padding: 8px;">0% achievable</td>
+                                        
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            
+        </table>
+    </body>
+</html> -->
