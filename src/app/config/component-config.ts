@@ -348,6 +348,7 @@ export const appConfig = {
   ADD_GENERAL_INSURANCE_PLAN: 'insurance/planning/general/insurance/suggest/policy/new/add',
   EDIT_GENERAL_INSURANCE_PLAN: 'insurance/planning/general/insurance/suggest/policy/new/edit',
   GET_INSURANCE_PLANNING_PLAN_SUMMARY: 'insurance/planning/plan/summary/insurance/get',
+  GET_INSURANCE_PLAN_SUMMARY: 'insurance/planning/summary/get',
   DELETE_SUGGEST_NEW:'account/insurance/general-insurance/delete',
   Edit_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/edit',
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
