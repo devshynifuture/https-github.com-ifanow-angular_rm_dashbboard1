@@ -152,7 +152,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 7500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -173,7 +173,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -195,7 +195,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 3000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
@@ -217,7 +217,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             gap: 10,
-            cost: 75000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -241,7 +241,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             gap: 5,
-            cost: 3000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF,AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children // abhishek said self too
           }
           break;
@@ -262,7 +262,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -284,7 +284,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
@@ -305,7 +305,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 1000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -326,7 +326,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 75000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
