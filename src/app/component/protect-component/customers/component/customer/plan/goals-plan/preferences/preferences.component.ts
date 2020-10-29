@@ -7,7 +7,7 @@ import { PlanService } from '../../plan.service';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { PreferencesService } from './preferences.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subscriber } from 'rxjs';
 import { Utils } from 'angular-bootstrap-md/lib/free/utils';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
@@ -49,7 +49,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   };
   obj: any;
   selectedTab: number = 0;
-
+  yearsEnd: any[];
+  subscriber = new Subscriber();
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -64,14 +65,27 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.data.singleOrMulti == 1) {
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      this.yearsEnd = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     } else {
       this.years = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      this.yearsEnd = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     if (this.data.goalType == 1) {
       this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      this.yearsEnd = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     this.setForms();
     this.setFormListeners();
+    this.subscriber.add(
+      this.goalDetailsFG.controls.savingEndDateYear.valueChanges.subscribe((value: string) => {
+        if (value) {
+          this.goalDetailsFG.controls.goalEndDateYear.setValue(value);
+          this.goalDetailsFG.controls.savingEndDateYear.setValue(value)
+        } else {
+          //this.remainingAllocation = 0;
+        }
+      })
+    )
   }
 
   setForms() {
@@ -117,11 +131,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
-    if(this.data.goalType == 5){
+    if (this.data.goalType == 5) {
       this.goalDetailsFG.addControl('frequency', this.fb.control(remainingData.frequency, [Validators.required]));
-      
+
     }
-   
+
   }
 
   restrictFrom100(event) {
@@ -138,17 +152,25 @@ export class PreferencesComponent implements OnInit, OnDestroy {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
           }
-        })
-      )
-      this.subscription.add(
-        this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
-          this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
-          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+          if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
           }
         })
       )
+      // this.subscription.add(
+      //   this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
+      //     this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      //     if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+      //       this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+      //       this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+      //     }
+      //     if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+      //       this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+      //       this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+      //     }
+      //   })
+      // )
     }
     if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
       this.subscription.add(
@@ -158,10 +180,14 @@ export class PreferencesComponent implements OnInit, OnDestroy {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
           }
+          if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
         })
       )
     }
-   
+
   }
   setInflamationReturns() {
     this.dataSource.forEach(element => {
@@ -177,15 +203,15 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns + "%"
       } else if (element.position == 'Stocks') {
         element.name = this.data.remainingData.returnsAssumptions.stock_returns + "%"
-      }else if (element.position == 'Insurance') {
+      } else if (element.position == 'Insurance') {
         element.name = this.data.remainingData.returnsAssumptions.insurance_return + "%"
-      }else if (element.position == 'Real Estates') {
+      } else if (element.position == 'Real Estates') {
         element.name = this.data.remainingData.returnsAssumptions.real_estate + "%"
-      }else if (element.position == 'Bank Accounts Saving') {
+      } else if (element.position == 'Bank Accounts Saving') {
         element.name = this.data.remainingData.returnsAssumptions.bank_account_saving + "%"
-      }else if (element.position == 'Commodities - Gold') {
+      } else if (element.position == 'Commodities - Gold') {
         element.name = this.data.remainingData.returnsAssumptions.commodity_gold + "%"
-      }else if (element.position == 'Commodities- Others') {
+      } else if (element.position == 'Commodities- Others') {
         element.name = this.data.remainingData.returnsAssumptions.commodity_other + "%"
       }
     });
@@ -290,7 +316,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })
-    if(this.data.goalType ==1){
+    if (this.data.goalType == 1) {
       this.assetAllocationFG.addControl('postequityAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.equity_ratio));
       this.assetAllocationFG.addControl('postdebtAllocation', this.fb.control(remainingData.postRetirementAssetAllocation.debt_ratio));
     }
@@ -320,7 +346,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
         this.removeStage(i);
       }
-      if(this.data.goalType == 1 ){
+      if (this.data.goalType == 1) {
         this.assetAllocationFG.controls.postequityAllocation.enable();
         this.assetAllocationFG.controls.postdebtAllocation.enable();
         this.assetAllocationFG.controls.postequityAllocation.setValue(this.data.remainingData.postRetirementAssetAllocation.equity_ratio);
@@ -346,20 +372,20 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     )
   }
   freezeCalculation(event) {
-        let obj = {
-          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
-          lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
-          id: this.data.remainingData.id,
-          goalType: this.data.goalType,
-          freezed: event.checked,
-        }
-        this.planService.freezCalculation(obj).subscribe(res => {
-          //this.loadMFData();
-          this.eventService.openSnackBar("Goal freezed successfully");
-          //dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
+    let obj = {
+      lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+      lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+      id: this.data.remainingData.id,
+      goalType: this.data.goalType,
+      freezed: event.checked,
+    }
+    this.planService.freezCalculation(obj).subscribe(res => {
+      //this.loadMFData();
+      this.eventService.openSnackBar("Goal freezed successfully");
+      //dialogRef.close();
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
   }
   addStages() {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
@@ -370,7 +396,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.removeAt(i);
   }
-  
+
   getSumOfJsonMap(json: Object = {}) {
     let sum = 0;
     for (let k in json) {
@@ -406,14 +432,14 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         Object.assign(this.obj, { stockReturns: parseInt(element.name) });
       } else if (element.position == 'Insurance') {
         Object.assign(this.obj, { insuranceReturn: parseInt(element.name) });
-      }else if (element.position == 'Real Estates') {
+      } else if (element.position == 'Real Estates') {
         Object.assign(this.obj, { realEstate: parseInt(element.name) });
-      }else if (element.position == 'Bank Accounts Saving') {
+      } else if (element.position == 'Bank Accounts Saving') {
         Object.assign(this.obj, { bankAccountSaving: parseInt(element.name) });
-      }else if (element.position == 'Commodities - Gold') {
+      } else if (element.position == 'Commodities - Gold') {
         Object.assign(this.obj, { commodityGold: parseInt(element.name) });
-      }else if (element.position == 'Commodities- Others') {
-        Object.assign(this.obj, {     commodityOther : parseInt(element.name) });
+      } else if (element.position == 'Commodities- Others') {
+        Object.assign(this.obj, { commodityOther: parseInt(element.name) });
       }
     });
     this.dataSource1.forEach(element => {
@@ -448,8 +474,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     obj.strategicOrTactical = parseInt(obj.strategicOrTactical);
     obj.staticOrProgressive = parseInt(obj.staticOrProgressive);
     obj.postRetirementDebtAssetAllocation = parseInt(obj.postdebtAllocation),
-    obj.postRetirementEquityAssetAllocation = parseInt(obj.postequityAllocation),
-    console.log(obj)
+      obj.postRetirementEquityAssetAllocation = parseInt(obj.postequityAllocation),
+      console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.switchToTab(++this.selectedTab);
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");

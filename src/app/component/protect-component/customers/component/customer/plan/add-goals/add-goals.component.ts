@@ -145,14 +145,14 @@ export class AddGoalsComponent implements OnInit {
             maxAgeFromPresent: 60,
             minLife:0,
             maxLife:100,
-            minCost: 500000,
+            minCost: 10000,
             maxCost: 100000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 7500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -166,14 +166,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 20,
-            minCost: 500000,
+            minCost: 10000,
             maxCost: 50000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -188,14 +188,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAge: 18,
             maxAge: 60,
-            minCost: 100000,
+            minCost: 10000,
             maxCost: 100000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 3000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
@@ -210,14 +210,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
-            minCost: 5000,
+            minCost: 10000,
             maxCost: 1000000,
             showAge: false,
             placeHolder: 'Year'
           }
           element.defaults = {
             gap: 10,
-            cost: 75000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -234,14 +234,14 @@ export class AddGoalsComponent implements OnInit {
             maxAge: 60,
             minAgeFromPresent: 0,
             maxAgeFromPresent: 0,
-            minCost: 50000,
+            minCost: 10000,
             maxCost: 50000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             gap: 5,
-            cost: 3000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF,AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children // abhishek said self too
           }
           break;
@@ -262,7 +262,7 @@ export class AddGoalsComponent implements OnInit {
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -277,14 +277,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 2,
             maxAgeFromPresent: 28,
-            minCost: 75000,
+            minCost: 10000,
             maxCost: 100000000,
             showAge: true,
             placeHolder: 'Age'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 500000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
@@ -298,14 +298,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
-            minCost: 100000,
+            minCost: 10000,
             maxCost: 10000000,
             showAge: false,
             placeHolder: 'Year'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 1000000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
@@ -319,14 +319,14 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
-            minCost: 500000,
+            minCost: 10000,
             maxCost: 100000000,
             showAge: false,
             placeHolder: 'Year'
           }
           element.defaults = {
             ageIncreament: 5,
-            cost: 75000,
+            cost: 10000,
             planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
