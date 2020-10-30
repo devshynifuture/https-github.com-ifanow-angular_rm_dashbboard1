@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {MfServiceService} from '../../mf-service.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -78,7 +78,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     private backOfficeService : BackOfficeService,
     private datePipe: DatePipe,
     private route: Router,
-    private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService) {
+    private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService,private cd: ChangeDetectorRef) {
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -274,7 +274,8 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 = new MatTableDataSource(this.getFilterData(catObj['DEBT'], 'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
-
+      this.cd.markForCheck();
+      this.cd.detectChanges();
       this.setCapitaDetails = {}
       this.setCapitaDetails.dataSource = this.dataSource
       this.setCapitaDetails.dataSource1 = this.dataSource1
@@ -707,6 +708,7 @@ export class MfCapitalDetailedComponent implements OnInit {
    const header = document.getElementById('templateHeader');
     // let header = null
     this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '',true);
+
   }
   Excel(tableTitle) {
     this.showDownload = true

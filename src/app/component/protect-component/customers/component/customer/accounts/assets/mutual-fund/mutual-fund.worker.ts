@@ -16,6 +16,7 @@ addEventListener('message', ({data}) => {
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
     element.balanceUnitOrg = element.balanceUnit;
+    element.sipAmountInt = element.sipAmount;
     element.ownerName = mfService.convertInTitleCase(element.ownerName);
     element.amountInvested = mfService.mutualFundRoundAndFormat(element.amountInvested, 0);
     element.totalAmountInvested = mfService.mutualFundRoundAndFormat(element.totalAmountInvested, 0);

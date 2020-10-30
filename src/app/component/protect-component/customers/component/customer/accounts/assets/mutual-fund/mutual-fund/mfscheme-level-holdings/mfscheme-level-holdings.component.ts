@@ -222,7 +222,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmount)?this.data.sipAmount:0);
+      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmountInt)?this.data.sipAmountInt:0);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -412,6 +412,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
   }
   saveMfSchemeLevel() {
+    let assetMutualFundTransactionTypeMasterId;
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
     // if(this.errorMsg || !this.schemeNameControl.value){
     //   this.schemeNameControl.setErrors({ incorrect: true });
@@ -453,6 +454,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         console.log("single element", element);
         let obj1;
         if (element) {
+          assetMutualFundTransactionTypeMasterId = element.assetMutualFundTransactionTypeMasterId ? element.assetMutualFundTransactionTypeMasterId : null;
+
           if (this.data && this.data.flag === 'editTransaction') {
             obj1 = {
               investorName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
@@ -545,11 +548,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
           schemeCode: this.schemeObj['schemeCode'],
           balanceUnit: 0,
-          sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
+          sipAmount: parseInt(this.schemeLevelHoldingForm.controls.sip.value),
           tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           realOrFictitious: 0,
           parentId: this.parentId,
-          mutualFundTransactions
+          mutualFundTransactions,
+          
+
         }
         console.log(postObj);
         if (mutualFundTransactions.length > 0) {
@@ -581,10 +586,11 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           // schemeCode: this.schemeObj['schemeCode'],
           balanceUnit:this.data.balanceUnitOrg,
           isSip: this.data.isSip,
-          sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
+          sipAmount: parseInt(this.schemeLevelHoldingForm.controls.sip.value),
           tag: this.schemeLevelHoldingForm.controls.tag.value ? this.schemeLevelHoldingForm.controls.tag.value : null,
           // realOrFictitious: 0,
           parentId: this.parentId,
+          
           // mutualFundTransactions: mutualFundTransactions,
           // mutualFundTransactions
         }
