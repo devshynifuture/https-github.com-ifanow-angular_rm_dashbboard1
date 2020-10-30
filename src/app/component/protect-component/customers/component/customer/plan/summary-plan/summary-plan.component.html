@@ -474,7 +474,7 @@
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Incomes{{isLoadingCashFlow}}</p>
+                                <p class="f-14 m-0 roboto f-400">Incomes</p>
                                 <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
                                     {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
                                         [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
@@ -581,6 +581,7 @@
                     <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
                     <div class="d-flex mb-20">
                         <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf(null)">
+                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         <div class="detailsPDF">
                             <p class="f-12 l-18 f-500 roboto mb-10">Financial plan.pdf</p>
                             <p class="f-12 l-18 mb-0">980 KB</p>
@@ -859,7 +860,7 @@
 
         <tr>
             <td>
-                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%;">
+                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
                     <tr>
                         <td>
                             <p style=" font-size: 15px; font-weight: 600;" *ngIf="singleGoalData && singleGoalData.retirementTableValue">
