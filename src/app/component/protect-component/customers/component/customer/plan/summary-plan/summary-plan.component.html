@@ -474,7 +474,7 @@
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Incomes{{isLoadingCashFlow}}</p>
+                                <p class="f-14 m-0 roboto f-400">Incomes</p>
                                 <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
                                     {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
                                         [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
