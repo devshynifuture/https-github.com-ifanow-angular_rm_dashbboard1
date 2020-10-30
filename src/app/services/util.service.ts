@@ -602,6 +602,8 @@ export class UtilService {
         fragData.isSpinner = false;
         fragData.size = this.formatFileSize(data.size,0);
         fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        var date = new Date();
+        fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
         const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
         const a = document.createElement('a');
