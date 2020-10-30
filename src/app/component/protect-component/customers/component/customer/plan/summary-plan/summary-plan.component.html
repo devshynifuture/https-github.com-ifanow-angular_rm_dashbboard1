@@ -580,7 +580,7 @@
                 <div class="b-b pl-12">
                     <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
                     <div class="d-flex mb-20">
-                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf()">
+                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf(null)">
                         <div class="detailsPDF">
                             <p class="f-12 l-18 f-500 roboto mb-10">Financial plan.pdf</p>
                             <p class="f-12 l-18 mb-0">980 KB</p>
@@ -698,7 +698,7 @@
 
                         <td style="text-align: right;">
                             <h3 style="margin: 0px; font-weight: 400; font-size: 16px;">
-                                {{singleGoalData?.year ? singleGoalData?.year : '-'}}
+                                {{singleGoalData ? singleGoalData.year : '-'}}
                             </h3>
                         </td>
                     </tr>
@@ -713,7 +713,7 @@
                 <table style="border: 0px; margin-top: 20px; width: 100%;">
                     <tr>
                         <td style="width: 265px;">
-                            <img style="width: 265px; height: 265px;" [src]="singleGoalData?.imageUrl">
+                            <img style="width: 265px; height: 265px;" [src]="singleGoalData ? singleGoalData.imageUrl:''">
                         </td>
 
                         <td style="vertical-align: top; padding-left: 15px;">
@@ -725,7 +725,7 @@
                                             Goal Amount </p>
                                         <h5 style="font-size: 16px; margin: 0px;">
                                             Rs.<span appFormatNumber
-                                                [value]="singleGoalData?.goalFV ? singleGoalData?.goalFV : '0'"></span>
+                                                [value]="singleGoalData ? singleGoalData.goalFV : '0'"></span>
                                         </h5>
                                     </td>
 
@@ -735,7 +735,7 @@
                                             Achieved </p>
                                         <h5 style="font-size: 16px; margin: 0px;">
                                             Rs.<span appFormatNumber
-                                                [value]="singleGoalData?.achievedValue ? singleGoalData?.achievedValue : '0'"></span>
+                                                [value]="singleGoalData? singleGoalData.achievedValue : '0'"></span>
                                         </h5>
                                     </td>
                                 </tr>
@@ -745,8 +745,8 @@
                                 <tr>
                                     <td>
                                         <div style="line-height: 30px; font-size: 12px; background:#007bff; height: 30px;"
-                                            [ngStyle]="{'width':singleGoalData?.percentCompleted > 100 ? 100 : singleGoalData?.percentCompleted +'%' }">
-                                            {{singleGoalData?.percentCompleted ? singleGoalData?.percentCompleted : '-'}}%
+                                            [ngStyle]="{'width':singleGoalData && singleGoalData.percentCompleted > 100 ? 100 : singleGoalData.percentCompleted +'%' }">
+                                            {{singleGoalData && singleGoalData.percentCompleted ? singleGoalData.percentCompleted : '-'}}%
                                         </div>
 
                                     </td>
@@ -775,11 +775,11 @@
                                     <td style="padding: 10px; border-bottom: 1px solid #dee5e7;"> Equity</td>
                                     <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
                                         <span appFormatNumber
-                                            [value]="singleGoalData?.equity_monthly ? singleGoalData?.equity_monthly : '0'"></span>
+                                            [value]="singleGoalData && singleGoalData.equity_monthly ? singleGoalData.equity_monthly : '0'"></span>
                                     </td>
                                     <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
                                         <span appFormatNumber
-                                            [value]="singleGoalData?.lump_equity ? singleGoalData?.lump_equity : '0'"></span>
+                                            [value]="singleGoalData && singleGoalData.lump_equity ? singleGoalData.lump_equity : '0'"></span>
                                     </td>
                                 </tr>
 
@@ -788,11 +788,11 @@
                                     <!-- <span style="font-size: 12px;"> 0%</span> -->
                                     <td style="padding: 10px; text-align: right;">
                                         <span appFormatNumber
-                                            [value]="singleGoalData?.debt_monthly ? singleGoalData?.debt_monthly : '0'"></span>
+                                            [value]="singleGoalData && singleGoalData.debt_monthly ? singleGoalData?.debt_monthly : '0'"></span>
                                     </td>
                                     <td style="padding: 10px; text-align: right;">
                                         <span appFormatNumber
-                                            [value]="singleGoalData?.lump_debt ? singleGoalData?.lump_debt : '0'"></span>
+                                            [value]="singleGoalData && singleGoalData.lump_debt ? singleGoalData?.lump_debt : '0'"></span>
                                     </td>
                                 </tr>
 
@@ -824,7 +824,7 @@
                                     <td style="padding: 8px;background: #f5f7f7;">Allocated %</td>
                                 </tr>
 
-                                <tr *ngFor="let allocation of singleGoalData?.goalAssetAllocation">
+                                <tr *ngFor="let allocation of singleGoalData.goalAssetAllocation">
                                     <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
                                         {{allocation.assetName}}</td>
                                     <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
@@ -845,7 +845,7 @@
                                     </td>
                                 </tr>
                                 <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"
-                                    *ngIf="singleGoalData?.goalAssetAllocation?.length == 0"> No assets allocated to
+                                    *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets allocated to
                                     this goal </td>
                             </table>
                         </td>
@@ -862,12 +862,12 @@
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%;">
                     <tr>
                         <td>
-                            <p style=" font-size: 15px; font-weight: 600;" *ngIf="singleGoalData?.retirementTableValue">
+                            <p style=" font-size: 15px; font-weight: 600;" *ngIf="singleGoalData && singleGoalData.retirementTableValue">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;">
-                                <tr *ngIf="singleGoalData?.retirementTableValue">
+                                <tr *ngIf="singleGoalData && singleGoalData.retirementTableValue">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
                                     <td
@@ -879,7 +879,7 @@
                                     <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
                                 </tr>
 
-                                <tr *ngFor="let element of singleGoalData?.retirementTableValue">
+                                <tr *ngFor="let element of singleGoalData.retirementTableValue">
                                     <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
                                     <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
