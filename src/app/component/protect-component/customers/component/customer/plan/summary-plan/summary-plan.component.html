@@ -693,7 +693,7 @@
                     <tr>
                         <td>
                             <h3 style="margin: 0px; font-size: 16px;">
-                                {{singleGoalData?.details ? singleGoalData?.details : '-'}}
+                                {{singleGoalData && singleGoalData.details ? singleGoalData.details : '-'}}
                             </h3>
                         </td>
 
@@ -736,7 +736,7 @@
                                             Achieved </p>
                                         <h5 style="font-size: 16px; margin: 0px;">
                                             Rs.<span appFormatNumber
-                                                [value]="singleGoalData? singleGoalData.achievedValue : '0'"></span>
+                                                [value]="singleGoalData?singleGoalData.achievedValue:'0'"></span>
                                         </h5>
                                     </td>
                                 </tr>
