@@ -43,7 +43,10 @@ export class SummaryPlanComponent implements OnInit {
   map: any;
   loopEle: number;
   isLoadingSummary = true;
-  singleGoalData: PeriodicElement;
+  singleGoalData= { details: '', value: '', month: '', lumpsum: '',imageUrl:'',year:'',
+  goalFV:'',achievedValue:'',equity_monthly:'',debt_monthly:'',lump_equity:'',lump_debt:'',
+  goalAssetAllocation:'',retirementTableValue:'',percentCompleted:''
+};
   userInfo = AuthService.getUserInfo();
   clientData = AuthService.getClientData();
   details = AuthService.getProfileDetails();
@@ -533,8 +536,22 @@ export interface PeriodicElement {
   value: string;
   month: string;
   lumpsum: string;
+  imageUrl:string,
+  year:string,
+  goalFV:string,
+  achievedValue:string,
+  equity_monthly:string,
+  debt_monthly:string,
+  lump_equity:string,
+  lump_debt:string,
+  goalAssetAllocation:string,
+  retirementTableValue:string,
+  percentCompleted:string
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { details: '', value: '', month: '', lumpsum: '' }
+  { details: '', value: '', month: '', lumpsum: '',imageUrl:'',year:'',
+  goalFV:'',achievedValue:'',equity_monthly:'',debt_monthly:'',lump_equity:'',lump_debt:'',
+  goalAssetAllocation:'',retirementTableValue:'',percentCompleted:''
+}
 ];

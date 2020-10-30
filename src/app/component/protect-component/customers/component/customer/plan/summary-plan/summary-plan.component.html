@@ -746,8 +746,8 @@
                                 <tr>
                                     <td>
                                         <div style="line-height: 30px; font-size: 12px; background:#007bff; height: 30px;"
-                                            [ngStyle]="{'width':singleGoalData && singleGoalData.percentCompleted > 100 ? 100 : singleGoalData.percentCompleted +'%' }">
-                                            {{singleGoalData && singleGoalData.percentCompleted ? singleGoalData.percentCompleted : '-'}}%
+                                            [ngStyle]="{'width':singleGoalData && singleGoalData?.percentCompleted > 100 ? 100 : singleGoalData.percentCompleted +'%' }">
+                                            {{singleGoalData && singleGoalData?.percentCompleted ? singleGoalData?.percentCompleted : '-'}}%
                                         </div>
 
                                     </td>
