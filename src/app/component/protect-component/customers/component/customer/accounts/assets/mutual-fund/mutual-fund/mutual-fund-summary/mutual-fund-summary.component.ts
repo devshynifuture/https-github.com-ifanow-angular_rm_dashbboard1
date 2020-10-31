@@ -1709,6 +1709,8 @@ export class MutualFundSummaryComponent implements OnInit {
 
     this.showDownload = true
     this.fragmentData.isSpinner = true;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
     setTimeout(() => {
       const para = document.getElementById('template');
       // const header = document.getElementById('templateHeader');
