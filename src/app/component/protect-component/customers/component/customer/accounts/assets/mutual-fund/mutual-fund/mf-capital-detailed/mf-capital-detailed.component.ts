@@ -9,6 +9,7 @@ import {RightFilterDuplicateComponent} from 'src/app/component/protect-component
 import {ActivatedRoute, Router} from '@angular/router';
 import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { DatePipe } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
@@ -21,6 +22,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   details;
   reportDate;
   displayedColumns: string[] = ['dateRedeem', 'trnRedeem', 'amtRedeem', 'sttRedeem', 'unitsRedeem', 'rateRedeem', 'datePurchase', 'amtPurchase', 'unitsPurchase', 'ratePurchase', 'stGainPurchase', 'stLossPurchase', 'ltGainPurchase', 'ltLossPurchase', 'indGainPurchase', 'indLossPurchase', 'daysPurchase'];
+  displayedColumnsTotal: string[] = ['dateRedeemTotal', 'trnRedeemTotal', 'amtRedeemTotal', 'sttRedeemTotal', 'unitsRedeemTotal', 'rateRedeemTotal', 'datePurchaseTotal', 'amtPurchaseTotal', 'unitsPurchaseTotal', 'ratePurchaseTotal', 'stGainPurchaseTotal', 'stLossPurchaseTotal', 'ltGainPurchaseTotal', 'ltLossPurchaseTotal', 'indGainPurchaseTotal', 'indLossPurchaseTotal', 'daysPurchaseTotal'];
   displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
   displayedColumns4: string[] = ['dateRedeem', 'trnRedeem', 'amtRedeem', 'sttRedeem', 'unitsRedeem', 'rateRedeem', 'datePurchase', 'amtPurchase', 'unitsPurchase', 'ratePurchase', 'stGainPurchase', 'stLossPurchase', 'ltGainPurchase', 'ltLossPurchase', 'indGainPurchase', 'indLossPurchase', 'daysPurchase'];
@@ -73,6 +75,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   adminAdvisorIds: any;
   parentId: any;
   loadingDone: boolean = false;
+  isShow=true;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
@@ -134,6 +137,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.isShow=true;
     this.MfServiceService.getadvisorList()
     .subscribe(res => {
       this.adminAdvisorIds = res;
@@ -701,6 +705,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     }
   }
   isGroup = (index, item) => item.schemeName;// for grouping schme name
+  isSimpleRow = (index, item) => item.totalAmt;
 
   generatePdf() {
     this.fragmentData.isSpinner = true
