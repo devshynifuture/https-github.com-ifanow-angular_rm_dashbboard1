@@ -134,7 +134,7 @@
                     <td class="br text-right w-6" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemRate == 0 || element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemRate == 0 || element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-4') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -192,7 +192,7 @@
                     <td class="br text-right w-8" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -472,7 +472,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-4') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -530,7 +530,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8  text-right"></td>
@@ -1153,7 +1153,7 @@
                             <td valign="top"
                                 style="text-align: right;width:7%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                    *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-4') : '0')}}</span>
                             </td>
 
                             <td valign="top"
@@ -1177,7 +1177,7 @@
                             <td valign="top"
                                 style="text-align: right;width:5%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
+                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                             </td>
 
                             <td valign="top"
@@ -1550,7 +1550,7 @@
                             <td valign="top"
                                 style="text-align: right;width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                    *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-4') : '0')}}</span>
                             </td>
 
                             <td valign="top"
@@ -1574,7 +1574,7 @@
                             <td valign="top"
                                 style="text-align: right;width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
+                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                             </td>
 
                             <td valign="top"
