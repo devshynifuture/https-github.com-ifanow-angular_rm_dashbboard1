@@ -142,12 +142,13 @@ export class RealEstateComponent implements OnInit {
 
   getRealEstateRes(data) {
     this.isLoading = false;
-    if (data == undefined) {
+    if (data == undefined || data.assetList.length <= 0) {
       this.noData = 'No Real estate found';
       this.datasource3.data = [];
       this.hideFilter = true;
+      this.sumOfMarketValue = 0;
+      this.sumOfpurchasedValue = 0;
     } else if (data.assetList.length > 0) {
-      this.assetValidation.getAssetCountGLobalData()
 
       console.log('getRealEstateRes', data);
       this.dataList = data;
@@ -162,6 +163,8 @@ export class RealEstateComponent implements OnInit {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
     }
+    this.assetValidation.getAssetCountGLobalData()
+
   }
 
   deleteModal(value, element) {
@@ -224,9 +227,16 @@ export class RealEstateComponent implements OnInit {
               this.getRealEstate();
             }
             else{
-              this.dataList.assetList.push(sideBarData.data)
-              this.dataList.sumOfMarketValue += sideBarData.data.marketValue;
-              this.dataList.sumOfPurchaseValue += sideBarData.data.amountInvested;
+              if(!this.dataList){
+                this.dataList = {assetList:[sideBarData.data]};
+                this.dataList['sumOfMarketValue'] = sideBarData.data.marketValue;
+                this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
+              }
+              else{
+                this.dataList.assetList.push(sideBarData.data)
+                this.dataList.sumOfMarketValue += sideBarData.data.marketValue;
+                this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
+              }
               this.getRealEstateRes(this.dataList);
             }
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

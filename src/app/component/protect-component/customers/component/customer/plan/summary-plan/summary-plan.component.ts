@@ -39,7 +39,7 @@ export class SummaryPlanComponent implements OnInit {
   incomePercent: number;
   expensePercent: number;
   @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
-  fragmentData = { isSpinner: false,date:'',time:'' };
+  fragmentData = { isSpinner: false,date:'',time:'', size:'' };
   map: any;
   loopEle: number;
   isLoadingSummary = true;
