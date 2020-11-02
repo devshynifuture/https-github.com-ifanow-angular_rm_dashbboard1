@@ -50,7 +50,9 @@ export class AddAssetStocksComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this. getPortfolioList();
+    if(this.editApiData){
+      this. getPortfolioList();
+    }
   }
 
   getPortfolioList() {
@@ -322,6 +324,7 @@ addNewNominee(data) {
     else {
       this.barButtonOptions.active = true;
       if (this.editApiData) {
+        
         let obj =
         {
           "familyMemberId": this.familyMemberId,
@@ -336,6 +339,7 @@ addNewNominee(data) {
           "stockList": [
             {
               // "ownerList": this.assetForm.value.getCoOwnerName,
+              "portfolioId": 0,
               "valueAsOn": this.datePipe.transform(this.assetForm.get("valueAsOn").value, 'yyyy-MM-dd'),
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
@@ -346,8 +350,14 @@ addNewNominee(data) {
             }
           ]
         }
-
+        
         if(this.editMood){
+          this.portfolioList.forEach(p => {
+            if(p.portfolioName == this.assetForm.get('portfolioName').value && p.ownerList[0].familyMemberId == this.getCoOwner.value[0].familyMemberId)
+            {
+              obj.stockList[0].portfolioId = p.id;
+            }
+          });
           this.cusService.editStockData(obj).subscribe(
             data =>{
               this.barButtonOptions.active = false;

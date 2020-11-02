@@ -899,7 +899,8 @@ export class CustomerService {
 
   getJointBankList(data) {
     console.log('limitedBanks', data);
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_SINGLE_JOIN, data, 1)
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
+    // return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_SINGLE_JOIN, data, 1)
   }
 
   getclientFamilybankList(data) {

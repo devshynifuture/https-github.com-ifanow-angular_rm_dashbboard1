@@ -570,7 +570,10 @@
                                             <h1>
                                                 <img class="documentImg"
                                                     *ngIf="item.relationshipId==0 || item.relationshipId == null"
-                                                    src="http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png">
+                                                    src="{{imgGenderSrc?imgGenderSrc:'http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png'}}">
+                                                <img class="documentImg"
+                                                    src="http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png"
+                                                    *ngIf="item.relationshipId!=2 && item.relationshipId != 1 && item.relationshipId!=3 && item.relationshipId!=4 &&item.relationshipId!=5 && item.relationshipId!=6 && item.relationshipId!=7 && item.relationshipId!=0 && item.relationshipId != null">
                                                 <img class="documentImg"
                                                     *ngIf="item.relationshipId==2 || item.relationshipId == 1"
                                                     src="/assets/images/svg/man-profile.svg">

@@ -16,7 +16,7 @@
                     </mat-menu>
                 </div> -->
             </div>
-            
+
 
             <div class="mt-80 sticky-top ">
                 <div class="leftScroll">
@@ -73,7 +73,12 @@
                 </div>
                 <div class="col-width-31">
                     <div class="row">
-                        <div class="col-md-12 text-right p-0" *ngIf="selectedGoal">
+                        <div class="col-md-6 text-right p-0">
+                            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+                        </div>
+                        <div class="col-md-6 text-right p-0" *ngIf="selectedGoal">
+                            <img (click)="generatePdf(null)" class="b-a c-p" matTooltip="Download PDF"
+                                src="assets/images/svg/pdf-icons.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
                         </div>
                     </div>
@@ -137,7 +142,8 @@
                                 <div class="col-md-3  p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 text-right bb pt-8 pb-8">Monthly</p>
                                     <p class="m-0 relClass text-black roboto p-12 bg-white text-right bb pt-6 pb-6">
-                                        <span appFormatNumber [value]="selectedGoal?.dashboardData?.equity_monthly">{{selectedGoal?.dashboardData?.equity_monthly}}
+                                        <span appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.equity_monthly">{{selectedGoal?.dashboardData?.equity_monthly}}
                                         </span>
 
                                         <span class="bar height24" style="display: inline-block;"
@@ -147,7 +153,8 @@
 
                                     <p class="m-0 text-black relClass roboto p-12 text-right bg-white pt-6 pb-6">
                                         <span class="bar" appFormatNumber
-                                            [value]="selectedGoal?.dashboardData?.debt_monthly">{{selectedGoal?.dashboardData?.debt_monthly}} </span>
+                                            [value]="selectedGoal?.dashboardData?.debt_monthly">{{selectedGoal?.dashboardData?.debt_monthly}}
+                                        </span>
 
                                         <span class="bar height24" style="display: inline-block;"
                                             *ngIf="loaderFn.loading">
@@ -158,7 +165,8 @@
                                     <p class="m-0 text-black roboto p-12 text-right f-500 bb pt-8 pb-8">Lumpsum</p>
                                     <p class="m-0 text-black relClass roboto text-right p-12 bg-white bb pt-6 pb-6">
                                         <span class="bar" appFormatNumber
-                                            [value]="selectedGoal?.dashboardData?.lump_equity"> {{selectedGoal?.dashboardData?.lump_equity}}</span>
+                                            [value]="selectedGoal?.dashboardData?.lump_equity">
+                                            {{selectedGoal?.dashboardData?.lump_equity}}</span>
 
                                         <span class="bar height24" style="display: inline-block;"
                                             *ngIf="loaderFn.loading">
@@ -166,7 +174,8 @@
                                     </p>
                                     <p class="m-0 text-black relClass text-right roboto p-12 bg-white pt-6 pb-6">
                                         <span class="bar" appFormatNumber
-                                            [value]="selectedGoal?.dashboardData?.lump_debt"> {{selectedGoal?.dashboardData?.lump_debt}}</span>
+                                            [value]="selectedGoal?.dashboardData?.lump_debt">
+                                            {{selectedGoal?.dashboardData?.lump_debt}}</span>
                                         <span class="bar height24" style="display: inline-block;"
                                             *ngIf="loaderFn.loading">
                                         </span>
@@ -208,129 +217,132 @@
                         </div>
                     </div>
                     <!--  -->
-                    <div [ngClass]="highlight == true ?'borderDrag':''" class=" mt-40"> 
-                    <div class="row  ">
-                        <div class="col-md-12 p-0">
-                            <h5 class="m-0 pb-12">Allocations to this goal</h5>
+                    <div [ngClass]="highlight == true ?'borderDrag':''" class=" mt-40">
+                        <div class="row  ">
+                            <div class="col-md-12 p-0">
+                                <h5 class="m-0 pb-12">Allocations to this goal</h5>
+                            </div>
                         </div>
-                    </div>
 
-                    <div  cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
-                        [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" class="hide-placeholder"
-                        (cdkDropListEntered)="inDropZoneMethod($event)" (cdkDropListExited)="inDropZoneMethod($event)">
+                        <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
+                            [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)"
+                            class="hide-placeholder" (cdkDropListEntered)="inDropZoneMethod($event)"
+                            (cdkDropListExited)="inDropZoneMethod($event)">
 
-                        <div [ngClass]="{'drop-zone': inDropZone}">
-                            <div  class="row b-a bg-grey height40 lter">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <p class="roboto m-0 text-black f-500">Description </p>
-                                </div>
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <p class="roboto m-0 text-black f-500">Advice </p>
-                                </div>
-                                <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
-                                    <p class="roboto m-0 text-black f-500">Current value </p>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center justify-content-end pr-0">
-                                    <p class="roboto m-0 text-black f-500">Maturity value </p>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center">
-                                    <p class="roboto m-0 text-black f-500">Allocated %</p>
-                                </div>
-                            </div>
-
-                            <div class="row pt-5 pb-5 bl-1 bb-1 br bg-white vai" *ngIf="loaderFn.loading" appSkeletonLoading
-                                [appSkeletonLoading]="loaderFn.loading">
-                                <div class="col-md-3 d-flex align-items-center relClass">
-                                    <div class="bar height24"></div>
-
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center relClass">
-                                    <div class="bar height24"></div>
-
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                                <div class="col-md-3 d-flex align-items-center justify-content-between relClass">
-                                    <div class="bar height24"></div>
-                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
-                                </div>
-                            </div>
-
-                            <ng-container *ngFor="let allocation of allocatedList">
-                                <div class="row pt-5 pb-5  bl-1 bb-1 br bg-white">
+                            <div [ngClass]="{'drop-zone': inDropZone}">
+                                <div class="row b-a bg-grey height40 lter">
                                     <div class="col-md-3 d-flex align-items-center">
-                                        <div class="relClass">
-                                            <div class="bar">{{!loaderFn.loading? "" : ""}}
-                                                <p class="mb-0 roboto"> {{allocation.assetName}}</p>
-                                            </div>
-                                        </div>
-
+                                        <p class="roboto m-0 text-black f-500">Description </p>
                                     </div>
                                     <div class="col-md-3 d-flex align-items-center">
-                                        <div class="relClass">
-                                            <div class="bar">
-                                                <p class="mb-0 roboto">{{allocation.advice || '-'}}</p>
-                                            </div>
-                                        </div>
-
+                                        <p class="roboto m-0 text-black f-500">Advice </p>
                                     </div>
-                                    <div class="col-md-2 d-flex align-items-center justify-content-end">
-                                        <div class="relClass">
-                                            <div class="bar">
-                                                <p class="mb-0 roboto" appFormatNumber
-                                                    [value]='allocation.currentValue'></p>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
+                                        <p class="roboto m-0 text-black f-500">Current value </p>
                                     </div>
                                     <div class="col-md-2 d-flex align-items-center justify-content-end pr-0">
-                                        <div class="relClass">
-                                            <div class="bar">
-                                                <p class="m-0 roboto" appFormatNumber
-                                                    [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
-                                                </p>
+                                        <p class="roboto m-0 text-black f-500">Maturity value </p>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center">
+                                        <p class="roboto m-0 text-black f-500">Allocated %</p>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-5 pb-5 bl-1 bb-1 br bg-white vai" *ngIf="loaderFn.loading"
+                                    appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                                    <div class="col-md-3 d-flex align-items-center relClass">
+                                        <div class="bar height24"></div>
+
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center relClass">
+                                        <div class="bar height24"></div>
+
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center relClass">
+                                        <div class="bar height24"></div>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center relClass">
+                                        <div class="bar height24"></div>
+                                    </div>
+                                    <div class="col-md-3 d-flex align-items-center justify-content-between relClass">
+                                        <div class="bar height24"></div>
+                                        <img src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                    </div>
+                                </div>
+
+                                <ng-container *ngFor="let allocation of allocatedList">
+                                    <div class="row pt-5 pb-5  bl-1 bb-1 br bg-white">
+                                        <div class="col-md-3 d-flex align-items-center">
+                                            <div class="relClass">
+                                                <div class="bar">{{!loaderFn.loading? "" : ""}}
+                                                    <p class="mb-0 roboto"> {{allocation.assetName}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3 d-flex align-items-center">
+                                            <div class="relClass">
+                                                <div class="bar">
+                                                    <p class="mb-0 roboto">{{allocation.advice || '-'}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-center justify-content-end">
+                                            <div class="relClass">
+                                                <div class="bar">
+                                                    <p class="mb-0 roboto" appFormatNumber
+                                                        [value]='allocation.currentValue'></p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-2  relClass  full-end ">
-
-                                        <div class="bar">
-                                            <p class="mb-0 roboto pr-48" appFormatNumber
-                                                [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>%
-                                            </p>
+                                        <div class="col-md-2 d-flex align-items-center justify-content-end pr-0">
+                                            <div class="relClass">
+                                                <div class="bar">
+                                                    <p class="m-0 roboto" appFormatNumber
+                                                        [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div class="bar">
-                                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg"
-                                                class="c-p">
-                                            <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="reallocateAsset(allocation)">Change
-                                                    allocation percentage</button>
-                                                <button mat-menu-item (click)="removeAllocation(allocation)">Remove
-                                                    Allocation</button>
-                                            </mat-menu>
+                                        <div class="col-md-2  relClass  full-end ">
+
+                                            <div class="bar">
+                                                <p class="mb-0 roboto pr-48" appFormatNumber
+                                                    [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>
+                                                    %
+                                                </p>
+                                            </div>
+
+                                            <div class="bar">
+                                                <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg"
+                                                    class="c-p">
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item (click)="reallocateAsset(allocation)">Change
+                                                        allocation percentage</button>
+                                                    <button mat-menu-item (click)="removeAllocation(allocation)">Remove
+                                                        Allocation</button>
+                                                </mat-menu>
+                                            </div>
+
+
+
                                         </div>
-
-
-
                                     </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
 
-                            <div class="row height40  bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
-                                <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-                                    <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No asset
-                                        allocated</span>
-                                    <span *ngIf="assetError">Unable to load asset data</span>
+                                <div class="row height40  bl-1 bb-1 br bg-white text-center"
+                                    *ngIf="!loaderFn.loading && allocatedList.length == 0">
+                                    <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
+                                        <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No asset
+                                            allocated</span>
+                                        <span *ngIf="assetError">Unable to load asset data</span>
+                                    </div>
+
                                 </div>
-                                
                             </div>
                         </div>
-                    </div>
                     </div>
 
                     <div class="row pt-28" [hidden]="!hasCostOfDelay || loaderFn.loading">
@@ -393,8 +405,8 @@
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="deleteMilestone(element)">Delete
                                             milestone</button>
-                                            <button mat-menu-item (click)="addMilestone(dataSource1,element,'Edit')">Edit
-                                                milestone</button>
+                                        <button mat-menu-item (click)="addMilestone(dataSource1,element,'Edit')">Edit
+                                            milestone</button>
                                     </mat-menu>
                                 </td>
                             </ng-container>
@@ -402,15 +414,18 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                         </table>
 
-                        <div class="row height40  bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
+                        <div class="row height40  bl-1 bb-1 br bg-white text-center"
+                            *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
                             <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No milestone added</span>         
-                            
+                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No milestone added</span>
+
                             </div>
-                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-center" *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
-                                <span class="pl-10 full-center w-100 f-14 text-primary c-p" (click)="addMilestone(dataSource1,'','add')">Add milestone</span>
+                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-center"
+                                *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
+                                <span class="pl-10 full-center w-100 f-14 text-primary c-p"
+                                    (click)="addMilestone(dataSource1,'','add')">Add milestone</span>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="row pt-40" *ngIf="!loaderFn.loading && isRetirementTab">
@@ -496,8 +511,11 @@
                         <div class="col-md-1 text-right">
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="openInSideBar(selectedGoal?.remainingData?.loan, 'openCalculators')">Edit Loan</button>
-                                <button mat-menu-item (click)="deleteLoan(selectedGoal?.remainingData?.loan)">Delete Loan</button>
+                                <button mat-menu-item
+                                    (click)="openInSideBar(selectedGoal?.remainingData?.loan, 'openCalculators')">Edit
+                                    Loan</button>
+                                <button mat-menu-item (click)="deleteLoan(selectedGoal?.remainingData?.loan)">Delete
+                                    Loan</button>
                             </mat-menu>
                         </div>
                     </div>
@@ -534,8 +552,7 @@
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TENURE</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading"></span><span
-                                                appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading"></span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.loanTenure">Year</span></span>
                                     </h5>
                                 </div>
@@ -609,32 +626,33 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                   
-                                    
 
-                                        <button mat-stroked-button class="in-btn"
+
+
+                                    <button mat-stroked-button class="in-btn"
                                         (click)="openInSideBar(null, 'openKeyinfo')">
                                         <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
 
-                                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
-                                            <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openPreferences')">
+                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
 
-                                   
+
                                 </div>
 
                                 <div class="btnBox justify-content-center" [hidden]="loaderFn.loading">
                                     <button mat-stroked-button class="in-btn-two"
-                                    (click)="openInSideBar(null, 'openCalculators')">
-                                    <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                                        (click)="openInSideBar(null, 'openCalculators')">
+                                        <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
                                 </div>
 
-                             
+
 
 
                                 <!-- <div class="btnBox" [hidden]="loaderFn.loading"> -->
-                                    <!-- <button mat-stroked-button class="in-btn">
+                                <!-- <button mat-stroked-button class="in-btn">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button> -->
-                                    <!-- <button mat-stroked-button class="in-btn-two"
+                                <!-- <button mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openPreferences')">
                                         <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button> -->
                                 <!-- </div> -->
@@ -667,3 +685,262 @@
         </div>
     </div>
 </div>
+
+
+
+<html #summaryPlan id="planSummary" style="display: none">
+
+
+<body>
+    <table cellpadding="0" cellspacing="0" border="0"
+        style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        align="center; page-break-before: always;">
+
+        <tr>
+            <td>
+                <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                    <tr>
+                        <td>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{clientData?.displayName}}'s Financial Plan
+                            </h3>
+                        </td>
+                        <td style="text-align: right;">
+                            <p style="margin: 0px 0px 5px 0px; font-size: 14px;">
+                                Prepared by
+                            </p>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{getOrgData?.companyName ? getOrgData?.companyName : '-'}}
+                            </h3>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table
+                    style="width: 100%; border: 0px; padding-top: 30px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+
+                    <tr>
+                        <td>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{singleGoalData? singleGoalData.goalName : '-'}}
+                            </h3>
+                        </td>
+
+                        <td style="text-align: right;">
+                            <h3 style="margin: 0px; font-weight: 400; font-size: 16px;">
+                                {{singleGoalData ? singleGoalData.year : '-'}}
+                            </h3>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <table style="border: 0px; margin-top: 20px; width: 100%;">
+                    <tr>
+                        <td style="width: 265px;">
+                            <img style="width: 265px; height: 265px;"
+                                [src]="singleGoalData ? singleGoalData.img :''">
+                        </td>
+
+                        <td style="vertical-align: top; padding-left: 15px;">
+                            <table
+                                style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 5px;">
+                                <tr>
+                                    <td>
+                                        <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                            Goal Amount </p>
+                                        <h5 style="font-size: 16px; margin: 0px;">
+                                            Rs.<span appFormatNumber
+                                                [value]="singleGoalData ? singleGoalData?.dashboardData?.futureValue : '0'"></span>
+                                        </h5>
+                                    </td>
+
+
+                                    <td>
+                                        <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                            Achieved </p>
+                                        <h5 style="font-size: 16px; margin: 0px;">
+                                            Rs.<span appFormatNumber
+                                                [value]="singleGoalData? singleGoalData?.dashboardData?.achievedValue:'0'"></span>
+                                        </h5>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="margin: 20px 0px 20px 0px; width: 100%; ">
+                                <tr>
+                                    <td>
+                                        <div style="line-height: 30px; font-size: 12px; background:#007bff; height: 30px;"
+                                            [ngStyle]="{'width':singleGoalData && singleGoalData?.dashboardData?.goalProgress > 100 ? 100 : singleGoalData?.dashboardData?.goalProgress +'%' }">
+                                            <span class="pl-8" appFormatNumber
+                                                [value]="singleGoalData?.dashboardData?.goalProgress">
+                                                {{singleGoalData?.dashboardData?.goalProgress}} %
+                                            </span>
+                                            <span> %</span>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 0px; font-size: 14px; font-weight: 600;">Additional Required</p>
+
+                            <table cellpadding="0" cellspacing="0"
+                                style="margin: 10px 0px 0px 0px; font-size: 14px; width: 100%; border: 1px solid #dee5e7;">
+                                <tr>
+                                    <td style="border-bottom: 1px solid #dee5e7;">
+
+                                    </td>
+
+                                    <td style="border-bottom: 1px solid #dee5e7; padding: 10px; text-align: right;">
+                                        Monthly
+                                    </td>
+
+                                    <td style="border-bottom: 1px solid #dee5e7;padding: 10px; text-align: right;">
+                                        Lumpsum
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7;"> Equity</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData ? singleGoalData?.dashboardData?.equity_monthly : '0'"></span>
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData ? singleGoalData?.dashboardData?.lump_equity : '0'"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 10px;"> Debt</td>
+                                    <!-- <span style="font-size: 12px;"> 0%</span> -->
+                                    <td style="padding: 10px; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData ? singleGoalData?.dashboardData?.debt_monthly : '0'"></span>
+                                    </td>
+                                    <td style="padding: 10px; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData ? singleGoalData?.dashboardData?.lump_debt : '0'"></span>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
+                    <tr>
+                        <td>
+                            <p style=" font-size: 15px; font-weight: 600;">Assets allocated to this goal</p>
+
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;">
+                                <tr>
+                                    <td style="padding: 8px;background: #f5f7f7;">Assets</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Advice</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Current Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Maturity Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Allocated %</td>
+                                </tr>
+
+                                <tr *ngFor="let allocation of singleGoalData.goalAssetAllocation">
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        {{allocation.assetName}}</td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        {{allocation.advice || '-'}}</td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber [value]='allocation.currentValue'></p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="m-0 roboto" appFormatNumber
+                                            [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
+                                        </p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto pr-48" appFormatNumber
+                                            [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>
+                                            %
+                                        </p>
+                                    </td>
+                                </tr>
+                                <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"
+                                    *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets
+                                    allocated to
+                                    this goal </td>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
+                    <tr>
+                        <td>
+                            <p style=" font-size: 15px; font-weight: 600;"
+                                *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                Goal year wise details</p>
+
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;">
+                                <tr *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
+                                        Goal year</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal FV</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal present value</td>
+                                    <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
+                                </tr>
+
+                                <tr *ngFor="let element of singleGoalData.retirementTableValue">
+                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                        {{element.goalYear}} </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'></p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber
+                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table>
+</body>
+
+</html>

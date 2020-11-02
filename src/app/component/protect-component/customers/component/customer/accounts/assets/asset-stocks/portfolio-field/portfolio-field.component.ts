@@ -92,7 +92,7 @@ export class PortfolioFieldComponent implements OnInit {
     console.log(this.familyWisePortfolio,this.othersWisePortfolio, "porfolio list", data);
     let arr1;
     let arr2;
-    if(this.familyWisePortfolio.length < this.othersWisePortfolio.length){
+    if(this.familyWisePortfolio.length <= this.othersWisePortfolio.length){
       arr1 = this.familyWisePortfolio;
       arr2 = this.othersWisePortfolio;
     }else{

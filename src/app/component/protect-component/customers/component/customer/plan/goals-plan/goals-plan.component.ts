@@ -16,7 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 import { AddGoalService } from './add-goal/add-goal.service';
@@ -127,6 +127,19 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   selectedGoalId: any = null;
   subscriber = new Subscriber();
   highlight: boolean = false;
+  singleGoalData = {
+    goalName: '', goal: '',
+    details: '', value: '', month: '', lumpsum: '', img: '', year: '',  dashboardData: { goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0,lump_debt:0 },
+    goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
+    goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
+  };
+  isLoadingGoals: boolean;
+  goalList: any;
+  fragmentData: any;
+  dataSource3: any;
+  clientData: any;
+  getOrgData: any;
+  details: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -139,11 +152,17 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator;
+  @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
 
   ngOnInit() {
+    this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
@@ -156,10 +175,19 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   // load all goals created for the client and select the first goal
+  generatePdf(data) {
+    this.fragmentData = {}
+    this.fragmentData.isSpinner = true;;
+    let para = document.getElementById('planSummary');
+    const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
+
+  }
   loadAllGoals() {
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
+    this.dataSource3 = new MatTableDataSource(ELEMENT_DATA);
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data
@@ -268,7 +296,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   afterDataLoadMethod() {
     this.highlight = false
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
-    console.log('allGoals',this.allGoals)
+    console.log('allGoals', this.allGoals)
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
       element.dashboardData.futureValue = UtilService.getNumberToWord(element.dashboardData.futureValue)
@@ -298,7 +326,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()).toString();
-      if(mapData.goalType == 1){
+      if (mapData.goalType == 1) {
         mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate).getFullYear()) : '-';
       }
       mapData.goalName = goalSubData.goalName;
@@ -445,16 +473,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         fragmentData.state = 'open65';
         break;
       case 'openKeyinfo':
-        if(this.selectedGoal.singleOrMulti == 1){
+        if (this.selectedGoal.singleOrMulti == 1) {
           fragmentData.componentName = KeyInfoComponent;
           fragmentData.state = 'open35';
           fragmentData.data = this.selectedGoal;
-        }else{
+        } else {
           fragmentData.componentName = KeyInfoComponent;
           fragmentData.state = 'open65';
           fragmentData.data = this.selectedGoal;
         }
-        
+
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;
@@ -494,6 +522,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
+    this.singleGoalData = this.selectedGoal
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
@@ -587,7 +616,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-      
+
         this.plansService.deleteLoan({ loanId: loan.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
           this.loadAllGoals();
@@ -610,15 +639,15 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if (event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
-    if(this.selectedGoal.remainingData.freezed ==  true){
+    if (this.selectedGoal.remainingData.freezed == true) {
       this.Unfreezed()
-    }else{
+    } else {
       this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
       this.loadAllAssets();
-     // this.loadAllGoals();
-     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
+      this.loadAllGoals();
+      this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
     }
-    
+
   }
   Unfreezed() {
     const dialogData = {
@@ -629,11 +658,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnNo: 'UNFREEZE',
       positiveMethod: () => {
         let obj = {
-          lumpSumAmountDebt:this.selectedGoal.remainingData.lumpSumAmountEquity,
-          lumpSumAmountEquity:this.selectedGoal.remainingData.lumpSumAmountEquity,
-          id:this.selectedGoal.remainingData.id,
-          goalType:this.selectedGoal.goalType,
-          freezed : false,
+          lumpSumAmountDebt: this.selectedGoal.remainingData.lumpSumAmountEquity,
+          lumpSumAmountEquity: this.selectedGoal.remainingData.lumpSumAmountEquity,
+          id: this.selectedGoal.remainingData.id,
+          goalType: this.selectedGoal.goalType,
+          freezed: false,
         }
         this.plansService.freezCalculation(obj).subscribe(res => {
           //this.allocateOtherAssetService.refreshAssetList.next();
@@ -687,12 +716,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
-  addMilestone(data,obj,flag){
+  addMilestone(data, obj, flag) {
     const dialogData = {
       data,
-      otherData:this.selectedGoal,
-      flag : flag,
-      singleObj : obj
+      otherData: this.selectedGoal,
+      flag: flag,
+      singleObj: obj
     }
     this.dialog.open(AddMilestoneComponent, {
       width: '650px',
@@ -729,3 +758,28 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 }
 
 
+export interface PeriodicElement {
+  details: string;
+  value: string;
+  month: string;
+  lumpsum: string;
+  imageUrl: string,
+  year: string,
+  goalFV: string,
+  achievedValue: string,
+  equity_monthly: string,
+  debt_monthly: string,
+  lump_equity: string,
+  lump_debt: string,
+  goalAssetAllocation: string,
+  retirementTableValue: string,
+  percentCompleted: string
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {
+    details: '', value: '', month: '', lumpsum: '', imageUrl: '', year: '',
+    goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
+    goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
+  }
+];
