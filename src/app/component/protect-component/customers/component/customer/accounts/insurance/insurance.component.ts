@@ -46,6 +46,8 @@ export class InsuranceComponent implements OnInit {
   stopLoadingGi = false;
   count: number;
   countGi = 0;
+  stopLoadingLi = false;
+  countLi = 0;
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -452,6 +454,9 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceData(typeId) {
+      this.countLi++
+      this.stopLoadingLi = this.countLi > 1 ? false : true;
+    // this.stopLoadingLi = true;
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
     this.showInsurance = 'Life';
@@ -536,6 +541,16 @@ export class InsuranceComponent implements OnInit {
             }
         }
 
+    }else{
+      if(insTypeId==0 && value == 'generalInsurance'){
+        this.stopLoadingGi ? loadData = true : loadData = false;
+      }else if(insTypeId != 0 && value == 'generalInsurance'){
+        this.stopLoadingGi ? loadData = false : loadData = false;
+      }else if(insTypeId==0 && value == 'lifeInsurance'){
+        this.stopLoadingLi ? loadData = true : loadData = false;
+      }else{
+        loadData = false;
+      }
     }
     arr && this.dataLoaded ? data.dataLoaded = true  : (loadData == false || loadData == true) ? data.dataLoaded = loadData : arr.length > 0 ? data.dataLoaded = false : data.dataLoaded = true;
     this.dataLoaded =false;
