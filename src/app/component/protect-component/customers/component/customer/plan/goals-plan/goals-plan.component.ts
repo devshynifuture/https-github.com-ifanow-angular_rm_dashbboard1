@@ -161,6 +161,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   @ViewChild('summaryPlan', {static: false}) summaryTemplateHeader: any;
 
   ngOnInit() {
+    this.fragmentData = {isSpinner: false};
     this.dataSource1 = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
