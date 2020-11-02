@@ -73,10 +73,10 @@
                 </div>
                 <div class="col-width-31">
                     <div class="row">
-                        <div class="col-md-1 text-right p-0">
+                        <div class="col-md-6 text-right p-0">
                             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         </div>
-                        <div class="col-md-11 text-right p-0" *ngIf="selectedGoal">
+                        <div class="col-md-6 text-right p-0" *ngIf="selectedGoal">
                             <img (click)="generatePdf(goal)" class="b-a c-p" matTooltip="Download PDF"
                                 src="assets/images/svg/pdf-icons.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
