@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor} from '@angular/forms';
 import 'froala-editor/js/froala_editor.pkgd.min.js';
-// import 'froala-editor/js/plugins.pkgd.min.js';
+import 'froala-editor/js/plugins.pkgd.min.js';
 // import 'froala-editor/js/froala_editor.pkgd.min';
 
 import 'froala-editor/js/plugins/align.min.js';
