@@ -16,7 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 import { AddGoalService } from './add-goal/add-goal.service';
@@ -127,6 +127,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   selectedGoalId: any = null;
   subscriber = new Subscriber();
   highlight: boolean = false;
+  singleGoalData = {
+    details: '', value: '', month: '', lumpsum: '', imageUrl: '', year: '',
+    goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
+    goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
+};
+  isLoadingGoals: boolean;
+  goalList: any;
+  fragmentData: any;
+  dataSource3: any;
+  clientData: any;
+  getOrgData: any;
+  details: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -139,9 +151,14 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator;
+  @ViewChild('summaryPlan', {static: false}) summaryTemplateHeader: any;
 
   ngOnInit() {
     this.dataSource1 = [];
@@ -156,10 +173,19 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   // load all goals created for the client and select the first goal
+  generatePdf(data){
+    this.fragmentData = {}
+    this.fragmentData.isSpinner = true;;
+        let para = document.getElementById('planSummary');
+    const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, '', '', false);
+
+  }
   loadAllGoals() {
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
+    this.dataSource3 = new MatTableDataSource(ELEMENT_DATA);
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data
@@ -494,6 +520,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
+    this.singleGoalData = this.selectedGoal
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
@@ -729,3 +756,28 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 }
 
 
+export interface PeriodicElement {
+  details: string;
+  value: string;
+  month: string;
+  lumpsum: string;
+  imageUrl: string,
+  year: string,
+  goalFV: string,
+  achievedValue: string,
+  equity_monthly: string,
+  debt_monthly: string,
+  lump_equity: string,
+  lump_debt: string,
+  goalAssetAllocation: string,
+  retirementTableValue: string,
+  percentCompleted: string
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {
+      details: '', value: '', month: '', lumpsum: '', imageUrl: '', year: '',
+      goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
+      goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
+  }
+];
