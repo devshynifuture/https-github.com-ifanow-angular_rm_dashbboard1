@@ -642,7 +642,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }else{
       this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
       this.loadAllAssets();
-     // this.loadAllGoals();
+      this.loadAllGoals();
      this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
     }
     
