@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor} from '@angular/forms';
 import 'froala-editor/js/froala_editor.pkgd.min.js';
 // import 'froala-editor/js/plugins.pkgd.min.js';
+// import 'froala-editor/js/froala_editor.pkgd.min';
+
 import 'froala-editor/js/plugins/align.min.js';
 // import 'froala-editor/js/plugins/char_counter.min.js';
 import 'froala-editor/js/plugins/colors.min.js';
@@ -43,7 +45,7 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   // End ControlValueAccesor methods.
   _model;
 
-  config: Object = {
+  config: object = {
     key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==',
     attribution: false,
     // attribution: false,
