@@ -46,8 +46,8 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   _model;
 
   config: object = {
-    key: 'XD6C5A4H3G3A8aD6C4D3E3G3E2G2C9B3A4tFOFSAGLUd1AVKg1SN==', // For version less than 3
-    // key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==', // for version 3
+    // key: 'XD6C5A4H3G3A8aD6C4D3E3G3E2G2C9B3A4tFOFSAGLUd1AVKg1SN==', // For version less than 3
+    key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==', // for version 3
     attribution: false,
     // attribution: false,
     // charCounterCount: false,
