@@ -551,7 +551,14 @@ export class UtilService {
         return 'other';
     }
   }
-
+  formatFileSize(bytes,decimalPoint) {
+    if(bytes == 0) return '0 Bytes';
+    var k = 1000,
+        dm = decimalPoint || 2,
+        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+ }
   htmlToPdf(header,
     inputData,
     pdfName,
@@ -593,6 +600,10 @@ export class UtilService {
       .subscribe((data) => {
         const file = new Blob([data], { type: 'application/pdf' });
         fragData.isSpinner = false;
+        fragData.size = this.formatFileSize(data.size,0);
+        fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        var date = new Date();
+        fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
         const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
         const a = document.createElement('a');

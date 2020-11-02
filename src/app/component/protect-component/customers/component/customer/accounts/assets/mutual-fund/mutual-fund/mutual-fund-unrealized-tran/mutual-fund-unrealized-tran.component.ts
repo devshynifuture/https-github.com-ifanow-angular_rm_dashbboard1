@@ -1513,6 +1513,8 @@ export class MutualFundUnrealizedTranComponent {
   generatePdf() {
     this.showDownload = true;
     this.fragmentData.isSpinner = true;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
     setTimeout(() => {
       const para = document.getElementById('template');
       if (this.viewMode == 'Unrealized Transactions') {
@@ -1522,11 +1524,6 @@ export class MutualFundUnrealizedTranComponent {
       }
       this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '',true);
     }, 200);
-
-
-    // if(data){
-    //   this.isSpinner = false;
-    // }
   }
 
   filterHedaerWise(data) {

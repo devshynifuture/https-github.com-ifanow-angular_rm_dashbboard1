@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material';
 import { AuthService } from './../../../../../../../auth-service/authService';
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { PlanService } from './../plan.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -21,10 +21,10 @@ export class SummaryPlanComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
-  isLoading: boolean;
+  isLoadingGoals = true;
   goalSummaryCountObj: any;
   goalList: any;
-  insurancePlanList: any[] = [];
+  insurancePlanList = [{}, {}, {}];
   clientDob: any;
   familyList: any[];
   startDate: any;
@@ -33,22 +33,33 @@ export class SummaryPlanComponent implements OnInit {
   yearToShow: string;
   budgetData = [{}, {}, {}]
   isLoadingBudget = false;
+  isLoadingCashFlow = true;
   object: { 'insuranceName': any; 'amount': any; 'img': string; };
   annualSurplus: any;
   incomePercent: number;
   expensePercent: number;
   @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
-  fragmentData = { isSpinner: false };
+  fragmentData = { isSpinner: false,date:'',time:'' };
   map: any;
   loopEle: number;
+  isLoadingSummary = true;
+  singleGoalData= { details: '', value: '', month: '', lumpsum: '',imageUrl:'',year:'',
+  goalFV:'',achievedValue:'',equity_monthly:'',debt_monthly:'',lump_equity:'',lump_debt:'',
+  goalAssetAllocation:'',retirementTableValue:'',percentCompleted:''
+};
+  userInfo = AuthService.getUserInfo();
+  clientData = AuthService.getClientData();
+  details = AuthService.getProfileDetails();
+  getOrgData = AuthService.getOrgDetails();
   constructor(
     private planService: PlanService,
     private eventService: EventService,
     private peopleService: PeopleService,
     private datePipe: DatePipe,
     private constantService: ConstantsService,
-    private util:UtilService,
-    private sanitizer: DomSanitizer
+    private util: UtilService,
+    private sanitizer: DomSanitizer,
+    private cd: ChangeDetectorRef
   ) { }
 
   @ViewChild(MatPaginator, { static: false }) paginator;
@@ -131,17 +142,32 @@ export class SummaryPlanComponent implements OnInit {
   }
   generatePdf(tmp) {
     this.fragmentData.isSpinner = true;
-    for(let i=0 ; i<=5 ;i++){
-      this.loopEle = i
+    let pdfArray = [];
+    this.dataSource.data.forEach(element => {
+      this.singleGoalData = element;
+      this.cd.markForCheck();
+      this.cd.detectChanges();
       let para = document.getElementById('planSummary');
-      console.log(para.innerHTML)
-    }
+      pdfArray.push({ goalName: element.details, para: para.innerHTML })
+    });
+    console.log(pdfArray)
+    let para ='';
+    pdfArray.forEach(element =>{
+      para += element.para
+    })
+    // for (let i = 0; i <= 5; i++) {
+    //   this.loopEle = i
+    //   this.cd.markForCheck();
+    //   this.cd.detectChanges();
+    //   let para = document.getElementById('planSummary');
+    //   console.log(para.innerHTML)
+    // }
 
-    //   const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    //   this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', '',false);
+      const header = this.summaryTemplateHeader.nativeElement.innerHTML
+      this.util.htmlToPdf('',para, 'Financial plan', 'true', this.fragmentData, '', '',false);
 
 
-    
+
 
 
   }
@@ -244,10 +270,10 @@ export class SummaryPlanComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     }
-    this.isLoading = true;
+    this.isLoadingGoals = true;
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.planService.getGoalSummaryPlanData(data)
       .subscribe(res => {
-        this.isLoading = false;
         if (res) {
           console.log(res);
           this.goalSummaryCountObj = res;
@@ -261,14 +287,34 @@ export class SummaryPlanComponent implements OnInit {
                 lumpsum = Math.round(goalValueObj.lumpSumAmountDebt[lumpsumDeptKey] + goalValueObj.lumpSumAmountEquity[lumpsumEquityKey]),
                 sipDebtKey = Object.keys(goalValueObj.sipAmountDebt)[0],
                 sipEquityKey = Object.keys(goalValueObj.sipAmountEquity)[0],
-                month = Math.round(goalValueObj.sipAmountDebt[sipDebtKey] + goalValueObj.sipAmountEquity[sipEquityKey]);
+                month = Math.round(goalValueObj.sipAmountDebt[sipDebtKey] + goalValueObj.sipAmountEquity[sipEquityKey]),
+                year = (new Date(goalValueObj.goalStartDate).getFullYear()).toString();
+              if (goalValueObj.goalType == 1) {
+                year = (goalValueObj.differentGoalYears) ? (new Date(goalValueObj.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalValueObj.goalEndDate).getFullYear()) : '-';
+              }
+              let goalFV = goalValueObj.goalFV
+              if (goalValueObj.retirementTableValue) {
+                goalValueObj.retirementTableValue.forEach(element => {
+                  element.goalYear = new Date(element.goalStartDate).getFullYear()
+                });
+              }
+
               arr.push({
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
                 month,
                 lumpsum,
-                percentCompleted: !!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : '',
-                imageUrl: !!goalValueObj.imageUrl ? goalValueObj.imageUrl : ''
+                percentCompleted: Math.round(!!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : 0),
+                imageUrl: !!goalValueObj.imageUrl ? goalValueObj.imageUrl : '',
+                year: year,
+                goalFV: UtilService.getNumberToWord(!!goalValueObj.goalFV ? goalValueObj.goalFV : 0),
+                achievedValue: UtilService.getNumberToWord(!!goalValueObj.achievedValue ? goalValueObj.achievedValue : 0),
+                equity_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountEquity) || 0,
+                debt_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountDebt) || 0,
+                lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
+                lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
+                goalAssetAllocation: item.goalAssetAllocation,
+                retirementTableValue: goalValueObj.retirementTableValue
               });
             } else if (!!item.singleOrMulti && item.singleOrMulti === 2) {
               let goalValueObj = item.multiYearGoalPlan,
@@ -307,85 +353,115 @@ export class SummaryPlanComponent implements OnInit {
               }
 
               month = Math.round(sipEquitySum + sipDebtSum);
+              let year;
+              year = (new Date(goalValueObj.goalStartDate).getFullYear()).toString();
+              if (goalValueObj.goalType == 1) {
+                year = (goalValueObj.differentGoalYears) ? (new Date(goalValueObj.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalValueObj.goalEndDate).getFullYear()) : '-';
+              }
+              if (goalValueObj.retirementTableValue) {
+                goalValueObj.retirementTableValue.forEach(element => {
+                  element.goalYear = new Date(element.goalStartDate).getFullYear()
+                });
+              }
               arr.push({
                 details: goalValueObj.name,
                 month,
                 lumpsum,
-                percentCompleted: !!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : '',
+                percentCompleted: Math.round(!!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : 0),
                 imageUrl: !!goalValueObj.imageUrl ? goalValueObj.imageUrl : '',
-                value: !!goalValueObj.futureValue ? Math.round(goalValueObj.futureValue) : ''
+                value: !!goalValueObj.futureValue ? Math.round(goalValueObj.futureValue) : '',
+                year: year,
+                goalFV: UtilService.getNumberToWord(!!goalValueObj.goalFV ? goalValueObj.goalFV : 0),
+                achievedValue: UtilService.getNumberToWord(!!goalValueObj.achievedValue ? goalValueObj.achievedValue : 0),
+                equity_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountEquity) || 0,
+                debt_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountDebt) || 0,
+                lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
+                lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
+                goalAssetAllocation: item.goalAssetAllocation,
+                retirementTableValue: goalValueObj.retirementTableValue
               });
             }
           });
           this.dataSource.data = arr;
+          this.isLoadingGoals = false;
           this.dataSource.paginator = this.paginator;
-
         }
       }, err => {
-        this.isLoading = false;
+        this.goalSummaryCountObj=''
+        this.isLoadingGoals = false;
         console.error(err);
         this.eventService.openSnackBar("Something went wrong", "DISMISS")
       })
 
   }
-
+  getSumOfJsonMap(json: Object = {}) {
+    let sum = 0;
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
+      }
+    }
+    return sum;
+  }
   getSummeryInsurance() {
     let data = {
       clientId: this.clientId
     }
-    this.isLoading = true;
+    this.isLoadingSummary = true;
     this.planService.getInsurancePlanningPlanSummary(data)
       .subscribe(res => {
-        this.isLoading = false;
+        this.isLoadingSummary = false;
+        this.insurancePlanList = []
         console.log(res, "values to see");
         if (!!res && res !== null) {
           // this.insurancePlanList = res;
           for (const [index, key] of Object.entries(res)) {
-              const element = res;
-              switch (index) {
-                case 'criticalIllness':
-                  this.object = { 'insuranceName': 'Critical illness', 'amount': key, 'img': '/assets/images/svg/CIsmall.svg' }
-                  break;
+            const element = res;
+            switch (index) {
+              case 'criticalIllness':
+                this.object = { 'insuranceName': 'Critical illness', 'amount': key, 'img': '/assets/images/svg/CIsmall.svg' }
+                break;
 
-                case 'fireAndSpecialPerilsInsurance':
-                  this.object = { 'insuranceName': 'Fire insurance', 'amount': key, 'img': '/assets/images/svg/FIsmall.svg' }
-                  break;
+              case 'fireAndSpecialPerilsInsurance':
+                this.object = { 'insuranceName': 'Fire insurance', 'amount': key, 'img': '/assets/images/svg/FIsmall.svg' }
+                break;
 
-                case 'healthInsurance':
-                   this.object = { 'insuranceName': 'Health insurance', 'amount': key, 'img': '/assets/images/svg/Hsmall.svg' }
-                  break;
-                case 'homeInsurance':
-                  this.object = { 'insuranceName': 'Home insurance', 'amount': key, 'img': '/assets/images/svg/Hsmall.svg' }
-                  break;
-                case 'life_insurance':
-                    this.object = { 'insuranceName': 'Life insurance', 'amount': key, 'img': '/assets/images/svg/LIsmall.svg' }
-                  break;
-                case 'motorInsurance':
-                    this.object = { 'insuranceName': 'Motor insurance', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
-                  break;
-                case 'personalAccident':
-                    this.object = { 'insuranceName': 'Personal accident', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
-                  break;
-                case 'travelInsurance':
-                    this.object = { 'insuranceName': 'Travel insurance', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
-                  break;
-                default:
-                  break;
-              }
+              case 'healthInsurance':
+                this.object = { 'insuranceName': 'Health insurance', 'amount': key, 'img': '/assets/images/svg/Hsmall.svg' }
+                break;
+              case 'homeInsurance':
+                this.object = { 'insuranceName': 'Home insurance', 'amount': key, 'img': '/assets/images/svg/Hsmall.svg' }
+                break;
+              case 'life_insurance':
+                this.object = { 'insuranceName': 'Life insurance', 'amount': key, 'img': '/assets/images/svg/LIsmall.svg' }
+                break;
+              case 'motorInsurance':
+                this.object = { 'insuranceName': 'Motor insurance', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
+                break;
+              case 'personalAccident':
+                this.object = { 'insuranceName': 'Personal accident', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
+                break;
+              case 'travelInsurance':
+                this.object = { 'insuranceName': 'Travel insurance', 'amount': key, 'img': '/assets/images/svg/PAsmall.svg' }
+                break;
+              default:
+                break;
+            }
 
-              this.insurancePlanList.push(this.object);
-            
+            this.insurancePlanList.push(this.object);
+
           }
 
           this.insurancePlanList = [...new Map(this.insurancePlanList.map(item => [item['insuranceName'], item])).values()];
 
         }
       }, err => {
+        this.insurancePlanList = [];
+        this.isLoadingSummary = false;
         console.error(err);
       })
   }
   getListFamilyMem() {
-    this.isLoading = true;
     const obj = {
       clientId: this.clientId
     };
@@ -423,6 +499,7 @@ export class SummaryPlanComponent implements OnInit {
     );
   }
   getCashflowData() {
+    this.isLoadingCashFlow = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -435,15 +512,19 @@ export class SummaryPlanComponent implements OnInit {
       data => {
         if (data) {
           console.log(data);
+          this.annualSurplus = 0;
+          this.isLoadingCashFlow = false;
           this.cashFlowData = data;
-          this.annualSurplus = this.cashFlowData.income -  this.cashFlowData.expense;
-          this.incomePercent = Math.floor((this.cashFlowData.income / this.annualSurplus)*100);
-          this.expensePercent = Math.floor((this.cashFlowData.expense / this.annualSurplus)*100);
+          this.annualSurplus = this.cashFlowData.income - this.cashFlowData.expense;
+          let total = this.cashFlowData.income + this.cashFlowData.expense;
+          this.incomePercent = Math.floor((this.cashFlowData.income / total) * 100);
+          this.expensePercent = Math.floor((this.cashFlowData.expense / total) * 100);
         } else {
           this.cashFlowData = '';
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
+        this.isLoadingCashFlow = false;
       }
     );
   }
@@ -455,8 +536,22 @@ export interface PeriodicElement {
   value: string;
   month: string;
   lumpsum: string;
+  imageUrl:string,
+  year:string,
+  goalFV:string,
+  achievedValue:string,
+  equity_monthly:string,
+  debt_monthly:string,
+  lump_equity:string,
+  lump_debt:string,
+  goalAssetAllocation:string,
+  retirementTableValue:string,
+  percentCompleted:string
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { details: '', value: '', month: '', lumpsum: '' }
+  { details: '', value: '', month: '', lumpsum: '',imageUrl:'',year:'',
+  goalFV:'',achievedValue:'',equity_monthly:'',debt_monthly:'',lump_equity:'',lump_debt:'',
+  goalAssetAllocation:'',retirementTableValue:'',percentCompleted:''
+}
 ];

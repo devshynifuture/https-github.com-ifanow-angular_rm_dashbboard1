@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
 import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class SipComponent implements OnInit {
   loaderValue: number;
   dontShowArnRiaDropdown: boolean;
 
-  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService, private mfService: MfServiceService) {
+  constructor(private cd: ChangeDetectorRef, private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService, private mfService: MfServiceService) {
   }
 
   ngOnInit() {
@@ -95,7 +96,8 @@ export class SipComponent implements OnInit {
   }
 
   initPoint() {
-    this.newSip();
+    this.getSipGraph();
+    // this.newSip();
     this.sipCountGet();
     this.expiredGet();
     this.expiringGet();
@@ -333,8 +335,43 @@ export class SipComponent implements OnInit {
       arnRiaValue: this.arnRiaId
     };
   }
+  getSipGraph() {
+    const obj = {
+      advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
+      arnRiaDetailsId: this.arnRiaId,
+      parentId: this.parentId
+    };
+    const obj2 = {
+      advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
+      arnRiaDetailsId: this.arnRiaId,
+      parentId: this.parentId
+    };
+    const newSip = this.backoffice.newSipGet(obj2);
+    const ceaseSipGet = this.backoffice.ceaseSipGet(obj2);
+    forkJoin(newSip, ceaseSipGet).subscribe(result => {
+      if (result[0]) {
+        this.newSipObj = result[0];
+        this.newSipObj[0].dateDiff = 30;
+        this.newSipObj[1].dateDiff = 60;
+        this.newSipObj[2].dateDiff = 90;
+        this.newSipObj[3].dateDiff = 120;
+        this.newSipObj[4].dateDiff = 150;
+        this.newSipObj[5].dateDiff = 180;
+        this.ceaseSipObj = result[1];
+        this.ceaseSipObj[0].dateDiff = 30;
+        this.ceaseSipObj[1].dateDiff = 60;
+        this.ceaseSipObj[2].dateDiff = 90;
+        this.ceaseSipObj[3].dateDiff = 120;
+        this.ceaseSipObj[4].dateDiff = 150;
+        this.ceaseSipObj[5].dateDiff = 180;
+        this.pieChart('pieChartSip');
+      }
 
+    });
+
+  }
   newSip() {
+
     const obj = {
       advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
@@ -433,6 +470,8 @@ export class SipComponent implements OnInit {
         data: [obj30.net, obj60.net, obj90.net, obj120.net, obj150.net, obj180.net]
       }]
     });
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 

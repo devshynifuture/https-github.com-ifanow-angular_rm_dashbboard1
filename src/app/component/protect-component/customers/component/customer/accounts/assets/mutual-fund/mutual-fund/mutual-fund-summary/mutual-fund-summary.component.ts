@@ -1538,6 +1538,9 @@ export class MutualFundSummaryComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
+        if(!sideBarData.data){
+          sideBarData.state = '';
+        }
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
@@ -1706,6 +1709,8 @@ export class MutualFundSummaryComponent implements OnInit {
 
     this.showDownload = true
     this.fragmentData.isSpinner = true;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
     setTimeout(() => {
       const para = document.getElementById('template');
       // const header = document.getElementById('templateHeader');

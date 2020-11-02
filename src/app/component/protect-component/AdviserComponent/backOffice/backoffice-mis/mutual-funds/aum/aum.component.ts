@@ -404,10 +404,10 @@ export class AumComponent implements OnInit {
   }
 
   pieChart(id, obj) {
-    let obj1 = obj[obj.length - 1];
-    let obj2 = obj[obj.length - 2];
-    let obj3 = obj[obj.length - 3];
-    let obj4 = obj[obj.length - 4];
+    let obj1 = obj[obj.length - 2];
+    let obj2 = obj[obj.length - 3];
+    let obj3 = obj[obj.length - 4];
+    let obj4 = obj[obj.length - 5];
     let months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     Highcharts.chart('pieChartAum', {
       chart: {

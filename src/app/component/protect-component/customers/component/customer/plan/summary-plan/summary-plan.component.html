@@ -6,35 +6,58 @@
                 <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span
                         class="text-primitive f-12">{{ yearToShow }}</span>
                 </p>
-                <h1 class="f-35 m-0 text-black pt-8">₹<span appFormatNumber [value]="annualSurplus ? annualSurplus : 0"></span></h1>
-
-                <div class="row pt-20">
-                    <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 roboto f-400">INCOME</p>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹28,30,500</p> -->
-                        <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.income ? "₹" : ""}}<span
-                                appFormatNumber [shouldRoundOff]="true"
-                                [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
-                    </div>
-                    <div class="col-md-12 p-0">
-                        <mat-progress-bar class="light-blue" mode="determinate" [matTooltip]="incomePercent+'%'" [value]="incomePercent"></mat-progress-bar>
+                <div *ngIf="isLoadingCashFlow==false">
+                    <h1 *ngIf="!isLoadingCashFlow" class="f-35 m-0 text-black pt-8">
+                        ₹<span appFormatNumber [value]="annualSurplus ? annualSurplus : 0"></span>
+                    </h1>
+                </div>
+                <div class="relClass" *ngIf="isLoadingCashFlow">
+                    <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                        <h1 class="f-35 m-0 roboto text-black pt-8 ">
+                            <span>{{''}}</span>
+                        </h1>
                     </div>
                 </div>
 
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
+                        <p class="text-black f-12 m-0 roboto f-400">INCOME</p>
+                    </div>
+                    <div class="col-md-6 p-0" *ngIf="!isLoadingCashFlow">
+                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                            {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
+                    </div>
+                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                {{''}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0" *ngIf="!isLoadingCashFlow">
+                        <mat-progress-bar class="light-blue" mode="determinate" [matTooltip]="incomePercent+'%'"
+                            [value]="incomePercent"></mat-progress-bar>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 roboto f-400">EXPENSES</p>
                     </div>
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-6 p-0" *ngIf="!isLoadingCashFlow">
                         <!-- <p class="text-black f-12 m-0 text-right roboto f-400">₹19,77,000</p> -->
                         <p class="text-black f-12 m-0 text-right roboto f-400">{{cashFlowData?.expense ? "₹" : ""}}<span
                                 appFormatNumber [shouldRoundOff]="true"
                                 [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
                     </div>
-                    <div class="col-md-12 p-0">
-                        <mat-progress-bar class="light-red" mode="determinate" [matTooltip]="expensePercent+'%'" [value]="expensePercent"></mat-progress-bar>
+                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                {{''}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0" *ngIf="!isLoadingCashFlow">
+                        <mat-progress-bar class="light-red" mode="determinate" [matTooltip]="expensePercent+'%'"
+                            [value]="expensePercent"></mat-progress-bar>
                     </div>
                 </div>
             </div>
@@ -52,32 +75,32 @@
                 </div> -->
             </div>
 
-            <div *ngIf="budgetData?.length > 0 && !isLoadingBudget" >
+            <div *ngIf="budgetData?.length > 0 && !isLoadingBudget">
                 <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
-                            <div class="col-md-9 pr-0">
-                                    <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
-                                    <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> /
-                                        <span appFormatNumber>{{item.spent}}</span></p>
-                                </div>
-                        <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
-                            <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100">
-                                {{item.progressPercent ? item.progressPercent : 0}}% </p>
-                            <p class="mb-10 f-14 text-danger roboto f-400" *ngIf="item.progressPercent > 100">
-                                {{item.progressPercent ? item.progressPercent : 0}}% </p>
-                        </div>
+                    <div class="col-md-9 pr-0">
+                        <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
+                        <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> /
+                            <span appFormatNumber>{{item.spent}}</span></p>
+                    </div>
+                    <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
+                        <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100">
+                            {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                        <p class="mb-10 f-14 text-danger roboto f-400" *ngIf="item.progressPercent > 100">
+                            {{item.progressPercent ? item.progressPercent : 0}}% </p>
+                    </div>
                 </div>
             </div>
             <div *ngIf="budgetData?.length > 0 && isLoadingBudget" class="relClass">
-                    <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
-                        <div [ngClass]="{'height23': isLoadingBudget}" class="bar">
-                            <div class="col-md-9 pr-0">
-                                <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
-                                <p class="mb-10 f-14 roboto text-custom f-400"> <span appFormatNumber>{{item.amount}}</span> 
-                                    <span appFormatNumber>{{item.spent}}</span></p>
-                            </div>
+                <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
+                    <div [ngClass]="{'height23': isLoadingBudget}" class="bar">
+                        <div class="col-md-9 pr-0">
+                            <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
+                            <p class="mb-10 f-14 roboto text-custom f-400"> <span appFormatNumber>{{item.amount}}</span>
+                                <span appFormatNumber>{{item.spent}}</span></p>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div *ngIf="budgetData?.length == 0">
                 <h4 class="d-flex justify-content-center b-a p-44">
@@ -161,23 +184,38 @@
                     <div class="col-md-8 mt-16 pr-8">
                         <div class="bg-white p-20">
                             <h5 class="f-400 mb-20 roboto">Goal summary</h5>
-                            <div class="row">
+                            <div class="row skeletonAnimation" [appSkeletonLoading]="isLoadingGoals" appSkeletonLoading>
                                 <div class="col-md-4 pl-0">
                                     <div class="row">
                                         <div class="col-md-12 p-0 mb-16">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Total goals</p>
-                                                <h1 class="text-primary f-400 roboto">
-                                                    {{ goalSummaryCountObj && goalSummaryCountObj?.totalGoals }}</h1>
+                                                <h1 class="text-primary f-400 roboto" *ngIf="!isLoadingGoals">
+                                                    {{ goalSummaryCountObj?.totalGoals ? goalSummaryCountObj?.totalGoals : 0 }}
+                                                </h1>
+                                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                                    <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                            {{''}}</p>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </div>
 
                                         <div class="col-md-12 p-0">
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Upcoming</p>
-                                                <h1 class="text-primary f-400 roboto">
-                                                    {{ goalSummaryCountObj && goalSummaryCountObj?.upcomingGoalsCount }}
+                                                <h1 class="text-primary f-400 roboto" *ngIf="!isLoadingGoals">
+                                                    {{ goalSummaryCountObj?.upcomingGoalsCount ? goalSummaryCountObj?.upcomingGoalsCount : 0 }}
                                                 </h1>
+                                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                                    <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                            {{''}}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -189,16 +227,27 @@
                                         <span class="linebr"></span>
 
                                         <p class="f-14 mb-0 roboto f-400">Monthly</p>
-                                        <h4 class="text-primary roboto f-400"><span appFormatNumber
-                                                [shouldRoundOff]="true"
-                                                [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals"></span>
+                                        <h4 class="text-primary roboto f-400" *ngIf="!isLoadingGoals"><span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals ? goalSummaryCountObj?.monthlyInvestmentMappedToGoals : 0"></span>
                                         </h4>
-
+                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                            <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                <p class="text-primary roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
                                         <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
-                                        <h4 class="text-primary roboto f-400"><span appFormatNumber
-                                                [shouldRoundOff]="true"
-                                                [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals"></span>
+                                        <h4 class="text-primary roboto f-400" *ngIf="!isLoadingGoals"><span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals ? goalSummaryCountObj?.lumpsumInvestmentMappedToGoals : 0"></span>
                                         </h4>
+                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                            <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                <p class="text-primary roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -219,8 +268,7 @@
                                 </div> -->
                             </div>
 
-                            <div class="row pt-20"
-                                *ngIf="dataSource?.data?.length>0">
+                            <div class="row pt-20" *ngIf="dataSource?.data?.length>0">
 
                                 <div class="col-md-12 p-0">
                                     <p class="f-14 left m-0 roboto f-400">Quick view</p>
@@ -238,7 +286,7 @@
                                 <div class="col-md-12 planTable p-0">
                                     <mat-paginator [hidePageSize]="true" [pageSize]="1"></mat-paginator>
                                     <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
-                                        [appSkeletonLoading]="isLoading">
+                                        [appSkeletonLoading]="isLoadingGoals">
 
                                         <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
@@ -300,42 +348,59 @@
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                     </table>
 
-
+                                    <div *ngIf="dataSource?.data?.length == 0">
+                                        <h4 class="d-flex justify-content-center b-a p-44">
+                                            No Data Found
+                                        </h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mt-16 pl-8">
+                    <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingSummary"
+                        appSkeletonLoading>
                         <div class="bg-white p-20">
                             <h5 class="f-500 mb-10"> Insurance summary</h5>
-
-                            <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
-                                <div class="col-md-2 p-0">
-                                    <img [src]="item.img">
-                                </div>
-                                <div class="col-md-10 pr-0 ">
-                                    <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
-                                    <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true" [value]="item?.amount"></span></p>
-                                </div>
-                            </div>
-
-                            <div class="row b-b pt-14 skeletonAnimation" *ngIf="isLoading"
-                                [appSkeletonLoading]="isLoading">
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
+                            <div *ngIf="insurancePlanList?.length > 0 && !isLoadingSummary">
+                                <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
+                                    <div class="col-md-2 p-0">
+                                        <img [src]="item.img">
+                                    </div>
+                                    <div class="col-md-10 pr-0 ">
+                                        <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
+                                        <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true"
+                                                [value]="item?.amount"></span></p>
+                                    </div>
                                 </div>
                             </div>
+                            <div *ngIf="insurancePlanList?.length > 0 && isLoadingSummary" class="relClass">
+                                <div class="row bb c-p pt-10" *ngFor="let item of insurancePlanList">
+                                    <div [ngClass]="{'height23': isLoadingSummary}" class="bar">
+                                        <div class="col-md-2 p-0">
+                                            {{''}}
+                                        </div>
+                                        <div class="col-md-10 pr-0 ">
+                                            <p class="f-14 m-0 roboto f-400">{{ '' }}</p>
+                                            <p class="f-14 mb-16 f-600"> <span appFormatNumber
+                                                    [shouldRoundOff]="true">{{''}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="insurancePlanList?.length == 0 && !isLoadingSummary">
+                                <h4 class="d-flex justify-content-center b-a p-44">
+                                    No Data Found
+                                </h4>
+                            </div>
+
 
                         </div>
 
                     </div>
                 </div>
 
-                <!-- <div class="row">
-                    <div class="col-md-8 mt-16 pr-8">
+                <div class="row">
+                    <!-- <div class="col-md-8 mt-16 pr-8">
                         <div class="bg-white p-20">
                             <h5 class="f-500 mb-20">Ratios</h5>
 
@@ -398,9 +463,10 @@
 
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-md-4 mt-16 pl-8">
+                    <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
+                        appSkeletonLoading>
                         <div class="bg-white p-20">
                             <div class="row d-flex align-items-center justify-content-between b-b">
                                 <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
@@ -409,44 +475,80 @@
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Incomes</p>
-                                <p class="f-14 m-0">{{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
+                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                    {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
                                         [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Expenses</p>
-                                <p class="f-14 m-0">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
+                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
                                         [shouldRoundOff]="true"
                                         [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Assets</p>
-                                <p class="f-14 m-0">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
+                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
                                         [shouldRoundOff]="true"
                                         [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Insurance</p>
-                                <p class="f-14 m-0">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
+                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
                                         [shouldRoundOff]="true"
                                         [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 m-0 roboto f-400">Liabilities</p>
-                                <p class="f-14 m-0">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
+                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
                                         [shouldRoundOff]="true"
                                         [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                 <p class="f-14 f-600 m-0">Surplus</p>
-                                <p class="f-14 f-600 m-0">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
+                                <p class="f-14 f-600 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
                                         [shouldRoundOff]="true"
                                         [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
+                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                        <p class="text-black f-12 m-0 text-right roboto f-400">
+                                            {{''}}</p>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -456,7 +558,7 @@
                         </div>
                     </div>
 
-                </div> -->
+                </div>
 
             </div>
 
@@ -476,13 +578,14 @@
                     </div>
                 </div>
                 <div class="b-b pl-12">
-                    <h5 class="roboto mt-16 mb-10 f-500" >Financial plan</h5>
+                    <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
                     <div class="d-flex mb-20">
-                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf()">
+                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdf(null)">
+                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         <div class="detailsPDF">
                             <p class="f-12 l-18 f-500 roboto mb-10">Financial plan.pdf</p>
-                            <p class="f-12 l-18 mb-0">980 KB</p>
-                            <p class="f-12 l-18 m-0">23/09/2019 <br> 09:28 AM</p>
+                            <p class="f-12 l-18 mb-0">{{fragmentData.size}}</p>
+                            <p class="f-12 l-18 m-0">{{fragmentData.date}} <br>{{fragmentData.time}}</p>
                         </div>
                     </div>
 
@@ -552,199 +655,252 @@
               </div>
 </div> -->
 
-<!-- <html #summaryPlan id="planSummary">
-    <head>
-    </head>
-    <body>
-        <table cellpadding="0" cellspacing="0" border="0"
+<html #summaryPlan id="planSummary" style="display: none">
+
+
+<body>
+    <table cellpadding="0" cellspacing="0" border="0"
         style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
-        
-            <tr>
-                <td>
-                    <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
-                        <tr>
-                            <td>
-                                <h3 style="margin: 0px; font-size: 16px;">
-                                    Abhay Bhosle's Financial Plan
-                                </h3>
-                            </td>
-                            <td style="text-align: right;">
-                                <p style="margin: 0px 0px 5px 0px; font-size: 14px;">
-                                    Prepared by
-                                </p>
-                                <h3 style="margin: 0px; font-size: 16px;">
-                                    Manek Financial Advisors Pvt Ltd
-                                </h3>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
 
-            <tr>
-                <td>
-                    <table style="width: 100%; border: 0px; padding-top: 30px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
-                        
-                        <tr>
-                            <td>
-                                <h3 style="margin: 0px; font-size: 16px;">
-                                    Shivali A Bhosle's Marriage   
-                                </h3>
-                            </td>
+        <tr>
+            <td>
+                <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                    <tr>
+                        <td>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{clientData?.displayName}}'s Financial Plan
+                            </h3>
+                        </td>
+                        <td style="text-align: right;">
+                            <p style="margin: 0px 0px 5px 0px; font-size: 14px;">
+                                Prepared by
+                            </p>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{getOrgData?.companyName ? getOrgData?.companyName : '-'}}
+                            </h3>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
-                            <td style="text-align: right;">
-                                <h3 style="margin: 0px; font-weight: 400; font-size: 16px;">
-                                    2034
-                                </h3>
-                            </td>
-                        </tr>
-                    
-                    </table>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <table
+                    style="width: 100%; border: 0px; padding-top: 30px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
 
+                    <tr>
+                        <td>
+                            <h3 style="margin: 0px; font-size: 16px;">
+                                {{singleGoalData && singleGoalData.details ? singleGoalData.details : '-'}}
+                            </h3>
+                        </td>
 
-            <tr>
-                <td>
-                    <table style="border: 0px; margin-top: 20px; width: 100%;">
-                        <tr>
-                            <td style="width: 265px;">
-                                <img style="width: 265px; height: 265px;" src="https://res.cloudinary.com/futurewise/image/upload/v1594125749/goal-default-image/car-goal_v2.0.svg">
-                            </td>
+                        <td style="text-align: right;">
+                            <h3 style="margin: 0px; font-weight: 400; font-size: 16px;">
+                                {{singleGoalData ? singleGoalData.year : '-'}}
+                            </h3>
+                        </td>
+                    </tr>
 
-                            <td style="vertical-align: top; padding-left: 15px;">
-                                <table style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 5px;">
-                                    <tr>
-                                        <td>
-                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
-                                                Goal Amount  </p>
-                                                <h5 style="font-size: 16px; margin: 0px;">
-                                                    Rs.35,12,057
-                                                </h5>
-                                        </td>
-
-                                        
-                                        <td>
-                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
-                                                Achieved  </p>
-                                                <h5 style="font-size: 16px; margin: 0px;">
-                                                    Rs.15,00,000
-                                                </h5>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table style="margin: 20px 0px 20px 0px; width: 100%; ">
-                                    <tr>
-                                        <td>
-                                            <div style="width: 100%; line-height: 30px; font-size: 12px; background:#f5f7f7; height: 30px;">
-                                                0%
-                                            </div>
-                                            
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <p style="margin: 0px; font-size: 14px; font-weight: 600;">Additional Required</p>
-                                
-                                <table  cellpadding="0" cellspacing="0" style="margin: 10px 0px 0px 0px; font-size: 14px; width: 100%; border: 1px solid #dee5e7;">
-                                    <tr>
-                                        <td style="border-bottom: 1px solid #dee5e7;">
-
-                                        </td>
-
-                                        <td style="border-bottom: 1px solid #dee5e7; padding: 10px; text-align: right;">
-                                            Monthly
-                                        </td>
-
-                                        <td style="border-bottom: 1px solid #dee5e7;padding: 10px; text-align: right;">
-                                            Lumpsum
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7;"> Equity</td>
-                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">12,860 <span style="font-size: 12px;"> 0%</span></td>
-                                            <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">5,00,165</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td style="padding: 10px;"> Debt</td>
-                                        <td style="padding: 10px; text-align: right;">12,860 <span style="font-size: 12px;"> 0%</span></td>
-                                            <td style="padding: 10px; text-align: right;">5,00,165</td>
-                                    </tr>
-
-                                </table>
-
-                            </td>
-                        </tr>
-                    </table>
-
-                    
-                </td>
-            </tr>
+                </table>
+            </td>
+        </tr>
 
 
-            <tr>
-                <td>
-                    <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
-                        <tr>
-                            <td>
-                                <p style=" font-size: 15px; font-weight: 600;">Assets allocated to this goal</p>
+        <tr>
+            <td>
+                <table style="border: 0px; margin-top: 20px; width: 100%;">
+                    <tr>
+                        <td style="width: 265px;">
+                            <img style="width: 265px; height: 265px;" [src]="singleGoalData ? singleGoalData.imageUrl:''">
+                        </td>
 
-                                <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;"> 
-                                    <tr>
-                                        <td style="padding: 8px;background: #f5f7f7;">Assets</td>
-                                        <td style="padding: 8px;background: #f5f7f7;">Current Value</td>
-                                        <td style="padding: 8px;background: #f5f7f7;">Maturity Value</td>
-                                        <td style="padding: 8px;background: #f5f7f7;">Recommmendation</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"> No assets allocated to this goal </td>
-                                        
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+                        <td style="vertical-align: top; padding-left: 15px;">
+                            <table
+                                style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 5px;">
+                                <tr>
+                                    <td>
+                                        <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                            Goal Amount </p>
+                                        <h5 style="font-size: 16px; margin: 0px;">
+                                            Rs.<span appFormatNumber
+                                                [value]="singleGoalData ? singleGoalData.goalFV : '0'"></span>
+                                        </h5>
+                                    </td>
 
 
+                                    <td>
+                                        <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 14px;">
+                                            Achieved </p>
+                                        <h5 style="font-size: 16px; margin: 0px;">
+                                            Rs.<span appFormatNumber
+                                                [value]="singleGoalData?singleGoalData.achievedValue:'0'"></span>
+                                        </h5>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="margin: 20px 0px 20px 0px; width: 100%; ">
+                                <tr>
+                                    <td>
+                                        <div style="line-height: 30px; font-size: 12px; background:#007bff; height: 30px;"
+                                            [ngStyle]="{'width':singleGoalData && singleGoalData?.percentCompleted > 100 ? 100 : singleGoalData.percentCompleted +'%' }">
+                                            {{singleGoalData && singleGoalData?.percentCompleted ? singleGoalData?.percentCompleted : '-'}}%
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 0px; font-size: 14px; font-weight: 600;">Additional Required</p>
+
+                            <table cellpadding="0" cellspacing="0"
+                                style="margin: 10px 0px 0px 0px; font-size: 14px; width: 100%; border: 1px solid #dee5e7;">
+                                <tr>
+                                    <td style="border-bottom: 1px solid #dee5e7;">
+
+                                    </td>
+
+                                    <td style="border-bottom: 1px solid #dee5e7; padding: 10px; text-align: right;">
+                                        Monthly
+                                    </td>
+
+                                    <td style="border-bottom: 1px solid #dee5e7;padding: 10px; text-align: right;">
+                                        Lumpsum
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7;"> Equity</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData.equity_monthly ? singleGoalData.equity_monthly : '0'"></span>
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData.lump_equity ? singleGoalData.lump_equity : '0'"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 10px;"> Debt</td>
+                                    <!-- <span style="font-size: 12px;"> 0%</span> -->
+                                    <td style="padding: 10px; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData.debt_monthly ? singleGoalData?.debt_monthly : '0'"></span>
+                                    </td>
+                                    <td style="padding: 10px; text-align: right;">
+                                        <span appFormatNumber
+                                            [value]="singleGoalData && singleGoalData.lump_debt ? singleGoalData?.lump_debt : '0'"></span>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
 
 
-            <tr>
-                <td>
-                    <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%;">
-                        <tr>
-                            <td>
-                                <p style=" font-size: 15px; font-weight: 600;">Goal year wise details</p>
+            </td>
+        </tr>
 
-                                <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;"> 
-                                    <tr>
-                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal Year</td>
-                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">Goal FV</td>
-                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">FV of assets allocated </td>
-                                        <td style="padding: 8px;background: #f5f7f7;">Status</td>
-                                    </tr>
 
-                                    <tr>
-                                        <td style="padding: 8px; border-right: 1px solid #dee5e7;">2025</td>
-                                        <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">  35,12,057  </td>
-                                        <td style="padding: 8px; border-right: 1px solid #dee5e7; text-align: right;">0</td>
-                                        <td style="padding: 8px;">0% achievable</td>
-                                        
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
+                    <tr>
+                        <td>
+                            <p style=" font-size: 15px; font-weight: 600;">Assets allocated to this goal</p>
 
-            
-        </table>
-    </body>
-</html> -->
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;">
+                                <tr>
+                                    <td style="padding: 8px;background: #f5f7f7;">Assets</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Advice</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Current Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Maturity Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7;">Allocated %</td>
+                                </tr>
+
+                                <tr *ngFor="let allocation of singleGoalData.goalAssetAllocation">
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        {{allocation.assetName}}</td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        {{allocation.advice || '-'}}</td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber [value]='allocation.currentValue'></p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="m-0 roboto" appFormatNumber
+                                            [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
+                                        </p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto pr-48" appFormatNumber
+                                            [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>
+                                            %
+                                        </p>
+                                    </td>
+                                </tr>
+                                <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"
+                                    *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets allocated to
+                                    this goal </td>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
+                    <tr>
+                        <td>
+                            <p style=" font-size: 15px; font-weight: 600;" *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                Goal year wise details</p>
+
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;">
+                                <tr *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
+                                        Goal year</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal FV</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal present value</td>
+                                    <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
+                                </tr>
+
+                                <tr *ngFor="let element of singleGoalData.retirementTableValue">
+                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                        {{element.goalYear}} </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'></p>
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
+                                        <p class="mb-0 roboto" appFormatNumber
+                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table>
+</body>
+
+</html>

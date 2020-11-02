@@ -507,13 +507,13 @@
             </td>
             <td style="text-align: right" colspan="6">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    111 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Mob number: </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
                     {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Capital gain Summary
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Capital Gain Summary
                         Report</strong>
                 </p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Finacial year:
@@ -585,47 +585,47 @@
 
         <tr *ngFor="let element of dataSource.data">
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{element.schemeName}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{element.folioNumber}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px; text-align: right;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px; text-align: right;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;border-right: 1px solid #dee5e7;">
+                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;border-right: 1px solid #dee5e7;">
                 {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
             </td>
 
@@ -634,48 +634,48 @@
 
         <tr *ngIf="dataSource.data.length > 0">
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 Total
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                0
-            </td>
-
-            <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.totalIndexGain == 0 ) ? 0 : (equityObj.totalIndexGain | number:'1.2-2')) : '0'}}
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.totalIndexLoss == 0 ) ? 0 : (equityObj.totalIndexLoss | number:'1.2-2')) : '0'}}
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                0
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top"
+                style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss | number:'1.2-2')) : '0'}}
             </td>
 
         </tr>
@@ -783,47 +783,47 @@
 
         <tr *ngIf="dataSource1.data.length > 0">
             <td valign="top"
-                style="font-weight: 500; border-left: 1px solid #dee5e7; font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold; border-left: 1px solid #dee5e7; font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 Total
             </td>
 
             <td valign="top"
-                style="font-weight: 500; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
             </td>
 
             <td valign="top"
-                style="font-weight: 500; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
             </td>
 
             <td valign="top"
-                style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                style="font-weight: bold; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                style="font-weight: bold;text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-weight: 500;  text-align: right;border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                style="font-weight: bold;  text-align: right;border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-weight: 500;text-align: right;  border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                style="font-weight: bold;text-align: right;  border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                style="font-weight: bold; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
             </td>
 
             <td valign="top"
-                style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                style="font-weight: bold;text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                 {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
             </td>
 
@@ -901,27 +901,27 @@
 
         <tr *ngIf="dataSource2.data.length > 0">
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 Total
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
                 {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
                 {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
             </td>
 
             <td valign="top"
-                style="font-size: 13px; border-left: 1px solid #dee5e7;border-right: 1px solid #dee5e7;text-align: right; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7;border-right: 1px solid #dee5e7;text-align: right; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
             </td>
 
