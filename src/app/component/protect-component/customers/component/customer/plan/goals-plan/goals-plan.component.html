@@ -77,7 +77,7 @@
                             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         </div>
                         <div class="col-md-6 text-right p-0" *ngIf="selectedGoal">
-                            <img (click)="generatePdf(goal)" class="b-a c-p" matTooltip="Download PDF"
+                            <img (click)="generatePdf(null)" class="b-a c-p" matTooltip="Download PDF"
                                 src="assets/images/svg/pdf-icons.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
                         </div>
@@ -748,7 +748,7 @@
                     <tr>
                         <td style="width: 265px;">
                             <img style="width: 265px; height: 265px;"
-                                [src]="singleGoalData ? singleGoalData.img:''">
+                                [src]="singleGoalData ? singleGoalData.img :''">
                         </td>
 
                         <td style="vertical-align: top; padding-left: 15px;">
