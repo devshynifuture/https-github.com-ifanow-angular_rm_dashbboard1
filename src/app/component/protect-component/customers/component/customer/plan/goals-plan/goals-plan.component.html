@@ -77,7 +77,7 @@
                             <img (click)="generatePdf(goal)" class="b-a c-p" matTooltip="Download PDF"
                                 src="assets/images/svg/pdf-icons.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
-
+                            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         </div>
                     </div>
                 </div>
