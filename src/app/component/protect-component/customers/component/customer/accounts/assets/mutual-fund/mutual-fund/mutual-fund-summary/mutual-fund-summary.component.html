@@ -6,8 +6,8 @@
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center">
             <div class="pdfClass"
                 *ngIf="!isLoading && this.mutualFund?.mutualFundList?.length > 0 && (summary.data.length > 0)">
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
-                    <img src="assets/images/svg/download-bordered.svg">
+                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" [ngClass]="!fragmentData.isSpinner?'':'b-0'">
+                    <img src="assets/images/svg/download-bordered.svg" *ngIf="!fragmentData.isSpinner">
                 </a>
                 <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
                     <button>Loading Done</button>

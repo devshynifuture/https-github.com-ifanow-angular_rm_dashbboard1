@@ -8,7 +8,8 @@
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
                 <div class="pdfClass">
                     <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon b-0">
-                        <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner"> </a>
+                        <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner"> 
+                    </a>
                         <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
                             <button>Loading Done</button>
                             <!-- DOne for bulk email -->
