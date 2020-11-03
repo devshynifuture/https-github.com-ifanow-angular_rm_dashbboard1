@@ -18,6 +18,7 @@ export class KeyInfoComponent implements OnInit {
   debt: any;
   equityLumpsum: any;
   debtLumpsum: any;
+  goalYrAndFutValues: any;
 
   constructor(private subInjectService: SubscriptionInject,   
      public utils: UtilService,
@@ -29,8 +30,9 @@ export class KeyInfoComponent implements OnInit {
     this.debt = this.data.dashboardData.arr_debt_monthly
     this.equityLumpsum =this.data.dashboardData.arr_lump_equity
     this.debtLumpsum =this.data.dashboardData.arr_lump_debt
+    this.goalYrAndFutValues = this.data.dashboardData.arr_goalYrAndFutValues
     console.log('key info ==',this.equity);
-    console.log('key info ==',this.debtLumpsum)
+    console.log('key info ==',this.goalYrAndFutValues)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});

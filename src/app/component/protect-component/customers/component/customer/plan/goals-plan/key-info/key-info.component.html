@@ -232,7 +232,7 @@
           <p *ngFor="let p of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
         </div>
         <div class="col-md-2 lter p-8 pb-0 bb br">
-          <p *ngFor="let p of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.futureValue}}</span></p>
+          <p *ngFor="let p of goalYrAndFutValues" class="mb-10 roboto text-right">₹<span appFormatNumber>{{p}}</span></p>
         </div>
 
         <div class="col-md-6 lter pr-0 pb-0 bb br">
