@@ -37,6 +37,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+    public authService: AuthService,
     public processTransaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private peopleService: PeopleService,
