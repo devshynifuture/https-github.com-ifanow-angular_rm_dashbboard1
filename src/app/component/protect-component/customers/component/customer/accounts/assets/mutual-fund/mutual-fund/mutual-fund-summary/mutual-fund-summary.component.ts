@@ -133,6 +133,7 @@ export class MutualFundSummaryComponent implements OnInit {
   adminAdvisorIds: any;
   parentId: any;
   loadingDone: boolean = false;
+  disabledOpacity=false;
   // setTrueKey = false;
 
 

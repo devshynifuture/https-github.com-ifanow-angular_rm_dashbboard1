@@ -32,6 +32,9 @@
     justify-content: end;
     margin-right: 10px;
 }
+.disabledOpacity {
+    opacity: none;
+   }
 .disabled {
     pointer-events:none;
    }
