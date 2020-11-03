@@ -31,8 +31,10 @@
                 </a>
                 <mat-menu #menu1="matMenu">
                     <!-- {{menu1}} -->
+                    <div (click)="$event.stopPropagation()">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
+                </div>
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>

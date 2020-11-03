@@ -18,9 +18,11 @@
                <!-- DOne for bulk email -->
             </div>
             <mat-menu #menu1="matMenu">
-               <button (click)="generatePdf()" mat-menu-item>PDF
-               </button>
-               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+               <div (click)="$event.stopPropagation()">
+                  <button (click)="generatePdf()" mat-menu-item>PDF
+                  </button>
+                  <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+               </div>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>
