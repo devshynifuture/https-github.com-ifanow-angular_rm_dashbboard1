@@ -41,7 +41,8 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private peopleService: PeopleService,
     private onlineTransact: OnlineTransactionService, public eventService: EventService,
-    private enumDataService: EnumDataService, private enumService: EnumServiceService) {
+    private enumDataService: EnumDataService, private enumService: EnumServiceService,
+    public authService: AuthService) {
     this.advisorId = AuthService.getAdvisorId();
     const date = new Date();
     const hourOfDay = date.getHours();
