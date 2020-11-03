@@ -7,25 +7,28 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
+      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
+         *ngIf="!isLoading && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
          <div class="pdfClass">
-               <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
-                  <img src="assets/images/svg/download-bordered.svg">
-               </a>
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+               <img src="assets/images/svg/download-bordered.svg">
+            </a>
             <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
                <button>Loading Done</button>
                <!-- DOne for bulk email -->
-           </div>
-            <mat-menu #menu5="matMenu">
+            </div>
+            <mat-menu #menu1="matMenu">
                <button (click)="generatePdf()" mat-menu-item>PDF
                </button>
                <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>
-         <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
+         <!-- <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
             <i class="material-icons">filter_list</i>FILTERS
-         </button>
+         </button> -->
+         <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
+               class="material-icons">filter_list</i>FILTERS</button>
       </div>
    </div>
    <div class="row">
@@ -69,7 +72,7 @@
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                     <span >{{mfData ? mfData.total_current_value : '0'}}</span>
+                     <span>{{mfData ? mfData.total_current_value : '0'}}</span>
                      <!-- <div>{{ grandTotal.currentValue }}</div>-->
                   </td>
                </ng-container>
@@ -174,9 +177,9 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-<!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
+         <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
-        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
+         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
             class="tran-height-2">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData"
@@ -486,14 +489,14 @@
                   </td>
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumns; when: isSimpleRow" mat-row ></tr>
+               <tr *matRowDef="let row; columns: displayedColumns; when: isSimpleRow" mat-row></tr>
                <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row
                   [hidden]="viewMode == 'All Transactions'"></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-<!--               <tr [style.height.px]="placeholderHeight" mat-row-->
-<!--                  *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>-->
+               <!--               <tr [style.height.px]="placeholderHeight" mat-row-->
+               <!--                  *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>-->
 
                <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
@@ -657,124 +660,124 @@
          </td>
 
       </tr>
-  <div *ngIf="isTableShow">
-   <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-      <td
-         style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{(columnHeader) ? columnHeader : 'Sub Category Name'}}</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Amount invested</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Current value</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Dividend payout</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Dividend reinvestment</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Gain</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Absolute return%</b>
-      </td>
-      <td
-         style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>XIRR%</b>
-      </td>
-      <td
-         style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>Allocation%</b>
-      </td>
-   </tr>
-   <tr *ngFor="let item of dataSource.data"
-      style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-      <td
-         style="text-align: left; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         {{item.categoryName}}
-      </td>
-      <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-         appFormatNumber>
-         {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-         appFormatNumber>
-         {{(item.currentValue) ? (item.currentValue) : 0}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-         appFormatNumber>
-         {{(item.dividendPayout) ? (item.dividendPayout) : 0}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-         appFormatNumber>
-         {{(item.dividendReinvest) ? (item.dividendReinvest) : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(item.totalGain) ? (item.totalGain | number:'1.2-2') : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(item.absReturn) ? (item.absReturn | number:'1.2-2') : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(item.allocationPer) ? (item.allocationPer | number:'1.2-2') : 0}}
-      </td>
-   </tr>
-   <tr
-      style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-      <td
-         style="text-align: left;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         Grand Total
-      </td>
-      <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-      >
-         {{mfData ? mfData.total_amount_invested : 0}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-      >
-         {{mfData ? mfData.total_current_value : '0'}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-         appFormatNumber>
-         {{mfData ? mfData.total_dividend_payout : '0'}}
-      </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-         appFormatNumber>
-         {{grandTotal ? grandTotal.dividendReinvest : '0'}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(grandTotal) ? ((grandTotal.totalGain + grandTotal.dividendPayout)| number:'1.2-2') : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(mfData) ? (mfData.total_absolute_return) : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
-      </td>
-      <td
-         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
-      </td>
-   </tr>
-  </div>
+      <div *ngIf="isTableShow">
+         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+            <td
+               style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>{{(columnHeader) ? columnHeader : 'Sub Category Name'}}</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Amount invested</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Current value</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Dividend payout</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Dividend reinvestment</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Gain</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Absolute return%</b>
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>XIRR%</b>
+            </td>
+            <td
+               style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               <b>Allocation%</b>
+            </td>
+         </tr>
+         <tr *ngFor="let item of dataSource.data"
+            style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+               style="text-align: left; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               {{item.categoryName}}
+            </td>
+            <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+               appFormatNumber>
+               {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+               appFormatNumber>
+               {{(item.currentValue) ? (item.currentValue) : 0}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+               appFormatNumber>
+               {{(item.dividendPayout) ? (item.dividendPayout) : 0}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+               appFormatNumber>
+               {{(item.dividendReinvest) ? (item.dividendReinvest) : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(item.totalGain) ? (item.totalGain | number:'1.2-2') : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(item.absReturn) ? (item.absReturn | number:'1.2-2') : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(item.allocationPer) ? (item.allocationPer | number:'1.2-2') : 0}}
+            </td>
+         </tr>
+         <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+               style="text-align: left;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               Grand Total
+            </td>
+            <td
+               style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               {{mfData ? mfData.total_amount_invested : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{mfData ? mfData.total_current_value : '0'}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+               appFormatNumber>
+               {{mfData ? mfData.total_dividend_payout : '0'}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+               appFormatNumber>
+               {{grandTotal ? grandTotal.dividendReinvest : '0'}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(grandTotal) ? ((grandTotal.totalGain + grandTotal.dividendPayout)| number:'1.2-2') : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(mfData) ? (mfData.total_absolute_return) : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+            </td>
+            <td
+               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
+            </td>
+         </tr>
+      </div>
    </table>
    <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
