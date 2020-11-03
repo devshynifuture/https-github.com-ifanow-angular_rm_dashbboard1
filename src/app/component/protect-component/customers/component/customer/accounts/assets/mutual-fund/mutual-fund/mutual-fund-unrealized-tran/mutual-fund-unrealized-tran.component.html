@@ -10,14 +10,14 @@
       <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
          *ngIf="!isLoading && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
          <div class="pdfClass">
-            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  [ngClass]="{ 'disabledOpacity' :isDisabledOpacity }" (click)="isDisabledOpacity==true" *ngIf="!fragmentData.isSpinner">
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  (click)="isDisabledOpacity==true" *ngIf="!fragmentData.isSpinner">
                <img src="assets/images/svg/download-bordered.svg">
             </a>
             <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
                <button>Loading Done</button>
                <!-- DOne for bulk email -->
             </div>
-            <mat-menu #menu1="matMenu">
+            <mat-menu #menu1="matMenu" class="disabledOpacity">
                   <button (click)="generatePdf()" mat-menu-item>PDF
                   </button>
                   <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
@@ -459,7 +459,7 @@
                   <td *matCellDef="let element" [matMenuTriggerFor]="menu25" [ngClass]="{ 'disabledOpacity' :true }" class="zIndex c-p" mat-cell>
                      <div> 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg">
-                        <mat-menu #menu25="matMenu">
+                        <mat-menu #menu25="matMenu" class="disabledOpacity">
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
                               matTooltipPosition="below">
