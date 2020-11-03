@@ -349,10 +349,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         arr_debt_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
         arr_lump_equity: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
         arr_lump_debt: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
+        arr_goalYrAndFutValues: this.getSumOfJsonMapArr(goalSubData.goalYrAndFutValues),
         key_arr_equity_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
         key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
         key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
         key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
+        key_goalYrAndFutValues:this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
@@ -378,11 +380,13 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         arr_equity_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
         arr_debt_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountDebt),
         arr_lump_equity: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountEquity),
+        arr_goalYrAndFutValues: this.getSumOfJsonMapArr(goalSubData.goalYrAndFutValues),
         arr_lump_debt: this.getSumOfJsonMapArr(goalSubData.lumpSumAmountDebt),
         key_arr_equity_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountEquity),
         key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
         key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
         key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
+        key_goalYrAndFutValues:this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
