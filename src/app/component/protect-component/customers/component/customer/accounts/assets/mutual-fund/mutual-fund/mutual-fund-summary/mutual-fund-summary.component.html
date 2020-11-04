@@ -22,34 +22,36 @@
             <button mat-stroked-button class="btn-primary addon v-middle"
                 (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
         </div> -->
-        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading && (summary.data.length > 0)">
+        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
+            *ngIf="!isLoading && (summary.data.length > 0)">
             <!-- <div class="pdfClass"> -->
 
-                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  (click)="isDisabledOpacity=true" *ngIf="!fragmentData.isSpinner">
-                    <img src="assets/images/svg/download-bordered.svg">
-                </a>
-                <mat-menu #menu1="matMenu">
-                    <button (click)="generatePdf()" mat-menu-item>PDF</button>
-                    <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
-                </mat-menu>
-                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-menu #menu1="matMenu">
+                <button (click)="generatePdf()" mat-menu-item>PDF</button>
+                <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
+            </mat-menu>
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             <!-- </div> -->
 
             <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
             </div>
             <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
-                class="material-icons">filter_list</i>FILTERS</button>
+                    class="material-icons">filter_list</i>FILTERS</button>
             <button mat-stroked-button class="btn-primary addon v-middle"
                 (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
         </div>
-     
+
     </div>
 
     <div class="row">
         <div [ngClass]="isLoading ? 'overflow-hidden': 'table-scroll-veiw'" class="col-md-12 p-0 mb-8">
-            <table mat-table *ngIf="summary.data.length > 0" [dataSource]="summary" id="tbs" class="mutualfunds-capital-equity skeletonAnimation"
-                appSkeletonLoading [appSkeletonLoading]="isLoading" >
+            <table mat-table *ngIf="summary.data.length > 0" [dataSource]="summary" id="tbs"
+                class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="schemeName">
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -371,7 +373,7 @@
 
                     <td *matFooterCellDef class="text-right" mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="iconsTotal" >
+                <ng-container matColumnDef="iconsTotal">
                     <td *matCellDef="let element" class="zIndex" mat-cell>
                     </td>
                 </ng-container>
@@ -489,7 +491,7 @@
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;border-collapse: separate;">
         <tr>
-            <td style="text-align: left; vertical-align: top;"  *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
                 <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -753,5 +755,3 @@
         </tr>
     </table>
 </div>
-
-
