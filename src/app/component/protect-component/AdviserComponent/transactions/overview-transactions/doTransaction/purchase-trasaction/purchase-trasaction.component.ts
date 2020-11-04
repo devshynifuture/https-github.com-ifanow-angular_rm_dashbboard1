@@ -26,6 +26,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   mfScheme: any;
   mfDefault: any;
   disabledScheme: boolean = true;
+  acceptedMandate: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -567,6 +568,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getMandateDetailsRes(data) {
+    this.acceptedMandate =[]
     this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
     if (!this.mandateDetails || this.mandateDetails.length == 0) {
       this.handleMandateFailure();
@@ -575,9 +577,18 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     this.showSpinnerMandate = false;
     if (data.length > 1) {
-      Object.assign(this.transactionSummary, { showUmrnEdit: true });
+      data.forEach(element => {
+        if(element.statusString == 'ACCEPTED'){
+          this.acceptedMandate.push(element)
+          Object.assign(this.transactionSummary, { showUmrnEdit: true });
+          Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
+        }
+        if(this.bankDetails.ifscCode == element.ifscCode){
+          this.selectedMandate = element
+        }
+      });
     }
-    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+   // this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
       Object.assign(this.transactionSummary, { selectedMandate: this.selectedMandate });
@@ -699,6 +710,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
+    this.selectedMandate = this.transactionSummary.selectedMandate
     const obj = {
       productDbId: this.schemeDetails.id,
       clientName: this.selectedFamilyMember,

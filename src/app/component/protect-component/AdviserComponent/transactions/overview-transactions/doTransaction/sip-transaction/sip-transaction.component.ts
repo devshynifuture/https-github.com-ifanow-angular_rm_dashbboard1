@@ -26,6 +26,8 @@ export class SipTransactionComponent implements OnInit {
   folioNumber: any;
   mutualFundData: any;
   mfDefault: any;
+  acceptedMandate: any;
+  copyTrasactionSummary: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -145,6 +147,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   enteredAmount(value) {
+    this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
@@ -510,10 +513,21 @@ export class SipTransactionComponent implements OnInit {
       }
     }
     this.showSpinnerMandate = false;
+    this.acceptedMandate = []
     if (data.length > 1) {
+      data.forEach(element => {
+        if(element.statusString == 'ACCEPTED'){
+          this.acceptedMandate.push(element)
+          Object.assign(this.transactionSummary, { showUmrnEdit: true });
+          Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
+          if(this.bankDetails.ifscCode == element.ifscCode){
+            this.selectedMandate = element
+          }
+        }
+      });
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
-    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+    
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
       Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
@@ -748,6 +762,9 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
+    this.copyTrasactionSummary = {}
+    this.copyTrasactionSummary =this.transactionSummary
+    this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
     const tenure = this.sipTransaction.controls.tenure.value;
     const noOfInstallments = this.sipTransaction.controls.installment.value;
