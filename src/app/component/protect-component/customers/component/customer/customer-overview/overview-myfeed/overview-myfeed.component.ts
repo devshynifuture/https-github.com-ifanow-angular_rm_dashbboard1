@@ -152,7 +152,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   isLoadingAssetAllocation = false;
   isAssetAllocationDataLoaded = false;
   parentId: any;
-  adminAdvisorIds=[];
+  adminAdvisorIds = [];
 
   constructor(
     private customerService: CustomerService,
@@ -170,7 +170,6 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
-    this.userInfo = AuthService.getUserInfo();
     if (!this.orgDetails) {
       this.orgDetails = {};
     }
@@ -183,7 +182,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     // }
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
-    this.parentId=AuthService.getParentId();
+    this.parentId = AuthService.getParentId();
     this.advisorImg = this.advisorInfo.profilePic;
     this.greeter();
     this.greeterFnID = setInterval(() => this.greeter(), 1000);
@@ -287,6 +286,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   portFolioSectionOffset: any = 0;
 
   ngOnInit() {
+    this.userInfo = AuthService.getUserInfo();
     this.teamMemberListGet();
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
@@ -356,28 +356,28 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         break;
     }
   }
-//get subadvisorList
-  teamMemberListGet(){
+  //get subadvisorList
+  teamMemberListGet() {
     this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
-    .subscribe(data => {
-      if (data && data.length !== 0) {
-        console.log('team members: ', data);
-        data.forEach(element => {
-          this.adminAdvisorIds.push(element);
-        });
-        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
-        if (!isIncludeID) {
-          this.adminAdvisorIds.unshift(this.advisorId);
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element);
+          });
+          const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+          if (!isIncludeID) {
+            this.adminAdvisorIds.unshift(this.advisorId);
+          }
+          console.log(this.adminAdvisorIds);
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
         }
-        console.log(this.adminAdvisorIds);
-      } else {
+        this.getMFPortfolioData();
+      }, err => {
         this.adminAdvisorIds = [this.advisorId];
-      }
-      this.getMFPortfolioData();
-    }, err => {
-      this.adminAdvisorIds = [this.advisorId];
-      this.getMFPortfolioData();
-    });
+        this.getMFPortfolioData();
+      });
   }
   // Load data from various apis
   loadCustomerProfile() {
@@ -1048,7 +1048,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      parentId:this.parentId ? this.parentId : this.advisorId,
+      parentId: this.parentId ? this.parentId : this.advisorId,
       advisorId: this.adminAdvisorIds,
     };
 
@@ -1127,14 +1127,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
-      if(this.mutualFund.total_amount_invested || this.mutualFund.total_current_value || this.mutualFund.total_balance_units){
+      if (this.mutualFund.total_amount_invested || this.mutualFund.total_current_value || this.mutualFund.total_balance_units) {
         const obj = {
           assetType: 5,
           investedAmount: this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0,
           gainAmount: this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,
           currentValue: this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,
           assetTypeString: 'Mutual funds',
-          path : '/customer/detail/account/assets/mutual'
+          path: '/customer/detail/account/assets/mutual'
         }
 
         // this.portFolioData[0].investedAmount = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0, 0);
@@ -1143,9 +1143,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
         this.portFolioData.unshift(obj);
         this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
-  
+
         this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
-      }else{
+      } else {
         this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
         this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         this.tabsLoaded.portfolioData.dataLoaded = true;
@@ -1153,7 +1153,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
       this.tabsLoaded.portfolioData.dataLoaded = true;
       this.tabsLoaded.portfolioData.isLoading = false;
-    }else{
+    } else {
       this.tabsLoaded.portfolioData.dataLoaded = true;
       this.tabsLoaded.portfolioData.isLoading = false;
     }

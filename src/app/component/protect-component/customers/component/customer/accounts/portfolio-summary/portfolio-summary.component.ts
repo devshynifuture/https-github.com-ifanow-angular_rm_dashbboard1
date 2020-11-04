@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import {ColorString} from 'highcharts';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {DatePipe} from '@angular/common';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {UtilService} from 'src/app/services/util.service';
-import {Chart} from 'angular-highcharts';
-import {AppConstants} from 'src/app/services/app-constants';
+import { ColorString } from 'highcharts';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { UtilService } from 'src/app/services/util.service';
+import { Chart } from 'angular-highcharts';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -36,7 +36,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   expenseList = [];
   incomeList = [];
   userData: any;
-  filterCashFlow = {income: [], expense: []};
+  filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
   tabsLoaded = {
@@ -48,7 +48,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   };
   assetAllocationPieConfig: Chart;
   portfolioGraph: Chart;
-
+  sidenavState = true;
   chartTotal = 100;
   chartData: any[];
   portFolioData: any[] = [];
@@ -88,7 +88,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       currentValue: 0,
       percentage: 0
     };
-
   cashFlowFG: FormGroup;
   subscription = new Subscription();
   noCashflowData = false;
@@ -658,7 +657,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     console.log(data);
     const thisMonthStart = UtilService.getStartOfTheDay(new Date(new Date().setDate(1)));
     const thisMonthEnd = UtilService.getEndOfDay(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
-    const {income, expense} = data;
+    const { income, expense } = data;
     income.forEach(element => {
       element.month = this.datePipe.transform(new Date(element.targetDate), 'MMM');
     });
