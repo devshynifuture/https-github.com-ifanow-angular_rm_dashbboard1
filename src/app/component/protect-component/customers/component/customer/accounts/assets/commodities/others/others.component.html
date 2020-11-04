@@ -116,7 +116,10 @@
                     [matDatepicker]="picker2" readonly [max]="todayDate" [min]="others.get('dateOfPurchase').value">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint> -->
+                <mat-error *ngIf="others.get('marketValueAsOnDate').hasError('required')">
+                    This field is required
+                </mat-error>
                 <mat-error class="f-12" *ngIf="getFormControl().marketValueAsOnDate.errors?.matDatepickerMin">
                     Market value as on date cannot be lower than date of purchase
                 </mat-error>
