@@ -118,12 +118,22 @@
                                     <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3"
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/women-profile-icon.svg" width="48px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==4"
+                                    <img (click)="open('edit',singleMembers)"
+                                        *ngIf="singleMembers.relationshipId==4 && singleMembers.age<=18"
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/son-profile.svg" width="36px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==5"
+                                    <img (click)="open('edit',singleMembers)"
+                                        *ngIf="singleMembers.relationshipId==4 && singleMembers.age>18"
+                                        style="margin-right: 9px; margin-left: 2px;"
+                                        src="/assets/images/svg/man-profile.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)"
+                                        *ngIf="singleMembers.relationshipId==5 && singleMembers.age<=18"
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/daughter-profile.svg" width="36px">
+                                    <img (click)="open('edit',singleMembers)"
+                                        *ngIf="singleMembers.relationshipId==5 && singleMembers.age>18"
+                                        style="margin-right: 9px; margin-left: 2px;"
+                                        src="/assets/images/svg/women-profile-icon.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==7"
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/mother-profile.svg" width="48px">
