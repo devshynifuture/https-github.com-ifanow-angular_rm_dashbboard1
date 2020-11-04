@@ -64,7 +64,7 @@
                 <div class="col-width-68">
                     <div class="row">
                         <div class="col-md-8 p-0">
-                            <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
+                            <h3 class="m-0 text-black text-capitalize f-500">{{selectedGoal.goalName}}</h3>
                         </div>
                         <div class="col-md-4 p-0 text-right">
                             <h3 class="f-20 f-500 mb-0 roboto">{{selectedGoal.year}}</h3>
@@ -688,12 +688,12 @@
 
 
 
-<html #summaryPlan id="planSummary" style="display: none;" >
+<html #summaryPlan id="planSummary"  >
 
 
 <body>
     <table cellpadding="0" cellspacing="0" border="0"
-        style="width: 100%; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        style="width: 800px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
 
         <tr>
@@ -841,10 +841,10 @@
                             <p style="margin: 0px; font-size: 14px; font-weight: 600;">Additional Required</p>
 
                             <table cellpadding="0" cellspacing="0"
-                                style="margin: 10px 0px 0px 0px; font-size: 14px; width: 100%; border: 1px solid #dee5e7; width: 50%;">
+                                style="margin: 10px 0px 0px 0px; font-size: 14px; border: 1px solid #dee5e7;  width: 100%; border: 1px solid #dee5e7; width: 100%;">
                                 <tr style="background: #F5F7F7;">
                                     <td style="border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; ">
-
+                                         
                                     </td>
 
                                     <td style="border-bottom: 1px solid #dee5e7;  padding: 10px; text-align: right;">
@@ -904,8 +904,8 @@
                                 <tr>
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Assets</td>
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Advice</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">Current Value</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">Maturity Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Current Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Maturity Value</td>
                                     <td style="padding: 8px;background: #f5f7f7;">Allocated %</td>
                                 </tr>
 
@@ -929,7 +929,7 @@
                                         </p>
                                     </td>
                                 </tr>
-                                <td colspan="4" style="padding: 8px; border-top: 1px solid #dee5e7;  text-align: center; font-size: 14px;"
+                                <td colspan="5" style="padding: 8px; border-top: 1px solid #dee5e7;  text-align: center; font-size: 14px;"
                                     *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets
                                     allocated to
                                     this goal </td>
