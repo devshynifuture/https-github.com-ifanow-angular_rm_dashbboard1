@@ -619,7 +619,7 @@
              <p style="margin: 0px; font-weight: 800;font-size: 20px;">
                  Mutual fund summary</p>
          </td> -->
-         <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
+         <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
             <div style="width: 200px;"
                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -844,24 +844,24 @@
       </tr>
       <tbody *ngFor="let item of customDataSource.data ;index as i">
          <tr style="page-break-inside: avoid">
-            <td *ngIf="item.groupName" colspan="13"
+            <td *ngIf="item.groupName" [attr.colspan]="displayedColumns.length"
                style="text-align: left;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.groupName}}
             </td>
          </tr>
          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-            <td class="f-700" colspan="8"
+            <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
-            <td class="f-700" colspan="5"
+            <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
                {{item.navDate | date:'dd/MM/yyyy'}}
             </td>
          </tr>
          <tr style="page-break-inside: avoid">
-            <td *ngIf="item.name || item.folio" colspan="13"
+            <td *ngIf="item.name || item.folio" [attr.colspan]="displayedColumns.length"
                style="color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
             </td>
@@ -1063,24 +1063,24 @@
 
 
          <tr style="page-break-inside: avoid">
-            <td *ngIf="item.groupName" colspan="8"
+            <td *ngIf="item.groupName" [attr.colspan]="displayedColumns?.length"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.groupName}}
             </td>
          </tr>
-         <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-            <td class="f-700" colspan="4"
+         <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid;">
+            <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
-            <td class="f-700" colspan="4"
-               style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
+            <td class="f-700" [attr.colspan]="colspanValue"
+               style="padding: 12px;border-right: 1px solid #DADCE0; ;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
                {{item.navDate | date:'dd/MM/yyyy'}}
             </td>
          </tr>
          <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio">
-            <td colspan="8"
+            <td [attr.colspan]="displayedColumns?.length"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
             </td>

@@ -28,7 +28,7 @@
                 <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  (click)="isDisabledOpacity=true" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
-                <mat-menu #menu1="matMenu" class="disabledOpacity">
+                <mat-menu #menu1="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
                 </mat-menu>
@@ -326,7 +326,7 @@
                         <div>
                             <img class="c-p" src="/assets/images/svg/dot-menu.svg"
                                 *ngIf="!isLoading && element.schemeName!='Total' ">
-                            <mat-menu #menu25="matMenu" class="disabledOpacity">
+                            <mat-menu #menu25="matMenu">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
     factsheet</button> -->
 
@@ -489,7 +489,7 @@
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;border-collapse: separate;">
         <tr>
-            <td style="text-align: left; vertical-align: top;" colspan="4" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;"  *ngIf="getOrgData">
                 <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
