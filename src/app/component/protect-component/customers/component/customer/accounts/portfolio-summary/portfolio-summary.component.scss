@@ -986,7 +986,7 @@ table {
 .left-side-clicks {
   margin-left: 228px;
   position: fixed !important;
-  top: 125px !important;
+  top: 166px !important;
   right: unset !important;
   background: #fff;
   cursor: pointer;
@@ -998,6 +998,7 @@ table {
   height: 40px;
   width: 30px;
   align-items: center;
+  left: 23px;
 }
 
 .fix-top .sidenav-link {
@@ -1333,7 +1334,7 @@ mat-drawer-content {
   position: fixed;
   z-index: 1;
   align-items: center;
-  top: 135px;
+  top: 172px;
 }
 
 
@@ -1387,3 +1388,7 @@ mat-drawer-content {
 }
 
 
+.summary-left-data-height{
+  height: calc(100vh - 277px);
+  overflow: auto;
+}
