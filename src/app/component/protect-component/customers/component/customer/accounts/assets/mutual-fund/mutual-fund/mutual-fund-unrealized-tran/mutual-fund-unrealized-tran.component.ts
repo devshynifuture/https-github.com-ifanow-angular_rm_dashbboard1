@@ -218,7 +218,7 @@ export class MutualFundUnrealizedTranComponent {
   parentId: any;
   loadingDone: boolean = false;
   isTableShow = true;
-
+  isDisabledOpacity = true;
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
