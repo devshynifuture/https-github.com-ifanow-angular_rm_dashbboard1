@@ -33,6 +33,10 @@
       padding-bottom: 0px;
   }
 }
+::ng-deep .disabledOpacity {
+  opacity: none;
+ }
+
 .example-viewport {
   height: 200px;
   border: 1px solid black;
@@ -125,4 +129,7 @@
 // }
 .disabled {
   pointer-events:none;
+ }
+ .disabledOpacity {
+  opacity:none;
  }

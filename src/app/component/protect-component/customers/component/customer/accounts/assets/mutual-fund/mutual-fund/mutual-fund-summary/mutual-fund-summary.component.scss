@@ -32,6 +32,10 @@
     justify-content: end;
     margin-right: 10px;
 }
+::ng-deep .disabledOpacity {
+    opacity: none;
+   }
+
 .disabled {
     pointer-events:none;
    }

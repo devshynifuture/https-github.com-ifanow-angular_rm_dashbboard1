@@ -1,7 +1,7 @@
 <div class="wrapper-8">
     <div class="row pb-12">
         <div class="col-md-4 pl-0">
-            <h4 class="m-0 text-black roboto pt-8">Mutual fund summary </h4>
+            <h4 class="m-0 text-black roboto pt-8">Mutual fund Summary </h4>
         </div>
         <!-- <div class="col-md-8 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (summary.data.length > 0)">
             <div class="pdfClass">
@@ -23,21 +23,17 @@
                 (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
         </div> -->
         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading && (summary.data.length > 0)">
-            <div class="pdfClass">
+            <!-- <div class="pdfClass"> -->
 
-                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  (click)="isDisabledOpacity=true" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
-                    <!-- {{menu1}} -->
                 </a>
-                <mat-menu #menu1="matMenu">
-                    <!-- {{menu1}} -->
-                    <div (click)="$event.stopPropagation()">
+                <mat-menu #menu1="matMenu" class="disabledOpacity">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
-                </div>
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-            </div>
+            <!-- </div> -->
 
             <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
@@ -325,12 +321,12 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menu25"
+                    <td *matCellDef="let element" [ngClass]="{ 'disabledOpacity' :true }" [matMenuTriggerFor]="menu25"
                         [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="c-p" mat-cell>
                         <div>
                             <img class="c-p" src="/assets/images/svg/dot-menu.svg"
                                 *ngIf="!isLoading && element.schemeName!='Total' ">
-                            <mat-menu #menu25="matMenu">
+                            <mat-menu #menu25="matMenu" class="disabledOpacity">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
     factsheet</button> -->
 
