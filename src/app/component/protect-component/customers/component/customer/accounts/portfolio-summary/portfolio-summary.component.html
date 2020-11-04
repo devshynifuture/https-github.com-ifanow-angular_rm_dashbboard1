@@ -269,7 +269,7 @@
 
       </mat-nav-list>
       <div>
-        <div class="left-side-clicks" (click)="sidenav.toggle()">
+        <div class="left-side-clicks" (click)="sidenav.toggle();sidenavState?sidenavState=false:sidenavState=true">
           <i class="material-icons f-30 text-custom">
             keyboard_arrow_left
           </i>
@@ -280,8 +280,9 @@
 
     <mat-sidenav-content class="p-0 pt-122 b-a ng-tns-c1-0" id="left">
 
-      <div>
-        <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
+      <div *ngIf="!sidenavState">
+        <div class="leftside-overlay-toggle-button "
+          (click)="sidenav.toggle();sidenavState?sidenavState=false:sidenavState=true">
           <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
         </div>
       </div>
@@ -327,12 +328,12 @@
                   </div>
               </div> -->
         <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height">
-          <div *ngIf="sidenavState">
+          <!-- <div *ngIf="sidenavState">
             <div class="leftside-overlay-toggle-button "
               (click)="sidenav.toggle();sidenavState?sidenavState=false:sidenavState=true">
               <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-xl-9 col-lg-6 col-md-9 b-l p-0 bg-grey lter">
 
