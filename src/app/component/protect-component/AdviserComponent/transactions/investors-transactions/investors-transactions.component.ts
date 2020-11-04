@@ -190,7 +190,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   handleMappedClientRes(data) {
     if (data) {
       data.forEach(singleData => {
-        if (singleData.activationStatus == 'YES') {
+        if (singleData.activationStatus == 'YES' || singleData.aggregatorType == 2) {
           singleData.statusStringTemp = 'Investment ready';
         } else {
           singleData.statusStringTemp = 'Pending';

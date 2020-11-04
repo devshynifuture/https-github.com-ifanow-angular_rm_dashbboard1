@@ -1411,7 +1411,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
         this.changeInput.emit(false);
         this.cd.markForCheck();
-        this.cd.detectChanges();
+        // this.cd.detectChanges();
       };
       worker.postMessage(input);
 

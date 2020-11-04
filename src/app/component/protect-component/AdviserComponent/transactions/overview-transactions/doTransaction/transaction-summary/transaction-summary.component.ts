@@ -139,7 +139,13 @@ export class TransactionSummaryComponent implements OnInit {
         return;
       }else{
         this.defaultBank = result;
-        this.bankDetailsSend.emit(result);
+        this.transactionSummary.acceptedMandate.forEach(element => {
+          if(result.ifscCode == element.ifscCode){
+            this.bankDetailsSend.emit(result);
+            this.transactionSummary.selectedMandate = element
+            this.transactionSummary.bankDetails = this.bankDetails
+          }
+        });
       }
     });
   }
@@ -190,11 +196,17 @@ export class TransactionSummaryComponent implements OnInit {
 
     this.bankDetails = data;
     console.log('bank == ',this.bankDetails)
-    this.defaultBank = this.bankDetails[0]
+    this.bankDetails.forEach(element => {
+      if(element.defaultBankFlag == 'Y'){
+        this.defaultBank = element
+        element.selected = true
+      }
+    });
+   
     this.bankDetails.forEach(element => {
       element.selected = false
     });
-    this.bankDetails[0].selected = true
+    //this.bankDetails[0].selected = true
     this.bankDetailsSend.emit(this.defaultBank);
     if (this.bankDetails.length > 1) {
       this.showBankEdit = true;

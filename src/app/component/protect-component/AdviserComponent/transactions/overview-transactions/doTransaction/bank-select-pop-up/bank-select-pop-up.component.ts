@@ -24,7 +24,7 @@ export class BankSelectPopUpComponent implements OnInit {
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
     this.bankList = this.data.bank;
-    ELEMENT_DATA.forEach(item => item.selected = false);
+    //ELEMENT_DATA.forEach(item => item.selected = false);
   }
   selectedBank(bank) {
     this.bank = bank
