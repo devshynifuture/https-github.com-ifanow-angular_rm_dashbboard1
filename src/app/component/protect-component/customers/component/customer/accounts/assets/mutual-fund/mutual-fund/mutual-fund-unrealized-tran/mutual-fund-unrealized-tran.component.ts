@@ -363,6 +363,9 @@ export class MutualFundUnrealizedTranComponent {
     }
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length/2);
+    console.log('colspanValue',this.colspanValue);
+
+
   }
 
   // ngAfterViewInit() {
@@ -508,6 +511,7 @@ export class MutualFundUnrealizedTranComponent {
             }
           }
           this.colspanValue = Math.round(this.displayedColumns.length/2);
+          console.log('colspanValue',this.colspanValue);
         }
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
@@ -554,6 +558,8 @@ export class MutualFundUnrealizedTranComponent {
             this.teamMemberListGet();
           }
         }
+        this.colspanValue = Math.round(this.displayedColumns.length/2);
+        console.log('colspanValue',this.colspanValue);
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       }

@@ -28,7 +28,7 @@
                 <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"  (click)="isDisabledOpacity=true" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
-                <mat-menu #menu1="matMenu">
+                <mat-menu #menu1="matMenu" class="disabledOpacity">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
                 </mat-menu>
@@ -489,7 +489,7 @@
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;border-collapse: separate;">
         <tr>
-            <td style="text-align: left; vertical-align: top;"  *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
                 <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -503,7 +503,7 @@
                     <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
                 </div>
             </td>
-            <td style=" text-align: right;" colspan="8">
+            <td style=" text-align: right;" colspan="12">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                     {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>

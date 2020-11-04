@@ -510,6 +510,7 @@
          </div>
       </div>
    </div>          
+
 </div>
 <!-- -------------------- pdf ---------------------------- -->
 <div #allTranTemplateHeader id="alltemplateHeader" class="hide" *ngIf="showDownload == true">
@@ -633,7 +634,7 @@
                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
             </div>
          </td>
-         <td style="text-align: right;">
+         <td style="text-align: right;" colspan="13">
             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
             <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
@@ -850,11 +851,11 @@
             </td>
          </tr>
          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-            <td class="f-700" 
+            <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
-            <td class="f-700"
+            <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
                {{item.navDate | date:'dd/MM/yyyy'}}
@@ -1063,7 +1064,7 @@
 
 
          <tr style="page-break-inside: avoid">
-            <td *ngIf="item.groupName" [attr.colspan]="displayedColumns?.length"
+            <td *ngIf="item.groupName" [attr.colspan]="8"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.groupName}}
             </td>
@@ -1080,7 +1081,7 @@
             </td>
          </tr>
          <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio">
-            <td [attr.colspan]="displayedColumns?.length"
+            <td [attr.colspan]="8"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
             </td>
