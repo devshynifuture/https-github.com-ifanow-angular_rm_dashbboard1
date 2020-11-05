@@ -53,10 +53,16 @@
                                 {{receipient}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input *ngIf="editRecepient" placeholder="Receipient" [matChipInputFor]="chipList"
+                            <input *ngIf="editRecepient" #toRef placeholder="Receipient" [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event, 'receipients')" class="b-0">
+                                (matChipInputTokenEnd)="add($event, 'receipients')" class="b-0" [formControl]="toFC"
+                                [matAutocomplete]="auto">
                         </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, 'to')">
+                            <mat-option *ngFor="let contact of contactList" [value]="contact">
+                                {{contact}}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                     <!-- <input type="text" [(ngModel)]="to" formControlName="receiver" /> -->
                     <!-- <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
@@ -77,10 +83,16 @@
                                 {{cc}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input [matChipInputFor]="chipList1" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, 'ccArray')"
-                                class="b-0">
+                            <input [matChipInputFor]="chipList1" #ccRef
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, 'ccArray')" [formControl]="ccFC"
+                                [matAutocomplete]="auto1" class="b-0">
                         </mat-chip-list>
+                        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event, 'cc')">
+                            <mat-option *ngFor="let contact of contactList" [value]="contact">
+                                {{contact}}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                     <!-- <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
                     <div *ngIf="!emailForm.get('carbonCopy').valid && emailForm.get('carbonCopy').touched"
@@ -102,10 +114,16 @@
                                 {{bcc}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input [matChipInputFor]="chipList2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, 'bccArray')"
-                                class="b-0">
+                            <input [matChipInputFor]="chipList2" #bccRef
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event, 'bccArray')" [formControl]="ccFC"
+                                [matAutocomplete]="auto2" class="b-0">
                         </mat-chip-list>
+                        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event, 'bcc')">
+                            <mat-option *ngFor="let contact of contactList" [value]="contact">
+                                {{contact}}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                     <!-- <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
                     <div *ngIf="!emailForm.get('blindCarbonCopy').valid && emailForm.get('blindCarbonCopy').touched"

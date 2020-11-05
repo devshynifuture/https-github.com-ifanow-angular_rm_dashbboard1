@@ -34,7 +34,7 @@
   }
 }
 ::ng-deep .disabledOpacity {
-  opacity: none;
+  opacity: 10;
  }
 
 .example-viewport {
@@ -131,5 +131,14 @@
   pointer-events:none;
  }
  .disabledOpacity {
-  opacity:none;
+  opacity:10;
+  z-index: 1000;
  }
+ ::ng-deep .cdk-overlay-pane {
+  opacity: 10;
+  opacity: 10;
+}
+::ng-deep .mat-menu-panel {
+  opacity: 10;
+  z-index: 1000;
+}

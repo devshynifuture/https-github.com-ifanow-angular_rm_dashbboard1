@@ -2,7 +2,7 @@ import { calendarService } from "./../../../Activities/calendar/calendar.service
 import { AuthService } from "./../../../../../../auth-service/authService";
 import { EmailUtilService } from "./../../../../../../services/email-util.service";
 import { FormBuilder, FormGroup, Form, FormControl } from "@angular/forms";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 
 import { SubscriptionService } from "./../../../Subscriptions/subscription.service";
 import { SubscriptionInject } from "./../../../Subscriptions/subscription-inject.service";
@@ -53,7 +53,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     private calendarService: calendarService,
     private fb: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
   receipentEmail: string;
   subject: string = "";
@@ -95,6 +95,14 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   currentDraftIds = [];
   gmailDraftThread;
   choice;
+  toFC = new FormControl();
+  bccFC = new FormControl();
+  ccFC = new FormControl();
+
+  @ViewChild('toRef', { static: false }) toRef: ElementRef<HTMLInputElement>;
+  @ViewChild('bccRef', { static: false }) bccRef: ElementRef<HTMLInputElement>;
+  @ViewChild('ccRef', { static: false }) ccRef: ElementRef<HTMLInputElement>;
+
 
   ngOnInit() {
     console.log("compose getting value data:::::", this.data);
@@ -152,6 +160,26 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           this.refreshRequired = true;
         }
       });
+  }
+
+  selected(event, choice): void {
+    switch (choice) {
+      case 'to':
+        this.receipients.push(event.option.viewValue);
+        this.toRef.nativeElement.value = '';
+        this.toFC.setValue(null);
+        break
+      case 'cc':
+        this.ccArray.push(event.option.viewValue);
+        this.ccRef.nativeElement.value = '';
+        this.ccFC.setValue(null);
+        break;
+      case 'bcc':
+        this.bccArray.push(event.option.viewValue);
+        this.bccRef.nativeElement.value = '';
+        this.bccFC.setValue(null);
+        break;
+    }
   }
 
   createDraft(value) {
@@ -565,7 +593,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadAttachment(attachment) {}
+  downloadAttachment(attachment) { }
 
   getAttachmentDetails(data) {
     if (data !== null) {
@@ -686,7 +714,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     };
 
     this.emailService.createUpdateDraft(requestJson, null).subscribe(
-      (responseJson) => {},
+      (responseJson) => { },
       (error) => {
         console.error(error);
       }
