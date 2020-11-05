@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatInput } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-other-payables',
@@ -55,7 +56,7 @@ export class AddOtherPayablesComponent implements OnInit {
   showError: boolean;
     nomineesListFM: any = [];
     maxDate = new Date();
-
+    validatorType = ValidatorType;
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   familyMemberId: any;
   callMethod: any;

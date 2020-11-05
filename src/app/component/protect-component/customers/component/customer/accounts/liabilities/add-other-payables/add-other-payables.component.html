@@ -110,7 +110,7 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #amtBorrowed class="form-control rupess br-0" (keypress)="keyPress($event)"
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #amtBorrowed class="form-control rupess br-0"
                         formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
@@ -129,8 +129,8 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
-                        (keypress)="keyPress($event)" formControlName="interest">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
+                    formControlName="interest">
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
@@ -170,7 +170,7 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #balance class="form-control rupess br-0" (keypress)="keyPress($event)"
+                    <input matInput #balance appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0"
                         formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">

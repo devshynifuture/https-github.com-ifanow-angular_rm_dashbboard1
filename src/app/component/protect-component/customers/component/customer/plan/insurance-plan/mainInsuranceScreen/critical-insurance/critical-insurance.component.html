@@ -107,7 +107,7 @@
 
 
                             <mat-form-field>
-                                <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #sumAssured autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                                <input matInput type="text" formControlName="sumAssured" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #sumAssured autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
                                 <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
                                 <mat-error>This field is required
                                 </mat-error>
@@ -260,7 +260,7 @@
             </div>
             <div class="col-md-3 pr-0 form-group " [ngClass]="critialIllnessForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="10"
+                    <input matInput type="text" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="10"
                         class="form-control br-0" [ngClass]="critialIllnessForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
                     <mat-hint align="end" *ngIf="critialIllnessForm.controls.bonusType.value == '1'" class="f-12">
                         {{cumulativeBonus.value.length}}/10</mat-hint>

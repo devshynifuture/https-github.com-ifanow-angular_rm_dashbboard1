@@ -55,7 +55,7 @@
 
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput type="text" autocomplete="off" formControlName="amount" maxlength="10" #partPayment class="form-control rupess br-0">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="amount" maxlength="10" #partPayment class="form-control rupess br-0">
                     <mat-error *ngIf="!singleTransForm.controls['amount'].hasError('max')">
                         This field is required
                     </mat-error>

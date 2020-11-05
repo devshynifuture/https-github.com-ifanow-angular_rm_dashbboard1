@@ -178,7 +178,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #deductibleAmt [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="deductibleAmt" matInput type="number">
+                        <input #deductibleAmt [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="deductibleAmt" matInput>
                         <mat-hint align="end" class="f-12">{{deductibleAmt.value.length}}/10</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
