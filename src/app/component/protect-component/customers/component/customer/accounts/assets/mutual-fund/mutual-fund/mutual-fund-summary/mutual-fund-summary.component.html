@@ -200,7 +200,7 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Withdrawal/<br>Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span>{{element.switchOut}}</span>
+                        <div class="bar"><span>{{element.withdrawalsTillToday}}</span>
 
                         </div>
                     </td>
@@ -208,6 +208,7 @@
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
                         <span>{{mfData ? this.mfData.withdrawals : '0'}}</span>
                     </td>
+
                 </ng-container>
                 <ng-container matColumnDef="switchOutTotal">
                     <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
