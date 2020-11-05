@@ -373,7 +373,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
   freezeCalculation(event) {
     let obj = {
-      lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+      lumpSumAmountDebt: this.data.remainingData.lumpSumAmountDebt,
       lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
       id: this.data.remainingData.id,
       goalType: this.data.goalType,
