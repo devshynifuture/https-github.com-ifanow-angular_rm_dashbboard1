@@ -8,8 +8,7 @@
         <div class="col-md-6 col-sm-12 p-0 bg-white mobileLoginUi flexLogin">
             <div *ngIf="!otpNumber" class="loginBox">
                 <p class="f-16 mb-12 mobileNone">
-                    <img class="advisorLogo" 
-                        [src]="logoUrl">
+                    <img class="advisorLogo" [src]="logoUrl">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details
@@ -35,7 +34,8 @@
                                 <mat-form-field appearance="standard" floatLabel="never">
                                     <input autofocus (keypress)="enterEvent($event)" class="form-control br-0"
                                         formControlName="name" matInput placeholder="Enter username" tabindex="1">
-                                    <mat-error *ngIf="loginForm && loginForm.controls.name.touched" class="mobilerightText">Username
+                                    <mat-error *ngIf="loginForm && loginForm.controls.name.touched"
+                                        class="mobilerightText">Username
                                         required
                                     </mat-error>
                                 </mat-form-field>
@@ -89,8 +89,8 @@
 
                         <div class="row ds-none">
                             <div class="col-md-12 text-center">
-                                <h5 class="mt-32">Don’t have an account? <span [routerLink]="[ '/login/signup']"
-                                        class="text-primary c-p"> Sign up </span>
+                                <h5 class="mt-32" *ngIf="!isClientWebsite">Don’t have an account? <span
+                                        [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span>
                                 </h5>
                             </div>
                         </div>
@@ -100,8 +100,8 @@
 
                     <!--          [queryParams]="{'advisorId':2808}"-->
 
-                    <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="[ '/login/signup']"
-                            class="text-primary c-p"> Sign up </span></h5>
+                    <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                            [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                     <h5 *ngIf="isBetaDomain" class="mt-32 mobileNone mb-24">Login into Support section? <span
                             [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                         </span>
@@ -112,8 +112,7 @@
 
             <div *ngIf="otpNumber" class="loginBox">
                 <p class="f-16 mobileNone mb-12">
-                    <img class="advisorLogo"
-                    [src]="logoUrl">
+                    <img class="advisorLogo" [src]="logoUrl">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">
@@ -161,15 +160,15 @@
 
 
                             <div class="mobileCenter ds-none">
-                                <h5 class="mt-12 ">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                        class="text-primary c-p"> Sign up </span></h5>
+                                <h5 class="mt-12 " *ngIf="!isClientWebsite">Don’t have an account? <span
+                                        [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                             </div>
 
 
                             <h5 (click)="otpClick()" class="mt-20 mobileNone text-primary c-p f-600">Login with password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span
+                            <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
                                     [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
                             </h5>
                         </div>
@@ -225,8 +224,8 @@
                                 <button [routerLink]="['/login']" class="f-15 mt-8 mb-8" mat-button>Login with
                                     password
                                 </button>
-                                <h5 class="mt-10 mb-16">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                        class="text-primary c-p"> Sign up </span></h5>
+                                <h5 class="mt-10 mb-16" *ngIf="!isClientWebsite">Don’t have an account? <span
+                                        [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                             </div>
 
 
@@ -234,7 +233,7 @@
                                 password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span
+                            <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
                                     [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
                             </h5>
                             <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span
@@ -249,8 +248,8 @@
               </button> -->
                             <h5 [routerLink]="['/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
 
-                            <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                    class="text-primary c-p"> Sign up </span></h5>
+                            <h5 class="mt-32 mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                                    [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                         </div>
                     </div>
                 </div>

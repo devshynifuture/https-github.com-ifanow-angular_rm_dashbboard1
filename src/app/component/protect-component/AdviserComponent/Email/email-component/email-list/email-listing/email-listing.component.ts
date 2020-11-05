@@ -311,7 +311,7 @@ export class EmailListingComponent implements OnInit {
           case 'starred':
             if (this.starredCount === this.prevStarredCount) {
               bringNewThreads = false;
-            } else if(this.starredCount > this.prevStarredCount){
+            } else if (this.starredCount > this.prevStarredCount) {
               bringNewThreads = true;
             }
             else if (this.starredCount > this.prevStarredCount) {
@@ -463,7 +463,7 @@ export class EmailListingComponent implements OnInit {
         this.isLoading = false;
         if (response) {
           this.eventService.openSnackBar(
-            "Deleted Successfully!! Updating list",
+            "Deleted Successfully",
             "DISMISS"
           );
           this.selection.clear();
@@ -638,13 +638,12 @@ export class EmailListingComponent implements OnInit {
               messageDates,
               messageCount: messageCountInAThread,
               labelIdsfromMessages,
-              emailers: `${
-                typeof extractSubjectFromHeaders["headerFromArray"][0] ===
-                  "string"
-                  ? extractSubjectFromHeaders["headerFromArray"][0]
-                    .split("<")[0]
-                    .trim()
-                  : ""
+              emailers: `${typeof extractSubjectFromHeaders["headerFromArray"][0] ===
+                "string"
+                ? extractSubjectFromHeaders["headerFromArray"][0]
+                  .split("<")[0]
+                  .trim()
+                : ""
                 }`,
               subjectMessage: {
                 subject: extractSubjectFromHeaders["headerSubjectArray"][0],
@@ -719,14 +718,22 @@ export class EmailListingComponent implements OnInit {
       let starValue = this.dataSource.data.find((item) => item.position == row.position).starred;
       this.dataSource.data.find((item) => item.position == row.position).starred = !starValue;
       const data = {
-
+        // {
+        //   "userId": {},
+        //   "emailId": {},
+        //   "ids": {} // threadId
+        // }
+        // {
+        //   "addLabelIds": [],
+        //   "removeLabelIds": []
+        // }
       }
       // this.emailService.modifyThreadIds(data)
-      //   .subscribe(res=>{
-      //     if(res){
-      //       console.log("modified ",res);
-      //     } 
-      //   }, err=> console.error(err));
+      //   .subscribe(res => {
+      //     if (res) {
+      //       console.log("modified ", res);
+      //     }
+      //   }, err => console.error(err));
     }
   }
 
@@ -804,8 +811,7 @@ export class EmailListingComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
-      row.position + 1
+    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${row.position + 1
       }`; //
   }
 

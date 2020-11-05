@@ -469,10 +469,18 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             if(!data){
-              this.fixDataList.assetList.push(sideBarData.data);
-              this.fixDataList.sumOfAmountInvested += sideBarData.data.amountInvested;
-              this.fixDataList.sumOfCurrentValue += sideBarData.data.currentValue;
-              this.fixDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              if(!this.fixDataList){
+                this.fixDataList = {assetList:[sideBarData.data]};
+                this.fixDataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+                this.fixDataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.fixDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
+              else{
+                this.fixDataList.assetList.push(sideBarData.data);
+                this.fixDataList.sumOfAmountInvested += sideBarData.data.amountInvested;
+                this.fixDataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                this.fixDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              }
               this.getFixedDepositRes(this.fixDataList);
             }
             else{
@@ -533,10 +541,18 @@ export class FixedIncomeComponent implements OnInit {
               this.getRecurringDepositList();
             }
             else{
-              this.recDataList.assetList.push(sideBarData.data);
-              this.recDataList.totalCurrentValue += sideBarData.data.currentValue;
-              this.recDataList.sumOfMonthlyContribution += sideBarData.data.monthlyContribution;
-              this.recDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              if(!this.recDataList){
+                this.recDataList = {assetList:[sideBarData.data]};
+                this.recDataList['totalCurrentValue'] = sideBarData.data.currentValue;
+                this.recDataList['sumOfMonthlyContribution'] = sideBarData.data.monthlyContribution;
+                this.recDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
+              else{
+                this.recDataList.assetList.push(sideBarData.data);
+                this.recDataList.totalCurrentValue += sideBarData.data.currentValue;
+                this.recDataList.sumOfMonthlyContribution += sideBarData.data.monthlyContribution;
+                this.recDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              }
               this.getRecurringDepositRes(this.recDataList);
             }
           }
@@ -565,11 +581,20 @@ export class FixedIncomeComponent implements OnInit {
               this.getBondsList();
             }
             else{
-              this.bondDataList.assetList.push(sideBarData.data);
-              this.bondDataList.sumOfAmountInvested  += sideBarData.data.amountInvested;
-              this.bondDataList.sumOfCouponAmount  += sideBarData.data.couponAmount;
-              this.bondDataList.sumOfCurrentValue  += sideBarData.data.currentValue;
-              this.bondDataList.sumOfMaturityValue  += sideBarData.data.maturityValue;
+              if(!this.bondDataList){
+                this.bondDataList = {assetList:[sideBarData.data]};
+                this.bondDataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+                this.bondDataList['sumOfCouponAmount'] = sideBarData.data.couponAmount;
+                this.bondDataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.bondDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
+              else{
+                this.bondDataList.assetList.push(sideBarData.data);
+                this.bondDataList.sumOfAmountInvested  += sideBarData.data.amountInvested;
+                this.bondDataList.sumOfCouponAmount  += sideBarData.data.couponAmount;
+                this.bondDataList.sumOfCurrentValue  += sideBarData.data.currentValue;
+                this.bondDataList.sumOfMaturityValue  += sideBarData.data.maturityValue;
+              }
               this.getBondsRes(this.bondDataList);
             }
           }

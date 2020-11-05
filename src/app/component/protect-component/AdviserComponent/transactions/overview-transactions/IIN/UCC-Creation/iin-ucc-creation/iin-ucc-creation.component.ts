@@ -35,6 +35,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   greeting;
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
+  logoText = 'Your Logo here';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     public processTransaction: ProcessTransactionService,

@@ -219,6 +219,7 @@ export class MutualFundUnrealizedTranComponent {
   loadingDone: boolean = false;
   isTableShow = true;
   isDisabledOpacity = true;
+  colspanValue: Number;
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -361,6 +362,10 @@ export class MutualFundUnrealizedTranComponent {
         'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'iconsTotal'];
     }
     this.dataTransaction.displayedColumns = this.displayedColumns;
+    this.colspanValue = Math.round(this.displayedColumns.length/2);
+    console.log('colspanValue',this.colspanValue);
+
+
   }
 
   // ngAfterViewInit() {
@@ -505,6 +510,8 @@ export class MutualFundUnrealizedTranComponent {
               this.teamMemberListGet();
             }
           }
+          this.colspanValue = Math.round(this.displayedColumns.length/2);
+          console.log('colspanValue',this.colspanValue);
         }
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
@@ -551,6 +558,8 @@ export class MutualFundUnrealizedTranComponent {
             this.teamMemberListGet();
           }
         }
+        this.colspanValue = Math.round(this.displayedColumns.length/2);
+        console.log('colspanValue',this.colspanValue);
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       }
