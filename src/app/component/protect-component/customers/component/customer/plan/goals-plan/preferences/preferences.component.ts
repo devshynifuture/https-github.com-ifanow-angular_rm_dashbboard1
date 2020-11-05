@@ -10,6 +10,7 @@ import { PreferencesService } from './preferences.service';
 import { Observable, Subscription, Subscriber } from 'rxjs';
 import { Utils } from 'angular-bootstrap-md/lib/free/utils';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AddGoalService } from '../add-goal/add-goal.service';
 
 @Component({
   selector: 'app-preferences',
@@ -58,7 +59,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
-    private preferenceService: PreferencesService
+    private preferenceService: PreferencesService,
+    private allocateOtherAssetService: AddGoalService
+
   ) { }
   selected = 0;
 
@@ -455,6 +458,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
       this.close()
       this.barButtonOptions.active = false;
+      this.allocateOtherAssetService.refreshObservable.next();
       this.subInjectService.setRefreshRequired();
     }, err => {
       this.barButtonOptions.active = false;
