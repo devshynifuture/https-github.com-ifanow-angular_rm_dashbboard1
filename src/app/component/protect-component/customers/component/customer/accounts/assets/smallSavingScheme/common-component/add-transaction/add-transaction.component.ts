@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { CustomerService } from '../../../../../customer.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -12,6 +13,7 @@ export class AddTransactionComponent implements OnInit {
   addTransactionList = 0;
   maxDate = new Date();
   transactionForm: any;
+  validatorType = ValidatorType;
   @Input() commencementDate;
   @Input() transactionViewData;
   @Output() outputEvent = new EventEmitter();
