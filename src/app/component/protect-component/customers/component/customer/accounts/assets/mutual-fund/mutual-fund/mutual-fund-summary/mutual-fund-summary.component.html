@@ -29,7 +29,7 @@
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <mat-menu #menu1="matMenu">
+            <mat-menu #menu1="matMenu" class="disabledOpacity">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
@@ -202,7 +202,7 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Withdrawal/<br>Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span>{{element.switchOut}}</span>
+                        <div class="bar"><span>{{element.withdrawalsTillToday}}</span>
 
                         </div>
                     </td>
@@ -210,6 +210,7 @@
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
                         <span>{{mfData ? this.mfData.withdrawals : '0'}}</span>
                     </td>
+
                 </ng-container>
                 <ng-container matColumnDef="switchOutTotal">
                     <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
@@ -323,12 +324,12 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" [ngClass]="{ 'disabledOpacity' :true }" [matMenuTriggerFor]="menu25"
+                    <td *matCellDef="let element" [matMenuTriggerFor]="menu25"
                         [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="c-p" mat-cell>
                         <div>
                             <img class="c-p" src="/assets/images/svg/dot-menu.svg"
                                 *ngIf="!isLoading && element.schemeName!='Total' ">
-                            <mat-menu #menu25="matMenu">
+                            <mat-menu #menu25="matMenu" class="disabledOpacity">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
     factsheet</button> -->
 

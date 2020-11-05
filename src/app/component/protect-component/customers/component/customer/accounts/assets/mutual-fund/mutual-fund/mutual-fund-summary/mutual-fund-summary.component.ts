@@ -1746,7 +1746,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'dividendPayout';
         break;
       case 'Withdrawal/Switch outs':
-        obj = 'switchOut';
+        obj = 'withdrawalsTillToday';
         break;
       case 'Balance unit':
         obj = 'balanceUnit';

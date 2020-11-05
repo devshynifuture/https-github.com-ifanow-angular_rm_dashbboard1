@@ -343,25 +343,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.show = false;
   }
 
-  // showAddTransact() {
-  //   this.showTransact = true;
-  //   if (this.transactEntries.length == 0) {
-  //     this.transactEntries.push(this.fb.group({
-  //       partPaymentDate: ['', [Validators.required]],
-  //       partPayment: ['', [Validators.required]],
-  //       option: ['', [Validators.required]]
-  //     }));
-  //   }
-  // }
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
         const data = this.sendData;
-        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
         const data = this.sendData;
-        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }
     } else {
