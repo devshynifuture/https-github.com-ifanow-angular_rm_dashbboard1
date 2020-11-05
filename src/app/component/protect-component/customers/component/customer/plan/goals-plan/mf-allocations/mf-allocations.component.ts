@@ -289,7 +289,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       btnNo: 'UNFREEZE',
       positiveMethod: () => {
         let obj = {
-          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountEquity,
+          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountDebt,
           lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
           id: this.data.remainingData.id,
           goalType: this.data.goalType,
