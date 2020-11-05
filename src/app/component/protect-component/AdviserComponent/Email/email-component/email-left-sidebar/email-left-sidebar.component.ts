@@ -1,16 +1,18 @@
-import { ComposeEmailComponent } from "./../compose-email/compose-email.component";
+import { Subscription } from 'rxjs';
+import { EmailDataStorageService } from '../../email-data-storage.service';
+import { ComposeEmailComponent } from "../compose-email/compose-email.component";
 import { ActivatedRoute, Router } from "@angular/router";
-import { EmailServiceService } from "./../../email-service.service";
+import { EmailServiceService } from "../../email-service.service";
 import { Component, OnInit } from "@angular/core";
 import { EventService } from "../../../../../../Data-service/event.service";
 import { AuthService } from "../../../../../../auth-service/authService";
 
 @Component({
-  selector: "app-left-sidebar",
-  templateUrl: "./left-sidebar.component.html",
-  styleUrls: ["./left-sidebar.component.scss"],
+  selector: "app-email-left-sidebar",
+  templateUrl: "./email-left-sidebar.component.html",
+  styleUrls: ["./email-left-sidebar.component.scss"],
 })
-export class LeftSidebarComponent implements OnInit {
+export class EmailLeftSidebarComponent implements OnInit {
   paginatorSubscription: any;
   isAllowedToCompose: boolean;
   isLoading: boolean;
@@ -23,13 +25,15 @@ export class LeftSidebarComponent implements OnInit {
   isCustomerEmail: boolean;
   location: any;
   unreadCount: number;
+  unReadCountSubs: Subscription;
 
   constructor(
     private emailService: EmailServiceService,
     private eventService: EventService,
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private emailDataStorageService: EmailDataStorageService
+  ) { }
 
   ngOnInit() {
     this.isUserAuthenticated();
@@ -92,36 +96,62 @@ export class LeftSidebarComponent implements OnInit {
 
   getRightSideNavListCount() {
     this.isLoading = true;
+
+    this.unReadCountSubs = this.emailDataStorageService.getUnReadCountThroughObs()
+      .subscribe(res => {
+        if (res) {
+          this.unreadCount = +res;
+        }
+      });
+
     this.emailService.getRightSideNavList().subscribe((responseData) => {
       this.navList = responseData;
       console.log("check navlist :::", this.navList);
       if (this.navList.length !== 0) {
+        let obj = {
+          inboxCount: null,
+          sentCount: null,
+          starredCount: null,
+          draftCount: null,
+          trashCount: null,
+          unreadCount: null
+        };
         this.navList.forEach((element) => {
           switch (element.labelId) {
-            case "IMPORTANT":
+            case "INBOX":
               this.importantCount = element.threadsTotal;
+              obj.inboxCount = this.importantCount;
               break;
             case "SENT":
               this.sentCount = element.threadsTotal;
+              obj.sentCount = this.sentCount;
               break;
             case "DRAFT":
               this.draftCount = element.threadsTotal;
+              obj.draftCount = this.draftCount;
               break;
             case "TRASH":
               this.trashCount = element.threadsTotal;
+              obj.trashCount = this.trashCount;
               break;
             case "STARRED":
               this.starredCount = element.threadsTotal;
+              obj.starredCount = this.starredCount;
               break;
           }
+          this.emailDataStorageService.storeNavCount(obj);
           if (
             (this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") ===
             element.labelId
-          ) {
-            this.unreadCount = parseInt(element.threadsUnread);
-          }
+          ) { }
         });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.unReadCountSubs) {
+      this.unReadCountSubs.unsubscribe();
+    }
   }
 }

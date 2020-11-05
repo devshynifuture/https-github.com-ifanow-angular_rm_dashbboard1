@@ -50,9 +50,9 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.rtList = data;
-          this.rtList.map(item=> {
-            if(item.name==="FRANKLIN_TEMPLETON"){
-              item.name="FRANKLIN";
+          this.rtList.map(item => {
+            if (item.name === "FRANKLIN_TEMPLETON") {
+              item.name = "FRANKLIN";
             }
           })
           this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
@@ -96,12 +96,14 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
           } else if (element.processStatus === 1) {
             element.status = "Success";
           } else if (element.processStatus === -1) {
-            element.status = "Duplicate";
-          } else if (element.processStatus === 2){
-            element.status = "In Progress";
-          } else {
+            // changed as duplicate scenario is not there confirmed with gaurav
             element.status = "Failed";
+          } else if (element.processStatus === 2) {
+            element.status = "In Progress";
           }
+          // } else {
+          //   element.status = "Failed";
+          // }
         });
 
         this.listData = data;
