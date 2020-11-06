@@ -982,7 +982,7 @@
 
 
 
-        <tr *ngIf = "singleGoalData.goalType == 1">
+        <tr *ngIf="singleGoalData.goalType == 1">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
@@ -1011,7 +1011,8 @@
                                         {{(element.onRetirementOrDemise == 1)?'Post retirement':'Demise'}}</td>
                                     <td
                                         style="padding: 8px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}</td>
+                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}
+                                    </td>
                                     <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; text-align: right;">
                                         ₹<span appFormatNumber>{{element.amount}} </span></td>
@@ -1027,7 +1028,7 @@
         </tr>
 
 
-        <tr *ngIf = "singleGoalData.goalType ==5 || singleGoalData.goalType ==6">
+        <tr *ngIf="singleGoalData.goalType ==5 || singleGoalData.goalType ==6">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
@@ -1071,29 +1072,54 @@
 
                                 </tr>
 
-                                <!-- <tr *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly">
-                                    <td 
+                                <tr>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{d | date:'yyyy'}}</td>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
+                                        <div *ngFor="let d of singleGoalData.dashboardData.key_arr_equity_monthly">
+                                            {{d | date:'yyyy'}}
+                                        </div>
+                                    </td>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">
-                                        ₹<span appFormatNumber>{{singleGoalData.dashboardData.presentValue}}</span></td>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_goalYrAndFutValues"
+                                        <div *ngFor="let d of singleGoalData.dashboardData.arr_goalYrAndFutValues">
+                                            ₹<span appFormatNumber>{{singleGoalData.dashboardData.presentValue}}</span>
+
+                                        </div>
+                                    </td>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                                        ₹<span appFormatNumber>{{d}}</span></td>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_equity_monthly"
+                                        <div *ngFor="let d of singleGoalData.dashboardData.arr_goalYrAndFutValues">
+                                            ₹<span appFormatNumber>{{d}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                                        ₹<span appFormatNumber>{{d}}</span></td>
-                                    <td  *ngFor="let d of singleGoalData.dashboardData.arr_debt_monthly"
+                                        <div *ngFor="let e of singleGoalData.dashboardData.arr_equity_monthly">
+                                            ₹<span appFormatNumber>{{e}}</span>
+                                        </div>
+                                    </td>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                                        ₹<span appFormatNumber>{{d}}</span></td>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_lump_equity"
+                                        <div *ngFor="let d of singleGoalData.dashboardData.arr_debt_monthly">
+                                            ₹<span appFormatNumber>{{d}}</span>
+                                        </div>
+                                    </td>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                                        ₹<span appFormatNumber>{{d}}</span></td>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_lump_debt"
+                                        <div *ngFor="let d of singleGoalData.dashboardData.arr_lump_equity">
+                                            <span appFormatNumber>{{d}}</span>
+                                        </div>
+                                        ₹
+                                    </td>
+                                    <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                                        ₹<span appFormatNumber>{{d}}</span></td>
-                                </tr> -->
+                                        <div *ngFor="let d of singleGoalData.dashboardData.arr_lump_debt">
+                                            ₹<span appFormatNumber>{{d}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
                             </table>
                         </td>
                     </tr>
