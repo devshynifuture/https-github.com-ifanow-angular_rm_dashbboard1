@@ -166,11 +166,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.dataSource1 = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
-        this.loadAllGoals();
+        this.loadAllGoals(false);
       })
     );
     this.loadAllAssets();
-    this.loadAllGoals();
+    this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
 
@@ -183,7 +183,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
 
   }
-  loadAllGoals() {
+  loadAllGoals(flag) {
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
@@ -191,6 +191,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data
+        if(flag == true){
+          this.loadAllGoals(false)
+        }
       } else {
         this.allGoals = [];
       }
@@ -444,7 +447,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       upperSliderData => {
         if (UtilService.isRefreshRequired(upperSliderData)) {
           this.selectedGoalId = null;
-          this.loadAllGoals();
+          this.loadAllGoals(false);
           sub.unsubscribe();
         }
       }
@@ -506,7 +509,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
       if (UtilService.isDialogClose(sideBarData)) {
         if (UtilService.isRefreshRequired(sideBarData)) {
-          this.loadAllGoals();
+          this.loadAllGoals(false);
         }
         subscription.unsubscribe();
       }
@@ -559,7 +562,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         }
         this.plansService.deleteMilestone({ milestoneId: milestone.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
-          this.loadAllGoals();
+          this.loadAllGoals(false);
           this.eventService.openSnackBar("Milestone deleted successfully");
           dialogRef.close();
         }, err => {
@@ -597,7 +600,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
             this.selectedGoal = {};
           }
           // update asset list if user deletes goal and the list is still open
-          this.loadAllGoals();
+          this.loadAllGoals(false);
           this.allocateOtherAssetService.refreshAssetList.next();
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
@@ -623,7 +626,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
         this.plansService.deleteLoan({ loanId: loan.id }).subscribe(res => {
           this.allocateOtherAssetService.refreshAssetList.next();
-          this.loadAllGoals();
+          this.loadAllGoals(false);
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
@@ -648,7 +651,10 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     } else {
       this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
       this.loadAllAssets();
-      this.loadAllGoals();
+      this.loadAllGoals(true);
+      setTimeout(() => {
+        this.loadAllAssets();
+      }, 100)
       this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
     }
 
@@ -662,7 +668,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnNo: 'UNFREEZE',
       positiveMethod: () => {
         let obj = {
-          lumpSumAmountDebt: this.selectedGoal.remainingData.lumpSumAmountEquity,
+          lumpSumAmountDebt: this.selectedGoal.remainingData.lumpSumAmountDebt,
           lumpSumAmountEquity: this.selectedGoal.remainingData.lumpSumAmountEquity,
           id: this.selectedGoal.remainingData.id,
           goalType: this.selectedGoal.goalType,
@@ -704,7 +710,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
           const assetIndex = this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
           this.allocatedList.splice(assetIndex, 1);
-          this.loadAllGoals();
+          this.loadAllGoals(false);
           // update asset list if user deletes goal and the list is still open
           this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");

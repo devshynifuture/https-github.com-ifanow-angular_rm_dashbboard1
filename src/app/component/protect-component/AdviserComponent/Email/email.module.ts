@@ -9,7 +9,7 @@ import { EmailListModule } from './email-component/email-list/email-list.module'
 // import {EmailSentComponent} from './email-component/email-sent/email-sent.component';
 // import {EmailTrashComponent} from './email-component/email-trash/email-trash.component';
 import { EmailComponent } from './email-component/email.component';
-import { LeftSidebarComponent } from './email-component/left-sidebar/left-sidebar.component';
+import { EmailLeftSidebarComponent } from './email-component/email-left-sidebar/email-left-sidebar.component';
 import { EmailRoutingModule } from './email-routing.module';
 import { EmailEntryModule } from './email.entry.module';
 
@@ -23,7 +23,7 @@ import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.inter
 @NgModule({
   declarations: [
     EmailComponent,
-    LeftSidebarComponent,
+    EmailLeftSidebarComponent,
     EmailSettingsComponent,
     // EmailSentComponent,
     // EmailDraftComponent,
@@ -43,7 +43,7 @@ import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.inter
   exports: [
     EmailListModule,
     EmailEntryModule,
-    LeftSidebarComponent
+    EmailLeftSidebarComponent
   ],
   providers: [
     HttpCancelService,

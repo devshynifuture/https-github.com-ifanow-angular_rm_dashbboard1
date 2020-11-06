@@ -11,6 +11,7 @@ import { IncomeDetailedViewComponent } from './income-detailed-view/income-detai
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../../accounts/assets/file-upload-service.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 
 @Component({
   selector: 'app-income',
@@ -42,13 +43,15 @@ export class IncomeComponent implements OnInit {
   myFiles: any;
   fileUploadData: any;
   file: any;
-
+  globalArray=[];
+  storedData: any;
   constructor(private fileUpload: FileUploadServiceService,
     private util:UtilService,private excel: ExcelGenService,
     public dialog: MatDialog, private eventService: EventService, 
     private subInjectService: SubscriptionInject,
      private planService: PlanService,
-     private _bottomSheet : MatBottomSheet) {
+     private _bottomSheet : MatBottomSheet,
+     private summaryPlanService:SummaryPlanServiceService) {
   }
 
   viewMode;
@@ -63,7 +66,16 @@ export class IncomeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
-    this.getIncomeList();
+    this.summaryPlanService.getIncomeData()
+    .subscribe(res => {
+      this.storedData = '';
+      this.storedData = res;
+    })
+    if(this.chekToCallApi()){
+      this.getIncomeList();
+    }else{
+      this.getIncomeListRes(this.storedData);
+    }
   }
 
   getIncomeList() {
@@ -76,7 +88,10 @@ export class IncomeComponent implements OnInit {
     }
     this.dataSource.data = [{}, {}, {}];
     this.planService.getIncomeData(obj).subscribe(
-      data => this.getIncomeListRes(data),
+      data =>{
+        this.pushArray(data);
+        this.getIncomeListRes(data);
+      },
       error => {
         this.noData = 'No income found';
         this.dataSource.data = []
@@ -84,6 +99,17 @@ export class IncomeComponent implements OnInit {
       }
     )
 
+  }
+  chekToCallApi(){
+    return this.storedData ? false :  true
+  }
+  pushArray(data){
+    if(data){
+      data = [...new Map(data.map(item => [item.id, item])).values()];
+      this.globalArray.push(data);
+      this.globalArray  = this.globalArray.flat();
+      this.summaryPlanService.setIncomeData(this.globalArray);
+    }
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true

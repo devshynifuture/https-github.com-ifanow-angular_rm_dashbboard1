@@ -321,7 +321,7 @@ export class TempserviceService {
     absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
-    withdrawals += (data.switchOut) ? data.switchOut : 0;
+    withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
     balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
     sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
@@ -407,7 +407,7 @@ export class TempserviceService {
       absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr == 0) ? data.xirr : 0;
       allocationPer += (data.allocatedPercentage == 'NaN') ? 0 : (data.allocatedPercentage) ? data.allocatedPercentage : 0;
-      withdrawals += (data.switchOut) ? data.switchOut : 0;
+      withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
       sip += (data.sipAmount) ? data.sipAmount : 0;
       netGain += (data.gainOrLossAmount) ? data.gainOrLossAmount : 0;
       marketValue += (data.marketValue) ? data.marketValue : 0;
