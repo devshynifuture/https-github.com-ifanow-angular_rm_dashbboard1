@@ -1071,13 +1071,13 @@
 
                                 </tr>
 
-                                <tr>
-                                    <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
+                                <!-- <tr *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly">
+                                    <td 
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{d | date:'yyyy'}}</td>
-                                    <!-- <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
+                                    <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">
-                                        ₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></td> -->
+                                        ₹<span appFormatNumber>{{singleGoalData.dashboardData.presentValue}}</span></td>
                                     <td *ngFor="let d of singleGoalData.dashboardData.arr_goalYrAndFutValues"
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                                         ₹<span appFormatNumber>{{d}}</span></td>
@@ -1093,7 +1093,7 @@
                                     <td *ngFor="let d of singleGoalData.dashboardData.arr_lump_debt"
                                         style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                                         ₹<span appFormatNumber>{{d}}</span></td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </td>
                     </tr>
