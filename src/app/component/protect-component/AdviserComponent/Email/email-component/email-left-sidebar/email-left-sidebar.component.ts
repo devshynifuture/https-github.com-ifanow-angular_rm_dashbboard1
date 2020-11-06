@@ -6,6 +6,7 @@ import { EmailServiceService } from "../../email-service.service";
 import { Component, OnInit } from "@angular/core";
 import { EventService } from "../../../../../../Data-service/event.service";
 import { AuthService } from "../../../../../../auth-service/authService";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: "app-email-left-sidebar",
@@ -32,7 +33,8 @@ export class EmailLeftSidebarComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private router: Router,
-    private emailDataStorageService: EmailDataStorageService
+    private emailDataStorageService: EmailDataStorageService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
@@ -139,12 +141,21 @@ export class EmailLeftSidebarComponent implements OnInit {
               obj.starredCount = this.starredCount;
               break;
           }
-          this.emailDataStorageService.storeNavCount(obj);
-          if (
-            (this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") ===
-            element.labelId
-          ) { }
         });
+        if (this.emailDataStorageService.navCountObj === null) {
+          this.emailDataStorageService.storeNavCount(obj);
+        } else if (this.emailDataStorageService.navCountObj !== null) {
+          if (obj.inboxCount > this.emailDataStorageService.navCountObj.inboxCount ||
+            obj.draftCount > this.emailDataStorageService.navCountObj.draftCount ||
+            obj.sentCount > this.emailDataStorageService.navCountObj.sentCount ||
+            obj.starredCount > this.emailDataStorageService.navCountObj.starredCount ||
+            obj.trashCount > this.emailDataStorageService.navCountObj.trashCount) {
+            this.emailDataStorageService.setCanHitGmailApi(true);
+            this.emailDataStorageService.storeNavCount(obj);
+          } else {
+            this.emailDataStorageService.setCanHitGmailApi(false);
+          }
+        }
       }
     });
   }

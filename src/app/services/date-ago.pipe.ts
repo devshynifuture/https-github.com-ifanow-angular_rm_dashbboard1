@@ -32,8 +32,10 @@ export class DateAgoPipe implements PipeTransform {
             let val = this.returnDateFunc(i, value);
             return val ? val : counter + ' ' + i + 's ago'; // if false plural (2 days ago)
           }
+        } else {
+          let val = this.returnDateFunc(i, value);
+          return val ? val : counter + ' ' + i + 's ago'; // if false plural (2 days ago)
         }
-
       }
     }
   }
@@ -41,7 +43,7 @@ export class DateAgoPipe implements PipeTransform {
   returnDateFunc(i, value) {
     if (i === 'week' || i === 'year' || i === 'month') {
       let date = new Date(parseInt(value));
-      let returnVal = date.getDate() + " " + this.monthArray[date.getMonth() + 1] + " " + date.getFullYear();
+      let returnVal = date.getDate() + " " + this.monthArray[date.getMonth()] + " " + date.getFullYear();
       return returnVal;
     } else {
       return false;

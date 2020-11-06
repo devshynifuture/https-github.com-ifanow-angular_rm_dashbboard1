@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { EmailDataStorageService } from './../../../email-data-storage.service';
 import { AuthService } from "src/app/auth-service/authService";
@@ -48,6 +49,8 @@ export class EmailListingComponent implements OnInit {
   starredCountSubs: Subscription;
   draftCountSubs: Subscription;
   trashCountSubs: Subscription;
+  canHitGmailApiSubs: Subscription;
+  canHitGmailApi: any = false;
 
   constructor(
     private emailService: EmailServiceService,
@@ -58,7 +61,8 @@ export class EmailListingComponent implements OnInit {
     private authService: AuthService,
     private emailUtilService: EmailUtilService,
     private subInjectService: SubscriptionInject,
-    private emailDataStorageService: EmailDataStorageService
+    private emailDataStorageService: EmailDataStorageService,
+    private titleService: Title
   ) { }
 
   paginatorLength;
@@ -75,6 +79,7 @@ export class EmailListingComponent implements OnInit {
   showDraftView: boolean = false;
   currentPage: number = 1;
   toShowMaxThreadsLength;
+  gmailThreadsSubs: Subscription;
 
   displayedColumns: string[] = [
     "select",
@@ -196,123 +201,38 @@ export class EmailListingComponent implements OnInit {
 
   getRightSideNavListCount(location) {
     // this.isLoading = true;
+    this.gmailThreadsSubs = this.emailDataStorageService.getGmailThreadsThroughObs()
+      .subscribe(res => {
+        if (res) {
+          this.gmailThreads = res;
+        }
+      })
 
-    // this.emailDataStorageService.getRightSideNavList().subscribe((responseData) => {
-    //   this.navList = responseData;
-    //   console.log("check navlist :::", this.navList);
-    //   if (this.navList.length !== 0) {
-    //     this.navList.forEach((element) => {
-    //       switch (element.labelId) {
-    //         case "IMPORTANT":
-    //           this.importantCount = element.threadsTotal;
-    //           break;
-    //         case "SENT":
-    //           this.sentCount = element.threadsTotal;
-    //           break;
-    //         case "DRAFT":
-    //           this.draftCount = element.threadsTotal;
-    //           break;
-    //         case "TRASH":
-    //           this.trashCount = element.threadsTotal;
-    //           break;
-    //         case "STARRED":
-    //           this.starredCount = element.threadsTotal;
-    //           break;
-    //       }
-    //       if ((this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") === element.labelId) {
-    //         this.unreadCount = parseInt(element.threadsUnread);
-    //       }
-    //     });
-
-    //     switch (location) {
-    //       case "inbox":
-    //         this.paginatorLength = this.importantCount;
-    //         break;
-    //       case "sent":
-    //         this.paginatorLength = this.sentCount;
-    //         break;
-    //       case "draft":
-    //         this.paginatorLength = this.draftCount;
-    //         break;
-    //       case "trash":
-    //         this.paginatorLength = this.trashCount;
-    //         break;
-    //       case "starred":
-    //         this.paginatorLength = this.starredCount;
-    //         break;
-    //     }
-
-    //     if (!this.isCustomerEmail) {
-    //       this.totalListSize = this.paginatorLength;
-    //       if (this.paginatorLength <= 50) {
-    //         this.maxListRes = this.paginatorLength;
-    //         this.showNextPaginationBtn = false;
-    //         this.showPrevPaginationBtn = false;
-    //       } else if (this.paginatorLength > 50) {
-    //         this.maxListRes = this.maxListRes + 50;
-    //       }
-
-    //       let valueOfNextPagination = this.maxListRes + 50;
-    //       if (valueOfNextPagination >= this.paginatorLength) {
-    //         this.showNextPaginationBtn = false;
-    //       } else if (valueOfNextPagination > this.paginatorLength) {
-    //         this.showNextPaginationBtn = false;
-    //       } else if (this.maxListRes < this.paginatorLength) {
-    //         this.showNextPaginationBtn = true;
-    //       }
-    //     }
-    // let bringNewThreads = false;
-    // check for increment of count
-    // switch (location) {
-    //   case 'inbox':
-    //     if (this.importantCount === this.prevImpCount) {
-    //       bringNewThreads = false;
-    //     } else if (this.importantCount > this.prevImpCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     break;
-    //   case 'sent':
-    //     if (this.sentCount === this.prevSentCount) {
-    //       bringNewThreads = false;
-    //     } else if (this.sentCount > this.prevSentCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     break;
-    //   case 'draft':
-    //     if (this.draftCount === this.prevDraftCount) {
-    //       bringNewThreads = false;
-    //     } else if (this.draftCount > this.prevDraftCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     break;
-    //   case 'trash':
-    //     if (this.trashCount === this.prevTrashCount) {
-    //       bringNewThreads = false;
-    //     } else if (this.trashCount > this.prevTrashCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     break;
-    //   case 'starred':
-    //     if (this.starredCount === this.prevStarredCount) {
-    //       bringNewThreads = false;
-    //     } else if (this.starredCount > this.prevStarredCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     else if (this.starredCount > this.prevStarredCount) {
-    //       bringNewThreads = true;
-    //     }
-    //     break;
-    //   default: bringNewThreads = false;
-    // }
-    // if (bringNewThreads) {
-    // this.getGmailList(location.toUpperCase(), "");
-    // // } else {
-    // //   if (this.messageListArray.length !== 0) {
-    // //     this.dataSource.data = this.messageListArray;
-    // //   }
-    // }
-    //   }
-    // });
+    this.canHitGmailApiSubs = this.emailDataStorageService.canHitGmailApi()
+      .subscribe(res => {
+        // this.canHitGmailApi = res;
+        if (this.emailDataStorageService[`${this.location}EmailList`].length === 0 || res) {
+          this.isLoading = true;
+          this.getGmailList(location.toUpperCase(), "");
+        } else {
+          this.dataSource = new MatTableDataSource(this.emailDataStorageService[`${this.location}EmailList`]);
+          if (this.location === 'inbox') {
+            let unreadCount = 0;
+            this.emailDataStorageService.inboxEmailList.forEach(element => {
+              if (!element.isRead) {
+                unreadCount += 1;
+              }
+            });
+            if (unreadCount > 0) {
+              this.titleService.setTitle(`MyPlanner - Inbox (${unreadCount})`)
+              this.emailDataStorageService.storeUnReadCount(unreadCount);
+            } else {
+              this.titleService.setTitle(`MyPlanner - Inbox`);
+            }
+          }
+          this.isLoading = false;
+        }
+      });
 
     this.inboxCountSubs = this.emailDataStorageService.getNavCountThroughObs()
       .subscribe(res => {
@@ -321,6 +241,30 @@ export class EmailListingComponent implements OnInit {
           this.sentCount = res.sentCount;
           this.trashCount = res.trashCount;
           this.starredCount = res.starredCount;
+
+          switch (this.location) {
+            case 'inbox':
+              if (this.unreadCount) {
+                this.titleService.setTitle(`MyPlanner - Inbox (${this.unreadCount})`);
+              } else {
+                this.titleService.setTitle(`MyPlanner - Inbox`);
+              }
+              break;
+            case 'sent':
+              this.titleService.setTitle(`MyPlanner - Sent`);
+              break;
+            case 'draft':
+              this.titleService.setTitle(`MyPlanner - Draft`);
+              break;
+            case 'trash':
+              this.titleService.setTitle(`MyPlanner - Trash`);
+              break;
+            case 'starred':
+              this.titleService.setTitle(`MyPlanner - Starred`);
+              break;
+
+            default: this.titleService.setTitle(`MyPlanner`);
+          }
         }
       })
 
@@ -342,13 +286,6 @@ export class EmailListingComponent implements OnInit {
       } else if (this.maxListRes < this.paginatorLength) {
         this.showNextPaginationBtn = true;
       }
-    }
-
-    if (this.emailDataStorageService[`${this.location}EmailList`].length === 0) {
-      this.getGmailList(location.toUpperCase(), "");
-    } else {
-      this.dataSource = new MatTableDataSource(this.emailDataStorageService[`${this.location}EmailList`]);
-      this.isLoading = false;
     }
   }
 
@@ -575,6 +512,7 @@ export class EmailListingComponent implements OnInit {
 
           this.nextPageToken = nextPageToken;
           this.gmailThreads = gmailThreads;
+          this.emailDataStorageService.storeGmailThreads(gmailThreads);
           let isUnReadCount = 0;
           console.log("this is response data::::", responseData);
           gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
@@ -689,6 +627,9 @@ export class EmailListingComponent implements OnInit {
           if (this.location === 'inbox') {
             this.emailDataStorageService.storeUnReadCount(isUnReadCount);
             this.unreadCount = isUnReadCount;
+            if (this.unreadCount && this.unreadCount > 0) {
+              this.titleService.setTitle(`MyPlanner - Inbox (${this.unreadCount})`)
+            }
           }
 
           this.messageListArray = tempArray1;
