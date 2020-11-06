@@ -10,16 +10,19 @@ export class EmailDataStorageService {
   draftEmailList: any = [];
   starredEmailList: any = [];
   trashEmailList: any = [];
+
   constructor() { }
 
   navCountObj: any = null;
+  prevNavCountObj = null;
 
   inboxEmailDataListObs = new BehaviorSubject<any | null>(null);
   sentEmailDataListObs = new BehaviorSubject<any | null>(null);
   draftEmailDataListObs = new BehaviorSubject<any | null>(null);
   trashEmailDataListObs = new BehaviorSubject<any | null>(null);
   starredEmailDataListObs = new BehaviorSubject<any | null>(null);
-
+  gmailThreadsObs = new BehaviorSubject<any | null>(null);
+  canHitGmailApiObs = new BehaviorSubject<any | null>(null);
 
   navCountObs = new BehaviorSubject(null);
   unReadCountObs = new BehaviorSubject(null);
@@ -52,6 +55,14 @@ export class EmailDataStorageService {
 
   getStarredEmailDataThroughObs(): Observable<any | null> {
     return this.starredEmailDataListObs.asObservable();
+  }
+
+  getGmailThreadsThroughObs(): Observable<any | null> {
+    return this.gmailThreadsObs.asObservable();
+  }
+
+  canHitGmailApi(): Observable<any | null> {
+    return this.canHitGmailApiObs.asObservable();
   }
 
   // storing data
@@ -88,6 +99,15 @@ export class EmailDataStorageService {
 
   storeUnReadCount(data): void {
     this.unReadCountObs.next(data);
+  }
+
+
+  storeGmailThreads(data): void {
+    this.gmailThreadsObs.next(data);
+  }
+
+  setCanHitGmailApi(data): void {
+    this.canHitGmailApiObs.next(data);
   }
 
   // checks counts empty

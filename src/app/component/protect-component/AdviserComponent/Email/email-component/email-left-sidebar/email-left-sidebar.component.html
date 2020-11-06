@@ -6,8 +6,8 @@
     </div>
     <mat-action-list class="pt-0 img-size-icons">
         <mat-list class="">
-            <mat-list-item routerLink="inbox" #rlaInbox="routerLinkActive" routerLinkActive="text-primary"
-                class="row c-p">
+            <mat-list-item (click)="getRightSideNavListCount()" routerLink="inbox" #rlaInbox="routerLinkActive"
+                routerLinkActive="text-primary" class="row c-p">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-2 pl-0">
@@ -18,7 +18,7 @@
                             <h5 mat-line class="mb-0 ml-28 f-14">Inbox </h5>
                         </div>
                         <div class="col-md-3 p-0 text-right">
-                            <span class=" f-14" *ngIf="!isCustomerEmail"
+                            <span class="bg-red f-14" *ngIf="!isCustomerEmail"
                                 [ngClass]="rlaInbox.isActive ? 'text-primary':'text-primitive'">
                                 {{ unreadCount }}
                             </span>
@@ -28,8 +28,8 @@
                 </div>
             </mat-list-item>
 
-            <mat-list-item routerLink="sent" #rlaSent="routerLinkActive" routerLinkActive="text-primary"
-                class="row c-p">
+            <mat-list-item (click)="getRightSideNavListCount()" routerLink="sent" #rlaSent="routerLinkActive"
+                routerLinkActive="text-primary" class="row c-p">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-2 pl-0">
@@ -52,8 +52,8 @@
                 </div>
             </mat-list-item>
 
-            <mat-list-item routerLink="starred" #rlaStarred="routerLinkActive" routerLinkActive="text-primary"
-                class="row c-p">
+            <mat-list-item (click)="getRightSideNavListCount()" routerLink="starred" #rlaStarred="routerLinkActive"
+                routerLinkActive="text-primary" class="row c-p">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-2 pl-0">
@@ -77,8 +77,8 @@
 
             </mat-list-item>
 
-            <mat-list-item routerLink="draft" #rlaDraft="routerLinkActive" routerLinkActive="text-primary"
-                class="row c-p">
+            <mat-list-item (click)="getRightSideNavListCount()" routerLink="draft" #rlaDraft="routerLinkActive"
+                routerLinkActive="text-primary" class="row c-p">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-2 pl-0">
@@ -109,8 +109,8 @@
                 </div>
             </mat-list-item> -->
 
-            <mat-list-item routerLinkActive="text-primary" #rlaTrash="routerLinkActive" routerLink="trash"
-                class="row c-p">
+            <mat-list-item (click)="getRightSideNavListCount()" routerLinkActive="text-primary"
+                #rlaTrash="routerLinkActive" routerLink="trash" class="row c-p">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-2 pl-0">
