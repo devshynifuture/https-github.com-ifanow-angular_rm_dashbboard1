@@ -5,6 +5,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {slideInAnimation} from '../../../../../../animation/router.animation';
 import {AuthService} from 'src/app/auth-service/authService';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { MfServiceService } from './assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-accounts',
@@ -28,7 +29,7 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState, public authService: AuthService) {
+              public routingStateService: RoutingState, public authService: AuthService,private MfServiceService : MfServiceService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
@@ -92,6 +93,7 @@ export class AccountsComponent implements OnInit {
        });
      });*/
     this.showRouter = false;
+    this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     setTimeout(() => {
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
