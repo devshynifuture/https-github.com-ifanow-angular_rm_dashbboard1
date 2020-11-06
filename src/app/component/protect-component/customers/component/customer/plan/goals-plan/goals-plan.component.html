@@ -696,7 +696,7 @@
         style="width: 95%; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
 
-         
+
         <tr>
             <td>
                 <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
@@ -748,8 +748,7 @@
                 <table style="border: 0px; margin-top: 20px; width: 100%;">
                     <tr>
                         <td style="width: 40%;">
-                            <img style="width: 100%;"
-                                [src]="singleGoalData ? singleGoalData.img :''">
+                            <img style="width: 100%;" [src]="singleGoalData ? singleGoalData.img :''">
                         </td>
 
                         <td style="vertical-align: top; padding-left: 15px; width: 60%;">
@@ -780,28 +779,30 @@
                             <table style="margin: 20px 0px 20px 0px; width: 100%; ">
                                 <tr>
                                     <td>
-                                        <div style="background: #f5f7f7; height: 35px;"> 
-                                        <div style="line-height: 35px; font-size: 16px; background:#007bff; display: inline-block; color: #ffffff; height: 35px;"
-                                            [ngStyle]="{'width':singleGoalData && singleGoalData?.dashboardData?.goalProgress > 100 ? 100 : singleGoalData?.dashboardData?.goalProgress +'%' }">
-                                            <span style="padding-left: 5px;" appFormatNumber
-                                                [value]="singleGoalData?.dashboardData?.goalProgress">
-                                                {{singleGoalData?.dashboardData?.goalProgress}} %
-                                            </span>
-                                            <span> %</span>
-                                        </div>
+                                        <div style="background: #f5f7f7; height: 35px;">
+                                            <div style="line-height: 35px; font-size: 16px; background:#007bff; display: inline-block; color: #ffffff; height: 35px;"
+                                                [ngStyle]="{'width':singleGoalData && singleGoalData?.dashboardData?.goalProgress > 100 ? 100 : singleGoalData?.dashboardData?.goalProgress +'%' }">
+                                                <span style="padding-left: 5px;" appFormatNumber
+                                                    [value]="singleGoalData?.dashboardData?.goalProgress">
+                                                    {{singleGoalData?.dashboardData?.goalProgress}} %
+                                                </span>
+                                                <span> %</span>
+                                            </div>
                                         </div>
 
                                     </td>
                                 </tr>
                             </table>
 
-                            <p style="margin-bottom: 0px; padding-top: 25px; font-size: 16px; font-weight: 600;">Additional Required</p>
+                            <p style="margin-bottom: 0px; padding-top: 25px; font-size: 16px; font-weight: 600;">
+                                Additional Required</p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="margin: 10px 0px 0px 0px; font-size: 16px; border: 1px solid #dee5e7;  width: 100%; border: 1px solid #dee5e7; width: 100%;">
                                 <tr style="background: #F5F7F7;">
-                                    <td style="border-bottom: 1px solid #dee5e7; padding: 14px; border-right: 1px solid #dee5e7; ">
-                                         
+                                    <td
+                                        style="border-bottom: 1px solid #dee5e7; padding: 14px; border-right: 1px solid #dee5e7; ">
+
                                     </td>
 
                                     <td style="border-bottom: 1px solid #dee5e7;    padding: 14px; text-align: right;">
@@ -814,7 +815,9 @@
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 14px; background: #F5F7F7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;"> Equity</td>
+                                    <td
+                                        style="padding: 14px; background: #F5F7F7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                                        Equity</td>
                                     <td style="padding: 14px; border-bottom: 1px solid #dee5e7; text-align: right;">
                                         ₹<span appFormatNumber
                                             [value]="singleGoalData && singleGoalData ? singleGoalData?.dashboardData?.equity_monthly : '0'"></span>
@@ -826,7 +829,8 @@
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 14px; background: #F5F7F7; border-right: 1px solid #dee5e7;"> Debt</td>
+                                    <td style="padding: 14px; background: #F5F7F7; border-right: 1px solid #dee5e7;">
+                                        Debt</td>
                                     <!-- <span style="font-size: 12px;"> 0%</span> -->
                                     <td style="padding: 14px; text-align: right;">
                                         ₹<span appFormatNumber
@@ -859,34 +863,46 @@
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
                                 <tr>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Assets</td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Advice</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Current Value</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Maturity Value</td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                        Assets</td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                        Advice</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
+                                        Current Value</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
+                                        Maturity Value</td>
                                     <td style="padding: 8px;background: #f5f7f7; text-align: right; ">Allocated %</td>
                                 </tr>
 
                                 <tr *ngFor="let allocation of singleGoalData.goalAssetAllocation">
-                                    <td style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
                                         {{allocation.assetName}}</td>
-                                    <td style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
                                         {{allocation.advice || '-'}}</td>
-                                    <td style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                         <p class="mb-0 roboto" appFormatNumber [value]='allocation.currentValue'></p>
                                     </td>
-                                    <td style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                         <p class="m-0 roboto" appFormatNumber
                                             [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
                                         </p>
                                     </td>
-                                    <td style="padding: 8px; border-top: 1px solid #dee5e7; text-align: right;  border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; border-top: 1px solid #dee5e7; text-align: right;  border-right: 1px solid #dee5e7;">
                                         <p class="mb-0 roboto pr-48" appFormatNumber
                                             [value]='(allocation.assetType == 5 && allocation.lumpsumOrSip == 1)? allocation.lumpsumPercent:(allocation.assetType == 5 && allocation.lumpsumOrSip == 2)?allocation.sipPercent:allocation.percentAllocated'>
                                             %
                                         </p>
                                     </td>
                                 </tr>
-                                <td colspan="5" style="padding: 8px; border-top: 1px solid #dee5e7;  text-align: center; font-size: 14px;"
+                                <td colspan="5"
+                                    style="padding: 8px; border-top: 1px solid #dee5e7;  text-align: center; font-size: 14px;"
                                     *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets
                                     allocated to
                                     this goal </td>
@@ -905,7 +921,14 @@
                         <td>
                             <p style=" font-size: 18px; margin-bottom: 0px; font-weight: 600;"> Planner notes</p>
 
-                            <p style="margin: 0px; font-size: 16px;"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.  </p>
+                            <p style="margin: 0px; font-size: 16px;"> Lorem Ipsum is simply dummy text of the printing
+                                and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                                a type specimen book. It has survived not only five centuries, but also the leap into
+                                electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
                         </td>
                     </tr>
                 </table>
@@ -959,38 +982,43 @@
 
 
 
-        <tr>
+        <tr *ngIf = "singleGoalData.goalType == 1">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
                         <td>
-                            <p style=" font-size: 18px; font-weight: 600;"> Milestone details  </p>
+                            <p style=" font-size: 18px; font-weight: 600;"> Milestone details </p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
                                 <tr>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Planning</td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Milestone type</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Amount </td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;"> Future value</td>
-                                     
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                        Planning</td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                        Milestone type</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
+                                        Amount </td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
+                                        Future value</td>
+
                                 </tr>
 
-                                <tr>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">Stock</td>
-                                    <td style="padding: 8px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Legacy </td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; text-align: right;">₹300000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">₹125455</td>
+                                <tr *ngFor="let element of dataSource1">
+                                    <td
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        {{(element.onRetirementOrDemise == 1)?'Post retirement':'Demise'}}</td>
+                                    <td
+                                        style="padding: 8px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}</td>
+                                    <td
+                                        style="padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        ₹<span appFormatNumber>{{element.amount}} </span></td>
+                                    <td
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        ₹<span appFormatNumber>{{element.milestoneFV}}</span></td>
                                 </tr>
-                                <tr>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">Stock</td>
-                                    <td style="padding: 8px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Legacy </td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; text-align: right;">₹300000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">₹125455</td>
-                                </tr>
-
-                               
-                               
                             </table>
                         </td>
                     </tr>
@@ -999,41 +1027,74 @@
         </tr>
 
 
-        <tr>
+        <tr *ngIf = "singleGoalData.goalType ==5 || singleGoalData.goalType ==6">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
                         <td>
-                            <p style=" font-size: 18px; font-weight: 600;"> Key info  </p>
+                            <p style=" font-size: 18px; font-weight: 600;"> Key info </p>
 
-                            <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
                                 <tr>
-                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7;" colspan="1"></td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;" colspan="2"></td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; text-align: center;" colspan="2">Monthly</td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; text-align: center;" colspan="2">Lumpsum</td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7;"
+                                        colspan="1"></td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;"
+                                        colspan="2"></td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; text-align: center;"
+                                        colspan="2">Monthly</td>
+                                    <td style="padding: 8px;background: #f5f7f7; border-bottom: 1px solid #dee5e7; text-align: center;"
+                                        colspan="2">Lumpsum</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">Goal year</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">Present value</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Future value </td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Equity</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Debt</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Equity</td>
-                                    <td style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;"> Debt</td>
-                                    
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        Goal year</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Present value</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Future value </td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Equity</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Debt</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Equity</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        Debt</td>
+
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">2021</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">₹30,00,000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">₹30,00,000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">₹30,00,000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">₹30,00,000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">₹30,00,000</td>
-                                    <td style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">₹30,00,000</td>
+                                    <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        {{d | date:'yyyy'}}</td>
+                                    <!-- <td *ngFor="let d of singleGoalData.dashboardData.key_arr_debt_monthly"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        ₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></td> -->
+                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_goalYrAndFutValues"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                                        ₹<span appFormatNumber>{{d}}</span></td>
+                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_equity_monthly"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                                        ₹<span appFormatNumber>{{d}}</span></td>
+                                    <td  *ngFor="let d of singleGoalData.dashboardData.arr_debt_monthly"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                                        ₹<span appFormatNumber>{{d}}</span></td>
+                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_lump_equity"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                                        ₹<span appFormatNumber>{{d}}</span></td>
+                                    <td *ngFor="let d of singleGoalData.dashboardData.arr_lump_debt"
+                                        style="padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                                        ₹<span appFormatNumber>{{d}}</span></td>
                                 </tr>
-                             </table>
+                            </table>
                         </td>
                     </tr>
                 </table>
