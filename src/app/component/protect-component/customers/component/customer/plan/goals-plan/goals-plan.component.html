@@ -943,12 +943,12 @@
                     <tr>
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;"
-                                *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                *ngIf="dataSource">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
-                                <tr *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                                <tr *ngIf="dataSource">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
                                     <td
@@ -960,7 +960,7 @@
                                     <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
                                 </tr>
 
-                                <tr *ngFor="let element of singleGoalData.retirementTableValue">
+                                <tr *ngFor="let element of dataSource">
                                     <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
                                     <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
