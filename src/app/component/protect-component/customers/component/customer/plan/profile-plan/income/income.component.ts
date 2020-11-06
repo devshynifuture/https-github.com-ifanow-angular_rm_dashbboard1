@@ -109,6 +109,7 @@ export class IncomeComponent implements OnInit {
       this.globalArray.push(data);
       this.globalArray  = this.globalArray.flat();
       this.summaryPlanService.setIncomeData(this.globalArray);
+      this.globalArray = [];
     }
   }
   fetchData(value, fileName, element) {
@@ -220,7 +221,8 @@ export class IncomeComponent implements OnInit {
         this.planService.deleteIncome(incomeData.id).subscribe(
           data => {
             this.eventService.openSnackBar("Income deleted successfully", "Dismiss")
-            this.getIncomeList();
+            this.deleteId(incomeData.id);
+            // this.getIncomeList();
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
@@ -242,6 +244,12 @@ export class IncomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  deleteId(id){
+    this.globalArray = this.storedData.filter(d=>d.id != id);
+    this.globalArray = [...new Map(this.globalArray.map(item => [item.id, item])).values()];
+    this.summaryPlanService.setIncomeData(this.globalArray);
+    this.getIncomeListRes(this.globalArray);
   }
 
   addIncomeDetail(data) {

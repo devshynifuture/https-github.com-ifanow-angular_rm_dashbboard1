@@ -20,6 +20,7 @@ import {DatePipe} from '@angular/common';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
 import {CustomerService} from '../../../../customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 const moment = _rollupMoment || _moment;
 
@@ -46,6 +47,21 @@ export const MY_FORMATS = {
   ],
 })
 export class IndividualIncomeInfoComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+};
 
   date = new FormControl(moment());
   bankList: any;
@@ -1126,8 +1142,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
       this.incomeNetForm.markAllAsTouched();
     } else {
-
-
+      this.barButtonOptions.active = true;
       const obj: any = {
         clientId: this.clientId,
         advisorId: this.advisorId,
@@ -1227,6 +1242,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       (this.editApiData) ? this.eventService.openSnackBar('Income is edited') : this.eventService.openSnackBar('Income is added');
       this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
     }
+    this.barButtonOptions.active = false;
   }
 
   resetFeild() {

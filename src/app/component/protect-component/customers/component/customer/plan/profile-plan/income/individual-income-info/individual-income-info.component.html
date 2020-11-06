@@ -736,8 +736,9 @@
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(false)">Close</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="submitIncomeForm()">SAVE</button>
-
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="submitIncomeForm()">SAVE</button> -->
+            <app-progress-button (click)="submitIncomeForm()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

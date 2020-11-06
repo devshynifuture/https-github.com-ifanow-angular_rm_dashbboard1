@@ -134,7 +134,7 @@ export class ExpensesComponent implements OnInit {
   storedData: string;
   refreshRequired: any;
   storedDataBudget: string;
-  budgetStorage={};
+  budgetStorage = {};
   refreshRequiredBudget: boolean;
 
   // periodSelection: any;
@@ -160,11 +160,11 @@ export class ExpensesComponent implements OnInit {
         this.storedDataBudget = '';
         this.storedDataBudget = res;
       })
-      this.summaryPlanService.getclientDob()
+    this.summaryPlanService.getclientDob()
       .subscribe(res => {
         this.clientDob = res;
       })
-      this.summaryPlanService.getFamilyList()
+    this.summaryPlanService.getFamilyList()
       .subscribe(res => {
         this.familyList = res;
       })
@@ -180,7 +180,7 @@ export class ExpensesComponent implements OnInit {
       this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
     }
     this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
-  
+
     this.styleElement = document.createElement('style');
     this.changeColors();
     this.personalProfileData = AuthService.getProfileDetails();
@@ -477,7 +477,7 @@ export class ExpensesComponent implements OnInit {
     this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
     // this.miscellaneousAmount = data.Billes_&_Utilies;
     // this.spent = data.total ? data.total : 0;
-    if(this.tab == 'Transactions'){
+    if (this.tab == 'Transactions' && this.dataSource.data.length > 0) {
       this.cashFlow('piechartExpense')
     }
   }
@@ -637,7 +637,7 @@ export class ExpensesComponent implements OnInit {
       // this.getBudgetGraphValues();
       // this.getBudgetList();
       // this.getBugetRecurring();
-      
+
       // this.getBudgetApis();
       // setTimeout(() => {
       //   this.budgetChart('bugetChart')
@@ -738,7 +738,7 @@ export class ExpensesComponent implements OnInit {
         this.spent += (element.spent == 0) ? 0 : element.spent ? element.spent : element.total ? element.total : 0
         this.budgetAmount += (element.totalAmount == 0) ? 0 : element.totalAmount ? element.totalAmount : element.total ? element.total : 0
       })
-      if(this.tab == 'Budget'){
+      if (this.tab == 'Budget') {
         this.budgetChart('bugetChart');
       }
     }
@@ -769,49 +769,49 @@ export class ExpensesComponent implements OnInit {
   }
   getListFamilyMem() {
     this.isLoading = true;
-      const obj = {
-        clientId: this.clientId
-      };
-      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
-        data => {
-          if (data) {
-            let array = [];
-            data.forEach(element => {
-              if (element.familyMemberId == 0) {
-                this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
-              } else {
-                const obj = {
-                  'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
-                  'id': element.familyMemberId
-                }
-                array.push(obj);
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data) {
+          let array = [];
+          data.forEach(element => {
+            if (element.familyMemberId == 0) {
+              this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+            } else {
+              const obj = {
+                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                'id': element.familyMemberId
               }
-  
-            });
-            this.familyList = array.map(function (obj, ind) {
-              let val = obj.id;
-              obj[val] = obj['dob']
-              delete obj['dob'];
-              delete obj['id'];
-              return obj;
-            });
-            this.summaryPlanService.setclientDob(this.clientDob);
-            this.summaryPlanService.setFamilyList(this.familyList);
+              array.push(obj);
+            }
 
-          }
-          if (this.chekToCallApi()) {
-            this.getAllExpense();
-          } else {
-            this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
-          }
-  
-        }, err => {
-          this.getAllExpense();
+          });
+          this.familyList = array.map(function (obj, ind) {
+            let val = obj.id;
+            obj[val] = obj['dob']
+            delete obj['dob'];
+            delete obj['id'];
+            return obj;
+          });
+          this.summaryPlanService.setclientDob(this.clientDob);
+          this.summaryPlanService.setFamilyList(this.familyList);
+
         }
-      );
- 
+        if (this.chekToCallApi()) {
+          this.getAllExpense();
+        } else {
+          this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+        }
+
+      }, err => {
+        this.getAllExpense();
+      }
+    );
+
     // this.isLoading = true;
-    
+
   }
   removeDate(item) {
     this.filterDate.splice(item, 1);
@@ -1225,6 +1225,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
   deleteModal(value, data) {
+    let deletedId = data.id;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -1249,11 +1250,12 @@ export class ExpensesComponent implements OnInit {
         } else if (value == 'expense' && !data.repeatFrequency && !data.continueTill) {
           this.planService.deleteExpenseTransaction(data.id).subscribe(
             data => {
-              this.refreshRequired = true;
-              this.expenseStorage = {};
-              this.storedData = "";
+              // this.refreshRequired = true;
+              // this.expenseStorage = {};
+              // this.storedData = "";
+              this.deleteId(deletedId);
               this.eventService.openSnackBar('Expense transaction is deleted', 'Dismiss');
-              this.getAllExpense();
+              // this.getAllExpense();
               dialogRef.close();
               // this.getTransaction();
             },
@@ -1262,12 +1264,13 @@ export class ExpensesComponent implements OnInit {
         } else if (value == 'budget' && data.repeatFrequency && data.continueTill) {
           this.planService.deleteRecuringBudget(data.id).subscribe(
             data => {
+              this.deleteIdBudget(deletedId);
               this.eventService.openSnackBar('Buget is deleted', 'Dismiss');
               dialogRef.close();
-              this.refreshRequiredBudget = true;
-              this.budgetStorage = {};
-              this.storedDataBudget = "";
-              this.getBudgetApis();
+              // this.refreshRequiredBudget = true;
+              // this.budgetStorage = {};
+              // this.storedDataBudget = "";
+              // this.getBudgetApis();
               // this.getBudgetList();
               // this.getBugetRecurring();
             },
@@ -1276,12 +1279,13 @@ export class ExpensesComponent implements OnInit {
         } else {
           this.planService.deletBudget(data.id).subscribe(
             data => {
+              this.deleteIdBudget(deletedId);
               this.eventService.openSnackBar('Recurring budget is deleted', 'Dismiss');
               dialogRef.close();
-              this.refreshRequiredBudget = true;
-              this.budgetStorage = {};
-              this.storedDataBudget = "";
-              this.getBudgetApis();
+              // this.refreshRequiredBudget = true;
+              // this.budgetStorage = {};
+              // this.storedDataBudget = "";
+              // this.getBudgetApis();
               // this.getBudgetList();
               // this.getBugetRecurring();
             },
@@ -1305,6 +1309,36 @@ export class ExpensesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  deleteId(id) {
+    let Obj = this.storedData;
+    Object.keys(Obj).map(key => {
+      Obj[key].forEach((singleData) => {
+        if (singleData.expenseList) {
+          singleData.expenseList = singleData.expenseList.filter(d => d.id != id);
+        }
+        if (singleData.recurringExpenseList) {
+          singleData.recurringExpenseList = singleData.recurringExpenseList.filter(d => d.id != id);
+        }
+      });
+    });
+    this.summaryPlanService.setExpenseData(Obj);
+    this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+  }
+  deleteIdBudget(id) {
+    let Obj = this.storedDataBudget;
+    Object.keys(Obj).map(key => {
+      Obj[key].forEach((singleData) => {
+        if (singleData[0]) {
+          singleData[0] = singleData[0].filter(d => d.id != id);
+        }
+        if (singleData[1]) {
+          singleData[1] = singleData[1].filter(d => d.id != id);
+        }
+      });
+    });
+    this.summaryPlanService.setBudgetData(Obj);
+    this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
   }
   openExpenses(value, data) {
     if (data == null) {
@@ -1330,7 +1364,7 @@ export class ExpensesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-          
+
             if (sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' || sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn') {
               // this.getTransaction();
               this.refreshRequired = sideBarData.refreshRequired;
