@@ -29,7 +29,7 @@
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <mat-menu #menu1="matMenu" class="disabledOpacity">
+            <mat-menu #menu1="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
