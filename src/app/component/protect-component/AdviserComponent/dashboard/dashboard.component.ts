@@ -1619,5 +1619,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  getTnxStatus(id) {
+    return UtilService.getTransactionStatusFromStatusId(id);
+  }
 
 }
