@@ -361,9 +361,9 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.dataSource1 = new MatTableDataSource(debtData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);
       this.dataSource2 = new MatTableDataSource(dividenedSummaryData);
-      console.log('ahgfjsf', this.dataSource)
-      console.log('2414w', this.dataSource1)
-      this.setCapitaSummary = {}
+      console.log('dataSource',this.dataSource);
+      console.log('dataSource1',this.dataSource1);
+      console.log('dataSource2',this.dataSource2);
       this.setCapitaSummary.dataSource = this.dataSource
       this.setCapitaSummary.dataSource1 = this.dataSource1
       this.setCapitaSummary.dataSource2 = this.dataSource2
@@ -470,6 +470,7 @@ export class MutualFundsCapitalComponent implements OnInit {
           if (flag) {
             const obj = {
               schemeName: element.schemeName,
+              isin: element.isin,
               folioNumber: element.folioNumber,
               dividendPayout: this.totaldividendPayout,
               dividendReinvestment: this.totaldividendReinvestment,
@@ -530,6 +531,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                 ele.schemeName = element.schemeName;
                 ele.folioNumber = element.folioNumber;
                 ele.ownerName = element.ownerName;
+                ele.isin = element.isin;
                 // fiterArray.push(element);
                 fiterArray.push(ele);
 

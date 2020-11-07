@@ -1698,7 +1698,8 @@ export class MutualFundSummaryComponent implements OnInit {
       var test = element.navDate.includes('$NEXTLINE')
       console.log('includes', test)
       if (element.folioNumber && test == false) {
-        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        let isin = element.isin ? ' | ' + element.isin : '';
+        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         element.navDate = (element.nav + '$NEXTLINE ' + element.navDate);
         console.log(element.navDate)
@@ -2016,7 +2017,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.loadingDone = true
     this.customDataSource.data.forEach(element => {
       if (element.folioNumber) {
-        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        let isin = element.isin ? ' | ' + element.isin : '';
+        element.schemeName = element.schemeName +isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
