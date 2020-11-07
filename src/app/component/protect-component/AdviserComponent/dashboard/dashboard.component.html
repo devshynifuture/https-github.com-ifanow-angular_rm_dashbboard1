@@ -1013,14 +1013,13 @@
                 <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
               </div>
               <div class="col-md-12">
-                <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
-                  class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
-                  READY
+                <button  mat-stroked-button
+                  class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
                 </button>
-                <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
+                <!-- <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
                   class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
                   AUTHORISATION
-                </button>
+                </button> -->
               </div>
             </div>
 
