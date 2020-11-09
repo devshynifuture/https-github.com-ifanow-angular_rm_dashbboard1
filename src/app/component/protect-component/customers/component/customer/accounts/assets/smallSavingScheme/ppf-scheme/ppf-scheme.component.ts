@@ -124,7 +124,9 @@ export class PPFSchemeComponent implements OnInit {
         console.log('getPpfSchemeDataResponse', data);
         if (!this.dataList) {
           this.ppfDataList.emit(data);
+          this.dataList = data;
         }
+
         this.ppfList = data.assetList;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
@@ -151,8 +153,11 @@ export class PPFSchemeComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             // this.getPpfSchemeData();
-            this.dataList.data = this.dataList.data.filter(x => x.id != element.id);
-            this.dataSource.data = this.dataList;
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+            // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
+            this.dataList.sumOfAccountBalance -= element.accountBalance;
+            this.getPpfSchemeDataResponse(this.dataList);
             dialogRef.close();
 
           },
@@ -216,7 +221,21 @@ export class PPFSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getPpfSchemeData();
+            if(!this.dataList){
+              
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
+              this.dataList['sumOfAccountBalance'] = sideBarData.data.accountBalance;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
+              this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
+            }
+            
+            this.getPpfSchemeDataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
