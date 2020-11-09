@@ -8,6 +8,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { setInterval } from 'timers';
 import { interval, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -43,8 +44,9 @@ export class ForgotPasswordComponent implements OnInit {
   showTimeRemaing: number;
   @ViewChild('countDown', { static: true }) elemRef: ElementRef;
   resendOtpFlag: boolean = false;
+  logoUrl: any;
   constructor(private loginService: LoginService, private eventService: EventService,
-    private router: Router, private fb: FormBuilder) {
+    private router: Router, private fb: FormBuilder, private peopleService: PeopleService) {
   }
   signUpBarList = [
     { name: "CREATE ACCOUNT", flag: true },
@@ -53,6 +55,7 @@ export class ForgotPasswordComponent implements OnInit {
     { name: "SET PASSWORD", flag: false }
   ]
   ngOnInit() {
+    this.getLogoUrl();
     this.verifyData = window.history.state;
     this.saveVerifyData = Object.assign({}, window.history.state);
     if (!this.saveVerifyData) {
@@ -67,6 +70,22 @@ export class ForgotPasswordComponent implements OnInit {
       this.isVerify = false;
     }
     this.userName = new FormControl('', [Validators.required]);
+  }
+
+  getLogoUrl() {
+    this.peopleService.getClientLogo({ hostName: window.location.hostname })
+      .subscribe(res => {
+        if (res) {
+          localStorage.removeItem('token');
+          console.log(res);
+          this.logoUrl = res.logoUrl;
+        } else {
+          this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
+        }
+      }, err => {
+        this.logoUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png';
+        console.error(err);
+      });
   }
 
   hideNumEmailFromUser(data) {
