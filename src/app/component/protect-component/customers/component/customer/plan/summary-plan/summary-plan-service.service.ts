@@ -10,6 +10,7 @@ export class SummaryPlanServiceService {
   private budgetData = new BehaviorSubject('')
   private dob = new BehaviorSubject('')
   private familyList = new BehaviorSubject('')
+  private incomeCount = new BehaviorSubject('')
 
   constructor() { }
 
@@ -19,6 +20,13 @@ export class SummaryPlanServiceService {
   }
   getIncomeData() {
     return this.incomeData.asObservable();
+  }
+  setIncomeCount(value) {
+    this.incomeCount.next(value);
+
+  }
+  getIncomeCount() {
+    return this.incomeCount.asObservable();
   }
   setExpenseData(value) {
     this.expenseData.next(value);
