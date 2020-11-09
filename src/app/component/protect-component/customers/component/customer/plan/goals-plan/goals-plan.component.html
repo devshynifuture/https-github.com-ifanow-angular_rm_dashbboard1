@@ -921,13 +921,8 @@
                         <td>
                             <p style=" font-size: 18px; margin-bottom: 0px; font-weight: 600;"> Planner notes</p>
 
-                            <p style="margin: 0px; font-size: 16px;"> Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-                                a type specimen book. It has survived not only five centuries, but also the leap into
-                                electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            <p style="margin: 0px; font-size: 16px; word-break:break-word;"> 
+                                {{singleGoalData?.remainingData?.notes}}.
                             </p>
                         </td>
                     </tr>
@@ -943,12 +938,12 @@
                     <tr>
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;"
-                                *ngIf="dataSource">
+                                *ngIf="dataSource.length > 0">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
-                                <tr *ngIf="dataSource">
+                                <tr  *ngIf="dataSource.length > 0">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
                                     <td
@@ -982,7 +977,7 @@
 
 
 
-        <tr *ngIf="singleGoalData.goalType == 1">
+        <tr *ngIf="singleGoalData.goalType == 1 && dataSource1.length>0">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>

@@ -310,8 +310,8 @@ export const appConfig = {
   // UPDATE_INFLAMATION_RETURNS:'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
-  SAVE_MILESTONE:'goal-planning/goal-milestone/save',
-  EDIT_MILESTONE:'goal-planning/goal-milestone/edit',
+  SAVE_MILESTONE: 'goal-planning/goal-milestone/save',
+  EDIT_MILESTONE: 'goal-planning/goal-milestone/edit',
   DELETE_MILESTONE: 'goal-planning/milestone/remove',
   DELETE_LOAN: 'goal-planning/goal-loan/delete',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
@@ -349,10 +349,10 @@ export const appConfig = {
   EDIT_GENERAL_INSURANCE_PLAN: 'insurance/planning/general/insurance/suggest/policy/new/edit',
   GET_INSURANCE_PLANNING_PLAN_SUMMARY: 'insurance/planning/plan/summary/insurance/get',
   GET_INSURANCE_PLAN_SUMMARY: 'insurance/planning/summary/get',
-  DELETE_SUGGEST_NEW:'account/insurance/general-insurance/delete',
+  DELETE_SUGGEST_NEW: 'account/insurance/general-insurance/delete',
   Edit_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/edit',
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
-  FREEZE_CAL:'goal-planning/goal/freeze',
+  FREEZE_CAL: 'goal-planning/goal/freeze',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -877,6 +877,7 @@ export const appConfig = {
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+  POST_MF_UPLOAD_CAS: 'mutual-fund/upload/cas',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 
@@ -938,15 +939,15 @@ export const appConfig = {
 
   QUESTION_ANSWER_ADD: 'admin/dashboard/on-boarding/question-answer/add',
   QUESTION_ANSWER_GET: 'admin/dashboard/on-boarding/question-answer/get',
-////////////////////////plan-summary///////////////////////////////////////
-  GET_CASHFLOW:'plan/cash-flow/summary/get',
+  ////////////////////////plan-summary///////////////////////////////////////
+  GET_CASHFLOW: 'plan/cash-flow/summary/get',
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
   ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
   ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
   GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
   PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
-  
+
 
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',

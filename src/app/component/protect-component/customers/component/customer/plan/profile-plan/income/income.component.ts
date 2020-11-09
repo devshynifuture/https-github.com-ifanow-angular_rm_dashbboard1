@@ -47,6 +47,7 @@ export class IncomeComponent implements OnInit {
   storedData: any;
   incomeId: any;
   isAdded: any;
+  LoadCount :any;
   constructor(private fileUpload: FileUploadServiceService,
     private util:UtilService,private excel: ExcelGenService,
     public dialog: MatDialog, private eventService: EventService, 
@@ -59,6 +60,7 @@ export class IncomeComponent implements OnInit {
   viewMode;
 
   ngOnInit() {
+    this.LoadCount = 0;
     this.reportDate = new Date();
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
@@ -73,6 +75,10 @@ export class IncomeComponent implements OnInit {
       this.storedData = '';
       this.storedData = res;
     })
+    this.summaryPlanService.getIncomeCount()
+    .subscribe(res => {
+      this.LoadCount = res;
+    })
     if(this.chekToCallApi()){
       this.getIncomeList();
     }else{
@@ -85,6 +91,8 @@ export class IncomeComponent implements OnInit {
       this.isLoading = true;
       this.dataSource.data = [{}, {}, {}];
     }
+    this.LoadCount++;
+    this.summaryPlanService.setIncomeCount(this.LoadCount);
     const obj =
     {
       advisorId: this.advisorId,
@@ -110,7 +118,7 @@ export class IncomeComponent implements OnInit {
 
   }
   chekToCallApi(){
-    return this.storedData ? false :  true
+    return this.LoadCount >= 1 ? false : this.storedData ? false :  true
   }
   pushArray(data){
     if(data && !this.incomeId){
@@ -121,10 +129,11 @@ export class IncomeComponent implements OnInit {
       this.globalArray = [];
       this.incomeId = '';
     }else if(this.isAdded){
+      this.storedData == '' ? this.storedData = [] : ''
       this.storedData.push(data)
       this.storedData  = this.storedData.flat();
       this.summaryPlanService.setIncomeData(this.storedData);
-    }else if(!this.isAdded){
+    }else if(this.isAdded == false){
       this.storedData = this.storedData.filter(d=>d.id != this.incomeId);
       this.storedData.push(data)
       this.storedData  = this.storedData.flat();
@@ -177,6 +186,8 @@ export class IncomeComponent implements OnInit {
       this.dataSource.data.forEach(element => {
         this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
+    }else{
+      this.dataSource.data = [];
     }
   }
   filterIncome(key: string, value: any) {

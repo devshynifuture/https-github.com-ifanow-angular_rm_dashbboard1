@@ -575,6 +575,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
+      isAdded : true,
       refreshRequired: true,
       value: 'addBudget'
     });
@@ -587,6 +588,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
+      isAdded : false,
       refreshRequired: true,
       value: 'editBudget'
     });
@@ -596,6 +598,7 @@ export class AddExpensesComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({
+      isAdded : true,
       flag: 'added',
       state: 'close',
       data,
@@ -611,6 +614,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
+      isAdded : false,
       refreshRequired: true,
       value: 'editExpense'
     });
