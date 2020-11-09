@@ -99,65 +99,74 @@ export class EmailLeftSidebarComponent implements OnInit {
   getRightSideNavListCount() {
     this.isLoading = true;
 
-    this.unReadCountSubs = this.emailDataStorageService.getUnReadCountThroughObs()
+    if (this.emailDataStorageService.getUnReadCount() !== null) {
+      this.unreadCount = +this.emailDataStorageService.getUnReadCount();
+    }
+
+    this.emailDataStorageService.getNavCountThroughObs()
       .subscribe(res => {
-        if (res) {
-          this.unreadCount = +res;
+        if (res && 'inboxCount' in res) {
+          this.importantCount = res.inboxCount;
+          this.draftCount = res.draftCount;
+          this.sentCount = res.sentCount;
+          this.starredCount = res.starredCount;
+          this.trashCount = res.trashCount;
+          this.unreadCount = +this.emailDataStorageService.getUnReadCount();
         }
       });
 
-    this.emailService.getRightSideNavList().subscribe((responseData) => {
-      this.navList = responseData;
-      console.log("check navlist :::", this.navList);
-      if (this.navList.length !== 0) {
-        let obj = {
-          inboxCount: null,
-          sentCount: null,
-          starredCount: null,
-          draftCount: null,
-          trashCount: null,
-          unreadCount: null
-        };
-        this.navList.forEach((element) => {
-          switch (element.labelId) {
-            case "INBOX":
-              this.importantCount = element.threadsTotal;
-              obj.inboxCount = this.importantCount;
-              break;
-            case "SENT":
-              this.sentCount = element.threadsTotal;
-              obj.sentCount = this.sentCount;
-              break;
-            case "DRAFT":
-              this.draftCount = element.threadsTotal;
-              obj.draftCount = this.draftCount;
-              break;
-            case "TRASH":
-              this.trashCount = element.threadsTotal;
-              obj.trashCount = this.trashCount;
-              break;
-            case "STARRED":
-              this.starredCount = element.threadsTotal;
-              obj.starredCount = this.starredCount;
-              break;
-          }
-        });
-        if (this.emailDataStorageService.navCountObj === null) {
-          this.emailDataStorageService.storeNavCount(obj);
-        } else if (this.emailDataStorageService.navCountObj !== null) {
-          if (obj.inboxCount > this.emailDataStorageService.navCountObj.inboxCount ||
-            obj.draftCount > this.emailDataStorageService.navCountObj.draftCount ||
-            obj.sentCount > this.emailDataStorageService.navCountObj.sentCount ||
-            obj.starredCount > this.emailDataStorageService.navCountObj.starredCount ||
-            obj.trashCount > this.emailDataStorageService.navCountObj.trashCount) {
-            this.emailDataStorageService.setCanHitGmailApi(true);
-            this.emailDataStorageService.storeNavCount(obj);
-          } else {
-            this.emailDataStorageService.setCanHitGmailApi(false);
-          }
-        }
-      }
-    });
+    // this.emailService.getRightSideNavList().subscribe((responseData) => {
+    //   this.navList = responseData;
+    //   console.log("check navlist :::", this.navList);
+    //   if (this.navList.length !== 0) {
+    //     let obj = {
+    //       inboxCount: null,
+    //       sentCount: null,
+    //       starredCount: null,
+    //       draftCount: null,
+    //       trashCount: null,
+    //       unreadCount: null
+    //     };
+    //     this.navList.forEach((element) => {
+    //       switch (element.labelId) {
+    //         case "INBOX":
+    //           this.importantCount = element.threadsTotal;
+    //           obj.inboxCount = this.importantCount;
+    //           break;
+    //         case "SENT":
+    //           this.sentCount = element.threadsTotal;
+    //           obj.sentCount = this.sentCount;
+    //           break;
+    //         case "DRAFT":
+    //           this.draftCount = element.threadsTotal;
+    //           obj.draftCount = this.draftCount;
+    //           break;
+    //         case "TRASH":
+    //           this.trashCount = element.threadsTotal;
+    //           obj.trashCount = this.trashCount;
+    //           break;
+    //         case "STARRED":
+    //           this.starredCount = element.threadsTotal;
+    //           obj.starredCount = this.starredCount;
+    //           break;
+    //       }
+    //     });
+    //     if (this.emailDataStorageService.navCountObj === null) {
+    //       this.emailDataStorageService.storeNavCount(obj);
+    //     } else if (this.emailDataStorageService.navCountObj !== null) {
+    //       if (obj.inboxCount > this.emailDataStorageService.navCountObj.inboxCount ||
+    //         obj.draftCount > this.emailDataStorageService.navCountObj.draftCount ||
+    //         obj.sentCount > this.emailDataStorageService.navCountObj.sentCount ||
+    //         obj.starredCount > this.emailDataStorageService.navCountObj.starredCount ||
+    //         obj.trashCount > this.emailDataStorageService.navCountObj.trashCount) {
+    //         this.emailDataStorageService.setCanHitGmailApi(true);
+    //         this.emailDataStorageService.storeNavCount(obj);
+    //       } else {
+    //         this.emailDataStorageService.setCanHitGmailApi(false);
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   ngOnDestroy(): void {

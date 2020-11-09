@@ -8,12 +8,12 @@
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
                 <div class="pdfClass">
                     <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon b-0">
-                        <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner"> 
+                        <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner">
                     </a>
-                        <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
-                            <button>Loading Done</button>
-                            <!-- DOne for bulk email -->
-                        </div>
+                    <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
+                        <button>Loading Done</button>
+                        <!-- DOne for bulk email -->
+                    </div>
                     <mat-menu #menu5="matMenu">
                         <button (click)="generatePdf()" mat-menu-item>PDF
                         </button>
@@ -29,13 +29,13 @@
                 <!-- put that code here Gayatri Pawar -->
 
                 <!-- end -->
-                <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)"  [matMenuTriggerFor]="menu1">ADD
-                    NEW</button> -->
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openMutualFund('addMutualFund',null)">ADD
+                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD
                     NEW</button>
-                <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
-                <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
+                <!-- <button mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openMutualFund('addMutualFund',null)">ADD
+                    NEW</button> -->
+                <mat-menu #menu1="matMenu" class="add-new">
+                    <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -47,8 +47,8 @@
                                 </p>
                             </div>
                         </div>
-                    </button> -->
-                <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+                    </button>
+                    <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -63,8 +63,8 @@
                                 </p>
                             </div>
                         </div>
-                    </button> -->
-                <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                    </button>
+                    <button (click)="openMutualFund('import-cas-file',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-download.svg">
@@ -76,8 +76,8 @@
                                 </p>
                             </div>
                         </div>
-                    </button> -->
-                <!-- </mat-menu> -->
+                    </button>
+                </mat-menu>
             </div>
         </div>
         <div class=" skeletonAnimation overflow-y-1200" *ngIf="showSummaryBar" appSkeletonLoading
@@ -408,7 +408,8 @@
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span>
+                                    <span appFormatNumber
+                                        [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span>
                                 </div>
                             </td>
                         </ng-container>
@@ -533,7 +534,8 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 c-p proximaFont text-right">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
+                                        <span appFormatNumber
+                                            [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -694,7 +696,8 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
+                                        <span appFormatNumber
+                                            [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -816,7 +819,8 @@
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
-                                        <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
+                                        <span appFormatNumber
+                                            [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -924,7 +928,8 @@
                 <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
                     {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Mob number:</strong>
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Mob
+                        number:</strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
                 <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Email:</strong>
                     {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
@@ -1239,7 +1244,8 @@
                             {{mfData.total_xirr | number:'1.2-2'}}</td>
                         <td
                             style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
-                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
+                            <span appFormatNumber
+                                [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
                 </table>
@@ -1423,7 +1429,8 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;">
-                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
+                            <span appFormatNumber
+                                [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
 
@@ -1510,7 +1517,8 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;">
-                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span></td>
+                            <span appFormatNumber
+                                [value]="totalValue.allocationPer ? totalValue.allocationPer :'0'"></span></td>
                     </tr>
 
 
@@ -1595,7 +1603,8 @@
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
-                            <span appFormatNumber [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
+                            <span appFormatNumber
+                                [value]="totalValue.allocationPer ? totalValue.allocationPer : '0'"></span></td>
                     </tr>
 
 

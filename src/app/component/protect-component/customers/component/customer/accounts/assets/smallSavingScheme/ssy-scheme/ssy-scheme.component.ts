@@ -156,6 +156,7 @@ export class SsySchemeComponent implements OnInit {
         console.log('getSsySchemedataResponse', data);
         if (!this.dataList) {
           this.ssyDataList.emit(data);
+          this.dataList = data;
         }
         this.ssyList = data.assetList;
         this.datasource.data = data.assetList;
@@ -173,7 +174,7 @@ export class SsySchemeComponent implements OnInit {
 
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -182,11 +183,15 @@ export class SsySchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteSSY(data.id).subscribe(
+        this.cusService.deleteSSY(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
-            this.getSsySchemedata();
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+              this.dataList.sumOfAmountInvested -= element.accountBalance;
+            
+            this.getSsySchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -226,7 +231,17 @@ export class SsySchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getSsySchemedata();
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              this.dataList['sumOfAmountInvested'] += sideBarData.data.accountBalance;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
+            }
+            this.getSsySchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -258,7 +273,7 @@ export class SsySchemeComponent implements OnInit {
     if (dataFiltered.length > 0) {
       dataFiltered.forEach(element => {
         this.sumOfCurrentValue += element.currentValue;
-        this.sumOfAccountBalance += element.accountBalance;
+        this.sumOfAmountInvested += element.accountBalance;
       })
     }
     this.isFixedIncomeFiltered = true;
