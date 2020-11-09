@@ -935,10 +935,9 @@
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
-                    <tr>
+                    <tr *ngIf="dataSource.length > 0">
                         <td>
-                            <p style=" font-size: 18px; font-weight: 600;"
-                                *ngIf="dataSource">
+                            <p style=" font-size: 18px; font-weight: 600;">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"

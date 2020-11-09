@@ -36,8 +36,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   displayedColumns = ['goalYear', 'goalFv', 'status'];
   displayedColumns1 = ['select', 'milestone', 'amount', 'fv', 'icons'];
   clientFamily: any[];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+  dataSource = ([{}, {}, {}]);
   dataSource1 = [];
   isRetirementTab = false;
   isLoading = true;
@@ -164,7 +163,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
-    this.dataSource.data = [];
+    //this.dataSource.data = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
         this.loadAllGoals(false);
@@ -544,7 +543,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
-    this.dataSource.sort = this.sort;
+    //this.dataSource.sort = this.sort;
     console.log('table', this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);
