@@ -131,11 +131,15 @@ export class ExpensesComponent implements OnInit {
   tab = 'Transactions';
   allExpnseData: any;
   expenseStorage = {};
-  storedData: string;
+  storedData: any;
   refreshRequired: any;
   storedDataBudget: string;
   budgetStorage = {};
   refreshRequiredBudget: boolean;
+  isAddedExpense: any;
+  isAddedBudget: any;
+  expenseId: any;
+  budgetId: any;
 
   // periodSelection: any;
 
@@ -299,6 +303,7 @@ export class ExpensesComponent implements OnInit {
     if (data) {
       // data = [...new Map(data.map(item => [item.id, item])).values()];
       // this.globalArray  = this.globalArray.flat();
+      // this.pushIfAddOrEdit(data);
       if (this.expenseStorage[this.startDate + '-' + this.endDate] && this.refreshRequired) {
         this.expenseStorage[this.startDate + '-' + this.endDate] = [];
         this.expenseStorage[this.startDate + '-' + this.endDate].push(data)
@@ -315,10 +320,51 @@ export class ExpensesComponent implements OnInit {
     }
     console.log(this.expenseStorage);
   }
+  pushIfAddOrEdit(data) {
+    if (this.isAddedExpense) {
+      if (this.storedData[this.startDate + '-' + this.endDate]) {
+        let Obj = this.storedData[this.startDate + '-' + this.endDate][0];
+        if(data.continueTill && data.repeatFrequency){
+          Obj.recurringExpenseList.push(data);
+          Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
+        }else{
+          Obj.expenseList.push(data);
+          Obj.expenseList = Obj.expenseList.flat();
+        }
+        this.summaryPlanService.setExpenseData(this.storedData);
+      } else {
+        this.expenseStorage = {};
+        this.expenseStorage[this.startDate + '-' + this.endDate] = [];
+        this.expenseStorage[this.startDate + '-' + this.endDate].push(data)
+        let Obj = this.expenseStorage[this.startDate + '-' + this.endDate][0];
+        if(data.continueTill && data.repeatFrequency){
+          Obj.recurringExpenseList.push(data);
+          Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
+        }else{
+          Obj.expenseList.push(data);
+          Obj.expenseList = Obj.expenseList.flat();
+        }
+        this.summaryPlanService.setExpenseData(this.expenseStorage);
+      }
+    } else {
+      let Obj = this.storedData[this.startDate + '-' + this.endDate][0];
+      if(data.continueTill && data.repeatFrequency){
+        Obj.recurringExpenseList = Obj.recurringExpenseList.filter(d=>d.id != this.expenseId);
+        Obj.recurringExpenseList.push(data);
+        Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
+      }else{
+        Obj.expenseList = Obj.expenseList.filter(d=>d.id != this.expenseId);
+        Obj.expenseList.push(data);
+        Obj.expenseList = Obj.expenseList.flat();
+      }
+      this.summaryPlanService.setExpenseData(this.storedData);
+    }
+  }
   pushArrayBudget(data) {
     if (data) {
       // data = [...new Map(data.map(item => [item.id, item])).values()];
       // this.globalArray  = this.globalArray.flat();
+      // this.pushIfAddOrEditBudget(data)
       if (this.budgetStorage[this.startDate + '-' + this.endDate] && this.refreshRequiredBudget) {
         this.budgetStorage[this.startDate + '-' + this.endDate] = [];
         this.budgetStorage[this.startDate + '-' + this.endDate].push(data)
@@ -335,13 +381,37 @@ export class ExpensesComponent implements OnInit {
     }
     console.log(this.budgetStorage);
   }
+  pushIfAddOrEditBudget(data) {
+    if (this.isAddedBudget) {
+      if (this.storedDataBudget[this.startDate + '-' + this.endDate]) {
+        let Obj = this.storedDataBudget[this.startDate + '-' + this.endDate][0];
+          Obj[0].push(data);
+          Obj[0] = Obj[0].flat();
+        this.summaryPlanService.setBudgetData(this.storedDataBudget);
+      } else {
+        this.budgetStorage = {};
+        this.budgetStorage[this.startDate + '-' + this.endDate] = [];
+        this.budgetStorage[this.startDate + '-' + this.endDate].push(data)
+        let Obj = this.budgetStorage[this.startDate + '-' + this.endDate][0];
+          Obj[0].push(data);
+          Obj[0] = Obj[0].flat();
+        this.summaryPlanService.setBudgetData(this.budgetStorage);
+      }
+    } else {
+      let Obj = this.storedDataBudget[this.startDate + '-' + this.endDate][0];
+        Obj[0] = Obj[0].filter(d=>d.id != this.budgetId);
+        Obj[0].push(data);
+        Obj[0] = Obj[0].flat();
+      this.summaryPlanService.setBudgetData(this.storedDataBudget);
+    }
+  }
   getAllExpenseResposne(data) {
     if (data) {
       this.allExpnseData = data;
       // this.isLoading = true;
       this.expenseList = this.filterExpenseAndRecurring(data.expenseList);
       this.recurringTrnList = this.filterExpenseAndRecurring(data.recurringExpenseList);
-      if(this.expenseList.length > 0){
+      if (this.expenseList.length > 0) {
         this.expenseList.forEach(singleExpense => {
           const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.expenseCategoryId];
           if (singleExpenseCategory) {
@@ -350,7 +420,7 @@ export class ExpensesComponent implements OnInit {
         });
       }
       this.transaction = this.expenseList;
-      if(this.recurringTrnList.length > 0){
+      if (this.recurringTrnList.length > 0) {
         this.recurringTrnList.forEach(singleExpense => {
           const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.expenseCategoryId];
           if (singleExpenseCategory) {
@@ -381,9 +451,9 @@ export class ExpensesComponent implements OnInit {
     return data
   }
   filterExpenseAndRecurring(array) {
-    if(array){
+    if (array) {
       array = array.filter(item => item.totalAmount > 0);
-    }else{
+    } else {
       array = [];
     }
     return array
@@ -673,9 +743,9 @@ export class ExpensesComponent implements OnInit {
   }
   getBudgetApis() {
     // if(!this.refreshRequiredBudget){
-      this.dataSource4.data = [{}, {}, {}];
-      this.dataSource5.data = [{}, {}, {}];
-      this.isLoadingBudget = true;
+    this.dataSource4.data = [{}, {}, {}];
+    this.dataSource5.data = [{}, {}, {}];
+    this.isLoadingBudget = true;
     // }
     const obj1 = {
       advisorId: this.advisorId,
@@ -1383,6 +1453,8 @@ export class ExpensesComponent implements OnInit {
 
             if (sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' || sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn') {
               // this.getTransaction();
+              this.isAddedExpense = sideBarData.isAdded;
+              this.expenseId = sideBarData.data;
               this.refreshRequired = sideBarData.refreshRequired;
               this.expenseStorage = {};
               this.storedData = "";
@@ -1390,13 +1462,17 @@ export class ExpensesComponent implements OnInit {
               // this.getExpenseGraphValue();
             } else if (sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget') {
               // this.getBudgetList();
+              this.isAddedBudget = sideBarData.isAdded;
+              this.budgetId = sideBarData.data;
               this.refreshRequiredBudget = sideBarData.refreshRequired;
               this.budgetStorage = {};
               this.storedDataBudget = "";
               this.getBudgetApis();
               // this.getBudgetGraphValues();
             } else {
+              this.isAddedBudget = sideBarData.isAdded;
               this.refreshRequiredBudget = sideBarData.refreshRequired;
+              this.budgetId = sideBarData.data;
               this.budgetStorage = {};
               this.storedDataBudget = "";
               this.getBudgetApis();
