@@ -408,6 +408,7 @@ export class LifeInsuranceComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
+         // this.deleteId(this.inputData.id);
           this.isRefreshRequired = true;
           this.outputChange.emit({id : '',isRefreshRequired:true});
           // this.getDetailsInsurance()
@@ -424,8 +425,17 @@ export class LifeInsuranceComponent implements OnInit {
       autoFocus: false,
     });
   }
+  chekToCallApi(){
+    return this.storedData ? false :  true
+  }
+  // deleteId(id){
+  //   this.inputData = this.storedData.filter(d=>d.id != id);
+  //   this.inputData = [...new Map(this.inputData.map(item => [item.id, item])).values()];
+  //   this.ipService.setIpData(this.inputData);
+  //   this.getGlobalDataInsurance();
+  // }
   getDetailsInsurance() {
-    this.dataSource1 = [{}, {}, {}];
+    this.dataSource1 = [{}, {}, {}]; 
     this.dataSouce3 = [{}, {}, {}];
     this.insuranceDetails = '';
     let obj = {

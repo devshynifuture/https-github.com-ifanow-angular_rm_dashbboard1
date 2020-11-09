@@ -290,7 +290,9 @@ export class AllInsurancelistComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if(upperSliderData['data']){
             this.selectedId = '';
-            this.detailsInsurance.dataLoaded = false;
+            if(this.detailsInsurance){
+              this.detailsInsurance.dataLoaded = false;
+            }
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();
