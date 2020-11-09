@@ -1031,5 +1031,13 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
   }
 
+  getClientLatestCASFileLogs(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LATEST_CAS_FILE_LOG, data);
+  }
+
+  postUploadCasFile(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
+  }
+
 }
 

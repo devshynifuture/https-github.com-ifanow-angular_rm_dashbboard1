@@ -878,6 +878,7 @@ export const appConfig = {
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
   POST_MF_UPLOAD_CAS: 'mutual-fund/upload/cas',
+  GET_CLIENT_LATEST_CAS_FILE_LOG: 'mutual-fund/client-latest/cas-log/get',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 
