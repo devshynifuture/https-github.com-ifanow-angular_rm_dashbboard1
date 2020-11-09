@@ -570,15 +570,12 @@ export class AddExpensesComponent implements OnInit {
 
   addBudgetRes(data) {
     this.barButtonOptions.active = false;
-    const obj={
-      isAdded : true,
-      id : data
-    }
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({
       flag: 'added',
       state: 'close',
-      data:obj,
+      data,
+      isAdded : true,
       refreshRequired: true,
       value: 'addBudget'
     });
@@ -586,15 +583,12 @@ export class AddExpensesComponent implements OnInit {
 
   editBudgetRes(data) {
     this.barButtonOptions.active = false;
-    const obj={
-      isAdded : false,
-      id : data
-    }
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({
       flag: 'added',
       state: 'close',
-      data : obj,
+      data,
+      isAdded : false,
       refreshRequired: true,
       value: 'editBudget'
     });
@@ -604,6 +598,7 @@ export class AddExpensesComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({
+      isAdded : true,
       flag: 'added',
       state: 'close',
       data,
@@ -619,6 +614,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
+      isAdded : false,
       refreshRequired: true,
       value: 'editExpense'
     });
