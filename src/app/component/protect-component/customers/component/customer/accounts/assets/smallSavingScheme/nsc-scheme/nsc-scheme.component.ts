@@ -157,13 +157,14 @@ export class NscSchemeComponent implements OnInit {
         console.log(data, 'getNscSchemedataResponse');
         if (!this.dataList) {
           this.nscDataList.emit(data);
+          this.dataList = data;
         }
         this.nscList = data.assetList;
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
         this.SumOfCurrentValue = data.sumOfCurrentValue;
-        this.SumOfMaturityValue = data.sumOfMaturityValue
+        this.SumOfMaturityValue = data.sumOfMaturityValue;
         this.nscData = data;
       }
     } else {
@@ -172,7 +173,7 @@ export class NscSchemeComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -181,11 +182,15 @@ export class NscSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteNSC(data.id).subscribe(
+        this.cusService.deleteNSC(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
-            this.getNscSchemedata();
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+              this.dataList.sumOfMaturityValue -= element.maturityValue;
+            
+            this.getNscSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -224,7 +229,17 @@ export class NscSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getNscSchemedata();
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              this.dataList['sumOfMaturityValue'] += sideBarData.data.maturityValue;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+            }
+            this.getNscSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
