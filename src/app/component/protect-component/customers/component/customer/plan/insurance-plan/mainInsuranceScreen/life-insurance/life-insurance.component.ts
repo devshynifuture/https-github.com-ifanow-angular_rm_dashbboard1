@@ -162,6 +162,7 @@ export class LifeInsuranceComponent implements OnInit {
   loadedData: any;
   needAnalysisSavedData: any;
   displayList: any;
+  allInsuranceData: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -188,6 +189,10 @@ export class LifeInsuranceComponent implements OnInit {
     .subscribe(res => {
       this.storedData = '';
       this.storedData = res;
+    })
+    this.ipService.getAllInsuranceData()
+    .subscribe(res => {
+      this.allInsuranceData = res;
     })
     this.setDetails(data)
     this.getGlobalDataInsurance();
@@ -409,8 +414,14 @@ export class LifeInsuranceComponent implements OnInit {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
          // this.deleteId(this.inputData.id);
-          this.isRefreshRequired = true;
+          this.allInsuranceData = this.allInsuranceData.filter(d=>d.id != obj.id);
+          this.ipService.setAllInsuranceData(this.allInsuranceData);
+          this.storedData = this.storedData.filter(d=>d.id != obj.id);
+          this.ipService.setIpData(this.storedData);
+          // this.isRefreshRequired = true;
           // this.outputChange.emit({id : '',isRefreshRequired:true});
+
+          this.outputChange.emit({loadResponse : true});
           // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
