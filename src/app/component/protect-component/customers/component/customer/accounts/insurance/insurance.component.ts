@@ -48,6 +48,10 @@ export class InsuranceComponent implements OnInit {
   countGi = 0;
   stopLoadingLi = false;
   countLi = 0;
+  insuranceId: any;
+  isAdded:any;
+  loadedId: any;
+  loaded = [];
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -147,6 +151,10 @@ export class InsuranceComponent implements OnInit {
       this.storedData = '';
       this.storedData = res;
     })
+    this.insService.getdataLoaded()
+    .subscribe(res => {
+      this.loadedId = res;
+    })
     this.getGlobalDataInsurance();
     this.getInsuranceData(1);
     this.lifeInsuranceFlag = true;
@@ -242,7 +250,7 @@ export class InsuranceComponent implements OnInit {
   getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
     if(insuranceId == 2 && insuranceSubTypeId == 0){
       this.countGi++
-      this.stopLoadingGi = this.countGi > 1 ? false : true;
+      // this.stopLoadingGi = this.countGi > 1 ? false : true;
     }
     
     this.allInsurance.forEach(element => {
@@ -254,21 +262,31 @@ export class InsuranceComponent implements OnInit {
         this.showInsurance = 'Life';
       }
     });
-    this.isLoading = true;
+    if(this.isAdded == undefined){
+      this.isLoading = true;
+    }
     const obj = {
       advisorId: advisorId,
       clientId: clientId,
       insuranceSubTypeId: insuranceSubTypeId,
-      insuranceTypeId: insuranceId
+      insuranceTypeId: insuranceId,
+      id:this.insuranceId ? this.insuranceId : 0
     };
     if (insuranceId == 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId,'lifeInsurance');
       if(this.loadApiAndData.dataLoaded){
+        if(this.isAdded == undefined){
         this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        }
         this.cusService.getLifeInsuranceData(obj).subscribe(
           data => {
             this.checkAndPush(data);
-            this.getInsuranceDataResponse(data);
+            if(!this.insuranceId){
+              this.getInsuranceDataResponse(data);
+            }else{
+              this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId,'lifeInsurance');
+              this.getInsuranceDataResponse(this.loadApiAndData);
+            }
           },
           error => {
             this.isLoading = false;
@@ -284,11 +302,19 @@ export class InsuranceComponent implements OnInit {
       delete obj.insuranceTypeId;
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId,'generalInsurance');
       if(this.loadApiAndData.dataLoaded){
+        if(this.isAdded == undefined){
         this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
+        }
         this.cusService.getGeneralInsuranceData(obj).subscribe(
           data => {
             this.checkAndPush(data);
-            this.getGeneralInsuranceDataRes(data);
+            if(!this.insuranceId){
+              this.getGeneralInsuranceDataRes(data);
+            }else{
+              this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId,'generalInsurance');
+              this.getGeneralInsuranceDataRes(this.loadApiAndData);
+            }
+            // this.getGeneralInsuranceDataRes(data);
           },
           error => {
             this.isLoading = false;
@@ -305,24 +331,41 @@ export class InsuranceComponent implements OnInit {
 
   }
   checkAndPush(data){
-    if(data){
-      let array = data.insuranceList ? data.insuranceList : data.generalInsuranceList;
+    if(data && this.isAdded == undefined){
+      let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
       array = [...new Map(array.map(item => [item.id, item])).values()];
       this.globalArray.push(array);
       this.globalArray  = this.globalArray.flat();
       this.insService.setInsData(this.globalArray);
+    }else if(this.isAdded){
+      this.storedData == '' ? this.storedData = [] : ''
+      let array =data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
+      this.storedData.push(array)
+      this.storedData  = this.storedData.flat();
+      this.storedData = [...new Map(this.storedData.map(item => [item.id, item])).values()];
+      this.insService.setInsData(this.storedData);
+    }else if(this.isAdded == false){
+      let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
+      this.storedData = this.storedData.filter(d=>d.id != this.insuranceId);
+      this.storedData.push(array)
+      this.storedData  = this.storedData.flat();
+      this.storedData = [...new Map(this.storedData.map(item => [item.id, item])).values()];
+      this.insService.setInsData(this.storedData);
     }
-    if(this.deletedId){
-      let arr = this.globalArray;
-      this.globalArray=[];
-      arr  = arr.flat();
-      arr = [...new Map(arr.map(item => [item.id, item])).values()];
-      arr = arr.filter(d=>d.id != this.deletedId);
-      this.deletedId='';
-      this.globalArray = arr;
-      // this.globalArray.push(this.globalArray);
-      this.insService.setInsData(this.globalArray);
-    }
+    this.loaded.push({id:this.insuranceSubTypeId})
+    this.loaded = [...new Map(this.loaded.map(item => [item.id, item])).values()];
+    this.insService.setdataLoaded(this.loaded)
+    this.isAdded =null;
+    // if(this.deletedId){
+    //   let arr = this.globalArray;
+    //   this.globalArray=[];
+    //   arr  = arr.flat();
+    //   arr = [...new Map(arr.map(item => [item.id, item])).values()];
+    //   arr = arr.filter(d=>d.id != this.deletedId);
+    //   this.deletedId='';
+    //   this.globalArray = arr;
+    //   this.insService.setInsData(this.globalArray);
+    // }
   }
   filterInsurance(key: string, value: any) {
     let dataFiltered;
@@ -460,9 +503,11 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
     this.showInsurance = 'Life';
-    this.isLoading = true;
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
-    this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
+    if(this.isAdded == undefined){
+      this.isLoading = true;
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
+      this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
+    }
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
     if (this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2) {
@@ -473,7 +518,8 @@ export class InsuranceComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      insuranceTypeId: typeId
+      insuranceTypeId: typeId,
+      id:this.insuranceId?this.insuranceId:0
     };
     // this.dataSource.data = [{}, {}, {}];
     this.loadApiAndData = this.loadAndGetData(0,'lifeInsurance');
@@ -481,7 +527,12 @@ export class InsuranceComponent implements OnInit {
       this.cusService.getInsuranceData(obj).subscribe(
         data => {
           this.checkAndPush(data);
-          this.getInsuranceDataRes(data);
+          if(!this.insuranceId){
+            this.getInsuranceDataRes(data);
+          }else{
+            this.loadApiAndData = this.loadAndGetData(this.insuranceSubTypeId,'lifeInsurance');
+            this.getInsuranceDataRes(this.loadApiAndData);
+          }
         },
         error => {
           this.dataSource.data = [];
@@ -513,16 +564,32 @@ export class InsuranceComponent implements OnInit {
         if(insTypeId==0 && value == 'generalInsurance'){
           if(element[type] > 3){
             arr.push(element);
-            this.stopLoadingGi ? loadData = true : loadData = false;
-            
+            // this.stopLoadingGi ? loadData = true : loadData = false;
+            this.countGi == 1 ? loadData = true : loadData = false;
           }
         }else if(insTypeId != 0 && value == 'generalInsurance'){
           if(element[type] == insTypeId){
             arr.push(element);
             data.dataLoaded = false;
-          }else{
-            this.stopLoadingGi ? loadData = false : loadData = false;
+            loadData=false;
           }
+          else{
+            // this.stopLoadingGi ? loadData = false : loadData = false;
+            if(this.countGi >= 1){
+              loadData = false
+            }else if(this.loadedId){
+              this.loadedId.forEach(element => {
+                if(element.id == this.insuranceSubTypeId){
+                  loadData = false
+                }
+              });
+            }else{
+                loadData = true;
+            }
+           
+            // this.countGi >= 1 ? loadData = false : loadData = true;
+          }
+          // 
         }else{
           if(element[type] == insTypeId){
             arr.push(element);
@@ -535,19 +602,44 @@ export class InsuranceComponent implements OnInit {
         });
         if(result.length == 0){
           if(insTypeId==0 && value == 'generalInsurance'){
-              this.stopLoadingGi ? loadData = true : loadData = false;
+            this.countGi == 1 ? loadData = true : loadData = false;
+              // this.stopLoadingGi ? loadData = true : loadData = false;
             }else if(insTypeId != 0 && value == 'generalInsurance'){
-              this.stopLoadingGi ? loadData = false : loadData = true;
+              // this.stopLoadingGi ? loadData = false : loadData = true;
+              // this.countGi >= 1 ? loadData = false : loadData = true;
+              if(this.loadedId){
+                this.loadedId.forEach(element => {
+                  if(element.id == this.insuranceSubTypeId){
+                    loadData = false
+                  }
+                });
+              }else{
+                this.countGi >= 1 ? loadData = false : loadData = true;
+              }
+            }else{
+              this.countLi >=1  ? loadData = false : loadData = true;
             }
         }
 
     }else{
       if(insTypeId==0 && value == 'generalInsurance'){
-        this.stopLoadingGi ? loadData = true : loadData = false;
+        // this.stopLoadingGi ? loadData = true : loadData = false;
+        this.countGi == 1 ? loadData = true : loadData = false;
       }else if(insTypeId != 0 && value == 'generalInsurance'){
-        this.stopLoadingGi ? loadData = false : loadData = false;
+        // this.countGi >= 1 ? loadData = false : loadData = true;
+        if(this.loadedId){
+          this.loadedId.forEach(element => {
+            if(element.id == this.insuranceSubTypeId){
+              loadData = false
+            }
+          });
+        }else{
+          this.countGi >= 1 ? loadData = false : loadData = true;
+        }
+        // this.stopLoadingGi ? loadData = false : loadData = false;
       }else if(insTypeId==0 && value == 'lifeInsurance'){
         this.stopLoadingLi ? loadData = true : loadData = false;
+        // this.countGi > 1 ? loadData = true : loadData = false;
       }else{
         loadData = false;
       }
@@ -782,14 +874,20 @@ export class InsuranceComponent implements OnInit {
           (this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0 : this.insuranceSubTypeId = subTypeId;
           this.cusService.deleteInsurance(data.id).subscribe(
             data => {
-              this.dataLoaded = true;
+              this.dataLoaded = false;
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
               dialogRef.close();
+              let reposne = this.deleteIdOfInsurance(this.deletedId);
               // this.getInsuranceData(this.insuranceTypeId)\
               if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
-                this.getInsuranceData(this.insuranceTypeId);
+                // this.getInsuranceData(this.insuranceTypeId);
+                this.loadApiAndData = this.loadAndGetData(this.insuranceSubTypeId,'lifeInsurance');
+                this.getInsuranceDataRes(this.loadApiAndData);
+
               } else {
-                this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+                // this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+                this.loadApiAndData = this.loadAndGetData(this.insuranceSubTypeId,'lifeInsurance'); 
+                this.getInsuranceDataResponse(this.loadApiAndData);
               }
 
             },
@@ -800,10 +898,13 @@ export class InsuranceComponent implements OnInit {
           (this.showInsurance == 'General') ? this.insuranceSubTypeId = 0 : this.insuranceSubTypeId = subTypeId;
           this.cusService.deleteGeneralInsurance(data.id).subscribe(
             data => {
-              this.dataLoaded = true;
+              this.dataLoaded = false;
+              let reposne = this.deleteIdOfInsurance(this.deletedId);
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
               dialogRef.close();
-              this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+              // this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+              this.loadApiAndData = this.loadAndGetData(this.insuranceSubTypeId,'generalInsurance');
+              this.getGeneralInsuranceDataRes(this.loadApiAndData);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -826,6 +927,17 @@ export class InsuranceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  deleteIdOfInsurance(id){
+    this.globalArray = this.storedData.filter(d=>d.id != id);
+    this.globalArray = [...new Map(this.globalArray.map(item => [item.id, item])).values()];
+    this.insService.setInsData(this.globalArray);
+    let data={
+      dataLoaded : false,
+      insuranceList :this.globalArray,
+      generalInsuranceList :this.globalArray,
+    }
+    return data
   }
 
   toggle(value) {
@@ -961,6 +1073,8 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         let subTypeId = (sideBarData.data) ? sideBarData.data.insuranceSubTypeId : this.insuranceSubTypeId;
+        this.insuranceId = sideBarData.data.id;
+        this.isAdded= sideBarData.data.isAdded;
         if (this.showInsurance == 'General' || this.showInsurance == 'Life') {
           this.insuranceSubTypeId = 0;
         }

@@ -410,7 +410,7 @@ export class LifeInsuranceComponent implements OnInit {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
          // this.deleteId(this.inputData.id);
           this.isRefreshRequired = true;
-          this.outputChange.emit({id : '',isRefreshRequired:true});
+          // this.outputChange.emit({id : '',isRefreshRequired:true});
           // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
@@ -631,6 +631,13 @@ export class LifeInsuranceComponent implements OnInit {
       this.insuranceDetails = data
       this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
       this.dataSource1 = ELEMENT_DATA1;
+      if(!this.insuranceDetails.graph){
+        if(this.plannerObj.additionalLifeIns){
+          this.insuranceDetails.graph  =  Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
+        }else{
+          this.insuranceDetails.graph = 0;
+        }
+      }
     }
 
   }
@@ -652,6 +659,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = data[6] ? data[6][0].total_amount : 0;
       this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = data[8] ?data[8][0].total_amount : 0;
+
     } else {
       this.plannerObj = this.setAll(this.plannerObj, 0);
       this.needAnalysisLoaded = '';
