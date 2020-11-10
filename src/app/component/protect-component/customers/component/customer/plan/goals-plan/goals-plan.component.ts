@@ -36,8 +36,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   displayedColumns = ['goalYear', 'goalFv', 'status'];
   displayedColumns1 = ['select', 'milestone', 'amount', 'fv', 'icons'];
   clientFamily: any[];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+  dataSource = ([{}, {}, {}]);
   dataSource1 = [];
   isRetirementTab = false;
   isLoading = true;
@@ -129,7 +128,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   highlight: boolean = false;
   singleGoalData = {
     goalName: '', goal: '',goalType:0,
-    details: '', value: '', month: '', lumpsum: '', img: '', year: '',  dashboardData: {arr_lump_equity:[],arr_lump_debt:[],arr_debt_monthly:[],arr_equity_monthly:[],arr_goalYrAndFutValues:[],key_arr_equity_monthly:[],presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0,lump_debt:0 },
+    details: '', value: '', month: '', lumpsum: '', img: '', year: '', remainingData:{notes:''},  dashboardData: {arr_lump_equity:[],arr_lump_debt:[],arr_debt_monthly:[],arr_equity_monthly:[],arr_goalYrAndFutValues:[],key_arr_equity_monthly:[],presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0,lump_debt:0 },
     goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
     goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
   };
@@ -164,6 +163,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
+    //this.dataSource.data = [];
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
         this.loadAllGoals(false);
@@ -543,7 +543,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
-    this.dataSource.sort = this.sort;
+    //this.dataSource.sort = this.sort;
     console.log('table', this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);

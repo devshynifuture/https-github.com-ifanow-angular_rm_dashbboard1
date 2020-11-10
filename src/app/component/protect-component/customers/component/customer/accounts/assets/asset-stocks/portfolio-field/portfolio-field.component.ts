@@ -103,12 +103,14 @@ export class PortfolioFieldComponent implements OnInit {
     
     if(arr1.length > 0){
       arr1.forEach(f=> {
-        arr2.forEach((o,i) => {
-          if(f.portfolioName != o.portfolioName){
-            this.familyWisePortfolio.push(o);
-          }
-        });
+        // arr2.forEach((o,i) => {
+        //   if(f.portfolioName == o.portfolioName){
+        //     arr2.push(o);
+        //   }
+        // });
+        arr2 = arr2.filter(o => f.portfolioName != o.portfolioName)
       });
+      this.familyWisePortfolio = this.familyWisePortfolio.concat(arr2);
     }
     else{
       this.familyWisePortfolio = this.uniqueArr(arr2);

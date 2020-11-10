@@ -51,6 +51,7 @@ export class EmailListingComponent implements OnInit {
   trashCountSubs: Subscription;
   canHitGmailApiSubs: Subscription;
   canHitGmailApi: any = false;
+  navCountObj: { inboxCount: any; sentCount: any; starredCount: any; draftCount: any; trashCount: any; unreadCount: any; };
 
   constructor(
     private emailService: EmailServiceService,
@@ -201,6 +202,67 @@ export class EmailListingComponent implements OnInit {
 
   getRightSideNavListCount(location) {
     // this.isLoading = true;
+
+    this.emailService.getRightSideNavList()
+      .subscribe((responseData) => {
+        this.navList = responseData;
+        if (this.navList.length !== 0) {
+          let obj = {
+            inboxCount: null,
+            sentCount: null,
+            starredCount: null,
+            draftCount: null,
+            trashCount: null,
+            unreadCount: null
+          };
+          this.navList.forEach((element) => {
+            switch (element.labelId) {
+              case "INBOX":
+                this.importantCount = element.threadsTotal;
+                obj.inboxCount = this.importantCount;
+                break;
+              case "SENT":
+                this.sentCount = element.threadsTotal;
+                obj.sentCount = this.sentCount;
+                break;
+              case "DRAFT":
+                this.draftCount = element.threadsTotal;
+                obj.draftCount = this.draftCount;
+                break;
+              case "TRASH":
+                this.trashCount = element.threadsTotal;
+                obj.trashCount = this.trashCount;
+                break;
+              case "STARRED":
+                this.starredCount = element.threadsTotal;
+                obj.starredCount = this.starredCount;
+                break;
+            }
+          });
+          if (this.emailDataStorageService.navCountObj === null) {
+            this.emailDataStorageService.storeNavCount(obj);
+            this.navCountObj = obj;
+          } else if (this.emailDataStorageService.navCountObj !== null) {
+            if (obj.inboxCount !== this.emailDataStorageService.navCountObj.inboxCount ||
+              obj.draftCount !== this.emailDataStorageService.navCountObj.draftCount ||
+              obj.sentCount !== this.emailDataStorageService.navCountObj.sentCount ||
+              obj.starredCount !== this.emailDataStorageService.navCountObj.starredCount ||
+              obj.trashCount !== this.emailDataStorageService.navCountObj.trashCount ||
+              (
+                this.emailDataStorageService[`${this.location}EmailList`] &&
+                this.emailDataStorageService[`${this.location}EmailList`].length === 0)
+            ) {
+              this.emailDataStorageService.setCanHitGmailApi(true);
+              this.emailDataStorageService.storeNavCount(obj);
+            } else {
+              this.emailDataStorageService.setCanHitGmailApi(false);
+            }
+          }
+        }
+        this.fetchGmailData(location);
+      });
+
+
     this.gmailThreadsSubs = this.emailDataStorageService.getGmailThreadsThroughObs()
       .subscribe(res => {
         if (res) {
@@ -208,31 +270,7 @@ export class EmailListingComponent implements OnInit {
         }
       })
 
-    this.canHitGmailApiSubs = this.emailDataStorageService.canHitGmailApi()
-      .subscribe(res => {
-        // this.canHitGmailApi = res;
-        if (this.emailDataStorageService[`${this.location}EmailList`].length === 0 || res) {
-          this.isLoading = true;
-          this.getGmailList(location.toUpperCase(), "");
-        } else {
-          this.dataSource = new MatTableDataSource(this.emailDataStorageService[`${this.location}EmailList`]);
-          if (this.location === 'inbox') {
-            let unreadCount = 0;
-            this.emailDataStorageService.inboxEmailList.forEach(element => {
-              if (!element.isRead) {
-                unreadCount += 1;
-              }
-            });
-            if (unreadCount > 0) {
-              this.titleService.setTitle(`MyPlanner - Inbox (${unreadCount})`)
-              this.emailDataStorageService.storeUnReadCount(unreadCount);
-            } else {
-              this.titleService.setTitle(`MyPlanner - Inbox`);
-            }
-          }
-          this.isLoading = false;
-        }
-      });
+    // fetch gmail data
 
     this.inboxCountSubs = this.emailDataStorageService.getNavCountThroughObs()
       .subscribe(res => {
@@ -286,6 +324,35 @@ export class EmailListingComponent implements OnInit {
       } else if (this.maxListRes < this.paginatorLength) {
         this.showNextPaginationBtn = true;
       }
+    }
+  }
+
+  fetchGmailData(location) {
+    // this.canHitGmailApi = res;
+    if (this.emailDataStorageService.canHitGmailApi()) {
+      this.isLoading = true;
+      this.getGmailList(location.toUpperCase(), "");
+      this.emailDataStorageService.setCanHitGmailApi(false);
+    } else {
+      this.dataSource = new MatTableDataSource(this.emailDataStorageService[`${this.location}EmailList`]);
+      if (this.location === 'inbox') {
+        let unreadCount = 0;
+        this.emailDataStorageService.inboxEmailList.forEach(element => {
+          if (!element.isRead) {
+            unreadCount += 1;
+          }
+        });
+        if (unreadCount > 0) {
+          this.titleService.setTitle(`MyPlanner - Inbox (${unreadCount})`)
+          this.emailDataStorageService.storeUnReadCount(unreadCount);
+          this.navCountObj = { ...this.emailDataStorageService.navCountObj };
+          this.navCountObj.unreadCount = unreadCount;
+          this.emailDataStorageService.storeNavCount(this.navCountObj);
+        } else {
+          this.titleService.setTitle(`MyPlanner - Inbox`);
+        }
+      }
+      this.isLoading = false;
     }
   }
 
@@ -627,6 +694,9 @@ export class EmailListingComponent implements OnInit {
           if (this.location === 'inbox') {
             this.emailDataStorageService.storeUnReadCount(isUnReadCount);
             this.unreadCount = isUnReadCount;
+            this.navCountObj = { ...this.emailDataStorageService.navCountObj };
+            this.navCountObj.unreadCount = this.unreadCount;
+            this.emailDataStorageService.storeNavCount(this.navCountObj);
             if (this.unreadCount && this.unreadCount > 0) {
               this.titleService.setTitle(`MyPlanner - Inbox (${this.unreadCount})`)
             }
