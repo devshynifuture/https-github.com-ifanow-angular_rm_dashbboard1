@@ -162,6 +162,7 @@ export class PoMisSchemeComponent implements OnInit {
         console.log('getPoMisSchemedataResponse', data);
         if (!this.dataList) {
           this.pomisDataList.emit(data);
+          this.dataList = data;
         }
         this.pomisList = data.assetList;
         this.datasource.data = data.assetList;
@@ -181,7 +182,7 @@ export class PoMisSchemeComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -190,10 +191,15 @@ export class PoMisSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deletePOMIS(data.id).subscribe(
+        this.cusService.deletePOMIS(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+              this.dataList.sumOfAmountInvested -= element.amountInvested;
+              this.dataList.sumOfMaturityValue -= element.maturityValue;
+              this.dataList.sumOfMonthlyPayout -= element.monthlyPayout;
+              this.dataList.sumOfPayoutTillToday -= element.totalPayoutTillToday;
             this.getPoMisSchemedata();
           },
           error => this.eventService.showErrorMessage(error)
@@ -254,7 +260,23 @@ export class PoMisSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getPoMisSchemedata();
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              this.dataList['sumOfMonthlyPayout'] = sideBarData.data.monthlyPayout;
+              this.dataList['sumOfPayoutTillToday'] = sideBarData.data.totalPayoutTillToday;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
+              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              this.dataList.sumOfMonthlyPayout += sideBarData.data.monthlyPayout;
+              this.dataList.sumOfPayoutTillToday += sideBarData.data.totalPayoutTillToday;
+            }
+            this.getPoMisSchemedataResponse(this.dataList)
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
