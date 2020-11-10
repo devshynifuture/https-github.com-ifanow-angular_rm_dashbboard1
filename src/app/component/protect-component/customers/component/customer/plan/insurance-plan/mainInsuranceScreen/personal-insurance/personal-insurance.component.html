@@ -125,7 +125,7 @@
 
     </div>
 
-    <div class="row pt-44">
+    <!-- <div class="row pt-44">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
@@ -137,7 +137,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
@@ -178,7 +178,7 @@
 
     <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Premium</h5>
+            <h5 class="m-0 pt-20 ">Approx annual premium</h5>
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
@@ -191,7 +191,7 @@
     </div>
 
 
-    <div class="row pt-36">
+    <!-- <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Policy start date</h5>
         </div>
@@ -225,16 +225,16 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
-    <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
+    </div> -->
+    <!-- <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
         </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="addMoreFlag" class="pt-40 pb-48">
+    <!-- <div *ngIf="addMoreFlag" class="pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-14 c-p">Show less</p>
         </div>
@@ -274,8 +274,6 @@
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                                {{option.type}}</mat-option> -->
                             <mat-option value='4'>Accidental death benefit</mat-option>
                             <mat-option value='5'>Permanent total disability </mat-option>
                             <mat-option value='6'>Permanent partial disability </mat-option>
@@ -423,11 +421,10 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <!--  [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event.value)' -->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row pt-32">
         <div class="col-md-12 p-0">
             <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>

@@ -802,7 +802,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
       const insuranceData = {
         insuranceTypeId: this.insuranceTypeId,
-        insuranceSubTypeId: this.insuranceSubTypeId
+        insuranceSubTypeId: this.insuranceSubTypeId,
+        id:null,
+        isAdded:null
       };
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.editInsuranceData.id;
@@ -813,7 +815,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
             this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
             const insuranceData = {
               insuranceTypeId: this.insuranceTypeId,
-              insuranceSubTypeId: this.insuranceSubTypeId
+              insuranceSubTypeId: this.insuranceSubTypeId,
+              id:this.editInsuranceData ? this.editInsuranceData.id : null,
+              isAdded:false
             };
             this.close(insuranceData);
           }
@@ -823,6 +827,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
           data => {
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+            insuranceData.id = data.insuranceId;
+            insuranceData.isAdded = true;
             this.close(insuranceData);
           }
         );
