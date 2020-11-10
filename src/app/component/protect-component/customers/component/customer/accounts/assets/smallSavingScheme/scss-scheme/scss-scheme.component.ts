@@ -153,7 +153,7 @@ export class ScssSchemeComponent implements OnInit {
     );
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -162,11 +162,17 @@ export class ScssSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteSCSS(data.id).subscribe(
+        this.cusService.deleteSCSS(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
-            this.getScssSchemedata();
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfAmountReceived -= element.totalAmountReceived;
+              this.dataList.sumOfAmountInvested -= element.amountInvested;
+              this.dataList.sumOfMaturityValue -= element.maturityValue;
+              this.dataList.sumOfQuarterlyPayout -= element.quarterlyPayout;
+            
+            this.getKvpSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -197,6 +203,7 @@ export class ScssSchemeComponent implements OnInit {
         console.log('getKvpSchemedataResponse', data);
         if (!this.dataList) {
           this.scssDataList.emit(data);
+          this.dataList = data;
         }
         this.scssList = data.assetList;
         this.datasource.data = data.assetList;
@@ -232,7 +239,22 @@ export class ScssSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getScssSchemedata();
+            
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfAmountReceived'] = sideBarData.data.totalAmountReceived;
+              this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              this.dataList['sumOfQuarterlyPayout'] = sideBarData.data.quarterlyPayout;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfAmountReceived += sideBarData.data.totalAmountReceived;
+              this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
+              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              this.dataList.sumOfQuarterlyPayout += sideBarData.data.quarterlyPayout;
+            }
+            this.getKvpSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

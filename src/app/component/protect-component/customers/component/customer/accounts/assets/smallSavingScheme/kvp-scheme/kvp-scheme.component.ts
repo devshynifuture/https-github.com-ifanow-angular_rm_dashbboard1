@@ -153,6 +153,7 @@ export class KvpSchemeComponent implements OnInit {
         console.log('getKvpSchemedataResponse', data);
         if (!this.dataList) {
           this.kvpDataList.emit(data);
+          this.dataList = data;
         }
         this.kvpList = data.assetList;
         this.datasource.data = data.assetList;
@@ -169,7 +170,7 @@ export class KvpSchemeComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -178,11 +179,16 @@ export class KvpSchemeComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteKVP(data.id).subscribe(
+        this.cusService.deleteKVP(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
-            this.getKvpSchemedata();
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+              this.dataList.sumOfAmountInvested -= element.accountBalance;
+              this.dataList.sumOfMaturityValue -= element.maturityValue;
+            
+            this.getKvpSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -222,7 +228,20 @@ export class KvpSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getKvpSchemedata();
+           
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              this.dataList['sumOfAmountInvested'] = sideBarData.data.accountBalance;
+              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
+              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+            }
+            this.getKvpSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

@@ -434,16 +434,18 @@ export class AddPoRdComponent implements OnInit {
     this.barButtonOptions.active = false;
     if (isAdd) {
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+    this.close(data);
+
     } else {
       this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
+      this.close(true);
     }
     console.log(data);
-    this.close(true);
   }
 
-  close(flag) {
+  close(data) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data:data});
   }
 
   isFormValuesForAdviceValid() {
