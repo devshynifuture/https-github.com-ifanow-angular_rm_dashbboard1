@@ -935,15 +935,14 @@
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
-                    <tr>
+                    <tr *ngIf="dataSource.length > 0">
                         <td>
-                            <p style=" font-size: 18px; font-weight: 600;"
-                                *ngIf="dataSource.length > 0">
+                            <p style=" font-size: 18px; font-weight: 600;">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
-                                <tr  *ngIf="dataSource.length > 0">
+                                <tr  *ngIf="dataSource">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
                                     <td
