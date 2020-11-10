@@ -949,7 +949,7 @@ export class MutualFundOverviewComponent implements OnInit {
       flag,
       data: { flag },
       id: 1,
-      state: 'open',
+      state: 'open65',
       componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
