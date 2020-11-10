@@ -14,14 +14,14 @@ export class MfImportCasFileComponent implements OnInit {
     private cusService: CustomerService,
     private fb: FormBuilder
   ) { }
-  clientId = AuthService.getClientId();
-
-  ngOnInit() { }
-
   uploadCasFileForm = this.fb.group({
     file: [, Validators.required],
     password: [, Validators.required]
   });
+  clientId = AuthService.getClientId();
+
+  ngOnInit() { }
+
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
@@ -45,7 +45,6 @@ export class MfImportCasFileComponent implements OnInit {
       })
   }
 
-
   getClientLatestCasLog() {
     let data = {
       clientId: this.clientId
@@ -60,7 +59,12 @@ export class MfImportCasFileComponent implements OnInit {
       })
   }
 
-
-
-
+  getClientCASFileDetailData() {
+    this.cusService.getClientCasFileDetailData({ clientId: this.clientId })
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+        }
+      })
+  }
 }

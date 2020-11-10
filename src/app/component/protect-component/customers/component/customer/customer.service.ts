@@ -1039,5 +1039,9 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
   }
 
+  getClientCasFileDetailData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_CAS_FILE_DETAIL_DATA, data);
+  }
+
 }
 
