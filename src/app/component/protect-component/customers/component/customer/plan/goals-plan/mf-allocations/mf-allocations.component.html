@@ -72,81 +72,86 @@
                     <mat-menu #menu1="matMenu">
                         <!-- category filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Categories</p>
-                        <mat-button-toggle-group (change)="filterAssets()" vertical [(ngModel)]="assetFilterValue">
-                            <mat-button-toggle [value]="'all'" class="p-0">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="assetFilterValue">
+                            <mat-button-toggle [value]="'all'" class="p-0 f-14 text-left btnHeight">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="assetFilterValue == 'all'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons" *ngIf="assetFilterValue == 'all'">
                                             done
-                                        </i>
+                                        </i> 
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         All
                                     </div>
-                                </div>
+                                </div>    
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'equity'">
+
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'equity'">
+                                 
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="assetFilterValue == 'equity'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="assetFilterValue == 'equity'">
                                             done
-                                        </i>
+                                        </i> 
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Equity
                                     </div>
-                                </div>
+                                </div> 
+                                
+                                  
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'debt'">
+
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'debt'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="assetFilterValue == 'debt'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="assetFilterValue == 'debt'">
                                             done
-                                        </i>
+                                        </i>  
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Debt
                                     </div>
-                                </div>
-                            </mat-button-toggle>
+                                </div> 
+                             </mat-button-toggle>
                         </mat-button-toggle-group>
                         <!-- category filter end -->
 
                         <!-- folio filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Folios</p>
-                        <mat-button-toggle-group (change)="filterAssets()" vertical [(ngModel)]="folioFilterValue">
-                            <mat-button-toggle [value]="'all'">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="folioFilterValue">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'all'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="folioFilterValue == 'all'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="folioFilterValue == 'all'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         All
                                     </div>
                                 </div>
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'zero'">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'zero'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="folioFilterValue == 'zero'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="folioFilterValue == 'zero'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Zero folios
                                     </div>
                                 </div>
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'non-zero'">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'non-zero'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="folioFilterValue == 'non-zero'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="folioFilterValue == 'non-zero'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Non zero folios
                                     </div>
                                 </div>
@@ -156,39 +161,39 @@
 
                         <!-- scheme filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Schemes</p>
-                        <mat-button-toggle-group (change)="filterAssets()" vertical [(ngModel)]="schemeFilterValue">
-                            <mat-button-toggle [value]="'all'">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="schemeFilterValue">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'all'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="schemeFilterValue == 'all'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="schemeFilterValue == 'all'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         All schemes
                                     </div>
                                 </div>
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'unallocated'">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'unallocated'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="schemeFilterValue == 'unallocated'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="schemeFilterValue == 'unallocated'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Unallocated schemes
                                     </div>
                                 </div>
                             </mat-button-toggle>
-                            <mat-button-toggle [value]="'allocated'">
+                            <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'allocated'">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <i class="material-icons pt-12" *ngIf="schemeFilterValue == 'allocated'">
+                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons width30" *ngIf="schemeFilterValue == 'allocated'">
                                             done
                                         </i>
                                     </div>
-                                    <div class="col-md-9 p-0 f-13">
+                                    <div class="col-md-4 p-0">
                                         Allocated schemes
                                     </div>
                                 </div>
