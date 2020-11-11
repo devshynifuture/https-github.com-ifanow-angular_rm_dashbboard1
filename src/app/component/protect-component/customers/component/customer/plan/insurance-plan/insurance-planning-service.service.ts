@@ -21,4 +21,10 @@ export class InsurancePlanningServiceService {
   getAllInsuranceData() {
     return this.allInsData.asObservable();
   }
+  pushId(array){
+    array.forEach(element => {
+      element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
+    });
+    return array;
+  }
 }

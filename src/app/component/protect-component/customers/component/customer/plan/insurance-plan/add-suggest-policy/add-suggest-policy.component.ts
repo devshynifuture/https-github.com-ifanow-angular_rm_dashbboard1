@@ -176,6 +176,7 @@ export class AddSuggestPolicyComponent implements OnInit {
           data => {
               console.log(data);
               this.barButtonOptions.active = false;
+              this.eventService.openSnackBar('Suggest policy edited', 'Ok');
               this.close(true);
           },
           err => {
@@ -187,6 +188,7 @@ export class AddSuggestPolicyComponent implements OnInit {
           data => {
               console.log(data);
               this.barButtonOptions.active = false;
+              this.eventService.openSnackBar('Suggest policy added', 'Ok');
               this.close(true);
           },
           err => {

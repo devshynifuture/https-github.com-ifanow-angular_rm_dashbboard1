@@ -63,7 +63,7 @@
                     <h5 class="roboto f-500">Planner notes</h5>
                     <div class="ba-light p-8" *ngIf="!isLoadingPlan">
                         <p class="m-0 f-14 l-18">
-                            {{(insuranceDetails)?insuranceDetails.needAnalysis.plannerNotes:'-'}}
+                            {{(insuranceDetails)? insuranceDetails?.needAnalysis?.plannerNotes:'-'}}
                         </p>
                     </div>
                     <div *ngIf="isLoadingPlan">
