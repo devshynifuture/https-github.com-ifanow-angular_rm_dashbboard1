@@ -22,9 +22,14 @@ export class InsurancePlanningServiceService {
     return this.allInsData.asObservable();
   }
   pushId(array){
-    array.forEach(element => {
-      element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
-    });
+    if(array){
+      array.forEach(element => {
+        element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
+      });
+    }else{
+      array = [];
+    }
+
     return array;
   }
 }
