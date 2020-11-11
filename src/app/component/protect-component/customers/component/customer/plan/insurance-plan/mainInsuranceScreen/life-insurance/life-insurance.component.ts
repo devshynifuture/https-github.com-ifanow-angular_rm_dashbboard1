@@ -162,6 +162,8 @@ export class LifeInsuranceComponent implements OnInit {
   loadedData: any;
   needAnalysisSavedData: any;
   displayList: any;
+  allInsuranceData: any;
+  isRefresh: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -188,6 +190,10 @@ export class LifeInsuranceComponent implements OnInit {
     .subscribe(res => {
       this.storedData = '';
       this.storedData = res;
+    })
+    this.ipService.getAllInsuranceData()
+    .subscribe(res => {
+      this.allInsuranceData = res;
     })
     this.setDetails(data)
     this.getGlobalDataInsurance();
@@ -337,6 +343,7 @@ export class LifeInsuranceComponent implements OnInit {
     return data;
   }
   deleteModal(value, data) {
+    let deletedId = data.id
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -348,18 +355,21 @@ export class LifeInsuranceComponent implements OnInit {
         if(this.inputData.insuranceType == 1){
           this.planService.deleteSuggestPolicy(data.id).subscribe(
             data => {
+              // this.isRefresh = true;
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-              this.getDetailsInsurance()
+              this.deleteWithoutHitingApi(deletedId);
               dialogRef.close();
-              this.isRefreshRequired = true;
+              // this.isRefreshRequired = true;
             },
             error => this.eventService.showErrorMessage(error)
           );
         }else{
           this.planService.deleteSuggestNew(data.id).subscribe(
             data => {
+              // this.isRefresh = true;
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-              this.getDetailsInsurance()
+              this.deleteWithoutHitingApi(deletedId);
+              // this.getDetailsInsurance()
               dialogRef.close();
               this.isRefreshRequired = true;
             },
@@ -387,6 +397,26 @@ export class LifeInsuranceComponent implements OnInit {
 
     });
   }
+  deleteWithoutHitingApi(deletedId){
+    let singleData = this.storedData.filter(d=>d.id == this.inputData.id);
+    let suggestPolicy = singleData[0][1];
+    if(this.inputData.insuranceType == 1){
+      suggestPolicy.forEach(element => {
+        element.id = element.insurance.id
+      });
+      suggestPolicy = suggestPolicy.filter(d=>d.id != deletedId);
+      singleData[0][1] = suggestPolicy
+    }else{
+      let suggested = suggestPolicy.suggested.length > 0 ? suggestPolicy.suggested : []
+      suggested.forEach(element => {
+        element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
+      });
+      suggested = suggested.filter(d=>d.id != deletedId);
+      singleData[0][1].suggested = suggested;
+    }
+    this.ipService.setIpData(this.storedData);
+     this.getForkJoinResponse(singleData[0])
+  }
   deleteInsurance() {
     const obj={
         id:this.inputData.id,
@@ -409,8 +439,14 @@ export class LifeInsuranceComponent implements OnInit {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
          // this.deleteId(this.inputData.id);
-          this.isRefreshRequired = true;
-          this.outputChange.emit({id : '',isRefreshRequired:true});
+          this.allInsuranceData = this.allInsuranceData.filter(d=>d.id != obj.id);
+          this.ipService.setAllInsuranceData(this.allInsuranceData);
+          this.storedData = this.storedData.filter(d=>d.id != obj.id);
+          this.ipService.setIpData(this.storedData);
+          // this.isRefreshRequired = true;
+          // this.outputChange.emit({id : '',isRefreshRequired:true});
+
+          this.outputChange.emit({loadResponse : true});
           // this.getDetailsInsurance()
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
@@ -435,8 +471,12 @@ export class LifeInsuranceComponent implements OnInit {
   //   this.getGlobalDataInsurance();
   // }
   getDetailsInsurance() {
-    this.dataSource1 = [{}, {}, {}]; 
-    this.dataSouce3 = [{}, {}, {}];
+    if(!this.isRefresh){
+      this.dataSource1 = [{}, {}, {}]; 
+      this.dataSouce3 = [{}, {}, {}];
+      this.loader(1);
+      this.isLoadingPlan = true;
+    }
     this.insuranceDetails = '';
     let obj = {
       // clientId: this.clientId,
@@ -461,8 +501,7 @@ export class LifeInsuranceComponent implements OnInit {
       obj2.familyMemberId.push(0);
     }
 
-    this.loader(1);
-    this.isLoadingPlan = true;
+  
     // this.planService.getDetailsInsurance(obj).subscribe(
     //   data => this.getDetailsInsuranceRes(data),
     //   err => {
@@ -474,8 +513,8 @@ export class LifeInsuranceComponent implements OnInit {
     const detailofInsurance = this.planService.getDetailsInsurance(obj);
     // const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
     const suggestPolicyGetGi = this.planService.getGeneralInsuranceNeedAnalysis(obj3);
-    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
     const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
+    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
     const recommndationGet = this.planService.getInsuranceAdvice(obj2);
     const needAnalysis = this.planService.getNeedBasedDetailsLifeInsurance(this.inputData.id);
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
@@ -484,6 +523,7 @@ export class LifeInsuranceComponent implements OnInit {
       result['id'] = this.inputData.id;
       this.plannerObj = this.setAll(this.plannerObj, 0);
       this.pushArray.push(result);
+      this.pushArray = [...new Map(this.pushArray.map(item => [item.id, item])).values()];
       this.ipService.setIpData(this.pushArray);
       this.getForkJoinResponse(result);
     }, err => {
@@ -631,6 +671,13 @@ export class LifeInsuranceComponent implements OnInit {
       this.insuranceDetails = data
       this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
       this.dataSource1 = ELEMENT_DATA1;
+      if(!this.insuranceDetails.graph){
+        if(this.plannerObj.additionalLifeIns){
+          this.insuranceDetails.graph  =  Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
+        }else{
+          this.insuranceDetails.graph = 0;
+        }
+      }
     }
 
   }
@@ -652,6 +699,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = data[6] ? data[6][0].total_amount : 0;
       this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = data[8] ?data[8][0].total_amount : 0;
+
     } else {
       this.plannerObj = this.setAll(this.plannerObj, 0);
       this.needAnalysisLoaded = '';
@@ -777,8 +825,10 @@ export class LifeInsuranceComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.isRefresh = sideBarData.refreshRequired;
             // this.isRefreshRequired = true;
-            this.getDetailsInsurance();
+            this.suggestPoliciesGetCall(data)
+            // this.getDetailsInsurance();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -786,7 +836,54 @@ export class LifeInsuranceComponent implements OnInit {
       }
     );
   }
-
+  suggestPoliciesGetCall(id){
+    let obj2 = {
+      clientId: this.clientId,
+      familyMemberId: [],
+      advisorId: this.advisorId,
+    }
+    let obj3={
+      id:[this.inputData.id],
+      insuranceType:this.inputData.insuranceType
+    }
+    if(this.inputData.owners){
+      this.inputData.owners.forEach(element => {
+        obj2.familyMemberId.push(element.ownerId);
+      });
+    }else{
+      obj2.familyMemberId.push(0);
+    }
+    if(this.inputData.insuranceType == 1){
+      this.planService.getSuggestPolicy(obj2).subscribe(
+        data => {
+          console.log(data),
+            this.checkAndPushSuggestedData(data,id);
+        }
+      );
+    }else{
+      this.planService.getGeneralInsuranceNeedAnalysis(obj3).subscribe(
+        data => {
+          console.log(data),
+            this.checkAndPushSuggestedData(data,id);
+        }
+      );
+    }
+  }
+  checkAndPushSuggestedData(array,id){
+    let singleData = this.storedData.filter(d=>d.id == this.inputData.id);
+    let suggestPolicy = singleData[0][1];
+    if(this.inputData.insuranceType == 1){
+      suggestPolicy = this.ipService.pushId(suggestPolicy)
+      // suggestPolicy = suggestPolicy.filter(d=>d.id != id);
+      suggestPolicy.push(array);
+      suggestPolicy  = suggestPolicy.flat();
+      suggestPolicy = this.ipService.pushId(suggestPolicy)
+      suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
+      singleData[0][1] = suggestPolicy
+    }
+    this.ipService.setIpData(this.storedData);
+     this.getForkJoinResponse(singleData[0])
+  }
   recommendationsPolicy(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',

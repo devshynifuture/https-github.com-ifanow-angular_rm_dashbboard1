@@ -171,7 +171,8 @@
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter your branch country" autocomplete="off" formControlName="branchCountry" matInput
             class="form-control">
-          <mat-error>This field is required</mat-error>
+          <mat-hint class="ml-8">Optional</mat-hint>
+          <!-- <mat-error>This field is required</mat-error> -->
         </mat-form-field>
       </div>
     </div>
@@ -187,7 +188,8 @@
           <input placeholder="Enter pin code" autocomplete="off" [maxLength]="6"
             (focusout)="getPostalPin($event.target.value)" formControlName="branchPinCode" #branchCode matInput
             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
-          <mat-error>This field is required</mat-error>
+          <!-- <mat-error>This field is required</mat-error> -->
+          <mat-hint class="ml-8">Optional</mat-hint>
           <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
         </mat-form-field>
       </div>
@@ -242,7 +244,8 @@
             [inputValidator]="validatorType.TEXT_ONLY" autocomplete="off" #branchCity formControlName="branchCity"
             matInput class="form-control">
           <mat-hint align="end">{{branchCity.value.length}}/30</mat-hint>
-          <mat-error>This field is required</mat-error>
+          <!-- <mat-error>This field is required</mat-error> -->
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -259,7 +262,8 @@
             [inputValidator]="validatorType.TEXT_ONLY" #branchState formControlName="branchState" matInput
             class="form-control">
           <mat-hint align="end">{{branchState.value.length}}/30</mat-hint>
-          <mat-error>This field is required</mat-error>
+          <!-- <mat-error>This field is required</mat-error> -->
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>

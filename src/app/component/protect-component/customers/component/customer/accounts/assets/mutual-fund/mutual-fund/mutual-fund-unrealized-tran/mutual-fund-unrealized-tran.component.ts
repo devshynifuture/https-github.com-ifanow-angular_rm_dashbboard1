@@ -667,27 +667,27 @@ export class MutualFundUnrealizedTranComponent {
       // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'currentValue') {
       this.customDataSource.data.arrayUnrealised.push({
-        name: 'Units', index: ind, isCheked: true,
+        name: 'Current value', index: ind, isCheked: true,
       });
       // Object.assign(this.customDataSource.data, { currentValue: true });
     } else if (header == 'dividendPayout') {
       this.customDataSource.data.arrayUnrealised.push({
-        name: 'Current value', index: ind, isCheked: true,
+        name: 'Dividend payout', index: ind, isCheked: true,
       });
       // Object.assign(this.customDataSource.data, { dividendPayout: true });
     } else if (header == 'dividendReinvest') {
       this.customDataSource.data.arrayUnrealised.push({
-        name: 'Dividend payout', index: ind, isCheked: true,
+        name: 'Dividend reinvestment', index: ind, isCheked: true,
       });
       // Object.assign(this.customDataSource.data, { dividendReinvest: true });
     } else if (header == 'totalAmount') {
       this.customDataSource.data.arrayUnrealised.push({
-        name: 'Dividend reinvestment', index: ind, isCheked: true,
+        name: 'Total amount', index: ind, isCheked: true,
       });
       // Object.assign(this.customDataSource.data, { totalAmount: true });
     } else if (header == 'units') {
       this.customDataSource.data.arrayUnrealised.push({
-        name: 'Total amount', index: ind, isCheked: true,
+        name: 'Units', index: ind, isCheked: true,
       });
       // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'gain') {

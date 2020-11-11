@@ -159,6 +159,7 @@ export class PoRdSchemeComponent implements OnInit {
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
         if (!this.dataList) {
           this.pordDataList.emit(data);
+          this.dataList = data;
         }
         this.pordList = data;
         this.dataSource.data = this.pordList.assetList;
@@ -188,11 +189,11 @@ export class PoRdSchemeComponent implements OnInit {
         this.cusService.deletePORD(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
-            this.pordList.assetList= this.pordList.assetList.filter(x => x.id != element.id);;
-            this.pordList.sumOfCurrentValue -= element.currentValue;
-            this.pordList.sumOfMonthlyDeposit -= element.monthlyContribution;
-            this.pordList.sumOfMaturityValue -= element.maturityValue;
-            this.getPoRdSchemedataResponse(this.pordList)
+            this.dataList.assetList= this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.sumOfCurrentValue -= element.currentValue;
+            this.dataList.sumOfMonthlyDeposit -= element.monthlyContribution;
+            this.dataList.sumOfMaturityValue -= element.maturityValue;
+            this.getPoRdSchemedataResponse(this.dataList)
             dialogRef.close();
             this.getPoRdSchemedata();
           },
@@ -262,7 +263,20 @@ export class PoRdSchemeComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.dataSource.data = [{}, {}, {}]
             this.isLoading = true;
-            this.getPoRdSchemedata();
+            
+            if(!this.dataList){
+              this.dataList=  {assetList:[sideBarData.data]};
+              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+              this.dataList['sumOfMonthlyDeposit'] = sideBarData.data.monthlyContribution;
+              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+            }
+            else{
+              this.dataList.assetList.push(sideBarData.data);
+              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+              this.dataList.sumOfMonthlyDeposit += sideBarData.data.monthlyContribution;
+              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+            }
+            this.getPoRdSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
