@@ -41,7 +41,12 @@
         <button mat-stroked-button class="btn-primary" (click)="inputFileRef.click()">
           {{ filename? 'Change': 'Choose' }} file
         </button>
-        <input type="file" class="d-none" #inputFileRef (change)="onFileSelect($event)" />
+        <input type="file" class="d-none" accept="application/pdf" #inputFileRef (change)="onFileSelect($event)" />
+        <mat-error *ngIf="uploadCasFileForm.get('file').touched && uploadCasFileForm.get('file').errors.required"
+          class="f-12 f-500">
+          A PDF file is required
+        </mat-error>
+
         <div class="wb-ba">
           {{ filename }}
         </div>
@@ -89,9 +94,13 @@
         that this might take some time depending on the load we’re currently having. You can check the staus of this
         below. </p>
       <div class="d-flex align-items-center">
-        <button mat-stroked-button class="btn-primary pl-10 pr-10"><img src="/assets/images/svg/reload-white.svg"
-            class="pr-12">Refresh</button>
-        <p class="text-info f-500 pl-20 roboto f-16 m-0">File imported - Click to proceed</p>
+        <button mat-stroked-button class="btn-primary pl-10 pr-10" (click)="getCasFileLogOnRefresh('multiple')">
+          <img src="/assets/images/svg/reload-white.svg" class="pr-12">
+          Refresh
+        </button>
+        <p class="text-info f-500 pl-20 roboto f-16 m-0">
+          {{ uploadFileStatusMsg }} {{isFileStatusProceed ? '- Click to proceed':''}}
+        </p>
       </div>
 
       <p class="m-0 pt-16 roboto f-400">Don’t want to wait? it’s ok too. You can safely close this window. Just ensure
@@ -114,25 +123,66 @@
     </div>
     <div class="col-md-12 import-table-mf">
       <p class="m-0 f-400 roboto text-dark pt-28 pb-10">You are viewing the status of CAS files uploaded in the past</p>
-      <table mat-table [dataSource]="dataSource5" id="table-low">
+      <table mat-table [dataSource]="dataSource5" class="skeletonAnimation" id="table-low"
+        [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef class="br f-500"> File name </th>
-          <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element" class="br">
+            <div *ngIf="!element.isLoading">
+              <div class="bar">
+                {{element.fileName}}
+              </div>
+            </div>
+            <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+            </div>
+          </td>
         </ng-container>
 
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="br f-500"> Upload date </th>
-          <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element" class="br">
+            <div *ngIf="!element.isLoading">
+              <div class="bar">
+                {{element.uploadTime | dateAgo}}
+              </div>
+            </div>
+            <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;"></div>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
           <th mat-header-cell *matHeaderCellDef class="f-500"> Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              <div class="bar text-success" *ngIf="element.processStatus ===2">
+                {{element.status}}
+              </div>
+
+              <div class="bar text-primary" *ngIf="element.processStatus ===0">
+                {{element.status}}
+                <span class="text-underline c-p"
+                  (click)="setCasFileObject(element); getCasFileLogOnRefresh('single')">Click to
+                  Refresh</span>
+              </div>
+
+              <div class="bar c-purple" *ngIf="element.processStatus === 1">
+                {{element.status}} -
+                <span class="text-underline c-p"
+                  (click)="setCasFileObject(element); changeCurrentTab(null, 'showMappingTable')">
+                  Click to proceed
+                </span>
+              </div>
+
+              <div class="bar c-red" *ngIf="element.processStatus === -1">
+                {{element.status}}
+              </div>
+            </div>
+
+            <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;"></div>
+          </td>
         </ng-container>
-
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
@@ -171,7 +221,7 @@
   </div>
 
   <div id="mf-import-tabs" *ngIf="showMappingTables">
-    <mat-tab-group [selectedIndex]="'1'">
+    <mat-tab-group [selectedIndex]="'0'">
       <mat-tab>
         <ng-template mat-tab-label>
           <span matBadge="10" matBadgeSize="large">Unmapped investors</span>
@@ -179,39 +229,72 @@
         <div class="pt-28">
           <p class="m-0 roboto f-400 pb-12">For the below folios you can map investor one at a time or select multiple
             folios (of the same investor) and then map at once</p>
-          <table mat-table [dataSource]="dataSource" id="table-low">
+          <table mat-table class="skeletonAnimation" [dataSource]="dataSource" id="table-low"
+            [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> </th>
-              <td mat-cell *matCellDef="let element" class="br">
-                <mat-checkbox></mat-checkbox>
+              <th mat-header-cell *matHeaderCellDef class="br">
+                <mat-checkbox (change)="$event ? masterToggle('investor') : null"
+                  [checked]="selectionInvestor.hasValue() && isAllSelected('investor')"
+                  [indeterminate]="selectionInvestor.hasValue() && !isAllSelected('investor')"
+                  [aria-label]="checkboxLabel('investor')">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row" class="br">
+                <div class="bar">
+                  <mat-checkbox (click)="$event.stopPropagation()" *ngIf="!isLoading"
+                    (change)="$event ? selectionInvestor.toggle(row) : null"
+                    [checked]="selectionInvestor.isSelected(row)" [aria-label]="checkboxLabel('investor',row)">
+                  </mat-checkbox>
+                </div>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  {{element.name}}
+                </div>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Folio </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  {{element.weight}}
+                </div>
+              </td>
             </ng-container>
 
 
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  {{element.symbol}}
+                </div>
+              </td>
             </ng-container>
             <ng-container matColumnDef="member">
               <th mat-header-cell *matHeaderCellDef> Family member </th>
-              <td mat-cell *matCellDef="let element"> {{element.member}} </td>
+              <td mat-cell *matCellDef="let element">
+                <div class="bar">
+                  {{element.member}}
+                </div>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <div class="row b-a" *ngIf="dataSource.data ===null">
+            <div class="col-md-12 text-center p-44">
+              No Data Found
+            </div>
+          </div>
+          <button *ngIf="dataSource.data !==null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
         </div>
       </mat-tab>
 
@@ -222,16 +305,25 @@
         <div class="pt-28">
           <p class="m-0 roboto f-400 pb-12">For the below transaction types you can map one at a time or select multiple
             transactions (of the similar nature) and then map at once</p>
-          <table mat-table [dataSource]="dataSource2" id="table-low">
-
-
+          <table mat-table [dataSource]="dataSource2" id="table-low" class="skeletonAnimation"
+            [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> </th>
-              <td mat-cell *matCellDef="let element" class="br">
-                <mat-checkbox></mat-checkbox>
+              <th mat-header-cell *matHeaderCellDef class="br">
+                <mat-checkbox (change)="$event ? masterToggle('transaction') : null"
+                  [checked]="selectionTransaction.hasValue() && isAllSelected('transaction')"
+                  [indeterminate]="selectionTransaction.hasValue() && !isAllSelected('transaction')"
+                  [aria-label]="checkboxLabel('transaction')">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row" class="br">
+                <div class="bar">
+                  <mat-checkbox (click)="$event.stopPropagation()" *ngIf="!isLoading"
+                    (change)="$event ? selectionTransaction.toggle(row) : null"
+                    [checked]="selectionTransaction.isSelected(row)" [aria-label]="checkboxLabel('transaction',row)">
+                  </mat-checkbox>
+                </div>
               </td>
             </ng-container>
-
 
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
@@ -256,7 +348,12 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
           </table>
-          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <div class="row b-a" *ngIf="dataSource2.data ===null">
+            <div class="col-md-12 text-center p-44">
+              No Data Found
+            </div>
+          </div>
+          <button *ngIf="dataSource2.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
         </div>
       </mat-tab>
 
@@ -268,28 +365,35 @@
           <p class="m-0 roboto f-400">The below mentioned schemes could not be identified by the system. </p>
           <p class="m-0 roboto f-400 pb-12"> Our team has been notified of these schemes and we will do the needful from
             our end.</p>
-          <table mat-table [dataSource]="dataSource3" id="table-low">
-
-
+          <table mat-table [dataSource]="dataSource3" id="table-low" class="skeletonAnimation" [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br">Scheme name </th>
               <td mat-cell *matCellDef="let element" class="br">
-                {{element.position}}
+                <div class="bar">
+                  {{element.position}}
+                </div>
               </td>
             </ng-container>
 
 
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Scheme code </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> 
+                <div class="bar">
+                  {{element.weight}} 
+                </div>
+              </td>
             </ng-container>
-
-
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
           </table>
-          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <div class="row b-a" *ngIf="dataSource3.data ===null">
+            <div class="col-md-12 text-center p-44">
+              No Data Found
+            </div>
+          </div>
+          <button *ngIf="dataSource3.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
         </div>
       </mat-tab>
     </mat-tab-group>
@@ -303,7 +407,8 @@
     </div>
     <div class="col-md-6 full-end text-right">
       <!-- <button mat-stroked-button class="bg-white text-primary h-40 br-0">SAVE & AND CLOSE</button> -->
-      <button mat-stroked-button class="btn-primary ml-20 h-40 br-0">SAVE & PROCEED</button>
+      <button mat-stroked-button *ngIf="shouldShowSaveAndProceed" class="btn-primary ml-20 h-40 br-0">SAVE &
+        PROCEED</button>
     </div>
   </div>
 </div>
