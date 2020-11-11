@@ -294,7 +294,8 @@
               No Data Found
             </div>
           </div>
-          <button *ngIf="dataSource.data !==null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <button *ngIf="dataSource.data !==null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search
+            family members to map</button>
         </div>
       </mat-tab>
 
@@ -353,7 +354,8 @@
               No Data Found
             </div>
           </div>
-          <button *ngIf="dataSource2.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <button *ngIf="dataSource2.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search
+            family members to map</button>
         </div>
       </mat-tab>
 
@@ -365,12 +367,13 @@
           <p class="m-0 roboto f-400">The below mentioned schemes could not be identified by the system. </p>
           <p class="m-0 roboto f-400 pb-12"> Our team has been notified of these schemes and we will do the needful from
             our end.</p>
-          <table mat-table [dataSource]="dataSource3" id="table-low" class="skeletonAnimation" [appSkeletonLoading]="isLoading">
+          <table mat-table [dataSource]="dataSource3" id="table-low" class="skeletonAnimation"
+            [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br">Scheme name </th>
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                  {{element.position}}
+                  {{element.schemeName}}
                 </div>
               </td>
             </ng-container>
@@ -378,9 +381,9 @@
 
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Scheme code </th>
-              <td mat-cell *matCellDef="let element" class="br"> 
+              <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                  {{element.weight}} 
+                  {{element.schemeCode}}
                 </div>
               </td>
             </ng-container>
@@ -393,7 +396,8 @@
               No Data Found
             </div>
           </div>
-          <button *ngIf="dataSource3.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+          <button *ngIf="dataSource3.data !== null && !isLoading" mat-stroked-button class="mt-28 btn-primary">Search
+            family members to map</button>
         </div>
       </mat-tab>
     </mat-tab-group>
