@@ -266,6 +266,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   openFolio(data) {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
+      
       data: { selectedFolios: data }
     });
 
