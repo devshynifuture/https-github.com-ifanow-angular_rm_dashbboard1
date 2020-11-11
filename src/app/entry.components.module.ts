@@ -128,6 +128,7 @@ import { VerifyAddEmailComponent } from './component/protect-component/AdviserCo
 import { AlertTitleComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/alert-title/alert-title.component';
 import { SchemeListComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/scheme-list/scheme-list.component';
 import { MfImportCasFileComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
+import { IinCreationLoaderComponent } from './component/protect-component/AdviserComponent/transactions/overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -288,7 +289,8 @@ export const componentList = [
   DetailedViewLifeInsuranceComponent,
   RightFilterDuplicateComponent,
   AddExpensesComponent,
-  MfImportCasFileComponent
+  MfImportCasFileComponent,
+  IinCreationLoaderComponent
 
   // ComposeEmailComponent
 ];
