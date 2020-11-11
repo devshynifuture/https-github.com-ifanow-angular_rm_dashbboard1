@@ -316,7 +316,7 @@
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                         class="f-600 pl-4 proximaFont text-left">
-                        <div class="bar">{{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}</div>
+                        <div class="bar">{{group.schemeName}} {{group.isin ? ' | '+group.isin : ''}} | {{group.folioNumber}} | {{group.ownerName}}</div>
 
                     </td>
                 </ng-container>
@@ -740,7 +740,7 @@
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                         class="f-600 pl-4 proximaFont text-left bb-1">
-                        <div class="bar">{{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}</div>
+                        <div class="bar">{{group.schemeName}} {{group.isin ? ' | '+group.isin : ''}} | {{group.folioNumber}} | {{group.ownerName}}</div>
 
                     </td>
                 </ng-container>
@@ -954,7 +954,7 @@
                     <ng-container matColumnDef="schemeName2">
                         <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
                         <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar"> {{element.schemeName}} </div>
+                            <div class="bar"> {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
 
@@ -1230,7 +1230,7 @@
                     <table style="width: 100%;">
                         <tr *ngIf="element.schemeName || element.folioNumber || element.ownerName">
                             <td style="border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;">
-                                {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
+                                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} | {{element.folioNumber}} | {{element.ownerName}}
                             </td>
                         </tr>
 
@@ -1660,7 +1660,7 @@
                         <tr>
                             <td colspan="16" style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
                                 *ngIf="element.schemeName || element.folioNumber || element.ownerName">
-                                {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
+                                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} | {{element.folioNumber}} | {{element.ownerName}}
                             </td>
                         </tr>
 
@@ -2101,7 +2101,7 @@
                         <tr>
                             <td valign="top"
                                 style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                                {{element.schemeName}}
+                                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} 
                             </td>
             
                             <td valign="top"

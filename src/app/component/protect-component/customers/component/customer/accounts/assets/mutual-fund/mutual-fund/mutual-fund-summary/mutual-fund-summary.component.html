@@ -57,7 +57,7 @@
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
                     <td class="br" mat-cell *matCellDef="let element" style="line-height: 20px !important;">
                         <div class="bar"><span
-                                *ngIf="!isLoading && element.schemeName!='Total'">{{element.schemeName+' | '}}<span
+                                *ngIf="!isLoading && element.schemeName!='Total'">{{element.schemeName+' | '}}<span>{{element.isin ? element.isin+' | ' : ''}}</span><span
                                     class="text-primary">{{element.folioNumber}}</span>{{' | '+element.ownerName}}</span>
 
                         </div>

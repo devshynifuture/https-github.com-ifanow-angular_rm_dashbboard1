@@ -45,6 +45,9 @@ export class IncomeComponent implements OnInit {
   file: any;
   globalArray=[];
   storedData: any;
+  incomeId: any;
+  isAdded: any;
+  LoadCount :any;
   constructor(private fileUpload: FileUploadServiceService,
     private util:UtilService,private excel: ExcelGenService,
     public dialog: MatDialog, private eventService: EventService, 
@@ -57,6 +60,7 @@ export class IncomeComponent implements OnInit {
   viewMode;
 
   ngOnInit() {
+    this.LoadCount = 0;
     this.reportDate = new Date();
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
@@ -71,6 +75,10 @@ export class IncomeComponent implements OnInit {
       this.storedData = '';
       this.storedData = res;
     })
+    this.summaryPlanService.getIncomeCount()
+    .subscribe(res => {
+      this.LoadCount = res;
+    })
     if(this.chekToCallApi()){
       this.getIncomeList();
     }else{
@@ -79,18 +87,27 @@ export class IncomeComponent implements OnInit {
   }
 
   getIncomeList() {
-    this.isLoading = true;
+    if(!this.incomeId){
+      this.isLoading = true;
+      this.dataSource.data = [{}, {}, {}];
+    }
+    this.LoadCount++;
+    this.summaryPlanService.setIncomeCount(this.LoadCount);
     const obj =
     {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      addMonthlyDistribution:false
+      addMonthlyDistribution:false,
+      id:this.incomeId ? this.incomeId : 0
     }
-    this.dataSource.data = [{}, {}, {}];
     this.planService.getIncomeData(obj).subscribe(
       data =>{
         this.pushArray(data);
-        this.getIncomeListRes(data);
+        if(!this.incomeId){
+          this.getIncomeListRes(data);
+        }else{
+          this.getIncomeListRes(this.storedData);
+        }
       },
       error => {
         this.noData = 'No income found';
@@ -101,15 +118,26 @@ export class IncomeComponent implements OnInit {
 
   }
   chekToCallApi(){
-    return this.storedData ? false :  true
+    return this.LoadCount >= 1 ? false : this.storedData ? false :  true
   }
   pushArray(data){
-    if(data){
+    if(data && !this.incomeId){
       data = [...new Map(data.map(item => [item.id, item])).values()];
       this.globalArray.push(data);
       this.globalArray  = this.globalArray.flat();
       this.summaryPlanService.setIncomeData(this.globalArray);
       this.globalArray = [];
+      this.incomeId = '';
+    }else if(this.isAdded){
+      this.storedData == '' ? this.storedData = [] : ''
+      this.storedData.push(data)
+      this.storedData  = this.storedData.flat();
+      this.summaryPlanService.setIncomeData(this.storedData);
+    }else if(this.isAdded == false){
+      this.storedData = this.storedData.filter(d=>d.id != this.incomeId);
+      this.storedData.push(data)
+      this.storedData  = this.storedData.flat();
+      this.summaryPlanService.setIncomeData(this.storedData);
     }
   }
   fetchData(value, fileName, element) {
@@ -158,6 +186,8 @@ export class IncomeComponent implements OnInit {
       this.dataSource.data.forEach(element => {
         this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
+    }else{
+      this.dataSource.data = [];
     }
   }
   filterIncome(key: string, value: any) {
@@ -191,6 +221,8 @@ export class IncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.incomeId = sideBarData.data.id;
+            this.isAdded = sideBarData.data.isAdded;
             this.getIncomeList();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 

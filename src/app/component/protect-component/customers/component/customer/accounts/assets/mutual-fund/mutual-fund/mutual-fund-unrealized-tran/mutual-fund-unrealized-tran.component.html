@@ -440,7 +440,7 @@
                   <td *matCellDef="let group" [attr.colspan]="displayedColumns?.length" class="zIndex bb">
                      <div class="bar d-flex w-100">
                         <p class="w-50 m-0 f-400">
-                           {{group.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
+                           {{group.schemeName}}{{group.isin ? ' | '+group.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
                         </p>
                         <p class="text-right w-50 m-0 f-400">Avg Cost NAV: {{group.avgNav}} | Current NAV:
                            {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}
@@ -853,7 +853,7 @@
          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
             <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-               {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
+               {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
             <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left;">
@@ -1072,7 +1072,7 @@
          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid;">
             <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-               {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
+               {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
             <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0; ;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
@@ -1128,7 +1128,7 @@
                style=" border-top: 1px solid #DADCE0; width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.unit}} -->
-                  {{item[fifthArrayTran]}}
+                  {{item[SixthArrayTran]}}
 
                </span>
             </td>

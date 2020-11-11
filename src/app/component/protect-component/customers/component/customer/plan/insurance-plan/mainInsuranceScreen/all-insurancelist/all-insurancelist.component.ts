@@ -11,6 +11,7 @@ import { CurrentPolicyComponent } from '../../current-policy/current-policy.comp
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatTableDataSource } from '@angular/material';
+import { InsurancePlanningServiceService } from '../../insurance-planning-service.service';
 
 @Component({
   selector: 'app-all-insurancelist',
@@ -68,9 +69,10 @@ export class AllInsurancelistComponent implements OnInit {
   id = 0;
   index: any;
   selectedId:any;
+  allInsuranceData: any;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
-    private eventService: EventService,) {
+    private eventService: EventService,private ipService:InsurancePlanningServiceService) {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
   }
@@ -79,6 +81,10 @@ export class AllInsurancelistComponent implements OnInit {
   isLoadingPlan = true;
   ngOnInit() {
     // this.detailsInsurance = {}
+    this.ipService.getAllInsuranceData()
+    .subscribe(res => {
+      this.allInsuranceData = res;
+    })
     this.getInsuranceList()
   }
   openDetailsInsurance(insurance) {
@@ -110,7 +116,11 @@ export class AllInsurancelistComponent implements OnInit {
   }
   getOutput(value){
     if(value){
-      if(value.id){
+      if(value.loadResponse){
+        this.allInsuranceData.length == 0 ? this.allInsuranceData = null : this.allInsuranceData;
+        this.selectedId = this.allInsuranceData ? this.allInsuranceData[0].id : ''
+        this.getInsurancePlaningListRes(this.allInsuranceData)
+      }else if(value.id){
         this.id = value.id;
       }else{
         this.selectedId ='';
@@ -185,6 +195,7 @@ export class AllInsurancelistComponent implements OnInit {
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
       this.insurancePlanningList =this.dataSource;
+      this.ipService.setAllInsuranceData(this.insurancePlanningList);
       if(!this.selectedId){
         this.selectedId=this.dataSource[0].id;
       }
@@ -290,7 +301,9 @@ export class AllInsurancelistComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if(upperSliderData['data']){
             this.selectedId = '';
-            this.detailsInsurance.dataLoaded = false;
+            if(this.detailsInsurance){
+              this.detailsInsurance.dataLoaded = false;
+            }
             this.getInsuranceList();
           }
           // this.getClientSubscriptionList();

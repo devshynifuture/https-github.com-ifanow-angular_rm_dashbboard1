@@ -278,6 +278,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 = new MatTableDataSource(this.getFilterData(catObj['DEBT'], 'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
+      console.log('dataSource',this.dataSource);
+      console.log('dataSource1',this.dataSource1);
+      console.log('dataSource2',this.dataSource2);
       this.cd.markForCheck();
       this.cd.detectChanges();
       this.setCapitaDetails = {}
@@ -423,6 +426,7 @@ export class MfCapitalDetailedComponent implements OnInit {
           schemeName: element.schemeName,
           folioNumber: element.folioNumber,
           ownerName: element.ownerName,
+          isin:element.isin
         }
         let totalObj: any = {};
         if ((element.redemptionTransactions) ? (element.redemptionTransactions.length > 0) : element.redemptionTransactions) {
@@ -685,6 +689,7 @@ export class MfCapitalDetailedComponent implements OnInit {
           if (flag) {
             const obj = {
               schemeName: element.schemeName,
+              isin:element.isin,
               folioNumber: element.folioNumber,
               dividendPayout: this.totaldividendPayout,
               dividendReinvestment: this.totaldividendReinvestment,

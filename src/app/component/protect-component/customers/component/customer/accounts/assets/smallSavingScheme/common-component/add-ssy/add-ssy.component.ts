@@ -543,12 +543,12 @@ export class AddSsyComponent implements OnInit {
     this.barButtonOptions.active = false;
     (this.editApi) ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'added');
     console.log(data);
-    this.close(true);
+    this.close(data);
   }
 
-  close(flag) {
+  close(data) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data: data});
   }
 
 

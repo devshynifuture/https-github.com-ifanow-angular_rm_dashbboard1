@@ -166,7 +166,8 @@ export class TempserviceService {
       if (reportType != 'schemeName') {
         (reportType == 'ownerName') ? filteredData.push({
           groupName: key,
-          pan: catObj[key][0].pan
+          pan: catObj[key][0].pan,
+          isin:catObj[key][0].isin
         }) : filteredData.push({groupName: key});
 
       }
@@ -199,18 +200,21 @@ export class TempserviceService {
               nav: this.mutualFundRoundAndFormat(singleData.nav, 3),
               navDate: singleData.navDate,
               avgNav: this.mutualFundRoundAndFormat(singleData.avgNav, 3),
+              isin:singleData.isin
               // pan: singleData.pan
             };
             if (reportType == 'ownerName') {
               obj.folioNumber = singleData.folioNumber;
               obj.pan = singleData.pan;
+              obj.isin = singleData.isin;
             }
             filteredData.push(obj);
             if (reportType != 'ownerName') {
               const obj2 = {
                 name: singleData.ownerName,
                 pan: singleData.pan,
-                folio: singleData.folioNumber
+                folio: singleData.folioNumber,
+                isin:singleData.isin
               };
               filteredData.push(obj2);
             }

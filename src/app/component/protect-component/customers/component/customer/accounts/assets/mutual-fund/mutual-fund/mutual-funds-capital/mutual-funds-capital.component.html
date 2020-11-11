@@ -52,7 +52,7 @@
                         <ng-container matColumnDef="schemeName">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.schemeName}} </div>
+                                <div class="bar"> {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} </div>
 
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
@@ -204,8 +204,7 @@
                         <ng-container matColumnDef="schemeName">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.schemeName}} </div>
-
+                                <div class="bar"> {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
 
@@ -355,7 +354,7 @@
                         <ng-container matColumnDef="schemeName2">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.schemeName}} </div>
+                                <div class="bar"> {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}} </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
 
@@ -585,8 +584,8 @@
 
         <tr *ngFor="let element of dataSource.data">
             <td valign="top"
-                style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{element.schemeName}}
+                style="font-size: 13px;text-align: left; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}}
             </td>
 
             <td valign="top"
@@ -735,7 +734,7 @@
         <tr *ngFor="let element of dataSource1.data">
             <td valign="top"
                 style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{element.schemeName}}
+                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}}
             </td>
 
             <td valign="top"
@@ -872,7 +871,7 @@
         <tr *ngFor="let element of dataSource2.data">
             <td valign="top"
                 style="font-size: 13px; text-align: left;  border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{element.schemeName}}
+                {{element.schemeName}}{{element.isin ? ' | '+element.isin : ''}}
             </td>
 
             <td valign="top"

@@ -433,7 +433,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data:data });
       this.eventService.openSnackBar('Added successfully!', 'OK');
       
     } else {

@@ -1240,7 +1240,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeOption = '2';
     } else {
       (this.editApiData) ? this.eventService.openSnackBar('Income is edited') : this.eventService.openSnackBar('Income is added');
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      const obj={
+        id: this.editApiData ? this.editApiData.id : data,
+        isAdded : this.editApiData ? false : true
+      }
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true ,data:obj});
     }
     this.barButtonOptions.active = false;
   }

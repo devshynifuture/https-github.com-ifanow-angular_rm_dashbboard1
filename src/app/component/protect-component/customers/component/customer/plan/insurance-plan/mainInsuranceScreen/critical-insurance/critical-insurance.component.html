@@ -142,7 +142,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <!-- <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
@@ -154,7 +154,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
@@ -194,7 +194,7 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Premium</h5>
+            <h5 class="m-0 pt-20 ">Approx annual premium</h5>
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
@@ -207,7 +207,7 @@
         </div>
     </div>
 
-    <div class="row pt-36">
+    <!-- <div class="row pt-36">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Policy start date</h5>
         </div>
@@ -239,17 +239,17 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
+    <!-- <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-4 text-right">
             <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
         </div>
-    </div>
+    </div> -->
 
-    <div class="pt-40 pb-48" *ngIf="addMoreFlag">
+    <!-- <div class="pt-40 pb-48" *ngIf="addMoreFlag">
         <div (click)="openOptionField()" class="col-md-4 text-right">
             <p class="m-0 text-primitive f-14 c-p">Show less</p>
         </div>
@@ -280,36 +280,6 @@
                 </mat-form-field>
             </div>
         </div>
-
-        <!-- <div class="row pt-28">
-            <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-32">Additional covers</h5>
-            </div>
-
-            <div class="col-md-3 pr-0 form-group  ">
-                <h5 class="mb-8 f-14">Add-ons</h5>
-                <mat-form-field>
-                    <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                        <mat-option value='12'>Personal accident</mat-option>
-                        <mat-option value='13'>Critical illness
-                        </mat-option>
-                    </mat-select>
-                    <mat-error>This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-3 form-group iconRupess">
-                <h5 class="mb-8 f-14">Amount</h5>
-                <mat-form-field>
-                    <input matInput type="number" formControlName="coversAmount" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #coversAmount autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
-                    <mat-hint align="end" class="f-12">{{coversAmount.value.length}}/10</mat-hint>
-                    <mat-error>This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div> -->
-
         <div class="row pt-28">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Exclusions/Special conditions</h5>
@@ -432,12 +402,11 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <!--[data]="bankAccountDetails" appBankAccount prod build (inputChange)='bankAccountList($event.value)'-->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
 
-    </div>
+    </div> -->
     <div class="row pt-32">
         <div class="col-md-12 p-0">
             <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
@@ -454,7 +423,6 @@
             <h5 (click)="close(insData,false)" class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <!-- <button (click)="saveHealthInsurance()"  mat-button>SAVE</button> -->
             <app-progress-button (btnClick)="saveCriticalIllness()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
             </app-progress-button>
         </div>
