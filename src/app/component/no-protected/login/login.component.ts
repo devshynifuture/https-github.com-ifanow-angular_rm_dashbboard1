@@ -255,33 +255,33 @@ export class LoginComponent implements OnInit {
 
         this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
         this.loginService.handleUserData(this.authService, this.router, this.userData);
-      } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
-        const obj = {
-          mobileNo: this.userData.mobileNo,
-          userId: this.userData.userId,
-          userType: this.userData.userType,
-          otp: otpString
-        };
-        this.loginService.saveAfterVerification(obj).subscribe(
-          data => {
-            if (data) {
-              this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
-              this.loginService.handleUserData(this.authService, this.router, this.userData);
-            } else {
-              this.barButtonOptions.active = false;
-            }
-          },
-          err => {
-            if (err == 'Something went wrong !') {
-              this.eventService.openSnackBar(err, 'Dismiss');
-              return;
-            }
-            // console.error(err);
-            // this.eventService.openSnackBar(err, 'Dismiss');
-            (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
-            this.barButtonOptions.active = false;
-          }
-        );
+      } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4 && this.otpResponse == otpString) {
+        // const obj = {
+        //   mobileNo: this.userData.mobileNo,
+        //   userId: this.userData.userId,
+        //   userType: this.userData.userType,
+        //   otp: otpString
+        // };
+        // this.loginService.saveAfterVerification(obj).subscribe(
+        //   data => {
+        //     if (data) {
+        //       this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+        //       this.loginService.handleUserData(this.authService, this.router, this.userData);
+        //     } else {
+        //       this.barButtonOptions.active = false;
+        //     }
+        //   },
+        //   err => {
+        //     if (err == 'Something went wrong !') {
+        //       this.eventService.openSnackBar(err, 'Dismiss');
+        //       return;
+        //     }
+        //     (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+        //     this.barButtonOptions.active = false;
+        //   }
+        // );
+        this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+        this.loginService.handleUserData(this.authService, this.router, this.userData);
       } else {
         (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
         this.barButtonOptions.active = false;

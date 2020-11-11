@@ -652,7 +652,9 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
-              insuranceSubTypeId: this.inputData.insuranceSubTypeId
+              insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+              id:this.dataForEdit ? this.dataForEdit.id : null,
+              isAdded:false
             }
             this.close(insuranceData)
           }
@@ -666,7 +668,9 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
-              insuranceSubTypeId: this.inputData.insuranceSubTypeId
+              insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+              id:data,
+              isAdded:true
             }
             this.close(insuranceData)
           }

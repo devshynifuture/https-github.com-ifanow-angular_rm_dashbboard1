@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class InsurancePlanningServiceService {
   private insPlanningData = new BehaviorSubject('')
+  private allInsData = new BehaviorSubject('')
 
   constructor() { }
   setIpData(value) {
@@ -13,5 +14,11 @@ export class InsurancePlanningServiceService {
   }
   getIpData() {
     return this.insPlanningData.asObservable();
+  }
+  setAllInsuranceData(value) {
+    this.allInsData.next(value);
+  }
+  getAllInsuranceData() {
+    return this.allInsData.asObservable();
   }
 }

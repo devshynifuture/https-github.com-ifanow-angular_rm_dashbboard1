@@ -76,7 +76,7 @@
 
 
 
-    <div class="row pt-32">
+    <!-- <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-10 ">Policy number</h5>
         </div>
@@ -88,7 +88,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -184,7 +184,7 @@
 
     <div class="row pt-28">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Premium</h5>
+            <h5 class="m-0 pt-20 ">Approx annual premium</h5>
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
@@ -196,7 +196,7 @@
         </div>
     </div>
 
-    <div class="row pt-36">
+    <!-- <div class="row pt-36">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Policy start date</h5>
         </div>
@@ -210,10 +210,10 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
 
-    <div class="row pt-44">
+    <!-- <div class="row pt-44">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8 ">Policy expiry date</h5>
         </div>
@@ -230,17 +230,17 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
+    <!-- <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
         </div>
-    </div>
+    </div> -->
 
-    <div class="pt-40 pb-48" *ngIf="addMoreFlag">
+    <!-- <div class="pt-40 pb-48" *ngIf="addMoreFlag">
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-14 c-p">Show less</p>
         </div>
@@ -268,8 +268,7 @@
 
                             <mat-form-field>
                                 <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                                    <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                {{option.add_on}}</mat-option> -->
+                            
                                     <mat-option value='15'>Earthquake</mat-option>
                                     <mat-option value='16'>Terrorism</mat-option>
                                     <mat-option value='17'>Rent for alternative accomodation</mat-option>
@@ -360,7 +359,7 @@
 
 
 
-    </div>
+    </div> -->
     <div class="row pt-32">
         <div class="col-md-12 p-0">
             <mat-checkbox #check (click)="checkRecommendation(check.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
