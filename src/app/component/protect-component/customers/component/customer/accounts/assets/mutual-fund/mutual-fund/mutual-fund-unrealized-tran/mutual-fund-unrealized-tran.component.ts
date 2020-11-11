@@ -1554,7 +1554,7 @@ export class MutualFundUnrealizedTranComponent {
         obj = 'purchasePrice';
         break;
       case 'Units':
-        obj = 'units';
+        obj = 'unit';
         break;
       case 'Current value':
         obj = 'currentAmount';
@@ -1648,7 +1648,7 @@ export class MutualFundUnrealizedTranComponent {
         obj = 'purchasePrice';
         break;
       case 'Units':
-        obj = 'units';
+        obj = 'unit';
         break;
       case 'Balance units':
         obj = 'balanceUnits';
