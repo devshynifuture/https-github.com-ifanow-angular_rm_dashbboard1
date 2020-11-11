@@ -1,273 +1,309 @@
-<div  class="row bb-1 popup-header-fix w-65">
-    <div  class="col-md-10 p-0">
-        <h4  class="mb-0 l-22 wrapper-20">Import CAS (Consolidated account statement) from CAMS</h4>
-    </div>
-    <div  class="col-md-2 col-2 full-center pl-48">
-    <i  class="material-icons c-p"> clear </i>
-</div>
+<div class="row bb-1 popup-header-fix w-65">
+  <div class="col-md-10 p-0">
+    <h4 class="mb-0 l-22 wrapper-20">Import CAS (Consolidated account statement) from CAMS</h4>
+  </div>
+  <div class="col-md-2 col-2 full-center pl-48">
+    <i class="material-icons c-p" (click)="close()"> clear </i>
+  </div>
 </div>
 <div class="pt-90 pb-90 pl-20 pr-20">
- <div class="row ">
-    <div class="col-md-12 text-right">
-        <button mat-stroked-button class="btn-primary-outline h-30 l-26">View status of past uploads</button>
+  <div *ngIf="currentTabValue === 1">
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <button mat-stroked-button class="btn-primary-outline h-30 l-26" (click)="showPastUploadedCasFile()">
+          View status of past uploads
+        </button>
+      </div>
+      <div class="col-md-12">
+        <p class="roboto f-400 m-0 text-dark pt-20">
+          CAMS, Karvy and Franklin Templeton have come together to allow
+          investors to view a consolidated report of their mutual fund holdings.
+        </p>
+        <p class="roboto f-400 m-0 text-dark pt-16">
+          If you have registered an email address in your folios across funds
+          serviced by CAMS, Karvy and Franklin Templeton, you can use CAMS’s mailback service to obtain a consolidated
+          PDF
+          account statement at your registered email address. For security reasons the statement will be password
+          protected using the password provided by you.
+        </p>
+        <p class="roboto f-400 m-0 text-dark pt-16">
+          Note: If you have uploaded CAS in the past too, then the system will
+          delete those records and upload the entire transaction history again.
+        </p>
+      </div>
     </div>
-    <div class="col-md-12">
-      
-        <p class="roboto f-400 m-0 text-dark pt-20">CAMS, Karvy and Franklin Templeton have come together to allow investors to view a consolidated report of their mutual fund holdings. </p>
-        <p class="roboto f-400 m-0 text-dark pt-16">If you have registered an email address in your folios across funds serviced by CAMS, Karvy and Franklin Templeton, you can use CAMS’s mailback service to obtain a consolidated PDF account statement at your registered email address. For security reasons the statement will be password protected using the password provided by you. </p>
-        <p class="roboto f-400 m-0 text-dark pt-16">Note: If you have uploaded CAS in the past too, then the system will delete those records and upload the entire transaction history again.</p>
-    </div>
-</div>
-<div class="row pt-28">
-    <div class="col-md-5 remove-top">
-     
-        <div class="d-flex pt-10">
-            <p>987435848PDKKF.pdf   <img src="/assets/images/svg/close-cross.svg" class="c-p pl-6"></p>
-        </div>
+    <div class="row pt-28">
+      <div class="col-md-5 remove-top" [formGroup]="uploadCasFileForm">
+        <!-- <div class="d-flex pt-10">
+          <p>987435848PDKKF.pdf <img src="/assets/images/svg/close-cross.svg" class="c-p pl-6"></p>
+        </div> -->
         <h5 class="m-0 roboto f-500 pb-6">Upload CAS</h5>
-        <button mat-stroked-button class="btn-primary">Choose file</button>
+        <button mat-stroked-button class="btn-primary" (click)="inputFileRef.click()">
+          {{ filename? 'Change': 'Choose' }} file
+        </button>
+        <input type="file" class="d-none" #inputFileRef (change)="onFileSelect($event)" />
+        <div class="wb-ba">
+          {{ filename }}
+        </div>
         <h5 class="m-0 pt-28 roboto f-400 pb-6">Password to unlock CAS file</h5>
         <mat-form-field floatLabel="never" appearance="standard">
-            <input matInput class="form-control" placeholder="Enter password provided while ordering file.">
-          </mat-form-field>
-     
-          <div class="row pt-28">
-              <div class="col-md-4 pl-0"><button mat-stroked-button class="btn-primary-outline ">Upload</button></div>
-              <div class="col-md-4 pl-0">
-                <button mat-button class="text-success">Success!</button>
-              </div>
+          <input matInput class="form-control" placeholder="Enter password provided while ordering file."
+            formControlName="password" type="password">
+          <mat-error>
+            This field is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="row pt-28">
+          <div class="col-md-4 pl-0">
+            <button mat-stroked-button class="btn-primary-outline" (click)="uploadFile()">Upload</button>
           </div>
-          
-    </div>
-    <div class="col-md-7">
+          <div class="col-md-4 pl-0" *ngIf="successFileUpload">
+            <button mat-button class="text-success">Success!</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-7">
         <h5 class="m-0 roboto f-500">Steps to import CAS file</h5>
-        <p class="roboto f-400 m-0 text-dark pt-16">Step 1: Visit camsonline.com > Investor services > Mailback services > Link </p>
-        <p class="roboto f-400 m-0 text-dark pt-16">Step 2: For statement type, click on “Detailed” and select date as 01/01/1991 to today and select “Zero balance folios”</p>
-        <p class="roboto f-400 m-0 text-dark pt-16">Step 3: Check your inbox and upload the file here. You will need the password while uploading</p>
+        <p class="roboto f-400 m-0 text-dark pt-16">Step 1: Visit camsonline.com > Investor services > Mailback services
+          >
+          Link </p>
+        <p class="roboto f-400 m-0 text-dark pt-16">Step 2: For statement type, click on “Detailed” and select date as
+          01/01/1991 to today and select “Zero balance folios”</p>
+        <p class="roboto f-400 m-0 text-dark pt-16">Step 3: Check your inbox and upload the file here. You will need the
+          password while uploading</p>
+      </div>
     </div>
-</div>
+  </div>
 
-<!-- nice job ui -->
-<!-- <div class="row">
+  <!-- nice job ui -->
+  <div class="row" *ngIf="currentTabValue === 2">
     <div class="col-md-12">
-        <h5 class="text-success m-0 f-400 roboto">Nice job! You’ve successfully uploaded the CAS file 987435848PDKKF.pdf</h5>
-        <p class="m-0 pt-24 roboto f-400">But hey, some manual intervention may be required from your end before you can see the data in the reports section.</p>
+      <h5 class="text-success m-0 f-400 roboto">Nice job! You’ve successfully uploaded the CAS file {{ filename }}
+      </h5>
+      <p class="m-0 pt-24 roboto f-400">But hey, some manual intervention may be required from your end before you can
+        see the data in the reports section.</p>
 
-            <p class="m-0 pt-20 roboto f-400 pb-20">Now, we can tell you that only after we finish processing the file. Note that this might take some time depending on the load we’re currently having. You can check the staus of this below. </p>
-            <div class="d-flex align-items-center">
-                <button mat-stroked-button class="btn-primary pl-10 pr-10"><img src="/assets/images/svg/reload-white.svg" class="pr-12">Refresh</button>
-                <p class="text-info f-500 pl-20 roboto f-16 m-0">File imported - Click to proceed</p>
-            </div>
-          
-            <p class="m-0 pt-16 roboto f-400">Don’t want to wait? it’s ok too. You can safely close this window. Just ensure you do the following: </p>
+      <p class="m-0 pt-20 roboto f-400 pb-20">Now, we can tell you that only after we finish processing the file. Note
+        that this might take some time depending on the load we’re currently having. You can check the staus of this
+        below. </p>
+      <div class="d-flex align-items-center">
+        <button mat-stroked-button class="btn-primary pl-10 pr-10"><img src="/assets/images/svg/reload-white.svg"
+            class="pr-12">Refresh</button>
+        <p class="text-info f-500 pl-20 roboto f-16 m-0">File imported - Click to proceed</p>
+      </div>
 
-            <p class="m-0 pt-12 roboto f-400">After a while, come back to the MF section > Click on Add New > Import CAS > On the first screen on the top right, you will see a button titled “View status of past uploads”.
-                
-                <p class="m-0 pt-12 roboto f-400">Click there to see the staus and follow the instructions given there.</p>
+      <p class="m-0 pt-16 roboto f-400">Don’t want to wait? it’s ok too. You can safely close this window. Just ensure
+        you do the following: </p>
+
+      <p class="m-0 pt-12 roboto f-400">After a while, come back to the MF section > Click on Add New > Import CAS > On
+        the first screen on the top right, you will see a button titled “View status of past uploads”.
+
+      <p class="m-0 pt-12 roboto f-400">Click there to see the staus and follow the instructions given there.</p>
     </div>
-</div> -->
+  </div>
 
-<!-- You are viewing the status of CAS files uploaded in the past -->
- <!-- <div class="row">
-    <div class="col-md-12 d-flex">
-        <span class="material-icons c-p">
-            keyboard_backspace
-            </span>
-        <h5 class="m-0 pt-4 pl-4 roboto f-400">Back</h5>
+  <!-- You are viewing the status of CAS files uploaded in the past -->
+  <div class="row" *ngIf="pastUploadedCasFile">
+    <div class="col-md-12 d-flex c-p" (click)="backFromPastUploadedCasFileStatus()">
+      <span class="material-icons">
+        keyboard_backspace
+      </span>
+      <h5 class="m-0 pt-4 pl-4 roboto f-400">Back</h5>
     </div>
     <div class="col-md-12 import-table-mf">
-        <p class="m-0 f-400 roboto text-dark pt-28 pb-10">You are viewing the status of CAS files uploaded in the past</p>
-        <table mat-table [dataSource]="dataSource5" id="table-low">
+      <p class="m-0 f-400 roboto text-dark pt-28 pb-10">You are viewing the status of CAS files uploaded in the past</p>
+      <table mat-table [dataSource]="dataSource5" id="table-low">
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef class="br f-500"> File name </th>
+          <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="br f-500"> Upload date </th>
+          <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef class="f-500"> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- point's -->
+  <div class="row pt-32 pb-48" *ngIf="showPointsIfRefreshed">
+    <div class="col-md-12">
+      <h5 class="m-0 roboto f-500">The CAS file has been successfully imported. </h5>
+      <p class="m-0 roboto f-400 pb-16">Some manual intervention may be required from your end. Specifically, </p>
+      <ul class="mf-import-main-point">
+        <li class="text-left">There could be investors which the system could not identify
+          <ul class="mf-import-second-point">
+            <li>If this happens, you will be prompted to map or add the investor as a family member</li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="mf-import-main-point pt-16">
+        <li class="text-left">There could be transaction types which the system could not identify
+          <ul class="mf-import-second-point">
+            <li> If this happens, you will have to manually tag a transaction type </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="mf-import-main-point pt-16">
+        <li class="text-left">There could be schemes which the system could not identify
+          <ul class="mf-import-second-point">
+            <li>We will be notified about this and we will do the needful</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="roboto f-400 m-0 text-dark pt-32">Click on the Proceed button to below finish the process</p>
+    </div>
+  </div>
+
+  <div id="mf-import-tabs" *ngIf="showMappingTables">
+    <mat-tab-group [selectedIndex]="'1'">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="10" matBadgeSize="large">Unmapped investors</span>
+        </ng-template>
+        <div class="pt-28">
+          <p class="m-0 roboto f-400 pb-12">For the below folios you can map investor one at a time or select multiple
+            folios (of the same investor) and then map at once</p>
+          <table mat-table [dataSource]="dataSource" id="table-low">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br f-500"> File name </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+              <th mat-header-cell *matHeaderCellDef class="br"> </th>
+              <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox></mat-checkbox>
+              </td>
             </ng-container>
-          
-       
+
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br f-500"> Upload date </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
             </ng-container>
-         
+
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef class="f-500"> Status </th>
-              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+              <th mat-header-cell *matHeaderCellDef class="br"> Folio </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
             </ng-container>
-          
-          
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+
+
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+            </ng-container>
+            <ng-container matColumnDef="member">
+              <th mat-header-cell *matHeaderCellDef> Family member </th>
+              <td mat-cell *matCellDef="let element"> {{element.member}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-    </div>
-</div>  -->
+          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+        </div>
+      </mat-tab>
 
-<!-- point's -->
-<!-- <div class="row pt-32 pb-48">
-    <div class="col-md-12">
-        <h5 class="m-0 roboto f-500">The CAS file has been successfully uploaded. </h5>
-            <p class="m-0 roboto f-400 pb-16">Some manual intervention may be required from your end. Specifically, </p>
-            <ul class="mf-import-main-point">
-                <li class="text-left">There could be investors which the system could not identify
-                    <ul class="mf-import-second-point">
-                        <li>If this happens, you will be prompted to map or add the investor as a family member</li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="mf-import-main-point pt-16">
-                <li class="text-left">There could be transaction types which the system could not identify
-                    <ul class="mf-import-second-point">
-                        <li> If this happens, you will have to manually tag a transaction type    </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="mf-import-main-point pt-16">
-                <li class="text-left">There could be schemes which the system could not identify
-                    <ul class="mf-import-second-point">
-                        <li>We will be notified about this and we will do the needful</li>
-                    </ul>
-                </li>
-            </ul>
-            <p class="roboto f-400 m-0 text-dark pt-32">Click on the Proceed button to below finish the process</p>
-    </div>
-</div> -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="10" matBadgeSize="large">Unmapped transactions</span>
+        </ng-template>
+        <div class="pt-28">
+          <p class="m-0 roboto f-400 pb-12">For the below transaction types you can map one at a time or select multiple
+            transactions (of the similar nature) and then map at once</p>
+          <table mat-table [dataSource]="dataSource2" id="table-low">
 
- <!-- <div id="mf-import-tabs">
-    <mat-tab-group>
-        <mat-tab>
-     
-           <ng-template mat-tab-label>
-            <span matBadge="10" matBadgeSize="large">Unmapped investors</span>
-             </ng-template>
-             <div class="pt-28">
-                <p class="m-0 roboto f-400 pb-12">For the below folios you can map investor one at a time or select multiple folios (of the same investor) and then map at once</p>
-                <table mat-table [dataSource]="dataSource" id="table-low">
 
-  
-                    <ng-container matColumnDef="position">
-                      <th mat-header-cell *matHeaderCellDef class="br">  </th>
-                      <td mat-cell *matCellDef="let element" class="br"> 
-                        <mat-checkbox></mat-checkbox>      
-                    </td>
-                    </ng-container>
-                  
-                  
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-                    </ng-container>
-                 
-                    <ng-container matColumnDef="weight">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Folio </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-                    </ng-container>
-                  
-                
-                    <ng-container matColumnDef="symbol">
-                      <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="member">
-                        <th mat-header-cell *matHeaderCellDef > Family member </th>
-                        <td mat-cell *matCellDef="let element" > {{element.member}} </td>
-                      </ng-container>
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>
-                  <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
-             </div>
-        </mat-tab>
-      
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <span matBadge="10" matBadgeSize="large">Unmapped transactions</span>
-             </ng-template>
-             <div class="pt-28">
-                <p class="m-0 roboto f-400 pb-12">For the below transaction types you can map one at a time or select multiple transactions (of the similar nature) and then map at once</p>
-                <table mat-table [dataSource]="dataSource2" id="table-low">
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> </th>
+              <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox></mat-checkbox>
+              </td>
+            </ng-container>
 
-  
-                    <ng-container matColumnDef="position">
-                      <th mat-header-cell *matHeaderCellDef class="br">  </th>
-                      <td mat-cell *matCellDef="let element" class="br"> 
-                        <mat-checkbox></mat-checkbox>      
-                    </td>
-                    </ng-container>
-                  
-                  
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-                    </ng-container>
-                 
-                    <ng-container matColumnDef="weight">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-                    </ng-container>
-                  
-                
-                    <ng-container matColumnDef="symbol">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="member">
-                        <th mat-header-cell *matHeaderCellDef > Map transaction type </th>
-                        <td mat-cell *matCellDef="let element" > {{element.member}} </td>
-                      </ng-container>
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                  </table>
-                  <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
-             </div>
-        </mat-tab>
-      
-        <mat-tab>
-            <ng-template mat-tab-label>
-            <span matBadge="0" matBadgeSize="large">Unmapped schemes</span>
-             </ng-template>
-             <div class="pt-28">
-                <p class="m-0 roboto f-400">The below mentioned schemes could not be identified by the system. </p>
-                    <p class="m-0 roboto f-400 pb-12">  Our team has been notified of these schemes and we will do the needful from our end.</p>
-                <table mat-table [dataSource]="dataSource3" id="table-low">
 
-  
-                    <ng-container matColumnDef="position">
-                      <th mat-header-cell *matHeaderCellDef class="br">Scheme name  </th>
-                      <td mat-cell *matCellDef="let element" class="br"> 
-                        {{element.position}}
-                    </td>
-                    </ng-container>
-                  
-                  
-                    <ng-container matColumnDef="weight">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Scheme code </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-                    </ng-container>
-                 
-                  
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-                  </table>
-                  <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
-             </div>
-        </mat-tab>
-      </mat-tab-group>
-</div> -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+            </ng-container>
+            <ng-container matColumnDef="member">
+              <th mat-header-cell *matHeaderCellDef> Map transaction type </th>
+              <td mat-cell *matCellDef="let element"> {{element.member}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="0" matBadgeSize="large">Unmapped schemes</span>
+        </ng-template>
+        <div class="pt-28">
+          <p class="m-0 roboto f-400">The below mentioned schemes could not be identified by the system. </p>
+          <p class="m-0 roboto f-400 pb-12"> Our team has been notified of these schemes and we will do the needful from
+            our end.</p>
+          <table mat-table [dataSource]="dataSource3" id="table-low">
+
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br">Scheme name </th>
+              <td mat-cell *matCellDef="let element" class="br">
+                {{element.position}}
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Scheme code </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+          </table>
+          <button mat-stroked-button class="mt-28 btn-primary">Search family members to map</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
 
 <div class="bottom-fixed w-65 wrapper-12">
-    <div class="row">
-        <div class="col-md-6">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
-        </div>
-        <div class="col-md-6 full-end text-right">
-            <button mat-stroked-button class="bg-white text-primary h-40 br-0">SAVE & AND CLOSE</button>
-            <button mat-stroked-button class="btn-primary ml-20 h-40 br-0">SAVE & PROCEED</button>
-        </div>
-       
+  <div class="row">
+    <div class="col-md-6">
+      <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
+    <div class="col-md-6 full-end text-right">
+      <!-- <button mat-stroked-button class="bg-white text-primary h-40 br-0">SAVE & AND CLOSE</button> -->
+      <button mat-stroked-button class="btn-primary ml-20 h-40 br-0">SAVE & PROCEED</button>
+    </div>
+  </div>
 </div>

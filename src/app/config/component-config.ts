@@ -882,6 +882,9 @@ export const appConfig = {
   GET_CLIENT_CAS_FILE_DETAIL_DATA: 'mutual-fund/cas-upload-detail/get',
   PUT_MAP_INVESTOR_CAS: 'mutual-fund/map/investor-mutualfund/update',
   PUT_MAP_TRANSACTION_CAS: 'mutual-fund/map/mf-transaction/update',
+  GET_STATUS_OF_CAS_FILE_UPLOAD: 'mutual-fund/client/cas-log/list/get',
+  GET_CAS_FILE_LOG_ON_REFRESH: 'mutual-fund/cas-log/refresh/get',
+  PUT_CAS_FILE_STATUS_UPDATE: 'mutual-fund/cas-log/status/update',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 

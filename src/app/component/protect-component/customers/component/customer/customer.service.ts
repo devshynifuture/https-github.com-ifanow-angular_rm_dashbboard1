@@ -4,6 +4,7 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UtilService } from "../../../../../services/util.service";
+import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
@@ -1036,11 +1037,31 @@ export class CustomerService {
   }
 
   postUploadCasFile(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
+    return this.httpService.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
   }
 
   getClientCasFileDetailData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_CAS_FILE_DETAIL_DATA, data);
+  }
+
+  putMapInvestor(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_INVESTOR_CAS, data);
+  }
+
+  putMapTransaction(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_TRANSACTION_CAS, data);
+  }
+
+  getStatusOfPastFileUpload(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STATUS_OF_CAS_FILE_UPLOAD, data);
+  }
+
+  getCasFileLogOnRefresh(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAS_FILE_LOG_ON_REFRESH, data);
+  }
+
+  putCasFileStatusUpdate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_CAS_FILE_STATUS_UPDATE, data);
   }
 
 }
