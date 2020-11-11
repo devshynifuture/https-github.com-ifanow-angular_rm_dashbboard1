@@ -19,11 +19,8 @@ import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { TransactionMobileViewComponent } from './transaction-mobile-view/transaction-mobile-view.component';
 import { TransactionBottomButtonComponent } from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
-import { IinCreationLoaderComponent } from './overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
 import { ConfirmUploadComponent } from './investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
-
-// import {IinCreationLoaderComponent} from './overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 
 
 @NgModule({
@@ -38,7 +35,6 @@ import { ConfirmUploadComponent } from './investors-transactions/investor-detail
     VideoKycComponent,
     TransactionMobileViewComponent,
     TransactionBottomButtonComponent,
-    IinCreationLoaderComponent,
     OpenPdfViewComponent,
     ConfirmUploadComponent
   ],
@@ -65,7 +61,7 @@ import { ConfirmUploadComponent } from './investors-transactions/investor-detail
     ScrollingModule
   ],
   entryComponents: [TransactionMobileViewComponent, ConfirmUploadComponent,
-    TransactionBottomButtonComponent, IinCreationLoaderComponent, OpenPdfViewComponent]
+    TransactionBottomButtonComponent, OpenPdfViewComponent]
   // IinCreationLoaderComponent
 })
 export class TransactionsModule {
