@@ -548,6 +548,7 @@ export class AddHealthInsuranceComponent implements OnInit {
         }
         this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
           data => {
+              this.eventService.openSnackBar("Existing policy added", 'Ok');
               this.barButtonOptions.active = false;
               this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
           },

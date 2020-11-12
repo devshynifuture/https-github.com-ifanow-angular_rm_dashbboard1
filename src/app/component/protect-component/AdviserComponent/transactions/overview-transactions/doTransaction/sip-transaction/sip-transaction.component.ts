@@ -147,7 +147,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   enteredAmount(value) {
-    this.selectedMandate = this.copyTrasactionSummary.selectedMandate
+   // this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
@@ -514,7 +514,8 @@ export class SipTransactionComponent implements OnInit {
     }
     this.showSpinnerMandate = false;
     this.acceptedMandate = []
-    if (data.length > 1) {
+    this.selectedMandate = {}
+    if (data.length > 0) {
       data.forEach(element => {
         if(element.statusString == 'ACCEPTED'){
           this.acceptedMandate.push(element)

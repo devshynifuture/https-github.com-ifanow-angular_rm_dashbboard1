@@ -576,7 +576,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
 
     this.showSpinnerMandate = false;
-    if (data.length > 1) {
+    if (data.length > 0) {
       data.forEach(element => {
         if(element.statusString == 'ACCEPTED'){
           this.acceptedMandate.push(element)

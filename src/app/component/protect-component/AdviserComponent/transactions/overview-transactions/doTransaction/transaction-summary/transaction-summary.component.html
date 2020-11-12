@@ -127,7 +127,7 @@
           <p class="m-0 roboto text-custom">UMRN details</p>
           <h5 class="m-0">
             <span class="f-500">UMRN no.:</span>
-            {{(transactionSummary == undefined) ? '-' : transactionSummary.selectedMandate.umrnNo}}
+            {{(transactionSummary && transactionSummary.selectedMandate) ?  transactionSummary.selectedMandate.umrnNo : '-' }}
           </h5>
           <h5 class="m-0">
             <span class="f-500">Mandate amount.:</span>
