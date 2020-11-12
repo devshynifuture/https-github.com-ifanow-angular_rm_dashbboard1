@@ -1,3 +1,4 @@
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MisAumDataStorageService } from './../../backoffice-mis/mutual-funds/aum/mis-aum-data-storage.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from './../../../../../../common/link-bank/link-bank.component';
@@ -32,6 +33,7 @@ export class SelectFolioMapComponent implements OnInit {
   selectedFolioInvestorName = '';
   advisorId;
   doShowDetails = false;
+  clientId = AuthService.getClientId();
 
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
@@ -39,7 +41,8 @@ export class SelectFolioMapComponent implements OnInit {
     private fb: FormBuilder,
     private eventService: EventService,
     private backOfcFolioMappingService: BackofficeFolioMappingService,
-    private misAumDataStorageService: MisAumDataStorageService
+    private misAumDataStorageService: MisAumDataStorageService,
+    private cusService: CustomerService
   ) { }
 
 
@@ -49,9 +52,9 @@ export class SelectFolioMapComponent implements OnInit {
 
   initPoint() {
     this.advisorId = AuthService.getAdvisorId();
-    if (this.data && this.data.selectedFolios.length !== 0) {
+    if (this.data && this.data.selectedFolios && this.data.selectedFolios.length !== 0) {
       this.data.selectedFolios.forEach((element, index) => {
-        if(index === this.data.selectedFolios.length - 1){
+        if (index === this.data.selectedFolios.length - 1) {
           this.selectedFolioInvestorName += element.ownerName;
         } else {
           this.selectedFolioInvestorName += element.ownerName + ' &';
@@ -64,8 +67,8 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   setUserDetail(value, typedValue) {
-    this.searchFamilyOrClientForm.controls['searchFamilyOrClient'].enable({emitEvent:false});
-    
+    this.searchFamilyOrClientForm.controls['searchFamilyOrClient'].enable({ emitEvent: false });
+
     this.doShowDetails = true;
     this.searchKeyword = typedValue;
     this.selectedClient = value;
@@ -107,13 +110,13 @@ export class SelectFolioMapComponent implements OnInit {
         )
       )
       .subscribe(data => {
-        if(data){
+        if (data && this.data.type === 'backoffice') {
           this.arrayOfFamilyMemberOrClient = data;
           this.arrayOfFamilyMemberOrClient.map(element => {
             element.showName = ''
           });
-          this.arrayOfFamilyMemberOrClient.map(item=>{
-            if(item.familyId > 0){
+          this.arrayOfFamilyMemberOrClient.map(item => {
+            if (item.familyId > 0) {
               item.showName = item.familyMemberName
             } else {
               item.showName = item.clientName
@@ -127,6 +130,17 @@ export class SelectFolioMapComponent implements OnInit {
             this.errorMsg = 'No data Found';
           }
           console.log("this is some value", this.arrayOfFamilyMemberOrClient);
+        } else if (data && this.data.type === 'casFileUpload') {
+          this.arrayOfFamilyMemberOrClient = data;
+          this.arrayOfFamilyMemberOrClient.map(item => {
+            item.showName = item.displayName;
+          })
+          if (data && data['length'] > 0) {
+            this.arrayOfFamilyMemberOrClientError = false;
+          } else {
+            this.arrayOfFamilyMemberOrClientError = true;
+            this.errorMsg = 'No data Found';
+          }
         } else {
           this.arrayOfFamilyMemberOrClientError = true;
           this.errorMsg = 'No data Found';
@@ -139,11 +153,18 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   getFamilyOrClientList(value) {
-    const data = {
-      parentId: this.parentId === 0 ? this.advisorId : this.parentId,
-      searchQuery: value,
+    if (this.data.type === 'backoffice') {
+      const data = {
+        parentId: this.parentId === 0 ? this.advisorId : this.parentId,
+        searchQuery: value,
+      }
+      return this.backOfcFolioMappingService.getUserDetailList(data)
+    } else if (this.data.type === 'casFileUpload') {
+      const data = {
+        clientId: this.clientId
+      }
+      return this.cusService.getFamilyMemberListForCasMapping(data)
     }
-    return this.backOfcFolioMappingService.getUserDetailList(data)
   }
 
   mapFolio() {
@@ -167,7 +188,7 @@ export class SelectFolioMapComponent implements OnInit {
         if (res) {
           console.log(res);
           // update call responds with 200 refresh or else no refresh
-          if(res.statusCode === 200){
+          if (res.statusCode === 200) {
             this.misAumDataStorageService.clearStorage();
             this.misAumDataStorageService.callApiData();
             this.dialogClose(true);
@@ -185,6 +206,10 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   dialogClose(refresh) {
-    this.dialogRef.close({ refresh });
+    if (this.data.type === 'backoffice') {
+      this.dialogRef.close({ refresh });
+    } else if (this.data.type === 'casFileUpload') {
+      this.dialogRef.close({ refresh, selectedFamilyMemberData: this.selectedClient })
+    }
   }
 }

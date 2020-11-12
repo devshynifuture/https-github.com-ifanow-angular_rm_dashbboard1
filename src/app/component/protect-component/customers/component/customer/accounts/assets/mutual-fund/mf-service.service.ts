@@ -325,7 +325,7 @@ export class MfServiceService {
         );
       });
     }
-    
+
     // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
     //   let array = [];
     //   mutualFundList.forEach(element => {
@@ -339,14 +339,14 @@ export class MfServiceService {
     // }
     if (dataForFilter.transactionPeriodCheck) {
       if (dataForFilter.fromDate && dataForFilter.toDate) {
-        
+
         mutualFundList.forEach(element => {
-          element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= dataForFilter.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.toDate);
-       
+          element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= dataForFilter.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.toDate);
+
         });
       }
     }
-    
+
 
     // let type = dataForFilter.reportType[0].name;
     // (type == 'Sub Category wise') ? type = 'subCategoryName' :
@@ -534,13 +534,13 @@ export class MfServiceService {
 
     return data;
   }
-  filterByFolio(data,showZeroFolio,setAllTrue){
-    if(showZeroFolio == false){
+  filterByFolio(data, showZeroFolio, setAllTrue) {
+    if (showZeroFolio == false) {
       data = data.filter((item: any) =>
-      item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
-    );
+        item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
+      );
     }
-    if(setAllTrue){
+    if (setAllTrue) {
       data.forEach(item => item.selected = true);
     }
     return data;
