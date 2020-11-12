@@ -143,7 +143,7 @@ export class LifeInsuranceComponent implements OnInit {
   counter: any;
   isLoading: boolean;
   insuranceDetails: any;
-  isLoadingPlan = true;
+  isLoadingPlan = false;
   @ViewChild('firstAccordion', { static: false }) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
@@ -204,11 +204,13 @@ export class LifeInsuranceComponent implements OnInit {
   }
   @Input()
   set isLoaders(data) {
-    this.dataSource1 = [{}, {}, {}];
-    this.dataSouce3 = [{}, {}, {}];
-    this.insuranceDetails = '';
-    this.loader(1);
-    this.isLoadingPlan = true;
+    if(data.isLoading == true){
+      this.dataSource1 = [{}, {}, {}];
+      this.dataSouce3 = [{}, {}, {}];
+      this.insuranceDetails = '';
+      this.loader(1);
+      this.isLoadingPlan = true;
+    }
     console.log(data)
   }
 
@@ -477,8 +479,8 @@ export class LifeInsuranceComponent implements OnInit {
       this.dataSouce3 = [{}, {}, {}];
       this.loader(1);
       this.isLoadingPlan = true;
+      this.insuranceDetails = '';
     }
-    this.insuranceDetails = '';
     let obj = {
       // clientId: this.clientId,
       // familyMemberId: [],
@@ -548,6 +550,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.panelOpenState = false;
     this.getDetailsInsuranceRes(result[0])
     let suggestedData = result[1];
+    this.isLoadingPlan = false;
     if (suggestedData) {
       if (this.inputData.insuranceType != 1) {
         let current = suggestedData.current.length > 0 ? suggestedData.current[0] : [];
@@ -782,9 +785,9 @@ export class LifeInsuranceComponent implements OnInit {
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
               this.isRefresh = true;
-              // this.getDetailsInsurance();
-              this.isRefreshRequired = sideBarData.data;
-              this.outputChange.emit({ id: this.inputData.id, isRefreshRequired: sideBarData.data });
+              this.getDetailsInsurance();
+              // this.isRefreshRequired = sideBarData.data;
+              // this.outputChange.emit({ id: this.inputData.id, isRefreshRequired: sideBarData.data });
             }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
             rightSideDataSub.unsubscribe();
