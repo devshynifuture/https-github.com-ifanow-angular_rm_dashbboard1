@@ -8,6 +8,10 @@ import { BackofficeFileUploadService } from './backoffice-file-upload.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../setting/settings.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-backoffice-file-upload',
@@ -36,6 +40,8 @@ export class BackofficeFileUploadComponent implements OnInit {
   selectedRadio: boolean;
   fileTypeStock: any;
   selectedType: 1;
+  stockFile: any;
+  type: any;
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -117,7 +123,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     //   this.uploadFile(this.parentId, this.filenm);
     // });
   }
-
+getFileStock(e,type){
+  this.fileName = e.currentTarget.files[0].name;
+  this.stockFile = e.target.files[0]
+    this.targetFile = e;
+    this.uploadButton = true;
+}
   // setArnRiaId(value) {
   //   console.log(value);
   //   if (value) {
@@ -144,7 +155,43 @@ export class BackofficeFileUploadComponent implements OnInit {
       }
     });
   }
+  fileTypeSelect(type){
+    this.type = type.name
+    console.log(this.type)
+  }
+  uploadTargetFileStock(){
+    this.addbarWidth(1);
+    this.numlimit = 30;
+    this.uploadButton = false;
+    const requestMap = {
+    };
+    const obj = {
+      file: this.stockFile
+    };
+    FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK,
+      this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
 
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          if(this.type == 1){
+            this.reconService.transactionUpload(obj).subscribe((data) => {
+                // this.fileType = data;
+                if (data) {
+                  console.log(data)
+                }
+              });
+          }else{
+            this.reconService.holdingUpload(obj).subscribe((data) => {
+                // this.fileType = data;
+                if (data) {
+                  console.log(data)
+                }
+              });
+          }
+        }
+
+      });
+  }
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
       return '0 Bytes';

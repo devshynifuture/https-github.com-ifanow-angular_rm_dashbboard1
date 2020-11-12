@@ -36,7 +36,7 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
-                                <mat-option *ngFor="let type of group.value" [value]="type.id">
+                                <mat-option (change)="fileTypeSelect(type)" *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
                             </mat-optgroup>
@@ -101,7 +101,7 @@
                     <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0"
                         mat-stroked-button>Choose
                         file</button>
-                    <input #file (change)="getFile($event)" style="display: none;" type="file">
+                    <input #file accept=".xlsx, .xls, .csv" (change)="getFileStock($event,selectedType)" style="display: none;" type="file">
                 </div>
             </div>
             <!-- <div class="row  pt-12">
@@ -122,8 +122,13 @@
                 <div class="col-md-1 text-left pr-0">
                     <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
                 </div>
-                <div class="col-md-12 text-left pr-0 pt-12">
+                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==1">
                     <button *ngIf="uploadButton" (click)="uploadTargetFile()" mat-stroked-button
+                        class="br-0 btn-bottom">Upload
+                        file</button>
+                </div>
+                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==2">
+                    <button *ngIf="uploadButton" (click)="uploadTargetFileStock()" mat-stroked-button
                         class="br-0 btn-bottom">Upload
                         file</button>
                 </div>
