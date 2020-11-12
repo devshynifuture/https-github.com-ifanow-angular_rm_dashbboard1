@@ -1,5 +1,12 @@
+import { ClientSggestionListService } from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
+import { CancelFlagService } from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { UtilService } from './../../../../../../../../../../services/util.service';
+import { AddClientComponent } from './../../../../../../../../PeopleComponent/people/Component/people-clients/add-client/add-client.component';
+import { AddFamilyMemberComponent } from './../../../../../customer-overview/overview-profile/add-family-member/add-family-member.component';
+import { EnumDataService } from './../../../../../../../../../../services/enum-data.service';
+import { SelectFolioMapComponent } from './../../../../../../../../AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { HttpHeaders } from '@angular/common/http';
 import { EventService } from './../../../../../../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,11 +28,22 @@ export class MfImportCasFileComponent implements OnInit {
   unmappedInvestorList: any[] = [];
   unmappedTransactionList: any[] = [];
   unmappedSchemeList: any[] = [];
+  familyMemberList: any;
+  duplicateFlag: boolean;
+  clientData = AuthService.getClientData();
+  advisorId = AuthService.getAdvisorId();
+  matTabIndex: number = 0;
+  investorUnmappedCount: number;
+  transactionUnmappedCount: number;
   constructor(
     private cusService: CustomerService,
     private fb: FormBuilder,
     private subInjectService: SubscriptionInject,
-    private eventService: EventService
+    private eventService: EventService,
+    private dialog: MatDialog,
+    private enumDataService: EnumDataService,
+    private cancelFlagService: CancelFlagService,
+    private clientSuggeService: ClientSggestionListService
   ) { }
 
   filename: any;
@@ -55,7 +73,92 @@ export class MfImportCasFileComponent implements OnInit {
   selectionInvestor = new SelectionModel<any>(true, []);
   selectionTransaction = new SelectionModel<any>(true, []);
 
+
   ngOnInit() {
+    this.getFamilyMemberList();
+    this.getTransactionTypeList();
+  }
+
+
+  getFamilyMemberList() {
+    this.cusService.getFamilyMemberListForCasMapping({ clientId: this.clientId })
+      .subscribe(res => {
+        if (res) {
+          this.familyMemberList = res;
+          console.log('this is family member,', res);
+        }
+      })
+  }
+
+  openAddNewFamilyMember(value, data) {
+    this.enumDataService.setRelationShipStatus();
+    let component;
+    if (value == 'add') {
+
+      if (this.clientData.clientType == 1) {
+        if (this.familyMemberList) {
+          let relationType = (this.clientData.genderId == 1) ? 3 : 2
+          this.duplicateFlag = this.familyMemberList.some(element => {
+            if (element.relationshipId == relationType) {
+              return true
+            } else {
+              return false
+            }
+          })
+        } else {
+          this.duplicateFlag = false;
+        }
+      }
+      this.clientData['duplicateFlag'] = this.duplicateFlag;
+      component = AddFamilyMemberComponent;
+
+      let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
+      ClientList = ClientList.filter(element => element.userId != this.clientData.userId);
+      data = { flag: 'Add member', fieldFlag: 'familyMember', client: this.clientData, ClientList };
+    }
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: component,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.getFamilyMemberList();
+            this.enumDataService.searchClientList();
+            this.cancelFlagService.setCancelFlag(undefined);
+            this.clientSuggeService.setEmptySuggestionList();
+            this.familyMemberList = undefined;
+            if (this.clientData.mobileList && this.clientData.mobileList.length > 0) {
+              this.clientData.mobileNo = this.clientData.mobileList[0].mobileNo;
+              const obj =
+              {
+                advisorId: AuthService.getAdvisorId(),
+                isdCodeId: this.clientData.mobileList[0].isdCodeId,
+                mobileNo: this.clientData.mobileNo
+              }
+              this.clientSuggeService.setSuggestionListUsingMobile(obj);
+            }
+            if (this.clientData.emailList && this.clientData.emailList.length > 0) {
+              this.clientData.email = this.clientData.emailList[0].email;
+              const obj =
+              {
+                advisorId: AuthService.getAdvisorId(),
+                email: this.clientData.email
+              }
+              this.clientSuggeService.setSuggestionListUsingEmail(obj);
+            }
+          }
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   isAllSelected(choice) {
@@ -186,6 +289,8 @@ export class MfImportCasFileComponent implements OnInit {
           this.pastUploadedCasFile = false;
           this.showPointsIfRefreshed = false;
           this.showMappingTables = true;
+          this.shouldShowSaveAndProceed = true;
+          this.dataSource.data = ELEMENT_DATA;
           this.getClientCASFileDetailData();
           break;
       }
@@ -199,6 +304,12 @@ export class MfImportCasFileComponent implements OnInit {
 
   showPastUploadedCasFile(): void {
     this.currentTabValue = null;
+    if (this.showMappingTables) {
+      this.showMappingTables = false;
+    }
+    if (this.shouldShowSaveAndProceed) {
+      this.shouldShowSaveAndProceed = false;
+    }
     this.pastUploadedCasFile = true;
     this.dataSource5.data = ELEMENT_DATA5;
     this.getStatusOfPastFileUpload();
@@ -224,13 +335,23 @@ export class MfImportCasFileComponent implements OnInit {
           this.unmappedTransactionList = [...res.unmappedTransactions];
           this.unmappedSchemeList = [...res.unmappedSchemes];
           if (this.unmappedInvestorList.length > 0) {
+            this.unmappedInvestorList.map(o => {
+              o.isMapped = false;
+              o.mappedMemberName = '';
+            })
             this.dataSource.data = this.unmappedInvestorList;
+            this.investorUnmappedCount = this.unmappedInvestorList.length;
           } else {
-            this.dataSource.data = null
+            this.dataSource.data = null;
           }
 
           if (this.unmappedTransactionList.length > 0) {
+            this.unmappedTransactionList.map(o => {
+              o.isMapped = false;
+              o.mappedTransactionTypeName = '';
+            });
             this.dataSource2.data = this.unmappedTransactionList;
+            this.transactionUnmappedCount = this.unmappedTransactionList.length;
           } else {
             this.dataSource2.data = null;
           }
@@ -249,19 +370,54 @@ export class MfImportCasFileComponent implements OnInit {
   }
 
 
-  mapInvestor() {
-    let data = [
-      {
-        id: 'id from unmapped investors',
-        clientId: this.clientId,
-        familyMemberId: 'familyMemberId',
-        investorName: 'name'
-      }
-    ];
+  mapInvestor(item, choice, element) {
+    let data = [];
+    switch (choice) {
+      case 'single':
+        data = [
+          {
+            id: element.id,
+            clientId: this.clientId,
+            familyMemberId: item.familyMemberId,
+            investorName: item.displayName
+          }
+        ];
+        break;
+      case 'multiple':
+        this.selectionInvestor.selected.forEach(item1 => {
+          data.push({
+            id: item1.id,
+            clientId: this.clientId,
+            familyMemberId: item.familyMemberId,
+            investorName: item.displayName
+          })
+        });
+        break;
+    }
     this.cusService.putMapInvestor(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
+          if (choice === 'single') {
+            this.dataSource.data.map(item1 => {
+              if (item1['id'] === element.id) {
+                item1['isMapped'] = true;
+                item1['mappedMemberName'] = item.displayName;
+              }
+            })
+          } else if (choice === 'multiple') {
+            this.selectionInvestor.selected.forEach(item2 => {
+              this.dataSource.data.find(item1 => item1['id'] === item2.id)['isMapped'] = true;
+              this.dataSource.data.find(item1 => item1['id'] === item2.id)['mappedMemberName'] = item.displayName;
+            })
+          }
+          this.selectionInvestor.clear();
+          this.investorUnmappedCount = 0;
+          this.dataSource.data.forEach(item => {
+            if (!item['isMapped']) {
+              this.investorUnmappedCount += 1;
+            }
+          })
         }
       }, err => {
         console.error(err);
@@ -269,21 +425,59 @@ export class MfImportCasFileComponent implements OnInit {
       });
   }
 
-  mapTransaction() {
-    let data = [
-      {
-        id: 'id from unmapped transactions list',
-        fwTransactionType: 'transactionType from transaction type get api',
-        effect: 'effect from transaction type get api',
-        transactionTypeMasterId: 'id from transaction type get api',
-        assetMutualFundTransactionTypeMasterId: 'assetTypeTransactionId from transaction type get api'
-      }
-    ]
+  mapTransaction(item, choice, element) {
+    let data = [];
+    switch (choice) {
+      case 'single':
+        data = [
+          {
+            id: element.id,
+            fwTransactionType: item.transactionType,
+            effect: item.effect,
+            transactionTypeMasterId: item.id,
+            assetMutualFundTransactionTypeMasterId: item.assetTypeTransactionId,
+            advisorId: this.advisorId
+          }
+        ]
+        break;
+
+      case 'multiple':
+        this.selectionTransaction.selected.forEach(element => {
+          data.push({
+            id: element.id,
+            fwTransactionType: item.transactionType,
+            effect: item.effect,
+            transactionTypeMasterId: item.id,
+            assetMutualFundTransactionTypeMasterId: item.assetTypeTransactionId,
+            advisorId: this.advisorId
+          });
+        })
+    }
 
     this.cusService.putMapTransaction(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
+          if (choice == 'single') {
+            this.dataSource2.data.map(item1 => {
+              if (item1['id'] === element.id) {
+                item1['isMapped'] = true;
+                item1['mappedTransactionTypeName'] = item.transactionType;
+              }
+            })
+          } else if (choice === 'multiple') {
+            this.selectionTransaction.selected.forEach(item1 => {
+              this.dataSource2.data.find(item2 => item2['id'] === item1.id)['isMapped'] = true;
+              this.dataSource2.data.find(item2 => item2['id'] === item1.id)['mappedTransactionTypeName'] = item.transactionType;
+            })
+          }
+          this.selectionTransaction.clear();
+          this.transactionUnmappedCount = 0;
+          this.dataSource2.data.forEach(item => {
+            if (!item['isMapped']) {
+              this.transactionUnmappedCount += 1;
+            }
+          })
         }
       }, err => {
         console.error(err);
@@ -330,6 +524,32 @@ export class MfImportCasFileComponent implements OnInit {
       })
   }
 
+  changeViewToMappingTableAfterFileUpload() {
+    this.showMappingTables = true;
+    this.currentTabValue = null;
+    this.pastUploadedCasFile = false;
+    this.isFileStatusProceed = false;
+    this.shouldShowSaveAndProceed = true;
+    this.getClientCASFileDetailData();
+  }
+
+
+  openFolio(data) {
+    const dialogRef = this.dialog.open(SelectFolioMapComponent, {
+      width: '663px',
+
+      data: { selectedFolios: data, type: 'casFileUpload' }
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result && 'selectedFamilyMemberData' in result) {
+        this.mapInvestor(result.selectedFamilyMemberData, 'multiple', null);
+      }
+    });
+  }
+
   getCasFileLogOnRefresh(choice) {
     let data;
     if (choice === 'single') {
@@ -345,7 +565,7 @@ export class MfImportCasFileComponent implements OnInit {
           if (choice == 'multiple') {
             switch (res.processStatus) {
               case -1:
-                this.uploadFileStatusMsg = 'File Imported';
+                this.uploadFileStatusMsg = 'Error, Please import file again';
                 this.isFileStatusProceed = false;
                 this.showPointsIfRefreshed = true;
                 break;
@@ -357,6 +577,7 @@ export class MfImportCasFileComponent implements OnInit {
 
               case 1:
                 this.uploadFileStatusMsg = 'File Imported';
+                this.setCasFileObject(res);
                 this.isFileStatusProceed = true;
                 break;
 
@@ -365,6 +586,7 @@ export class MfImportCasFileComponent implements OnInit {
                 this.isFileStatusProceed = true;
                 break;
             }
+
           } else if (choice == 'single') {
             this.dataSource5.data.map(item => {
               if (item['id'] === this.currentCasFileObject.id) {
@@ -395,22 +617,39 @@ export class MfImportCasFileComponent implements OnInit {
   }
 
   updateCasFileStatus() {
-    let data = {
-      id: 21,
-      processStatus: 2
-    }
+    if (
+      this.dataSource.data.every(item => item['isMapped'] == true) &&
+      this.dataSource2.data.every(item => item['isMapped'] == true)
+    ) {
+      let data = {
+        id: this.currentCasFileObject.id,
+        processStatus: 2
+      }
 
-    //     id of selected cas log obj,
-    // processStatus 2 for Data processed after completion of all mapping
-    this.cusService.putCasFileStatusUpdate(data)
-      .subscribe(res => {
-        if (res) {
-          console.log(res);
-        }
-      }, err => {
-        console.log(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+      //     id of selected cas log obj,
+      // processStatus 2 for Data processed after completion of all mapping
+      this.cusService.putCasFileStatusUpdate(data)
+        .subscribe(res => {
+          if (res) {
+            console.log(res);
+            this.close();
+          }
+        }, err => {
+          console.log(err);
+          this.eventService.openSnackBar('Something went wrong!', "DISMISS");
+        })
+    } else {
+      this.eventService.openSnackBar("Some are still unmapped");
+    }
+  }
+
+  changeMatTabIndex() {
+    this.matTabIndex += 1;
+    if (this.matTabIndex > 3) {
+      this.matTabIndex = 0;
+    }
+    this.shouldShowSaveAndProceed = (this.matTabIndex === 2) ? false : true;
+    this.shouldShowSaveAndProceed = (this.investorUnmappedCount === 0 && this.transactionUnmappedCount === 0) ? false : true;
   }
 
   close() {

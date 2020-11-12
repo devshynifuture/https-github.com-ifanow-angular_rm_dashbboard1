@@ -1064,5 +1064,9 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_CAS_FILE_STATUS_UPDATE, data);
   }
 
+  getFamilyMemberListForCasMapping(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, data);
+  }
+
 }
 
