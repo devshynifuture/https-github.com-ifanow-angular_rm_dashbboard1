@@ -18,7 +18,7 @@ export class BackofficeFileUploadComponent implements OnInit {
 
   selectedFileType: any = '';
   filterRTA = '';
-  filterStatus= '';
+  filterStatus = '';
   filter: any = {
     rt: 0,
     status: 2
@@ -33,6 +33,9 @@ export class BackofficeFileUploadComponent implements OnInit {
   targetFile: any;
   uploadButton = false;
   barWidth: any = '0%';
+  selectedRadio: boolean;
+  fileTypeStock: any;
+  selectedType: 1;
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -46,6 +49,19 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedType = 1
+    this.fileTypeStock = [
+      {
+        category: "Transaction Files",
+        id: 1,
+        value: [{ name: 'Xls', id: 1 }]
+      }, {
+        category: "Holdings",
+        id: 2,
+        value: [{ name: 'Xls', id: 1 }]
+      }
+    ]
+    this.selectedRadio = true
     this.advisorId = AuthService.getAdvisorId();
     this.reconService.getBackOfficeFileUploadFileType({}).subscribe((data) => {
       console.log('thisis filetype data', data);
@@ -65,7 +81,17 @@ export class BackofficeFileUploadComponent implements OnInit {
       });
     this.setFilter();
   }
+  changeType(event) {
+    this.selectedType = event.value
+    console.log(event)
+    console.log(this.fileTypeStock)
+    if (event) {
 
+    } else {
+
+    }
+    this.fileType
+  }
   getFile(e) {
     this.fileName = e.currentTarget.files[0].name;
     this.fileSize = this.formatBytes(e.currentTarget.files[0].size, 2);
@@ -200,27 +226,27 @@ export class BackofficeFileUploadComponent implements OnInit {
       // reload
       var { value } = this.fileType[0];
       let transactionFileTypeArr = value;
-  
-      var { value} = this.fileType[1];
+
+      var { value } = this.fileType[1];
       let stpSipFileTypeArr = value;
-    
+
       var { value } = this.fileType[2];
       let aumFileTypeArr = value;
-  
+
       var { value } = this.fileType[3];
       let folioMasterFileTypeArr = value;
 
-      if(transactionFileTypeArr.some(item=> item.id === this.selectedFileType)){
+      if (transactionFileTypeArr.some(item => item.id === this.selectedFileType)) {
         this.router.navigate(['transaction'], { relativeTo: this.activatedRoute })
       }
-      if(stpSipFileTypeArr.some(item=> item.id === this.selectedFileType)){
+      if (stpSipFileTypeArr.some(item => item.id === this.selectedFileType)) {
         this.router.navigate(['sip-stp'], { relativeTo: this.activatedRoute })
       }
 
-      if(aumFileTypeArr.some(item=> item.id === this.selectedFileType)){
+      if (aumFileTypeArr.some(item => item.id === this.selectedFileType)) {
         this.router.navigate(['aum'], { relativeTo: this.activatedRoute });
       }
-      if(folioMasterFileTypeArr.some(item=> item.id === this.selectedFileType)){
+      if (folioMasterFileTypeArr.some(item => item.id === this.selectedFileType)) {
         this.router.navigate(['folio'], { relativeTo: this.activatedRoute });
       }
       this.num = 0;
