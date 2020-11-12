@@ -147,7 +147,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   enteredAmount(value) {
-    this.selectedMandate = this.copyTrasactionSummary.selectedMandate
+   // this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
