@@ -5,7 +5,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
-const componentList = [SelectFolioMapComponent]
+const componentList = []
 
 @NgModule({
   declarations: componentList,

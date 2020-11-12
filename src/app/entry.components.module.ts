@@ -1,3 +1,4 @@
+import { SelectFolioMapComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
 // tslint:disable:max-line-length
 import { DetailedPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-td-scheme/detailed-po-td/detailed-po-td.component';
 import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
@@ -290,7 +291,8 @@ export const componentList = [
   RightFilterDuplicateComponent,
   AddExpensesComponent,
   MfImportCasFileComponent,
-  IinCreationLoaderComponent
+  IinCreationLoaderComponent,
+  SelectFolioMapComponent
 
   // ComposeEmailComponent
 ];

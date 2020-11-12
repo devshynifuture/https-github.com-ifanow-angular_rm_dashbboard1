@@ -647,13 +647,13 @@
                     </div>
                 </div>
                 <div class="d-flex mt-20 align-items-center " *ngIf="!isLoadingPlan"
-                    [ngClass]="{'justify-content-center': inputData.insuranceType != 1,'justify-content-between': inputData.insuranceType == 1}">
+                    [ngClass]="{'justify-content-center': inputData?.insuranceType != 1,'justify-content-between': inputData?.insuranceType == 1}">
                     <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
                     </button>
 
                     <button mat-stroked-button class="btn140 text-primary br-2"
-                        *ngIf="!isLoadingPlan && inputData.insuranceType == 1" (click)="suggestPolicy(null)">
+                        *ngIf="!isLoadingPlan && inputData?.insuranceType == 1" (click)="suggestPolicy(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Suggest policy
                     </button>
                 </div>

@@ -335,7 +335,7 @@ export class HttpService {
       });
   }
 
-  getWithoutAuth(url: string, params, requestAge: number=undefined): Observable<any> {
+  getWithoutAuth(url: string, params, requestAge: number = undefined): Observable<any> {
     if (!requestAge) {
       requestAge = DEFAULT_AGE;
     }
@@ -460,7 +460,8 @@ export class HttpService {
       httpOptions = options;
     }
     return this._http
-      .post(url, body, httpOptions).pipe(
+      .post(url, body, httpOptions)
+      .pipe(
         catchError(err => of([]))
 
         // catchError(err => {
@@ -469,6 +470,19 @@ export class HttpService {
         // })
       );
   }
+
+  postExternal1(url: string, body, options?): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    if (options != undefined) {
+      httpOptions = options;
+    }
+    return this._http
+      .post(url, body, httpOptions);
+  }
+
+
 
   getExternal(url: string, options?): Observable<any> {
     let httpOptions = {

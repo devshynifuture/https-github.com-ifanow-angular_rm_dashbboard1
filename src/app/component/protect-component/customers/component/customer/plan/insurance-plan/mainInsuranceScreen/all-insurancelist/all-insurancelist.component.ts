@@ -78,8 +78,8 @@ export class AllInsurancelistComponent implements OnInit {
     this.clientId = AuthService.getClientId()
   }
 
-  isLoading = true;
-  isLoadingPlan = true;
+  isLoading = false;
+  isLoadingPlan = false;
   ngOnInit() {
     // this.detailsInsurance = {}
     this.ipService.getAllInsuranceData()
@@ -90,7 +90,12 @@ export class AllInsurancelistComponent implements OnInit {
     .subscribe(res => {
       this.plannerObj = res;
     })
-    this.getInsuranceList()
+    if(!this.allInsuranceData &&  this.allInsuranceData == ''){
+      this.getInsuranceList();
+    }else{
+      this.isLoadingInInsurance={isLoading:false};
+      this.getInsurancePlaningListRes(this.allInsuranceData);
+    }
   }
   openDetailsInsurance(insurance) {
     this.selectedId = insurance.id
