@@ -17,8 +17,9 @@ import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fi
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, empty } from 'rxjs';
 import { InsurancePlanningServiceService } from '../insurance-planning-service.service';
+import { defaultIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -45,6 +46,8 @@ export class ShowHealthPlanningComponent implements OnInit {
   insuranceIds = [];
   isRefreshRequired = false;
   storedData: any;
+  needAnalysisData: any;
+  globalArray =[];
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -64,6 +67,14 @@ export class ShowHealthPlanningComponent implements OnInit {
         this.storedData = '';
         this.storedData = res;
       })
+      this.ipService.getNeedAnlysisData()
+      .subscribe(res => {
+        this.needAnalysisData = res;
+      })
+      this.ipService.getFamilyMemberList()
+      .subscribe(res => {
+        this.familyMemberList = res;
+      })
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
     this.inputData = data;
@@ -77,8 +88,17 @@ export class ShowHealthPlanningComponent implements OnInit {
     console.log('insurance data', this.inputData)
     this.showInsurance = this.inputData
     this.insuranceIds.push(this.inputData.id);
-    this.getStepOneAndTwoData();
+    if(this.chekToCallApi()){
+      this.getStepOneAndTwoData();
+    }else{
+      let singleObjectData = this.getData();
+      this.forkJoinResponse(singleObjectData[0]);
+    }
     this.getGlobalDataInsurance();
+  }
+  getData(){
+    let singleData = this.needAnalysisData.filter(d=>d.id == this.inputData.id);
+    return singleData;
   }
   formatNumber(data, noOfPlaces: number = 0) {
     if (data) {
@@ -96,10 +116,21 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
     return data;
   }
+  chekToCallApi(){
+    let data =[];
+    if(this.needAnalysisData){
+       data = this.needAnalysisData.filter(d => d.id == this.inputData.id);
+    }
+    return data.length > 0 ? false :  true
+
+  }
   getStepOneAndTwoData() {
-    this.dataSource = [{}, {}, {}];
-    this.dataSource1 = [{}, {}, {}];
-    this.isLoading = true;
+    let familyMemberList;
+    if(!this.isRefreshRequired){
+      this.dataSource = [{}, {}, {}];
+      this.dataSource1 = [{}, {}, {}];
+      this.isLoading = true;
+    }
     let obj = {
       id: this.insuranceIds[0] == null ? -1 : this.insuranceIds,
       insuranceType: this.inputData.insuranceType
@@ -113,76 +144,62 @@ export class ShowHealthPlanningComponent implements OnInit {
       realOrFictious: 2
     };
     const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj);
-    const familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
-    const suggestNewGet = this.planService.getGeneralInsuranceReview(obj3)
-    // this.planService.getGeneralInsuranceNeedAnalysis(obj).subscribe(
-    //   data => {
-    //     if(data){
-    //       if (data) {
-    //         this.dataSource =this.getFilterData(data.current) ;
-    //         this.dataSource1 =this.getFilterData(data.suggested) ;
-    //         this.isLoading = false;
-    //         console.log(data);
-    //       }
-    //       this.dataSource = data.current;  
-    //       if(data.current){
-    //         data.current.forEach(element => {
-    //           if(element.insuranceDetails.insuredMembers.length > 0){
-    //             element.insuranceDetails.insuredMembers.forEach(ele => {
-    //               this.ownerIds.push({
-    //                 'ownerId': !ele.familyMemberId ? this.clientId : ele.familyMemberId
-    //               })
-    //             });
-    //           }else{
-    //             this.ownerIds.push({
-    //               'ownerId': element.insurance.policyHolderId
-    //             })
-    //           }
-    //         });
-    //       }                                                                                                                                                                                                                                                                                                                                                                                                           
-    //     }                                                                                                                                                                                                                                                                                                                                                                                                             
-    //   },
-    //   err => {
-    //     this.eventService.openSnackBar(err, 'Dismiss');
-    //   }
-    // );
-    forkJoin(getCurrentPolicy, familyMemberList, suggestNewGet).subscribe(result => {
-      this.familyMemberList = result[1];
-      if (result) {
-        let data = result[0];
-        if (data) {
-          this.dataSource = this.getFilterData(data.current);
-          this.dataSource = data.current;
-          this.checkAndPushSuggestedData(result[0])
-          if (data.current) {
-            data.current.forEach(element => {
-              if (element.insuranceDetails.insuredMembers.length > 0) {
-                element.insuranceDetails.insuredMembers.forEach(ele => {
-                  this.ownerIds.push({
-                    'ownerId': ele.familyMemberId
-                  })
-                });
-              } else {
-                this.ownerIds.push({
-                  'ownerId': element.insuranceDetails.policyHolderId
-                })
-              }
-            });
-          }
-        } else {
-          this.dataSource = [];
-        }
-        if (data.suggested) {
-          this.dataSource1 = this.getFilterData(data.suggested);
-        } else {
-          this.dataSource1 = [];
-        }
-        this.isLoading = false;
-      }
+    if(!this.familyMemberList && this.familyMemberList == ''){
+        familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
+    }else{
+       familyMemberList = empty().pipe(defaultIfEmpty(''));
 
+    }
+    // const suggestNewGet = this.planService.getGeneralInsuranceReview(obj3);
+    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+      result['id'] = this.inputData.id;
+      if(this.needAnalysisData){
+        this.needAnalysisData = [...new Map(this.needAnalysisData.map(item => [item.id, item])).values()];
+      }
+      this.globalArray.push(result);
+      this.ipService.setNeedAnlysisData(this.globalArray);
+      this.globalArray =[];
+      this.forkJoinResponse(result);
     }, err => {
       this.eventService.openSnackBar(err, 'Dismiss');
     })
+  }
+  forkJoinResponse(result){
+    if(result[1]){
+      this.familyMemberList = result[1];
+      this.ipService.setFamilyMemberList(this.familyMemberList);
+    }
+    if (result) {
+      let data = result[0];
+      if (data) {
+        this.dataSource = this.getFilterData(data.current);
+        this.dataSource = data.current;
+        this.checkAndPushSuggestedData(result[0])
+        if (data.current) {
+          data.current.forEach(element => {
+            if (element.insuranceDetails.insuredMembers.length > 0) {
+              element.insuranceDetails.insuredMembers.forEach(ele => {
+                this.ownerIds.push({
+                  'ownerId': ele.familyMemberId
+                })
+              });
+            } else {
+              this.ownerIds.push({
+                'ownerId': element.insuranceDetails.policyHolderId
+              })
+            }
+          });
+        }
+      } else {
+        this.dataSource = [];
+      }
+      if (data.suggested) {
+        this.dataSource1 = this.getFilterData(data.suggested);
+      } else {
+        this.dataSource1 = [];
+      }
+      this.isLoading = false;
+    }
   }
   checkAndPushSuggestedData(array) {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);
@@ -274,6 +291,7 @@ export class ShowHealthPlanningComponent implements OnInit {
 
   }
   deleteModal(value, data) {
+    let deletedId = data ? data.id : null;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -286,7 +304,8 @@ export class ShowHealthPlanningComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
             dialogRef.close();
-            this.getStepOneAndTwoData();
+            this.deleteNewPolicy(deletedId);
+            // this.getStepOneAndTwoData();
             this.isRefreshRequired = true;
           },
           error => this.eventService.showErrorMessage(error)
@@ -310,6 +329,18 @@ export class ShowHealthPlanningComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  deleteNewPolicy(id){
+    let singleData = this.needAnalysisData.filter(d => d.id == this.inputData.id);
+    let suggestPolicy = singleData[0][0];
+      let suggested = suggestPolicy.suggested.length > 0 ? suggestPolicy.suggested : []
+      suggested.forEach(element => {
+        element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
+      });
+      suggested = suggested.filter(d => d.id != id);
+      singleData[0][0].suggested = suggested;
+    this.ipService.setNeedAnlysisData(this.needAnalysisData);
+    this.forkJoinResponse(singleData[0]);
   }
   close(data) {
     data.isRefreshRequired = this.isRefreshRequired
