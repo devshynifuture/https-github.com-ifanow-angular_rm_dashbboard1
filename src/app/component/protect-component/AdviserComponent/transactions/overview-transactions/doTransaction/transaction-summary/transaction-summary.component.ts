@@ -193,7 +193,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-
+   // this.getMandateDetails()
     this.bankDetails = data;
     console.log('bank == ',this.bankDetails)
     this.bankDetails.forEach(element => {
