@@ -1426,7 +1426,8 @@ export class MutualFundSummaryComponent implements OnInit {
   }
   Excel(tableTitle) {
     this.showDownload = true
-    this.customDataSource.data = this.copyOfData
+    this.customDataSource.data = this.customDataSource.data
+    // this.customDataSource.data = this.copyOfData
     this.customDataSource.data.forEach(element => {
       var test = element.navDate.includes('$NEXTLINE')
       console.log('includes', test)
@@ -2018,7 +2019,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.forEach(element => {
       if (element.folioNumber) {
         let isin = element.isin ? ' | ' + element.isin : '';
-        element.schemeName = element.schemeName +isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if (type == false) {
