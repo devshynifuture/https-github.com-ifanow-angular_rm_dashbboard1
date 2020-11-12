@@ -70,6 +70,7 @@ export class AllInsurancelistComponent implements OnInit {
   index: any;
   selectedId:any;
   allInsuranceData: any;
+  plannerObj: any;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private eventService: EventService,private ipService:InsurancePlanningServiceService) {
@@ -84,6 +85,10 @@ export class AllInsurancelistComponent implements OnInit {
     this.ipService.getAllInsuranceData()
     .subscribe(res => {
       this.allInsuranceData = res;
+    })
+    this.ipService.getPlannerObj()
+    .subscribe(res => {
+      this.plannerObj = res;
     })
     this.getInsuranceList()
   }

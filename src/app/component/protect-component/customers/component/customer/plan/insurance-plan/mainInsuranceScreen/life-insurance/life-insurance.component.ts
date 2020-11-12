@@ -546,7 +546,6 @@ export class LifeInsuranceComponent implements OnInit {
   getForkJoinResponse(result) {
     this.needAnalysisSavedData = result[3]
     this.panelOpenState = false;
-    this.getNeedAnalysisData(result[3]);
     this.getDetailsInsuranceRes(result[0])
     let suggestedData = result[1];
     if (suggestedData) {
@@ -570,6 +569,7 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.dataSouce3 = [];
     }
+    this.getNeedAnalysisData(result[3]);
     if (result[2]) {
       this.dataSource1 = result[2];
     } else {
@@ -700,6 +700,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = data[6] ? data[6][0].total_amount : 0;
       this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = data[8] ? data[8][0].total_amount : 0;
+      this.setAdviceAmountToAllIns();
 
     } else {
       this.plannerObj = this.setAll(this.plannerObj, 0);
@@ -707,6 +708,12 @@ export class LifeInsuranceComponent implements OnInit {
     }
 
 
+
+  }
+  setAdviceAmountToAllIns(){
+    let singleData = this.allInsuranceData.filter(d => d.id == this.inputData.id);
+    singleData[0].adviceAmount = this.insuranceDetails.advice ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
+    this.ipService.setAllInsuranceData(this.allInsuranceData);
 
   }
   getFilterData(data, totalAmount, name, amount) {
@@ -774,6 +781,7 @@ export class LifeInsuranceComponent implements OnInit {
           console.log('this is sidebardata in subs subs : ', sideBarData);
           if (UtilService.isDialogClose(sideBarData)) {
             if (sideBarData.data) {
+              this.isRefresh = true;
               // this.getDetailsInsurance();
               this.isRefreshRequired = sideBarData.data;
               this.outputChange.emit({ id: this.inputData.id, isRefreshRequired: sideBarData.data });
