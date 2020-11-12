@@ -290,6 +290,7 @@ export class MfImportCasFileComponent implements OnInit {
           this.showPointsIfRefreshed = false;
           this.showMappingTables = true;
           this.shouldShowSaveAndProceed = true;
+          this.isLoading = true;
           this.dataSource.data = ELEMENT_DATA;
           this.getClientCASFileDetailData();
           break;
@@ -311,6 +312,7 @@ export class MfImportCasFileComponent implements OnInit {
       this.shouldShowSaveAndProceed = false;
     }
     this.pastUploadedCasFile = true;
+    this.isLoading = true;
     this.dataSource5.data = ELEMENT_DATA5;
     this.getStatusOfPastFileUpload();
   }
@@ -492,8 +494,6 @@ export class MfImportCasFileComponent implements OnInit {
         if (res) {
           this.isLoading = false;
           console.log("cas file status", res);
-          this.dataSource5.data = res;
-
           res.map(item => {
             item.isLoading = false;
             switch (item.processStatus) {
@@ -510,13 +510,8 @@ export class MfImportCasFileComponent implements OnInit {
                 break;
             }
           });
-          /*
-            status
-            -1 - Error
-            0 - In Queue
-            1 - File Imported
-            2 - Data Processed
-          */
+          this.dataSource5.data = res;
+
         }
       }, err => {
         console.error(err);
