@@ -110,7 +110,15 @@ export class ReconciliationService {
     getBackOfficeFileToUpload(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
     }
-
+    uploadStock(data){
+        return this.http.post(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD, data);
+    }
+    transactionUpload(data){
+        return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK, data);
+    }
+    holdingUpload(data){
+        return this.http.post(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD, data);
+    }
     getBackOfficeTransactions(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_TRANSACTIONS, data);
     }

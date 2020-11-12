@@ -11,8 +11,22 @@
 
     <div class="row">
         <div class="col-md-3 col-lg-3 p-0 br upload-box">
-
             <div class="row ">
+                <div class="col-md-12 pr-0">
+                    <h5 class="mb-4 mt-12 f-14">Please Select Type</h5>
+                </div>
+                <div class="col-md-12 pr-0 form-group">
+                    <mat-radio-group id="custom-radio" (change)="changeType($event)">
+                        <mat-radio-button [ngClass]="selectedType == 1 ? 'text-primary b-a-custom': 'text-primitive'" [checked]="true" [value]="1">
+                            Mutual fund
+                        </mat-radio-button>
+                        <mat-radio-button [ngClass]="selectedType == 2 ? 'text-primary b-a-custom': 'text-primitive'" [value]="2" >
+                            Stock
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="row "  *ngIf= "selectedType == 1">
                 <div class="col-md-12 pr-0">
                     <h5 class="mb-4 mt-12 f-14">Please Select File Type</h5>
                 </div>
@@ -22,6 +36,26 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
+                                <mat-option (change)="fileTypeSelect(type)" *ngFor="let type of group.value" [value]="type.id">
+                                    {{ type.name }}
+                                </mat-option>
+                            </mat-optgroup>
+                            <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row"  *ngIf="selectedType == 2">
+                <div class="col-md-12 pr-0">
+                    <h5 class="mb-4 mt-12 f-14">Please Select File Type</h5>
+                </div>
+                <div class="col-md-12 form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control" [(ngModel)]="selectedFileType">
+                            <!-- formControlName="lead" -->
+                            <mat-option value="">Select option</mat-option>
+                            <mat-optgroup *ngFor="let group of fileTypeStock" [label]="group.category">
                                 <mat-option *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
@@ -32,7 +66,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf= "selectedType == 1">
                 <div class="col-md-12 pr-0 pt-10">
                     <h5 class="mb-4 f-14">Please Select ARN/RIA</h5>
                 </div>
@@ -48,14 +82,26 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="selectedType ==1">
                 <div class="col-md-12 pr-0 pt-10">
                     <h5 class="mb-4   f-14">Please Select a File...</h5>
                 </div>
                 <div class="col-md-12 ">
-                    <button [disabled]="selectedFileType == '' || arnRiaId == ''" (click)="file.click()" class="br-0" mat-stroked-button>Choose
+                    <button [disabled]="selectedFileType == '' || arnRiaId == ''" (click)="file.click()" class="br-0"
+                        mat-stroked-button>Choose
                         file</button>
                     <input #file (change)="getFile($event)" style="display: none;" type="file">
+                </div>
+            </div>
+            <div class="row" *ngIf="selectedType ==2">
+                <div class="col-md-12 pr-0 pt-10">
+                    <h5 class="mb-4   f-14">Please Select a File...</h5>
+                </div>
+                <div class="col-md-12 ">
+                    <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0"
+                        mat-stroked-button>Choose
+                        file</button>
+                    <input #file accept=".xlsx, .xls, .csv" (change)="getFileStock($event,selectedType)" style="display: none;" type="file">
                 </div>
             </div>
             <!-- <div class="row  pt-12">
@@ -76,8 +122,14 @@
                 <div class="col-md-1 text-left pr-0">
                     <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
                 </div>
-                <div class="col-md-12 text-left pr-0 pt-12">
-                    <button *ngIf="uploadButton" (click)="uploadTargetFile()" mat-stroked-button class="br-0 btn-bottom">Upload
+                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==1">
+                    <button *ngIf="uploadButton" (click)="uploadTargetFile()" mat-stroked-button
+                        class="br-0 btn-bottom">Upload
+                        file</button>
+                </div>
+                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==2">
+                    <button *ngIf="uploadButton" (click)="uploadTargetFileStock()" mat-stroked-button
+                        class="br-0 btn-bottom">Upload
                         file</button>
                 </div>
                 <div class="col-md-12 text-left  pt-12" *ngIf="fileSize && !uploadButton">
@@ -97,7 +149,8 @@
                     <div class="row">
                         <div class="col-md-6 p-0 pr-8 left">
                             <mat-form-field *ngIf="filterList">
-                                <mat-select class="form-control" [(ngModel)]="filterRTA" (selectionChange)="setFilter()">
+                                <mat-select class="form-control" [(ngModel)]="filterRTA"
+                                    (selectionChange)="setFilter()">
                                     <!-- formControlName="lead" -->
                                     <mat-option value=''>Select RTA</mat-option>
                                     <mat-option [value]="rt.id" *ngFor="let rt of filterList.RT_TYPE">{{rt.name}}
@@ -108,7 +161,8 @@
                         </div>
                         <div class="col-md-5 p-0 pr-8 left">
                             <mat-form-field *ngIf="filterList">
-                                <mat-select class="form-control" [(ngModel)]="filterStatus" (selectionChange)="setFilter()">
+                                <mat-select class="form-control" [(ngModel)]="filterStatus"
+                                    (selectionChange)="setFilter()">
                                     <!-- formControlName="lead" -->
                                     <mat-option value=''>Select status</mat-option>
                                     <mat-option [value]="status.id" *ngFor="let status of filterList.status">
@@ -126,11 +180,15 @@
 
                 <div class="col-md-12 col-lg-6 right classToggleBtn">
                     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right matButtonWidth">
-                        <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction" [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
+                        <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction"
+                            [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
                             Transactions</mat-button-toggle>
-                        <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp" [state]="filter" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
-                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/folio" [state]="filter" routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
-                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/aum" [state]="filter" routerLinkActive="btn-primary">AUM Files</mat-button-toggle>
+                        <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp"
+                            [state]="filter" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
+                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/folio"
+                            [state]="filter" routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
+                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/aum"
+                            [state]="filter" routerLinkActive="btn-primary">AUM Files</mat-button-toggle>
                     </mat-button-toggle-group>
                 </div>
             </div>
