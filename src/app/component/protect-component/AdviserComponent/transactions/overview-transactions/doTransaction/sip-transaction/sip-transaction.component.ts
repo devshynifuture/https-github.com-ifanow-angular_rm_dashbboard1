@@ -514,6 +514,7 @@ export class SipTransactionComponent implements OnInit {
     }
     this.showSpinnerMandate = false;
     this.acceptedMandate = []
+    this.selectedMandate = {}
     if (data.length > 0) {
       data.forEach(element => {
         if(element.statusString == 'ACCEPTED'){
