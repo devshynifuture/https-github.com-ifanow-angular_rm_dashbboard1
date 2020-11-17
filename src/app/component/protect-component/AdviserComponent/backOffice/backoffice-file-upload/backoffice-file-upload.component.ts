@@ -45,8 +45,9 @@ export class BackofficeFileUploadComponent implements OnInit {
   fileTypeStock: any;
   selectedType: 1;
   stockFile: any;
-  type: any;
+  type: any = 1;
   element: any;
+  upload: boolean = false;
   constructor(
     private subInjectService: SubscriptionInject,
     private reconService: ReconciliationService,
@@ -168,6 +169,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
   uploadTargetFileStock() {
     this.addbarWidth(1);
+    this.upload = true
     this.numlimit = 30;
     this.uploadButton = false;
     const requestMap = {
@@ -180,6 +182,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD,
         this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
+            this.upload = false
             const responseObject = JSON.parse(response);
             const encodedata = responseObject.payLoad;
             const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
@@ -204,6 +207,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD,
         this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
+            this.upload = false
             const responseObject = JSON.parse(response);
             const encodedata = responseObject.payLoad;
             const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
