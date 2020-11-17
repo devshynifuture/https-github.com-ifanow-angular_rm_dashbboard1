@@ -539,7 +539,7 @@ export class MfImportCasFileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result && 'selectedFamilyMemberData' in result) {
+      if (result && 'selectedFamilyMemberData' in result && result.selectedFamiltMemberData) {
         this.mapInvestor(result.selectedFamilyMemberData, 'multiple', null);
       }
     });
@@ -583,26 +583,25 @@ export class MfImportCasFileComponent implements OnInit {
             }
 
           } else if (choice == 'single') {
-            this.dataSource5.data.map(item => {
-              if (item['id'] === this.currentCasFileObject.id) {
-                item['isLoading'] = false;
-                res.isLoading = false;
-                item = { ...res };
-                switch (res.processStatus) {
-                  case -1: item.status = 'Error';
-                    break;
+            switch (res.processStatus) {
+              case -1: res.status = 'Error';
+                break;
 
-                  case 0: item.status = 'In Queue';
-                    break;
+              case 0: res.status = 'In Queue';
+                break;
 
-                  case 1: item.status = 'File Imported';
-                    break;
+              case 1: res.status = 'File Imported';
+                break;
 
-                  case 2: item.status = 'Data Processed';
-                    break;
-                }
-              }
-            });
+              case 2: res.status = 'Data Processed';
+                break;
+            }
+            let arr = [...this.dataSource5.data];
+            let index = this.dataSource5.data.findIndex(item => item['id'] === this.currentCasFileObject.id);
+            arr.splice(index, 1, res);
+            // this.dataSource5.data.splice(index, 1, res);
+            console.log(arr, this.dataSource5.data);
+            this.dataSource5.data = [...arr];
           }
         }
       }, err => {
@@ -640,17 +639,27 @@ export class MfImportCasFileComponent implements OnInit {
 
   changeMatTabIndex() {
     this.matTabIndex += 1;
-    if (this.matTabIndex > 3) {
+    if (this.matTabIndex === 3) {
+      if (this.investorUnmappedCount === 0 && this.transactionUnmappedCount === 0) {
+        this.shouldShowSaveAndProceed = false;
+      } else {
+        this.shouldShowSaveAndProceed = true;
+        this.close();
+      }
+    }
+    if (this.matTabIndex > 2) {
       this.matTabIndex = 0;
     }
-    this.shouldShowSaveAndProceed = (this.matTabIndex === 2) ? false : true;
-    this.shouldShowSaveAndProceed = (this.investorUnmappedCount === 0 && this.transactionUnmappedCount === 0) ? false : true;
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({
-      state: 'close',
-    });
+    let obj = {
+      state: 'close'
+    }
+    if (this.successFileUpload) {
+      obj['refreshRequired'] = true;
+    }
+    this.subInjectService.changeNewRightSliderState(obj);
   }
 }
 export interface PeriodicElement {
