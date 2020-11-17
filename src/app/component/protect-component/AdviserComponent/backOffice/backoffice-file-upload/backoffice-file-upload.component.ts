@@ -43,7 +43,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   barWidth: any = '0%';
   selectedRadio: boolean;
   fileTypeStock: any;
-  selectedType: 1;
+  selectedType: number = 1;
   stockFile: any;
   type: any = 1;
   element: any;
