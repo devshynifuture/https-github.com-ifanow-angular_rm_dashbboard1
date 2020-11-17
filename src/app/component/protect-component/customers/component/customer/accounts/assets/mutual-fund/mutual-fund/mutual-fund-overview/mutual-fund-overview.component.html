@@ -129,10 +129,10 @@
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24" *ngIf="isLoading"></div>
                                         <span
-                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}"
+                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain_Dupl >= 0,'text-danger': mfData.total_unrealized_gain_Dupl < 0}"
                                             *ngIf="!isLoading">{{mfData.total_unrealized_gain ? mfData.total_unrealized_gain : 0}}</span>
                                         <span *ngIf="!isLoading" class="left"
-                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}">{{'₹'}}
+                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain_Dupl >= 0,'text-danger': mfData.total_unrealized_gain_Dupl < 0}">{{'₹'}}
                                         </span>
                                         <span *ngIf="isLoading">{{''}}</span>
                                     </h5>
@@ -985,7 +985,14 @@
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Unrealized gain/loss
                                         </p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;">
+
+                                        <h2 *ngIf="mfData.total_unrealized_gain_Dupl < 0"
+                                            style="margin: 0px; font-size: 24px; color : #d9534f;">
+                                            <span
+                                                *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span>
+                                        </h2>
+                                        <h2 *ngIf="mfData.total_unrealized_gain_Dupl >= 0"
+                                            style="margin: 0px; font-size: 24px; color : #5cb85c;">
                                             <span
                                                 *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span>
                                         </h2>
@@ -993,9 +1000,32 @@
 
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Returns</p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;"><span
-                                                *ngIf="mfData.total_xirr">{{mfData.total_xirr | number:'1.2-2'}}</span>%
+                                        <h2 *ngIf="mfData.total_xirr < 0"
+                                            style="margin: 0px; font-size: 24px; color : #d9534f;">
+                                            <span>{{mfData.total_xirr ? (mfData.total_xirr | number:'1.2-2') : 0}}</span>%
+                                            <span *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
+                                                <span *ngIf="!isLoading">{{'↓'}}</span>
+                                            </span>
+                                            <!-- <p class="mb-0">
+                                                &#8595; <span></span>
+                                            </p>
+                                            <p class="mb-0">
+                                                &#2193; <span></span>
+                                            </p> -->
                                         </h2>
+                                        <h2 *ngIf="mfData.total_xirr >= 0"
+                                            style="margin: 0px; font-size: 24px;color : #5cb85c;">
+                                            <span>{{mfData.total_xirr ? (mfData.total_xirr | number:'1.2-2') : 0}}</span>%
+
+                                            <!-- <p class="mb-0">
+                                                &#8593; <span></span>
+                                            </p>
+                                            <p class="mb-0">
+                                                &#2191; <span></span>
+                                            </p> -->
+                                        </h2>
+
+
                                     </td>
                                 </tr>
                             </table>
