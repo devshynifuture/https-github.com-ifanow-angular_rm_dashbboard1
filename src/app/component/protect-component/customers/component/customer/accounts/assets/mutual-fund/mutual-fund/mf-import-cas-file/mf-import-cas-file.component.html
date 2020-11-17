@@ -42,7 +42,7 @@
           {{ filename? 'Change': 'Choose' }} file
         </button>
         <input type="file" class="d-none" accept="application/pdf" #inputFileRef (change)="onFileSelect($event)" />
-        <mat-error *ngIf="uploadCasFileForm.get('file').touched && uploadCasFileForm.get('file').errors.required"
+        <mat-error *ngIf="uploadCasFileForm.get('file').touched && uploadCasFileForm.get('file').invalid"
           class="f-12 f-500">
           A PDF file is required
         </mat-error>
@@ -54,7 +54,7 @@
         <mat-form-field floatLabel="never" appearance="standard">
           <input matInput class="form-control" placeholder="Enter password provided while ordering file."
             formControlName="password" type="password">
-          <mat-error>
+          <mat-error *ngIf="uploadCasFileForm.get('password').touched && uploadCasFileForm.get('password').invalid">
             This field is required
           </mat-error>
         </mat-form-field>
