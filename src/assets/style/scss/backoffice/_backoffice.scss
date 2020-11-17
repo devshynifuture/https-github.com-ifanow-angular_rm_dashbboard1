@@ -4,7 +4,16 @@
   position: inherit;
   z-index: 0;
 }
-
+.select-file-type-backoffice{
+  .mat-radio-button:nth-child(1){
+    min-width: 143px !important;
+   
+  }
+  .mat-radio-button:nth-child(2){
+    min-width: 120px !important;
+   
+  }
+}
 .remove-sip-clenup,
 .keep-sip-clenup {
   padding: 0 5px !important;

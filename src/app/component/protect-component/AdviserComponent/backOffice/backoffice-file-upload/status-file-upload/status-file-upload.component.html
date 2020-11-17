@@ -36,7 +36,7 @@
                     <ng-container matColumnDef="mfoverview">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
                         </th>
-                        <td class="br text-center" mat-cell *matCellDef="let element">
+                        <td class="br text-left" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(isLoading) ? '':element.reason}}
                             </div>
@@ -54,7 +54,7 @@
                     <ng-container matColumnDef="portfolioName">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Portfolio name
                         </th>
-                        <td class="br text-center" mat-cell *matCellDef="let element">
+                        <td class="br text-left" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(isLoading) ? '':element.portfolioName}}
                             </div>
