@@ -10,7 +10,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { BackofficeFileUploadAumComponent } from './backoffice-file-upload-aum/backoffice-file-upload-aum.component';
 
 @NgModule({
-  declarations: [adminRoutingComponents, BackofficeFileUploadAumComponent, StatusFileUploadComponent],
+  declarations: [adminRoutingComponents, BackofficeFileUploadAumComponent],
   imports: [
     CommonModule,
     MaterialModule,
