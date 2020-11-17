@@ -70,9 +70,10 @@
                         <div class="bar"> </div>
                         <a *ngIf="!isLoading" [href]="element.fileUrl"
                             [ngClass]="{'cursor-not-allowed': !element.fileUrl}"
-                            (click)="!element.fileUrl ? event.preventDefault(): ''">
+                            (click)="!element.fileUrl ? $event.preventDefault(): ''">
                             <img src="assets/images/svg/download-bordered.svg"
-                                [ngClass]="{'opacity-50': !element.fileUrl}">
+                                [ngClass]="{'opacity-50': !element.fileUrl}"
+                                (click)="!element.fileUrl ? $event.preventDefault(): ''">
                         </a>
                     </td>
                 </ng-container>
