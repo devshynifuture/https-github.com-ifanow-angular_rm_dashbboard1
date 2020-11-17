@@ -36,7 +36,7 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
-                                <mat-option (change)="fileTypeSelect(type)" *ngFor="let type of group.value" [value]="type.id">
+                                <mat-option *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
                             </mat-optgroup>
@@ -56,7 +56,7 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileTypeStock" [label]="group.category">
-                                <mat-option *ngFor="let type of group.value" [value]="type.id">
+                                <mat-option (click)="fileTypeSelect(group);type.selected = true" *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
                             </mat-optgroup>

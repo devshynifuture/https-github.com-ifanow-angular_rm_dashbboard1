@@ -156,7 +156,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     });
   }
   fileTypeSelect(type) {
-    this.type = type.name
+    this.type = type.id
     console.log(this.type)
   }
   uploadTargetFileStock() {
@@ -164,33 +164,26 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.numlimit = 30;
     this.uploadButton = false;
     const requestMap = {
+      advisorId: AuthService.getAdvisorId()
     };
     const obj = {
       file: this.stockFile
     };
-    FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK,
-      this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-
-        if (status == 200) {
-          const responseObject = JSON.parse(response);
-          if (this.type == 1) {
-            this.reconService.transactionUpload(obj).subscribe((data) => {
-              // this.fileType = data;
-              if (data) {
-                console.log(data)
-              }
-            });
-          } else {
-            this.reconService.holdingUpload(obj).subscribe((data) => {
-              // this.fileType = data;
-              if (data) {
-                console.log(data)
-              }
-            });
+    if (this.type == 1) {
+      FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD,
+        this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
           }
-        }
-
-      });
+        });
+    } else {
+      FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD,
+        this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+          }
+        });
+    }
   }
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
