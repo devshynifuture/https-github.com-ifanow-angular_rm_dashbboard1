@@ -17,10 +17,10 @@
                 <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Line no. </th>
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Sr no. </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.name}}
+                                {{(isLoading) ? '':element.id}}
                             </div>
                         </td>
                     </ng-container>
@@ -129,7 +129,7 @@
 
     <div class="row pt-16 pb-16">
         <div class="col-md-12 d-flex align-items-center justify-content-end">
-            <p class="br-0 text-primitive mb-0 mr-20 f-14" (click)="close()">
+            <p class="br-0 text-left text-primitive mb-0 mr-20 f-14" (click)="close()">
                 CANCEL
             </p>
             <!-- <button class="text-primary f-14 ml-12 sendNowBtn " mat-stroked-button cdkFocusInitial>

@@ -24,7 +24,7 @@ export class StatusFileUploadComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
-  displayedColumns: string[] = ['name', 'mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'amount', 'transactionType'];
+  displayedColumns: string[] = ['mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'amount', 'transactionType'];
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   advisorId: any;
@@ -37,8 +37,9 @@ export class StatusFileUploadComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data1)
+    this.clientDetails = this.data1.data
     if (this.data1.flag == 'holding') {
-      this.displayedColumns = ['name', 'mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'amount',];
+      this.displayedColumns = ['mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'amount',];
     }
   }
   close() {

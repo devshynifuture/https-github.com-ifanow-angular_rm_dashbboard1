@@ -209,7 +209,7 @@ export class BackofficeFileUploadComponent implements OnInit {
             const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
             const responseData = JSON.parse(datavalue);
             const dialogRef = this.dialog.open(StatusFileUploadComponent, {
-              width: '800px',
+              width: '900px',
               height: '500px',
               data: { data: responseData, flag: 'holding' }
             });
