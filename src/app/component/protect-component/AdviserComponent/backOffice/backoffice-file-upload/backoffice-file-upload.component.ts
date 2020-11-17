@@ -39,7 +39,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   barWidth: any = '0%';
   selectedRadio: boolean;
   fileTypeStock: any;
-  selectedType: 1;
+  selectedType: number = 1;
   stockFile: any;
   type: any;
   constructor(
@@ -123,12 +123,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     //   this.uploadFile(this.parentId, this.filenm);
     // });
   }
-getFileStock(e,type){
-  this.fileName = e.currentTarget.files[0].name;
-  this.stockFile = e.target.files[0]
+  getFileStock(e, type) {
+    this.fileName = e.currentTarget.files[0].name;
+    this.stockFile = e.target.files[0]
     this.targetFile = e;
     this.uploadButton = true;
-}
+  }
   // setArnRiaId(value) {
   //   console.log(value);
   //   if (value) {
@@ -155,11 +155,11 @@ getFileStock(e,type){
       }
     });
   }
-  fileTypeSelect(type){
+  fileTypeSelect(type) {
     this.type = type.name
     console.log(this.type)
   }
-  uploadTargetFileStock(){
+  uploadTargetFileStock() {
     this.addbarWidth(1);
     this.numlimit = 30;
     this.uploadButton = false;
@@ -173,20 +173,20 @@ getFileStock(e,type){
 
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          if(this.type == 1){
+          if (this.type == 1) {
             this.reconService.transactionUpload(obj).subscribe((data) => {
-                // this.fileType = data;
-                if (data) {
-                  console.log(data)
-                }
-              });
-          }else{
+              // this.fileType = data;
+              if (data) {
+                console.log(data)
+              }
+            });
+          } else {
             this.reconService.holdingUpload(obj).subscribe((data) => {
-                // this.fileType = data;
-                if (data) {
-                  console.log(data)
-                }
-              });
+              // this.fileType = data;
+              if (data) {
+                console.log(data)
+              }
+            });
           }
         }
 
