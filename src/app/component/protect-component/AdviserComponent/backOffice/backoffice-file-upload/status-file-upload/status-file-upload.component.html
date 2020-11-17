@@ -132,9 +132,10 @@
             <p class="br-0 text-left text-primitive mb-0 mr-20 f-14" (click)="close()">
                 CANCEL
             </p>
-            <!-- <button class="text-primary f-14 ml-12 sendNowBtn " mat-stroked-button cdkFocusInitial>
-                SEND NOW
-            </button> -->
+            <button class="text-primary f-14 ml-12 sendNowBtn " (click)="download(data1.flag)" mat-stroked-button
+                cdkFocusInitial>
+                DOWNLOAD
+            </button>
             <!-- <app-progress-button (btnClick)="sendClientId()" class="br-0 text-inherit  " [options]="barButtonOptions">
             </app-progress-button> -->
         </div>
