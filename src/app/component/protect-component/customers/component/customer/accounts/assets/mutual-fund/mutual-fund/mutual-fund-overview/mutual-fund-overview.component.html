@@ -1000,12 +1000,10 @@
 
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Returns</p>
-                                        <h2 *ngIf="mfData.total_xirr < 0"
+                                        <h2 *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0 && !isLoading"
                                             style="margin: 0px; font-size: 24px; color : #d9534f;">
-                                            <span>{{mfData.total_xirr ? (mfData.total_xirr | number:'1.2-2') : 0}}</span>%
-                                            <span *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
-                                                <span *ngIf="!isLoading">{{'↓'}}</span>
-                                            </span>
+                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>%
+
                                             <!-- <p class="mb-0">
                                                 &#8595; <span></span>
                                             </p>
@@ -1013,9 +1011,9 @@
                                                 &#2193; <span></span>
                                             </p> -->
                                         </h2>
-                                        <h2 *ngIf="mfData.total_xirr >= 0"
+                                        <h2 *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0 && !isLoading"
                                             style="margin: 0px; font-size: 24px;color : #5cb85c;">
-                                            <span>{{mfData.total_xirr ? (mfData.total_xirr | number:'1.2-2') : 0}}</span>%
+                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>
 
                                             <!-- <p class="mb-0">
                                                 &#8593; <span></span>
