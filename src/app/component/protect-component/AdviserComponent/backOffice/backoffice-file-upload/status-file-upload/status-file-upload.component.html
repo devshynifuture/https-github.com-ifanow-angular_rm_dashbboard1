@@ -24,14 +24,21 @@
                             </div>
                         </td>
                     </ng-container>
-
+                    <ng-container matColumnDef="scripUniqueIdentifier">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Scrip identifier </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.scripUniqueIdentifier}}
+                            </div>
+                        </td>
+                    </ng-container>
                     <!-- Name Column -->
                     <ng-container matColumnDef="mfoverview">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.name}}
+                                {{(isLoading) ? '':element.reason}}
                             </div>
                         </td>
                     </ng-container>
@@ -40,7 +47,25 @@
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.name}}
+                                {{(isLoading) ? '':element.pan}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="portfolioName">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Portfolio name
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.portfolioName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Quantity
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.quantity}}
                             </div>
                         </td>
                     </ng-container>
@@ -49,16 +74,25 @@
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.name}}
+                                {{(isLoading) ? '':element.date}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="transactionType">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Transaction type
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.transactionType}}
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="amount">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Amount
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.name}}
+                                {{(isLoading) ? '':element.amount}}
                             </div>
                         </td>
                     </ng-container>

@@ -185,9 +185,9 @@ export class BackofficeFileUploadComponent implements OnInit {
             const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
             const responseData = JSON.parse(datavalue);
             const dialogRef = this.dialog.open(StatusFileUploadComponent, {
-              width: '700px',
+              width: '800px',
               height: '500px',
-              data: { data: responseData }
+              data: { data: responseData, flag: 'transaction' }
             });
             dialogRef.afterClosed().subscribe(result => {
               if (result == undefined) {
@@ -205,7 +205,23 @@ export class BackofficeFileUploadComponent implements OnInit {
         this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
-
+            const encodedata = responseObject.payLoad;
+            const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
+            const responseData = JSON.parse(datavalue);
+            const dialogRef = this.dialog.open(StatusFileUploadComponent, {
+              width: '800px',
+              height: '500px',
+              data: { data: responseData, flag: 'holding' }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (result == undefined) {
+                return
+              }
+              this.close()
+              console.log('The dialog was closed');
+              this.element = result;
+              console.log('result -==', this.element)
+            });
           }
         });
     }
