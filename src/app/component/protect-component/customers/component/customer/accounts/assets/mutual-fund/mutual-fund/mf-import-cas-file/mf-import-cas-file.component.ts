@@ -539,7 +539,7 @@ export class MfImportCasFileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result && 'selectedFamilyMemberData' in result && result.selectedFamiltMemberData) {
+      if (result.selectedFamilyMemberData) {
         this.mapInvestor(result.selectedFamilyMemberData, 'multiple', null);
       }
     });
