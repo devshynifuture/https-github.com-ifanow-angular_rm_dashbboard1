@@ -15,18 +15,20 @@
                 <div class="col-md-12 pr-0">
                     <h5 class="mb-4 mt-12 f-14">Please Select Type</h5>
                 </div>
-                <div class="col-md-12 pr-0 form-group">
+                <div class="col-md-12 pr-0 form-group select-file-type-backoffice">
                     <mat-radio-group id="custom-radio" (change)="changeType($event)">
-                        <mat-radio-button [ngClass]="selectedType == 1 ? 'text-primary b-a-custom': 'text-primitive'" [checked]="true" [value]="1">
-                            Mutual fund
+                        <mat-radio-button [ngClass]="selectedType == 1 ? 'text-primary b-a-custom': 'text-primitive'"
+                            [checked]="true" [value]="1">
+                            Mutual funds
                         </mat-radio-button>
-                        <mat-radio-button [ngClass]="selectedType == 2 ? 'text-primary b-a-custom': 'text-primitive'" [value]="2" >
-                            Stock
+                        <mat-radio-button [ngClass]="selectedType == 2 ? 'text-primary b-a-custom': 'text-primitive'"
+                            [value]="2">
+                            Stocks
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
-            <div class="row "  *ngIf= "selectedType == 1">
+            <div class="row " *ngIf="selectedType == 1">
                 <div class="col-md-12 pr-0">
                     <h5 class="mb-4 mt-12 f-14">Please Select File Type</h5>
                 </div>
@@ -36,7 +38,7 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
-                                <mat-option *ngFor="let type of group.value" [value]="type.id">
+                                <mat-option class="t-u" *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
                             </mat-optgroup>
@@ -46,7 +48,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row"  *ngIf="selectedType == 2">
+            <div class="row" *ngIf="selectedType == 2">
                 <div class="col-md-12 pr-0">
                     <h5 class="mb-4 mt-12 f-14">Please Select File Type</h5>
                 </div>
@@ -56,7 +58,8 @@
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
                             <mat-optgroup *ngFor="let group of fileTypeStock" [label]="group.category">
-                                <mat-option (click)="fileTypeSelect(group);type.selected = true" *ngFor="let type of group.value" [value]="type.id">
+                                <mat-option class="t-u" (click)="fileTypeSelect(group);type.selected = true"
+                                    *ngFor="let type of group.value" [value]="type.id">
                                     {{ type.name }}
                                 </mat-option>
                             </mat-optgroup>
@@ -66,7 +69,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row" *ngIf= "selectedType == 1">
+            <div class="row" *ngIf="selectedType == 1">
                 <div class="col-md-12 pr-0 pt-10">
                     <h5 class="mb-4 f-14">Please Select ARN/RIA</h5>
                 </div>
@@ -101,7 +104,8 @@
                     <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0"
                         mat-stroked-button>Choose
                         file</button>
-                    <input #file accept=".xlsx, .xls, .csv" (change)="getFileStock($event,selectedType)" style="display: none;" type="file">
+                    <input #file accept=".xlsx, .xls, .csv" (change)="getFileStock($event,selectedType)"
+                        style="display: none;" type="file">
                 </div>
             </div>
             <!-- <div class="row  pt-12">
@@ -122,15 +126,17 @@
                 <div class="col-md-1 text-left pr-0">
                     <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
                 </div>
-                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==1">
+                <div class="col-md-12 text-left pr-0 pt-12 d-flex" *ngIf="selectedType==1">
                     <button *ngIf="uploadButton" (click)="uploadTargetFile()" mat-stroked-button
-                        class="br-0 btn-bottom">Upload
+                        class="br-0 btn-bottom mr-16">Upload
                         file</button>
+
                 </div>
-                <div class="col-md-12 text-left pr-0 pt-12" *ngIf="selectedType==2">
+                <div class="col-md-12 text-left pr-0 pt-12 d-flex" *ngIf="selectedType==2">
                     <button *ngIf="uploadButton" (click)="uploadTargetFileStock()" mat-stroked-button
                         class="br-0 btn-bottom">Upload
                         file</button>
+                    <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
                 <div class="col-md-12 text-left  pt-12" *ngIf="fileSize && !uploadButton">
                     <div class='loaderWrap'>
