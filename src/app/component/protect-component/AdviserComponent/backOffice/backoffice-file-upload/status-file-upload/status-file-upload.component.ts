@@ -30,7 +30,7 @@ export class StatusFileUploadComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   advisorId: any;
-  isLoading = false;
+  isLoading: any;
   @ViewChild('tableEl', { static: false }) tableEl;
 
   constructor(public dialogRef: MatDialogRef<StatusFileUploadComponent>,
