@@ -1,8 +1,8 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormArray, FormBuilder} from '@angular/forms';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormArray, FormBuilder } from '@angular/forms';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 
@@ -23,7 +23,7 @@ export class OwnerNomineeDirective {
   emitedNOminee: any = [];
 
   constructor(private fb: FormBuilder, private enumDataService: EnumDataService, private custumService: CustomerService, private enumService: EnumServiceService,
-              private peopleService: PeopleService) {
+    private peopleService: PeopleService) {
   }
 
   @Input() set callMethod(callMethod: any) {
@@ -87,9 +87,9 @@ export class OwnerNomineeDirective {
     }
   }
 
- 
+
   getListFamilyMem(): any {
-   
+
     let obj = {
       clientId: this.clientId,
     };
@@ -98,13 +98,13 @@ export class OwnerNomineeDirective {
     }
     if (this.sendData.length <= 0) {
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
-        (data) =>{
+        (data) => {
           this.enumService.getFamilyList(data);
           this.getListOfFamilyByClientRes(data);
         },
-        error =>{
+        error => {
           this.getListOfFamilyByClientRes(this.enumService.FamilyList());
-        } 
+        }
       );
     }
   }
@@ -132,62 +132,65 @@ export class OwnerNomineeDirective {
     }));
   }
 
-  userForBank:any ;
+  userForBank: any;
   disabledMember(value) {
-    
+
     this.userForBank = [];
     const controlsArr: any = [];
     if (this.getCoOwner) {
       for (const e in this.getCoOwner.controls) {
-        controlsArr.push({type: 'owner', index: e, data: this.getCoOwner.controls[e].value});
+        controlsArr.push({ type: 'owner', index: e, data: this.getCoOwner.controls[e].value });
       }
     }
 
     if (this.getNominee) {
       for (const e in this.getNominee.controls) {
-        controlsArr.push({type: 'nominee', index: e, data: this.getNominee.controls[e].value});
+        controlsArr.push({ type: 'nominee', index: e, data: this.getNominee.controls[e].value });
       }
     }
 
     if (this.sendData.length <= 0) {
       this.sendData = this.emitedNOminee;
     }
-    this.sendData.forEach((element,f) => {
-      for (const [i,e] of controlsArr.entries()) {
+    this.sendData.forEach((element, f) => {
+
+      for (const [i, e] of controlsArr.entries()) {
         if (e.data.name != '') {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
               // if(e.index == "0"){
-                setTimeout(() => {
-                  let owners = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value || (x.clientId == this.getCoOwner.controls[e.index].get('familyMemberId').value && x.relationshipId == 1));
-                  this.userForBank.push(owners[0]);
-                  console.log(this.userForBank);
-                  // && controlsArr.length - 1 == i
-                  
-                }, 500);
+              setTimeout(() => {
+                let owners = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value || (x.clientId == this.getCoOwner.controls[e.index].get('familyMemberId').value && x.relationshipId == 1));
+                this.userForBank.push(owners[0]);
+                console.log(this.userForBank);
+                // && controlsArr.length - 1 == i
+
+              }, 500);
               // }
-              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id == 0?element.clientId:element.familyMemberId);
+              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id == 0 ? element.clientId : element.familyMemberId);
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 1 ? 1 : 0);
               if (this.getCoOwner.controls[e.index].get('relationshipId')) {
                 this.getCoOwner.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }
             } else {
-              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id == 0?element.clientId:element.familyMemberId);
+              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id == 0 ? element.clientId : element.familyMemberId);
               if (this.getNominee.controls[e.index].get('relationshipId')) {
                 this.getNominee.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }
             }
             element.disable = true;
-            return;
+            if (this.sendData.length > 1) {
+              return;
+            }
           } else {
             element.disable = false;
           }
         }
         setTimeout(() => {
-          if(this.userForBank.length > 0  && controlsArr.length - 1 == i){
-            
-            this.enumDataService.getAccountList(this.userForBank).then((data)=>{
-                 this.emitBank.emit();
+          if (this.userForBank.length > 0 && controlsArr.length - 1 == i) {
+
+            this.enumDataService.getAccountList(this.userForBank).then((data) => {
+              this.emitBank.emit();
             });
           }
         }, 600);
@@ -215,13 +218,13 @@ export class OwnerNomineeDirective {
         if (parseInt(e) == this.ownerData.value.getCoOwnerName.length - 1) {
           if (this.ownerPer > 100 || this.ownerPer < 100) {
             this.showErrorOwner = true;
-            arrayCon.get('share').setErrors({incorrect: true});
+            arrayCon.get('share').setErrors({ incorrect: true });
             arrayCon.get('share').markAsTouched();
             // arrayCon.get('share').updateValueAndValidity();
           } else {
             this.showErrorOwner = false;
             // this.showErrorCoOwner = false;
-            arrayCon.controls.share.setErrors({incorrect: false});
+            arrayCon.controls.share.setErrors({ incorrect: false });
             arrayCon.get('share').updateValueAndValidity();
           }
         }
@@ -240,14 +243,14 @@ export class OwnerNomineeDirective {
         if (this.NomineePer > 100 || this.NomineePer < 100) {
           this.showErrorOwner = true;
           if (parseInt(e) == this.ownerData.value.getNomineeName.length - 1) {
-            arrayCon.controls.sharePercentage.setErrors({incorrect: true});
+            arrayCon.controls.sharePercentage.setErrors({ incorrect: true });
             arrayCon.get('sharePercentage').markAsTouched();
             // arrayCon.get('sharePercentage').updateValueAndValidity();
           }
         } else {
           this.showErrorOwner = false;
           // this.showErrorCoOwner = false;
-          arrayCon.controls.sharePercentage.setErrors({incorrect: false});
+          arrayCon.controls.sharePercentage.setErrors({ incorrect: false });
           arrayCon.get('sharePercentage').updateValueAndValidity();
         }
 
