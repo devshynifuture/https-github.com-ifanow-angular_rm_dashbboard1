@@ -1,1 +1,109 @@
-<p>status-file-upload works!</p>
+<div class="posRelavativeClass">
+    <div class="p-20 pb-0">
+        <div class="row  ">
+            <div class="col-md-12 p-0">
+                <h4 class="mb-10  f-20">
+                    File details
+                </h4>
+                <!-- <p class="f-16">If yes, let’s go ahead and send the reports.</p> -->
+                <!-- <p>Total number of recipients: {{(clientCount)?clientCount.clientCount:''}}</p> -->
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="people-table-scroll fitScreen">
+                <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
+                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                    <ng-container matColumnDef="name">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Line no. </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="mfoverview">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pan">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> PAN no
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="date">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Date
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="amount">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
+                        </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="callBulk == true && data.reportType == 'overview'">
+    <app-bulk-overview [data]="clientsSend"></app-bulk-overview>
+
+</div>
+<div *ngIf="callBulk == true && data.reportType == 'summary'">
+    <app-bulk-summary [data]="clientsSend"></app-bulk-summary>
+
+</div>
+<div *ngIf="callBulk == true && (data.reportType == 'allTransactions' || data.reportType == 'unrealisedTransactions')">
+    <app-bulk-all-transactions [data]="clientsSend"></app-bulk-all-transactions>
+</div>
+<div *ngIf="callBulk == true && data.reportType == 'capitalGainSummary'">
+    <app-bulk-capital-gain-summary [data]="clientsSend"></app-bulk-capital-gain-summary>
+</div>
+<div *ngIf="callBulk == true && data.reportType == 'capitalGainDetails'">
+    <app-bulk-capital-gain-detailed [data]="clientsSend"></app-bulk-capital-gain-detailed>
+</div> -->
+    <div *ngIf="!isLoading && !clientDetails">
+        <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
+            <span class="pl-10 full-center w-100 f-14">No client selected</span>
+        </div>
+    </div>
+
+    <div class="row pt-16 pb-16">
+        <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <p class="br-0 text-primitive mb-0 mr-20 f-14" (click)="close()">
+                CANCEL
+            </p>
+            <!-- <button class="text-primary f-14 ml-12 sendNowBtn " mat-stroked-button cdkFocusInitial>
+                SEND NOW
+            </button> -->
+            <!-- <app-progress-button (btnClick)="sendClientId()" class="br-0 text-inherit  " [options]="barButtonOptions">
+            </app-progress-button> -->
+        </div>
+    </div>
+
+</div>

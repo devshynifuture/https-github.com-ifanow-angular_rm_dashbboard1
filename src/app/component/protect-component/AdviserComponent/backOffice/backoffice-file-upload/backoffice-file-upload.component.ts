@@ -12,7 +12,11 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { MatDialog } from '@angular/material';
+import { StatusFileUploadComponent } from './status-file-upload/status-file-upload.component';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 
+const Buffer = require('buffer/').Buffer;
 @Component({
   selector: 'app-backoffice-file-upload',
   templateUrl: './backoffice-file-upload.component.html',
@@ -42,9 +46,12 @@ export class BackofficeFileUploadComponent implements OnInit {
   selectedType: 1;
   stockFile: any;
   type: any;
+  element: any;
   constructor(
+    private subInjectService: SubscriptionInject,
     private reconService: ReconciliationService,
     private eventService: EventService,
+    public dialog: MatDialog,
     private http: HttpService,
     private BackOffice: BackofficeFileUploadService,
     private settingService: SettingsService,
@@ -174,6 +181,23 @@ export class BackofficeFileUploadComponent implements OnInit {
         this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
+            const encodedata = responseObject.payLoad;
+            const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
+            const responseData = JSON.parse(datavalue);
+            const dialogRef = this.dialog.open(StatusFileUploadComponent, {
+              width: '700px',
+              height: '500px',
+              data: { data: responseData }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (result == undefined) {
+                return
+              }
+              this.close()
+              console.log('The dialog was closed');
+              this.element = result;
+              console.log('result -==', this.element)
+            });
           }
         });
     } else {
@@ -181,9 +205,15 @@ export class BackofficeFileUploadComponent implements OnInit {
         this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
+
           }
         });
     }
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+    });
   }
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
