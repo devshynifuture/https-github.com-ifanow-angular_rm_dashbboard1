@@ -173,62 +173,67 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.numlimit = 30;
     this.uploadButton = false;
     const requestMap = {
-      advisorId: AuthService.getAdvisorId()
     };
     const obj = {
       file: this.stockFile
     };
-    if (this.type == 1) {
-      FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD,
-        this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-          if (status == 200) {
-            this.upload = false
-            const responseObject = JSON.parse(response);
-            const encodedata = responseObject.payLoad;
-            const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
-            const responseData = JSON.parse(datavalue);
-            const dialogRef = this.dialog.open(StatusFileUploadComponent, {
-              width: '900px',
-              height: '500px',
-              data: { data: responseData, flag: 'transaction' }
+    FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK,
+      this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          const encodedata = responseObject.payLoad;
+          const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
+          const responseData = JSON.parse(datavalue);
+          if (this.type == 1) {
+            let obj = {
+              advisorId: AuthService.getAdvisorId(),
+              fileNameInS3: responseData
+            }
+            this.reconService.transactionUpload(obj).subscribe((data) => {
+              this.upload = false
+              console.log('thisis filetype data', data);
+              const dialogRef = this.dialog.open(StatusFileUploadComponent, {
+                width: '900px',
+                height: '500px',
+                data: { data: data, flag: 'transaction' }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result == undefined) {
+                  return
+                }
+                this.close()
+                console.log('The dialog was closed');
+                this.element = result;
+                console.log('result -==', this.element)
+              });
             });
-            dialogRef.afterClosed().subscribe(result => {
-              if (result == undefined) {
-                return
-              }
-              this.close()
-              console.log('The dialog was closed');
-              this.element = result;
-              console.log('result -==', this.element)
+          } else {
+            let obj = {
+              advisorId: AuthService.getAdvisorId(),
+              fileNameInS3: responseData
+            }
+            this.reconService.holdingUpload(obj).subscribe((data) => {
+              this.upload = false
+              console.log('thisis filetype data', data);
+              const dialogRef = this.dialog.open(StatusFileUploadComponent, {
+                width: '900px',
+                height: '500px',
+                data: { data: data, flag: 'holding' }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result == undefined) {
+                  return
+                }
+                this.close()
+                console.log('The dialog was closed');
+                this.element = result;
+                console.log('result -==', this.element)
+              });
             });
           }
-        });
-    } else {
-      FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD,
-        this.stockFile, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-          if (status == 200) {
-            this.upload = false
-            const responseObject = JSON.parse(response);
-            const encodedata = responseObject.payLoad;
-            const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
-            const responseData = JSON.parse(datavalue);
-            const dialogRef = this.dialog.open(StatusFileUploadComponent, {
-              width: '900px',
-              height: '500px',
-              data: { data: responseData, flag: 'holding' }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (result == undefined) {
-                return
-              }
-              this.close()
-              console.log('The dialog was closed');
-              this.element = result;
-              console.log('result -==', this.element)
-            });
-          }
-        });
-    }
+        }
+      });
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
