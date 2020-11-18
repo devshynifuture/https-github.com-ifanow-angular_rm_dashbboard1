@@ -8,10 +8,11 @@ import { RiskProfileComponent } from './riskProfile/risk-profile/risk-profile.co
 import { ExpensesComponent } from '../../accounts/expenses/expenses.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { FinacialPlanSectionComponent } from './finacial-plan-section/finacial-plan-section.component';
 
 
 @NgModule({
-  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent],
+  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent, FinacialPlanSectionComponent],
   imports: [
     CommonModule,
     ProfilePlanRoutingModule,
