@@ -2,6 +2,7 @@ import { AddProfilePlanComponent } from './add-profile-plan/add-profile-plan.com
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-profile-plan',
@@ -11,7 +12,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 export class ProfilePlanComponent implements OnInit {
 
   viewMode;
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject, public enumDataService: EnumDataService) { }
   isLoading = false;
   ngOnInit() {
     this.viewMode = "tab1";

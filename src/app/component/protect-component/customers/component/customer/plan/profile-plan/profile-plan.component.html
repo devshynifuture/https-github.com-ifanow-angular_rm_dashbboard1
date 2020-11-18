@@ -43,15 +43,16 @@
                         <div class="col-md-10 p-0">Financial health</div>
 
                     </div>
-                </li>
-                <li (click)="viewMode ='tab6'" [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
+                </li> -->
+                <li (click)="viewMode ='tab6'" *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY"
+                    [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/income.svg">
                         </div>
                         <div class="col-md-10 p-0">Financial plans</div>
                     </div>
-                </li> -->
+                </li>
                 <!-- <li (click)="viewMode ='tab7'" [ngClass]="{'activeColor':viewMode =='tab7'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Preferences</div>
@@ -471,24 +472,22 @@
                                         <div class="col-md-4 pl-8">
                                             <div class="m-0 f-16 text-black text-center">
                                                 <div class="bar">
-                                                    < 10%</div>
+                                                    < 10%</div> </div> <p class="m-0 f-12 roboto f-400">Adverse</p>
                                                 </div>
-                                                <p class="m-0 f-12 roboto f-400">Adverse</p>
-                                            </div>
-                                            <div class="col-md-4 p-0">
+                                                <div class="col-md-4 p-0">
 
-                                                <div class="m-0 f-16 text-black text-center">
-                                                    <div class="bar">10 - 15%</div>
+                                                    <div class="m-0 f-16 text-black text-center">
+                                                        <div class="bar">10 - 15%</div>
+                                                    </div>
+                                                    <p class="m-0 f-12 roboto f-400 text-center">Moderate</p>
                                                 </div>
-                                                <p class="m-0 f-12 roboto f-400 text-center">Moderate</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="m-0 f-16 text-black text-center">
-                                                    <div class="bar">> 15%</div>
+                                                <div class="col-md-4">
+                                                    <div class="m-0 f-16 text-black text-center">
+                                                        <div class="bar">> 15%</div>
+                                                    </div>
+                                                    <p class="m-0 f-12 roboto f-400">Optimum</p>
                                                 </div>
-                                                <p class="m-0 f-12 roboto f-400">Optimum</p>
                                             </div>
-                                        </div>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
