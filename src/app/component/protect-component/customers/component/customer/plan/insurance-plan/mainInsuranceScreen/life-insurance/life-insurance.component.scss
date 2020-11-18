@@ -245,3 +245,6 @@ table {
     margin-top: -25px;
     color: #fff;
   }
+  .disableCursor{
+    pointer-events: none;
+  }

@@ -35,16 +35,18 @@ export class AddSuggestPolicyComponent implements OnInit {
   suggestPolicyForm: any;
   advisorId: any;
   clientId: any;
-  options =[];
+  options = [];
   selectedVal: any;
   policyDetails: any;
   isRecommended = false;
-  constructor(private eventService:EventService,private planService:PlanService,private subInjectService: SubscriptionInject, private fb: FormBuilder,private customerService:CustomerService) { }
+  recommendOrNot: any;
+  constructor(private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.insuranceData = data.inputData;
+    this.recommendOrNot = data.inputData.recommendOrNot;
     this.getHolderNames(data.inputData);
     this.getdataForm(data.insurance);
     console.log(data);
@@ -83,25 +85,30 @@ export class AddSuggestPolicyComponent implements OnInit {
       insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
       tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
     })
-    if(this.dataForEdit){
+    if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;
-      this.isRecommended = this.dataForEdit ? (this.dataForEdit.suggestion ? true : false) : false 
+      this.isRecommended = this.dataForEdit ? (this.dataForEdit.suggestion ? true : false) : false
       this.showRecommendation = this.isRecommended;
     }
-    
+
   }
   checkRecommendation(value) {
     if (value) {
       this.showRecommendation = true;
+      // if (this.recommendOrNot) {
+      //   this.eventService.openSnackBar('Cannot recommend more than one policy', 'Ok');
+      //   this.showRecommendation = false;
+      // }
     } else {
       this.showRecommendation = false;
     }
+    console.log(this.isRecommended)
   }
   close(flag) {
 
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  findPolicyName(data){
+  findPolicyName(data) {
     let value = data.target.value;
     const inpValue = this.suggestPolicyForm.get('policyName').value;
     const obj = {
@@ -109,34 +116,34 @@ export class AddSuggestPolicyComponent implements OnInit {
       insuranceSubTypeId: 0
     };
     this.customerService.getPolicyName(obj).subscribe(
-        data => {
-           if(data.policyDetails.length>0){
-            this.options = data.policyDetails;
-            this.checkValidPolicy(data,inpValue,value);
-          }else{
-            this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
-            this.suggestPolicyForm.get('policyName').markAsTouched();
-          }
-        },
-        (error) => {
-            console.log(error);
-            this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
-            this.suggestPolicyForm.get('policyName').markAsTouched();
-
+      data => {
+        if (data.policyDetails.length > 0) {
+          this.options = data.policyDetails;
+          this.checkValidPolicy(data, inpValue, value);
+        } else {
+          this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+          this.suggestPolicyForm.get('policyName').markAsTouched();
         }
+      },
+      (error) => {
+        console.log(error);
+        this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
+        this.suggestPolicyForm.get('policyName').markAsTouched();
+
+      }
     );
   }
-  selectPolicy(value){
+  selectPolicy(value) {
     this.selectedVal = value;
     this.policyDetails = value;
   }
-  checkValidPolicy(value,input,typeValue){
-    if(this.selectedVal){
-      if(this.selectedVal.policyName != typeValue){
+  checkValidPolicy(value, input, typeValue) {
+    if (this.selectedVal) {
+      if (this.selectedVal.policyName != typeValue) {
         this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
         this.suggestPolicyForm.get('policyName').markAsTouched();
       }
-    }else if(!this.selectedVal){
+    } else if (!this.selectedVal) {
       this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
       this.suggestPolicyForm.get('policyName').markAsTouched();
     }
@@ -154,42 +161,43 @@ export class AddSuggestPolicyComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
       const obj = {
-        'id':this.dataForEdit ? this.dataForEdit.id : null,
+        'id': this.dataForEdit ? this.dataForEdit.id : null,
         'clientId': this.clientId,
         'advisorId': this.advisorId,
-        'familyMemberIdLifeAssured':this.insuranceData.familyMemberId == 0 ? this.clientId : this.insuranceData.familyMemberId  ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
-        'insuranceTypeId':this.policyDetails ? this.policyDetails.insuranceTypeId :this.dataForEdit.insuranceTypeId,
-        'insuranceSubTypeId':this.policyDetails ? this.policyDetails.insuranceSubTypeId :this.dataForEdit.insuranceSubTypeId,
-        'policyNumber':this.policyDetails ? this.policyDetails.policyNumber :this.dataForEdit.policyNumber ,
-        'policyId':this.policyDetails ? this.policyDetails.id :this.dataForEdit.policyId ,
-        'policyTypeId':this.policyDetails ? this.policyDetails.policyTypeId : this.dataForEdit.policyTypeId,
+        'familyMemberIdLifeAssured': this.insuranceData.familyMemberId == 0 ? this.clientId : this.insuranceData.familyMemberId ? this.insuranceData.familyMemberId : this.insuranceData.familyMemberIds,
+        'insuranceTypeId': this.policyDetails ? this.policyDetails.insuranceTypeId : this.dataForEdit.insuranceTypeId,
+        'insuranceSubTypeId': this.policyDetails ? this.policyDetails.insuranceSubTypeId : this.dataForEdit.insuranceSubTypeId,
+        'policyNumber': this.policyDetails ? this.policyDetails.policyNumber : this.dataForEdit.policyNumber,
+        'policyId': this.policyDetails ? this.policyDetails.id : this.dataForEdit.policyId,
+        'policyTypeId': this.policyDetails ? this.policyDetails.policyTypeId : this.dataForEdit.policyTypeId,
         'policyName': this.suggestPolicyForm.get('policyName').value,
         'premiumAmount': this.suggestPolicyForm.get('premiumAmount').value,
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
-        'realOrFictitious':2,
-        'suggestion':this.showRecommendation?(this.storeData ? this.storeData : ""):""
+        'realOrFictitious': 2,
+        'suggestion': this.storeData,
+        'isRecommend': this.showRecommendation
       }
-      if(this.dataForEdit){
+      if (this.dataForEdit) {
         this.planService.editSuggestNew(obj).subscribe(
           data => {
-              console.log(data);
-              this.barButtonOptions.active = false;
-              this.eventService.openSnackBar('Suggest policy edited', 'Ok');
-              this.close(true);
+            console.log(data);
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar('Suggest policy edited', 'Ok');
+            this.close(true);
           },
           err => {
             this.eventService.openSnackBar(err, 'Dismiss');
           }
         );
-      }else{
+      } else {
         this.planService.addSuggestNew(obj).subscribe(
           data => {
-              console.log(data);
-              this.barButtonOptions.active = false;
-              this.eventService.openSnackBar('Suggest policy added', 'Ok');
-              this.close(true);
+            console.log(data);
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar('Suggest policy added', 'Ok');
+            this.close(true);
           },
           err => {
             this.eventService.openSnackBar(err, 'Dismiss');

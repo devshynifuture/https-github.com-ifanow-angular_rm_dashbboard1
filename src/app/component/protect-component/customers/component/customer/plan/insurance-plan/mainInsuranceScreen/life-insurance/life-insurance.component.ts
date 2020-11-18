@@ -164,6 +164,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayList: any;
   allInsuranceData: any;
   isRefresh: any;
+  recommendOrNot = false;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -204,7 +205,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   @Input()
   set isLoaders(data) {
-    if(data.isLoading == true){
+    if (data.isLoading == true) {
       this.dataSource1 = [{}, {}, {}];
       this.dataSouce3 = [{}, {}, {}];
       this.insuranceDetails = '';
@@ -218,6 +219,7 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.recommendOrNot = false;
     this.panelOpenState = false;
     console.log('inputData', this.inputData)
   }
@@ -548,7 +550,6 @@ export class LifeInsuranceComponent implements OnInit {
   getForkJoinResponse(result) {
     this.needAnalysisSavedData = result[3]
     this.panelOpenState = false;
-    this.getDetailsInsuranceRes(result[0])
     let suggestedData = result[1];
     this.isLoadingPlan = false;
     if (suggestedData) {
@@ -568,7 +569,23 @@ export class LifeInsuranceComponent implements OnInit {
         });
         this.dataSouce3 = suggestedData;
       }
-
+      let countSuggest = 0
+      if (this.dataSouce3.length > 0) {
+        let suggestionId;
+        this.dataSouce3.forEach(ele => {
+          if (ele['insurance'].suggestion) {
+            suggestionId = ele['insurance'].id;
+            countSuggest++
+            this.recommendOrNot = true;
+          }
+        });
+        (countSuggest >= 1) ? this.recommendOrNot = true : this.recommendOrNot = false;
+        let deletedArray = this.dataSouce3.filter(d => d['insurance'].id == suggestionId);
+        let RemovedArray = this.dataSouce3.filter(d => d['insurance'].id != suggestionId);
+        RemovedArray.unshift(deletedArray);
+        RemovedArray = RemovedArray.flat();
+        this.dataSouce3 = RemovedArray;
+      }
     } else {
       this.dataSouce3 = [];
     }
@@ -578,6 +595,7 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.dataSource1 = [];
     }
+    this.getDetailsInsuranceRes(result[0])
     this.stopLoaderWhenReponse.emit(true);
     this.isLoadingPlan = false;
     if (this.inputData.insuranceType == 1) {
@@ -668,13 +686,15 @@ export class LifeInsuranceComponent implements OnInit {
       );
     }
 
+
+
+
   }
   getDetailsInsuranceRes(data) {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
       this.insuranceDetails = data
       this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
-      this.dataSource1 = ELEMENT_DATA1;
       if (!this.insuranceDetails.graph) {
         if (this.plannerObj.additionalLifeIns) {
           this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
@@ -713,9 +733,9 @@ export class LifeInsuranceComponent implements OnInit {
 
 
   }
-  setAdviceAmountToAllIns(){
+  setAdviceAmountToAllIns() {
     let singleData = this.allInsuranceData.filter(d => d.id == this.inputData.id);
-    singleData[0].adviceAmount = this.insuranceDetails.advice ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
+    singleData[0].adviceAmount = this.insuranceDetails ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
     this.ipService.setAllInsuranceData(this.allInsuranceData);
 
   }
@@ -840,6 +860,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.getForkJoinResponse(singleData[0])
   }
   suggestPolicy(data) {
+    this.inputData.recommendOrNot = data ? (data.insurance.suggestion ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false);
     if (data) {
       data.inputData = this.inputData
     } else {

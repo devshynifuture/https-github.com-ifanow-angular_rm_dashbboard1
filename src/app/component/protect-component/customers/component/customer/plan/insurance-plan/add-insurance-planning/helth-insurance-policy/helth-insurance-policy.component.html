@@ -2,15 +2,16 @@
     <h5 class="m-0 text-black f-500">Advice on {{showInsurance.smallHeading}} policy</h5>
     <div class="row pt-20">
         <div class="col-md-4 p-0 br-1">
-            <p class="m-0 pb-8">Select primary advice{{healthInsurance.get('selectAdvice').value}}<img src="/assets/images/svg/info.svg"></p>
-                    <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
-                        <mat-radio-button  [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
-                            [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''" (click)="setValue()">
-                            {{advice.advice}}</mat-radio-button>
-                    </mat-radio-group>
-                    <mat-error class="f-12">
-                        {{showError ? 'Please select primary advise' : ''}}
-                      </mat-error>
+            <p class="m-0 pb-8">Select primary advice<img src="/assets/images/svg/info.svg"></p>
+            <mat-radio-group aria-label="Select an option" id="health-radio" formControlName="selectAdvice">
+                <mat-radio-button [value]="advice.advice" class="b-ua mt-20" *ngFor="let advice of adviceData"
+                    [ngClass]="healthInsurance.get('selectAdvice').value == advice.advice ? 'bu-primary b-a-custom text-primary' : ''"
+                    (click)="setValue()">
+                    {{advice.advice}}</mat-radio-button>
+            </mat-radio-group>
+            <mat-error class="f-12">
+                {{showError ? 'Please select primary advise' : ''}}
+            </mat-error>
             <div class="col-md-11 pl-0 pr-24">
                 <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
                 <div class="form-group">
@@ -28,7 +29,7 @@
         <div class="col-md-8 p-0 bl-1">
             <div class="row">
                 <div class="col-md-8">
-                    <p class="m-0 text-black pb-4">Advice header {{healthInsurance.get('adviceHeader').value}}</p>
+                    <p class="m-0 text-black pb-4">Advice header</p>
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control"
@@ -47,7 +48,8 @@
                     <p class="m-0 text-black pb-4 pt-120">Advice status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput class="form-control" value="Given" formControlName="adviceStatus">
+                            <input matInput type="text" class="form-control" value="Given" [disabled]='true'
+                                formControlName="adviceStatus">
                             <!-- <mat-error class="f-12">This field is required</mat-error> -->
                         </mat-form-field>
                     </div>
@@ -57,45 +59,57 @@
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <mat-radio-button class="p-0" value="1">Take client consent <button mat-stroked-button
-                                    class="btn-primary-outline br-4 btn-xs h-20 f-12">RECOMMENDED</button></mat-radio-button>
-                            
-                                    <p class="f-12 ml-32 mb-0 roboto text-custom">If this option is selected, further action on this advice is
-                                possible only after your client
-                                gives explicit consent via email.</p>
-                            <mat-checkbox class="ml-44">Create a linked task</mat-checkbox>
+                                        class="btn-primary-outline br-4 btn-xs h-20 f-12">RECOMMENDED</button>
+                                </mat-radio-button>
+
+                                <p class="f-12 ml-32 mb-0 roboto text-custom">If this option is selected, further action
+                                    on this advice is
+                                    possible only after your client
+                                    gives explicit consent via email.</p>
+                                <mat-checkbox class="ml-44">Create a linked task</mat-checkbox>
                             </div>
 
                             <div class="col-md-12 p-0">
                                 <mat-radio-button value="2">Bypass client consent</mat-radio-button>
-                                <p class="f-12 roboto ml-32 text-custom">If this option is selected, you can directly start further
+                                <p class="f-12 roboto ml-32 text-custom">If this option is selected, you can directly
+                                    start further
                                     work on this advice without taking any explicit consent from your client.</p>
                             </div>
 
-                        </div> 
-                         
+                        </div>
+
                     </mat-radio-group>
-                    
+
 
                 </div>
                 <div class="col-md-4">
-                    <p class="m-0 text-black pb-4">Advice header</p>
+                    <p class="m-0 text-black pb-4">Advice date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput [matDatepicker]="picker" class="form-control b-0"
-                                formControlName="adviceHeaderDate">
+                            <input matInput #adviceHeaderDate (ngModelChange)="dateChange('adviceHeaderDate')"
+                                [matDatepicker]="picker" class="form-control b-0" formControlName="adviceHeaderDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
+                                This field is required</mat-error>
+                            <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.max)">
+                                Date should be less than implementation date
+                            </mat-error>
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-4">Implementation date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput [matDatepicker]="picker1" class="form-control b-0"
-                                formControlName="implementationDate">
+                            <input matInput #implementationDate (ngModelChange)="dateChange('implementationDate')"
+                                [matDatepicker]="picker1" class="form-control b-0" formControlName="implementationDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="f-12"
+                                *ngIf="(healthInsurance.get('implementationDate').errors?.required)">This field is
+                                required</mat-error>
+                            <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
+                                Date should be greater than advice date
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

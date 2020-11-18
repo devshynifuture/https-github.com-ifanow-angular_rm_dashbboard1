@@ -163,34 +163,34 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             data => {
                 console.log(data);
                 this.options = data;
-                if(data.length>0){
+                if (data.length > 0) {
                     this.options = data;
-                  }else{
+                } else {
                     this.healthInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
                     this.healthInsuranceForm.get('insurerName').markAsTouched();
-                  }
+                }
             },
-            err=>{
+            err => {
                 this.healthInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
                 this.healthInsuranceForm.get('insurerName').markAsTouched();
             }
         );
     }
 
-    getBank(){
-        if(this.enumService.getBank().length > 0){
-          this.bankList = this.enumService.getBank();
+    getBank() {
+        if (this.enumService.getBank().length > 0) {
+            this.bankList = this.enumService.getBank();
         }
-        else{
-          this.bankList = [];
+        else {
+            this.bankList = [];
         }
-        console.log(this.bankList,"this.bankList2");
-      }
+        console.log(this.bankList, "this.bankList2");
+    }
 
     openDialog(eventData): void {
         const dialogRef = this.dialog.open(LinkBankComponent, {
             width: '50%',
-            data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+            data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -302,10 +302,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
 
     }
-    showDeductible(){
-        if(this.healthInsuranceForm.get('planDetails').value == '1' || this.healthInsuranceForm.get('planDetails').value == '2'){
+    showDeductible() {
+        if (this.healthInsuranceForm.get('planDetails').value == '1' || this.healthInsuranceForm.get('planDetails').value == '2') {
             this.showDeductibleSum = true;
-        }else{
+        } else {
             this.showDeductibleSum = false;
         }
     }
@@ -353,22 +353,22 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     getOwnerData(value, data) {
 
         data.forEach(element => {
-          for (const e in this.getCoOwner.controls) {
-            const name = this.getCoOwner.controls[e].get('name');
-            if (element.userName == name.value) {
-              this.getCoOwner.controls[e].get('name').setValue(element.userName);
-              this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
-              this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
-              this.getCoOwner.controls[e].get('userType').setValue(element.userType);
-    
+            for (const e in this.getCoOwner.controls) {
+                const name = this.getCoOwner.controls[e].get('name');
+                if (element.userName == name.value) {
+                    this.getCoOwner.controls[e].get('name').setValue(element.userName);
+                    this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+                    this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+                    this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+                }
             }
-          }
-    
+
         });
-    
-    
-    
-      }
+
+
+
+    }
     getdataForm(data) {
         this.dataForEdit = data.data;
         if (data.data == null) {
@@ -392,8 +392,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 familyMemberId: null,
                 id: 0,
                 isClient: 0,
-                clientId:0,
-                userType:0
+                clientId: 0,
+                userType: 0
             })]),
             name: [(this.dataForEdit ? this.dataForEdit.name : null)],
             PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
@@ -647,20 +647,20 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         this.ProposerData = Object.assign([], data.familyMembersList);
         console.log('Proposer data', this.ProposerData);
     }
-    getClientId(){
-            this.nomineesListFM.forEach(element => {
-              for (const e in this.getCoOwner.controls) {
+    getClientId() {
+        this.nomineesListFM.forEach(element => {
+            for (const e in this.getCoOwner.controls) {
                 const id = this.getCoOwner.controls[e].get('familyMemberId');
                 if (element.familyMemberId == id.value) {
-                  this.getCoOwner.controls[e].get('name').setValue(element.userName);
-                  this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
-                  this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
-                  this.getCoOwner.controls[e].get('userType').setValue(element.userType);
-        
+                    this.getCoOwner.controls[e].get('name').setValue(element.userName);
+                    this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+                    this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+                    this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
                 }
-              }
-        
-            });
+            }
+
+        });
     }
     preventDefault(e) {
         e.preventDefault();
@@ -758,8 +758,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
                             insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-                            id:this.dataForEdit ? this.dataForEdit.id : null, 
-                            isAdded:false
+                            id: this.dataForEdit ? this.dataForEdit.id : null,
+                            isAdded: false
                         };
                         this.close(insuranceData);
                     }
@@ -774,8 +774,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
                             insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-                            id:data,
-                            isAdded:true
+                            id: data,
+                            isAdded: true
                         };
                         this.close(insuranceData);
                     }

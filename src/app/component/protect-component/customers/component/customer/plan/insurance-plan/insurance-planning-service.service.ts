@@ -10,6 +10,7 @@ export class InsurancePlanningServiceService {
   private needAnalysisData = new BehaviorSubject('')
   private familyMemberList = new BehaviorSubject('')
   private plannerObj = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
 
   constructor() { }
   setIpData(value) {
@@ -42,15 +43,36 @@ export class InsurancePlanningServiceService {
   getPlannerObj() {
     return this.plannerObj.asObservable();
   }
-  pushId(array){
-    if(array){
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setIpData('');
+    this.setAllInsuranceData('');
+    this.setNeedAnlysisData('');
+    this.setFamilyMemberList('');
+    this.setPlannerObj('');
+  }
+  pushId(array) {
+    if (array) {
       array.forEach(element => {
         element.id = element.insurance ? element.insurance.id : element.insuranceDetails.id
       });
-    }else{
+    } else {
       array = [];
     }
 
     return array;
+  }
+  sorting(data, filterId) {
+    if (data) {
+      data.sort((a, b) =>
+        a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+      );
+    }
+    return data
   }
 }

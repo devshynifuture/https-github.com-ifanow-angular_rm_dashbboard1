@@ -1,7 +1,8 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - {{insuranceData?.displayHolderName}} </h3>
+            <h3 class="mb-0 wrapper-20 f-500"> Life insurance - Suggest policy - {{insuranceData?.displayHolderName}}
+            </h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-20">
@@ -10,24 +11,26 @@
         </div>
     </div>
 </div>
-<div class="pt-90 pr-28 pl-28"  [formGroup]="suggestPolicyForm">
+<div class="pt-90 pr-28 pl-28" [formGroup]="suggestPolicyForm">
     <div class="row">
         <div class="col-md-8 pl-0">
             <h5 class="m-0">Policy name</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" formControlName="policyName" matInput (keyup)="findPolicyName($event)" autocomplete="off" [matAutocomplete]="auto">
+                    <input matInput class="form-control br-0" formControlName="policyName" matInput
+                        (keyup)="findPolicyName($event)" autocomplete="off" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option  (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
-                                {{option.policyName}}
-                            </mat-option>
-                        </mat-autocomplete>
-                        <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.required)">
-                                This field is required
-                            </mat-error>
-                            <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.erroInPolicy)">
-                               Enter valid policy name
-                            </mat-error>
+                        <mat-option (click)="selectPolicy(option)" *ngFor="let option of options"
+                            [value]="option.policyName">
+                            {{option.policyName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.required)">
+                        This field is required
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="(suggestPolicyForm.get('policyName').errors?.erroInPolicy)">
+                        Enter valid policy name
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -35,7 +38,9 @@
             <h5 class="m-0">Premium amount</h5>
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 rupess" #premiumAmount [maxLength]="10" formControlName="premiumAmount" matInput>
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 rupess" #premiumAmount [maxLength]="10" formControlName="premiumAmount"
+                        matInput>
                     <mat-hint align="end" class="f-12">{{premiumAmount.value.length}}/10</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
@@ -49,21 +54,23 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="frequency" matInput>
-                            <mat-option value='12'>Monthly</mat-option>
-                            <mat-option value='4'>Quarterly</mat-option>
-                            <mat-option value='2'>Half yearly</mat-option>
-                            <mat-option value='1'>Yearly</mat-option>
+                        <mat-option value='12'>Monthly</mat-option>
+                        <mat-option value='4'>Quarterly</mat-option>
+                        <mat-option value='2'>Half yearly</mat-option>
+                        <mat-option value='1'>Yearly</mat-option>
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
-                    </div>
+            </div>
         </div>
         <div class="col-md-4 pl-0">
             <h5 class="m-0">Insurance amount</h5>
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput class="form-control br-0 rupess" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #insuranceAmount [maxLength]="10" formControlName="insuranceAmount" >
+                    <input matInput class="form-control br-0 rupess" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" #insuranceAmount [maxLength]="10"
+                        formControlName="insuranceAmount">
                     <mat-hint align="end" class="f-12">{{insuranceAmount.value.length}}/10</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
@@ -74,7 +81,8 @@
             <h5 class="m-0">Tenure</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" formControlName="tenure" #tenure (keyup)="onChange(suggestPolicyForm,'tenure',$event)">
+                    <input matInput class="form-control br-0" formControlName="tenure" #tenure
+                        (keyup)="onChange(suggestPolicyForm,'tenure',$event)">
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -83,11 +91,14 @@
     </div>
     <div class="row pt-32">
         <div class="col-md-12 p-0">
-            <mat-checkbox #check [checked]="isRecommended" (change)="checkRecommendation($event.checked)">Recommended option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
+            <mat-checkbox #check [checked]="isRecommended" [disabled]="recommendOrNot ? true : false"
+                [matTooltip]="recommendOrNot ? 'Cannot recommend more than one policy' : null"
+                (change)="checkRecommendation($event.checked)">Recommended
+                option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
             <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
         </div>
     </div>
-    <app-froala *ngIf="showRecommendation" (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
+    <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

@@ -27,7 +27,7 @@ export class AllInsurancelistComponent implements OnInit {
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   dataSource: any = new MatTableDataSource();
-  insurancePlanningList=[{},{},{}]
+  insurancePlanningList = [{}, {}, {}]
   insuranceList = [{
     header: 'Add Life insurance',
     heading: 'Life insurance',
@@ -68,12 +68,13 @@ export class AllInsurancelistComponent implements OnInit {
   isLoadingInInsurance: any;
   id = 0;
   index: any;
-  selectedId:any;
+  selectedId: any;
   allInsuranceData: any;
   plannerObj: any;
+  clientIdToClearStorage: string;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
-    private eventService: EventService,private ipService:InsurancePlanningServiceService) {
+    private eventService: EventService, private ipService: InsurancePlanningServiceService) {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
   }
@@ -82,31 +83,40 @@ export class AllInsurancelistComponent implements OnInit {
   isLoadingPlan = false;
   ngOnInit() {
     // this.detailsInsurance = {}
+    this.ipService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.ipService.clearStorage();
+      }
+    }
+    this.ipService.setClientId(this.clientId);
     this.ipService.getAllInsuranceData()
-    .subscribe(res => {
-      this.allInsuranceData = res;
-    })
+      .subscribe(res => {
+        this.allInsuranceData = res;
+      })
     this.ipService.getPlannerObj()
-    .subscribe(res => {
-      this.plannerObj = res;
-    })
-    if(!this.allInsuranceData &&  this.allInsuranceData == ''){
+      .subscribe(res => {
+        this.plannerObj = res;
+      })
+    if (!this.allInsuranceData && this.allInsuranceData == '') {
       this.getInsuranceList();
-    }else{
-      this.isLoadingInInsurance={isLoading:false};
+    } else {
+      this.isLoadingInInsurance = { isLoading: false };
       this.getInsurancePlaningListRes(this.allInsuranceData);
     }
   }
   openDetailsInsurance(insurance) {
     this.selectedId = insurance.id
-    console.log('insurance',insurance)
+    console.log('insurance', insurance)
     this.detailsInsurance = insurance
     this.detailsInsurance.dataLoaded = true;
     this.showIsurance = true
   }
   getInsuranceList() {
     this.showIsurance = true
-    this.isLoadingInInsurance={isLoading:true};
+    this.isLoadingInInsurance = { isLoading: true };
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -119,23 +129,23 @@ export class AllInsurancelistComponent implements OnInit {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.insuranceLoader = true;
         this.isLoadingPlan = false;
-         this.showIsurance = false
-         this.loader(-1);
+        this.showIsurance = false
+        this.loader(-1);
       }
     );
   }
-  getOutput(value){
-    if(value){
-      if(value.loadResponse){
+  getOutput(value) {
+    if (value) {
+      if (value.loadResponse) {
         this.allInsuranceData.length == 0 ? this.allInsuranceData = null : this.allInsuranceData;
         this.selectedId = this.allInsuranceData ? this.allInsuranceData[0].id : ''
         this.getInsurancePlaningListRes(this.allInsuranceData)
-      }else if(value.id){
+      } else if (value.id) {
         this.id = value.id;
-      }else{
-        this.selectedId ='';
+      } else {
+        this.selectedId = '';
       }
-      if(value.isRefreshRequired){
+      if (value.isRefreshRequired) {
         this.getInsuranceList()
       }
     }
@@ -143,7 +153,7 @@ export class AllInsurancelistComponent implements OnInit {
   getInsurancePlaningListRes(data) {
     // this.selectedId='';
     this.loader(-1);
-    if(data){
+    if (data) {
       data.forEach(singleInsuranceData => {
         if (singleInsuranceData.owners.length > 0) {
           singleInsuranceData.displayHolderName = singleInsuranceData.owners[0].holderName;
@@ -175,7 +185,7 @@ export class AllInsurancelistComponent implements OnInit {
           element.header = 'Add Critical insurance'
           element.heading = 'Critical illness'
           element.logo = '/assets/images/svg/CIsmall.svg'
-        }  else if (element.insuranceType == 10) {
+        } else if (element.insuranceType == 10) {
           element.value = '6';
           element.header = 'Add Fire insurance'
           element.heading = 'Fire insurance'
@@ -190,12 +200,12 @@ export class AllInsurancelistComponent implements OnInit {
           element.header = 'Add Personal accident'
           element.heading = 'Personal accident'
           element.logo = '/assets/images/svg/PAsmall.svg'
-        }else if (element.insuranceType == 8) {
+        } else if (element.insuranceType == 8) {
           element.value = '7';
           element.header = 'Add Travel insurance'
           element.heading = 'Travel insurance'
           element.logo = '/assets/images/svg/PAsmall.svg'
-        }else if (element.insuranceType == 4) {
+        } else if (element.insuranceType == 4) {
           element.value = '8';
           element.header = 'Add Motor insurance'
           element.heading = 'Motor insurance'
@@ -204,25 +214,25 @@ export class AllInsurancelistComponent implements OnInit {
       });
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
-      this.insurancePlanningList =this.dataSource;
+      this.insurancePlanningList = this.dataSource;
       this.ipService.setAllInsuranceData(this.insurancePlanningList);
-      if(!this.selectedId){
-        this.selectedId=this.dataSource[0].id;
+      if (!this.selectedId) {
+        this.selectedId = this.dataSource[0].id;
       }
-      if(this.id){
-        this.index = this.dataSource.findIndex(x => x.id ===this.id);
+      if (this.id) {
+        this.index = this.dataSource.findIndex(x => x.id === this.id);
         this.detailsInsurance = this.insuranceList[this.index]
-      }else{
+      } else {
         this.detailsInsurance = this.insuranceList[0]
       }
-      if(this.detailsInsurance){
+      if (this.detailsInsurance) {
         this.detailsInsurance.dataLoaded = true;
-      }else{
-        this.detailsInsurance={dataLoaded : true}
+      } else {
+        this.detailsInsurance = { dataLoaded: true }
       }
 
       this.showIsurance = true;
-    }else{
+    } else {
       this.showIsurance = false;
     }
   }
@@ -309,9 +319,9 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if(upperSliderData['data']){
+          if (upperSliderData['data']) {
             this.selectedId = '';
-            if(this.detailsInsurance){
+            if (this.detailsInsurance) {
               this.detailsInsurance.dataLoaded = false;
             }
             this.getInsuranceList();
@@ -322,8 +332,8 @@ export class AllInsurancelistComponent implements OnInit {
       }
     );
   }
-  stopLoader(value){
-    if(value){
+  stopLoader(value) {
+    if (value) {
       this.isLoadingPlan = false;
     }
   }
