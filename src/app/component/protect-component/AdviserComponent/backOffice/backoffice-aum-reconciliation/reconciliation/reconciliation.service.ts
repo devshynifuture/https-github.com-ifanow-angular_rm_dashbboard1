@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { EventService } from '../../../../../../Data-service/event.service';
+import { HttpParams } from '@angular/common/http';
 @Injectable({
     providedIn: 'root'
 })
@@ -110,14 +111,16 @@ export class ReconciliationService {
     getBackOfficeFileToUpload(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
     }
-    uploadStock(data){
-        return this.http.post(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD, data);
-    }
-    transactionUpload(data){
+    uploadStock(data) {
         return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK, data);
     }
-    holdingUpload(data){
-        return this.http.post(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD, data);
+    transactionUpload(data) {
+        const httpParams = new HttpParams().set('advisorId', data.advisorId).set('fileNameInS3', data.fileNameInS3);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.TRANSACTION_UPLOAD, httpParams);
+    }
+    holdingUpload(data) {
+        const httpParams = new HttpParams().set('advisorId', data.advisorId).set('fileNameInS3', data.fileNameInS3);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.HOLDING_UPLOAD, httpParams);
     }
     getBackOfficeTransactions(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_TRANSACTIONS, data);
