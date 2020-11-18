@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
@@ -59,6 +59,7 @@ export class IncomeComponent implements OnInit {
   }
 
   viewMode;
+  @Output() finPlan = new EventEmitter();
 
   ngOnInit() {
     this.LoadCount = 0;
@@ -199,6 +200,9 @@ export class IncomeComponent implements OnInit {
     } else {
       this.dataSource.data = [];
     }
+    setTimeout(() => {
+      this.finPlan.emit(document.getElementById('template'));
+    }, 7000);
   }
   filterIncome(key: string, value: any) {
     let dataFiltered;
