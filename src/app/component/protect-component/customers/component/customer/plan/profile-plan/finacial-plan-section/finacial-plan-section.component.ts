@@ -7,6 +7,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { ExpensesComponent } from '../../../accounts/expenses/expenses.component';
 import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MutualFundSummaryComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
 @Component({
@@ -16,7 +18,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   entryComponents: [
     IncomeComponent,
     ExpensesComponent,
-    InsuranceComponent
+    InsuranceComponent,
+    MutualFundSummaryComponent,
+    MutualFundComponent,
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -59,19 +63,19 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.moduleAdded.splice(i, 1);
   }
   download() {
-    let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
-    list.forEach(element => {
-      if (element.id == 1) {
-        element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-        window.open(element.url)
-      } else if (element.id == 2) {
-        element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18' + '&' + 'fromDate=2019%2F11%2F18'
-        window.open(element.url)
-      } else if (element.id == 3) {
-        element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-        window.open(element.url)
-      }
-    });
+    // let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
+    // list.forEach(element => {
+    //   if (element.id == 1) {
+    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
+    //     window.open(element.url)
+    //   } else if (element.id == 2) {
+    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18' + '&' + 'fromDate=2019%2F11%2F18'
+    //     window.open(element.url)
+    //   } else if (element.id == 3) {
+    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
+    //     window.open(element.url)
+    //   }
+    // });
 
   }
   checkAndLoadPdf(value: any, sectionName: any) {
@@ -86,6 +90,15 @@ export class FinacialPlanSectionComponent implements OnInit {
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
         case 'Life insurance' || 'General insurance':
+          factory = this.resolver.resolveComponentFactory(InsuranceComponent);
+          break;
+        case 'Mutual fund summary':
+          factory = this.resolver.resolveComponentFactory(MutualFundSummaryComponent);
+          break;
+        case 'Mutual fund unrealised transaction':
+          factory = this.resolver.resolveComponentFactory(InsuranceComponent);
+          break;
+        case 'Mutual fund all transaction':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;
       }
