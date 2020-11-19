@@ -11,26 +11,34 @@
     <div class="col-md-6">
         <h3 class="m-0 bb-1 pb-8">Modules added</h3>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="mt-8 h-auto-500 relClass">
-                <div class="row p-4 b-a pt-8 pb-8">
-                    <div class="col-md-1 pl-8">
-                        <div class="bar">
-                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="row p-4 b-a pt-8 pb-8 c-p">
+                        <div class="col-md-1 pl-8">
+                            <div class="bar">
+                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-10 pl-0">
-                        <div class="bar">
-                            <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                        <div class="col-md-10 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{module.name}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="bar">
-                            <img src="/assets/images/svg/close.svg" class="c-p">
+                        <div class="col-md-1" (click)="removeModule(module,i)">
+                            <div class="bar">
+                                <img src="/assets/images/svg/close.svg" class="c-p">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div *ngIf="moduleAdded.length  == 0">
+                <span class="text-center">
+                    No module added
+                </span>
+            </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
                     <div class="col-md-2 pl-0">
@@ -115,7 +123,8 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
+                                        <mat-checkbox (change)="checkAndLoadPdf($event.checked,'Life insurance')">
+                                        </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
