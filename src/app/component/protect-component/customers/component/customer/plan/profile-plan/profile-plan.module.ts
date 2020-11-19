@@ -38,7 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-
+    DragDropModule,
   ]
 })
 export class ProfilePlanModule { }
