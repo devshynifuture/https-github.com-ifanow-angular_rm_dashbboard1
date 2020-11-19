@@ -75,7 +75,7 @@ export class MutualFundOverviewComponent implements OnInit {
   @Output() sendData = new EventEmitter();
   @Output() changeAsPerCategory = new EventEmitter();
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: object;
+  @Input() finPlanObj: any;
   total_net_Gain: number;
   cashFlowXirr: any;
   filterData: any;
