@@ -1416,7 +1416,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.showDownload = true
         this.changeInput.emit(false);
         this.cd.markForCheck();
-        this.loaded.emit(document.getElementById('template'));
+        this.loaded.emit(this.summaryTemplate);
         // this.cd.detectChanges();
       };
       worker.postMessage(input);

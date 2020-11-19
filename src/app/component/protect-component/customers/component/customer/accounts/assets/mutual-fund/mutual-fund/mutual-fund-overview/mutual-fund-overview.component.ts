@@ -541,7 +541,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.eventService.openSnackBar(' No Mutual Fund Found', 'Dismiss');
     }
     this.ref.detectChanges()
-    this.loaded.emit(document.getElementById('template'));
+    this.loaded.emit(document.getElementById('templateOverview'));
   }
 
   calculatePercentage(data) {// function for calculating percentage
@@ -805,7 +805,7 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdf() {
     this.svg = this.chart.getSVG();
     this.fragmentData.isSpinner = true;
-    const para = document.getElementById('template');
+    const para = document.getElementById('templateOverview');
     const obj = {
       htmlInput: para.innerHTML,
       name: 'Overview',
