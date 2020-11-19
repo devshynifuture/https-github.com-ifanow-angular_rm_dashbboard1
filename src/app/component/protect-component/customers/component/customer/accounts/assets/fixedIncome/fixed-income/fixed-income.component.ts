@@ -36,7 +36,7 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvested: any;
   sumCurrentValue: any;
   sumMaturityValue: any;
-  totalCurrentValue :any;
+  totalCurrentValue: any;
   totalMarketValue = 0;
   sumAmountInvestedB: any;
   sumCouponAmount: any;
@@ -67,8 +67,9 @@ export class FixedIncomeComponent implements OnInit {
     private customerService: CustomerService, private eventService: EventService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
+    private custumService: CustomerService,
     public util: UtilService, public dialog: MatDialog,
-    private _bottomSheet : MatBottomSheet, private assetValidation: AssetValidationService) {
+    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService) {
   }
 
   viewMode;
@@ -93,13 +94,15 @@ export class FixedIncomeComponent implements OnInit {
   Close() {
 
   }
-  fetchData(value, fileName, element) {
+  fetchData(value, fileName, element, type) {
+    element['subCatTypeId'] = type;
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:  (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
-      asset: value
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
+      asset: value,
+      element: element
     }
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
@@ -110,10 +113,10 @@ export class FixedIncomeComponent implements OnInit {
     });
     // this.myFiles = fileName.target.files[0]
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
-    if (this.fileUploadData) {
-      this.file = fileName
-      this.fileUpload.uploadFile(fileName)
-    }
+    // if (this.fileUploadData) {
+    //   this.file = fileName
+    //   this.fileUpload.uploadFile(fileName)
+    // }
     setTimeout(() => {
       this.isLoadingUpload = false
     }, 7000);
@@ -148,27 +151,27 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     if (value == '2') {
-      if(this.recDataList){
+      if (this.recDataList) {
         this.isLoading = false;
         this.getRecurringDepositRes(this.recDataList);
       }
-      else{
-      this.getRecurringDepositList();
+      else {
+        this.getRecurringDepositList();
       }
     } else if (value == '3') {
-      if(this.bondDataList){
+      if (this.bondDataList) {
         this.isLoading = false;
         this.getBondsRes(this.bondDataList);
       }
-      else{
-      this.getBondsList();
+      else {
+        this.getBondsList();
       }
     } else {
-      if(this.fixDataList){
+      if (this.fixDataList) {
         this.isLoading = false;
         this.getFixedDepositRes(this.fixDataList);
       }
-      else{
+      else {
         this.getFixedDepositList();
       }
     }
@@ -204,7 +207,7 @@ export class FixedIncomeComponent implements OnInit {
 
       this.fixDataList = data;
       this.dataSource.data = this.fixDataList.assetList;
-      console.log('fixed deposite',this.dataSource.data)
+      console.log('fixed deposite', this.dataSource.data)
       this.dataSource.sort = this.fixedIncomeTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumCurrentValue = 0;
@@ -291,7 +294,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-         this.assetValidation.getAssetCountGLobalData();
+        this.assetValidation.getAssetCountGLobalData();
 
         console.log('getBondsRes ******** ', data);
         this.bondDataList = data;
@@ -312,7 +315,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   activeFilter: any = 'All';
-  filterFixedIncome(key: string, value: any, data:any, type:string ) {
+  filterFixedIncome(key: string, value: any, data: any, type: string) {
     this.sumAmountInvested = 0;
     this.sumCurrentValue = 0;
     this.sumMaturityValue = 0;
@@ -329,37 +332,37 @@ export class FixedIncomeComponent implements OnInit {
     let dataFiltered = [];
     this.activeFilter = value;
     if (value == "All") {
-      if(type == 'fix'){
-      this.getFixedDepositRes(data)
+      if (type == 'fix') {
+        this.getFixedDepositRes(data)
       }
-      else if(type == 'bond'){
+      else if (type == 'bond') {
         this.getBondsRes(data)
       }
-      else{
+      else {
         this.getRecurringDepositRes(data)
       }
     }
     else {
       data.assetList.forEach(item => {
-        if(item[key] === value){
-          if(item.currentValue){
+        if (item[key] === value) {
+          if (item.currentValue) {
             this.sumCurrentValue += item.currentValue;
             this.totalCurrentValue += item.currentValue;
             this.sumCurrentValueB += item.currentValue;
           }
-          if(item.amountInvested){
+          if (item.amountInvested) {
             this.sumAmountInvested += item.amountInvested;
             this.sumAmountInvestedB += item.amountInvested;
           }
-          if(item.monthlyContribution){
+          if (item.monthlyContribution) {
             this.sumOfMonthlyContribution += item.monthlyContribution;
           }
-          if(item.maturityValue){
+          if (item.maturityValue) {
             this.sumMaturityValue += item.maturityValue;
             this.sumOfMaturityValue += item.maturityValue;
           }
-          if(item.couponAmount){
-            this.sumCouponAmount +=item.couponAmount
+          if (item.couponAmount) {
+            this.sumCouponAmount += item.couponAmount
           }
         }
       });
@@ -373,12 +376,12 @@ export class FixedIncomeComponent implements OnInit {
     }
 
     this.isFixedIncomeFiltered = true;
-    
+
     // this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.fixedIncomeTableSort;
   }
 
-  
+
 
   deleteModal(value, element) {
     const dialogData = {
@@ -397,11 +400,11 @@ export class FixedIncomeComponent implements OnInit {
               this.fixDataList.assetList = this.fixDataList.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.fixDataList.assetList;
 
-            // this.fixDataList.assetList.push(sideBarData.data);
-            this.fixDataList.sumOfAmountInvested -= element.amountInvested;
-            this.fixDataList.sumOfCurrentValue -= element.currentValue;
-            this.fixDataList.sumOfMaturityValue -= element.maturityValue;
-            this.getFixedDepositRes(this.fixDataList);
+              // this.fixDataList.assetList.push(sideBarData.data);
+              this.fixDataList.sumOfAmountInvested -= element.amountInvested;
+              this.fixDataList.sumOfCurrentValue -= element.currentValue;
+              this.fixDataList.sumOfMaturityValue -= element.maturityValue;
+              this.getFixedDepositRes(this.fixDataList);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -411,12 +414,12 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               // this.getRecurringDepositList();
               this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
-              
+
               this.recDataList.totalCurrentValue -= element.currentValue;
               this.recDataList.sumOfMonthlyContribution -= element.monthlyContribution;
               this.recDataList.sumOfMaturityValue -= element.maturityValue;
               this.getRecurringDepositRes(this.recDataList);
-              
+
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -426,10 +429,10 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               // this.getBondsList();
               this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);
-              this.bondDataList.sumOfAmountInvested  -= element.amountInvested;
-              this.bondDataList.sumOfCouponAmount  -= element.couponAmount;
-              this.bondDataList.sumOfCurrentValue  -= element.currentValue;
-              this.bondDataList.sumOfMaturityValue  -= element.maturityValue;
+              this.bondDataList.sumOfAmountInvested -= element.amountInvested;
+              this.bondDataList.sumOfCouponAmount -= element.couponAmount;
+              this.bondDataList.sumOfCurrentValue -= element.currentValue;
+              this.bondDataList.sumOfMaturityValue -= element.maturityValue;
               this.getBondsRes(this.bondDataList);
             },
             error => this.eventService.showErrorMessage(error)
@@ -468,14 +471,14 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(!data){
-              if(!this.fixDataList){
-                this.fixDataList = {assetList:[sideBarData.data]};
+            if (!data) {
+              if (!this.fixDataList) {
+                this.fixDataList = { assetList: [sideBarData.data] };
                 this.fixDataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
                 this.fixDataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
                 this.fixDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
               }
-              else{
+              else {
                 this.fixDataList.assetList.push(sideBarData.data);
                 this.fixDataList.sumOfAmountInvested += sideBarData.data.amountInvested;
                 this.fixDataList.sumOfCurrentValue += sideBarData.data.currentValue;
@@ -483,7 +486,7 @@ export class FixedIncomeComponent implements OnInit {
               }
               this.getFixedDepositRes(this.fixDataList);
             }
-            else{
+            else {
               this.getFixedDepositList();
             }
           }
@@ -537,17 +540,17 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(data){
+            if (data) {
               this.getRecurringDepositList();
             }
-            else{
-              if(!this.recDataList){
-                this.recDataList = {assetList:[sideBarData.data]};
+            else {
+              if (!this.recDataList) {
+                this.recDataList = { assetList: [sideBarData.data] };
                 this.recDataList['totalCurrentValue'] = sideBarData.data.currentValue;
                 this.recDataList['sumOfMonthlyContribution'] = sideBarData.data.monthlyContribution;
                 this.recDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
               }
-              else{
+              else {
                 this.recDataList.assetList.push(sideBarData.data);
                 this.recDataList.totalCurrentValue += sideBarData.data.currentValue;
                 this.recDataList.sumOfMonthlyContribution += sideBarData.data.monthlyContribution;
@@ -577,23 +580,23 @@ export class FixedIncomeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(data){
+            if (data) {
               this.getBondsList();
             }
-            else{
-              if(!this.bondDataList){
-                this.bondDataList = {assetList:[sideBarData.data]};
+            else {
+              if (!this.bondDataList) {
+                this.bondDataList = { assetList: [sideBarData.data] };
                 this.bondDataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
                 this.bondDataList['sumOfCouponAmount'] = sideBarData.data.couponAmount;
                 this.bondDataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
                 this.bondDataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
               }
-              else{
+              else {
                 this.bondDataList.assetList.push(sideBarData.data);
-                this.bondDataList.sumOfAmountInvested  += sideBarData.data.amountInvested;
-                this.bondDataList.sumOfCouponAmount  += sideBarData.data.couponAmount;
-                this.bondDataList.sumOfCurrentValue  += sideBarData.data.currentValue;
-                this.bondDataList.sumOfMaturityValue  += sideBarData.data.maturityValue;
+                this.bondDataList.sumOfAmountInvested += sideBarData.data.amountInvested;
+                this.bondDataList.sumOfCouponAmount += sideBarData.data.couponAmount;
+                this.bondDataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                this.bondDataList.sumOfMaturityValue += sideBarData.data.maturityValue;
               }
               this.getBondsRes(this.bondDataList);
             }
@@ -623,6 +626,11 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
+  // ============== upload =======
+
 }
+
+
+
 
 

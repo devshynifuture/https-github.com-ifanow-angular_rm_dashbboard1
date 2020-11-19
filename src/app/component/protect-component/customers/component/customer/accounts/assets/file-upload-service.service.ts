@@ -35,7 +35,9 @@ export class FileUploadServiceService {
     this.getUserInfo = AuthService.getUserInfo()
 
   }
+  element: any;
   fetchFileUploadData(value, myFiles) {
+    this.element = value.element;
     console.log('here its me', value)
     this.basicDetails = value
     this.familyMemberId = value.familyMemberId
@@ -83,6 +85,8 @@ export class FileUploadServiceService {
         this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
           console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
           if (responseData == null) {
+            // this.addDocumentUsers(fileName, this.imageType, fileuploadurl);
+            this.addDocumentUsers(fileuploadurl);
             this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
             this.fileUploadSuccsess = true
             this.responseData = true
@@ -98,6 +102,30 @@ export class FileUploadServiceService {
     if (this.responseData == true) {
       return this.responseData
     }
+  }
+
+  addDocumentUsers(url) {
+    // console.log(obj, 'save obj');
+    let addDocObj = {
+      advisorId: this.element.advisorId,
+      clientId: this.element.clientId,
+      userId: this.getUserInfo.userId,
+      userType: this.element.ownerList[0].isClient ? 2 : 3,
+      assetCategoryOrSubCatTypeId: this.element.subCatTypeId,
+      documentId: this.element.id,
+      documentType: 5,
+      proofType: 0,
+      proofSubType: 0,
+      fileName: ''
+    };
+    url = url.substring(url.search('x-amz-meta-uuid'), url.length - 1);
+    url = url.substring(0, url.indexOf('&'));
+    const uuID = url.replace('x-amz-meta-uuid=', '');
+    addDocObj.fileName = uuID;
+    this.custumService.saveClientUploadFile(addDocObj).subscribe((data) => {
+      console.log('added', data);
+
+    });
   }
   // fileUploadClient(value) {
   //   console.log('here its me', value)
@@ -121,4 +149,19 @@ export class FileUploadServiceService {
   //   return this.fileUploadData
   // }
 
+  getAssetsDoc(element) {
+    let self = this
+    return new Promise(function (resolve, reject) {
+      const obj = {
+        userId: self.getUserInfo.userId,
+        userType: element.ownerList[0].isClient ? 2 : 3,
+      };
+      self.custumService.getClientUploadFile(obj).subscribe((data) => {
+        resolve(data);
+      },
+        err => {
+          reject(err)
+        });
+    });
+  }
 }

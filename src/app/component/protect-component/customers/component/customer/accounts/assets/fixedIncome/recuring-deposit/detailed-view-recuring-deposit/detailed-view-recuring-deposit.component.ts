@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { CustomerService } from '../../../../../customer.service';
+import { FileUploadServiceService } from '../../../file-upload-service.service';
 
 @Component({
   selector: 'app-detailed-view-recuring-deposit',
@@ -11,9 +13,9 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 export class DetailedViewRecuringDepositComponent implements OnInit {
   inputData: any;
   recuringDeposit: any;
-  bankList:any = [];
-
-  constructor(public utils: UtilService,private subInjectService: SubscriptionInject, private enumService: EnumServiceService) { }
+  bankList: any = [];
+  doc: any;
+  constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private enumService: EnumServiceService, private fileUpload: FileUploadServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -22,16 +24,29 @@ export class DetailedViewRecuringDepositComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  
-  clientFamilybankList:any = [];
+
+  clientFamilybankList: any = [];
   ngOnInit() {
     this.bankList = this.enumService.getBank();
     this.clientFamilybankList = this.enumService.getclientFamilybankList();
     console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
     this.recuringDeposit = this.inputData;
+    this.fileUpload.getAssetsDoc(this.inputData).then((data) => {
+      this.getMapDoc(data)
+    });
+
+  }
+
+  getMapDoc(docs) {
+    docs.forEach(d => {
+      if (d.documentId == this.inputData.id) {
+        this.doc = d;
+        console.log(this.doc, "this.doc 123", this.inputData);
+      }
+    });
   }
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

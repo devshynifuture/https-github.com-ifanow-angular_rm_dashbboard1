@@ -27,15 +27,17 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} <span *ngIf="recuringDeposit.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
+                        {{owner.name}} <span *ngIf="recuringDeposit.ownerList.length > 1">sharing {{owner.share}}%
+                            ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly contribution
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{recuringDeposit.monthlyContribution? '₹':''}}<span appFormatNumber>{{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{recuringDeposit.monthlyContribution? '₹':''}}<span
+                            appFormatNumber>{{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -82,8 +84,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{recuringDeposit.currentValue? '₹':''}}<span appFormatNumber>{{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{recuringDeposit.currentValue? '₹':''}}<span
+                            appFormatNumber>{{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -91,11 +94,12 @@
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹<span appFormatNumber>{{(recuringDeposit.maturityValue)?recuringDeposit.maturityValue:'-'}}</span>
+                        ₹<span
+                            appFormatNumber>{{(recuringDeposit.maturityValue)?recuringDeposit.maturityValue:'-'}}</span>
                     </div>
                 </div>
-                
-               
+
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         RD no.
@@ -117,7 +121,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!recuringDeposit.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!recuringDeposit.userBankMappingId">
                         <div [ngSwitch]="recuringDeposit.userBankMappingId" *ngFor="let bank of clientFamilybankList">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -135,7 +139,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="recuringDeposit.nomineeList.length == 0 ">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -143,14 +147,26 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let obj of recuringDeposit.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} <span *ngIf="recuringDeposit.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        {{obj.name}} <span *ngIf="recuringDeposit.nomineeList.length > 1">sharing
+                            {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <!-- *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'" -->
+        <div *ngIf="doc">
+            <img [src]="doc.imageUrl" height="200" width="250"> <br />
+        </div>
+        <!-- <div
+                                *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
+                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
+                                </ngx-doc-viewer>
+                            </div> -->
     </div>
 </div>
