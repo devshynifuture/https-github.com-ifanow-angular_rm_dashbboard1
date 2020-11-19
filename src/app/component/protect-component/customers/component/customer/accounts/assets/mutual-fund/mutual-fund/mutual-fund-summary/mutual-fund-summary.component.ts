@@ -60,7 +60,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @Output() getCountData = new EventEmitter();
   @Output() loaded = new EventEmitter();
 
-  @Input() finPlanObj: string;
+  @Input() finPlanObj: string;//finacial plan pdf input
 
   viewMode: string;
   reponseData: any;
@@ -1018,7 +1018,8 @@ export class MutualFundSummaryComponent implements OnInit {
     };
   }
   calculationOninit() {
-    if (this.mutualFund.mutualFundList.length > 0) {
+    this.mutualFund = this.mfData
+    if (this.mfData.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
       if (this.addedData) {
