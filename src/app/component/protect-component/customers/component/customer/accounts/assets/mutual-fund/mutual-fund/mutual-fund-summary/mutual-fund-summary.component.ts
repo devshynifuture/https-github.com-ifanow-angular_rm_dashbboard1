@@ -1413,7 +1413,7 @@ export class MutualFundSummaryComponent implements OnInit {
               }
             })
         }
-
+        this.showDownload = true
         this.changeInput.emit(false);
         this.cd.markForCheck();
         this.loaded.emit(document.getElementById('template'));
