@@ -125,7 +125,7 @@ export class InsuranceComponent implements OnInit {
   myFiles;
   selectedInsuranceName = 'LIFE INSURANCE'
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: string;
+  @Input() finPlanObj: any;
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject,
@@ -167,12 +167,59 @@ export class InsuranceComponent implements OnInit {
         this.loadedId = res;
       })
     this.getGlobalDataInsurance();
-    this.getInsuranceData(1);
+    if (!this.finPlanObj) {
+      this.getInsuranceData(1);
+    } else {
+      this.finPlanLoadingFunction(); //to load different functions
+    }
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
     this.enumDataService.setBankAccountTypes();
   }
+  finPlanLoadingFunction() {
+    switch (this.finPlanObj.sectionName) {
+      case 'All life insurances':
+        this.getInsuranceData(1);
+        break;
+      case 'Term insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 1);
+        break;
+      case 'Traditional insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 2);
+        break;
+      case 'Ulip insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 3);
+        break;
+      case 'All General insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 0);
+        break;
+      case 'Health insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 5);
+        break;
+      case 'Personal accident':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 7);
+        break;
+      case 'Critical illness':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 6);
+        break;
+      case 'Motor insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 4);
+        break;
+      case 'Travel insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 8);
+        break;
+      case 'Home insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 9);
+        break;
+      case 'Fire & special perils':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 10);
+        break;
+      default:
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 0);
+        break;
 
+    }
+  }
   changeExpression() {
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
