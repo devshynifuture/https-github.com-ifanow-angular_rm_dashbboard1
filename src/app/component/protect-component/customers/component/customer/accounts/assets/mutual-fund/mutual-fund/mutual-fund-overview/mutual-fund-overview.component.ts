@@ -68,13 +68,14 @@ export class MutualFundOverviewComponent implements OnInit {
   advisorId: any;
   advisorData: any;
   clientId;
+  hideForFinPlan = '';
   // setTrueKey =false;
 
   @Output() changeInput = new EventEmitter();
   @Output() sendData = new EventEmitter();
   @Output() changeAsPerCategory = new EventEmitter();
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: string;
+  @Input() finPlanObj: object;
   total_net_Gain: number;
   cashFlowXirr: any;
   filterData: any;
@@ -160,7 +161,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    // token : 
+    // token :
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
