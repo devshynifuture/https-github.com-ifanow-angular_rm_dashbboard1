@@ -552,6 +552,7 @@ export class InsuranceComponent implements OnInit {
 
       this.dataSource.data = [];
     }
+    this.loaded.emit(document.getElementById('templateIns'));
   }
 
   getInsuranceData(typeId) {
@@ -831,6 +832,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSourceGeneralInsurance.data = [];
 
     }
+    this.loaded.emit(document.getElementById('templateGen'));
   }
 
   getGlobalDataInsurance() {
@@ -876,7 +878,7 @@ export class InsuranceComponent implements OnInit {
       let para = document.getElementById('templateIns');
       this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
     } else {
-      let para = document.getElementById('template2');
+      let para = document.getElementById('templateGen');
       this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
 
     }

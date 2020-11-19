@@ -89,7 +89,18 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'expense' || 'budget':
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
-        case 'Life insurance' || 'General insurance':
+        case 'All life insurances':
+        case 'Term insurance':
+        case 'Traditional insurance':
+        case 'Ulip insurance':
+        case 'All General insurance':
+        case 'Health insurance':
+        case 'Personal accident':
+        case 'Critical illness':
+        case 'Motor insurance':
+        case 'Travel insurance':
+        case 'Home insurance':
+        case 'Fire & special perils':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;
         case 'Mutual fund summary':
