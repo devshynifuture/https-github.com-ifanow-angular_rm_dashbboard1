@@ -56,7 +56,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     console.log(this.moduleAdded)
   }
   removeModule(module, i) {
-
+    this.moduleAdded.splice(i, 1);
   }
   download() {
     let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
