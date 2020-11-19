@@ -6,6 +6,7 @@ import { IncomeComponent } from '../income/income.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ExpensesComponent } from '../../../accounts/expenses/expenses.component';
 import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
 @Component({
@@ -25,9 +26,11 @@ export class FinacialPlanSectionComponent implements OnInit {
     read: ViewContainerRef,
     static: true
   }) container;
+  moduleAdded: any;
   constructor(private util: UtilService, private resolver: ComponentFactoryResolver, private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
+    this.moduleAdded = []
   }
   // checkAndLoadPdf(value, sectionName) {
   //   if (value) {
@@ -38,15 +41,23 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getOutput(data) {
     console.log(data);
-    this.generatePdf(data);
+    this.generatePdf(data, '');
   }
 
-  generatePdf(data) {
+  generatePdf(data, sectionName) {
     this.fragmentData.isSpinner = true;
+    this.moduleAdded.push({ name: sectionName })
+    console.log(this.moduleAdded)
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-
     this.util.htmlToPdf('', data.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
+
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.moduleAdded, event.previousIndex, event.currentIndex);
+  }
+  removeModule(module, i) {
+
   }
   download() {
     let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
@@ -87,7 +98,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           console.log(data.innerHTML);
           this.fragmentData.isSpinner = false
-          this.generatePdf(data);
+          this.generatePdf(data, sectionName);
           console.log(pdfContent.loaded)
           sub.unsubscribe();
         })
