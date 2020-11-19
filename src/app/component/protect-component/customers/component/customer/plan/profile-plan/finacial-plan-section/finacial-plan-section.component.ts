@@ -9,6 +9,7 @@ import { InsuranceComponent } from '../../../accounts/insurance/insurance.compon
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MutualFundSummaryComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
 import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
+import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
 @Component({
@@ -20,6 +21,7 @@ import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual
     ExpensesComponent,
     InsuranceComponent,
     MutualFundSummaryComponent,
+    MutualFundOverviewComponent,
     MutualFundComponent,
   ]
 })
@@ -100,6 +102,9 @@ export class FinacialPlanSectionComponent implements OnInit {
           break;
         case 'Mutual fund all transaction':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
+          break;
+        case 'Mutual fund overview':
+          factory = this.resolver.resolveComponentFactory(MutualFundOverviewComponent);
           break;
       }
       const pdfContentRef = this.container.createComponent(factory);
