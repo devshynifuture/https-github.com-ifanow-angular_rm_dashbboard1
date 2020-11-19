@@ -1,17 +1,17 @@
-import {Component, OnInit, ViewChild, EventEmitter, Output, ChangeDetectorRef, Input} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatSort, MatTableDataSource, MatBottomSheet} from '@angular/material';
-import {AddIncomeComponent} from './add-income/add-income.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../plan.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {IncomeDetailedViewComponent} from './income-detailed-view/income-detailed-view.component';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {FileUploadServiceService} from '../../../accounts/assets/file-upload-service.service';
-import {BottomSheetComponent} from '../../../../common-component/bottom-sheet/bottom-sheet.component';
-import {SummaryPlanServiceService} from '../../summary-plan/summary-plan-service.service';
+import { Component, OnInit, ViewChild, EventEmitter, Output, ChangeDetectorRef, Input } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
+import { AddIncomeComponent } from './add-income/add-income.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { IncomeDetailedViewComponent } from './income-detailed-view/income-detailed-view.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { FileUploadServiceService } from '../../../accounts/assets/file-upload-service.service';
+import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 
 @Component({
   selector: 'app-income',
@@ -19,8 +19,8 @@ import {SummaryPlanServiceService} from '../../summary-plan/summary-plan-service
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
   getOrgData;
   totalAmountOutstandingBalance;
   isLoadingUpload = false;
@@ -32,7 +32,7 @@ export class IncomeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   totalMonthlyIncome: number;
   personalProfileData: any;
   userInfo: any;
@@ -51,18 +51,19 @@ export class IncomeComponent implements OnInit {
   clientIdToClearStorage: string;
 
   constructor(private fileUpload: FileUploadServiceService,
-              private util: UtilService, private excel: ExcelGenService,
-              public dialog: MatDialog, private eventService: EventService,
-              private subInjectService: SubscriptionInject,
-              private planService: PlanService,
-              private _bottomSheet: MatBottomSheet,
-              private summaryPlanService: SummaryPlanServiceService, private ref: ChangeDetectorRef) {
+    private util: UtilService, private excel: ExcelGenService,
+    public dialog: MatDialog, private eventService: EventService,
+    private subInjectService: SubscriptionInject,
+    private planService: PlanService,
+    private _bottomSheet: MatBottomSheet,
+    private summaryPlanService: SummaryPlanServiceService, private ref: ChangeDetectorRef) {
   }
 
   viewMode;
-  @Output() finPlan = new EventEmitter();
+  @Output() finPlan = new EventEmitter();//finacial plan pdf Output
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: any;
+  @Input() finPlanObj: any;//finacial plan pdf input
+
 
   ngOnInit() {
     console.log(this.finPlanObj);
@@ -109,11 +110,11 @@ export class IncomeComponent implements OnInit {
     this.LoadCount++;
     this.summaryPlanService.setIncomeCount(this.LoadCount);
     const obj = {
-        advisorId: this.advisorId,
-        clientId: this.clientId,
-        addMonthlyDistribution: false,
-        id: this.incomeId ? this.incomeId : 0
-      };
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      addMonthlyDistribution: false,
+      id: this.incomeId ? this.incomeId : 0
+    };
     this.planService.getIncomeData(obj).subscribe(
       data => {
         this.pushArray(data);
@@ -214,7 +215,7 @@ export class IncomeComponent implements OnInit {
   filterIncome(key: string, value: any) {
     let dataFiltered;
 
-    dataFiltered = this.filterForIncome.filter(function(item) {
+    dataFiltered = this.filterForIncome.filter(function (item) {
       return item[key] === value;
     });
     if (dataFiltered.length > 0) {
@@ -364,5 +365,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
     rate: '8.40%',
     status: 'LIVE'
   },
-  {no: '', owner: 'Total', type: '', amt: '1,60,000', income: '', till: '', rate: '', status: ''},
+  { no: '', owner: 'Total', type: '', amt: '1,60,000', income: '', till: '', rate: '', status: '' },
 ];
