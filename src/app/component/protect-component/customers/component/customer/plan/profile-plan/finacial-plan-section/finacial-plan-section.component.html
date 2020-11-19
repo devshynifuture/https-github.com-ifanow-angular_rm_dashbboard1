@@ -412,7 +412,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'All life insurances')">
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund overview')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -422,7 +422,8 @@
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox #check (change)="checkAndLoadPdf($event,'Mutual fund summary')">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund summary')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
