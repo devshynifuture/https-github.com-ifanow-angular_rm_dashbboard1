@@ -114,8 +114,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     if (!row) {
       return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
-      row.position + 1
+    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${row.position + 1
       }`;
   }
 
@@ -144,9 +143,9 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
           this.brokerList = res;
           if (this.brokerList.length == 1) {
             this.filterForm.get("brokerCode").setValue(this.brokerList[0].id, { emitEvent: false });
-            this.filterForm.get("brokerCode").disable({emitEvent: false});
+            this.filterForm.get("brokerCode").disable({ emitEvent: false });
           } else {
-            this.filterForm.get("brokerCode").enable({ emitEvent:false });
+            this.filterForm.get("brokerCode").enable({ emitEvent: false });
             this.filterForm.get("brokerCode").setValue(-1, { emitEvent: false });
           }
           this.getSipCleanUpList(true);
@@ -154,10 +153,10 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       });
 
     this.filterSub = this.filterForm.valueChanges.subscribe((res) => {
-      if(!this.util.areTwoObjectsSame(this.prevFilterFormValue, res)){
+      if (!this.util.areTwoObjectsSame(this.prevFilterFormValue, res)) {
         this.getSipCleanUpList(true);
         this.prevFilterFormValue = res;
-      } 
+      }
     });
     // this.getSipCleanUpList(false);
   }
@@ -266,6 +265,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   }
 
   selectMultipleData(flag, value, index) {
+    this.showMultipleKeepBtn = flag;
     (flag == true) ? this.selectedRow.push(value) : this.selectedRow.splice(index, 1)
   }
 
