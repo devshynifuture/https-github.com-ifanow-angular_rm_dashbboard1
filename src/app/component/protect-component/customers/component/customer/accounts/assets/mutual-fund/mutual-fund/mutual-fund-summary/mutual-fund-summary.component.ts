@@ -58,6 +58,10 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
   @Output() getCountData = new EventEmitter();
+  @Output() loaded = new EventEmitter();
+
+  @Input() finPlanObj: string;
+
   viewMode: string;
   reponseData: any;
   setDefaultFilterData: any;
@@ -1411,6 +1415,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
         this.changeInput.emit(false);
         this.cd.markForCheck();
+        this.loaded.emit(document.getElementById('template'));
         // this.cd.detectChanges();
       };
       worker.postMessage(input);

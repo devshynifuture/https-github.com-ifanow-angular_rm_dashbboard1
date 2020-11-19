@@ -24,6 +24,7 @@ import { MatStepperModule } from '@angular/material';
 import { TransactionEntryModule } from 'src/app/component/protect-component/AdviserComponent/transactions/transaction.entry.module';
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MutualFundModule } from '../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.module';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MaterialModule,
     CustomDirectiveModule,
     InsuranceModule,
+    MutualFundModule,
     MaterialModule,
     ChartModule,
     FormsModule,
