@@ -60,7 +60,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @Output() getCountData = new EventEmitter();
   @Output() loaded = new EventEmitter();
 
-  @Input() finPlanObj: string;//finacial plan pdf input
+  @Input() finPlanObj: any;//finacial plan pdf input
 
   viewMode: string;
   reponseData: any;
