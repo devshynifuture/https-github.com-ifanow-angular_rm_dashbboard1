@@ -20,6 +20,7 @@ import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fun
 import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import { MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
+import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -35,6 +36,7 @@ import { PlanService } from '../../plan.service';
     MutualFundOverviewComponent,
     MutualFundUnrealizedTranComponent,
     MutualFundComponent,
+    GoalsPlanComponent,
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -108,7 +110,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  checkAndLoadPdf(value: any, sectionName: any) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any) {
     let factory;
     if (value) {
       this.fragmentData.isSpinner = true;
@@ -119,17 +121,17 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'expense' || 'budget':
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
-        case 'All life insurances':
-        case 'Term insurance':
-        case 'Traditional insurance':
-        case 'Ulip insurance':
-        case 'All General insurance':
-        case 'Health insurance':
-        case 'Personal accident':
-        case 'Critical illness':
-        case 'Motor insurance':
-        case 'Travel insurance':
-        case 'Home insurance':
+        // case 'All life insurances':
+        // case 'Term insurance':
+        // case 'Traditional insurance':
+        // case 'Ulip insurance':
+        // case 'All General insurance':
+        // case 'Health insurance':
+        // case 'Personal accident':
+        // case 'Critical illness':
+        // case 'Motor insurance':
+        // case 'Travel insurance':
+        // case 'Home insurance':
         case 'Fire & special perils':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;
@@ -145,10 +147,17 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Mutual fund overview':
           factory = this.resolver.resolveComponentFactory(MutualFundOverviewComponent);
           break;
+        case 'Goal':
+          factory = this.resolver.resolveComponentFactory(GoalsPlanComponent);
+          break;
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
+      if (sectionName == 'Goal') {
+        pdfContent.finPlanObj = { hideForFinPlan: true, obj };
+      } else {
+        pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
+      }
       const sub = pdfContent.loaded
         .pipe(delay(1))
         .subscribe(data => {

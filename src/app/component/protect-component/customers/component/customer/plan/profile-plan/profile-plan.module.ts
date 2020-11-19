@@ -26,6 +26,7 @@ import { CommonComponentModule } from 'src/app/component/protect-component/commo
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MutualFundModule } from '../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.module';
 import { AssetsModule } from '../../accounts/assets/assets.module';
+import { PlanGoalsModule } from '../goals-plan/plan-goals.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { AssetsModule } from '../../accounts/assets/assets.module';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
+    PlanGoalsModule,
     AssetsModule
   ]
 })

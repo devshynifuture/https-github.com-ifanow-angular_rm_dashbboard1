@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, EventEmitter } from '@angular/core';
 
 import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
@@ -23,6 +23,9 @@ import { AddGoalService } from './add-goal/add-goal.service';
 import { ReallocateAssetComponent } from './reallocate-asset/reallocate-asset.component';
 import { element } from 'protractor';
 import { AddMilestoneComponent } from './add-milestone/add-milestone.component';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 
@@ -127,8 +130,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   subscriber = new Subscriber();
   highlight: boolean = false;
   singleGoalData = {
-    goalName: '', goal: '',goalType:0,
-    details: '', value: '', month: '', lumpsum: '', img: '', year: '', remainingData:{notes:''},  dashboardData: {arr_lump_equity:[],arr_lump_debt:[],arr_debt_monthly:[],arr_equity_monthly:[],arr_goalYrAndFutValues:[],key_arr_equity_monthly:[],presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0,lump_debt:0 },
+    goalName: '', goal: '', goalType: 0,
+    details: '', value: '', month: '', lumpsum: '', img: '', year: '', remainingData: { notes: '' }, dashboardData: { arr_lump_equity: [], arr_lump_debt: [], arr_debt_monthly: [], arr_equity_monthly: [], arr_goalYrAndFutValues: [], key_arr_equity_monthly: [], presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0, lump_debt: 0 },
     goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
     goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
   };
@@ -147,6 +150,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     private plansService: PlanService,
     private dialog: MatDialog,
     private allocateOtherAssetService: AddGoalService,
+    private cd: ChangeDetectorRef,
     public loaderFn: LoaderFunction
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
@@ -159,8 +163,13 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator;
   @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+  @Output() loaded = new EventEmitter();
 
+  @Input() finPlanObj: any;//finacial plan pdf input
   ngOnInit() {
+    if (this.finPlanObj && this.finPlanObj.sectionName) {
+      this.selectedGoal = this.finPlanObj.selectionName
+    }
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
     //this.dataSource.data = [];
@@ -191,7 +200,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data
-        if(flag == true){
+        if (flag == true) {
           this.loadAllGoals(false)
         }
       } else {
@@ -357,7 +366,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
         key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
         key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
-        key_goalYrAndFutValues:this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
+        key_goalYrAndFutValues: this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
@@ -389,7 +398,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         key_arr_debt_monthly: this.getSumOfJsonMapArrKey(goalSubData.sipAmountDebt),
         key_arr_lump_equity: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountEquity),
         key_arr_lump_debt: this.getSumOfJsonMapArrKey(goalSubData.lumpSumAmountDebt),
-        key_goalYrAndFutValues:this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
+        key_goalYrAndFutValues: this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
@@ -530,6 +539,10 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
     this.singleGoalData = this.selectedGoal
+    if (this.selectedGoal && this.finPlanObj.selectionName) {
+      this.selectedGoal = this.finPlanObj.selectionName
+      this.singleGoalData = this.finPlanObj.selectionName
+    }
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
@@ -548,6 +561,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
+    this.cd.markForCheck();
+    this.loaded.emit(document.getElementById('planSummary'));
   }
   deleteMilestone(milestone) {
     const dialogData = {
