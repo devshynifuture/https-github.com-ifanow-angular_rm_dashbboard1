@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -73,7 +73,7 @@ export class LiabilitiesComponent implements OnInit {
   getAdvisorDetail: any;
 
 
-  constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
+  constructor(private cd: ChangeDetectorRef, private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
