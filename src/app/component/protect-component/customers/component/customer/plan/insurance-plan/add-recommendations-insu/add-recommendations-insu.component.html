@@ -14,8 +14,8 @@
 
 <div class="pt-90 pr-28 pl-28">
     <div class="recommendationTable" *ngIf="!isLoading">
-        <table mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading"
-            class=" skeletonAnimation">
+        <table mat-table *ngIf="dataSource?.length > 0" [dataSource]="dataSource" id="table-low" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" class=" skeletonAnimation">
             <ng-container matColumnDef="policyName">
 
                 <th mat-header-cell *matHeaderCellDef class="br text-left"> Policy name </th>
@@ -57,7 +57,7 @@
                         <span *ngIf="element.advice">
                             {{element.advice}}
                         </span>
-                        <span *ngIf="!element.advice">
+                        <span *ngIf="!element.advice" class="c-p">
                             <img src="/assets/images/svg/plus-rounded.svg" (click)="openDialog(element,null)">
                         </span>
                     </div>

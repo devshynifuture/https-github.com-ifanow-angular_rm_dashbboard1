@@ -23,11 +23,11 @@
         </app-progress-button>
     </div>
     <div *ngIf="tab == 0">
-            <div class="p-0  br-0 right c-p" (click)="clearAllFeilds()">
-                    <i class="material-icons">
-                        refresh
-                    </i>
-                </div>
+        <div class="p-0  br-0 right c-p" (click)="clearAllFeilds()">
+            <i class="material-icons">
+                refresh
+            </i>
+        </div>
         <!-- <app-progress-button *ngIf="needBase && needBase.isMapped == 1" class="btn-danger br-0 right"
             [options]="barButtonOptions2">
         </app-progress-button> -->
@@ -56,8 +56,7 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select  [formControl]="mainDependent"
-                                    class="form-control br-0">
+                                <mat-select [formControl]="mainDependent" class="form-control br-0">
                                     <mat-option disabled value=''>Select one</mat-option>
                                     <mat-option [value]="option.name"
                                         (click)="selectDependent(option.familyMemberId,'familyMemberId')"
@@ -72,9 +71,9 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0 remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input type="text" placeholder="Select life expectancy"
-                                    aria-label="Number" matInput (keyup)="onChange($event,'expectancy')"
-                                    [formControl]="expectancy" [matAutocomplete]="auto" class="form-control br-0">
+                                <input type="text" placeholder="Select life expectancy" aria-label="Number" matInput
+                                    (keyup)="onChange($event,'expectancy')" [formControl]="expectancy"
+                                    [matAutocomplete]="auto" class="form-control br-0">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                     <mat-option *ngFor="let option of filteredOptions | async"
                                         (click)="selectDependent(option,'lifeExpectency')" [value]="option.value">
@@ -98,7 +97,7 @@
                                     (keyup)="onChange($event,'retirement');selectDependent('','retirementAge')"
                                     [formControl]="retirementAgeControl" [maxLength]="10"
                                     placeholder="Enter retirement age" appInputValueValidation autocomplete="true"
-                                    class="form-control rupess br-0"  matInput type="number">
+                                    class="form-control rupess br-0" matInput type="number">
                                 <!-- <mat-hint align="end" class="f-12">{{retirementAge.value.length}}/10</mat-hint> -->
                                 <mat-error>This field is required
                                 </mat-error>
@@ -565,16 +564,27 @@
                         </div>
                     </mat-accordion>
 
-                    <div class="row pt-20" *ngIf="!isLodingNeedAnalysis">
+                    <!-- <div class="row pt-20" *ngIf="!isLodingNeedAnalysis">
                         <div class="col-md-11 p-0">
                             Planner notes
-                        </div>
-                        <!-- <div class="col-md-1 text-right">
+                        </div> -->
+                    <!-- <div class="col-md-1 text-right">
                                 <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img"
                                     class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
                             </div> -->
-                        <div class="col-md-12 p-0">
+                    <!-- <div class="col-md-12 p-0">
                             <p class="f-14 p-12 ba-light">{{plannerNote ? plannerNote : '-'}}</p>
+                        </div> -->
+                    <!-- <div class="mt-16">
+                            <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
+                        </div>
+                    </div> -->
+                    <div class="col-md-12 pt-20" id="email-froala" *ngIf="!isLodingNeedAnalysis">
+                        <div class="col-md-11 p-0">
+                            Planner notes
+                        </div>
+                        <div class="mt-16">
+                            <app-froala (modelChange)="saveDataNeed($event)" [(model)]="storeDataNeed"></app-froala>
                         </div>
                     </div>
                 </div>
@@ -605,15 +615,15 @@
                     </div>
                 </div>
                 <div class="row pt-20">
-                 
+
                     <!-- <div class="col-md-1 text-right">
                         <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img"
                             class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
                     </div> -->
                     <div class="col-md-12" id="email-froala">
-                            <div class="col-md-11 p-0">
-                                    Planner notes
-                                </div>
+                        <div class="col-md-11 p-0">
+                            Planner notes
+                        </div>
                         <div class="mt-16">
                             <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
                         </div>

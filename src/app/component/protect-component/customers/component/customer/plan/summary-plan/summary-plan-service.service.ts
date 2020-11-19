@@ -11,6 +11,7 @@ export class SummaryPlanServiceService {
   private dob = new BehaviorSubject('')
   private familyList = new BehaviorSubject('')
   private incomeCount = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
 
   constructor() { }
 
@@ -51,5 +52,19 @@ export class SummaryPlanServiceService {
   }
   getFamilyList() {
     return this.familyList.asObservable();
+  }
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setIncomeData('');
+    this.setIncomeCount('');
+    this.setExpenseData('');
+    this.setBudgetData('');
+    this.setclientDob('');
+    this.setFamilyList('');
   }
 }

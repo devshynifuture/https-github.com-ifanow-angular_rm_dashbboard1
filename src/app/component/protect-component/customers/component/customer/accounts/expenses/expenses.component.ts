@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter, Output, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
@@ -140,7 +140,8 @@ export class ExpensesComponent implements OnInit {
   isAddedBudget: any;
   expenseId: any;
   budgetId: any;
-
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;
   // periodSelection: any;
 
   constructor(private fileUpload: FileUploadServiceService, private fb: FormBuilder,
@@ -154,6 +155,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.finPlanObj);
     this.summaryPlanService.getExpenseData()
       .subscribe(res => {
         this.storedData = '';
@@ -176,12 +178,16 @@ export class ExpensesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getStartAndEndDate('1');
     this.selectedPeriod = '1'
-    this.viewMode = 'Transactions';
-    if (this.chekToCallApi()) {
+    if (this.finPlanObj) {
       this.getListFamilyMem()
-      // this.getAllExpense();
     } else {
-      this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+      this.viewMode = 'Transactions';
+      if (this.chekToCallApi()) {
+        this.getListFamilyMem()
+        // this.getAllExpense();
+      } else {
+        this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+      }
     }
     this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
 
@@ -324,10 +330,10 @@ export class ExpensesComponent implements OnInit {
     if (this.isAddedExpense) {
       if (this.storedData[this.startDate + '-' + this.endDate]) {
         let Obj = this.storedData[this.startDate + '-' + this.endDate][0];
-        if(data.continueTill && data.repeatFrequency){
+        if (data.continueTill && data.repeatFrequency) {
           Obj.recurringExpenseList.push(data);
           Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
-        }else{
+        } else {
           Obj.expenseList.push(data);
           Obj.expenseList = Obj.expenseList.flat();
         }
@@ -337,10 +343,10 @@ export class ExpensesComponent implements OnInit {
         this.expenseStorage[this.startDate + '-' + this.endDate] = [];
         this.expenseStorage[this.startDate + '-' + this.endDate].push(data)
         let Obj = this.expenseStorage[this.startDate + '-' + this.endDate][0];
-        if(data.continueTill && data.repeatFrequency){
+        if (data.continueTill && data.repeatFrequency) {
           Obj.recurringExpenseList.push(data);
           Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
-        }else{
+        } else {
           Obj.expenseList.push(data);
           Obj.expenseList = Obj.expenseList.flat();
         }
@@ -348,12 +354,12 @@ export class ExpensesComponent implements OnInit {
       }
     } else {
       let Obj = this.storedData[this.startDate + '-' + this.endDate][0];
-      if(data.continueTill && data.repeatFrequency){
-        Obj.recurringExpenseList = Obj.recurringExpenseList.filter(d=>d.id != this.expenseId);
+      if (data.continueTill && data.repeatFrequency) {
+        Obj.recurringExpenseList = Obj.recurringExpenseList.filter(d => d.id != this.expenseId);
         Obj.recurringExpenseList.push(data);
         Obj.recurringExpenseList = Obj.recurringExpenseList.flat();
-      }else{
-        Obj.expenseList = Obj.expenseList.filter(d=>d.id != this.expenseId);
+      } else {
+        Obj.expenseList = Obj.expenseList.filter(d => d.id != this.expenseId);
         Obj.expenseList.push(data);
         Obj.expenseList = Obj.expenseList.flat();
       }
@@ -385,23 +391,23 @@ export class ExpensesComponent implements OnInit {
     if (this.isAddedBudget) {
       if (this.storedDataBudget[this.startDate + '-' + this.endDate]) {
         let Obj = this.storedDataBudget[this.startDate + '-' + this.endDate][0];
-          Obj[0].push(data);
-          Obj[0] = Obj[0].flat();
+        Obj[0].push(data);
+        Obj[0] = Obj[0].flat();
         this.summaryPlanService.setBudgetData(this.storedDataBudget);
       } else {
         this.budgetStorage = {};
         this.budgetStorage[this.startDate + '-' + this.endDate] = [];
         this.budgetStorage[this.startDate + '-' + this.endDate].push(data)
         let Obj = this.budgetStorage[this.startDate + '-' + this.endDate][0];
-          Obj[0].push(data);
-          Obj[0] = Obj[0].flat();
+        Obj[0].push(data);
+        Obj[0] = Obj[0].flat();
         this.summaryPlanService.setBudgetData(this.budgetStorage);
       }
     } else {
       let Obj = this.storedDataBudget[this.startDate + '-' + this.endDate][0];
-        Obj[0] = Obj[0].filter(d=>d.id != this.budgetId);
-        Obj[0].push(data);
-        Obj[0] = Obj[0].flat();
+      Obj[0] = Obj[0].filter(d => d.id != this.budgetId);
+      Obj[0].push(data);
+      Obj[0] = Obj[0].flat();
       this.summaryPlanService.setBudgetData(this.storedDataBudget);
     }
   }
@@ -438,6 +444,10 @@ export class ExpensesComponent implements OnInit {
       this.isLoading = false;
       this.getExpenseGraphValueNew(this.expenseGraph);
       this.getAssetData(data);
+      this.cd.detectChanges()
+      this.loaded.emit(document.getElementById('templateExpense'));
+      let para = document.getElementById('templateExpense');
+      console.log(para.innerHTML)
       console.log('All expense data', data);
 
     }
@@ -628,7 +638,7 @@ export class ExpensesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById(tmp);
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    if (tmp == 'template') {
+    if (tmp == 'templateExpense') {
       let expenseSvg = this.expenseChart.getSVG();
       header = this.transactionExpens.nativeElement.innerHTML
       this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg, false);
@@ -806,6 +816,7 @@ export class ExpensesComponent implements OnInit {
       this.getAssetData(this.allExpnseData);
     }
     this.getGraphCalculations();
+    this.loaded.emit(document.getElementById('template2'));
 
     // if (result[2]) {
     //   this.budgetAmount = result[2].budgetAmount
@@ -885,11 +896,22 @@ export class ExpensesComponent implements OnInit {
           this.summaryPlanService.setFamilyList(this.familyList);
 
         }
-        if (this.chekToCallApi()) {
-          this.getAllExpense();
+        if (!this.finPlanObj) {
+          if (this.chekToCallApi()) {
+            this.getAllExpense();
+          } else {
+            this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+          }
         } else {
-          this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+          if (this.finPlanObj.sectionName == 'budget') {
+            this.viewMode = 'Budget';
+            this.getBudgetApis();
+          } else {
+            this.viewMode = 'Transactions';
+            this.getAllExpense();
+          }
         }
+
 
       }, err => {
         this.getAllExpense();

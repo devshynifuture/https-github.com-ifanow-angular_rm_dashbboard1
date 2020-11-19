@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, ChangeDetectorRef, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
@@ -43,23 +43,28 @@ export class IncomeComponent implements OnInit {
   myFiles: any;
   fileUploadData: any;
   file: any;
-  globalArray=[];
+  globalArray = [];
   storedData: any;
   incomeId: any;
   isAdded: any;
-  LoadCount :any;
+  LoadCount: any;
+  clientIdToClearStorage: string;
   constructor(private fileUpload: FileUploadServiceService,
-    private util:UtilService,private excel: ExcelGenService,
-    public dialog: MatDialog, private eventService: EventService, 
+    private util: UtilService, private excel: ExcelGenService,
+    public dialog: MatDialog, private eventService: EventService,
     private subInjectService: SubscriptionInject,
-     private planService: PlanService,
-     private _bottomSheet : MatBottomSheet,
-     private summaryPlanService:SummaryPlanServiceService) {
+    private planService: PlanService,
+    private _bottomSheet: MatBottomSheet,
+    private summaryPlanService: SummaryPlanServiceService, private ref: ChangeDetectorRef) {
   }
 
   viewMode;
+  @Output() finPlan = new EventEmitter();
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: string;
 
   ngOnInit() {
+    console.log(this.finPlanObj);
     this.LoadCount = 0;
     this.reportDate = new Date();
     this.viewMode = "tab1"
@@ -70,24 +75,33 @@ export class IncomeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
+    this.summaryPlanService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.summaryPlanService.clearStorage();
+      }
+    }
+    this.summaryPlanService.setClientId(this.clientId);
     this.summaryPlanService.getIncomeData()
-    .subscribe(res => {
-      this.storedData = '';
-      this.storedData = res;
-    })
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      })
     this.summaryPlanService.getIncomeCount()
-    .subscribe(res => {
-      this.LoadCount = res;
-    })
-    if(this.chekToCallApi()){
+      .subscribe(res => {
+        this.LoadCount = res;
+      })
+    if (this.chekToCallApi()) {
       this.getIncomeList();
-    }else{
+    } else {
       this.getIncomeListRes(this.storedData);
     }
   }
 
   getIncomeList() {
-    if(!this.incomeId){
+    if (!this.incomeId) {
       this.isLoading = true;
       this.dataSource.data = [{}, {}, {}];
     }
@@ -97,15 +111,15 @@ export class IncomeComponent implements OnInit {
     {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      addMonthlyDistribution:false,
-      id:this.incomeId ? this.incomeId : 0
+      addMonthlyDistribution: false,
+      id: this.incomeId ? this.incomeId : 0
     }
     this.planService.getIncomeData(obj).subscribe(
-      data =>{
+      data => {
         this.pushArray(data);
-        if(!this.incomeId){
+        if (!this.incomeId) {
           this.getIncomeListRes(data);
-        }else{
+        } else {
           this.getIncomeListRes(this.storedData);
         }
       },
@@ -117,26 +131,26 @@ export class IncomeComponent implements OnInit {
     )
 
   }
-  chekToCallApi(){
-    return this.LoadCount >= 1 ? false : this.storedData ? false :  true
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true
   }
-  pushArray(data){
-    if(data && !this.incomeId){
+  pushArray(data) {
+    if (data && !this.incomeId) {
       data = [...new Map(data.map(item => [item.id, item])).values()];
       this.globalArray.push(data);
-      this.globalArray  = this.globalArray.flat();
+      this.globalArray = this.globalArray.flat();
       this.summaryPlanService.setIncomeData(this.globalArray);
       this.globalArray = [];
       this.incomeId = '';
-    }else if(this.isAdded){
+    } else if (this.isAdded) {
       this.storedData == '' ? this.storedData = [] : ''
       this.storedData.push(data)
-      this.storedData  = this.storedData.flat();
+      this.storedData = this.storedData.flat();
       this.summaryPlanService.setIncomeData(this.storedData);
-    }else if(this.isAdded == false){
-      this.storedData = this.storedData.filter(d=>d.id != this.incomeId);
+    } else if (this.isAdded == false) {
+      this.storedData = this.storedData.filter(d => d.id != this.incomeId);
       this.storedData.push(data)
-      this.storedData  = this.storedData.flat();
+      this.storedData = this.storedData.flat();
       this.summaryPlanService.setIncomeData(this.storedData);
     }
   }
@@ -145,7 +159,7 @@ export class IncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1)?element.ownerList[0].familyMemberId:0,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? element.ownerList[0].familyMemberId : 0,
       asset: value
     }
     this.myFiles = [];
@@ -186,9 +200,11 @@ export class IncomeComponent implements OnInit {
       this.dataSource.data.forEach(element => {
         this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
-    }else{
+    } else {
       this.dataSource.data = [];
     }
+    this.ref.detectChanges()
+    this.loaded.emit(document.getElementById('template'));
   }
   filterIncome(key: string, value: any) {
     let dataFiltered;
@@ -233,12 +249,12 @@ export class IncomeComponent implements OnInit {
       }
     );
   }
-   generatePdf() {
+  generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    
-    this.util.htmlToPdf('',para.innerHTML, 'Income', 'true', this.fragmentData, '', '',false);
+
+    this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
 
   }
   deleteModal(value, incomeData) {
@@ -277,8 +293,8 @@ export class IncomeComponent implements OnInit {
 
     });
   }
-  deleteId(id){
-    this.globalArray = this.storedData.filter(d=>d.id != id);
+  deleteId(id) {
+    this.globalArray = this.storedData.filter(d => d.id != id);
     this.globalArray = [...new Map(this.globalArray.map(item => [item.id, item])).values()];
     this.summaryPlanService.setIncomeData(this.globalArray);
     this.getIncomeListRes(this.globalArray);

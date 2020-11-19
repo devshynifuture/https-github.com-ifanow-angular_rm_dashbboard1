@@ -1,4 +1,4 @@
-<div [ngSwitch]="viewMode" class="">
+<div [ngSwitch]="viewMode" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div *ngSwitchCase="'tab1'">
         <div class="wrapper-8 pt-20">
             <!-- <div class="row">
@@ -30,25 +30,26 @@
                         NEW
                     </button>
                 </div> -->
-                <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.data.length > 0 && !isLoading">
-                        <div class="pdfClass">
-            
-                            <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
-                                <img src="assets/images/svg/download-bordered.svg">
-                            </a>
-            
-                            <mat-menu #menu1="matMenu">
-                                <button mat-menu-item (click)="generatePdf()">PDF</button>
-                                <button (click)="Excel('Income')" mat-menu-item>XLS</button>
-                            </mat-menu>
-                            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                        </div>
-            
-                        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
-                        </div>
-            
-                        <!-- <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
+                    *ngIf="dataSource.data.length > 0 && !isLoading">
+                    <div class="pdfClass">
+
+                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                            <img src="assets/images/svg/download-bordered.svg">
+                        </a>
+
+                        <mat-menu #menu1="matMenu">
+                            <button mat-menu-item (click)="generatePdf()">PDF</button>
+                            <button (click)="Excel('Income')" mat-menu-item>XLS</button>
+                        </mat-menu>
+                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+                    </div>
+
+                    <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                    </div>
+
+                    <!-- <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
                             <img src="assets/images/svg/up-down.svg">
                         </a>
             
@@ -58,35 +59,36 @@
                                     type="file">
                             </button>
                         </mat-menu> -->
-                        <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                    <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>Email report</button>
                             <button mat-menu-item>Option 1</button>
                             <button mat-menu-item>Option 2</button>
                         </mat-menu> -->
-                        <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                    <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                 class="material-icons">filter_list</i>FILTERS
                         </button> -->
-                        <button mat-stroked-button class="btn-default addon mr-12 ml-8 v-middle" [matMenuTriggerFor]="liabilitiesMenu"><i
-                                class="material-icons">filter_list</i>FILTERS
+                    <button mat-stroked-button class="btn-default addon mr-12 ml-8 v-middle"
+                        [matMenuTriggerFor]="liabilitiesMenu"><i class="material-icons">filter_list</i>FILTERS
+                    </button>
+                    <mat-menu #liabilitiesMenu>
+                        <button mat-menu-item (click)="filterIncome('status', 'LIVE')">
+                            STATUS - LIVE
                         </button>
-                        <mat-menu #liabilitiesMenu>
-                            <button mat-menu-item (click)="filterIncome('status', 'LIVE')">
-                                STATUS - LIVE
-                            </button>
-                            <button mat-menu-item (click)="filterIncome('status', 'MATURED')">
-                                STATUS - MATURED
-                            </button>
-                        </mat-menu>
-                        <button (click)="addIncome('addIncome',null)" mat-stroked-button class="btn-primary addon v-middle"> ADD
-                            NEW
+                        <button mat-menu-item (click)="filterIncome('status', 'MATURED')">
+                            STATUS - MATURED
                         </button>
-                    </div>
+                    </mat-menu>
+                    <button (click)="addIncome('addIncome',null)" mat-stroked-button class="btn-primary addon v-middle">
+                        ADD
+                        NEW
+                    </button>
+                </div>
             </div>
 
             <div class="plan-icome">
-                <table  #tableEl *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort
-                    appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <table #tableEl *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table
+                    matSort appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no">
                         <th *matHeaderCellDef class="br t-right t-1" mat-header-cell mat-sort-header> No.</th>
                         <td *matCellDef="let element;index as i" class="br t-1" mat-cell>
@@ -101,8 +103,8 @@
                             <div class="bar"> {{element.ownerName}} </div>
                         </td>
                         <td *matFooterCellDef class="br pr-8 text-right f-600" mat-footer-cell>
-                                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
-                            </td>
+                            <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="type">
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="incomeTypeId"> Type</th>
@@ -124,21 +126,28 @@
                             Monthly amount
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">{{!isLoading && element.monthlyIncomeToShow? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">{{element.monthlyIncomeToShow ? element.monthlyIncomeToShow : '-' }}</span> </div>
+                            <div class="bar">{{!isLoading && element.monthlyIncomeToShow? "₹" : ""}}<span
+                                    appFormatNumber
+                                    *ngIf="!isLoading">{{element.monthlyIncomeToShow ? element.monthlyIncomeToShow : '-' }}</span>
+                            </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                <div>{{!isLoading && totalMonthlyIncome!=0 ? '₹ ' : ''}}<span [value]="totalMonthlyIncome ? totalMonthlyIncome : '-'" appFormatNumber></span></div>
-                            </td>
+                            <div>{{!isLoading && totalMonthlyIncome!=0 ? '₹ ' : ''}}<span
+                                    [value]="totalMonthlyIncome ? totalMonthlyIncome : '-'" appFormatNumber></span>
+                            </div>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="income">
-                        <th *matHeaderCellDef class="br right-hcb hide-arrow" mat-header-cell mat-sort-header="incomeStyleId"> Income
+                        <th *matHeaderCellDef class="br right-hcb hide-arrow" mat-header-cell
+                            mat-sort-header="incomeStyleId"> Income
                             style
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar" *ngIf="!isLoading"> {{(element.incomeStyleId == 1) ? 'Stable' : 'Erratic'}} </div>
+                            <div class="bar" *ngIf="!isLoading"> {{(element.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}
+                            </div>
                             <div class="bar" *ngIf="isLoading">{{''}}</div>
                         </td>
-                        
+
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                     </ng-container>
                     <ng-container matColumnDef="till">
@@ -160,7 +169,7 @@
                             Growth rate
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                                    <div class="bar"> {{element.growthRate}}{{(isLoading) ? '' : '%'}} </div>
+                            <div class="bar"> {{element.growthRate}}{{(isLoading) ? '' : '%'}} </div>
                         </td>
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                     </ng-container>
@@ -168,18 +177,19 @@
                     <ng-container matColumnDef="status">
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
                         <td *matCellDef="let element" class="br text-primary" mat-cell>
-                             <div class="bar">
-                                                <span class="text-primary" *ngIf="element.status == 'LIVE'">
-                                                    {{'LIVE'}} </span>
-                                                <span class="text-success" *ngIf="element.status == 'MATURED'">
-                                                    {{'MATURED'}} </span>
-                                            </div>
+                            <div class="bar">
+                                <span class="text-primary" *ngIf="element.status == 'LIVE'">
+                                    {{'LIVE'}} </span>
+                                <span class="text-success" *ngIf="element.status == 'MATURED'">
+                                    {{'MATURED'}} </span>
+                            </div>
                         </td>
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                        <td *matCellDef="let element"  class="t-2 mat-menu-trigger text-center c-p" mat-cell [matMenuTriggerFor]="menu4">
+                        <td *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p" mat-cell
+                            [matMenuTriggerFor]="menu4">
                             <!-- <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
                                 more_vert
                             </i> -->
@@ -191,8 +201,8 @@
                                     View
                                 </button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('Income',$event,element)"
-                                        class="uploadInput" id="file-4" multiple type="file">
+                                    <input (change)="fetchData('Income',$event,element)" class="uploadInput" id="file-4"
+                                        multiple type="file">
                                 </button>
                                 <!-- <button mat-menu-item>Activity</button> -->
                                 <button (click)="deleteModal('INCOME',element)" mat-menu-item>Delete</button>
@@ -220,112 +230,147 @@
 
 <!-- -------------------- pdf ---------------------------- -->
 <div #incomeTemp id="template" class="hide">
-        <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-    
-            <tr>
-                <td colspan="11">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="vertical-align: top;">
-                                <img style="width: 120px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                            </td>
-                            <td>
-                                <table style="float: right;">
-                                    <tr *ngIf="userInfo">
-                                        <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
-                                            {{(userInfo.name) ? userInfo.name : '-'}}
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="userInfo">
-                                        <td style="font-size: 14px; text-align: right;">
-                                            <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
-                                        </td>
-                                    </tr>
-    
-                                    <tr *ngIf="userInfo">
-                                        <td style="font-size: 14px; text-align: right;">
-                                            <span style="font-weight: 500;">Email Id:</span>   {{getOrgData.email ? getOrgData.email  : userInfo.email}}
-                                        </td>
-                                    </tr>
-    
-                                    <tr>
-    
-                                        <td style="font-size: 14px; text-align: right;">
-                                            <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-    
-            <tr>
-                <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                    Income</td>
-            </tr>
-            <tr>
-                <td colspan="11">
-                    <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
-                        Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
-                </td>
-            </tr>
-            <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    No. </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    Owner</td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                   Type </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                        Monthly amount
-                    </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                            Income style </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                        Continues till </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                        Growth rate </td>
-                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    Status </td>
-    
-            </tr>
-            <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data ;index as i">
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{i + 1}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.ownerName}}</td>
-             
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}} </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" ><span appFormatNumber>{{item.monthlyIncomeToShow ? item.monthlyIncomeToShow : 0}}</span></td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                 {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
-                    {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
-                    {{(item.growthRate) ? item.growthRate : '-'}}%</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span style="color: #007bff" *ngIf="item.status == 'LIVE'">
-                        {{'LIVE'}} </span>
-                    <span style="color: #00ff6a" *ngIf="item.status == 'CLOSED'">
-                        {{'CLOSED'}} </span>
-                </td>
-    
-            </tr>
-            <tr style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>Total</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber></td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="totalMonthlyIncome">{{totalMonthlyIncome}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber></td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" [value]="totalAmountOutstandingBalance" appFormatNumber>
-                </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
-            </tr>
-        </table>
-    </div>
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+
+        <tr>
+            <td colspan="11">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <img style="width: 120px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                        </td>
+                        <td>
+                            <table style="float: right;">
+                                <tr *ngIf="userInfo">
+                                    <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
+                                        {{(userInfo.name) ? userInfo.name : '-'}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="userInfo">
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;"> Mobile no:</span>
+                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="userInfo">
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;">Email Id:</span>
+                                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;">Report as on:</span>
+                                        {{reportDate | date:'dd-MMM-yyyy' }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                Income</td>
+        </tr>
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+            </td>
+        </tr>
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                No. </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Owner</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Type </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Monthly amount
+            </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Income style </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Continues till </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Growth rate </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Status </td>
+
+        </tr>
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{i + 1}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.ownerName}}</td>
+
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                {{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}}
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span appFormatNumber>{{item.monthlyIncomeToShow ? item.monthlyIncomeToShow : 0}}</span></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                {{(item.growthRate) ? item.growthRate : '-'}}%</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span style="color: #007bff" *ngIf="item.status == 'LIVE'">
+                    {{'LIVE'}} </span>
+                <span style="color: #00ff6a" *ngIf="item.status == 'CLOSED'">
+                    {{'CLOSED'}} </span>
+            </td>
+
+        </tr>
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                appFormatNumber>Total</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber [value]="totalMonthlyIncome">{{totalMonthlyIncome}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                [value]="totalAmountOutstandingBalance" appFormatNumber>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+        </tr>
+    </table>
+</div>

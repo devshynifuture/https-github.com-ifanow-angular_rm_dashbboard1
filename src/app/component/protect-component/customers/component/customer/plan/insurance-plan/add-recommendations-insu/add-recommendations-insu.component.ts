@@ -12,10 +12,10 @@ import { MatDialog } from '@angular/material';
 })
 export class AddRecommendationsInsuComponent implements OnInit {
   displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice', 'empty'];
-  dataSource : any;
+  dataSource: any;
   inputData: any;
-  isLoading:any;
-  constructor(public dialog: MatDialog,private planService : PlanService,private eventService:EventService,private subInjectService : SubscriptionInject) { }
+  isLoading: any;
+  constructor(public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -28,7 +28,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   }
   ngOnInit() {
   }
-  getHolderNames(obj){
+  getHolderNames(obj) {
     if (obj.owners && obj.owners.length > 0) {
       obj.displayHolderName = obj.owners[0].holderName;
       if (obj.owners.length > 1) {
@@ -42,14 +42,19 @@ export class AddRecommendationsInsuComponent implements OnInit {
     } else {
       obj.displayHolderName = '';
     }
-}
-  getRecommendations(){
+  }
+  getRecommendations() {
     this.isLoading = true;
     this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
       data => {
-        this.dataSource = data
-        this.isLoading = false;
-        console.log(data)
+        if (data) {
+          this.dataSource = data
+          this.isLoading = false;
+          console.log(data)
+        } else {
+          this.dataSource = [];
+          this.isLoading = false;
+        }
       },
       err => {
         this.dataSource = [];
@@ -58,15 +63,15 @@ export class AddRecommendationsInsuComponent implements OnInit {
       }
     );
   }
-  recommend(data){
-    const obj={
-      id : this.inputData.id,
-      insuranceId : data.insurance.id
+  recommend(data) {
+    const obj = {
+      id: this.inputData.id,
+      insuranceId: data.insurance.id
     }
     this.planService.updateRecommendationsLI(obj).subscribe(
       data => {
-          this.getRecommendations()
-          console.log(data)
+        this.getRecommendations()
+        console.log(data)
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -74,7 +79,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     );
   }
   openDialog(value, data): void {
-    data ={smallHeading : 'life insurance'}
+    data = { smallHeading: 'life insurance' }
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       height: '600px',

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-helth-insurance-policy',
@@ -24,22 +25,22 @@ export class HelthInsurancePolicyComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-};
+  };
   healthInsurance: any;
-  adviceHealthInsurance=[];
+  adviceHealthInsurance = [];
   showInsurance: DialogData;
   advice: any;
   showError = false;
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
+  constructor(private datePipe: DatePipe, private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-  adviceData = [{ value: 1, advice: 'Continue' , selected : true},
-  {value: 2, advice:'Discontinue', selected : false},
-  {value: 3, advice:'Port policy', selected : false},
-  {value: 4, advice:'Increase sum assured', selected : false},
-  {value: 5, advice:'Decrease sum assured', selected : false},
-  {value: 6, advice:'Add members', selected : false},
-  {value: 7, advice:'Remove members', selected : false}]
+  adviceData = [{ value: 1, advice: 'Continue', selected: true },
+  { value: 2, advice: 'Discontinue', selected: false },
+  { value: 3, advice: 'Port policy', selected: false },
+  { value: 4, advice: 'Increase sum assured', selected: false },
+  { value: 5, advice: 'Decrease sum assured', selected: false },
+  { value: 6, advice: 'Add members', selected: false },
+  { value: 7, advice: 'Remove members', selected: false }]
   ngOnInit() {
     this.getdataForm('')
     this.showInsurance = this.data.data
@@ -50,47 +51,73 @@ export class HelthInsurancePolicyComponent implements OnInit {
       selectAdvice: [(!data) ? '' : data.selectAdvice, [Validators.required]],
       adviceHeader: [data ? '' : data.adviceHeader, [Validators.required]],
       adviceStatus: [(!data) ? '' : data.adviceStatus],
-      adviceRationale: [(!data) ? '' : data.adviceRationale, [Validators.required]],
+      adviceRationale: [(!data) ? '' : data.adviceRationale],
       adviceHeaderDate: [(!data) ? '' : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
       consent: [(!data) ? '1' : data.consent, [Validators.required]],
-      nonFinAdvice:[(!data) ? '' : '',[Validators.required]]
+      nonFinAdvice: [(!data) ? '' : '', [Validators.required]]
     });
+    this.healthInsurance.controls['adviceStatus'].disable()
   }
   getFormControl(): any {
     return this.healthInsurance.controls;
   }
-  close(){
+  close() {
     this.dialogRef.close(this.showInsurance)
   }
-  setValue(){
-    this.healthInsurance.get('adviceHeader').value = this.healthInsurance.get('selectAdvice').value ;
-    this.showError =false;
+  setValue() {
+    this.healthInsurance.get('adviceHeader').value = this.healthInsurance.get('selectAdvice').value;
+    this.showError = false;
     this.healthInsurance.get('adviceHeader').setErrors(null);
 
   }
-  saveAdviceOnHealth(){
+  dateChange(value) {
+    let adviceHeaderDate = this.datePipe.transform(this.healthInsurance.controls.adviceHeaderDate.value, 'yyyy/MM/dd')
+    console.log(adviceHeaderDate);
+    let implementationDate = this.datePipe.transform(this.healthInsurance.controls.implementationDate.value, 'yyyy/MM/dd')
+    if (adviceHeaderDate && implementationDate) {
+      if (value == 'adviceHeaderDate') {
+        if (implementationDate > adviceHeaderDate) {
+          this.healthInsurance.get('adviceHeaderDate').setErrors();
+        } else {
+          this.healthInsurance.get('adviceHeaderDate').setErrors({ max: 'Date Issue' });
+          this.healthInsurance.get('adviceHeaderDate').markAsTouched();
+        }
+      } else {
+        if (implementationDate > adviceHeaderDate) {
+          this.healthInsurance.get('implementationDate').setErrors();
+        } else {
+          this.healthInsurance.get('implementationDate').setErrors({ max: 'Date of repayment' });
+          this.healthInsurance.get('implementationDate').markAsTouched();
+        }
+
+      }
+    }
+
+
+  }
+  saveAdviceOnHealth() {
     if (this.healthInsurance.invalid) {
       this.healthInsurance.get('selectAdvice').value ? '' : this.showError = true;
       this.healthInsurance.markAllAsTouched();
-  }else {
-    this.barButtonOptions.active = true;
-    let obj = {
-      selectAdvice:this.healthInsurance.controls.selectAdvice.value,
-      adviceHeader:this.healthInsurance.controls.selectAdvice.value,
-      adviceStatus:'Given',
-      adviceRationale:this.healthInsurance.controls.adviceRationale.value,
-      adviceHeaderDate:this.healthInsurance.controls.adviceHeaderDate.value,
-      implementationDate:this.healthInsurance.controls.implementationDate.value,
-      consent:this.healthInsurance.controls.consent.value,
+    } else {
+      this.barButtonOptions.active = true;
+      let obj = {
+        selectAdvice: this.healthInsurance.controls.selectAdvice.value,
+        adviceHeader: this.healthInsurance.controls.selectAdvice.value,
+        adviceStatus: 'Given',
+        adviceRationale: this.healthInsurance.controls.adviceRationale.value,
+        adviceHeaderDate: this.healthInsurance.controls.adviceHeaderDate.value,
+        implementationDate: this.healthInsurance.controls.implementationDate.value,
+        consent: this.healthInsurance.controls.consent.value,
+      }
+      this.adviceHealthInsurance.push(obj);
+      this.data.value.adviceValue = obj.selectAdvice;
+      this.advice = this.data.value
+      console.log('this.advice', this.adviceHealthInsurance)
+      this.dialogRef.close(this.advice)
     }
-    this.adviceHealthInsurance.push(obj);
-    this.data.value.adviceValue = obj.selectAdvice;
-    this.advice = this.data.value
-    console.log('this.advice',this.adviceHealthInsurance)
-    this.dialogRef.close(this.advice)
-  }
-    
-   
+
+
   }
 }

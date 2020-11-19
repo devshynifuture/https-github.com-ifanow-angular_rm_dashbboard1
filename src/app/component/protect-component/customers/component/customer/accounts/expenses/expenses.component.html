@@ -1,4 +1,4 @@
-<div id="ui-expenses" class="account_side-menu">
+<div id="ui-expenses" class="account_side-menu" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
         <div class="col-md-12 p-0" [ngSwitch]="viewMode">
             <div [ngSwitch]="viewMode">
@@ -57,8 +57,9 @@
                                         </a>
 
                                         <mat-menu #menu1="matMenu">
-                                            <button mat-menu-item (click)="generatePdf('template')">PDF</button>
-                                            <button (click)="Excel('Expenses','template')" mat-menu-item>XLS</button>
+                                            <button mat-menu-item (click)="generatePdf('templateExpense')">PDF</button>
+                                            <button (click)="Excel('Expenses','templateExpense')"
+                                                mat-menu-item>XLS</button>
                                         </mat-menu>
                                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                                     </div>
@@ -145,7 +146,8 @@
                                                 <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
                                                     class="br"> Amount </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
-                                                    <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.totalAmount? "₹" : ""}}<span
+                                                    <div [ngClass]="{'bar': isLoading}">
+                                                        {{!isLoading && element.totalAmount? "₹" : ""}}<span
                                                             appFormatNumber>{{isLoading ? '' : element.totalAmount }}</span>
                                                     </div>
                                                 </td>
@@ -571,8 +573,8 @@
                                                         src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
-                                                        (click)="detailedViewRecurring(element,'Recurring commitments')">Detailed
-                                                        view</button>
+                                                            (click)="detailedViewRecurring(element,'Recurring commitments')">Detailed
+                                                            view</button>
                                                     </mat-menu>
                                                 </div>
                                             </td>
@@ -609,7 +611,7 @@
 <!--------------------------------------------------------PDF------------------------------------------------------>
 
 <!-----------------------------------TRANSACTION AN OTHER Commitmments----------------------------------------------->
-<div #transactionExpens id="template" class="hide" *ngIf="viewMode == 'Transactions'">
+<div #transactionExpens id="templateExpense" class="hide" *ngIf="viewMode == 'Transactions'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -974,7 +976,7 @@
             </td>
             <td
                 style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            
+
                 <div *ngIf="item.budgetPerOther > 100 ">
                     <div style="background:#007bff ;height:5px;width: 70%;display: inline-block;float: left;">
 
