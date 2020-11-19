@@ -1,16 +1,24 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentFactory, ViewContainerRef, ViewChild } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { delay } from 'rxjs/operators';
-import { IncomeComponent } from '../income/income.component';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ExpensesComponent } from '../../../accounts/expenses/expenses.component';
-import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MutualFundSummaryComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
-import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
-import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import {
+  Component,
+  OnInit,
+  ComponentFactoryResolver,
+  ComponentFactory,
+  ViewContainerRef,
+  ViewChild
+} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {delay} from 'rxjs/operators';
+import {IncomeComponent} from '../income/income.component';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ExpensesComponent} from '../../../accounts/expenses/expenses.component';
+import {InsuranceComponent} from '../../../accounts/insurance/insurance.component';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {MutualFundSummaryComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import {MutualFundComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
+import {MutualFundOverviewComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import {MutualFundUnrealizedTranComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
 @Component({
@@ -29,17 +37,24 @@ import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutu
 })
 export class FinacialPlanSectionComponent implements OnInit {
   loadedSection: any;
-  fragmentData = { isSpinner: false }
+  fragmentData = {isSpinner: false};
   @ViewChild('pdfContainer', {
     read: ViewContainerRef,
     static: true
   }) container;
   moduleAdded: any;
-  constructor(private util: UtilService, private resolver: ComponentFactoryResolver, private subInjectService: SubscriptionInject) { }
+  selected = 0;
+  isLoading = false;
+  panelOpenState = false;
+  constructor(private util: UtilService, private resolver: ComponentFactoryResolver,
+              private subInjectService: SubscriptionInject) {
+  }
+
 
   ngOnInit() {
-    this.moduleAdded = []
+    this.moduleAdded = [];
   }
+
   // checkAndLoadPdf(value, sectionName) {
   //   if (value) {
   //     this.loadedSection = sectionName
@@ -57,15 +72,18 @@ export class FinacialPlanSectionComponent implements OnInit {
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf('', data.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
-    this.moduleAdded.push({ name: sectionName })
+    this.moduleAdded.push({name: sectionName});
   }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.moduleAdded, event.previousIndex, event.currentIndex);
-    console.log(this.moduleAdded)
+    console.log(this.moduleAdded);
   }
+
   removeModule(module, i) {
     this.moduleAdded.splice(i, 1);
   }
+
   download() {
     // let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
     // list.forEach(element => {
@@ -82,6 +100,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     // });
 
   }
+
   checkAndLoadPdf(value: any, sectionName: any) {
     let factory;
     if (value) {
@@ -122,16 +141,16 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      pdfContent.finPlanObj = { hideForFinPlan: true, sectionName: sectionName };
+      pdfContent.finPlanObj = {hideForFinPlan: true, sectionName};
       const sub = pdfContent.loaded
         .pipe(delay(1))
         .subscribe(data => {
           console.log(data.innerHTML);
-          this.fragmentData.isSpinner = false
+          this.fragmentData.isSpinner = false;
           this.generatePdf(data, sectionName);
-          console.log(pdfContent.loaded)
+          console.log(pdfContent.loaded);
           sub.unsubscribe();
-        })
+        });
     }
 
 

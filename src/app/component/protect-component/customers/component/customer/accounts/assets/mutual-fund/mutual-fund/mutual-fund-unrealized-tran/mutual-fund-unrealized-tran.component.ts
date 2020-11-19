@@ -124,7 +124,7 @@ export class MutualFundUnrealizedTranComponent {
   @Output() changeInput = new EventEmitter();
   @Output() loaded = new EventEmitter();
 
-  @Input() finPlanObj: any;
+  @Input() finPlanObj: any;//finacial plan pdf input
   advisorData: any;
   // displayedColumns: string[];
   viewMode = '';
