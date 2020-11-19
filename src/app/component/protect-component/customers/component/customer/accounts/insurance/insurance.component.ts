@@ -52,6 +52,12 @@ export class InsuranceComponent implements OnInit {
   isAdded: any;
   loadedId: any;
   loadedData = [];
+  userInfo: any;
+  getAdvisorDetail: any;
+  details: any;
+  getOrgData: any;
+  reportDate: Date;
+  showDownload: boolean;
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -131,12 +137,16 @@ export class InsuranceComponent implements OnInit {
     private enumDataService: EnumDataService,
     private insService: InsuranceService) {
     this.clientData = AuthService.getClientData();
-
+    this.userInfo = AuthService.getUserInfo();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   insuranceTypeId;
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
     this.advisorId = AuthService.getAdvisorId();
@@ -786,55 +796,64 @@ export class InsuranceComponent implements OnInit {
     );
   }
 
-  Excel(tableTitle) {
-    tableTitle = this.showInsurance + '_' + 'Insurance';
-    this.fragmentData.isSpinner = true;
-    if (this.insuranceTypeId == 1) {
-      let rows = this.tableEl._elementRef.nativeElement.rows;
-      const data = this.excelGen.generateExcel(rows, tableTitle);
-      if (data) {
-        this.fragmentData.isSpinner = false;
-      }
-    } else {
-      let rows = this.tableEl2._elementRef.nativeElement.rows;
-      const data = this.excelGen.generateExcel(rows, tableTitle);
-      if (data) {
-        this.fragmentData.isSpinner = false;
-      }
-    }
-
-  }
-
-  // generatePdf() {
+  // Excel(tableTitle) {
+  //   tableTitle = this.showInsurance + '_' + 'Insurance';
   //   this.fragmentData.isSpinner = true;
   //   if (this.insuranceTypeId == 1) {
-  //     let para = document.getElementById('template');
-  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //     let rows = this.tableEl._elementRef.nativeElement.rows;
+  //     const data = this.excelGen.generateExcel(rows, tableTitle);
+  //     if (data) {
+  //       this.fragmentData.isSpinner = false;
+  //     }
   //   } else {
-  //     let para = document.getElementById('template2');
-  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //     let rows = this.tableEl2._elementRef.nativeElement.rows;
+  //     const data = this.excelGen.generateExcel(rows, tableTitle);
+  //     if (data) {
+  //       this.fragmentData.isSpinner = false;
+  //     }
   //   }
 
   // }
-  generatePdf(tableTitle) {
-    // let rows = this.tableEl._elementRef.nativeElement.rows;
-    // this.pdfGen.generatePdf(rows, tableTitle);
-    tableTitle = this.showInsurance + '_' + 'Insurance';
-    // this.fragmentData.isSpinner = true;
-    if (this.insuranceTypeId == 1) {
-      let rows = this.tableEl._elementRef.nativeElement.rows;
-      const data = this.pdfGen.generatePdf(rows, tableTitle);
-      // if (data) {
-      //   this.fragmentData.isSpinner = false;
-      // }
-    } else {
-      let rows = this.tableEl2._elementRef.nativeElement.rows;
-      const data = this.pdfGen.generatePdf(rows, tableTitle);
-      // if (data) {
-      //   this.fragmentData.isSpinner = false;
-      // }
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excelGen.generateExcel(rows, tableTitle);
+    if (data) {
+      this.fragmentData.isSpinner = false;
     }
   }
+
+  generatePdf(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    if (this.insuranceTypeId == 1) {
+      let para = document.getElementById('templateIns');
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+    } else {
+      let para = document.getElementById('template2');
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+
+    }
+
+  }
+  // generatePdf(tableTitle) {
+  //   // let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   // this.pdfGen.generatePdf(rows, tableTitle);
+  //   tableTitle = this.showInsurance + '_' + 'Insurance';
+  //   // this.fragmentData.isSpinner = true;
+  //   if (this.insuranceTypeId == 1) {
+  //     let rows = this.tableEl._elementRef.nativeElement.rows;
+  //     const data = this.pdfGen.generatePdf(rows, tableTitle);
+  //     // if (data) {
+  //     //   this.fragmentData.isSpinner = false;
+  //     // }
+  //   } else {
+  //     let rows = this.tableEl2._elementRef.nativeElement.rows;
+  //     const data = this.pdfGen.generatePdf(rows, tableTitle);
+  //     // if (data) {
+  //     //   this.fragmentData.isSpinner = false;
+  //     // }
+  //   }
+  // }
 
   getInsuranceTypeData(typeId, typeSubId) {
     if (typeSubId == 4) {

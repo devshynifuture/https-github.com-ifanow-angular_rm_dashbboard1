@@ -70,14 +70,20 @@ export class LiabilitiesComponent implements OnInit {
   reportDate: Date;
   getOrgData: any;
   selectedItem
+  getAdvisorDetail: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService,
     private fileUpload: FileUploadServiceService,
-    private _bottomSheet : MatBottomSheet,
+    private _bottomSheet: MatBottomSheet,
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
-    this.clientData = AuthService.getClientData()
+    this.clientData = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -136,7 +142,7 @@ export class LiabilitiesComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -168,7 +174,7 @@ export class LiabilitiesComponent implements OnInit {
 
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    this.util.htmlToPdf('',para.innerHTML, 'Liabilities', 'true', this.fragmentData, '', '',false);
+    this.util.htmlToPdf('', para.innerHTML, 'Liabilities', 'true', this.fragmentData, '', '', false);
   }
   // generatePdf(tableTitle){
   //   let rows = this.tableEl._elementRef.nativeElement.rows;

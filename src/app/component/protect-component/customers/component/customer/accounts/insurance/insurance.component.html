@@ -518,22 +518,44 @@
 <div #lifeInsurance id="templateIns" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
-                <img *ngIf="personalProfileData" [src]="personalProfileData.profilePic" width="100px">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                </div>
             </td>
-            <td style="text-align: right;">
-                <p *ngIf="personalProfileData" style="margin: 0px; font-weight: 600;">
-                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong>
-                        Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong> Email
-                        : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            <td style=" text-align: right;" colspan="12">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+
+                <p style="margin: 0px;padding-top: 12px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
             </td>
         </tr>
 
         <tr>
             <td colspan="2" style="padding: 10px;"></td>
+        </tr>
+
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+            </td>
         </tr>
         <tr>
             <td colspan="9"
@@ -678,22 +700,44 @@
 <div #generalInsurance id="template2" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
-                <img *ngIf="personalProfileData" [src]="personalProfileData.profilePic" width="100px">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                </div>
             </td>
-            <td style="text-align: right;">
-                <p *ngIf="personalProfileData" style="margin: 0px; font-weight: 600;">
-                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong>
-                        Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
-                <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong> Email
-                        : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            <td style=" text-align: right;" colspan="12">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+
+                <p style="margin: 0px;padding-top: 12px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
             </td>
         </tr>
 
         <tr>
             <td colspan="2" style="padding: 10px;"></td>
+        </tr>
+
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+            </td>
         </tr>
         <tr>
             <td colspan="9"
