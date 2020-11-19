@@ -1,4 +1,4 @@
-<div id="ui-insurance">
+<div id="ui-insurance" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
         <div class="col-md-12 col-lg-2 p-0 tabViewLiabilities pt-8 pb-20">
             <div class="vertical-menu bg-grey lter">
@@ -109,7 +109,7 @@
 
                             <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
                             <!-- <mat-menu #menu7="matMenu"> -->
-                                <!-- <button mat-menu-item>Upload file
+                            <!-- <button mat-menu-item>Upload file
                     <input (change)="fetchData('Life Insurance',$event)" class="uploadInput" id="file-4"
                         multiple type="file">
                 </button> -->
@@ -515,7 +515,7 @@
 </div>
 <!-- -------------------- pdf life ---------------------------- -->
 
-<div #lifeInsurance id="template" class="hide">
+<div #lifeInsurance id="templateIns" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
             <td style="text-align: left;">

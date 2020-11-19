@@ -9,6 +9,21 @@ import { ExpensesComponent } from '../../accounts/expenses/expenses.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { FinacialPlanSectionComponent } from './finacial-plan-section/finacial-plan-section.component';
+import { InsuranceModule } from '../../accounts/insurance/insurance.module';
+import { ChartModule } from 'angular-highcharts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { EntryComponentsModule } from 'src/app/entry.components.module';
+import { AccountEntryModule } from '../../accounts/account.entry.module';
+import { PlanEntryModule } from '../plan.entry.module';
+import { CustomersRoutingModule } from '../../../../customers-routing.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { AdviceEntryModule } from '../../customer-activity/advice-entry.module';
+import { CustomerOverviewEntryModule } from '../../customer-overview/customer-overview-entry-module';
+import { MatStepperModule } from '@angular/material';
+import { TransactionEntryModule } from 'src/app/component/protect-component/AdviserComponent/transactions/transaction.entry.module';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -17,7 +32,13 @@ import { FinacialPlanSectionComponent } from './finacial-plan-section/finacial-p
     CommonModule,
     ProfilePlanRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    InsuranceModule,
+    MaterialModule,
+    ChartModule,
+    FormsModule,
+    ReactiveFormsModule,
+
   ]
 })
 export class ProfilePlanModule { }

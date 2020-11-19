@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, ChangeDetectorRef, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
@@ -55,13 +55,16 @@ export class IncomeComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private _bottomSheet: MatBottomSheet,
-    private summaryPlanService: SummaryPlanServiceService) {
+    private summaryPlanService: SummaryPlanServiceService, private ref: ChangeDetectorRef) {
   }
 
   viewMode;
   @Output() finPlan = new EventEmitter();
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: string;
 
   ngOnInit() {
+    console.log(this.finPlanObj);
     this.LoadCount = 0;
     this.reportDate = new Date();
     this.viewMode = "tab1"
@@ -200,9 +203,8 @@ export class IncomeComponent implements OnInit {
     } else {
       this.dataSource.data = [];
     }
-    setTimeout(() => {
-      this.finPlan.emit(document.getElementById('template'));
-    }, 7000);
+    this.ref.detectChanges()
+    this.loaded.emit(document.getElementById('template'));
   }
   filterIncome(key: string, value: any) {
     let dataFiltered;
