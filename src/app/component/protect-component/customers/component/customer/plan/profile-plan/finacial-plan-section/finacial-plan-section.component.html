@@ -12,7 +12,7 @@
         <h3 class="m-0 bb-1 pb-8">Modules added</h3>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="row p-4 b-a pt-8 pb-8">
                         <div class="col-md-1 pl-8">
