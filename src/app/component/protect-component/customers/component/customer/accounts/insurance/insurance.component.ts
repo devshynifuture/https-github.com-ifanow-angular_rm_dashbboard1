@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -126,7 +126,7 @@ export class InsuranceComponent implements OnInit {
   selectedInsuranceName = 'LIFE INSURANCE'
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;
-  constructor(private eventService: EventService, public dialog: MatDialog,
+  constructor(private cd: ChangeDetectorRef, private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject,
     private cusService: CustomerService,
@@ -330,6 +330,7 @@ export class InsuranceComponent implements OnInit {
       insuranceTypeId: insuranceId,
       id: this.insuranceId ? this.insuranceId : 0
     };
+    (this.finPlanObj) ? this.dataLoaded = true : this.dataLoaded = false;
     if (insuranceId == 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {
@@ -552,7 +553,9 @@ export class InsuranceComponent implements OnInit {
 
       this.dataSource.data = [];
     }
-    this.loaded.emit(document.getElementById('templateIns'));
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.lifeInsurance.nativeElement);
   }
 
   getInsuranceData(typeId) {
@@ -745,12 +748,15 @@ export class InsuranceComponent implements OnInit {
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
       this.isLoading = false;
-      this.loaded.emit(document.getElementById('templateIns'));
+
     } else {
       this.isLoading = false;
       this.getCount();
       this.dataSource.data = [];
     }
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.lifeInsurance.nativeElement);
   }
 
   getGeneralInsuranceDataRes(data) {
@@ -832,7 +838,10 @@ export class InsuranceComponent implements OnInit {
       this.dataSourceGeneralInsurance.data = [];
 
     }
-    this.loaded.emit(document.getElementById('templateGen'));
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.generalInsurance.nativeElement);
+
   }
 
   getGlobalDataInsurance() {

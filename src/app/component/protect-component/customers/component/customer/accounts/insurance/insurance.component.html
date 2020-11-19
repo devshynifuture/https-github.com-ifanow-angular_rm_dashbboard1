@@ -696,10 +696,13 @@
         </tr>
 
     </table>
-    <div *ngIf="insuranceTypeId == 1 && dataSource?.data?.length == 0"
-        class="w-100 mt-70 d-flex flex-column align-items-center">
+    <div *ngIf="dataSource?.data?.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
+        class="w-100 d-flex flex-column align-items-center">
+        <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
         <img src="assets/images/svg/documents-empty-states.svg">
-        <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+        <h4 class="text-center pt-12">No Data Found
+        </h4>
+        <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
     </div>
 </div>
 <!-- -------------------- pdf General insurance ---------------------------- -->
@@ -880,9 +883,13 @@
             </td>
         </tr>
     </table>
-    <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance?.data?.length == 0"
-        class="w-100 mt-70 d-flex flex-column align-items-center">
+    <div *ngIf="dataSourceGeneralInsurance?.data?.length == 0"
+        [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
+        class="w-100 d-flex flex-column align-items-center">
+        <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
         <img src="assets/images/svg/documents-empty-states.svg">
-        <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+        <h4 class="text-center pt-12">No Data Found
+        </h4>
+        <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
     </div>
 </div>
