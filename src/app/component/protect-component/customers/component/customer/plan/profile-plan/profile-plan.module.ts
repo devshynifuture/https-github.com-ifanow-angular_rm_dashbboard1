@@ -25,6 +25,7 @@ import { TransactionEntryModule } from 'src/app/component/protect-component/Advi
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MutualFundModule } from '../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.module';
+import { AssetsModule } from '../../accounts/assets/assets.module';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MutualFundModule } from '../../accounts/assets/mutual-fund/mutual-fund/
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
+    AssetsModule
   ]
 })
 export class ProfilePlanModule { }
