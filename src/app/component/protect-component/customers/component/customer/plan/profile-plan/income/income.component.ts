@@ -23,7 +23,7 @@ export class IncomeComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   getOrgData;
   totalAmountOutstandingBalance;
-  isLoadingUpload: boolean = false;
+  isLoadingUpload = false;
   displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
@@ -49,6 +49,7 @@ export class IncomeComponent implements OnInit {
   isAdded: any;
   LoadCount: any;
   clientIdToClearStorage: string;
+
   constructor(private fileUpload: FileUploadServiceService,
     private util: UtilService, private excel: ExcelGenService,
     public dialog: MatDialog, private eventService: EventService,
@@ -59,15 +60,16 @@ export class IncomeComponent implements OnInit {
   }
 
   viewMode;
-  @Output() finPlan = new EventEmitter();
+  @Output() finPlan = new EventEmitter();//finacial plan pdf Output
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: string;
+  @Input() finPlanObj: any;//finacial plan pdf input
+
 
   ngOnInit() {
     console.log(this.finPlanObj);
     this.LoadCount = 0;
     this.reportDate = new Date();
-    this.viewMode = "tab1"
+    this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
@@ -88,11 +90,11 @@ export class IncomeComponent implements OnInit {
       .subscribe(res => {
         this.storedData = '';
         this.storedData = res;
-      })
+      });
     this.summaryPlanService.getIncomeCount()
       .subscribe(res => {
         this.LoadCount = res;
-      })
+      });
     if (this.chekToCallApi()) {
       this.getIncomeList();
     } else {
@@ -107,13 +109,12 @@ export class IncomeComponent implements OnInit {
     }
     this.LoadCount++;
     this.summaryPlanService.setIncomeCount(this.LoadCount);
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       addMonthlyDistribution: false,
       id: this.incomeId ? this.incomeId : 0
-    }
+    };
     this.planService.getIncomeData(obj).subscribe(
       data => {
         this.pushArray(data);
@@ -125,15 +126,17 @@ export class IncomeComponent implements OnInit {
       },
       error => {
         this.noData = 'No income found';
-        this.dataSource.data = []
-        this.eventService.showErrorMessage(error)
+        this.dataSource.data = [];
+        this.eventService.showErrorMessage(error);
       }
-    )
+    );
 
   }
+
   chekToCallApi() {
-    return this.LoadCount >= 1 ? false : this.storedData ? false : true
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
+
   pushArray(data) {
     if (data && !this.incomeId) {
       data = [...new Map(data.map(item => [item.id, item])).values()];
@@ -143,25 +146,26 @@ export class IncomeComponent implements OnInit {
       this.globalArray = [];
       this.incomeId = '';
     } else if (this.isAdded) {
-      this.storedData == '' ? this.storedData = [] : ''
-      this.storedData.push(data)
+      this.storedData == '' ? this.storedData = [] : '';
+      this.storedData.push(data);
       this.storedData = this.storedData.flat();
       this.summaryPlanService.setIncomeData(this.storedData);
     } else if (this.isAdded == false) {
       this.storedData = this.storedData.filter(d => d.id != this.incomeId);
-      this.storedData.push(data)
+      this.storedData.push(data);
       this.storedData = this.storedData.flat();
       this.summaryPlanService.setIncomeData(this.storedData);
     }
   }
+
   fetchData(value, fileName, element) {
-    this.isLoadingUpload = true
-    let obj = {
+    this.isLoadingUpload = true;
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       familyMemberId: (element.ownerList[0].isClient == 1) ? element.ownerList[0].familyMemberId : 0,
       asset: value
-    }
+    };
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
@@ -171,28 +175,29 @@ export class IncomeComponent implements OnInit {
     });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
-      this.file = fileName
-      this.fileUpload.uploadFile(fileName)
+      this.file = fileName;
+      this.fileUpload.uploadFile(fileName);
     }
     setTimeout(() => {
-      this.isLoadingUpload = false
+      this.isLoadingUpload = false;
     }, 7000);
   }
+
   Excel(tableTitle) {
     this.fragmentData.isSpinner = true;
-    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const rows = this.tableEl._elementRef.nativeElement.rows;
     const data = this.excel.generateExcel(rows, tableTitle);
     if (data) {
       this.fragmentData.isSpinner = false;
     }
   }
+
   getIncomeListRes(data) {
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No income found';
-      this.dataSource.data = []
-    }
-    else if (data) {
+      this.dataSource.data = [];
+    } else if (data) {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       this.totalMonthlyIncome = 0;
@@ -203,9 +208,10 @@ export class IncomeComponent implements OnInit {
     } else {
       this.dataSource.data = [];
     }
-    this.ref.detectChanges()
+    this.ref.detectChanges();
     this.loaded.emit(document.getElementById('template'));
   }
+
   filterIncome(key: string, value: any) {
     let dataFiltered;
 
@@ -220,7 +226,7 @@ export class IncomeComponent implements OnInit {
         this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
     } else {
-      this.eventService.openSnackBar("No data found", "Dismiss")
+      this.eventService.openSnackBar('No data found', 'Dismiss');
     }
 
   }
@@ -249,14 +255,16 @@ export class IncomeComponent implements OnInit {
       }
     );
   }
+
   generatePdf() {
     this.fragmentData.isSpinner = true;
-    let para = document.getElementById('template');
+    const para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
 
     this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
 
   }
+
   deleteModal(value, incomeData) {
     const dialogData = {
       data: value,
@@ -268,13 +276,13 @@ export class IncomeComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteIncome(incomeData.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Income deleted successfully", "Dismiss")
+            this.eventService.openSnackBar('Income deleted successfully', 'Dismiss');
             this.deleteId(incomeData.id);
             // this.getIncomeList();
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222');
@@ -293,6 +301,7 @@ export class IncomeComponent implements OnInit {
 
     });
   }
+
   deleteId(id) {
     this.globalArray = this.storedData.filter(d => d.id != id);
     this.globalArray = [...new Map(this.globalArray.map(item => [item.id, item])).values()];
@@ -337,24 +346,24 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {
-    no: "1",
+    no: '1',
     owner: 'Rahul Jain',
-    type: "Salaried",
+    type: 'Salaried',
     amt: '60,000',
-    income: "18/09/2021",
-    till: "Retirement",
-    rate: "8.40%",
-    status: "MATURED"
+    income: '18/09/2021',
+    till: 'Retirement',
+    rate: '8.40%',
+    status: 'MATURED'
   },
   {
-    no: "2",
+    no: '2',
     owner: 'Rahul Jain',
-    type: "Salaried",
+    type: 'Salaried',
     amt: '60,000',
-    income: "18/09/2021",
-    till: "Retirement ",
-    rate: "8.40%",
-    status: "LIVE"
+    income: '18/09/2021',
+    till: 'Retirement ',
+    rate: '8.40%',
+    status: 'LIVE'
   },
-  { no: "", owner: 'Total', type: "", amt: '1,60,000', income: "", till: "", rate: "", status: "" },
+  { no: '', owner: 'Total', type: '', amt: '1,60,000', income: '', till: '', rate: '', status: '' },
 ];

@@ -56,12 +56,18 @@ export class OtherPayablesComponent implements OnInit {
   getOrgData: any;
   userInfo: any;
   reportDate: Date;
+  getAdvisorDetail: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
-    private _bottomSheet : MatBottomSheet,
+    private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private fileUpload: FileUploadServiceService) {
 
     this.clientData = AuthService.getClientData()
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -144,7 +150,7 @@ export class OtherPayablesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('',para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '',false);
+    this.util.htmlToPdf('', para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '', false);
   }
 
   // generatePdf(tableTitle){

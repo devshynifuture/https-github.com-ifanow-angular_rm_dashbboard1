@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -52,6 +52,12 @@ export class InsuranceComponent implements OnInit {
   isAdded: any;
   loadedId: any;
   loadedData = [];
+  userInfo: any;
+  getAdvisorDetail: any;
+  details: any;
+  getOrgData: any;
+  reportDate: Date;
+  showDownload: boolean;
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -119,8 +125,8 @@ export class InsuranceComponent implements OnInit {
   myFiles;
   selectedInsuranceName = 'LIFE INSURANCE'
   @Output() loaded = new EventEmitter();
-  @Input() finPlanObj: string;
-  constructor(private eventService: EventService, public dialog: MatDialog,
+  @Input() finPlanObj: any;
+  constructor(private cd: ChangeDetectorRef, private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject,
     private cusService: CustomerService,
@@ -131,12 +137,16 @@ export class InsuranceComponent implements OnInit {
     private enumDataService: EnumDataService,
     private insService: InsuranceService) {
     this.clientData = AuthService.getClientData();
-
+    this.userInfo = AuthService.getUserInfo();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   insuranceTypeId;
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
     this.advisorId = AuthService.getAdvisorId();
@@ -157,12 +167,59 @@ export class InsuranceComponent implements OnInit {
         this.loadedId = res;
       })
     this.getGlobalDataInsurance();
-    this.getInsuranceData(1);
+    if (!this.finPlanObj) {
+      this.getInsuranceData(1);
+    } else {
+      this.finPlanLoadingFunction(); //to load different functions
+    }
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
     this.enumDataService.setBankAccountTypes();
   }
+  finPlanLoadingFunction() {
+    switch (this.finPlanObj.sectionName) {
+      case 'All life insurances':
+        this.getInsuranceData(1);
+        break;
+      case 'Term insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 1);
+        break;
+      case 'Traditional insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 2);
+        break;
+      case 'Ulip insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 1, 3);
+        break;
+      case 'All General insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 0);
+        break;
+      case 'Health insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 5);
+        break;
+      case 'Personal accident':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 7);
+        break;
+      case 'Critical illness':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 6);
+        break;
+      case 'Motor insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 4);
+        break;
+      case 'Travel insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 8);
+        break;
+      case 'Home insurance':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 9);
+        break;
+      case 'Fire & special perils':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 10);
+        break;
+      default:
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 0);
+        break;
 
+    }
+  }
   changeExpression() {
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
@@ -273,6 +330,7 @@ export class InsuranceComponent implements OnInit {
       insuranceTypeId: insuranceId,
       id: this.insuranceId ? this.insuranceId : 0
     };
+    (this.finPlanObj) ? this.dataLoaded = true : this.dataLoaded = false;
     if (insuranceId == 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {
@@ -495,6 +553,9 @@ export class InsuranceComponent implements OnInit {
 
       this.dataSource.data = [];
     }
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.lifeInsurance.nativeElement);
   }
 
   getInsuranceData(typeId) {
@@ -687,12 +748,15 @@ export class InsuranceComponent implements OnInit {
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
       this.isLoading = false;
-      this.loaded.emit(document.getElementById('templateIns'));
+
     } else {
       this.isLoading = false;
       this.getCount();
       this.dataSource.data = [];
     }
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.lifeInsurance.nativeElement);
   }
 
   getGeneralInsuranceDataRes(data) {
@@ -774,6 +838,10 @@ export class InsuranceComponent implements OnInit {
       this.dataSourceGeneralInsurance.data = [];
 
     }
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    this.loaded.emit(this.generalInsurance.nativeElement);
+
   }
 
   getGlobalDataInsurance() {
@@ -786,55 +854,64 @@ export class InsuranceComponent implements OnInit {
     );
   }
 
-  Excel(tableTitle) {
-    tableTitle = this.showInsurance + '_' + 'Insurance';
-    this.fragmentData.isSpinner = true;
-    if (this.insuranceTypeId == 1) {
-      let rows = this.tableEl._elementRef.nativeElement.rows;
-      const data = this.excelGen.generateExcel(rows, tableTitle);
-      if (data) {
-        this.fragmentData.isSpinner = false;
-      }
-    } else {
-      let rows = this.tableEl2._elementRef.nativeElement.rows;
-      const data = this.excelGen.generateExcel(rows, tableTitle);
-      if (data) {
-        this.fragmentData.isSpinner = false;
-      }
-    }
-
-  }
-
-  // generatePdf() {
+  // Excel(tableTitle) {
+  //   tableTitle = this.showInsurance + '_' + 'Insurance';
   //   this.fragmentData.isSpinner = true;
   //   if (this.insuranceTypeId == 1) {
-  //     let para = document.getElementById('template');
-  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //     let rows = this.tableEl._elementRef.nativeElement.rows;
+  //     const data = this.excelGen.generateExcel(rows, tableTitle);
+  //     if (data) {
+  //       this.fragmentData.isSpinner = false;
+  //     }
   //   } else {
-  //     let para = document.getElementById('template2');
-  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //     let rows = this.tableEl2._elementRef.nativeElement.rows;
+  //     const data = this.excelGen.generateExcel(rows, tableTitle);
+  //     if (data) {
+  //       this.fragmentData.isSpinner = false;
+  //     }
   //   }
 
   // }
-  generatePdf(tableTitle) {
-    // let rows = this.tableEl._elementRef.nativeElement.rows;
-    // this.pdfGen.generatePdf(rows, tableTitle);
-    tableTitle = this.showInsurance + '_' + 'Insurance';
-    // this.fragmentData.isSpinner = true;
-    if (this.insuranceTypeId == 1) {
-      let rows = this.tableEl._elementRef.nativeElement.rows;
-      const data = this.pdfGen.generatePdf(rows, tableTitle);
-      // if (data) {
-      //   this.fragmentData.isSpinner = false;
-      // }
-    } else {
-      let rows = this.tableEl2._elementRef.nativeElement.rows;
-      const data = this.pdfGen.generatePdf(rows, tableTitle);
-      // if (data) {
-      //   this.fragmentData.isSpinner = false;
-      // }
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excelGen.generateExcel(rows, tableTitle);
+    if (data) {
+      this.fragmentData.isSpinner = false;
     }
   }
+
+  generatePdf(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    if (this.insuranceTypeId == 1) {
+      let para = document.getElementById('templateIns');
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+    } else {
+      let para = document.getElementById('templateGen');
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+
+    }
+
+  }
+  // generatePdf(tableTitle) {
+  //   // let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   // this.pdfGen.generatePdf(rows, tableTitle);
+  //   tableTitle = this.showInsurance + '_' + 'Insurance';
+  //   // this.fragmentData.isSpinner = true;
+  //   if (this.insuranceTypeId == 1) {
+  //     let rows = this.tableEl._elementRef.nativeElement.rows;
+  //     const data = this.pdfGen.generatePdf(rows, tableTitle);
+  //     // if (data) {
+  //     //   this.fragmentData.isSpinner = false;
+  //     // }
+  //   } else {
+  //     let rows = this.tableEl2._elementRef.nativeElement.rows;
+  //     const data = this.pdfGen.generatePdf(rows, tableTitle);
+  //     // if (data) {
+  //     //   this.fragmentData.isSpinner = false;
+  //     // }
+  //   }
+  // }
 
   getInsuranceTypeData(typeId, typeSubId) {
     if (typeSubId == 4) {

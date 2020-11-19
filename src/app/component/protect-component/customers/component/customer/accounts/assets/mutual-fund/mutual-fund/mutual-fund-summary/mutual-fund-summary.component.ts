@@ -58,6 +58,10 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
   @Output() getCountData = new EventEmitter();
+  @Output() loaded = new EventEmitter();
+
+  @Input() finPlanObj: any;//finacial plan pdf input
+
   viewMode: string;
   reponseData: any;
   setDefaultFilterData: any;
@@ -1014,7 +1018,8 @@ export class MutualFundSummaryComponent implements OnInit {
     };
   }
   calculationOninit() {
-    if (this.mutualFund.mutualFundList.length > 0) {
+    this.mutualFund = this.mfData
+    if (this.mfData.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
       if (this.addedData) {
@@ -1408,9 +1413,10 @@ export class MutualFundSummaryComponent implements OnInit {
               }
             })
         }
-
+        this.showDownload = true
         this.changeInput.emit(false);
         this.cd.markForCheck();
+        this.loaded.emit(this.summaryTemplate);
         // this.cd.detectChanges();
       };
       worker.postMessage(input);
@@ -1442,7 +1448,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     });
     setTimeout(() => {
-      var blob = new Blob([document.getElementById('template').innerHTML], {
+      var blob = new Blob([document.getElementById('templateSummary').innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       saveAs(blob, tableTitle + ".xls");
@@ -1715,7 +1721,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
     setTimeout(() => {
-      const para = document.getElementById('template');
+      const para = document.getElementById('templateSummary');
       // const header = document.getElementById('templateHeader');
       const header = this.summaryTemplateHeader.nativeElement.innerHTML
 

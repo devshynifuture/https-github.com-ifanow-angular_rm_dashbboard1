@@ -73,7 +73,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({ hostName: 'clients.wealthwisdom.in' })
+    this.peopleService.getClientLogo({ hostName: document.location.hostname })
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');
