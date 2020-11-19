@@ -296,7 +296,7 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   ngOnInit() {
-    if (this.finPlanObj.sectionName == 'Mutual fund all transaction') {
+    if (this.finPlanObj && this.finPlanObj.sectionName == 'Mutual fund all transaction') {
       this.viewMode = 'All Transactions';
       this.mode = 'All Transactions';
       this.reportName = 'MF_All_Trasaction_Report';
