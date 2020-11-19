@@ -1,4 +1,4 @@
-<div>
+<div [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-6 pl-0 c-p" *ngIf="!isLoading">
