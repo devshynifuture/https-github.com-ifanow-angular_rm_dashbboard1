@@ -1,4 +1,4 @@
-<div>
+<div [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-6 pl-0 c-p" *ngIf="!isLoading">
@@ -904,7 +904,7 @@
 
 
 
-<div #mfOverviewTemplate id="template" class="hide" *ngIf="mfData" meta charset="UTF-8">
+<div #mfOverviewTemplate id="templateOverview" class="hide" *ngIf="mfData" meta charset="UTF-8">
     <html>
     <meta charset="UTF-8">
     <table cellpadding="0" cellspacing="0" border="0"
@@ -912,7 +912,7 @@
         align="center; page-break-before: always;">
 
         <tr>
-            <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
                 <div
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">

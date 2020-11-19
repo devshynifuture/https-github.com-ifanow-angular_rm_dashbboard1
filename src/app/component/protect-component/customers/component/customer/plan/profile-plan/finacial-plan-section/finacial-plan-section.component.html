@@ -11,26 +11,34 @@
     <div class="col-md-6">
         <h3 class="m-0 bb-1 pb-8">Modules added</h3>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="mt-8 h-auto-500 relClass">
-                <div class="row p-4 b-a pt-8 pb-8">
-                    <div class="col-md-1 pl-8">
-                        <div class="bar">
-                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="row p-4 b-a pt-8 pb-8 c-p">
+                        <div class="col-md-1 pl-8">
+                            <div class="bar">
+                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-10 pl-0">
-                        <div class="bar">
-                            <p class="m-0 pt-4">Plan / Scenario 2 / Life insurance / Rahul Jain</p>
+                        <div class="col-md-10 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{module.name}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="bar">
-                            <img src="/assets/images/svg/close.svg" class="c-p">
+                        <div class="col-md-1" (click)="removeModule(module,i)">
+                            <div class="bar">
+                                <img src="/assets/images/svg/close.svg" class="c-p">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div *ngIf="moduleAdded.length  == 0">
+                <span class="text-center">
+                    No module added
+                </span>
+            </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
                     <div class="col-md-2 pl-0">
@@ -115,7 +123,8 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
+                                        <mat-checkbox (change)="checkAndLoadPdf($event.checked,'Life insurance','')">
+                                        </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
@@ -181,7 +190,7 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'income')">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'income','')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -191,7 +200,7 @@
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'expense')">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'expense','')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -201,7 +210,7 @@
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'budget')">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'budget','')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -221,60 +230,13 @@
 
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngFor="let goal of dataSource.data">
                                     <div class="col-md-1">
-                                        <mat-checkbox>
+                                        <mat-checkbox (change)="checkAndLoadPdf($event.checked,'Goal',goal)">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
+                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Goal / {{goal.details}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +357,7 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    <h5 class="m-0">Insurance</h5>
+                                    <h5 class="m-0">Mutual Fund</h5>
                                 </mat-panel-title>
 
                             </mat-expansion-panel-header>
@@ -403,22 +365,287 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Life insurance')"></mat-checkbox>
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund overview','')">
+                                        </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life insurance</p>
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Overview</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'General insurance')">
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund summary','')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            General insurance </p>
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Summary</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund unrealised transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Unrealised transaction </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            All Transaction </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Life insurance</h5>
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'All life insurances','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            All life insurances</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Term insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Term insurance</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Traditional insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Traditional insurance </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Ulip insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Ulip insurance </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">General insurance</h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            All general insurances</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Health insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Health insurance</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Personal accident','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Personal accident </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Critical illness','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Critical illness </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Motor insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Motor insurance</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Travel insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Travel insurance</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Home insurance','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Home insurance</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Fire & special perils</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Liabilities</h5>
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund overview','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Home</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund summary','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Vehicle</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund unrealised transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Education </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Personal </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Credit card </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Mortgage </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Others </p>
                                     </div>
                                 </div>
                             </div>
