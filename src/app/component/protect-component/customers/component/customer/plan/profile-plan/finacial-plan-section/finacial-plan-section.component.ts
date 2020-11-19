@@ -46,15 +46,14 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   generatePdf(data, sectionName) {
     this.fragmentData.isSpinner = true;
-    this.moduleAdded.push({ name: sectionName })
-    console.log(this.moduleAdded)
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf('', data.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
-
+    this.moduleAdded.push({ name: sectionName })
   }
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.moduleAdded, event.previousIndex, event.currentIndex);
+    console.log(this.moduleAdded)
   }
   removeModule(module, i) {
 
