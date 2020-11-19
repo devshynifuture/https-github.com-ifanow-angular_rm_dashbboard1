@@ -124,7 +124,7 @@ export class MutualFundUnrealizedTranComponent {
   @Output() changeInput = new EventEmitter();
   @Output() loaded = new EventEmitter();
 
-  @Input() finPlanObj: string;
+  @Input() finPlanObj: any;
   advisorData: any;
   // displayedColumns: string[];
   viewMode = '';
@@ -296,6 +296,11 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   ngOnInit() {
+    if (this.finPlanObj.sectionName == 'Mutual fund all transaction') {
+      this.viewMode = 'All Transactions';
+    } else {
+      this.viewMode = 'Unrealized Transactions';
+    }
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
