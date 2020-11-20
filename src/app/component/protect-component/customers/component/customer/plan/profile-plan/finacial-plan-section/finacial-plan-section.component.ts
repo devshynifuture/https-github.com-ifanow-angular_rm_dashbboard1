@@ -84,15 +84,15 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getOutput(data) {
     console.log(data);
-    this.generatePdf(data, '');
+    this.generatePdf(data, '', '');
   }
 
-  generatePdf(data, sectionName) {
+  generatePdf(data, sectionName, obj) {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
-    this.moduleAdded.push({ name: sectionName });
+    this.moduleAdded.push({ name: sectionName + '' + (obj) ? obj.details : '' });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -186,7 +186,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
-          this.generatePdf(data, sectionName);
+          this.generatePdf(data, sectionName, obj);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
