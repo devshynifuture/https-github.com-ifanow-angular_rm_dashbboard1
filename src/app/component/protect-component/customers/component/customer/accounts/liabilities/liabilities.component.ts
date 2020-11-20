@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef, Output, EventEmitter, Input } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -89,7 +89,8 @@ export class LiabilitiesComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
   @ViewChild('liabilitiesTemp', { static: false }) liabilitiesTemp: ElementRef;
-
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
   viewMode: string;
 
   ngOnInit() {
@@ -292,6 +293,7 @@ export class LiabilitiesComponent implements OnInit {
 
       }
     }
+    this.loaded.emit(this.liabilitiesTemp.nativeElement);
   }
 
   deleteModal(value, data) {
@@ -487,7 +489,11 @@ export class LiabilitiesComponent implements OnInit {
           this.mortgage.push(element);
         }
       });
-      this.sortTable(this.dataToShow);
+      if (this.finPlanObj) {
+        this.sortAccordingToFinPlan();
+      } else {
+        this.sortTable(this.dataToShow);
+      }
     } else {
       this.noData = "No Data Found";
       this.dataSource.data = []
@@ -505,6 +511,31 @@ export class LiabilitiesComponent implements OnInit {
       this.mortgage = [];
       this.dataStore = [];
       this.storeData = data.loans.length;
+    }
+  }
+  sortAccordingToFinPlan() {
+    switch (this.finPlanObj.sectionName) {
+      case 'All Liabltities':
+        this.sortTable('tab1');
+        break;
+      case 'Home':
+        this.sortTable('1');
+        break;
+      case 'Vehicle':
+        this.sortTable('2');
+        break;
+      case 'Education':
+        this.sortTable('3');
+        break;
+      case 'Personal':
+        this.sortTable('5');
+        break;
+      case 'Credit card':
+        this.sortTable('4');
+        break;
+      case 'Mortgage':
+        this.sortTable('6');
+        break;
     }
   }
   clickHandling() {

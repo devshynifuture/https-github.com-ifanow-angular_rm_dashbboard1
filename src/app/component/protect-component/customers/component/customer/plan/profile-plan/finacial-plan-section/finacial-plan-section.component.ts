@@ -18,6 +18,8 @@ import { MutualFundSummaryComponent } from '../../../accounts/assets/mutual-fund
 import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
 import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { LiabilitiesComponent } from '../../../accounts/liabilities/liabilities.component';
+import { OtherPayablesComponent } from '../../../accounts/liabilities/other-payables/other-payables.component';
 import { MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
 import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
@@ -36,6 +38,8 @@ import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
     MutualFundOverviewComponent,
     MutualFundUnrealizedTranComponent,
     MutualFundComponent,
+    LiabilitiesComponent,
+    OtherPayablesComponent,
     GoalsPlanComponent,
   ]
 })
@@ -80,7 +84,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
     this.moduleAdded.push({ name: sectionName });
   }
 
@@ -118,7 +122,8 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'income':
           factory = this.resolver.resolveComponentFactory(IncomeComponent);
           break;
-        case 'expense' || 'budget':
+        case 'expense':
+        case 'budget':
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
         // case 'All life insurances':
@@ -147,6 +152,17 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Mutual fund overview':
           factory = this.resolver.resolveComponentFactory(MutualFundOverviewComponent);
           break;
+        case 'All Liabltities':
+        case 'Home':
+        case 'Vehicle':
+        case 'Education':
+        case 'Personal':
+        case 'Credit card':
+        case 'Mortgage':
+          factory = this.resolver.resolveComponentFactory(LiabilitiesComponent);
+          break;
+        case 'Others':
+          factory = this.resolver.resolveComponentFactory(OtherPayablesComponent);
         case 'Goal':
           factory = this.resolver.resolveComponentFactory(GoalsPlanComponent);
           break;

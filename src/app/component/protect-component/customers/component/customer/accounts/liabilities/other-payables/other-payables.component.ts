@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
@@ -44,6 +44,8 @@ export class OtherPayablesComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('otherPayablesTemp', { static: false }) otherPayablesTemp: ElementRef;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
   personalProfileData: any;
@@ -57,7 +59,7 @@ export class OtherPayablesComponent implements OnInit {
   userInfo: any;
   reportDate: Date;
   getAdvisorDetail: any;
-  constructor(public custmService: CustomerService, public util: UtilService,
+  constructor(private ref: ChangeDetectorRef, public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
     private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private fileUpload: FileUploadServiceService) {
@@ -83,8 +85,12 @@ export class OtherPayablesComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
 
     if (!this.payableData) {
-      this.noData = 'No Data Found';
-      this.dataSource.data = [];
+      if (this.finPlanObj) {
+        this.getPayables();
+      } else {
+        this.noData = 'No Data Found';
+        this.dataSource.data = [];
+      }
     } else {
       this.dataSource = this.payableData;
       this.dataSource = new MatTableDataSource(this.payableData);
@@ -251,6 +257,8 @@ export class OtherPayablesComponent implements OnInit {
       this.OtherDataChange.emit(data);
       this.dataSource.data = []
     }
+    this.ref.detectChanges()
+    this.loaded.emit(this.otherPayablesTemp.nativeElement);
 
   }
 

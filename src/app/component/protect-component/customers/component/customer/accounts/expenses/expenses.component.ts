@@ -445,11 +445,11 @@ export class ExpensesComponent implements OnInit {
       this.getExpenseGraphValueNew(this.expenseGraph);
       this.getAssetData(data);
       this.cd.detectChanges()
-      this.loaded.emit(document.getElementById('templateExpense'));
-      let para = document.getElementById('templateExpense');
-      console.log(para.innerHTML)
-      console.log('All expense data', data);
-
+      if (this.finPlanObj.sectionName == 'expense') {
+        this.loaded.emit(document.getElementById('templateExpense'));
+      } else {
+        this.getBudgetApis();
+      }
     }
   }
   sorting(data, filterId) {
@@ -905,7 +905,7 @@ export class ExpensesComponent implements OnInit {
         } else {
           if (this.finPlanObj.sectionName == 'budget') {
             this.viewMode = 'Budget';
-            this.getBudgetApis();
+            this.getAllExpense();
           } else {
             this.viewMode = 'Transactions';
             this.getAllExpense();
