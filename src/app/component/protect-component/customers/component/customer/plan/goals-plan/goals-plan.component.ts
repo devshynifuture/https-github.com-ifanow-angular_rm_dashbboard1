@@ -539,10 +539,13 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
     this.singleGoalData = this.selectedGoal
-    if (this.selectedGoal && this.finPlanObj.selectionName) {
-      this.selectedGoal = this.finPlanObj.selectionName
-      this.singleGoalData = this.finPlanObj.selectionName
+
+    if (this.selectedGoal && this.finPlanObj.obj) {
+      this.selectedGoal = this.finPlanObj.obj
+      this.singleGoalData = this.finPlanObj.obj
     }
+    this.cd.markForCheck();
+    this.cd.detectChanges();
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
