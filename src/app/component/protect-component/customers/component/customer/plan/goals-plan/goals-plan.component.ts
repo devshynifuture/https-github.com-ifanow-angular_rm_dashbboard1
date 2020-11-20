@@ -541,8 +541,17 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.singleGoalData = this.selectedGoal
 
     if (this.selectedGoal && this.finPlanObj.obj) {
+      this.finPlanObj.obj.dashboardData = {}
       this.selectedGoal = this.finPlanObj.obj
       this.singleGoalData = this.finPlanObj.obj
+      this.singleGoalData.dashboardData.equity_monthly = this.finPlanObj.obj.equity_monthly
+      this.singleGoalData.dashboardData.debt_monthly = this.finPlanObj.obj.debt_monthly
+      this.singleGoalData.dashboardData.achievedValue = this.finPlanObj.obj.achievedValue
+      this.singleGoalData.dashboardData.goalProgress = this.finPlanObj.obj.percentCompleted
+      this.singleGoalData.dashboardData.lump_debt = this.finPlanObj.obj.lump_debt
+      this.singleGoalData.dashboardData.lump_equity = this.finPlanObj.obj.lump_equity
+      this.singleGoalData.img = this.finPlanObj.obj.imageUrl
+      this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
     }
     this.cd.markForCheck();
     this.cd.detectChanges();
