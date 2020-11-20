@@ -162,7 +162,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator;
-  @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+  @ViewChild('summaryTemplateHeader', { static: false }) summaryTemplateHeader: any;
+  @ViewChild('summaryPlan', { static: false }) summaryPlan: any;
   @Output() loaded = new EventEmitter();
 
   @Input() finPlanObj: any;//finacial plan pdf input
@@ -574,7 +575,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.createChart(this.selectedGoal);
     }, 100);
     this.cd.markForCheck();
-    this.loaded.emit(document.getElementById('planSummary'));
+    this.loaded.emit(this.summaryPlan.nativeElement);
   }
   deleteMilestone(milestone) {
     const dialogData = {
