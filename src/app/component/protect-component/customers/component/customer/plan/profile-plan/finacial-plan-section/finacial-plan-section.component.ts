@@ -184,7 +184,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       const sub = pdfContent.loaded
         .pipe(delay(1))
         .subscribe(data => {
-          console.log(data.innerHTML);
+          //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           this.generatePdf(data, sectionName);
           console.log(pdfContent.loaded);
