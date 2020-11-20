@@ -445,10 +445,12 @@ export class ExpensesComponent implements OnInit {
       this.getExpenseGraphValueNew(this.expenseGraph);
       this.getAssetData(data);
       this.cd.detectChanges()
-      if (this.finPlanObj.sectionName == 'expense') {
-        this.loaded.emit(document.getElementById('templateExpense'));
-      } else {
-        this.getBudgetApis();
+      if(this.finPlanObj){
+        if (this.finPlanObj.sectionName == 'expense') {
+          this.loaded.emit(document.getElementById('templateExpense'));
+        } else {
+          this.getBudgetApis();
+        }
       }
     }
   }

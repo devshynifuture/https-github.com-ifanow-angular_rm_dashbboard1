@@ -87,12 +87,12 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.generatePdf(data, '');
   }
 
-  generatePdf(data, sectionName) {
+  generatePdf(data, displayName) {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
-    this.moduleAdded.push({ name: sectionName });
+    this.util.htmlToPdf('', data.innerHTML, displayName, 'true', this.fragmentData, '', '', false);
+    this.moduleAdded.push({ name: displayName });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -121,7 +121,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
     let factory;
     if (value) {
       this.fragmentData.isSpinner = true;
@@ -186,7 +186,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
-          this.generatePdf(data, sectionName);
+          this.generatePdf(data, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
