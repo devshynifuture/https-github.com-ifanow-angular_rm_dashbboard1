@@ -609,6 +609,317 @@
                             </div>
 
                         </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Stocks</h5>
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Stocks')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Stocks </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Fixed income
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Fixed deposit')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Fixed deposit </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Recurring deposits')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Recurring deposits </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Bonds')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Bonds </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Real estate
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Real estate')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Real estate
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Retirement accounts
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Employees Provident Fund (EPF)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Employees Provident Fund (EPF)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'National pension system (NPS)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / National pension system (NPS) </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Gratuity')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Gratuity </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Small saving scheme
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Public provident fund (PPF)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Public provident fund (PPF)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'National pension system (NPS)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / National pension system (NPS) </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Sukanya samriddhi yojana (SSY)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Sukanya samriddhi yojana (SSY)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Kisan vikas patra (KVP)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Kisan vikas patra (KVP)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Senior citizen savings scheme (SCSS)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Senior citizen savings scheme (SCSS)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Post office savings a/c')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Post office savings a/c
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Post office recurring deposit (PO RD)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Post office recurring deposit (PO RD)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Post office time deposit (PO TD)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Post office time deposit (PO TD)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Post office monthly income scheme (PO MIS)')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Post office monthly income scheme (PO MIS)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Cash & Bank
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Bank accounts')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Bank accounts
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Cash in hand')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Cash in hand </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
+                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="m-0">Commodities
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bl br bb">
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Gold')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Gold
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check (change)="checkAndLoadPdf($event.checked,'Others')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / Others </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel>
                     </mat-accordion>
                 </div>
             </mat-tab>
