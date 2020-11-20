@@ -82,16 +82,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   // }
 
 
-  getOutput(data) {
-    console.log(data);
-    this.generatePdf(data, '');
-  }
 
-  generatePdf(data, displayName) {
+
+  generatePdf(data, sectionName, displayName) {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, displayName, 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
     this.moduleAdded.push({ name: displayName });
   }
 
@@ -186,7 +183,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
-          this.generatePdf(data, displayName);
+          this.generatePdf(data, sectionName, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
