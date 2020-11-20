@@ -1,11 +1,11 @@
-import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
   selector: '[appFormatNumber]'
 })
 export class FormatNumberDirective implements AfterViewInit {
   @Input() locale = 'en-IN';
-  @Input() shouldRoundOff = true;
+  @Input() shouldRoundOff: any = true;
 
   @Input() set value(value) {
 
@@ -35,8 +35,13 @@ export class FormatNumberDirective implements AfterViewInit {
     if (text && text !== '') {
       if (!isNaN(text)) {
         let numberValue: number = parseFloat(text);
-        if (this.shouldRoundOff) { // true
-          numberValue = Math.round(numberValue);
+        switch (this.shouldRoundOff) {
+          case true:
+            numberValue = Math.round(numberValue);
+            break;
+          case 'floor':
+            numberValue = Math.floor(numberValue);
+            break;
         }
         text = numberValue.toLocaleString(this.locale);
       } else {

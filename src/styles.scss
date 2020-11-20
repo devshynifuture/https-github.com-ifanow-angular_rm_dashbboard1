@@ -1494,6 +1494,14 @@ mat-tab-group[vertical] {
   }
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
 @keyframes loading {
   100% {
     transform: translateX(100%);

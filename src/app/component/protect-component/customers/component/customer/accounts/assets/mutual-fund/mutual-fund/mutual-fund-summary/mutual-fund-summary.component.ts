@@ -1449,7 +1449,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     });
     setTimeout(() => {
-      var blob = new Blob([document.getElementById('template').innerHTML], {
+      var blob = new Blob([document.getElementById('templateSummary').innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       saveAs(blob, tableTitle + ".xls");
@@ -1722,7 +1722,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
     setTimeout(() => {
-      const para = document.getElementById('template');
+      const para = document.getElementById('templateSummary');
       // const header = document.getElementById('templateHeader');
       const header = this.summaryTemplateHeader.nativeElement.innerHTML
 

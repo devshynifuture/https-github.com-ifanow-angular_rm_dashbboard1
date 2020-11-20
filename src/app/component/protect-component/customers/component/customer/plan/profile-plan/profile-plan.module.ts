@@ -28,6 +28,7 @@ import { MutualFundModule } from '../../accounts/assets/mutual-fund/mutual-fund/
 import { AssetsModule } from '../../accounts/assets/assets.module';
 import { CustomersModule } from '../../../../customers.module';
 import { LiabilitiesModule } from '../../accounts/liabilities/liabilities.module';
+import { PlanGoalsModule } from '../goals-plan/plan-goals.module';
 
 
 @NgModule({
@@ -46,7 +47,9 @@ import { LiabilitiesModule } from '../../accounts/liabilities/liabilities.module
     DragDropModule,
     AssetsModule,
     CustomersModule,
-    LiabilitiesModule
+    LiabilitiesModule,
+    PlanGoalsModule,
+    AssetsModule
   ]
 })
 export class ProfilePlanModule { }

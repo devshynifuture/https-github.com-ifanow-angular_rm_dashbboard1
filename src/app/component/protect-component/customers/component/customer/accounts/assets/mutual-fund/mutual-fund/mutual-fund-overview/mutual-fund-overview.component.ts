@@ -540,7 +540,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCashFlow = false;
       this.eventService.openSnackBar(' No Mutual Fund Found', 'Dismiss');
     }
-    this.ref.detectChanges()
+    this.ref.detectChanges();
     this.loaded.emit(this.mfOverviewTemplate.nativeElement);
   }
 
@@ -805,7 +805,7 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdf() {
     this.svg = this.chart.getSVG();
     this.fragmentData.isSpinner = true;
-    const para = document.getElementById('template');
+    const para = document.getElementById('templateOverview');
     const obj = {
       htmlInput: para.innerHTML,
       name: 'Overview',

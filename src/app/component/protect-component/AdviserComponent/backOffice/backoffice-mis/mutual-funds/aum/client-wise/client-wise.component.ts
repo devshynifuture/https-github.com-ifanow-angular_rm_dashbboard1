@@ -20,7 +20,7 @@ export class ClientWiseComponent implements OnInit {
   arrayOfHeaders: any[][] = [
     ["Sr. No.", "Client Name", "Current Value", "% Weight"],
     ["Sr. No.", "Investor Name", "Current Value", "% Weight"],
-    ["Sr. No.", "Scheme Name", "Current Name", "% Weight"],
+    ["Sr. No.", "Scheme Name", "Current Value", "% Weight"],
     [
       "Sr. No.",
       "Scheme Name",
@@ -86,7 +86,7 @@ export class ClientWiseComponent implements OnInit {
     public aum: AumComponent,
     private backoffice: BackOfficeService,
     private mfService: MfServiceService
-  ) {}
+  ) { }
 
   showLoader = true;
   clientList;
@@ -159,16 +159,16 @@ export class ClientWiseComponent implements OnInit {
         a[propertyName] > b[propertyName]
           ? 1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : -1
+            ? 0
+            : -1
       );
     } else {
       applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName]
           ? -1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : 1
+            ? 0
+            : 1
       );
     }
   }
@@ -184,16 +184,16 @@ export class ClientWiseComponent implements OnInit {
         a[propertyName] > b[propertyName]
           ? 1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : -1
+            ? 0
+            : -1
       );
     } else {
       applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName]
           ? -1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : 1
+            ? 0
+            : 1
       );
     }
   }
@@ -209,16 +209,16 @@ export class ClientWiseComponent implements OnInit {
         a[propertyName] > b[propertyName]
           ? 1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : -1
+            ? 0
+            : -1
       );
     } else {
       applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName]
           ? -1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : 1
+            ? 0
+            : 1
       );
     }
   }
@@ -234,16 +234,16 @@ export class ClientWiseComponent implements OnInit {
         a[propertyName] > b[propertyName]
           ? 1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : -1
+            ? 0
+            : -1
       );
     } else {
       applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName]
           ? -1
           : a[propertyName] === b[propertyName]
-          ? 0
-          : 1
+            ? 0
+            : 1
       );
     }
   }
@@ -254,7 +254,7 @@ export class ClientWiseComponent implements OnInit {
       advisorId: this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
     };
-    this.backoffice.getAumClientScheme(obj).subscribe((data) => {});
+    this.backoffice.getAumClientScheme(obj).subscribe((data) => { });
   }
 
   getClientTotalAum() {
@@ -587,7 +587,7 @@ export class ClientWiseComponent implements OnInit {
           "",
           Math.round(sumWeightInPercTemp),
         ];
-      break;
+        break;
     }
   }
 
