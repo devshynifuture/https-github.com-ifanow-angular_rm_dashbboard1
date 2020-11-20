@@ -961,7 +961,9 @@ export const appConfig = {
 
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
-  REFERRED_USERS: 'user/advisor/referrals/get'
+  REFERRED_USERS: 'user/advisor/referrals/get',
+  FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId='
+
 };
 
 
