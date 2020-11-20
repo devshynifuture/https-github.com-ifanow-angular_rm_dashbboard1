@@ -224,6 +224,7 @@ export class FinacialPlanSectionComponent implements OnInit {
               arr.push({
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
+                futureValue: goalValueObj.goalFV,
                 month,
                 lumpsum,
                 percentCompleted: Math.round(!!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : 0),
