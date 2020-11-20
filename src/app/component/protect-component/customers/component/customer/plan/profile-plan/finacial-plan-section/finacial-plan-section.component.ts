@@ -126,21 +126,35 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'income':
           factory = this.resolver.resolveComponentFactory(IncomeComponent);
           break;
-        case 'expense':
-        case 'budget':
+        case 'Expense This month':
+        case 'Expense Last month':
+        case 'Expense This quarter':
+        case 'Expense Last quarter':
+        case 'Expense This calender year':
+        case 'Expense Last calender year':
+        case 'Expense This financial year':
+        case 'Expense Last financial year':
+        case 'Budget This month':
+        case 'Budget Last month':
+        case 'Budget This quarter':
+        case 'Budget Last quarter':
+        case 'Budget This calender year':
+        case 'Budget Last calender year':
+        case 'Budget This financial year':
+        case 'Budget Last financial year':
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
-        // case 'All life insurances':
-        // case 'Term insurance':
-        // case 'Traditional insurance':
-        // case 'Ulip insurance':
-        // case 'All General insurance':
-        // case 'Health insurance':
-        // case 'Personal accident':
-        // case 'Critical illness':
-        // case 'Motor insurance':
-        // case 'Travel insurance':
-        // case 'Home insurance':
+        case 'All life insurances':
+        case 'Term insurance':
+        case 'Traditional insurance':
+        case 'Ulip insurance':
+        case 'All General insurance':
+        case 'Health insurance':
+        case 'Personal accident':
+        case 'Critical illness':
+        case 'Motor insurance':
+        case 'Travel insurance':
+        case 'Home insurance':
         case 'Fire & special perils':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;

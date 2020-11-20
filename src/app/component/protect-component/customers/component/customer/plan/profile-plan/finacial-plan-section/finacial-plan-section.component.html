@@ -146,18 +146,18 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'income','','Income')">
+                                            (change)="checkAndLoadPdf($event.checked,'income','','Profile / Income')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Income</p>
+                                            Profile / Income</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','Profile / Expense / This month')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense This month','','Profile / Expense / This month')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -168,67 +168,166 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense Last month','','Profile / Expense / Last month')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / This month</p>
+                                            Profile / Expense / Last month</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense This quarter','','Profile / Expense / This quarter')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Expense</p>
+                                            Profile / Expense / This quarter</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense Last quarter','','Profile / Expense / Last quarter')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Expense</p>
+                                            Profile / Expense / Last quarter</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense This calender year','','Profile / Expense / This calender year')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Expense</p>
+                                            Profile / Expense / This calender year</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'expense','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense Last calender year','','Profile / Expense / Last calender year')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Expense</p>
+                                            Profile / Expense / Last calender year</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'budget','','expense')">
+                                            (change)="checkAndLoadPdf($event.checked,'Expense This financial year','','Profile / Expense / This financial year')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Budget</p>
+                                            Profile / Expense / This financial year</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Expense Last financial year','','Profile / Expense / Last financial year')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Expense / Last financial year</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget This month','','Profile / Budget / This month')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / This month</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget Last month','','Profile / Budget / Last month')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / Last month</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget This quarter','','Profile / Budget / This quarter')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / This quarter</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget Last quarter','','Profile / Budget / Last quarter')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / Last quarter</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget This calender year','','Profile / Budget / This calender year')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / This calender year</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget Last calender year','','Profile / Budget / Last calender year')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / Last calender year</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget This financial year','','Profile / Budget / This financial year')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / This financial year</p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Budget Last financial year','','Profile / Budget / Last financial year')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Profile / Budget / Last financial year</p>
                                     </div>
                                 </div>
                             </div>
