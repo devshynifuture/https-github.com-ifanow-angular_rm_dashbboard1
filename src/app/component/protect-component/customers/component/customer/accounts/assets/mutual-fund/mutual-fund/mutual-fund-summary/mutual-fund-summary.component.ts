@@ -1258,7 +1258,7 @@ export class MutualFundSummaryComponent implements OnInit {
       } else if (!this.inputData && !this.reponseData) {
         this.rightFilterData.reportType = [];
         this.rightFilterData.reportType[0] = {
-          name: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
+          name: (this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise'),
           selected: true
         }
       }
@@ -1416,7 +1416,8 @@ export class MutualFundSummaryComponent implements OnInit {
         this.showDownload = true
         this.changeInput.emit(false);
         this.cd.markForCheck();
-        this.loaded.emit(document.getElementById('template'));
+        this.cd.detectChanges()
+        this.loaded.emit(this.summaryTemplate.nativeElement);
         // this.cd.detectChanges();
       };
       worker.postMessage(input);

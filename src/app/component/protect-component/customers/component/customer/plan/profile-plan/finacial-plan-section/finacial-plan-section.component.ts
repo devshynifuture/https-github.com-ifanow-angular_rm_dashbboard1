@@ -6,18 +6,20 @@ import {
   ViewContainerRef,
   ViewChild
 } from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {delay} from 'rxjs/operators';
-import {IncomeComponent} from '../income/income.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ExpensesComponent} from '../../../accounts/expenses/expenses.component';
-import {InsuranceComponent} from '../../../accounts/insurance/insurance.component';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {MutualFundSummaryComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
-import {MutualFundComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
-import {MutualFundOverviewComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import {MutualFundUnrealizedTranComponent} from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { delay } from 'rxjs/operators';
+import { IncomeComponent } from '../income/income.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ExpensesComponent } from '../../../accounts/expenses/expenses.component';
+import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MutualFundSummaryComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import { MutualFundComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund.component';
+import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { LiabilitiesComponent } from '../../../accounts/liabilities/liabilities.component';
+import { OtherPayablesComponent } from '../../../accounts/liabilities/other-payables/other-payables.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -33,11 +35,13 @@ import {MutualFundUnrealizedTranComponent} from '../../../accounts/assets/mutual
     MutualFundOverviewComponent,
     MutualFundUnrealizedTranComponent,
     MutualFundComponent,
+    LiabilitiesComponent,
+    OtherPayablesComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
   loadedSection: any;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   @ViewChild('pdfContainer', {
     read: ViewContainerRef,
     static: true
@@ -47,7 +51,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   isLoading = false;
   panelOpenState = false;
   constructor(private util: UtilService, private resolver: ComponentFactoryResolver,
-              private subInjectService: SubscriptionInject) {
+    private subInjectService: SubscriptionInject) {
   }
 
 
@@ -71,8 +75,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
-    this.moduleAdded.push({name: sectionName});
+    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
+    this.moduleAdded.push({ name: sectionName });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -109,7 +113,8 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'income':
           factory = this.resolver.resolveComponentFactory(IncomeComponent);
           break;
-        case 'expense' || 'budget':
+        case 'expense':
+        case 'budget':
           factory = this.resolver.resolveComponentFactory(ExpensesComponent);
           break;
         case 'All life insurances':
@@ -138,10 +143,22 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Mutual fund overview':
           factory = this.resolver.resolveComponentFactory(MutualFundOverviewComponent);
           break;
+        case 'All Liabltities':
+        case 'Home':
+        case 'Vehicle':
+        case 'Education':
+        case 'Personal':
+        case 'Credit card':
+        case 'Mortgage':
+          factory = this.resolver.resolveComponentFactory(LiabilitiesComponent);
+          break;
+        case 'Others':
+          factory = this.resolver.resolveComponentFactory(OtherPayablesComponent);
+          break;
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      pdfContent.finPlanObj = {hideForFinPlan: true, sectionName};
+      pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
       const sub = pdfContent.loaded
         .pipe(delay(1))
         .subscribe(data => {
