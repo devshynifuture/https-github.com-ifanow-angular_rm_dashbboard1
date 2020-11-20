@@ -57,15 +57,22 @@ export class FinacialPlanSectionComponent implements OnInit {
   dataSource: any;
   goalList: any;
   goalSummaryCountObj: any;
+  advisorId: any;
+  clientId: any;
+  insuranceList: any;
+  insurancePlanningList: any;
   constructor(private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
+    this.advisorId = AuthService.getAdvisorId(),
+      this.clientId = AuthService.getClientId()
   }
 
 
   ngOnInit() {
     this.moduleAdded = [];
     this.getGoalSummaryValues();
+    this.getInsuranceList();
   }
 
   // checkAndLoadPdf(value, sectionName) {
@@ -189,8 +196,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   getGoalSummaryValues() {
     let data = {
-      advisorId: AuthService.getAdvisorId(),
-      clientId: AuthService.getClientId()
+      advisorId: this.advisorId,
+      clientId: this.clientId,
     }
     //this.isLoadingGoals = true;
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -318,7 +325,83 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   }
-
+  getInsuranceList() {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.planService.getInsurancePlaningList(obj).subscribe(
+      data => this.getInsurancePlaningListRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  getInsurancePlaningListRes(data) {
+    if (data) {
+      data.forEach(singleInsuranceData => {
+        if (singleInsuranceData.owners.length > 0) {
+          singleInsuranceData.displayHolderName = singleInsuranceData.owners[0].holderName;
+          if (singleInsuranceData.owners.length > 1) {
+            for (let i = 1; i < singleInsuranceData.owners.length; i++) {
+              if (singleInsuranceData.owners[i].holderName) {
+                const firstName = (singleInsuranceData.owners[i].holderName as string).split(' ')[0];
+                singleInsuranceData.displayHolderName += ', ' + firstName;
+              }
+            }
+          }
+        } else {
+          singleInsuranceData.displayHolderName = '';
+        }
+      });
+      this.dataSource = data
+      this.dataSource.forEach(element => {
+        if (element.insuranceType == 1) {
+          element.header = 'Add Life insurance'
+          element.heading = 'Life insurance'
+          element.logo = '/assets/images/svg/LIsmall.svg'
+        } else if (element.insuranceType == 5) {
+          element.value = '1';
+          element.header = 'Add Health insurance'
+          element.heading = 'Health insurance'
+          element.logo = '/assets/images/svg/HIsmall.svg'
+        } else if (element.insuranceType == 6) {
+          element.value = '2';
+          element.header = 'Add Critical insurance'
+          element.heading = 'Critical illness'
+          element.logo = '/assets/images/svg/CIsmall.svg'
+        } else if (element.insuranceType == 10) {
+          element.value = '6';
+          element.header = 'Add Fire insurance'
+          element.heading = 'Fire insurance'
+          element.logo = '/assets/images/svg/FIsmall.svg'
+        } else if (element.insuranceType == 9) {
+          element.value = '5';
+          element.header = 'Add Home insurance'
+          element.heading = 'Home insurance'
+          element.logo = '/assets/images/svg/Hsmall.svg'
+        } else if (element.insuranceType == 7) {
+          element.value = '4';
+          element.header = 'Add Personal accident'
+          element.heading = 'Personal accident'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        } else if (element.insuranceType == 8) {
+          element.value = '7';
+          element.header = 'Add Travel insurance'
+          element.heading = 'Travel insurance'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        } else if (element.insuranceType == 4) {
+          element.value = '8';
+          element.header = 'Add Motor insurance'
+          element.heading = 'Motor insurance'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        }
+      });
+      console.log(this.dataSource)
+      this.insuranceList = this.dataSource
+      this.insurancePlanningList = this.dataSource;
+    }
+  }
   getSumOfJsonMap(json: Object = {}) {
     let sum = 0;
     for (let k in json) {
