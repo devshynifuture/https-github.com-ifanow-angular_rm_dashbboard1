@@ -615,45 +615,36 @@
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
-            <td colspan="11">
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="vertical-align: top;">
-                            <img style="width: 120px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                        </td>
-                        <td style="vertical-align: top;">
-                            <table style="width: 100%;">
-                                <tr *ngIf="userInfo">
-                                    <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
-                                        {{(userInfo.name) ? userInfo.name : '-'}}
-                                    </td>
-                                </tr>
-                                <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;"> Mobile no:</span>
-                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
-                                    </td>
-                                </tr>
-
-                                <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Email Id:</span>
-                                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Report as on:</span>
-                                        {{reportDate | date:'dd-MMM-yyyy' }}
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                </div>
             </td>
+            <td style=" text-align: right;" colspan="12">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
+                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding: 10px;"></td>
         </tr>
 
         <tr>
@@ -805,45 +796,36 @@
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
-            <td colspan="11">
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="vertical-align: top;">
-                            <img style="width: 250px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                        </td>
-                        <td>
-                            <table style="float: right;">
-                                <tr *ngIf="userInfo">
-                                    <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
-                                        {{(userInfo.name) ? userInfo.name : '-'}}
-                                    </td>
-                                </tr>
-                                <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;"> Mobile no:</span>
-                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
-                                    </td>
-                                </tr>
-
-                                <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Email Id:</span>
-                                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}
-                                    </td>
-                                </tr>
-
-                                <tr>
-
-                                    <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Report as on:</span>
-                                        {{reportDate | date:'dd-MMM-yyyy' }}
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                </div>
             </td>
+            <td style=" text-align: right;" colspan="12">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
+                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding: 10px;"></td>
         </tr>
 
         <tr>

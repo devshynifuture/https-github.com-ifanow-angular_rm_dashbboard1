@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
@@ -27,10 +27,10 @@ export class CommoditiesComponent implements OnInit {
   showRequring: string;
   @ViewChild('tableEl', { static: false }) tableEl;
 
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue','pvalue', 'desc', 'status', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue','mvalueDate',  'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'mvalueDate', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   isLoading = false;
@@ -48,6 +48,8 @@ export class CommoditiesComponent implements OnInit {
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
   @ViewChild('otherListTable', { static: false }) otherListTableSort: MatSort;
+  @ViewChild('goldTemp', { static: false }) goldTemp: ElementRef;
+  @ViewChild('othersTemp', { static: false }) othersTemp: ElementRef;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   noData: string;
@@ -56,32 +58,48 @@ export class CommoditiesComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
-  
-  constructor(private excel:ExcelGenService, 
-    private fileUpload : FileUploadServiceService,
-     private pdfGen:PdfGenService,  private subInjectService: SubscriptionInject, 
-     private custumService: CustomerService, private eventService: EventService,
-     public utils: UtilService, public dialog: MatDialog,
-     private _bottomSheet : MatBottomSheet, private assetValidation: AssetValidationService) { }
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
+    private pdfGen: PdfGenService, private subInjectService: SubscriptionInject,
+    private custumService: CustomerService, private eventService: EventService,
+    public utils: UtilService, public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService, private ref: ChangeDetectorRef) { }
   ngOnInit() {
+    this.reportDate = new Date();
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
-    this.getGoldList()
-
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    if (this.finPlanObj) {
+      if (this.finPlanObj.sectionName == 'Gold') {
+        this.showRequring = '1'
+        this.getGoldList()
+      } else {
+        this.showRequring = '2'
+        this.getOtherList();
+      }
+    } else {
+      this.getGoldList()
+    }
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:  (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -100,7 +118,7 @@ export class CommoditiesComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -155,26 +173,26 @@ export class CommoditiesComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-goldDataList:any;
-otherDataList:any;
+  goldDataList: any;
+  otherDataList: any;
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
     if (value == '1') {
-      if(this.goldDataList){
+      if (this.goldDataList) {
         this.isLoading = false;
         this.getGoldRes(this.goldDataList);
       }
-      else{
+      else {
         this.goldList = new MatTableDataSource(this.data);
         this.getGoldList();
       }
     } else {
-      if(this.otherDataList){
+      if (this.otherDataList) {
         this.isLoading = false;
         this.getOthersRes(this.otherDataList);
       }
-      else{
+      else {
         this.otherCommodityList = new MatTableDataSource(this.data);
         this.getOtherList();
       }
@@ -263,6 +281,8 @@ otherDataList:any;
       this.noData = 'No Gold found';
       this.goldList.data = []
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.goldTemp.nativeElement);
   }
   getOtherList() {
     this.isLoading = true;
@@ -283,18 +303,20 @@ otherDataList:any;
   getOthersRes(data) {
     this.isLoading = false;
     if (data != undefined) {
-        console.log('getOthersRes @@@@', data);
-        this.otherDataList =  data;
-        this.otherCommodityList.data = this.otherDataList.assetList;
-        this.otherCommodityList.sort = this.otherListTableSort;
-        this.sumOfMarketValueOther = data.sumOfMarketValue;
-        this.sumOfPurchaseValueOther = data.sumOfPurchaseValue;
-      
+      console.log('getOthersRes @@@@', data);
+      this.otherDataList = data;
+      this.otherCommodityList.data = this.otherDataList.assetList;
+      this.otherCommodityList.sort = this.otherListTableSort;
+      this.sumOfMarketValueOther = data.sumOfMarketValue;
+      this.sumOfPurchaseValueOther = data.sumOfPurchaseValue;
+
     }
     else {
       this.noData = 'No Others found';
       this.otherCommodityList.data = []
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.othersTemp.nativeElement);
   }
   openCommodities(value, state, data) {
     let popupHeaderText = !!data ? 'Edit Gold' : 'Add Gold';

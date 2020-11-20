@@ -23,6 +23,7 @@ import { OtherPayablesComponent } from '../../../accounts/liabilities/other-paya
 import { MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
 import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
+import { CommoditiesComponent } from '../../../accounts/assets/commodities/commodities/commodities.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -41,6 +42,7 @@ import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
     LiabilitiesComponent,
     OtherPayablesComponent,
     GoalsPlanComponent,
+    CommoditiesComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -183,6 +185,10 @@ export class FinacialPlanSectionComponent implements OnInit {
           factory = this.resolver.resolveComponentFactory(OtherPayablesComponent);
         case 'Goal':
           factory = this.resolver.resolveComponentFactory(GoalsPlanComponent);
+          break;
+        case 'Gold':
+        case 'OthersComm':
+          factory = this.resolver.resolveComponentFactory(CommoditiesComponent);
           break;
       }
       const pdfContentRef = this.container.createComponent(factory);
