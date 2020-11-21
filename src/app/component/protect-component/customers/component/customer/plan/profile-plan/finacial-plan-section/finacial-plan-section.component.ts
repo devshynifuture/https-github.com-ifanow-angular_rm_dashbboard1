@@ -24,6 +24,8 @@ import { MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
 import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
 import { CommoditiesComponent } from '../../../accounts/assets/commodities/commodities/commodities.component';
+import { RealEstateComponent } from '../../../accounts/assets/realEstate/real-estate/real-estate.component';
+import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asset-stocks.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -42,7 +44,9 @@ import { CommoditiesComponent } from '../../../accounts/assets/commodities/commo
     LiabilitiesComponent,
     OtherPayablesComponent,
     GoalsPlanComponent,
-    CommoditiesComponent
+    CommoditiesComponent,
+    RealEstateComponent,
+    AssetStocksComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -189,6 +193,12 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Gold':
         case 'OthersComm':
           factory = this.resolver.resolveComponentFactory(CommoditiesComponent);
+          break;
+        case 'Real estate':
+          factory = this.resolver.resolveComponentFactory(RealEstateComponent);
+          break;
+        case 'Stocks':
+          factory = this.resolver.resolveComponentFactory(AssetStocksComponent);
           break;
       }
       const pdfContentRef = this.container.createComponent(factory);

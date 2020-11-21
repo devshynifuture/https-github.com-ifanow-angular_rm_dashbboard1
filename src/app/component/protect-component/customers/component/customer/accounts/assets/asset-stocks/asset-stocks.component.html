@@ -1,4 +1,4 @@
-<div class="wrapper-8 pb-44 asset-stocks">
+<div class="wrapper-8 pb-44 asset-stocks" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <!-- <div class="row">
  <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
    <button [matMenuTriggerFor]="menu" class="ba-black br-0" mat-stroked-button>
@@ -556,7 +556,7 @@
 </div>
 
 
-<div *ngIf="portfolioData.length <= 0 && !isLoading" class="row">
+<div *ngIf="portfolioData.length <= 0 && !isLoading" class="row" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="d-flex flex-column align-items-center mt-80 col-md-12">
         <img src="assets/images/svg/documents-empty-states.svg">
         <h4 class="text-center mt-12 mb-20">{{noData }}</h4>
@@ -607,7 +607,7 @@
     </div>
 </div>
 
-<div id="template" style="display: none;"  *ngIf="portfolioData.length > 0">
+<div #StocksTemplate id="template" style="display: none;"  *ngIf="portfolioData.length > 0">
     <table cellpadding="0" cellspacing="0" border="0"
         style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
