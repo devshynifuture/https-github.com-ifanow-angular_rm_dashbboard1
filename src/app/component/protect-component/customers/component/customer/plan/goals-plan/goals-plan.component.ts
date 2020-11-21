@@ -189,7 +189,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.fragmentData = {}
     this.fragmentData.isSpinner = true;;
     let para = document.getElementById('planSummary');
-    const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    //const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
 
   }
@@ -541,7 +541,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.selectedGoal = goalData;
     this.singleGoalData = this.selectedGoal
 
-    if (this.selectedGoal && this.finPlanObj.obj) {
+    if (this.selectedGoal && this.finPlanObj && this.finPlanObj.obj) {
       this.finPlanObj.obj.dashboardData = {}
       this.selectedGoal = this.finPlanObj.obj
       this.singleGoalData = this.finPlanObj.obj

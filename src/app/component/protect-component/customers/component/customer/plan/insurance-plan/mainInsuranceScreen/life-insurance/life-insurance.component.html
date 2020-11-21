@@ -753,7 +753,7 @@
         </div>
     </div>
     <!-- class="hide" *ngIf="mfData" -->
-    <div #insuranceTemplate id="insuranceTemplate" class="hide" style="display: none;" meta charset="UTF-8">
+    <div #insuranceTemplate id="insuranceTemplate" style="display:none" meta charset="UTF-8">
         <html>
         <meta charset="UTF-8">
         <table cellpadding="0" cellspacing="0" border="0"
@@ -841,6 +841,9 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <tr *ngIf="dataSouce3length == 0">
+                                        No data found
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -897,6 +900,9 @@
                                             style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                             {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
                                         </td>
+                                    </tr>
+                                    <tr *ngIf="dataSource1.length == 0">
+                                        No data found
                                     </tr>
                                 </table>
                             </td>
