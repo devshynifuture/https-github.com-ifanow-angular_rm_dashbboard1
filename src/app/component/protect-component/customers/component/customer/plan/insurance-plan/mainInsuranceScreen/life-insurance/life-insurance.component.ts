@@ -165,6 +165,11 @@ export class LifeInsuranceComponent implements OnInit {
   allInsuranceData: any;
   isRefresh: any;
   recommendOrNot = false;
+  userInfo: any;
+  clientData: any;
+  getAdvisorDetail: any;
+  details: any;
+  getOrgData: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -176,6 +181,11 @@ export class LifeInsuranceComponent implements OnInit {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   @Input()
