@@ -165,6 +165,12 @@ export class LifeInsuranceComponent implements OnInit {
   allInsuranceData: any;
   isRefresh: any;
   recommendOrNot = false;
+  userInfo: any;
+  clientData: any;
+  getAdvisorDetail: any;
+  details: any;
+  getOrgData: any;
+  fragmentData: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -172,10 +178,16 @@ export class LifeInsuranceComponent implements OnInit {
     private eventService: EventService,
     private planService: PlanService,
     private dialog: MatDialog,
-    private ipService: InsurancePlanningServiceService
+    private ipService: InsurancePlanningServiceService,
+    private UtilService: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   @Input()
@@ -219,6 +231,10 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.dataSourceLiability = []
+    this.dataSourceAsset = []
+    this.dataSourceGoals = []
+    this.dataSourceIncome = []
     this.recommendOrNot = false;
     this.panelOpenState = false;
     console.log('inputData', this.inputData)
@@ -401,6 +417,13 @@ export class LifeInsuranceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  generatePdf() {
+    this.fragmentData = {}
+    this.fragmentData.isSpinner = true;;
+    let para = document.getElementById('insuranceTemplate');
+    //const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Insurance plan', false, this.fragmentData, '', '', false);
   }
   deleteWithoutHitingApi(deletedId) {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);
