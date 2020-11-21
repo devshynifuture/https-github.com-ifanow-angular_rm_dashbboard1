@@ -26,6 +26,18 @@ import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
 import { CommoditiesComponent } from '../../../accounts/assets/commodities/commodities/commodities.component';
 import { RealEstateComponent } from '../../../accounts/assets/realEstate/real-estate/real-estate.component';
 import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asset-stocks.component';
+import { CashAndBankComponent } from '../../../accounts/assets/cash&bank/cash-and-bank/cash-and-bank.component';
+import { FixedIncomeComponent } from '../../../accounts/assets/fixedIncome/fixed-income/fixed-income.component';
+import { RetirementAccountComponent } from '../../../accounts/assets/retirementAccounts/retirement-account/retirement-account.component';
+import { PoMisSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
+import { PoTdSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-td-scheme/po-td-scheme.component';
+import { PoRdSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-rd-scheme/po-rd-scheme.component';
+import { PoSavingsComponent } from '../../../accounts/assets/smallSavingScheme/po-savings/po-savings.component';
+import { ScssSchemeComponent } from '../../../accounts/assets/smallSavingScheme/scss-scheme/scss-scheme.component';
+import { KvpSchemeComponent } from '../../../accounts/assets/smallSavingScheme/kvp-scheme/kvp-scheme.component';
+import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/ssy-scheme/ssy-scheme.component';
+import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
+import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -46,7 +58,19 @@ import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asse
     GoalsPlanComponent,
     CommoditiesComponent,
     RealEstateComponent,
-    AssetStocksComponent
+    AssetStocksComponent,
+    CashAndBankComponent,
+    FixedIncomeComponent,
+    RetirementAccountComponent,
+    PoMisSchemeComponent,
+    PoTdSchemeComponent,
+    PoRdSchemeComponent,
+    PoSavingsComponent,
+    ScssSchemeComponent,
+    KvpSchemeComponent,
+    SsySchemeComponent,
+    NscSchemeComponent,
+    PPFSchemeComponent,
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -200,6 +224,48 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Stocks':
           factory = this.resolver.resolveComponentFactory(AssetStocksComponent);
           break;
+        case 'Bank accounts':
+        case 'Cash in hand':
+          factory = this.resolver.resolveComponentFactory(CashAndBankComponent);
+          break;
+        case 'Fixed deposit':
+        case 'Recurring deposits':
+        case 'Bonds':
+          factory = this.resolver.resolveComponentFactory(FixedIncomeComponent);
+          break;
+        case 'EPF':
+        case 'NPS':
+        case 'Gratuity':
+          factory = this.resolver.resolveComponentFactory(RetirementAccountComponent);
+          break;
+        case 'PPF':
+          factory = this.resolver.resolveComponentFactory(PPFSchemeComponent);
+          break;
+        case 'NSC':
+          factory = this.resolver.resolveComponentFactory(NscSchemeComponent);
+          break;
+        case 'SSY':
+          factory = this.resolver.resolveComponentFactory(SsySchemeComponent);
+          break;
+        case 'KVP':
+          factory = this.resolver.resolveComponentFactory(KvpSchemeComponent);
+          break;
+        case 'SCSS':
+          factory = this.resolver.resolveComponentFactory(ScssSchemeComponent);
+          break;
+        case 'PoSaving':
+          factory = this.resolver.resolveComponentFactory(PoSavingsComponent);
+          break;
+        case 'PO RD':
+          factory = this.resolver.resolveComponentFactory(PoRdSchemeComponent);
+          break;
+        case 'PO TD':
+          factory = this.resolver.resolveComponentFactory(PoTdSchemeComponent);
+          break;
+        case 'PO MIS':
+          factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
+          break;
+
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;

@@ -1,5 +1,5 @@
 import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -37,6 +37,9 @@ export class KvpSchemeComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('kvpTemp', { static: false }) kvpTemp: ElementRef;
   excelData: any[];
   footer = [];
   fileUploadData: any;
@@ -47,8 +50,11 @@ export class KvpSchemeComponent implements OnInit {
   hideFilter: boolean;
   isFixedIncomeFiltered: boolean;
   kvpList: any[];
+  getOrgData: any;
+  reportDate: Date;
+  userInfo: any;
 
-  constructor(private excel: ExcelGenService,
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
     private assetValidation: AssetValidationService,
     private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
@@ -60,7 +66,9 @@ export class KvpSchemeComponent implements OnInit {
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'certificateNo', 'desc', 'status', 'icons'];
 
   ngOnInit() {
-
+    this.reportDate = new Date();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     if (!this.dataList) {
@@ -80,7 +88,7 @@ export class KvpSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -168,6 +176,10 @@ export class KvpSchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.kvpTemp.nativeElement);
+    }
   }
 
   deleteModal(value, element) {
@@ -185,9 +197,9 @@ export class KvpSchemeComponent implements OnInit {
             dialogRef.close();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
-              this.dataList.sumOfAmountInvested -= element.accountBalance;
-              this.dataList.sumOfMaturityValue -= element.maturityValue;
-            
+            this.dataList.sumOfAmountInvested -= element.accountBalance;
+            this.dataList.sumOfMaturityValue -= element.maturityValue;
+
             this.getKvpSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
@@ -228,14 +240,14 @@ export class KvpSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-           
-            if(!this.dataList){
-              this.dataList=  {assetList:[sideBarData.data]};
+
+            if (!this.dataList) {
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
               this.dataList['sumOfAmountInvested'] = sideBarData.data.accountBalance;
               this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
