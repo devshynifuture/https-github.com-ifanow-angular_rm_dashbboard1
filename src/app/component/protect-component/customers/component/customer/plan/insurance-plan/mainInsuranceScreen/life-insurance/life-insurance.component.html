@@ -9,8 +9,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2 pr-0 right text-right c-p" (click)="deleteInsurance()" *ngIf="!isLoadingPlan">
-        <img src="/assets/images/svg/insurance-delect-icon.svg">
+    <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
+        <img (click)="generatePdf(null)" class="b-a c-p" matTooltip="Download PDF"
+            src="assets/images/svg/pdf-icons.svg">
+        <img (click)="deleteInsurance()" src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>
 
@@ -753,47 +755,123 @@
         </div>
     </div>
     <!-- class="hide" *ngIf="mfData" -->
-    <div #insuranceTemplate id="insuranceTemplate" style="display:none" meta charset="UTF-8">
+    <div #insuranceTemplate id="insuranceTemplate" style="display: none;" meta charset="UTF-8">
         <html>
         <meta charset="UTF-8">
         <table cellpadding="0" cellspacing="0" border="0"
             style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
             align="center; page-break-before: always;">
             <tr>
-                <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                    <div
-                        *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                        <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                    </div>
-                    <div
-                        *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                        <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                    </div>
-                    <div
-                        *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                        <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                    </div>
-                </td>
-                <td style="text-align: right;">
-                    <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
-                        {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                    <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                    <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Mob
-                            number:</strong>
-                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                    <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
-                            Email:</strong>
-                        {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
-
-                    <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
-                            {{'Insurance planning'}}</strong>
-                    </p>
-                    <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
-                            {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                    </p>
+                <td>
+                    <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                        <tr>
+                            <td>
+                                <h3 style="margin: 0px; font-size: 18px;">
+                                    {{clientData?.displayName}}'s Insurance Plan
+                                </h3>
+                            </td>
+                            <td style="text-align: right;">
+                                <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
+                                    Prepared by
+                                </p>
+                                <h3 style="margin: 0px; font-size: 18px;">
+                                    {{getOrgData?.companyName ? getOrgData?.companyName : '-'}}
+                                </h3>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
 
+            <tr>
+                <td>
+                    <table
+                        style="width: 100%; border: 0px; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+
+                        <tr>
+                            <td>
+                                <h3 style="margin: 0px; font-size: 18px;">
+                                    {{getData ? getData.heading : ''}} -
+                                    {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0].holderName) : ''}}
+                                </h3>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="border: 0px; margin-top: 20px; width: 100%;">
+                        <tr>
+                            <td style="width: 40%;">
+                                <img style="width: 100%;" src="{{logo}}">
+                            </td>
+
+                            <td style="vertical-align: top; padding-left: 15px; width: 60%;">
+                                <table
+                                    style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 15px;">
+                                    <tr>
+                                        <td>
+                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
+                                                ACTUAL </p>
+                                            <h5 style="font-size: 18px; margin: 0px;">
+                                                Rs. <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                                            </h5>
+                                        </td>
+
+
+                                        <td>
+                                            <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
+                                                ADVICE </p>
+                                            <h5 style="margin: 0px;"
+                                                *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
+                                                <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
+                                                    [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                                            </h5>
+                                            <h5 style="margin: 0px;"
+                                                *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
+                                                <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
+                                                    [value]="insuranceDetails?.advice"></span>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="margin: 20px 0px 20px 0px; width: 100%; ">
+                                    <tr>
+                                        <td>
+                                            <div style="background: #f5f7f7; height: 35px;">
+                                                <div style="line-height: 35px; font-size: 16px; background:#007bff; display: inline-block; color: #ffffff; height: 35px;"
+                                                    [ngStyle]="{'width':insuranceDetails && insuranceDetails.graph > 100 ? 100 : insuranceDetails.graph +'%' }">
+                                                    <span class="pl-8">
+                                                        {{insuranceDetails.graph ? insuranceDetails.graph : '0'}} %
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table cellpadding="0" cellspacing="0"
+                                    *ngIf="insuranceDetails?.needAnalysis?.plannerNote"
+                                    style="margin: 10px 0px 0px 0px; font-size: 16px; border: 1px solid #dee5e7;  width: 100%; border: 1px solid #dee5e7; width: 100%;">
+                                    <tr style="background: #F5F7F7;">
+                                        <td
+                                            style="border-bottom: 1px solid #dee5e7;padding: 14px;   text-align: lefts;">
+                                            Planner notes
+                                        </td>
+                                        <td style="padding: 14px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                            {{(insuranceDetails)? insuranceDetails?.needAnalysis?.plannerNotes:'-'}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </td>
+            </tr>
             <tr>
                 <td colspan="5" style="padding: 10px;"></td>
             </tr>
@@ -893,12 +971,12 @@
                                         </td>
                                         <td
                                             style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                            {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
+                                            {{isLoadingPlan ? '' : (element ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
 
                                         </td>
                                         <td
                                             style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                            {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
+                                            {{isLoadingPlan ? '' : (element ? element.advice : '-')}}
                                         </td>
                                     </tr>
                                     <tr *ngIf="dataSource1.length == 0">
@@ -914,49 +992,354 @@
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
-                            <td>
+                            <td style="border: 1px solid #dee5e7;">
                                 <p style=" font-size: 18px; font-weight: 600;">Need based analysis</p>
 
                                 <table cellpadding="0" cellspacing="0"
                                     style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
                                     <tr>
-                                        <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                        <td
+                                            style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left: 0px;">
                                             Particulars</td>
                                         <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
                                             Annual amount
                                         </td>
                                         <td
-                                            style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
+                                            style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-right: 0px;">
                                             Total amount
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td
-                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
-                                            {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            1. Liabilities
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
                                             <span appFormatNumber>
-                                                {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }}
+                                                -
                                             </span>
                                         </td>
                                         <td
-                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                            <span appFormatNumber>
-                                                {{element?.insurance?.premiumAmount}} </span>
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.liabilities ? plannerObj.liabilities : '-'"></span>
                                         </td>
-                                        <td
-                                            style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                            {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
 
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Liability details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Principal outstanding
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceLiability">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                ₹
+                                                <span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.percent}}%
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="dataSourceLiability.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            2. Dependant's needs
                                         </td>
                                         <td
-                                            style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                            {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
                                         </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.dependantNeeds ? plannerObj.dependantNeeds : '-'"></span>
+                                        </td>
+
                                     </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Expense details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Annual amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceLifeInsurance">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.expenses}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                ₹{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            3. Goals to be met
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.goalsMeet ? plannerObj.goalsMeet : '-'"></span>
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Goal details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Goal amount(PV)
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceGoals">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                ₹ <span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="dataSourceGoals.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            4. Gross life insurance required(1+2+3)
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            {{plannerObj.GrossLifeinsurance ? '₹' : ''}}
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            5 Less : Continuous income source
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.incomeSource ? plannerObj.incomeSource : '-'"></span>
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceIncome">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    ₹{{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="dataSourceIncome.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            6 Less: Exisiting life Insurance (sum assured)
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber>
+                                                -</span>
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            7 Less : Existing Assets
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.existingAsset ? plannerObj.existingAsset : '-'">
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Asset details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Total amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceAsset">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    ₹{{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}
+                                                </span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="dataSourceAsset.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <tr>
+                                        <td
+                                            style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
+                                            8. Additional life insurance required (4-5-6-7)
+                                        </td>
+                                        <td
+                                            style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                            <span appFormatNumber>
+                                                -
+                                            </span>
+                                        </td>
+                                        <td
+                                            style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
+                                            <span appFormatNumber
+                                                [value]="plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : '-'"></span>
+                                        </td>
+
+                                    </tr>
+                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+
+                                    </table>
                                 </table>
                             </td>
                         </tr>
