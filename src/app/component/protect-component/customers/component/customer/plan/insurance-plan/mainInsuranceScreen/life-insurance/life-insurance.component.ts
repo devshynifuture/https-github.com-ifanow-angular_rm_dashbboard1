@@ -243,6 +243,7 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.fragmentData = { isSpinner: false };
     console.log(this.finPlanObj)
     if (this.finPlanObj) {
       this.allInsuranceData = this.finPlanObj.allInsuranceList
@@ -440,7 +441,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   generatePdf() {
     this.fragmentData = {}
-    this.fragmentData.isSpinner = true;;
+    this.fragmentData.isSpinner = true;
     let para = document.getElementById('insuranceTemplate');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.UtilService.htmlToPdf('', para.innerHTML, 'Insurance plan', false, this.fragmentData, '', '', false);

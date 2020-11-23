@@ -1,5 +1,5 @@
 <div class="row pb-12 insuFixedHeader pt-28 bb-grey" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
-    <div class="col-md-10 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+    <div class="col-md-4 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
         <h3 class="m-0" *ngIf="!isLoadingPlan">{{getData ? getData.heading : ''}} -
             {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0].holderName) : ''}}
         </h3>
@@ -8,6 +8,9 @@
 
             </div>
         </div>
+    </div>
+    <div class="col-md-6 text-right p-0">
+        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
     </div>
     <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
         <img (click)="generatePdf(null)" class="b-a c-p" matTooltip="Download PDF"
