@@ -45,8 +45,11 @@ export class AllAdviceFixedDepositComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 7,
-      adviceStatusId: 0
+      // assetCategory: 7,
+      // adviceStatusId: 0
+      categoryMasterId: 7,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {

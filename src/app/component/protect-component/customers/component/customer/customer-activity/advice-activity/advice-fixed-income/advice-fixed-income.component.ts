@@ -44,8 +44,11 @@ export class AdviceFixedIncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 7,
-      adviceStatusId: 1
+      // assetCategory: 7,
+      // adviceStatusId: 1,
+      categoryMasterId: 7,
+      categoryTypeId: 0,
+      status: 1
     }
     this.isLoading = true;
     this.fixedDataSource = [{}, {}, {}];

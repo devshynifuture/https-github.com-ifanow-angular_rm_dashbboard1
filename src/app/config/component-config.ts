@@ -353,6 +353,7 @@ export const appConfig = {
   Edit_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/edit',
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
   FREEZE_CAL: 'goal-planning/goal/freeze',
+  ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -498,7 +499,7 @@ export const appConfig = {
   EXPENSE_ALL_GET: 'account/expense/graph/detail/of/expense/get',
   FINPLAN_PDF_UPLOAD: 'plan/file-upload-url/get',
   /////////////////////////Activity///////////////////////////////////
-  ADVICE_GET_ALL: 'advice/asset/get',
+  ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/asset/fixed-income/recurring-deposit/add',
   ADVICE_ADD_PPF: 'advice/asset/small-saving-scheme/suggest-new-PPF/add',
