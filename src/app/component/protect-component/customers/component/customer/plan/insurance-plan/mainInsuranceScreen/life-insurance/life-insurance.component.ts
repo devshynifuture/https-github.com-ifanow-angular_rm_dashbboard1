@@ -171,6 +171,13 @@ export class LifeInsuranceComponent implements OnInit {
   details: any;
   getOrgData: any;
   fragmentData: any;
+  libilities: boolean = false
+  dependant: boolean = false
+  goalsToBeMate: boolean = false
+  continuous: boolean = false
+  existingAsset: boolean = false
+  noOpened : boolean = false
+
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
