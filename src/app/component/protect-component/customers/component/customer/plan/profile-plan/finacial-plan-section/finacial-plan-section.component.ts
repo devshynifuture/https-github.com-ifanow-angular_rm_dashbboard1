@@ -280,7 +280,8 @@ export class FinacialPlanSectionComponent implements OnInit {
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
-        pdfContent.finPlanObj = { hideForFinPlan: true, data: obj };
+        obj.dataLoaded = true;
+        pdfContent.finPlanObj = { hideForFinPlan: true, data: obj, allInsuranceList: this.insurancePlanningList };
       } else {
         pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -149,6 +149,7 @@ export class LifeInsuranceComponent implements OnInit {
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('insuranceTemp', { static: false }) insuranceTemp: ElementRef;
   inputReceive: any;
   needAnalysisData: any;
   dataSourceLiability: any;
@@ -178,7 +179,7 @@ export class LifeInsuranceComponent implements OnInit {
   goalsToBeMate: boolean = false
   continuous: boolean = false
   existingAsset: boolean = false
-  noOpened : boolean = false
+  noOpened: boolean = false
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -189,6 +190,7 @@ export class LifeInsuranceComponent implements OnInit {
     private dialog: MatDialog,
     private ipService: InsurancePlanningServiceService,
     private UtilService: UtilService,
+    private ref: ChangeDetectorRef
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -243,6 +245,8 @@ export class LifeInsuranceComponent implements OnInit {
   ngOnInit() {
     console.log(this.finPlanObj)
     if (this.finPlanObj) {
+      this.allInsuranceData = this.finPlanObj.allInsuranceList
+      this.inputData = this.finPlanObj.data
       this.setDetails(this.finPlanObj.data)
       this.getGlobalDataInsurance();
 
@@ -325,7 +329,7 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
   setDetails(data) {
-    if (this.inputData) {
+    if (data) {
       this.getData = data
       this.setLogo.forEach(element => {
         if (element.heading == data.heading) {
@@ -639,6 +643,10 @@ export class LifeInsuranceComponent implements OnInit {
     this.isLoadingPlan = false;
     if (this.inputData.insuranceType == 1) {
       this.firstAccordion ? this.firstAccordion.closeAll() : '';
+    }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();
+      this.loaded.emit(this.insuranceTemp.nativeElement);
     }
   }
   getFilterDataNeedAnalysis(array) {
