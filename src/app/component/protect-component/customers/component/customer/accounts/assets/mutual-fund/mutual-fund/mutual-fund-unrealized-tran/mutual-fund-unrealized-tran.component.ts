@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -116,7 +116,7 @@ export class MutualFundUnrealizedTranComponent {
   isSpinner = false;
   customDataHolder = [];
   @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
+  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate: ElementRef;
   @ViewChild('unrealizedTranTemplateHeader', { static: false }) unrealizedTranTemplateHeader;
   @ViewChild('allTranTemplateHeader', { static: false }) allTranTemplateHeader;
   rightFilterData: any = { reportType: '' };
@@ -1000,7 +1000,7 @@ export class MutualFundUnrealizedTranComponent {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
       this.rightFilterData.reportType = [];
       this.rightFilterData.reportType[0] = {
-        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise' )),
         selected: true,
       };
       if (this.isRouterLink) {
@@ -1008,10 +1008,10 @@ export class MutualFundUnrealizedTranComponent {
       }
       const input = {
         mutualFundList: mutualFund,
-        type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
+        type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : 'Sub Category wise',
         // nav: this.mutualFund.nav,
         // mutualFund:this.mfData,
-        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
+        mutualFund: (this.reponseData) ? this.reponseData : (this.mutualFund ? this.mutualFund : this.mfData),
         transactionType: this.rightFilterData.transactionType,
         viewMode: this.viewMode,
         showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
@@ -1215,8 +1215,11 @@ export class MutualFundUnrealizedTranComponent {
         console.log('dataSource', this.dataSource)
 
         console.log('isLoadingfalse', this.isLoading)
-        // this.changeDetectorRef.detectChanges();
-        this.loaded.emit(document.getElementById('template'));
+        if (this.finPlanObj) {
+          this.showDownload = true;
+          this.cd.detectChanges();
+          this.loaded.emit(this.unrealizedTranTemplate.nativeElement);
+        }
       };
 
       worker.postMessage(input);

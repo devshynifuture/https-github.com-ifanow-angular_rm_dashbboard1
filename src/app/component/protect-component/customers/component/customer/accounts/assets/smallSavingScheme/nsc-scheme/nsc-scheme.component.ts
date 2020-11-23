@@ -1,5 +1,5 @@
 import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -41,7 +41,9 @@ export class NscSchemeComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
-
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('nscTemp', { static: false }) nscTemp: ElementRef;
   excelData: any[];
   footer;
   fileUploadData: any;
@@ -52,8 +54,11 @@ export class NscSchemeComponent implements OnInit {
   nscList: any[];
   hideFilter: boolean;
   isFixedIncomeFiltered: boolean;
+  reportDate: Date;
+  userInfo: any;
+  getOrgData: any;
 
-  constructor(private excel: ExcelGenService,
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
     private assetValidation: AssetValidationService,
     private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
@@ -66,8 +71,11 @@ export class NscSchemeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     this.getNscSchemedata();
     if (!this.dataList) {
       this.getNscSchemedata();
@@ -85,7 +93,7 @@ export class NscSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -171,6 +179,10 @@ export class NscSchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.nscTemp.nativeElement);
+    }
   }
 
   deleteModal(value, element) {
@@ -188,8 +200,8 @@ export class NscSchemeComponent implements OnInit {
             dialogRef.close();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
-              this.dataList.sumOfMaturityValue -= element.maturityValue;
-            
+            this.dataList.sumOfMaturityValue -= element.maturityValue;
+
             this.getNscSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
@@ -229,12 +241,12 @@ export class NscSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(!this.dataList){
-              this.dataList=  {assetList:[sideBarData.data]};
+            if (!this.dataList) {
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
               this.dataList['sumOfMaturityValue'] += sideBarData.data.maturityValue;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;

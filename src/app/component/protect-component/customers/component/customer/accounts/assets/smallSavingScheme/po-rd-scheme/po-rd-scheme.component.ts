@@ -1,6 +1,6 @@
 import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -40,6 +40,9 @@ export class PoRdSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('pordTemp', { static: false }) pordTemp: ElementRef;
   excelData: any[];
   fileUploadData: any;
   file: any;
@@ -49,8 +52,11 @@ export class PoRdSchemeComponent implements OnInit {
   pordList: any;
   hideFilter: boolean;
   isFixedIncomeFiltered: boolean;
+  reportDate: Date;
+  userInfo: any;
+  getOrgData: any;
 
-  constructor(private excel: ExcelGenService,
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
     private assetValidation: AssetValidationService,
@@ -63,6 +69,9 @@ export class PoRdSchemeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.reportDate = new Date();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     if (!this.dataList) {
@@ -76,7 +85,7 @@ export class PoRdSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -174,7 +183,10 @@ export class PoRdSchemeComponent implements OnInit {
       this.dataSource.data = [];
       this.noData = 'No scheme found';
     }
-
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.pordTemp.nativeElement);
+    }
   }
 
   deleteModal(value, element) {
@@ -189,7 +201,7 @@ export class PoRdSchemeComponent implements OnInit {
         this.cusService.deletePORD(element.id).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
-            this.dataList.assetList= this.dataList.assetList.filter(x => x.id != element.id);
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
             this.dataList.sumOfMonthlyDeposit -= element.monthlyContribution;
             this.dataList.sumOfMaturityValue -= element.maturityValue;
@@ -263,14 +275,14 @@ export class PoRdSchemeComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.dataSource.data = [{}, {}, {}]
             this.isLoading = true;
-            
-            if(!this.dataList){
-              this.dataList=  {assetList:[sideBarData.data]};
+
+            if (!this.dataList) {
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
               this.dataList['sumOfMonthlyDeposit'] = sideBarData.data.monthlyContribution;
               this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfMonthlyDeposit += sideBarData.data.monthlyContribution;

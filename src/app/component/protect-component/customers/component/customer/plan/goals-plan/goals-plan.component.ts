@@ -162,7 +162,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator;
-  @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+  @ViewChild('summaryTemplateHeader', { static: false }) summaryTemplateHeader: any;
+  @ViewChild('summaryPlan', { static: false }) summaryPlan: any;
   @Output() loaded = new EventEmitter();
 
   @Input() finPlanObj: any;//finacial plan pdf input
@@ -188,7 +189,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.fragmentData = {}
     this.fragmentData.isSpinner = true;;
     let para = document.getElementById('planSummary');
-    const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    //const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
 
   }
@@ -539,10 +540,22 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
     this.singleGoalData = this.selectedGoal
-    if (this.selectedGoal && this.finPlanObj.selectionName) {
-      this.selectedGoal = this.finPlanObj.selectionName
-      this.singleGoalData = this.finPlanObj.selectionName
+
+    if (this.selectedGoal && this.finPlanObj && this.finPlanObj.obj) {
+      this.finPlanObj.obj.dashboardData = {}
+      this.selectedGoal = this.finPlanObj.obj
+      this.singleGoalData = this.finPlanObj.obj
+      this.singleGoalData.dashboardData.equity_monthly = this.finPlanObj.obj.equity_monthly
+      this.singleGoalData.dashboardData.debt_monthly = this.finPlanObj.obj.debt_monthly
+      this.singleGoalData.dashboardData.achievedValue = this.finPlanObj.obj.achievedValue
+      this.singleGoalData.dashboardData.goalProgress = this.finPlanObj.obj.percentCompleted
+      this.singleGoalData.dashboardData.lump_debt = this.finPlanObj.obj.lump_debt
+      this.singleGoalData.dashboardData.lump_equity = this.finPlanObj.obj.lump_equity
+      this.singleGoalData.img = this.finPlanObj.obj.imageUrl
+      this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
     }
+    this.cd.markForCheck();
+    this.cd.detectChanges();
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
@@ -562,7 +575,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.createChart(this.selectedGoal);
     }, 100);
     this.cd.markForCheck();
-    this.loaded.emit(document.getElementById('planSummary'));
+    this.loaded.emit(this.summaryPlan.nativeElement);
   }
   deleteMilestone(milestone) {
     const dialogData = {

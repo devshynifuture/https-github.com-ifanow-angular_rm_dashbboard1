@@ -1,5 +1,5 @@
 import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -34,6 +34,9 @@ export class PPFSchemeComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('ppfTemp', { static: false }) ppfTemp: ElementRef;
   SumOfAmountInvested: any;
   SumOfCurrentValue: any;
   fileUploadData: any;
@@ -44,7 +47,10 @@ export class PPFSchemeComponent implements OnInit {
   ppfList: any;
   isFixedIncomeFiltered: boolean;
   hideFilter: boolean;
-  constructor(private excel: ExcelGenService, private pdfGen: PdfGenService,
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog, private cusService: CustomerService,
@@ -56,8 +62,11 @@ export class PPFSchemeComponent implements OnInit {
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     if (!this.dataList) {
       this.getPpfSchemeData();
     } else {
@@ -74,7 +83,7 @@ export class PPFSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -139,6 +148,11 @@ export class PPFSchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = []
     }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.ppfTemp.nativeElement);
+    }
+
   }
   deleteModal(value, element) {
     const dialogData = {
@@ -221,20 +235,20 @@ export class PPFSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(!this.dataList){
-              
-              this.dataList=  {assetList:[sideBarData.data]};
+            if (!this.dataList) {
+
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
               // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
               this.dataList['sumOfAccountBalance'] = sideBarData.data.accountBalance;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
               this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
             }
-            
+
             this.getPpfSchemeDataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 

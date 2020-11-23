@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material';
 import { pieChart } from './highChart-pichart';
 import { StockDetailsViewComponent } from '../stock-details-view/stock-details-view.component';
 import { StockTransactionDetailsComponent } from './stock-transaction-details/stock-transaction-details.component';
-import { StockHoldingDetailsComponent} from './stock-holding-details/stock-holding-details.component';
+import { StockHoldingDetailsComponent } from './stock-holding-details/stock-holding-details.component';
 import { AssetValidationService } from '../asset-validation.service';
 import { StockPdfService } from 'src/app/services/stock-pdf.service';
 import * as Highcharts from 'highcharts';
@@ -29,10 +29,13 @@ export class AssetStocksComponent implements OnInit {
   @ViewChild('summery', { static: false }) summery;
   @ViewChild('PaiChart', { static: false }) PaiChart;
   @ViewChild('categoriesL', { static: false }) categoriesL;
+  @ViewChild('StocksTemplate', { static: false }) StocksTemplate: ElementRef;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
   displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
     'dividend', 'icons'];
 
-  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'bal',  'ret',
+  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'bal', 'ret',
     'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
@@ -48,15 +51,15 @@ export class AssetStocksComponent implements OnInit {
   svg: string;
   fragmentData = { isSpinner: false };
   reportDate = new Date();
-  clientDetails:any;
-  clientData:any;
-  getOrgData:any;
-  userInfo:any;
-  constructor(public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
-    private cusService: CustomerService, private eventService: EventService, private stockPDF : StockPdfService) {
+  clientDetails: any;
+  clientData: any;
+  getOrgData: any;
+  userInfo: any;
+  constructor(private ref: ChangeDetectorRef, public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
+    private cusService: CustomerService, private eventService: EventService, private stockPDF: StockPdfService) {
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
     console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
@@ -71,82 +74,82 @@ export class AssetStocksComponent implements OnInit {
     // pieChart(id);
     this.chart = Highcharts.chart('piechartStock', {
       chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: 0,
-          plotShadow: false
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
       },
       title: {
-          text: '',
-          align: 'center',
-          verticalAlign: 'middle',    
-          y: 60
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
       },
       tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
-          pie: {
-              dataLabels: {
-                  enabled: true,
-                  distance: -50,
-                  style: {
-                      fontWeight: 'bold',
-                      color: 'white'
-                  }
-              },
-              startAngle: 0,
-              endAngle: 360,
-              center: ['52%', '55%'],
-              size: '120%'
-          }
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['52%', '55%'],
+          size: '120%'
+        }
       },
       series: [{
-          type: 'pie',
-          name: 'Browser share',
-          innerSize: '60%',
-          data: [
-              {
-                  name: 'Banking',
-                  y: data.Banks?data.Banks.perrcentage:0,
-                  color: '#008FFF',
-                  dataLabels: {
-                      enabled: false
-                  }
-              }, {
-                  name: 'Information technology',
-                  y: data.Information_Technology?data.Information_Technology.perrcentage:0,
-                  color: '#5DC644',
-                  dataLabels: {
-                      enabled: false
-                  }
-              }, {
-                  name: 'FMCG',
-                  y: data.fmcg?data.fmcg.perrcentage:0,
-                  color: '#FFC100',
-                  dataLabels: {
-                      enabled: false
-                  }
-              }, {
-                  name: 'Other',
-                  y: data.OTHERS?data.OTHERS.perrcentage:0,
-                  color: '#A0AEB4',
-                  dataLabels: {
-                      enabled: false
-                  }
-              }, {
-                  name: 'Auto ancillaries',
-                  y: data.Auto_Ancillaries?data.Auto_Ancillaries.perrcentage:0,
-                  color: '#FF6823',
-                  dataLabels: {
-                      enabled: false
-                  }
-              }
-          ]
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '60%',
+        data: [
+          {
+            name: 'Banking',
+            y: data.Banks ? data.Banks.perrcentage : 0,
+            color: '#008FFF',
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Information technology',
+            y: data.Information_Technology ? data.Information_Technology.perrcentage : 0,
+            color: '#5DC644',
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'FMCG',
+            y: data.fmcg ? data.fmcg.perrcentage : 0,
+            color: '#FFC100',
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Other',
+            y: data.OTHERS ? data.OTHERS.perrcentage : 0,
+            color: '#A0AEB4',
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Auto ancillaries',
+            y: data.Auto_Ancillaries ? data.Auto_Ancillaries.perrcentage : 0,
+            color: '#FF6823',
+            dataLabels: {
+              enabled: false
+            }
+          }
+        ]
       }]
-  });
+    });
   }
 
-  
+
   getDetails() {
     const obj = {
       clientId: this.clientId,
@@ -160,7 +163,7 @@ export class AssetStocksComponent implements OnInit {
   getDetailsClientAdvisorRes(data) {
     console.log('data', data);
     this.clientDetails = data;
-    if(data){
+    if (data) {
       this.clientData = data.clientData;
       this.getOrgData = data.advisorData
       this.userInfo = data.advisorData;
@@ -179,7 +182,7 @@ export class AssetStocksComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg,false);
+    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg, false);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -275,14 +278,14 @@ export class AssetStocksComponent implements OnInit {
               s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
             }
             s.stockList[index].ownerList = p.ownerList
-            s.stockList[index]['nomineeList']= p.nomineeList;
-            s.stockList[index]['linkedBankAccount']= p.linkedBankAccount;
-            s.stockList[index]['linkedDematAccount']= p.linkedDematAccount;
-            s.stockList[index]['description']= p.description;
+            s.stockList[index]['nomineeList'] = p.nomineeList;
+            s.stockList[index]['linkedBankAccount'] = p.linkedBankAccount;
+            s.stockList[index]['linkedDematAccount'] = p.linkedDematAccount;
+            s.stockList[index]['description'] = p.description;
             this.stockListGroup.push(s.stockList[index]);
           }
         });
-        
+
         p['stockListGroup'] = this.stockListGroup;
         this.stockListGroup = [];
       });
@@ -293,6 +296,8 @@ export class AssetStocksComponent implements OnInit {
       this.noData = 'No Stocks Found';
       this.isLoading = false;
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.StocksTemplate.nativeElement);
   }
 
   checkAndFillDataSource(singlePortfolio) {
@@ -458,7 +463,7 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
-  opendetailviews(data , portfolioData) {
+  opendetailviews(data, portfolioData) {
     // console.log('clicked');
 
     let component;
@@ -484,7 +489,7 @@ export class AssetStocksComponent implements OnInit {
       state: 'open35',
       componentName: component
     };
-    
+
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

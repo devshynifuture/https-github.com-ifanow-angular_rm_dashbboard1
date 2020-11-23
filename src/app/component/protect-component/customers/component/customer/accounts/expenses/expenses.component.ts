@@ -176,11 +176,12 @@ export class ExpensesComponent implements OnInit {
       })
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getStartAndEndDate('1');
     this.selectedPeriod = '1'
     if (this.finPlanObj) {
-      this.getListFamilyMem()
+      this.getFinPlanBasedCall();
+      // this.getListFamilyMem()
     } else {
+      this.getStartAndEndDate('1');
       this.viewMode = 'Transactions';
       if (this.chekToCallApi()) {
         this.getListFamilyMem()
@@ -218,6 +219,59 @@ export class ExpensesComponent implements OnInit {
 
   //   });
   // }
+  getFinPlanBasedCall() {
+    switch (this.finPlanObj.sectionName) {
+      case 'Expense This month':
+        this.getStartAndEndDate(1);
+        break;
+      case 'Expense Last month':
+        this.getStartAndEndDate(2);
+        break;
+      case 'Expense This quarter':
+        this.getStartAndEndDate(3);
+        break;
+      case 'Expense Last quarter':
+        this.getStartAndEndDate(4);
+        break;
+      case 'Expense This calender year':
+        this.getStartAndEndDate(5);
+        break;
+      case 'Expense Last calender year':
+        this.getStartAndEndDate(6);
+        break;
+      case 'Expense This financial year':
+        this.getStartAndEndDate(7);
+        break;
+      case 'Expense Last financial year':
+        this.getStartAndEndDate(8);
+        break;
+      case 'Budget This month':
+        this.getStartAndEndDate(1);
+        break;
+      case 'Budget Last month':
+        this.getStartAndEndDate(2);
+        break;
+      case 'Budget This quarter':
+        this.getStartAndEndDate(3);
+        break;
+      case 'Budget Last quarter':
+        this.getStartAndEndDate(4);
+        break;
+      case 'Budget This calender year':
+        this.getStartAndEndDate(5);
+        break;
+      case 'Budget Last calender year':
+        this.getStartAndEndDate(6);
+        break;
+      case 'Budget This financial year':
+        this.getStartAndEndDate(7);
+        break;
+      case 'Budget Last financial year':
+        this.getStartAndEndDate(8);
+        break;
+    }
+    this.getListFamilyMem()
+  }
   changeColors() {
     const head = document.getElementsByTagName('head')[0];
     const css = `
@@ -445,11 +499,15 @@ export class ExpensesComponent implements OnInit {
       this.getExpenseGraphValueNew(this.expenseGraph);
       this.getAssetData(data);
       this.cd.detectChanges()
-      this.loaded.emit(document.getElementById('templateExpense'));
-      let para = document.getElementById('templateExpense');
-      console.log(para.innerHTML)
-      console.log('All expense data', data);
-
+      if (this.finPlanObj) {
+        let name = this.finPlanObj.sectionName;
+        if (name == 'Expense This month' || name == 'Expense Last month' || name == 'Expense This quarter' || name == 'Expense Last quarter' || name == 'Expense This calender year' || name == 'Expense Last calender year' || name == 'Expense This financial year' || name == 'Expense Last financial year') {
+          // this.loaded.emit(document.getElementById('templateExpense'));
+          this.loaded.emit(this.transactionExpens.nativeElement);
+        } else {
+          this.getBudgetApis();
+        }
+      }
     }
   }
   sorting(data, filterId) {
@@ -816,7 +874,8 @@ export class ExpensesComponent implements OnInit {
       this.getAssetData(this.allExpnseData);
     }
     this.getGraphCalculations();
-    this.loaded.emit(document.getElementById('template2'));
+    // this.loaded.emit(document.getElementById('template2'));
+    this.loaded.emit(this.budgetPdf.nativeElement);
 
     // if (result[2]) {
     //   this.budgetAmount = result[2].budgetAmount
@@ -903,11 +962,12 @@ export class ExpensesComponent implements OnInit {
             this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
           }
         } else {
-          if (this.finPlanObj.sectionName == 'budget') {
-            this.viewMode = 'Budget';
-            this.getBudgetApis();
-          } else {
+          let name = this.finPlanObj.sectionName;
+          if (name == 'Expense This month' || name == 'Expense Last month' || name == 'Expense This quarter' || name == 'Expense Last quarter' || name == 'Expense This calender year' || name == 'Expense Last calender year' || name == 'Expense This financial year' || name == 'Expense Last financial year') {
             this.viewMode = 'Transactions';
+            this.getAllExpense();
+          } else {
+            this.viewMode = 'Budget';
             this.getAllExpense();
           }
         }

@@ -514,7 +514,7 @@
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
                     {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
-                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong>
+                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise'))}}</strong>
                 </p>
                 <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
                         {{reportDate | date:'dd-MMM-yyyy' }}</strong>

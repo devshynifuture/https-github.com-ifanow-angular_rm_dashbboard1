@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -27,8 +27,8 @@ import { Subscription } from 'rxjs';
 })
 export class CashAndBankComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
-  bankDataList:any;
-  cashDataList:any;
+  bankDataList: any;
+  cashDataList: any;
   showRequring: string;
   advisorId: any;
   clientId: any;
@@ -56,41 +56,62 @@ export class CashAndBankComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
 
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
-    private fileUpload : FileUploadServiceService, private enumService: EnumServiceService,
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService, private subInjectService: SubscriptionInject,
+    private fileUpload: FileUploadServiceService, private enumService: EnumServiceService,
     private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
     public utils: UtilService, public dialog: MatDialog, private assetValidation: AssetValidationService,
-    private _bottomSheet : MatBottomSheet) {
-      this.clientData =AuthService.getClientData()
+    private _bottomSheet: MatBottomSheet) {
+    this.clientData = AuthService.getClientData()
   }
 
   @ViewChildren(FormatNumberDirective) formatNumber;
-  bankList:any = [];
-  clientFamilybankList:any = [];
-  accountTypes:any =[];
+  @ViewChild('bankAccTemp', { static: false }) bankAccTemp: ElementRef;
+  @ViewChild('cashInHandTemp', { static: false }) cashInHandTemp: ElementRef;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
+  bankList: any = [];
+  clientFamilybankList: any = [];
+  accountTypes: any = [];
   ngOnInit() {
+    this.reportDate = new Date();
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getBankAccountList();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    if (this.finPlanObj) {
+      if (this.finPlanObj.sectionName == 'Bank accounts') {
+        this.showRequring = '1'
+        this.getBankAccountList();
+      } else {
+        this.showRequring = '2'
+        this.getCashInHandList();
+      }
+    } else {
+      this.getBankAccountList();
+
+    }
     this.bankAccountList = new MatTableDataSource(this.data);
     this.bankList = this.enumService.getBank();
-    this.unSubcrip = this.enumDataService.getBankAccountViewTypes().subscribe(data =>{
+    this.unSubcrip = this.enumDataService.getBankAccountViewTypes().subscribe(data => {
       this.accountTypes = data;
     });
-    this.unSubcrip2 =this.enumService.getclientViewbankList().subscribe(data =>{
+    this.unSubcrip2 = this.enumService.getclientViewbankList().subscribe(data => {
       this.clientFamilybankList = data;
     });
-    console.log(this.bankList,"this.bankList",this.clientFamilybankList);
-    
+    console.log(this.bankList, "this.bankList", this.clientFamilybankList);
+
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
-  
+
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
@@ -115,7 +136,7 @@ export class CashAndBankComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -192,20 +213,20 @@ export class CashAndBankComponent implements OnInit {
     this.isLoading = true;
     this.showRequring = value;
     if (value == '2') {
-      if(this.cashDataList){
+      if (this.cashDataList) {
         this.isLoading = false;
         this.cashInHandList.data = this.cashDataList;
       }
-      else{
-      this.getCashInHandList();
-      this.cashInHandList = new MatTableDataSource(this.data);
+      else {
+        this.getCashInHandList();
+        this.cashInHandList = new MatTableDataSource(this.data);
       }
     } else {
-      if(this.bankDataList){
+      if (this.bankDataList) {
         this.isLoading = false;
         this.bankAccountList.data = this.bankDataList;
       }
-      else{
+      else {
         this.getBankAccountList();
         this.bankAccountList = new MatTableDataSource(this.data);
       }
@@ -293,6 +314,8 @@ export class CashAndBankComponent implements OnInit {
       this.noData = 'No Bank accounts found';
       this.bankAccountList.data = [];
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.bankAccTemp.nativeElement);
   }
 
   getCashInHandList() {
@@ -328,6 +351,8 @@ export class CashAndBankComponent implements OnInit {
       this.noData = 'No Cash in hand found';
       this.cashInHandList.data = [];
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.cashInHandTemp.nativeElement);
   }
 
   openAddEdit(data, value) {
@@ -347,7 +372,7 @@ export class CashAndBankComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             (sideBarData.data == 1) ? this.getBankAccountList() : this.getCashInHandList();
-              
+
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
@@ -452,5 +477,5 @@ const ELEMENT_DATA8: PeriodicElement8[] = [
     desc: '',
   },
 
-  
+
 ];

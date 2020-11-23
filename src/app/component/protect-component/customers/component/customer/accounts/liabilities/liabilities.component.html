@@ -1,4 +1,4 @@
-<div id="ui-liabilities">
+<div id="ui-liabilities" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
         <div class="col-md-12 col-lg-2 p-0 pt-8 tabViewLiabilities">
             <ul class="vertical-menu bg-grey lter ">
@@ -492,7 +492,8 @@
         </tr>
 
 
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+        <tr *ngIf="dataSource?.data?.length > 0"
+            style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No.</td>
@@ -567,7 +568,7 @@
             </td>
 
         </tr>
-        <tr
+        <tr *ngIf="dataSource?.data?.length > 0"
             style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -599,4 +600,12 @@
             </td>
         </tr>
     </table>
+    <div *ngIf="dataSource?.data?.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
+        class="w-100 d-flex flex-column align-items-center">
+        <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center pt-12">No Data Found
+        </h4>
+        <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
+    </div>
 </div>

@@ -1,5 +1,5 @@
 import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -47,6 +47,12 @@ export class FixedIncomeComponent implements OnInit {
   @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
   @ViewChild('bondListTable', { static: false }) bondListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('fixedDepositeTemp', { static: false }) fixedDepositeTemp: ElementRef;
+  @ViewChild('recurringDepositeTemp', { static: false }) recurringDepositeTemp: ElementRef;
+  @ViewChild('bondsTemp', { static: false }) bondsTemp: ElementRef;
+
   excelData: any[];
   footer = [];
   data: Array<any> = [{}, {}, {}];
@@ -61,9 +67,11 @@ export class FixedIncomeComponent implements OnInit {
   responseData: any;
   clientData: any;
   myFiles: any;
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
 
-
-  constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
+  constructor(private ref: ChangeDetectorRef, private excelSer: ExcelService, private subInjectService: SubscriptionInject,
     private customerService: CustomerService, private eventService: EventService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
@@ -81,13 +89,28 @@ export class FixedIncomeComponent implements OnInit {
   isFixedIncomeFiltered = false;
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.showRequring = '1';
     this.hidePdf = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData()
-
-    this.getFixedDepositList();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    if (this.finPlanObj) {
+      if (this.finPlanObj.sectionName == 'Fixed deposit') {
+        this.showRequring = '1'
+        this.getFixedDepositList();
+      } else if (this.finPlanObj.sectionName == 'Recurring deposits') {
+        this.showRequring = '2'
+        this.getRecurringDepositList();
+      } else {
+        this.showRequring = '3'
+        this.getBondsList();
+      }
+    } else {
+      this.getFixedDepositList();
+    }
     // this.dataSource = new MatTableDataSource(this.data);
   }
 
@@ -225,7 +248,8 @@ export class FixedIncomeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }
-
+    this.ref.detectChanges();
+    this.loaded.emit(this.fixedDepositeTemp.nativeElement);
   }
 
   getRecurringDepositList() {
@@ -270,6 +294,8 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.recurringDepositeTemp.nativeElement);
   }
 
   getBondsList() {
@@ -312,6 +338,8 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
+    this.ref.detectChanges();
+    this.loaded.emit(this.bondsTemp.nativeElement);
   }
 
   activeFilter: any = 'All';

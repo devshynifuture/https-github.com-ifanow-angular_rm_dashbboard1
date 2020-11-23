@@ -208,8 +208,10 @@ export class IncomeComponent implements OnInit {
     } else {
       this.dataSource.data = [];
     }
-    this.ref.detectChanges();
-    this.loaded.emit(document.getElementById('template'));
+    if (this.finPlanObj) {
+      this.ref.detectChanges();
+      this.loaded.emit(document.getElementById('template'));
+    }
   }
 
   filterIncome(key: string, value: any) {
