@@ -333,4 +333,7 @@ export class PlanService {
   addAdviseOnHealth(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVISE_ON_HEALTH, data);
   }
+  getFinPlanFileUploadUrl(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FINPLAN_PDF_UPLOAD, data)
+  }
 }

@@ -85,8 +85,8 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table [dataSource]="dataSouce3" multiTemplateDataRows class="mat-elevation-z8"
-                        id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                    <table *ngIf="dataSouce3?.length > 0" mat-table [dataSource]="dataSouce3" multiTemplateDataRows
+                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
                         class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
@@ -933,10 +933,9 @@
                 </table>
             </td>
         </tr>
-        <tr *ngIf="dataSource1.length > 0">
+        <tr>
             <td>
-                <table cellpadding="0" cellspacing="0"
-                    style="margin-top: 25px; width: 100%; page-break-before: always;">
+                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;">Recommendations on current policies</p>
@@ -985,9 +984,11 @@
                                         {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
                                     </td>
                                 </tr>
-                                <!-- <tr *ngIf="dataSource1.length == 0">
+                                <tr *ngIf="dataSource1.length == 0">
+                                    <td style="text-align: center;padding-top: 20px;">
                                         No data found
-                                    </tr> -->
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -996,8 +997,7 @@
         </tr>
         <tr *ngIf="inputData?.insuranceType == 1 && !isLoadingPlan && needAnalysisLoaded">
             <td>
-                <table cellpadding="0" cellspacing="0"
-                    style="margin-top: 25px; width: 100%; page-break-before: always;">
+                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;">Need based analysis</p>
@@ -1300,8 +1300,8 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber>
-                                            -</span>
+                                        <span appFormatNumber
+                                            [value]="plannerObj.existingLifeInsurance ? plannerObj.existingLifeInsurance : '-'"></span>
                                     </td>
 
                                 </tr>

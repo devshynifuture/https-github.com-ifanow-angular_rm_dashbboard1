@@ -292,17 +292,21 @@
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.currentValue?element.currentValue:!isLoading?'-':''}}</span>
+                {{!isLoading && element.currentValue? "₹" : ""}}<span
+                    appFormatNumber>{{element.currentValue?element.currentValue:!isLoading?'-':''}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{element.rate | number: '1.2-2'}}{{!isLoading ?'%':''}} </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.accountBalance }}</span></td>
+                {{!isLoading && element.amountInvested? "₹" : ""}}<span
+                    appFormatNumber>{{element.amountInvested }}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.maturityValue }}</span>
+                {{!isLoading && element.maturityValue ? "₹" : ""}}<span
+                    appFormatNumber>{{element.maturityValue }}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
@@ -326,7 +330,8 @@
                 appFormatNumber>Total</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span>
+                {{!isLoading && SumOfCurrentValue ? "₹" : ""}}<span [value]="SumOfCurrentValue"
+                    appFormatNumber>{{SumOfCurrentValue}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -336,7 +341,9 @@
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="SumOfMaturityValue" appFormatNumber>{{SumOfMaturityValue}}</span>
+                {{!isLoading && SumOfMaturityValue? "₹" : ""}}<span [value]="SumOfMaturityValue"
+                    appFormatNumber>{{SumOfMaturityValue}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
