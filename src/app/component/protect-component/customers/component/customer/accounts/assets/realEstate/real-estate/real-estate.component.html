@@ -259,10 +259,12 @@
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.marketValue }}</span></td>
+                {{!isLoading && element.marketValue? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.purchaseValue}}</span></td>
+                {{!isLoading && element.purchaseValue? "₹" : ""}}<span appFormatNumber>{{element.purchaseValue}}</span>
+            </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber>
                 {{element.description ? element.description : '-'}}
@@ -283,10 +285,16 @@
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfMarketValue" appFormatNumber>{{sumOfMarketValue}}</span></td>
+                {{!isLoading && sumOfMarketValue ? "₹" : ""}}<span [value]="sumOfMarketValue"
+                    appFormatNumber>{{sumOfMarketValue}}</span>
+
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfpurchasedValue" appFormatNumber>{{sumOfpurchasedValue}}</span></td>
+                {{!isLoading && sumOfpurchasedValue ? "₹" : ""}}<span [value]="sumOfpurchasedValue"
+                    appFormatNumber>{{sumOfpurchasedValue}}</span>
+
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>

@@ -633,13 +633,13 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.dataSouce3 = [];
     }
+    this.getDetailsInsuranceRes(result[0])
     this.getNeedAnalysisData(result[3]);
     if (result[2]) {
       this.dataSource1 = result[2];
     } else {
       this.dataSource1 = [];
     }
-    this.getDetailsInsuranceRes(result[0])
     this.stopLoaderWhenReponse.emit(true);
     this.isLoadingPlan = false;
     if (this.inputData.insuranceType == 1) {
