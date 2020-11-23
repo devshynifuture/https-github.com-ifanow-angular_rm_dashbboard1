@@ -26,7 +26,7 @@ export class AllAdviceCashAndHandComponent implements OnInit {
   selectedAssetId: any = [];
   bankCount: any;
   cashCount: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -41,8 +41,11 @@ export class AllAdviceCashAndHandComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 11,
-      adviceStatusId:0
+      // assetCategory: 11,
+      // adviceStatusId:0,
+      categoryMasterId: 11,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -77,18 +80,18 @@ export class AllAdviceCashAndHandComponent implements OnInit {
   getFlagCount(flag, count) {
     (flag == 'bank') ? this.bankCount = count : this.cashCount = count
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -96,11 +99,11 @@ export class AllAdviceCashAndHandComponent implements OnInit {
     });
     return filterdData;
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
     console.log(data);
-    let bankAccData=this.filterForAsset(data.BANK_ACCOUNTS)
+    let bankAccData = this.filterForAsset(data.BANK_ACCOUNTS)
     this.bankAccDataSource.data = bankAccData;
-    let cashInHandData=this.filterForAsset(data.CASH_IN_HAND)
+    let cashInHandData = this.filterForAsset(data.CASH_IN_HAND)
     this.cashInHandDataSource.data = cashInHandData;
     this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
     this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;
@@ -165,7 +168,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2',balance:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', balance: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
