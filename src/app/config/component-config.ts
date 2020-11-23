@@ -844,7 +844,7 @@ export const appConfig = {
   GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
   //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: 'user/generate/otp',
+  GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
