@@ -147,6 +147,8 @@ export class LifeInsuranceComponent implements OnInit {
   @ViewChild('firstAccordion', { static: false }) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
   inputReceive: any;
   needAnalysisData: any;
   dataSourceLiability: any;
@@ -215,6 +217,7 @@ export class LifeInsuranceComponent implements OnInit {
         this.allInsuranceData = res;
       })
     this.setDetails(data)
+
     this.getGlobalDataInsurance();
   }
 
@@ -237,6 +240,12 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    console.log(this.finPlanObj)
+    if (this.finPlanObj) {
+      this.setDetails(this.finPlanObj.data)
+      this.getGlobalDataInsurance();
+
+    }
     this.dataSourceLiability = []
     this.dataSourceAsset = []
     this.dataSourceGoals = []
