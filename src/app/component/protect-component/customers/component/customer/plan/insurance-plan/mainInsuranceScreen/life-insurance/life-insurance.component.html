@@ -82,8 +82,8 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table *ngIf="dataSouce3.length>0" [dataSource]="dataSouce3" multiTemplateDataRows
-                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                    <table mat-table [dataSource]="dataSouce3" multiTemplateDataRows class="mat-elevation-z8"
+                        id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
                         class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
@@ -263,7 +263,7 @@
                     </div>
                     <mat-accordion #firstAccordion="matAccordion" [multi]="true">
                         <div class="br bl" *ngIf="!isLoadingPlan && needAnalysisLoaded">
-                            <mat-expansion-panel (click)="panelOpenState = true" [expanded]="false">
+                            <mat-expansion-panel (click)="panelOpenState = true;libilities = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
                                         1. Liabilities
@@ -335,7 +335,7 @@
                                 </div>
 
                             </mat-expansion-panel>
-                            <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                            <mat-expansion-panel (opened)="panelOpenState = true;dependant = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
                                         2. Dependant's needs
@@ -425,7 +425,8 @@
 
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                            <mat-expansion-panel (opened)="panelOpenState = true; goalsToBeMate = true"
+                                [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
                                         3. Goals to be met
@@ -516,7 +517,7 @@
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                            <mat-expansion-panel (opened)="panelOpenState = true;continuous = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
                                         5 Less : Continuous income source
@@ -604,7 +605,8 @@
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="panelOpenState = true" [expanded]="false">
+                            <mat-expansion-panel (opened)="panelOpenState = true; existingAsset = true"
+                                [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
                                         7 Less : Existing Assets
@@ -875,7 +877,7 @@
             <tr>
                 <td colspan="5" style="padding: 10px;"></td>
             </tr>
-            <tr>
+            <tr *ngIf="dataSouce3length > 0">
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
@@ -919,16 +921,16 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <tr *ngIf="dataSouce3length == 0">
+                                    <!-- <tr *ngIf="dataSouce3length == 0">
                                         No data found
-                                    </tr>
+                                    </tr> -->
                                 </table>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr *ngIf="dataSource1.length > 0">
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
@@ -979,16 +981,16 @@
                                             {{isLoadingPlan ? '' : (element ? element.advice : '-')}}
                                         </td>
                                     </tr>
-                                    <tr *ngIf="dataSource1.length == 0">
+                                    <!-- <tr *ngIf="dataSource1.length == 0">
                                         No data found
-                                    </tr>
+                                    </tr> -->
                                 </table>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            <tr *ngIf="inputData?.insuranceType == 1">
+            <tr *ngIf="inputData?.insuranceType == 1 && !isLoadingPlan && needAnalysisLoaded">
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
@@ -1028,7 +1030,8 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                    <table *ngIf="libilities == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
                                         <tr>
                                             <td
                                                 style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
@@ -1082,7 +1085,8 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                    <table *ngIf="dependant ==  true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
                                         <tr>
                                             <td
                                                 style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
@@ -1131,7 +1135,8 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                    <table *ngIf="goalsToBeMate == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
                                         <tr>
                                             <td
                                                 style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
@@ -1205,7 +1210,8 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                    <table *ngIf="continuous == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
                                         <tr>
                                             <td
                                                 style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
@@ -1281,7 +1287,8 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
+                                    <table *ngIf="existingAsset == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
                                         <tr>
                                             <td
                                                 style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
