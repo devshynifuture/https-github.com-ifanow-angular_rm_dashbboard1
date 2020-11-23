@@ -22,7 +22,7 @@ export class PlanService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_SUMMARY_PLAN, httpParams)
   }
-  getGoalSummaryPlanData(data){
+  getGoalSummaryPlanData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOAL_SUMMARY_PLAN, data);
   }
   addIncomeData(data) {
@@ -161,7 +161,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_GOALS, httpParams);
   }
   deleteGoal(data) {
-    let httpParams = new HttpParams().set('goalId', data.goalId).set("goalType", data.goalType).set('id',data.id)
+    let httpParams = new HttpParams().set('goalId', data.goalId).set("goalType", data.goalType).set('id', data.id)
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOAL + '?' + httpParams, '');
   }
 
@@ -201,10 +201,10 @@ export class PlanService {
   getMFList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_DATA, data);
   }
-  saveMileStone(data){
+  saveMileStone(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_MILESTONE, data);
   }
-  EditMilstone(data){
+  EditMilstone(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_MILESTONE, data)
   }
   allocateOtherAssetToGoal(data) {
@@ -246,7 +246,7 @@ export class PlanService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_ANALYSIS_ADD, data);
   }
   removeLifeInsuranceAnalysisMapToPlan(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_LIFE_NEED_ANALYSIS_MAP+ 'id=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_LIFE_NEED_ANALYSIS_MAP + 'id=' + data, '');
   }
   getDetailsInsurance(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETAILED_INSURANCE, data);
@@ -258,10 +258,10 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.EXPENSE_ALL_GET, data)
   }
   deleteInsurancePlanning(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_INPLANNING+ '?clientId=' + data.clientId + '&familyMemberId=' + data.familyMemberId + '&id=' + data.id + '&insuranceSubTypeId=' + data.insuranceSubTypeId+ '&insuranceTypeId=' + data.insuranceTypeId,'')
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_INPLANNING + '?clientId=' + data.clientId + '&familyMemberId=' + data.familyMemberId + '&id=' + data.id + '&insuranceSubTypeId=' + data.insuranceSubTypeId + '&insuranceTypeId=' + data.insuranceTypeId, '')
   }
   getInsuranceRecommendation(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.RECOMMENDATION_LIST_GET+ 'id=' + data, '')
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RECOMMENDATION_LIST_GET + 'id=' + data, '')
   }
   getInsuranceAdvice(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.INSURANCE_ADVICE_GET, data)
@@ -273,14 +273,14 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.NEED_BASED_ANALYSIS, data)
   }
   getGeneralInsuranceAdvice(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_ADVICE_GET+ 'id=' + data, '')
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_ADVICE_GET + 'id=' + data, '')
   }
 
-  getInsurancePlanningPlanSummary(data){
+  getInsurancePlanningPlanSummary(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_PLAN_SUMMARY, data);
   }
   getGeneralInsuranceSuggestPolicy(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_SUGGEST_POLICY+ 'id=' + data, '')
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_SUGGEST_POLICY + 'id=' + data, '')
   }
   updateCurrentPolicyGeneralInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_CURRENT_POLICY_GI, data)
@@ -298,7 +298,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GENERAL_INSURANCE_CURRENT_POLICY_GET, data)
   }
   getNeedBasedDetailsLifeInsurance(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_NEED_BASED_DETAILS+ 'id=' + data, '')
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_NEED_BASED_DETAILS + 'id=' + data, '')
   }
   updateRecommendationsLI(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_RECOMMENDATION_UPDATE, data)
@@ -313,7 +313,7 @@ export class PlanService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.Edit_SUGGEST_NEW, data)
   }
   deleteSuggestPolicy(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGESTED_POLICY+ 'id=' + data, '')
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGESTED_POLICY + 'id=' + data, '')
   }
   addGenralInsurancePlan(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE_PLAN, data)
@@ -324,10 +324,13 @@ export class PlanService {
   deleteSuggestNew(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUGGEST_NEW, data);
   }
-  getCashFlow(data){
+  getCashFlow(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW, data)
   }
-  freezCalculation(data){
+  freezCalculation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.FREEZE_CAL, data);
+  }
+  getFinPlanFileUploadUrl(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FINPLAN_PDF_UPLOAD, data)
   }
 }

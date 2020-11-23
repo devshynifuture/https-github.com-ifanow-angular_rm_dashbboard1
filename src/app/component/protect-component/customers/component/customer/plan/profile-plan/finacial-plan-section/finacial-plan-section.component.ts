@@ -39,6 +39,8 @@ import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/s
 import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
+import { HttpService } from 'src/app/http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -93,7 +95,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientId: any;
   insuranceList: any;
   insurancePlanningList: any;
-  constructor(private util: UtilService, private resolver: ComponentFactoryResolver,
+  constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -291,12 +293,33 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           this.generatePdf(data, sectionName, displayName);
+          this.uploadFile(data, sectionName, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
     }
 
 
+  }
+  uploadFile(innerHtmlData, sectionName, displayName) {
+    const obj = {
+      clientId: this.clientId,
+      fileName: sectionName + '.html'
+    };
+    this.planService.getFinPlanFileUploadUrl(obj).subscribe(
+      data => this.uploadFileRes(data, innerHtmlData)
+    );
+  }
+  uploadFileRes(data, innerHtmlData) {
+    console.log(data);
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', '')
+    };
+    this.http.put(data.fileUploadUrl, innerHtmlData.innerHTML, httpOptions).subscribe((responseData) => {
+      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+
+    });
   }
   getGoalSummaryValues() {
     let data = {

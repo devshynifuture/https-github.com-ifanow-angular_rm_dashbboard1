@@ -85,8 +85,8 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table mat-table [dataSource]="dataSouce3" multiTemplateDataRows class="mat-elevation-z8"
-                        id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                    <table *ngIf="dataSouce3?.length > 0" mat-table [dataSource]="dataSouce3" multiTemplateDataRows
+                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
                         class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
