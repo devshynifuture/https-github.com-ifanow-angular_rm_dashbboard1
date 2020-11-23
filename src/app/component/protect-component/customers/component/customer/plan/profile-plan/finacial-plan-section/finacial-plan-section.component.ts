@@ -38,6 +38,7 @@ import { KvpSchemeComponent } from '../../../accounts/assets/smallSavingScheme/k
 import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/ssy-scheme/ssy-scheme.component';
 import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
+import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -71,6 +72,7 @@ import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/p
     SsySchemeComponent,
     NscSchemeComponent,
     PPFSchemeComponent,
+    LifeInsuranceComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -118,7 +120,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false);
     this.moduleAdded.push({ name: displayName });
   }
 
@@ -265,12 +267,21 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'PO MIS':
           factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
           break;
+        case 'PO MIS':
+          factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
+          break;
+        case 'Life insurance':
+          factory = this.resolver.resolveComponentFactory(LifeInsuranceComponent);
+          break;
 
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
+      } else if (sectionName == 'Life insurance') {
+        obj.dataLoaded = true;
+        pdfContent.finPlanObj = { hideForFinPlan: true, data: obj, allInsuranceList: this.insurancePlanningList };
       } else {
         pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
       }
