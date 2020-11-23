@@ -826,12 +826,12 @@
                                         <td>
                                             <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
                                                 ADVICE </p>
-                                            <h5 style="margin: 0px;"
+                                            <h5 style="font-size: 18px; margin: 0px;"
                                                 *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
                                                     [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                                             </h5>
-                                            <h5 style="margin: 0px;"
+                                            <h5 style="font-size: 18px; margin: 0px;"
                                                 *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
                                                     [value]="insuranceDetails?.advice"></span>
@@ -994,7 +994,7 @@
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
-                            <td style="border: 1px solid #dee5e7;">
+                            <td>
                                 <p style=" font-size: 18px; font-weight: 600;">Need based analysis</p>
 
                                 <table cellpadding="0" cellspacing="0"
