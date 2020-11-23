@@ -24,6 +24,21 @@ import { MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
 import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
 import { CommoditiesComponent } from '../../../accounts/assets/commodities/commodities/commodities.component';
+import { RealEstateComponent } from '../../../accounts/assets/realEstate/real-estate/real-estate.component';
+import { AssetStocksComponent } from '../../../accounts/assets/asset-stocks/asset-stocks.component';
+import { CashAndBankComponent } from '../../../accounts/assets/cash&bank/cash-and-bank/cash-and-bank.component';
+import { FixedIncomeComponent } from '../../../accounts/assets/fixedIncome/fixed-income/fixed-income.component';
+import { RetirementAccountComponent } from '../../../accounts/assets/retirementAccounts/retirement-account/retirement-account.component';
+import { PoMisSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
+import { PoTdSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-td-scheme/po-td-scheme.component';
+import { PoRdSchemeComponent } from '../../../accounts/assets/smallSavingScheme/po-rd-scheme/po-rd-scheme.component';
+import { PoSavingsComponent } from '../../../accounts/assets/smallSavingScheme/po-savings/po-savings.component';
+import { ScssSchemeComponent } from '../../../accounts/assets/smallSavingScheme/scss-scheme/scss-scheme.component';
+import { KvpSchemeComponent } from '../../../accounts/assets/smallSavingScheme/kvp-scheme/kvp-scheme.component';
+import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/ssy-scheme/ssy-scheme.component';
+import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
+import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
+import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -42,7 +57,22 @@ import { CommoditiesComponent } from '../../../accounts/assets/commodities/commo
     LiabilitiesComponent,
     OtherPayablesComponent,
     GoalsPlanComponent,
-    CommoditiesComponent
+    CommoditiesComponent,
+    RealEstateComponent,
+    AssetStocksComponent,
+    CashAndBankComponent,
+    FixedIncomeComponent,
+    RetirementAccountComponent,
+    PoMisSchemeComponent,
+    PoTdSchemeComponent,
+    PoRdSchemeComponent,
+    PoSavingsComponent,
+    ScssSchemeComponent,
+    KvpSchemeComponent,
+    SsySchemeComponent,
+    NscSchemeComponent,
+    PPFSchemeComponent,
+    LifeInsuranceComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -90,7 +120,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false);
     this.moduleAdded.push({ name: displayName });
   }
 
@@ -190,11 +220,68 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'OthersComm':
           factory = this.resolver.resolveComponentFactory(CommoditiesComponent);
           break;
+        case 'Real estate':
+          factory = this.resolver.resolveComponentFactory(RealEstateComponent);
+          break;
+        case 'Stocks':
+          factory = this.resolver.resolveComponentFactory(AssetStocksComponent);
+          break;
+        case 'Bank accounts':
+        case 'Cash in hand':
+          factory = this.resolver.resolveComponentFactory(CashAndBankComponent);
+          break;
+        case 'Fixed deposit':
+        case 'Recurring deposits':
+        case 'Bonds':
+          factory = this.resolver.resolveComponentFactory(FixedIncomeComponent);
+          break;
+        case 'EPF':
+        case 'NPS':
+        case 'Gratuity':
+          factory = this.resolver.resolveComponentFactory(RetirementAccountComponent);
+          break;
+        case 'PPF':
+          factory = this.resolver.resolveComponentFactory(PPFSchemeComponent);
+          break;
+        case 'NSC':
+          factory = this.resolver.resolveComponentFactory(NscSchemeComponent);
+          break;
+        case 'SSY':
+          factory = this.resolver.resolveComponentFactory(SsySchemeComponent);
+          break;
+        case 'KVP':
+          factory = this.resolver.resolveComponentFactory(KvpSchemeComponent);
+          break;
+        case 'SCSS':
+          factory = this.resolver.resolveComponentFactory(ScssSchemeComponent);
+          break;
+        case 'PoSaving':
+          factory = this.resolver.resolveComponentFactory(PoSavingsComponent);
+          break;
+        case 'PO RD':
+          factory = this.resolver.resolveComponentFactory(PoRdSchemeComponent);
+          break;
+        case 'PO TD':
+          factory = this.resolver.resolveComponentFactory(PoTdSchemeComponent);
+          break;
+        case 'PO MIS':
+          factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
+          break;
+        case 'PO MIS':
+          factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
+          break;
+        case 'Life insurance':
+          factory = this.resolver.resolveComponentFactory(LifeInsuranceComponent);
+          break;
+
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
+      } else if (sectionName == 'Life insurance') {
+        obj.dataLoaded = true;
+        pdfContent.finPlanObj = { hideForFinPlan: true, data: obj, allInsuranceList: this.insurancePlanningList };
       } else {
         pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
       }

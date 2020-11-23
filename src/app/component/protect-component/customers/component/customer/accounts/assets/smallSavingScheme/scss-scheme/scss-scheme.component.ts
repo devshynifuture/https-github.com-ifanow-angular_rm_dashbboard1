@@ -1,5 +1,5 @@
 import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -43,6 +43,9 @@ export class ScssSchemeComponent implements OnInit {
   footer = [];
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('scssTemp', { static: false }) scssTemp: ElementRef;
   excelData: any[];
   fileUploadData: any;
   file: any;
@@ -52,8 +55,11 @@ export class ScssSchemeComponent implements OnInit {
   scssList: any[];
   isFixedIncomeFiltered: boolean;
   hideFilter: boolean;
+  reportDate: Date;
+  userInfo: any;
+  getOrgData: any;
 
-  constructor(private excel: ExcelGenService,
+  constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -67,6 +73,9 @@ export class ScssSchemeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.reportDate = new Date();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     if (!this.dataList) {
@@ -80,7 +89,7 @@ export class ScssSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -168,10 +177,10 @@ export class ScssSchemeComponent implements OnInit {
             dialogRef.close();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfAmountReceived -= element.totalAmountReceived;
-              this.dataList.sumOfAmountInvested -= element.amountInvested;
-              this.dataList.sumOfMaturityValue -= element.maturityValue;
-              this.dataList.sumOfQuarterlyPayout -= element.quarterlyPayout;
-            
+            this.dataList.sumOfAmountInvested -= element.amountInvested;
+            this.dataList.sumOfMaturityValue -= element.maturityValue;
+            this.dataList.sumOfQuarterlyPayout -= element.quarterlyPayout;
+
             this.getKvpSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
@@ -219,6 +228,10 @@ export class ScssSchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.scssTemp.nativeElement);
+    }
     console.log('datasource', this.datasource)
   }
 
@@ -239,15 +252,15 @@ export class ScssSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            
-            if(!this.dataList){
-              this.dataList=  {assetList:[sideBarData.data]};
+
+            if (!this.dataList) {
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfAmountReceived'] = sideBarData.data.totalAmountReceived;
               this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
               this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
               this.dataList['sumOfQuarterlyPayout'] = sideBarData.data.quarterlyPayout;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfAmountReceived += sideBarData.data.totalAmountReceived;
               this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;

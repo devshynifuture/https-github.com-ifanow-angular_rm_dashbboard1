@@ -1,5 +1,5 @@
 import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -38,6 +38,9 @@ export class SsySchemeComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('ssyTemp', { static: false }) ssyTemp: ElementRef;
   excelData: any[];
   footer = [];
   fileUploadData: any;
@@ -48,6 +51,9 @@ export class SsySchemeComponent implements OnInit {
   isFixedIncomeFiltered: boolean;
   hideFilter: boolean;
   ssyList: any[];
+  reportDate: Date;
+  userInfo: any;
+  getOrgData: any;
 
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -56,15 +62,19 @@ export class SsySchemeComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private assetValidation: AssetValidationService,
     private subInjectService: SubscriptionInject,
-    private eventService: EventService) {
+    private eventService: EventService,
+    private ref: ChangeDetectorRef) {
     this.clientData = AuthService.getClientData()
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     if (!this.dataList) {
       this.getSsySchemedata();
     } else {
@@ -82,7 +92,7 @@ export class SsySchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -171,7 +181,10 @@ export class SsySchemeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }
-
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.ssyTemp.nativeElement);
+    }
   }
 
   deleteModal(value, element) {
@@ -189,8 +202,8 @@ export class SsySchemeComponent implements OnInit {
             dialogRef.close();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
-              this.dataList.sumOfAmountInvested -= element.accountBalance;
-            
+            this.dataList.sumOfAmountInvested -= element.accountBalance;
+
             this.getSsySchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)
@@ -231,12 +244,12 @@ export class SsySchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(!this.dataList){
-              this.dataList=  {assetList:[sideBarData.data]};
+            if (!this.dataList) {
+              this.dataList = { assetList: [sideBarData.data] };
               this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
               this.dataList['sumOfAmountInvested'] += sideBarData.data.accountBalance;
             }
-            else{
+            else {
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;

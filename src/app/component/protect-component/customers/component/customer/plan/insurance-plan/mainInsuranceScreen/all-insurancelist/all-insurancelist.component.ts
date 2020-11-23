@@ -31,31 +31,31 @@ export class AllInsurancelistComponent implements OnInit {
   insuranceList = [{
     header: 'Add Life insurance',
     heading: 'Life insurance',
-    logo: '/assets/images/svg/LIsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIsmall.svg',
   }, {
     header: 'Add Health insurance',
     heading: 'Health insurance',
-    logo: '/assets/images/svg/HIsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/HIsmall.svg',
   }, {
     header: 'Add Critical Insurance',
     heading: 'Critical illness',
-    logo: '/assets/images/svg/CIsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606126530/svg_assets/CIsmall.svg',
   }, {
     header: 'Add Cancer Insurance',
     heading: 'Cancer care',
-    logo: '/assets/images/svg/CCsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606126528/svg_assets/CCsmall.svg',
   }, {
     header: 'Add Personal accident',
     heading: 'Personal accident',
-    logo: '/assets/images/svg/PAsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAsmall.svg',
   }, {
     header: 'Add Fire Insurance',
     heading: 'Fire insurance',
-    logo: '/assets/images/svg/FIsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/FIsmall.svg',
   }, {
     header: 'Add Householders Insurance',
     heading: 'Householders',
-    logo: '/assets/images/svg/Hsmall.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/Hsmall.svg',
   }]
   detailsInsurance: any;
   clientId: any;

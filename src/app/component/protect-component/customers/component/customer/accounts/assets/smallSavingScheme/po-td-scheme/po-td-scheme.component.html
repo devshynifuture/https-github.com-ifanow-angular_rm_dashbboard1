@@ -1,230 +1,412 @@
-<div class="row">
-    <div class="col-md-4 p-0">
-        <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
-    </div>
-    <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
-        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+<div [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
         </div>
-        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
-            <img src="assets/images/svg/download-bordered.svg">
-        </a>
-        <mat-menu #menu5="matMenu">
-            <button (click)="pdf('PO TD')" mat-menu-item>PDF</button>
-            <button (click)="Excel('PO TD')" mat-menu-item>XLS</button>
-        </mat-menu>
-        <!-- 
-        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
-            <img src="assets/images/svg/up-down.svg">
-        </a> -->
+        <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
+            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+            </div>
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-menu #menu5="matMenu">
+                <button (click)="pdf('PO TD')" mat-menu-item>PDF</button>
+                <button (click)="Excel('PO TD')" mat-menu-item>XLS</button>
+            </mat-menu>
+            <!-- 
+            <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+                <img src="assets/images/svg/up-down.svg">
+            </a> -->
 
-        <!-- <mat-menu #menu7="matMenu"> -->
-        <!-- <button mat-menu-item>Upload file
-                <input (change)="fetchData('Po TD',$event)" class="uploadInput" id="file-4" multiple type="file">
-            </button> -->
-        <!-- </mat-menu> -->
-        <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
-        <mat-menu #menu6="matMenu">
-            <button mat-menu-item>Email Report</button>
-            <button mat-menu-item>Option 2</button>
-            <button mat-menu-item>Option 3</button>
-        </mat-menu> -->
+            <!-- <mat-menu #menu7="matMenu"> -->
+            <!-- <button mat-menu-item>Upload file
+                    <input (change)="fetchData('Po TD',$event)" class="uploadInput" id="file-4" multiple type="file">
+                </button> -->
+            <!-- </mat-menu> -->
+            <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
+            <mat-menu #menu6="matMenu">
+                <button mat-menu-item>Email Report</button>
+                <button mat-menu-item>Option 2</button>
+                <button mat-menu-item>Option 3</button>
+            </mat-menu> -->
 
-        <button mat-stroked-button [matMenuTriggerFor]="potd" class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS</button>
-        <mat-menu #potd>
-            <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
-                                                        Vinayak Nerlekar
-                                                    </button>
-                                                    <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
-                                                        BANK FD
-                                                    </button> -->
-            <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
-                                                CORPORATE FD
-                                              </button> -->
-            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterPotd(null, 'All')">
-                All
-            </button>
-            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
-                (click)="filterPotd('statusId', 'LIVE')">
-                STATUS - LIVE
-            </button>
-            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
-                (click)="filterPotd('statusId', 'MATURED')">
-                STATUS - Matured
-            </button>
-        </mat-menu>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
-        <mat-menu #menu1="matMenu" class="add-new">
-            <button mat-menu-item class="b-b">
-                <div class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                        <img src="assets/images/svg/dark-three-dot.svg">
+            <button mat-stroked-button [matMenuTriggerFor]="potd" class="btn-default addon mr-8 v-middle"><i
+                    class="material-icons">filter_list</i>FILTERS</button>
+            <mat-menu #potd>
+                <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                                                            Vinayak Nerlekar
+                                                        </button>
+                                                        <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
+                                                            BANK FD
+                                                        </button> -->
+                <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                                                    CORPORATE FD
+                                                  </button> -->
+                <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                    (click)="filterPotd(null, 'All')">
+                    All
+                </button>
+                <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                    (click)="filterPotd('statusId', 'LIVE')">
+                    STATUS - LIVE
+                </button>
+                <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                    (click)="filterPotd('statusId', 'MATURED')">
+                    STATUS - Matured
+                </button>
+            </mat-menu>
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
+            <mat-menu #menu1="matMenu" class="add-new">
+                <button mat-menu-item class="b-b">
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/dark-three-dot.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Portfolio summary</p>
+                            <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                                <br> summary. Time saver!</p>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <p class="m-0 text-black">Portfolio summary</p>
-                        <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                            <br> summary. Time saver!</p>
+                </button>
+                <button mat-menu-item class="b-b">
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/scheme-icon.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Scheme level transactions</p>
+                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                <br> scheme level for better reporting</p>
+                        </div>
                     </div>
-                </div>
-            </button>
-            <button mat-menu-item class="b-b">
-                <div class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                        <img src="assets/images/svg/scheme-icon.svg">
+                </button>
+                <button mat-menu-item>
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/dark-download.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Import data</p>
+                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                <br> scheme level for better reporting</p>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <p class="m-0 text-black">Scheme level transactions</p>
-                        <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                            <br> scheme level for better reporting</p>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden mt-8 real-estate">
+        <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs"
+            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+            <ng-container matColumnDef="no" sticky>
+                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br">
+                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                </td>
+                <td mat-footer-cell class="bl-1" *matFooterCellDef> </td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br W-18"> Owner </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar"> </div>
+                    <div *ngFor="let owner of element.ownerList; let i = index">
+                        <span *ngIf="i == 0">{{owner.name}}</span>
                     </div>
-                </div>
-            </button>
-            <button mat-menu-item>
-                <div class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                        <img src="assets/images/svg/dark-download.svg">
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="  text-right br f-600 pr-20 "> Total </td>
+            </ng-container>
+            <ng-container matColumnDef="cvalue">
+                <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                    class="br t-11 right-hcb  hide-arrow">
+                    Current value </th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                    <div class="bar">{{!isLoading? "₹" : ""}}<span
+                            appFormatNumber>{{element.currentValue?element.currentValue:!isLoading? "-" : "" }}</span>
                     </div>
-                    <div class="col-md-10">
-                        <p class="m-0 text-black">Import data</p>
-                        <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                            <br> scheme level for better reporting</p>
+                </td>
+                <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                    <div *ngIf="sumOfCurrentValue">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue"
+                            appFormatNumber>{{sumOfCurrentValue}}</span></div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rate">
+                <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-6 right-hcb hide-arrow"> Rate
+                </th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                    <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <ng-container matColumnDef="amt">
+                <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
+                    class="br right-hcb w-12 hide-arrow">
+                    Amount invested
+                </th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                    <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span>
                     </div>
-                </div>
-            </button>
-        </mat-menu>
+                </td>
+                <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested"
+                            appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="tenure">
+                <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br w-6 text-right hide-arrow">
+                    Tenure
+                </th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                    <div class="bar"> {{element.tenure}} <span
+                            *ngIf="!isLoading">{{element.tenure <=1? 'Year' : 'Years'}}</span></div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <ng-container matColumnDef="mvalue">
+                <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">
+                    Maturity value </th>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                    <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span>
+                    </div>
+                </td>
+                <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue"
+                            appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="mdate">
+                <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  textLeft">Maturity <br>
+                    date
+                </th>
+                <td mat-cell *matCellDef="let element" class="br text-left ">
+                    <div class="bar"> {{element.maturityDate |date:'dd/MM/yyyy'}} </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <ng-container matColumnDef="number">
+                <th mat-sort-header="tdNumber" mat-header-cell *matHeaderCellDef class="br t-left">TD <br> number
+                </th>
+                <td mat-cell *matCellDef="let element" class="br amt text-left ">
+                    <div class="bar"> {{isLoading ? '' : element.tdNumber || '-'}} </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <ng-container matColumnDef="desc">
+                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
+                <td mat-cell *matCellDef="let element" class="br t-10">
+                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                <td mat-cell *matCellDef="let element" class="br text-primary">
+                    <div class="bar"> {{element.statusId}} </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+            <ng-container matColumnDef="icons" sticky>
+                <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center">
+
+                    <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                    <mat-menu #menubank="matMenu">
+                        <button mat-menu-item (click)="openAddPOTD(element)">Edit</button>
+                        <button mat-menu-item (click)="openDetailPOTD(element)">Detailed view</button>
+                        <button mat-menu-item>Upload file
+                            <input (change)="fetchData('Po TD',$event,element)" class="uploadInput" id="file-4" multiple
+                                type="file">
+                        </button>
+                        <!-- <button mat-menu-item>Activity</button> -->
+                        <button mat-menu-item (click)="deleteModal('PO TD',element)">Delete</button>
+                    </mat-menu>
+
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br"> </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns22; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns22;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
+        </table>
+
+        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">No PO TD found</h4>
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
+        </div>
     </div>
 </div>
-<div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs"
-        appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
-        <ng-container matColumnDef="no" sticky>
-            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-            </td>
-            <td mat-footer-cell class="bl-1" *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="owner">
-            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br W-18"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> </div>
-                <div *ngFor="let owner of element.ownerList; let i = index">
-                    <span *ngIf="i == 0">{{owner.name}}</span>
+<!-- -------------------- pdf ---------------------------- -->
+<div #potdTemp id="template" class="hide">
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+
+        <tr>
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div style="width: 200px;"
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
                 </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="  text-right br f-600 pr-20 "> Total </td>
-        </ng-container>
-        <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-11 right-hcb  hide-arrow">
-                Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span
-                        appFormatNumber>{{element.currentValue?element.currentValue:!isLoading? "-" : "" }}</span>
-                </div>
-            </td>
-            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div *ngIf="sumOfCurrentValue">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue"
-                        appFormatNumber>{{sumOfCurrentValue}}</span></div>
-            </td>
-        </ng-container>
+            <td style=" text-align: right;" colspan="12">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-        <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-6 right-hcb hide-arrow"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</div>
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
+                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br right-hcb w-12 hide-arrow">
-                Amount invested
-            </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
-            </td>
-            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested"
-                        appFormatNumber>{{sumOfAmountInvested}}</span></div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="tenure">
-            <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br w-6 text-right hide-arrow">Tenure
-            </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar"> {{element.tenure}} <span
-                        *ngIf="!isLoading">{{element.tenure <=1? 'Year' : 'Years'}}</span></div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">
-                Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
-            </td>
-            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue"
-                        appFormatNumber>{{sumOfMaturityValue}}</span></div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  textLeft">Maturity <br> date
-            </th>
-            <td mat-cell *matCellDef="let element" class="br text-left ">
-                <div class="bar"> {{element.maturityDate |date:'dd/MM/yyyy'}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <ng-container matColumnDef="number">
-            <th mat-sort-header="tdNumber" mat-header-cell *matHeaderCellDef class="br t-left">TD <br> number
-            </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-left ">
-                <div class="bar"> {{isLoading ? '' : element.tdNumber || '-'}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <ng-container matColumnDef="desc">
-            <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <ng-container matColumnDef="status">
-            <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary">
-                <div class="bar"> {{element.statusId}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="icons" sticky>
-            <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center">
+        </tr>
 
-                <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="openAddPOTD(element)">Edit</button>
-                    <button mat-menu-item (click)="openDetailPOTD(element)">Detailed view</button>
-                    <button mat-menu-item>Upload file
-                        <input (change)="fetchData('Po TD',$event,element)" class="uploadInput" id="file-4" multiple
-                            type="file">
-                    </button>
-                    <!-- <button mat-menu-item>Activity</button> -->
-                    <button mat-menu-item (click)="deleteModal('PO TD',element)">Delete</button>
-                </mat-menu>
+        <tr>
+            <td colspan="2" style="padding: 10px;"></td>
+        </tr>
 
+        <tr>
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                Post office time deposit (PO TD)</td>
+        </tr>
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="br"> </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns22; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns22;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
+        </tr>
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                No. </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Owner</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Current value </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Rate
+            </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Amount invested </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Tenure </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Maturity value </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Maturity <br> date </td>
+
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                TD <br> number </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Description </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Status </td>
+
+
+        </tr>
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let element of dataSource.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{isLoading ? '' : i + 1 }}</td>
+            <td *ngFor="let owner of element.ownerList; let i = index"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                <span *ngIf="i == 0">{{owner.name}}</span></td>
+
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span appFormatNumber>{{element.currentValue?element.currentValue:!isLoading? "-" : "" }}</span>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span appFormatNumber>{{element.amountInvested }}</span></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <div> {{element.tenure}} <span *ngIf="!isLoading">{{element.tenure <=1? 'Year' : 'Years'}}</span></div>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span appFormatNumber>{{element.maturityValue }}</span></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                {{element.maturityDate |date:'dd/MM/yyyy'}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                {{isLoading ? '' : element.tdNumber || '-'}} </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                {{isLoading ? '' : element.description || '-'}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                {{element.statusId}} </td>
+        </tr>
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                appFormatNumber>Total</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+        </tr>
+        <tr *ngIf="dataSource.data.length == 0 ">
+            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                No data found
+            </td>
+        </tr>
     </table>
-
-    <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
-        <img src="assets/images/svg/documents-empty-states.svg">
-        <h4 class="text-center mt-12 mb-20">No PO TD found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
-    </div>
 </div>

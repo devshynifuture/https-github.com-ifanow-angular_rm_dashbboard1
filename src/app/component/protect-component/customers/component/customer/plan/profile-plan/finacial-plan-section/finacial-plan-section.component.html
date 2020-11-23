@@ -35,7 +35,7 @@
             </div>
 
             <div *ngIf="moduleAdded.length  == 0">
-                <span class="text-center">
+                <span class="text-center pt-28">
                     No module added
                 </span>
             </div>
@@ -124,7 +124,7 @@
                                 <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
                                     <div class="col-md-1">
                                         <mat-checkbox
-                                            (change)="checkAndLoadPdf($event.checked,'Life insurance','','Life insurance')">
+                                            (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Life insurance')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -875,7 +875,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Employees Provident Fund (EPF)','','Portfolio / Employees Provident Fund (EPF)')">
+                                            (change)="checkAndLoadPdf($event.checked,'EPF','','Portfolio / Employees Provident Fund (EPF)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -887,7 +887,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'National pension system (NPS)','','Portfolio / National pension system (NPS)')">
+                                            (change)="checkAndLoadPdf($event.checked,'NPS','','Portfolio / National pension system (NPS)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -920,7 +920,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Public provident fund (PPF)','','Portfolio / Public provident fund (PPF)')">
+                                            (change)="checkAndLoadPdf($event.checked,'PPF','','Portfolio / Public provident fund (PPF)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -932,18 +932,19 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'National pension system (NPS)','','Portfolio / National pension system (NPS)')">
+                                            (change)="checkAndLoadPdf($event.checked,'NSC','','Portfolio / National pension system (NPS)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
                                         <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / National pension system (NPS) </p>
+                                            Portfolio / National savings certificate (NSC)
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Sukanya samriddhi yojana (SSY)','','Portfolio / Sukanya samriddhi yojana (SSY)')">
+                                            (change)="checkAndLoadPdf($event.checked,'SSY','','Portfolio / Sukanya samriddhi yojana (SSY)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -955,7 +956,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Kisan vikas patra (KVP)','',' Portfolio / Kisan vikas patra (KVP)')">
+                                            (change)="checkAndLoadPdf($event.checked,'KVP','',' Portfolio / Kisan vikas patra (KVP)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -967,7 +968,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Senior citizen savings scheme (SCSS)','','Portfolio / Senior citizen savings scheme (SCSS)')">
+                                            (change)="checkAndLoadPdf($event.checked,'SCSS','','Portfolio / Senior citizen savings scheme (SCSS)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -979,7 +980,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Post office savings a/c','','Portfolio / Post office savings a/c')">
+                                            (change)="checkAndLoadPdf($event.checked,'PoSaving','','Portfolio / Post office savings a/c')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -991,7 +992,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Post office recurring deposit (PO RD)','','Portfolio / Post office recurring deposit (PO RD)')">
+                                            (change)="checkAndLoadPdf($event.checked,'PO RD','','Portfolio / Post office recurring deposit (PO RD)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -1003,7 +1004,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Post office time deposit (PO TD)','','Portfolio / Post office time deposit (PO TD)')">
+                                            (change)="checkAndLoadPdf($event.checked,'PO TD','','Portfolio / Post office time deposit (PO TD)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -1015,7 +1016,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Post office monthly income scheme (PO MIS)','','Portfolio / Post office monthly income scheme (PO MIS)')">
+                                            (change)="checkAndLoadPdf($event.checked,'PO MIS','','Portfolio / Post office monthly income scheme (PO MIS)')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">

@@ -1,5 +1,5 @@
 import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
-import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input  } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -37,6 +37,9 @@ export class PoSavingsComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('poSavingTemp', { static: false }) poSavingTemp: ElementRef;
   excelData: any[];
   footer = [];
   footerRowColumn = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
@@ -49,37 +52,43 @@ export class PoSavingsComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  reportDate: Date;
+  userInfo: any;
+  getOrgData: any;
 
 
-  constructor(private excel:ExcelGenService,  
-    private fileUpload : FileUploadServiceService,
-    private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+  constructor(private excel: ExcelGenService,
+    private fileUpload: FileUploadServiceService,
+    private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     private assetValidation: AssetValidationService,
-    private _bottomSheet:MatBottomSheet) {
-      this.clientData = AuthService.getClientData()
-    }
-
-  ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    if(!this.dataList){
-      this.getPoSavingSchemedata();
-      }else{
-        this.getPoSavingSchemedataResponse(this.dataList);
-      }
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
+    this.clientData = AuthService.getClientData()
   }
 
-  Excel(tableTitle){
+  ngOnInit() {
+    this.reportDate = new Date();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    if (!this.dataList) {
+      this.getPoSavingSchemedata();
+    } else {
+      this.getPoSavingSchemedataResponse(this.dataList);
+    }
+  }
+
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     }
     this.myFiles = [];
@@ -98,7 +107,7 @@ export class PoSavingsComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -147,7 +156,7 @@ export class PoSavingsComponent implements OnInit {
       if (data.assetList) {
         this.assetValidation.getAssetCountGLobalData();
         console.log('getPoSavingSchemedataResponse', data);
-        if(!this.dataList){
+        if (!this.dataList) {
           this.poDataList.emit(data);
         }
         this.datasource.data = data.assetList;
@@ -157,10 +166,14 @@ export class PoSavingsComponent implements OnInit {
         this.SumOfBalancementioned = data.SumOfBalancementioned;
         this.posavingdata = data;
       }
-    }  else {
+    } else {
       this.noData = 'No scheme found';
       this.datasource.data = [];
 
+    }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.poSavingTemp.nativeElement);
     }
   }
 

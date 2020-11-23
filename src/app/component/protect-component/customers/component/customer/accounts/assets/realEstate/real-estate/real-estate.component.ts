@@ -1,19 +1,19 @@
-import {Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource, MatBottomSheet} from '@angular/material';
-import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
-import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {PdfGenService} from 'src/app/services/pdf-gen.service';
-import {FileUploadServiceService} from '../../file-upload-service.service';
-import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
+import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
+import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
+import { EnumServiceService } from '../../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
@@ -33,9 +33,12 @@ export class RealEstateComponent implements OnInit {
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
@@ -44,20 +47,26 @@ export class RealEstateComponent implements OnInit {
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
 
   constructor(public subInjectService: SubscriptionInject,
-              public custmService: CustomerService, public cusService: CustomerService,
-              private excel: ExcelGenService, private pdfGen: PdfGenService,
-              private fileUpload: FileUploadServiceService,
-              public enumService: EnumServiceService, private assetValidation: AssetValidationService,
-              public eventService: EventService, public dialog: MatDialog,
-              private _bottomSheet : MatBottomSheet) {
+    public custmService: CustomerService, public cusService: CustomerService,
+    private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private fileUpload: FileUploadServiceService,
+    public enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    public eventService: EventService, public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     this.getRealEstate();
 
   }
@@ -72,7 +81,7 @@ export class RealEstateComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
-      familyMemberId:(element.ownerList[0].isClient == 1)?0:element.ownerList[0].familyMemberId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value
     };
     this.myFiles = [];
@@ -164,7 +173,8 @@ export class RealEstateComponent implements OnInit {
       this.datasource3.data = [];
     }
     this.assetValidation.getAssetCountGLobalData()
-
+    this.ref.detectChanges();//to refresh the dom when response come
+    this.loaded.emit(this.realEstateTemp.nativeElement);
   }
 
   deleteModal(value, element) {
@@ -182,9 +192,9 @@ export class RealEstateComponent implements OnInit {
             dialogRef.close();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfMarketValue -= element.marketValue;
-              // this.dataList.sumOfPurchaseValue += element.amountInvested;
-              this.getRealEstateRes(this.dataList);
-              // this.datasource3.data = this.dataList;
+            // this.dataList.sumOfPurchaseValue += element.amountInvested;
+            this.getRealEstateRes(this.dataList);
+            // this.datasource3.data = this.dataList;
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
@@ -223,16 +233,16 @@ export class RealEstateComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(data){
+            if (data) {
               this.getRealEstate();
             }
-            else{
-              if(!this.dataList){
-                this.dataList = {assetList:[sideBarData.data]};
+            else {
+              if (!this.dataList) {
+                this.dataList = { assetList: [sideBarData.data] };
                 this.dataList['sumOfMarketValue'] = sideBarData.data.marketValue;
                 this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
               }
-              else{
+              else {
                 this.dataList.assetList.push(sideBarData.data)
                 this.dataList.sumOfMarketValue += sideBarData.data.marketValue;
                 this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
@@ -260,7 +270,7 @@ export class RealEstateComponent implements OnInit {
     if (value == 'All' || value == 'LIVE') { //status is hardcoded not coming from backend
       dataFiltered = this.dataList;
     } else {
-      dataFiltered = this.dataList.filter(function(item) {
+      dataFiltered = this.dataList.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length <= 0) {
@@ -323,5 +333,5 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     desc: 'ICICI FD',
     status: ''
   },
-  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ''},
+  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: '' },
 ];
