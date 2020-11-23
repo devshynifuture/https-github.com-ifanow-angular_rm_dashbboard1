@@ -178,6 +178,7 @@ export class LifeInsuranceComponent implements OnInit {
   goalsToBeMate: boolean = false
   continuous: boolean = false
   existingAsset: boolean = false
+  noOpened : boolean = false
 
 
   constructor(private subInjectService: SubscriptionInject,

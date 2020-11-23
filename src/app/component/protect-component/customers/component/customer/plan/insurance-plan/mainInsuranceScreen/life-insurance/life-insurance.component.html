@@ -826,12 +826,12 @@
                                         <td>
                                             <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
                                                 ADVICE </p>
-                                            <h5 style="margin: 0px;"
+                                            <h5 style="font-size: 18px; margin: 0px;"
                                                 *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
                                                     [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                                             </h5>
-                                            <h5 style="margin: 0px;"
+                                            <h5 style="font-size: 18px; margin: 0px;"
                                                 *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
                                                     [value]="insuranceDetails?.advice"></span>
@@ -877,7 +877,7 @@
             <tr>
                 <td colspan="5" style="padding: 10px;"></td>
             </tr>
-            <tr *ngIf="dataSouce3length > 0">
+            <tr *ngIf="dataSouce3.length > 0">
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
@@ -921,7 +921,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <!-- <tr *ngIf="dataSouce3length == 0">
+                                    <!-- <tr *ngIf="dataSouce3.length == 0">
                                         No data found
                                     </tr> -->
                                 </table>
@@ -994,7 +994,7 @@
                 <td>
                     <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                         <tr>
-                            <td style="border: 1px solid #dee5e7;">
+                            <td>
                                 <p style=" font-size: 18px; font-weight: 600;">Need based analysis</p>
 
                                 <table cellpadding="0" cellspacing="0"
@@ -1015,7 +1015,7 @@
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            1. Liabilities
+                                            <b>1. Liabilities</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1063,14 +1063,14 @@
                                         </tr>
                                         <tr *ngIf="dataSourceLiability.length ==0">
                                             <td>
-                                                <h4 class="text-center pt-12">No data found</h4>
+                                                <h4 style="padding-top: 12px; text-align: center;">No data found</h4>
                                             </td>
                                         </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            2. Dependant's needs
+                                            <b>2. Dependant's needs</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1120,7 +1120,7 @@
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            3. Goals to be met
+                                            <b>3. Goals to be met</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1168,14 +1168,14 @@
                                         </tr>
                                         <tr *ngIf="dataSourceGoals.length ==0">
                                             <td>
-                                                <h4 class="text-center pt-12">No data found</h4>
+                                                <h4 style="padding-top: 12px; text-align: center;">No data found</h4>
                                             </td>
                                         </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            4. Gross life insurance required(1+2+3)
+                                            <b>4. Gross life insurance required(1+2+3)</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1185,17 +1185,52 @@
                                         </td>
                                         <td
                                             style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                            {{plannerObj.GrossLifeinsurance ? '₹' : ''}}
+                                            <span appFormatNumber
+                                                [value]="plannerObj.GrossLifeinsurance ? plannerObj.GrossLifeinsurance : '-'"></span>
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
-
+                                    <table *ngIf="noOpened == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceIncome">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    ₹{{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="dataSourceIncome.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            5 Less : Continuous income source
+                                            <b>5 Less : Continuous income source</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1243,14 +1278,14 @@
                                         </tr>
                                         <tr *ngIf="dataSourceIncome.length ==0">
                                             <td>
-                                                <h4 class="text-center pt-12">No data found</h4>
+                                                <h4 style="padding-top: 12px; text-align: center;">No data found</h4>
                                             </td>
                                         </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            6 Less: Exisiting life Insurance (sum assured)
+                                            <b>6 Less: Exisiting life Insurance (sum assured)</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1265,13 +1300,47 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
-
+                                    <table *ngIf="noOpened == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceIncome">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    ₹{{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="dataSourceIncome.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            7 Less : Existing Assets
+                                            <b>7 Less : Existing Assets</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1322,14 +1391,14 @@
                                         </tr>
                                         <tr *ngIf="dataSourceAsset.length ==0">
                                             <td>
-                                                <h4 class="text-center pt-12">No data found</h4>
+                                                <h4 style="padding-top: 12px; text-align: center;">No data found</h4>
                                             </td>
                                         </tr>
                                     </table>
                                     <tr>
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                            8. Additional life insurance required (4-5-6-7)
+                                            <b>8. Additional life insurance required (4-5-6-7)</b>
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1344,8 +1413,42 @@
                                         </td>
 
                                     </tr>
-                                    <table cellpadding="0" cellspacing="0" style="width: 90%; margin: 15px auto;">
-
+                                    <table *ngIf="noOpened == true" cellpadding="0" cellspacing="0"
+                                        style="width: 90%; margin: 15px auto;">
+                                        <tr>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-left:  1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income details</td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                Income amount
+                                            </td>
+                                            <td
+                                                style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                                % to consider
+                                            </td>
+                                        </tr>
+                                        <tr *ngFor="let element of dataSourceIncome">
+                                            <td
+                                                style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                {{element.name}}
+                                            </td>
+                                            <td
+                                                style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    ₹{{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
+                                            </td>
+                                            <td
+                                                style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                <span appFormatNumber>
+                                                    {{element.percent}}%</span>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="dataSourceIncome.length ==0">
+                                            <td>
+                                                <h4 class="text-center pt-12">No data found</h4>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </table>
                             </td>
