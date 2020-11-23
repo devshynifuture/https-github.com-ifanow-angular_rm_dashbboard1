@@ -58,21 +58,21 @@ export class LifeInsuranceComponent implements OnInit {
   }
   setLogo = [{
     heading: 'Life insurance',
-    logo: '/assets/images/svg/LIbig.svg',
-    bigLogo: '/assets/images/svg/LIbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIbig.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIbig.svg',
 
   }, {
     value: '1',
     header: 'Add Health Insurance',
     smallHeading: 'health insurance',
     insuranceType: 5,
-    logo: '/assets/images/svg/helth-insurance.svg',
-    bigLogo: '/assets/images/svg/HIbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/helth-insurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/Hbig.svg',
     heading: 'Health insurance',
     subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
   }, {
     value: '2',
-    logo: '/assets/images/svg/Criticalillness.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Criticalillness.svg',
     bigLogo: '/assets/images/svg/CIbig.svg',
     header: 'Add Critical Illness',
     smallHeading: 'critical illness',
@@ -81,8 +81,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
   }, {
     value: '3',
-    logo: '/assets/images/svg/Cancercare.svg',
-    bigLogo: '/assets/images/svg/CCbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Cancercare.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/CCbig.svg',
     header: 'Add Cancer Care',
     smallHeading: 'cancer care',
     insuranceType: 11,
@@ -90,8 +90,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
   }, {
     value: '4',
-    logo: '/assets/images/svg/Personalaccident.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Personalaccident.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Personal Accident',
     heading: 'Personal accident',
     smallHeading: 'personal accident',
@@ -99,8 +99,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
   }, {
     value: '5',
-    logo: '/assets/images/svg/Householders.svg',
-    bigLogo: '/assets/images/svg/Hbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Householders.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/HIbig.svg',
     header: 'Add Householders',
     smallHeading: 'householders',
     insuranceType: 9,
@@ -108,8 +108,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
   }, {
     value: '6',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/Fibig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/Fibig.svg',
     header: 'Add Fire Insurance',
     smallHeading: 'fire insurance',
     insuranceType: 10,
@@ -118,8 +118,8 @@ export class LifeInsuranceComponent implements OnInit {
   },
   {
     value: '7',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Travel Insurance',
     smallHeading: 'travel insurance',
     insuranceType: 8,
@@ -127,8 +127,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
   }, {
     value: '8',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Motor Insurance',
     smallHeading: 'motor insurance',
     insuranceType: 4,
