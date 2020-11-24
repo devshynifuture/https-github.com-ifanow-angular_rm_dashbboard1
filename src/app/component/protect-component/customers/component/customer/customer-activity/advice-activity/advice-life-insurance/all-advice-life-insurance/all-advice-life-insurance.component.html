@@ -198,8 +198,7 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br">
-                <mat-checkbox *ngIf="isLoading==false
-                    [checked]=" ulipCount==traditionalDataSource.data.length"
+                <mat-checkbox *ngIf="isLoading==false" [checked]=" ulipCount==traditionalDataSource.data.length"
                     [indeterminate]="ulipCount>0 && ulipCount<traditionalDataSource.data.length"
                     (change)=" checkAll($event,traditionalDataSource,'recurringDeposit')"></mat-checkbox>
             </th>
