@@ -15,7 +15,10 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   isLoading: boolean;
   selectedAssetId: any = [];
   openAddEdit;
-
+  pordCount = 0;
+  displayedColumns = [];
+  displayedColumns2 = [];
+  displayedColumns3 = [];
 
   healthInsuranceDataSource = new MatTableDataSource([{}, {}, {}]);
   personalAccidentDataSource = new MatTableDataSource([{}, {}, {}]);

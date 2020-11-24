@@ -579,7 +579,7 @@
                 <mat-checkbox [checked]="travelCount==travelDataSource.data.length"
                     [indeterminate]="travelCount>0 && travelCount<travelDataSource.data.length"
                     (change)="checkAll($event,travelDataSource,'travel')"
-                    *ngIf="isLoading==false && travelDataSource.tableFlag">
+                    *ngIf="isLoading==false && travelDataSource.data.length">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -683,7 +683,7 @@
                 <mat-checkbox [checked]="homeCount==homeInsDataSource.data.length"
                     [indeterminate]="homeCount>0 && homeCount<homeInsDataSource.data.length"
                     (change)="checkAll($event,homeInsDataSource,'home')"
-                    *ngIf="isLoading==false && homeInsDataSource.tableFlag"></mat-checkbox>
+                    *ngIf="isLoading==false && homeInsDataSource.data.length"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"
@@ -790,7 +790,7 @@
                 <mat-checkbox (change)="checkAll($event,travelDataSource,'fire')"
                     [checked]="pordCount==FireDataSource.data.length"
                     [indeterminate]="pordCount>0 && pordCount<FireDataSource.data.length"
-                    *ngIf="isLoading==false && FireDataSource.tableFlag"></mat-checkbox>
+                    *ngIf="isLoading==false && FireDataSource.data.length"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,FireDataSource,'fire')">
