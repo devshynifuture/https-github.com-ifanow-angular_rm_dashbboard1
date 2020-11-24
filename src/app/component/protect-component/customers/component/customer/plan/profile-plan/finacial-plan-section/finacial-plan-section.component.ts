@@ -304,7 +304,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   uploadFile(innerHtmlData, sectionName, displayName) {
     const obj = {
       clientId: this.clientId,
-      fileName: sectionName + '.html'
+      fileName: sectionName + '.html',
+      htmlInput: String(innerHtmlData.innerHTML)
     };
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, innerHtmlData)
@@ -312,14 +313,6 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   uploadFileRes(data, innerHtmlData) {
     console.log(data);
-    const httpOptions = {
-      headers: new HttpHeaders()
-        .set('Content-Type', '')
-    };
-    this.http.put(data.fileUploadUrl, innerHtmlData.innerHTML, httpOptions).subscribe((responseData) => {
-      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-
-    });
   }
   getGoalSummaryValues() {
     let data = {
