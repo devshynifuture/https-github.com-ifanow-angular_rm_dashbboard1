@@ -464,19 +464,19 @@
                     <button mat-menu-item>Delete</button>
                 </mat-menu>
                 <div class=" bar">
-                        <i *ngIf="isLoading==false" class="material-icons">
-                            more_vert
-                        </i>
+                    <i *ngIf="isLoading==false" class="material-icons">
+                        more_vert
+                    </i>
 
-</div>
-</td>
-</ng-container>
-<tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-</table>
-<div *ngIf="ulipDataSource.tableFlag==false" class="b-a bt-0">
-    <h4 class="text-center p-44">No Data Found</h4>
-</div>
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+    </table>
+    <div *ngIf="ulipDataSource.tableFlag==false" class="b-a bt-0">
+        <h4 class="text-center p-44">No Data Found</h4>
+    </div>
 </div>
 <div *ngIf="allAdvice == true">
     <app-all-advice-life-insurance></app-all-advice-life-insurance>
