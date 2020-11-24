@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h3 class="mb-0 wrapper-20"><img (click)="backToTransact()" class="c-p mr-8"
-                                       src="/assets/images/svg/back-arrow.svg"> Switch transaction</h3>
+          src="/assets/images/svg/back-arrow.svg"> Switch transaction</h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -82,10 +82,9 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
-                       formControlName="schemeSwitch" matInput placeholder="Start typing to see scheme names"
-                       type="text">
+                  formControlName="schemeSwitch" matInput placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
-                                  [displayWith]="processTransaction.displaySchemeName">
+                  [displayWith]="processTransaction.displaySchemeName">
                   <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
@@ -113,11 +112,10 @@
           <div class="col-md-7 p-0">
             <div class="form-group">
               <mat-form-field>
-                <mat-select class="form-control"
-                            formControlName="investmentAccountSelection">
+                <mat-select class="form-control" formControlName="investmentAccountSelection">
                   <mat-option *ngIf="folioList.length > 1" disabled value=''>Select scheme folio</mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
-                              [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
+                    [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                   This field is required
@@ -143,16 +141,14 @@
                   <p class="f-14 m-0">Current value</p>
                   <mat-form-field appearance="standard" floatLabel="never">
                     <input #currentValue [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           formControlName="currentValue" matInput
-                           type="text">
+                      formControlName="currentValue" matInput type="text">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
                   <mat-form-field appearance="standard" floatLabel="never">
                     <input #balanceUnit [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           formControlName="balanceUnit" matInput
-                           type="text">
+                      formControlName="balanceUnit" matInput type="text">
                   </mat-form-field>
                 </div>
               </div>
@@ -176,11 +172,11 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input (changedValue)="getSchemeListTranfer($event)" [matAutocomplete]="auto1" appCustomAutoComplete
-                       aria-label="Number" class="form-control" formControlName="transferIn" matInput
-                       placeholder="Start typing to see transferIn names" type="text">
+                  aria-label="Number" class="form-control" formControlName="transferIn" matInput
+                  placeholder="Start typing to see transferIn names" type="text">
                 <mat-autocomplete #auto1="matAutocomplete"
-                                  (optionSelected)="selectedSchemeTransfer($event.option.value)"
-                                  [displayWith]="processTransaction.displaySchemeName">
+                  (optionSelected)="selectedSchemeTransfer($event.option.value)"
+                  [displayWith]="processTransaction.displaySchemeName">
                   <mat-option *ngFor="let scheme of filterNewSchemeList  | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
@@ -228,7 +224,7 @@
           <div class="col-md-5 p-0">
             <mat-form-field>
               <mat-select (selectionChange)="switchType($event.value)" class="form-control br-0"
-                          formControlName="switchType">
+                formControlName="switchType">
                 <mat-option disabled value=''>Select Switch type</mat-option>
                 <mat-option value="1">Amount Rs.
                 </mat-option>
@@ -252,22 +248,24 @@
             <div class="form-group inputPaddNone">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input #employeeContry (change)="enteredAmount($event.target.value)"
-                       [inputValidator]="validatorType.NUMBER_ONLY"
-                       appInputValueValidation class="form-control br-0 rupess"
-                       formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
-                       type="text">
+                  [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control br-0 rupess"
+                  formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
+                  type="text">
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value) == 1" align="start"
-                          class="f-12 text-custom">
+                  class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetailsTransfer == undefined) ? '0' : schemeDetailsTransfer.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value == 2)" align="start"
-                          class="f-12 text-custom">
+                  class="f-12 text-custom">
                   Min units: {{(schemeDetails == undefined) ? '0' : schemeDetails.minimumRedemptionQty }}
                 </mat-hint>
-                <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.min)" class="f-12">
+                <mat-error
+                  *ngIf="(switchTransaction.get('employeeContry').errors?.min) && (switchTransaction.get('switchType').value) == 1"
+                  class="f-12">
                   Should be greater than or equal
-                  to {{switchTransaction.get('switchType').value == 1 ? schemeDetailsTransfer.minimumPurchaseAmount : schemeDetails.minimumRedemptionQty}}
+                  to
+                  {{switchTransaction.get('switchType').value == 1 ? schemeDetailsTransfer.minimumPurchaseAmount : schemeDetails.minimumRedemptionQty}}
                 </mat-error>
                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
@@ -279,7 +277,7 @@
       </div>
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>

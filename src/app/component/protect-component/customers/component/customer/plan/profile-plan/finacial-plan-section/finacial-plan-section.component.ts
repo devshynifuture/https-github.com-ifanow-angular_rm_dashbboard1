@@ -148,14 +148,19 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.planService.mergeCall(this.moduleAdded).subscribe(
       data => this.mergeCallRes(data)
     );
-
+    this.getPDFCall()
   }
   mergeCallRes(data) {
 
   }
+  pdfRes(data) {
+    setTimeout(() => {
+      this.getPDFCall()
+    }, 500);
+  }
   getPDFCall() {
     this.planService.getPDFCall().subscribe(
-      data => this.mergeCallRes(data)
+      data => this.pdfRes(data)
     );
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
