@@ -329,7 +329,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   uploadFileRes(data, displayName) {
-    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName });
+    this.moduleAdded.push({ name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName });
     console.log(data);
   }
   getGoalSummaryValues() {
