@@ -143,23 +143,24 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   download() {
     let obj = {
-
+      clientId: AuthService.getClientId(),
+      s3Objects: this.moduleAdded
     }
-    this.planService.mergeCall(this.moduleAdded).subscribe(
+    this.planService.mergeCall(obj).subscribe(
       data => this.mergeCallRes(data)
     );
-    this.getPDFCall()
-  }
-  mergeCallRes(data) {
 
   }
-  pdfRes(data) {
-    setTimeout(() => {
-      this.getPDFCall()
-    }, 500);
+  mergeCallRes(data) {
+    this.getPDFCall(data)
   }
-  getPDFCall() {
-    this.planService.getPDFCall().subscribe(
+  pdfRes(data) {
+    // setTimeout(() => {
+    //   this.getPDFCall(data)
+    // }, 500);
+  }
+  getPDFCall(data) {
+    this.planService.getPDFCall(data).subscribe(
       data => this.pdfRes(data)
     );
   }
@@ -328,7 +329,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   uploadFileRes(data, displayName) {
-    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++ });
+    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName });
     console.log(data);
   }
   getGoalSummaryValues() {
