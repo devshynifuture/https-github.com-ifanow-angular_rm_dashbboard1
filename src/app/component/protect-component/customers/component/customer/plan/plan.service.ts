@@ -339,7 +339,8 @@ export class PlanService {
   mergeCall(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MEREGE_CALL, data)
   }
-  getPDFCall() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PDF_CALL, '')
+  getPDFCall(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PDF_CALL, httpParams)
   }
 }
