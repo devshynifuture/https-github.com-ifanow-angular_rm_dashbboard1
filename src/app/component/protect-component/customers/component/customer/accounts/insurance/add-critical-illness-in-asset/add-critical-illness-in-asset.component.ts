@@ -66,6 +66,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   showSumAssured = false;
   insuredMemberList: any;
   options: any;
+  showHeader: any;
 
   constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
   validatorType = ValidatorType
@@ -77,6 +78,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     this.inputData = data;
     this.policyList = data.displayList.policyTypes;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getFamilyMemberList();
     this.getdataForm(data)
     // this.setInsuranceDataFormField(data);

@@ -63,8 +63,9 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
   bankList: any;
+  showHeader: any;
 
-  constructor(private dialog: MatDialog,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private enumService:EnumServiceService) { }
+  constructor(private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() set data(data) {
@@ -74,6 +75,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     this.policyList = data.displayList.policyTypes;
     this.policyFeature = data.displayList.policyFeature;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getdataForm(data)
     // this.setInsuranceDataFormField(data);
     console.log(data);
@@ -155,7 +157,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],clientId: [data ? data.clientId : 0],userType: [data ? data.userType : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], clientId: [data ? data.clientId : 0], userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -446,7 +448,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -456,20 +458,20 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     });
 
   }
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   dateChange(value, form, formValue) {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.travelInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any =this.datePipe.transform(this.travelInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd') ;
+      let comparedDate: any = this.datePipe.transform(this.travelInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd');
       // let comparedDate: any = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
       // comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       // comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
@@ -501,17 +503,17 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-        if(data.length>0){
-            this.options = data;
-          }else{
-            this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
-            this.travelInsuranceForm.get('insurerName').markAsTouched();
-          }
-    },
-    err=>{
+        if (data.length > 0) {
+          this.options = data;
+        } else {
+          this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+          this.travelInsuranceForm.get('insurerName').markAsTouched();
+        }
+      },
+      err => {
         this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
         this.travelInsuranceForm.get('insurerName').markAsTouched();
-    }
+      }
     );
   }
 
@@ -541,7 +543,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       this.travelInsuranceForm.controls['sumAssuredIdv'].setValidators(null);
     }
   }
-  getClientId(){
+  getClientId() {
     this.nomineesListFM.forEach(element => {
       for (const e in this.getCoOwner.controls) {
         const id = this.getCoOwner.controls[e].get('familyMemberId');
@@ -555,7 +557,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       }
 
     });
-}
+  }
   saveTravelInsurance() {
     this.getClientId();
     let memberList = [];
@@ -600,8 +602,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "policyNumber": this.travelInsuranceForm.get('policyNum').value,
         "planName": this.travelInsuranceForm.get('planeName').value,
         "premiumAmount": this.travelInsuranceForm.get('premium').value,
-        "policyStartDate":this.datePipe.transform(this.travelInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.travelInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.travelInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.travelInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "geographyId": this.travelInsuranceForm.get('geography').value,
         "exclusion": this.travelInsuranceForm.get('exclusion').value,
         "tpaName": this.travelInsuranceForm.get('tpaName').value,
@@ -653,8 +655,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:this.dataForEdit ? this.dataForEdit.id : null,
-              isAdded:false
+              id: this.dataForEdit ? this.dataForEdit.id : null,
+              isAdded: false
             }
             this.close(insuranceData)
           }
@@ -669,8 +671,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:data,
-              isAdded:true
+              id: data,
+              isAdded: true
             }
             this.close(insuranceData)
           }
