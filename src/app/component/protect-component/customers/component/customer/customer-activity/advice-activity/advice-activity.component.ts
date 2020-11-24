@@ -25,7 +25,9 @@ export class AdviceActivityComponent implements OnInit {
     { name: "Retirement accounts", count: 1, urlPath: '/customer/detail/activity/advice/retirement' },
     { name: "Small saving schemes", count: 1, urlPath: '/customer/detail/activity/advice/smallSavingScheme' },
     { name: "Cash & Bank", count: 1, urlPath: '/customer/detail/activity/advice/cashHand' },
-    { name: "Commodities", count: 1, urlPath: '/customer/detail/activity/advice/commodities' }
+    { name: "Commodities", count: 1, urlPath: '/customer/detail/activity/advice/commodities' },
+    { name: "Life insurance", count: 1, urlPath: '/customer/detail/activity/advice/lifeInsurance' },
+    { name: "General insurance", count: 1, urlPath: '/customer/detail/activity/advice/generalInsurance' }
   ]
   ngOnInit() {
 

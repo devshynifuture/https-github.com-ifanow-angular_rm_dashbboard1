@@ -582,10 +582,6 @@
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Policy number
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Sum assured
             </td>
             <td
@@ -598,15 +594,23 @@
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Premium paying term
+                PPT
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Policy term
+                PT
+            </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Duration remaining
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Plan type
+            </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Policy number
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -622,22 +626,25 @@
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.lifeAssuredName}}</td>
-            <td appFormatNumber
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{(item.policyName) ? item.policyName : '-'}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.policyNumber) ? item.policyNumber : '-'}}</td>
-            <td appFormatNumber
+                {{!isLoading && item.sumAssured ? "₹" : ""}}<span
+                    appFormatNumber>{{(item.sumAssured) ? (item.sumAssured) : 0}}</span>
+            </td>
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.sumAssured) ? (item.sumAssured) : 0}}</td>
-            <td appFormatNumbercurrentVa
+                {{!isLoading && item.currentValue ? "₹" : ""}}<span
+                    appFormatNumber>{{(item.currentValue == 'Infinity' ? 0 : item.currentValue)}}</span>
+            </td>
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.currentValue == 'Infinity' ? 0 : item.currentValue)}}</td>
-            <td appFormatNumber
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.premiumAmount) ? (item.premiumAmount) : 0}}</td>
+                {{!isLoading && item.premiumAmount ? "₹" : ""}}<span appFormatNumber>
+                    {{(item.premiumAmount) ? (item.premiumAmount) : 0}}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.premiumPayingTerm) ? (item.premiumPayingTerm) : '-'}}</td>
@@ -646,8 +653,14 @@
                 {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.statusId == 'MATURED' ? '-' : item.durationRemaining}} </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
             </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{(item.policyNumber) ? item.policyNumber : '-'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
@@ -667,18 +680,26 @@
             </td>
             <td appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                Total
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                Total
+                {{!isLoading && totalSumAssuredLifeIns ? "₹" : ""}}<span [value]="totalSumAssuredLifeIns"
+                    appFormatNumber></span>
             </td>
-            <td [value]="totalSumAssuredLifeIns" appFormatNumber
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalCurrentValue ? "₹" : ""}}<span [value]="totalCurrentValue" appFormatNumber></span>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalPremiunAmountLifeIns ? "₹" : ""}}<span [value]="totalPremiunAmountLifeIns"
+                    appFormatNumber></span>
+            </td>
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td [value]="totalCurrentValue" appFormatNumber
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td [value]="totalPremiunAmountLifeIns" appFormatNumber
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
             <td
@@ -788,7 +809,8 @@
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{showType}}</td>
+                {{showType}}{{(insuranceSubTypeId == 8) ? ' & Geography' : ''}}
+            </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy number
@@ -820,24 +842,28 @@
             </td>
             <td appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.sumAssured}}</td>
+                {{!isLoading && item.sumAssured? "₹" : ""}}<span
+                    appFormatNumber>{{(item.sumAssured)?item.sumAssured:0}}</span>
+            </td>
             <td appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.premiumAmount}}</td>
+                {{!isLoading && item.premiumAmount ? "₹" : ""}}<span appFormatNumber> {{item.premiumAmount}}</span>
+            </td>
             <td appFormatNumber
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                 {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                 {{item.statusId == 'EXPIRED' ? '-' : item.durationRemaining}} </td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.policyType) ? item.policyType : item.planName}}</td>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                {{(item.insuranceSubTypeId == 5) ? ((item.policyFeatureId == 0) ? 'Standard, ' : (item.policyFeatureId == 1) ? 'Top up, ' : (item.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(item.policyType) ? (item.policyType) : item.planName}}{{(insuranceSubTypeId == 8 && item.geographyId) ? ((item.geographyId == 1) ? ' - Worldwide' : (item.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (item.geographyId
+                == 3) ? ' - Asia' : '') : ''}}</td>
             <td appFormatNumber
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                 {{item.policyNumber}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
                 <span *ngIf="item.statusId == 'EXPIRED'" class="text-danger">
@@ -857,11 +883,14 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 Total
             </td>
-            <td [value]="totalSumAssured" appFormatNumber
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalSumAssured? "₹" : ""}}<span appFormatNumber [value]="totalSumAssured"></span>
             </td>
-            <td [value]="totalPremiunAmount" appFormatNumber
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalPremiunAmount ? "₹" : ""}}<span [value]="totalPremiunAmount"
+                    appFormatNumber></span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

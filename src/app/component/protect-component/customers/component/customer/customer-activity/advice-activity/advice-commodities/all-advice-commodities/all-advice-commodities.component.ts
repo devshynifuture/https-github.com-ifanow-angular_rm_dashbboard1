@@ -16,10 +16,10 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class AllAdviceCommoditiesComponent implements OnInit {
 
   displayedColumns3: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'total', 'advice', 'astatus', 'adate', 'icon'];
-  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'advice', 'astatus', 'adate', 'icon'];  dataSource3 = ELEMENT_DATA1;
+  displayedColumns4: string[] = ['checkbox', 'name', 'desc', 'pvalue', 'mvalue', 'advice', 'astatus', 'adate', 'icon']; dataSource3 = ELEMENT_DATA1;
   advisorId: any;
   clientId: any;
-  selectedAssetId: any =[];
+  selectedAssetId: any = [];
   goalCount: any;
   othersCount: any;
   isLoading: boolean;
@@ -27,7 +27,7 @@ export class AllAdviceCommoditiesComponent implements OnInit {
   otherDataSource: any = new MatTableDataSource();
   @ViewChild("tableOne", { static: false }) sort1: MatSort;
   @ViewChild("tableTwo", { static: false }) sort2: MatSort;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService,private AdviceUtilsService:AdviceUtilsService) { }
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private AdviceUtilsService: AdviceUtilsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -42,8 +42,11 @@ export class AllAdviceCommoditiesComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 12,
-      adviceStatusId:0
+      // assetCategory: 12,
+      // adviceStatusId:0
+      categoryMasterId: 12,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -65,18 +68,18 @@ export class AllAdviceCommoditiesComponent implements OnInit {
   getFlagCount(flag, count) {
     (flag == 'gold') ? this.goalCount = count : this.othersCount = count
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -84,11 +87,11 @@ export class AllAdviceCommoditiesComponent implements OnInit {
     });
     return filterdData;
   }
-  getAllSchemeResponse(data){
-    let goldData=this.filterForAsset(data.GOLD)
+  getAllSchemeResponse(data) {
+    let goldData = this.filterForAsset(data.GOLD)
     this.goldDataSource.data = goldData;
     this.goldDataSource.sort = this.sort1;
-    let othersData=this.filterForAsset(data.OTHERS)
+    let othersData = this.filterForAsset(data.OTHERS)
     this.otherDataSource.data = othersData;
     this.goldDataSource['tableFlag'] = (data.GOLD.length == 0) ? false : true;
     this.otherDataSource['tableFlag'] = (data.OTHERS.length == 0) ? false : true;
@@ -178,7 +181,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

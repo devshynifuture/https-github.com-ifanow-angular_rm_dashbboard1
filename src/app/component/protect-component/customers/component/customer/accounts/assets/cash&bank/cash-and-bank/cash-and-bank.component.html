@@ -455,7 +455,8 @@
                 {{element.interestRate | number: '1.2-2'}} {{!isLoading? "%" : ""}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber [value]="element.accountBalance"></span>
+                {{!isLoading && element.accountBalance ? "₹" : ""}}<span appFormatNumber
+                    [value]="element.accountBalance"></span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -504,7 +505,8 @@
                 appFormatNumber></td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="totalAccountBalance" appFormatNumber>{{totalAccountBalance}}</span>
+                {{!isLoading && totalAccountBalance ? "₹" : ""}}<span [value]="totalAccountBalance"
+                    appFormatNumber>{{totalAccountBalance}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -608,7 +610,7 @@
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber [value]="element.cashValue"></span>
+                {{!isLoading && element.cashValue ? "₹" : ""}}<span appFormatNumber [value]="element.cashValue"></span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -632,7 +634,9 @@
                 Total</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfCashValue" appFormatNumber>{{sumOfCashValue}}</span></td>
+                {{!isLoading && sumOfCashValue ? "₹" : ""}}<span [value]="sumOfCashValue"
+                    appFormatNumber>{{sumOfCashValue}}</span>
+            </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber></td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"

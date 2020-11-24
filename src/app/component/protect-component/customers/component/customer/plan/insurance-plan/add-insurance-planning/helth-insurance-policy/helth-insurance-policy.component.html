@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <mat-form-field>
                         <mat-select class="form-control" formControlName="nonFinAdvice">
-                            <mat-option value="">Select option</mat-option>
+                            <mat-option disabled value="">Select option</mat-option>
                             <mat-option value="1">Add nominee</mat-option>
                             <mat-option value="2">Remove nominee</mat-option>
                         </mat-select>
@@ -32,8 +32,8 @@
                     <p class="m-0 text-black pb-4">Advice header</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput [value]="healthInsurance.get('selectAdvice').value" class="form-control"
-                                formControlName="adviceHeader">
+                            <input matInput readonly [value]="healthInsurance.get('selectAdvice').value"
+                                class="form-control" formControlName="adviceHeader">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -86,8 +86,9 @@
                     <p class="m-0 text-black pb-4">Advice date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput #adviceHeaderDate (ngModelChange)="dateChange('adviceHeaderDate')"
-                                [matDatepicker]="picker" class="form-control b-0" formControlName="adviceHeaderDate">
+                            <input autocomplete="off" matInput #adviceHeaderDate [min]="todayDate" [max]="todayDate"
+                                (ngModelChange)="dateChange('adviceHeaderDate')" [matDatepicker]="picker"
+                                class="form-control b-0" formControlName="adviceHeaderDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
@@ -100,8 +101,9 @@
                     <p class="m-0 text-black pb-4">Implementation date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput #implementationDate (ngModelChange)="dateChange('implementationDate')"
-                                [matDatepicker]="picker1" class="form-control b-0" formControlName="implementationDate">
+                            <input autocomplete="off" [min]="todayDate" matInput #implementationDate
+                                (ngModelChange)="dateChange('implementationDate')" [matDatepicker]="picker1"
+                                class="form-control b-0" formControlName="implementationDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <mat-error class="f-12"
@@ -110,6 +112,17 @@
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
                                 Date should be greater than advice date
                             </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0 text-black pb-4">Amount</p>
+                    <div class="form-group">
+                        <mat-form-field class="ba-date">
+                            <input autocomplete="off" maxlength="10" matInput #amount class="form-control b-0"
+                                formControlName="amount">
+                            <mat-error class="f-12" *ngIf="(healthInsurance.get('amount').errors?.required)">This field
+                                is
+                                required</mat-error>
+                            <mat-hint align="end" class="f-12">{{amount.value.length}}/15</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -121,6 +134,8 @@
 <div class="row pt-10">
     <div class="col-md-12 text-right mb-20">
         <button mat-button (click)="close()">CANCEL</button>
-        <button mat-button class="text-primary" (click)="saveAdviceOnHealth()">SAVE</button>
+        <app-progress-button (btnClick)="saveAdviceOnHealth()" [options]="barButtonOptions"
+            class="br-0 text-inherit ml-12">
+        </app-progress-button>
     </div>
 </div>

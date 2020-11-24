@@ -38,7 +38,7 @@ export class AllRetirementAssetComponent implements OnInit {
   gratuityCount: any;
   superannuationCount: any;
   epsCount: any;
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -56,8 +56,11 @@ export class AllRetirementAssetComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 9,
-      adviceStatusId:0
+      // assetCategory: 9,
+      // adviceStatusId:0
+      categoryMasterId: 9,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -75,18 +78,18 @@ export class AllRetirementAssetComponent implements OnInit {
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -94,21 +97,21 @@ export class AllRetirementAssetComponent implements OnInit {
     });
     return filterdData;
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
     this.isLoading = false;
-    let epfData=this.filterForAsset(data.EPF)
+    let epfData = this.filterForAsset(data.EPF)
     this.epfDataSource = new MatTableDataSource(epfData);
     this.epfDataSource.sort = this.sort;
-    let epsData=this.filterForAsset(data.EPS)
+    let epsData = this.filterForAsset(data.EPS)
     this.epsDataSource = new MatTableDataSource(epsData);
     this.epsDataSource.sort = this.sort;
-    let superannuationData=this.filterForAsset(data.SUPERANNUATION)
+    let superannuationData = this.filterForAsset(data.SUPERANNUATION)
     this.superannuationDataSource = new MatTableDataSource(superannuationData);
     this.superannuationDataSource.sort = this.sort;
-    let gratuityData=this.filterForAsset(data.GRATUITY)
+    let gratuityData = this.filterForAsset(data.GRATUITY)
     this.gratuityDataSource = new MatTableDataSource(gratuityData);
     this.gratuityDataSource.sort = this.sort;
-    let npsData=this.filterForAsset(data.NPS)
+    let npsData = this.filterForAsset(data.NPS)
     this.npsDataSource = new MatTableDataSource(npsData);
     this.npsDataSource.sort = this.sort;
     this.epfDataSource['tableFlag'] = (data.EPF.length == 0) ? false : true;

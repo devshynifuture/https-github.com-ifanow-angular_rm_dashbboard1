@@ -1634,6 +1634,13 @@
         </tr>
 
     </table>
+    <tr>
+        <div *ngIf="dataSource.data?.length == 0 && dataSource2.data?.length==0  && dataSource3.data?.length==0 && dataSource4.data?.length==0 "
+            class="d-flex flex-column align-items-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+        </div>
+    </tr>
 
     </html>
 </div>

@@ -36,13 +36,16 @@ export class AllAdviceRealAssetComponent implements OnInit {
   }
   allAdvice = true;
   getAllAdviceByAsset() {
-  this.isLoading = true;
+    this.isLoading = true;
     this.dataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 8,
-      adviceStatusId: 0
+      // assetCategory: 8,
+      // adviceStatusId: 0
+      categoryMasterId: 8,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {

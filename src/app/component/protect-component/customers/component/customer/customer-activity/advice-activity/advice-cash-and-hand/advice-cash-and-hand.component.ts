@@ -65,8 +65,11 @@ export class AdviceCashAndHandComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 11,
-      adviceStatusId:1
+      // assetCategory: 11,
+      // adviceStatusId:1
+      categoryMasterId: 11,
+      categoryTypeId: 0,
+      status: 1
     }
     this.cashInHandDataSource.data = [{}, {}, {}];
     this.bankAccDataSource.data = [{}, {}, {}]
@@ -81,18 +84,18 @@ export class AdviceCashAndHandComponent implements OnInit {
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -102,9 +105,9 @@ export class AdviceCashAndHandComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     console.log(data);
-    let bankAccData=this.filterForAsset(data.BANK_ACCOUNTS)
+    let bankAccData = this.filterForAsset(data.BANK_ACCOUNTS)
     this.bankAccDataSource.data = bankAccData;
-    let cashInHandData=this.filterForAsset(data.CASH_IN_HAND)
+    let cashInHandData = this.filterForAsset(data.CASH_IN_HAND)
     this.cashInHandDataSource.data = cashInHandData;
     this.bankAccDataSource['tableFlag'] = (data.BANK_ACCOUNTS.length == 0) ? false : true;
     this.cashInHandDataSource['tableFlag'] = (data.CASH_IN_HAND.length == 0) ? false : true;

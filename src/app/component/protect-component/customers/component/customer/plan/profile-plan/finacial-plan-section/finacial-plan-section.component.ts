@@ -39,6 +39,10 @@ import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/s
 import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
+import { HttpService } from 'src/app/http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
+import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -72,7 +76,9 @@ import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen
     SsySchemeComponent,
     NscSchemeComponent,
     PPFSchemeComponent,
-    LifeInsuranceComponent
+    LifeInsuranceComponent,
+    MutualFundsCapitalComponent,
+    MfCapitalDetailedComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -93,7 +99,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientId: any;
   insuranceList: any;
   insurancePlanningList: any;
-  constructor(private util: UtilService, private resolver: ComponentFactoryResolver,
+  count: any = 0;
+  constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -102,6 +109,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.count = 0;
     this.moduleAdded = [];
     this.getGoalSummaryValues();
     this.getInsuranceList();
@@ -121,7 +129,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false);
-    this.moduleAdded.push({ name: displayName });
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -134,22 +142,22 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   download() {
-    // let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
-    // list.forEach(element => {
-    //   if (element.id == 1) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-    //     window.open(element.url)
-    //   } else if (element.id == 2) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18' + '&' + 'fromDate=2019%2F11%2F18'
-    //     window.open(element.url)
-    //   } else if (element.id == 3) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-    //     window.open(element.url)
-    //   }
-    // });
+    let obj = {
+
+    }
+    this.planService.mergeCall(this.moduleAdded).subscribe(
+      data => this.mergeCallRes(data)
+    );
 
   }
+  mergeCallRes(data) {
 
+  }
+  getPDFCall() {
+    this.planService.getPDFCall().subscribe(
+      data => this.mergeCallRes(data)
+    );
+  }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
     let factory;
     if (value) {
@@ -273,7 +281,12 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Life insurance':
           factory = this.resolver.resolveComponentFactory(LifeInsuranceComponent);
           break;
-
+        case 'Capital Gain Summary':
+          factory = this.resolver.resolveComponentFactory(MutualFundsCapitalComponent);
+          break;
+        case 'MF Capital Gain Detailed':
+          factory = this.resolver.resolveComponentFactory(MfCapitalDetailedComponent);
+          break;
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
@@ -291,12 +304,27 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           this.generatePdf(data, sectionName, displayName);
+          this.uploadFile(data, sectionName, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
     }
 
 
+  }
+  uploadFile(innerHtmlData, sectionName, displayName) {
+    const obj = {
+      clientId: this.clientId,
+      name: sectionName + '.html',
+      htmlInput: String(innerHtmlData.innerHTML)
+    };
+    this.planService.getFinPlanFileUploadUrl(obj).subscribe(
+      data => this.uploadFileRes(data, displayName)
+    );
+  }
+  uploadFileRes(data, displayName) {
+    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++ });
+    console.log(data);
   }
   getGoalSummaryValues() {
     let data = {

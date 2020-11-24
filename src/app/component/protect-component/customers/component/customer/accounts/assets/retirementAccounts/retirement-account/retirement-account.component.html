@@ -1201,21 +1201,34 @@
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.currentEpfValue?element.currentEpfValue:!isLoading?'-':''}}</span>
+                {{!isLoading && element.currentEpfValue ? "₹" : ""}}<span
+                    appFormatNumber>{{element.currentEpfValue?element.currentEpfValue:!isLoading?'-':''}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.currentEpsValue?element.currentEpsValue:!isLoading?'-':''}}</span></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{ element.employeesMonthlyContribution }} </span></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{ element.employersMonthlyContribution }} </span>
+                {{!isLoading && element.currentEpsValue ? "₹" : ""}}<span
+                    appFormatNumber>{{element.currentEpsValue?element.currentEpsValue:!isLoading?'-':''}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{ element.voluntaryContribution }} </span></td>
+                {{!isLoading && element.employeesMonthlyContribution ? "₹" : ""}}<span
+                    appFormatNumber>{{ element.employeesMonthlyContribution ? element.employeesMonthlyContribution : '-' }}
+                </span>
+
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && element.employersMonthlyContribution ? "₹" : ""}}<span
+                    appFormatNumber>{{ element.employersMonthlyContribution ? element.employersMonthlyContribution : '-' }}
+                </span>
+
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && element.voluntaryContribution ? "₹" : ""}}<span
+                    appFormatNumber>{{ element.voluntaryContribution ? element.voluntaryContribution : '-'}} </span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}
@@ -1239,20 +1252,26 @@
                 appFormatNumber>Total</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfcurrentEpfBalance" appFormatNumber>{{sumOfcurrentEpfBalance}}</span></td>
+                {{!isLoading && sumOfcurrentEpfBalance ? "₹" : ""}}<span
+                    [value]="sumOfcurrentEpfBalance ? sumOfcurrentEpfBalance :'-'" appFormatNumber></span>
+            </td>
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span>
+                {{!isLoading && sumOfcurrentEpsBalance ? "₹" : ""}}<span
+                    [value]="sumOfcurrentEpsBalance ? sumOfcurrentEpsBalance :'-'"
+                    appFormatNumber>{{sumOfcurrentEpsBalance ? sumOfcurrentEpsBalance :'-'}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfemployeesMonthlyContribution"
+                {{!isLoading && sumOfemployeesMonthlyContribution ? "₹" : ""}}<span
+                    [value]="sumOfemployeesMonthlyContribution ? sumOfemployeesMonthlyContribution : '-'"
                     appFormatNumber>{{sumOfemployeesMonthlyContribution}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfemployersMonthlyContribution"
+                {{!isLoading && sumOfemployersMonthlyContribution ? "₹" : ""}}<span
+                    [value]="sumOfemployersMonthlyContribution ? sumOfemployersMonthlyContribution : '-'"
                     appFormatNumber>{{sumOfemployersMonthlyContribution}}</span>
             </td>
             <td
@@ -1364,7 +1383,8 @@
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.currentValuation?element.currentValuation:!isLoading?'-':''}}</span>
+                {{!isLoading && element.currentValuation? "₹" : ""}}<span
+                    appFormatNumber>{{element.currentValuation?element.currentValuation:!isLoading?'-':''}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -1403,10 +1423,15 @@
                 appFormatNumber>Total</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span></td>
+                {{!isLoading && totalCurrentValue? "₹" : ""}}<span [value]="totalCurrentValue ? totalCurrentValue :'-'"
+                    appFormatNumber>{{totalCurrentValue}}</span>
+
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="totalContribution" appFormatNumber>{{totalContribution}}</span>
+                {{!isLoading && totalContribution ? "₹" : ""}}<span [value]="totalContribution ? totalContribution :'-'"
+                    appFormatNumber>{{totalContribution}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -1532,7 +1557,9 @@
                 {{element.yearsCompleted}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{element.gratuityReceived}}</span>
+                {{!isLoading && element.gratuityReceived ? "₹" : ""}}<span
+                    appFormatNumber>{{element.gratuityReceived ? element.gratuityReceived :'-'}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -1570,11 +1597,17 @@
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span>
+                {{!isLoading && sumOfGratuityReceived ? "₹" : ""}}<span
+                    [value]="sumOfGratuityReceived ? sumOfGratuityReceived : '-'"
+                    appFormatNumber>{{sumOfGratuityReceived}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfAmountReceived" appFormatNumber>{{sumOfAmountReceived}}</span>
+                {{!isLoading && sumOfAmountReceived ? "₹" : ""}}<span
+                    [value]="sumOfAmountReceived ? sumOfAmountReceived : '-'"
+                    appFormatNumber>{{sumOfAmountReceived}}</span>
+
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

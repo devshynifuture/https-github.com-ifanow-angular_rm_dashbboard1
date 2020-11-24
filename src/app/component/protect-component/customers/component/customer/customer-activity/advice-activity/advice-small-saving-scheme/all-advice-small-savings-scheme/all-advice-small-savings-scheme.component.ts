@@ -49,7 +49,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
   selectedAssetId: any = [];
   pordCount: any;
 
-  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService) { }
+  constructor(private utilService: UtilService, private subInjectService: SubscriptionInject, private activityService: ActiityService) { }
   allAdvice = true
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -70,8 +70,11 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 10,
-      adviceStatusId:0
+      // assetCategory: 10,
+      // adviceStatusId:0
+      categoryMasterId: 10,
+      categoryTypeId: 0,
+      status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
@@ -96,18 +99,18 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -166,25 +169,25 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
         break;
     }
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
     this.isLoading = false;
-    let ppfData=this.filterForAsset(data.PPF)
+    let ppfData = this.filterForAsset(data.PPF)
     this.ppfDataSource.data = ppfData;
-    let nscData=this.filterForAsset(data.NSC)
+    let nscData = this.filterForAsset(data.NSC)
     this.nscDataSource.data = nscData;
-    let ssyData=this.filterForAsset(data.SSY)
+    let ssyData = this.filterForAsset(data.SSY)
     this.ssyDataSource.data = ssyData;
-    let kvpData=this.filterForAsset(data.KVP)
+    let kvpData = this.filterForAsset(data.KVP)
     this.kvpDataSource.data = kvpData;
-    let scssData=this.filterForAsset(data.SCSS)
+    let scssData = this.filterForAsset(data.SCSS)
     this.scssDataSource.data = scssData;
-    let poSavingData=this.filterForAsset(data.PO_Savings)
+    let poSavingData = this.filterForAsset(data.PO_Savings)
     this.posavingDataSource.data = poSavingData;
-    let pordData=this.filterForAsset(data.PO_RD)
+    let pordData = this.filterForAsset(data.PO_RD)
     this.pordDataSource.data = pordData;
-    let pomisData=this.filterForAsset(data.PO_MIS)
+    let pomisData = this.filterForAsset(data.PO_MIS)
     this.pomisDataSource.data = pomisData;
-    let potdData=this.filterForAsset(data.PO_TD)
+    let potdData = this.filterForAsset(data.PO_TD)
     this.potdDataSource.data = potdData;
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.nscDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;
@@ -237,7 +240,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -247,7 +250,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
       data,
       id: 1,
       state: (flag == 'detailedKvp') ? 'open35' : 'open',
-      componentName : AddKvpComponent
+      componentName: AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -260,7 +263,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -270,7 +273,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
       data,
       id: 1,
       state: (flag == 'detailedScss') ? 'open35' : 'open',
-      componentName:  AddScssComponent
+      componentName: AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -283,7 +286,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -306,7 +309,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -351,7 +354,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -374,7 +377,7 @@ export class AllAdviceSmallSavingsSchemeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-        
+
       }
     );
   }
@@ -448,7 +451,7 @@ const ELEMENT_DATA2: PeriodicElement2[] = [
   { name: 'Rahul Jain', desc: '2', cvalue: 'This is', emprcon: '23123', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];
-export interface PeriodicElement4{
+export interface PeriodicElement4 {
   name: string;
   desc: string;
   cvalue: string;
@@ -459,7 +462,7 @@ export interface PeriodicElement4{
 }
 
 const ELEMENT_DATA4: PeriodicElement4[] = [
-  { name: 'Rahul Jain', desc: '1', cvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', cvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', cvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

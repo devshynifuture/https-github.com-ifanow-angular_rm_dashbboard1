@@ -518,7 +518,7 @@
 <div #allTranTemplateHeader id="alltemplateHeader" class="hide" *ngIf="showDownload == true">
    <table id="FakeHeaders" *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="unrealisedData">
          <td *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
             style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayTran[0]?.name}}</b>
@@ -558,7 +558,7 @@
 
 <div #unrealizedTranTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
    <table id="FakeHeaders" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
-      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="unrealisedData">
          <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
             style="width: 4%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
@@ -663,7 +663,7 @@
          </td>
 
       </tr>
-      <div *ngIf="isTableShow">
+      <div *ngIf="isTableShow && unrealisedData">
          <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
                style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -791,7 +791,7 @@
    <!-- Unrealized Transactions -->
    <table *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="unrealisedData">
          <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
             style="width: 4%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
@@ -1027,7 +1027,7 @@
    <!-- All Transactions -->
    <table *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="unrealisedData">
          <td *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
             style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayTran[0]?.name}}</b>
@@ -1199,4 +1199,8 @@
 
       </tbody>
    </table>
+   <div *ngIf="!unrealisedData" class="d-flex flex-column align-items-center">
+      <img class="width300" src="assets/images/svg/noDataFound.svg">
+      <h4 class="text-center pt-12"> No data found</h4>
+   </div>
 </div>

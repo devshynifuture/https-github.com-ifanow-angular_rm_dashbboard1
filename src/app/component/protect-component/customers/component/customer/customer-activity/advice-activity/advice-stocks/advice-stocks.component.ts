@@ -40,15 +40,18 @@ export class AdviceStocksComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 1,
-      adviceStatusId:1
+      // assetCategory: 1,
+      // adviceStatusId:1,
+      categoryMasterId: 6,
+      categoryTypeId: 0,
+      status: 1
     }
     this.stockDatasource = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
         this.isLoading = false;
-        this.stockDatasource=[];
+        this.stockDatasource = [];
         this.stockDatasource['tableFlag'] = (this.stockDatasource.length == 0) ? false : true;
 
         // this.datasource.data = [];
@@ -59,12 +62,12 @@ export class AdviceStocksComponent implements OnInit {
 
   getAllAssetResponse(data) {
     this.isLoading = false;
-    let filterdData=[];
-    let stockData=data.STOCKS;
+    let filterdData = [];
+    let stockData = data.STOCKS;
     stockData.forEach(element => {
-      var asset=element.AssetDetails;
+      var asset = element.AssetDetails;
       element.AdviceList.forEach(obj => {
-        obj.assetDetails=asset;
+        obj.assetDetails = asset;
         filterdData.push(obj);
       });
     });
