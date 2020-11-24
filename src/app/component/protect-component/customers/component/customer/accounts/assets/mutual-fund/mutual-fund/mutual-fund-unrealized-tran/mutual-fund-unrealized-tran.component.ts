@@ -792,6 +792,9 @@ export class MutualFundUnrealizedTranComponent {
       }, (error) => {
         this.isLoading = false;
         this.eventService.showErrorMessage(error);
+        this.showDownload = true;
+        this.cd.detectChanges();
+        this.loaded.emit(this.unrealizedTranTemplate.nativeElement);
       }
     );
   }
@@ -1000,7 +1003,7 @@ export class MutualFundUnrealizedTranComponent {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
       this.rightFilterData.reportType = [];
       this.rightFilterData.reportType[0] = {
-        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise' )),
+        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise')),
         selected: true,
       };
       if (this.isRouterLink) {
