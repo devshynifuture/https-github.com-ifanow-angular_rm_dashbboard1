@@ -198,7 +198,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
-        this.isSpinner = false
+        this.isSpinner = true
         const file = new Blob([data], { type: 'application/pdf' });
         //fragData.isSpinner = false;
         //fragData.size = this.formatFileSize(data.size,0);
