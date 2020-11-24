@@ -13,8 +13,8 @@
         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
     </div>
     <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
-        <img (click)="generatePdf(null)" class="" matTooltip="Download PDF"
-            src="assets/images/svg/download-pdf-blue.svg" class="pr-16 h-24">
+        <img (click)="generatePdf()" class="" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg"
+            class="pr-16 h-24">
         <img (click)="deleteInsurance()" src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>

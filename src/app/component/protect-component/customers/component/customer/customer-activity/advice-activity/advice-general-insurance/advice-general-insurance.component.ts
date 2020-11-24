@@ -10,6 +10,7 @@ import { ActiityService } from '../../actiity.service';
   styleUrls: ['./advice-general-insurance.component.scss']
 })
 export class AdviceGeneralInsuranceComponent implements OnInit {
+  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   advisorId: any;
   clientId: any;
   isLoading: boolean;

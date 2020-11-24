@@ -372,7 +372,7 @@
     </div>
 </div>
 <!----------------------------Gold------------------------------------------>
-<div #goldTemp id="template" class="hide" *ngIf="showRequring == 1">
+<div #goldTemp id="template" class="hide" *ngIf="showRequring == '1'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -501,8 +501,9 @@
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="totalMonthlyIncome">{{totalMonthlyIncome}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{isLoading ? '' : 'Total'}}</td>
@@ -526,7 +527,7 @@
     </table>
 </div>
 <!----------------------------Others------------------------------------------>
-<div #othersTemp id="template" *ngIf="showRequring == 2" class="hide">
+<div #othersTemp id="template" *ngIf="showRequring == '2'" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
