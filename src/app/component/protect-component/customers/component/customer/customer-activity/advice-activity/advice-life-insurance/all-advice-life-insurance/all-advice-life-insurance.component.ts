@@ -40,9 +40,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       clientId: this.clientId,
       // assetCategory: 7,
       // adviceStatusId: 1,
-      categoryMasterId: 7,
+      categoryMasterId: 3,
       categoryTypeId: 0,
-      status: 1
+      status: 0
     }
     this.isLoading = true;
     this.termDataSource = [{}, {}, {}];

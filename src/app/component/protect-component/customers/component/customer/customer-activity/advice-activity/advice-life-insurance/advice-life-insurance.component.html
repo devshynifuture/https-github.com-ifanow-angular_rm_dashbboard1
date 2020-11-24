@@ -53,10 +53,10 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">
-                Add new FD</button>
+                Add new</button>
             <mat-menu #menu1="matMenu">
-                <button mat-menu-item (click)="openAddEdit('adviceFixedDeposit',null)">Suggest new
-                    FD</button>
+                <button mat-menu-item (click)="openAddEditAdvice('term insurance',null)">Suggest new
+                    Term Insurance</button>
                 <button mat-menu-item>Add misc. advice</button>
             </mat-menu>
         </div>

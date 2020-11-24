@@ -4,6 +4,10 @@ import { ActiityService } from '../../actiity.service';
 import { AdviceUtilsService } from '../advice-utils.service';
 import { MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
+import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -27,7 +31,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   traditionalCount: any;
   ulipCount: any;
 
-  constructor(private activityService: ActiityService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -55,7 +59,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       // assetCategory: 7,
       // adviceStatusId: 1,
       categoryMasterId: 3,
-      categoryTypeId: 42,
+      categoryTypeId: 0,
       status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
@@ -130,5 +134,33 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         this.ulipCount = count;
         break;
     }
+  }
+
+  openAddEditAdvice(value, data) {
+    let Component = (value == "term insurance") ? AddInsuranceComponent : AddInsuranceComponent;
+
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: null, flag: value },
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          this.getAdviceByAsset();
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 }
