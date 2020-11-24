@@ -2054,3 +2054,16 @@ ngx-slick-carousel > .slick-disabled {
     margin: 0px auto;
   }
 }
+.suggested-policies-icons{
+  height: 18px !important;
+  width: 24px !important;
+  .mat-icon {
+    height: 30px !important;
+    font-size: 22px !important;
+  }
+}
+#life-insurance-accordion{
+  .mat-expansion-panel:not([class*=mat-elevation-z]){
+    box-shadow:  none !important;
+  }
+}
