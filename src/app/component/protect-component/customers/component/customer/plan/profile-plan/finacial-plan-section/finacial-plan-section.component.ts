@@ -159,7 +159,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   mergeCallRes(data) {
     this.id = data
     this.generatePDF = false
-
+    this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
     }, 5000);
@@ -198,6 +198,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
+        this.isSpinner = false
         const file = new Blob([data], { type: 'application/pdf' });
         //fragData.isSpinner = false;
         //fragData.size = this.formatFileSize(data.size,0);
