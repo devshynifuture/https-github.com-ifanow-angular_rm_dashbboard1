@@ -40,7 +40,7 @@ import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/n
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 import { HttpService } from 'src/app/http-service/http-service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { apiConfig } from 'src/app/config/main-config';
@@ -105,7 +105,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   id: any;
   generatePDF: boolean;
   isSpinner: boolean = true;
-  constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
+  constructor(private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -159,8 +159,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   mergeCallRes(data) {
     this.id = data
     this.generatePDF = false
-    this.getPDFCall(data)
 
+    setTimeout(() => {
+      this.getPDFCall(data)
+    }, 5000);
   }
   callRepeate() {
     if (this.generatePDF == false) {
@@ -189,24 +191,21 @@ export class FinacialPlanSectionComponent implements OnInit {
     let obj = {
       id: data.id
     }
-    this.http
+    return this.http
       .post(
         apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
         obj,
         { responseType: 'blob' }
       )
       .subscribe((data) => {
-        this.callRepeate()
-        this.generatePDF = true
-        this.isSpinner = true
         const file = new Blob([data], { type: 'application/pdf' });
-        // fragData.isSpinner = false;
-        // fragData.size = this.formatFileSize(data.size,0);
-        // fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        //fragData.isSpinner = false;
+        //fragData.size = this.formatFileSize(data.size,0);
+        //fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
         var date = new Date();
         // fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = '' + '\'s ' + 'pdfName' + ' as on ' + date;
+        const namePdf = 'this.client.name' + '\'s ' + 'pdfName' + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';
