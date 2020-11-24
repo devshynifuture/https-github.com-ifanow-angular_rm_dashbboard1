@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
-import { ActiityService } from '../../actiity.service';
-import { AdviceUtilsService } from '../advice-utils.service';
+import { ActiityService } from '../../../actiity.service';
 import { MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
+import { AdviceUtilsService } from '../../advice-utils.service';
 
 @Component({
-  selector: 'app-advice-life-insurance',
-  templateUrl: './advice-life-insurance.component.html',
-  styleUrls: ['./advice-life-insurance.component.scss']
+  selector: 'app-all-advice-life-insurance',
+  templateUrl: './all-advice-life-insurance.component.html',
+  styleUrls: ['./all-advice-life-insurance.component.scss']
 })
-export class AdviceLifeInsuranceComponent implements OnInit {
+export class AllAdviceLifeInsuranceComponent implements OnInit {
   displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
   lifeInsuranceList: any;
   isLoading: boolean;
-  allAdvice = false;
+  allAdvice = true;
   stockCount: number;
   selectedAssetId: any = [];
   termDataSource: any;
@@ -27,37 +26,28 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   traditionalCount: any;
   ulipCount: any;
 
-  constructor(private activityService: ActiityService, private eventService: EventService) { }
+  constructor(private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAllCategory();
+    this.getAdviceByAsset();
   }
-  getAllCategory() {
-    this.isLoading = true;
-    this.termDataSource = [{}, {}, {}];
-    this.traditionalDataSource = [{}, {}, {}];
-    this.ulipDataSource = [{}, {}, {}];
-    this.activityService.getAllCategory('').subscribe(
-      data => {
-        console.log(data);
-        this.getAdviceByAsset();
-      }, (error) => {
-        this.eventService.openSnackBar('error', 'Dismiss');
-      }
-    );
-  }
+
   getAdviceByAsset() {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       // assetCategory: 7,
       // adviceStatusId: 1,
-      categoryMasterId: 3,
-      categoryTypeId: 42,
+      categoryMasterId: 7,
+      categoryTypeId: 0,
       status: 1
     }
+    this.isLoading = true;
+    this.termDataSource = [{}, {}, {}];
+    this.traditionalDataSource = [{}, {}, {}];
+    this.ulipDataSource = [{}, {}, {}];
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
         this.termDataSource = [];
@@ -131,4 +121,5 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         break;
     }
   }
+
 }

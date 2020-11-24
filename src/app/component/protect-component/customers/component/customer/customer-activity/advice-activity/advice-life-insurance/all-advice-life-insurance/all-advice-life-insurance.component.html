@@ -1,9 +1,9 @@
-<div class="wrapper-20 advice-fixed-income" *ngIf="allAdvice == false">
+<div class="wrapper-20 advice-fixed-income" *ngIf="allAdvice == true">
     <div class="row">
         <div class="col-md-6 p-0">
-            <button mat-stroked-button class="btn-primary mr-12 br-0">Advice
+            <button mat-stroked-button class="text-primary mr-12 br-0 b-priamry" (click)="allAdvice = false">Advice
                 given</button>
-            <button mat-stroked-button class="text-primary br-0 b-priamry" (click)="allAdvice = true">All Life
+            <button mat-stroked-button class="btn-primary br-0">All Life
                 Insurance</button>
         </div>
         <div class="col-md-6 p-0 text-right">
@@ -468,6 +468,6 @@
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
-<div *ngIf="allAdvice == true">
-    <app-all-advice-life-insurance></app-all-advice-life-insurance>
+<div *ngIf="allAdvice == false">
+    <app-advice-life-insurance></app-advice-life-insurance>
 </div>
