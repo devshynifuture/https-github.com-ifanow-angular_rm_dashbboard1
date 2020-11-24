@@ -162,7 +162,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
-    }, 5000);
+    }, 7000);
   }
   callRepeate() {
     if (this.generatePDF == false) {
