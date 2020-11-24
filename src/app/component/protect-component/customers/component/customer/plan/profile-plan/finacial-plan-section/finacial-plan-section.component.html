@@ -519,6 +519,28 @@
                                             Portfolio / All Transaction </p>
                                     </div>
                                 </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Capital Gain Summary','','Portfolio / MF Capital Gain Summary')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / MF Capital Gain Summary </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'MF Capital Gain Detailed','','Portfolio / MF Capital Gain Detailed')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / MF Capital Gain Detailed </p>
+                                    </div>
+                                </div>
                             </div>
 
                         </mat-expansion-panel>
@@ -687,7 +709,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'All Liabltities','','All Liabltities')">
+                                            (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">

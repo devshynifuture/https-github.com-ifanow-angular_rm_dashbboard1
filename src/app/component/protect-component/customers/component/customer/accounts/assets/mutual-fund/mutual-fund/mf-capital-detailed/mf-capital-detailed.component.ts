@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {MfServiceService} from '../../mf-service.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { MfServiceService } from '../../mf-service.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { DatePipe } from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -75,34 +75,34 @@ export class MfCapitalDetailedComponent implements OnInit {
   adminAdvisorIds: any;
   parentId: any;
   loadingDone: boolean = false;
-  isShow=true;
+  isShow = true;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
-    private backOfficeService : BackOfficeService,
+    private backOfficeService: BackOfficeService,
     private datePipe: DatePipe,
     private route: Router,
-    private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService,private cd: ChangeDetectorRef) {
+    private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService, private cd: ChangeDetectorRef) {
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
-        this.parentId=parseInt(param1.parentId);
+        this.parentId = parseInt(param1.parentId);
         this.familyMemberId = parseInt(param1.familyMemberId)
 
         this.fromDateYear = param1.from,
           this.toDateYear = param1.to,
           console.log('2423425', param1)
-          this.familyList = []
-          const obj={
-          id:this.familyMemberId
-          }
-          this.familyList.push(obj)
+        this.familyList = []
+        const obj = {
+          id: this.familyMemberId
+        }
+        this.familyList.push(obj)
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
-        this.parentId=AuthService.getParentId();
+        this.parentId = AuthService.getParentId();
         this.userInfo = AuthService.getUserInfo();
         this.clientData = AuthService.getClientData();
         this.getOrgData = AuthService.getOrgDetails();
@@ -115,8 +115,10 @@ export class MfCapitalDetailedComponent implements OnInit {
   @Input() responseData;
   @Input() changedData;
   @Input() mutualFund;
-  @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
+  @ViewChild('mfCapitalTemplateDetailed', { static: false }) mfCapitalTemplateDetailed: ElementRef;
   @ViewChild('mfCapitalTemplateHeader', { static: false }) mfCapitalTemplateHeader;
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
   uploadData(data) {
     if (data.clientId) {
       this.clientId = data.clientId
@@ -127,9 +129,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.toDate = new Date(this.toDateYear, 2, 31);
       this.grandFatheringEffect = true;
       // this.getAdvisorData();
-      if(this.adminAdvisorIds.length > 0){
+      if (this.adminAdvisorIds.length > 0) {
         this.getCapitalgain();
-      }else{
+      } else {
         this.teamMemberListGet();
       }
     }
@@ -137,11 +139,11 @@ export class MfCapitalDetailedComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.isShow=true;
+    this.isShow = true;
     this.MfServiceService.getadvisorList()
-    .subscribe(res => {
-      this.adminAdvisorIds = res;
-    });
+      .subscribe(res => {
+        this.adminAdvisorIds = res;
+      });
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
@@ -157,9 +159,9 @@ export class MfCapitalDetailedComponent implements OnInit {
           this.fromDate = new Date(this.fromDateYear, 3, 1);
         this.toDate = new Date(this.toDateYear, 2, 31);
         this.grandFatheringEffect = true;
-        if(this.adminAdvisorIds.length > 0){
+        if (this.adminAdvisorIds.length > 0) {
           this.getCapitalgain();
-        }else{
+        } else {
           this.teamMemberListGet();
         }
         console.log('2423425', param1)
@@ -176,6 +178,15 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.setCapitaDetails.GTdividendPayout = {}
     this.setCapitaDetails.GTReinvesment = {}
     this.isLoading = true;
+    if (this.finPlanObj) {
+      this.fromDateYear = 2019;
+      this.fromDate = new Date(this.fromDateYear, 3, 1);
+      this.toDateYear = 2020;
+      this.toDate = new Date(this.toDateYear, 2, 31);
+      this.grandFatheringEffect = true;
+      this.teamMemberListGet();
+
+    }
     console.log('response data:', this.responseData);  // You will get the @Input value
     if (this.responseData || this.mutualFundList) {
       this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
@@ -195,37 +206,37 @@ export class MfCapitalDetailedComponent implements OnInit {
 
 
   }
-  teamMemberListGet(){
-    this.adminAdvisorIds =[];
+  teamMemberListGet() {
+    this.adminAdvisorIds = [];
     this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
-    .subscribe(data => {
-      if (data && data.length !== 0) {
-        console.log('team members: ', data);
-        data.forEach(element => {
-          this.adminAdvisorIds.push(element);
-        });
-        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
-        if (!isIncludeID) {
-          this.adminAdvisorIds.unshift(this.advisorId);
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element);
+          });
+          const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+          if (!isIncludeID) {
+            this.adminAdvisorIds.unshift(this.advisorId);
+          }
+          console.log(this.adminAdvisorIds);
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
         }
-        console.log(this.adminAdvisorIds);
-      } else {
+        this.getCapitalgain();
+        this.MfServiceService.setadvisorList(this.adminAdvisorIds);
+      }, err => {
         this.adminAdvisorIds = [this.advisorId];
-      }
-          this.getCapitalgain();
-      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
-    }, err => {
-      this.adminAdvisorIds = [this.advisorId];
-      this.MfServiceService.setadvisorList(this.adminAdvisorIds);
-          this.getCapitalgain();
-    });
+        this.MfServiceService.setadvisorList(this.adminAdvisorIds);
+        this.getCapitalgain();
+      });
   }
   getCapitalgain() {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      parentId:this.parentId ? this.parentId : this.advisorId,
-      advisorIds:this.advisorId,
+      parentId: this.parentId ? this.parentId : this.advisorId,
+      advisorIds: this.advisorId,
       clientId: this.clientId,
 
     };
@@ -278,11 +289,12 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 = new MatTableDataSource(this.getFilterData(catObj['DEBT'], 'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
-      console.log('dataSource',this.dataSource);
-      console.log('dataSource1',this.dataSource1);
-      console.log('dataSource2',this.dataSource2);
+      console.log('dataSource', this.dataSource);
+      console.log('dataSource1', this.dataSource1);
+      console.log('dataSource2', this.dataSource2);
       this.cd.markForCheck();
       this.cd.detectChanges();
+      this.loaded.emit(this.mfCapitalTemplateDetailed.nativeElement);
       this.setCapitaDetails = {}
       this.setCapitaDetails.dataSource = this.dataSource
       this.setCapitaDetails.dataSource1 = this.dataSource1
@@ -317,34 +329,34 @@ export class MfCapitalDetailedComponent implements OnInit {
       }
     }
   }
-  categorisedHybridFund(data){
+  categorisedHybridFund(data) {
     let equityFund = [];
-    let debtFund=[];
+    let debtFund = [];
     Object.keys(data).map(key => {
       if (data[key][0].category == 'HYBRID') {
         data[key][0].mutualFund.forEach(element => {
-          if(element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
-          || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv'|| element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced'){
+          if (element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
+            || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv' || element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced') {
             equityFund.push(element);
-          }else if(element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation'){
+          } else if (element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
             debtFund.push(element);
-          }else{
+          } else {
             equityFund.push(element);
           }
         });
       }
     });
-    if(debtFund.length >0 ){
-      if(data['DEBT']){
-        data['DEBT'][0].mutualFund=[...data['DEBT'][0].mutualFund,...debtFund];
-      }else{
+    if (debtFund.length > 0) {
+      if (data['DEBT']) {
+        data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
+      } else {
         data.DEBT[0].mutualFund = debtFund
       }
     }
-    if(equityFund.length > 0){
-      if(data['EQUITY']){
-        data['EQUITY'][0].mutualFund=[...data['EQUITY'][0].mutualFund,...equityFund]
-      }else{
+    if (equityFund.length > 0) {
+      if (data['EQUITY']) {
+        data['EQUITY'][0].mutualFund = [...data['EQUITY'][0].mutualFund, ...equityFund]
+      } else {
         data.EQUITY[0].mutualFund = equityFund
 
       }
@@ -417,16 +429,16 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mfList = this.MfServiceService.filterArray(mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
-      mfList= this.MfServiceService.sorting(mfList, 'schemeName');
+      mfList = this.MfServiceService.sorting(mfList, 'schemeName');
       mfList.forEach(element => {
         const startObj = {
           schemeName: element.schemeName,
           folioNumber: element.folioNumber,
           ownerName: element.ownerName,
-          isin:element.isin
+          isin: element.isin
         }
         let totalObj: any = {};
         if ((element.redemptionTransactions) ? (element.redemptionTransactions.length > 0) : element.redemptionTransactions) {
@@ -449,16 +461,16 @@ export class MfCapitalDetailedComponent implements OnInit {
                   ele.indexGain = totalObj.indexGain;
                   ele.indexLoss = totalObj.indexLoss;
                   let purchaseTrnDate = new Date(ele.transactionDate)
-                  if(category == 'EQUITY'  && this.criteriaDate >=  purchaseTrnDate){
+                  if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
                     ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
                     // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
                     ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
                     // ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
-                  }else{
-                    ele.purchasePriceRate =  ele.purchasePrice;
+                  } else {
+                    ele.purchasePriceRate = ele.purchasePrice;
                     ele.purchaseAmt = ele.amount
                   }
-               
+
                   if (ind == 0) {
                     ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
                     ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
@@ -543,9 +555,9 @@ export class MfCapitalDetailedComponent implements OnInit {
     let indexGain;
     let indexLoss;
     let purchaseTrnDate = new Date(data.transactionDate)
-    if(category == 'EQUITY' && this.criteriaDate >=  purchaseTrnDate){
+    if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
       gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
-    }else{
+    } else {
       gainLossBasedOnGrandfathering = 'gainOrLossAmount'
     }
     if (data.days < days) {
@@ -555,7 +567,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       ltGain = ((data[gainLossBasedOnGrandfathering] >= 0) ? data[gainLossBasedOnGrandfathering] : 0);
       ltLoss = ((data[gainLossBasedOnGrandfathering] < 0) ? data[gainLossBasedOnGrandfathering] : 0);
     }
-    if(ltGain || ltLoss){
+    if (ltGain || ltLoss) {
       indexGain = ((data.indexGainOrLoss >= 0) ? (data.indexGainOrLoss) : 0)
       indexLoss = ((data.indexGainOrLoss < 0) ? (data.indexGainOrLoss) : 0)
     }
@@ -660,7 +672,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
       }
       mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
@@ -689,7 +701,7 @@ export class MfCapitalDetailedComponent implements OnInit {
           if (flag) {
             const obj = {
               schemeName: element.schemeName,
-              isin:element.isin,
+              isin: element.isin,
               folioNumber: element.folioNumber,
               dividendPayout: this.totaldividendPayout,
               dividendReinvestment: this.totaldividendReinvestment,
@@ -715,11 +727,11 @@ export class MfCapitalDetailedComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-  //  const header = document.getElementById('templateHeader');
-   const header = document.getElementById('templateHeader');
+    //  const header = document.getElementById('templateHeader');
+    const header = document.getElementById('templateHeader');
 
     // let header = null
-    this.UtilService.htmlToPdf(header.innerHTML,para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '',true);
+    this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true);
 
   }
   Excel(tableTitle) {
@@ -738,13 +750,13 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.loadingDone = true
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
-      let para = this.mfCapitalTemplate.nativeElement.innerHTML
-     // let header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
+      let para = this.mfCapitalTemplateDetailed.nativeElement.innerHTML
+      // let header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF capital gain detailed' + date,
         landscape: true,
-        header :null,
+        header: null,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

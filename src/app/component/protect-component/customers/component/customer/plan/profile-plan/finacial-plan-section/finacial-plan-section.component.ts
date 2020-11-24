@@ -41,6 +41,8 @@ import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/p
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 import { HttpService } from 'src/app/http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
+import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -74,7 +76,9 @@ import { HttpHeaders } from '@angular/common/http';
     SsySchemeComponent,
     NscSchemeComponent,
     PPFSchemeComponent,
-    LifeInsuranceComponent
+    LifeInsuranceComponent,
+    MutualFundsCapitalComponent,
+    MfCapitalDetailedComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -275,7 +279,12 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Life insurance':
           factory = this.resolver.resolveComponentFactory(LifeInsuranceComponent);
           break;
-
+        case 'Capital Gain Summary':
+          factory = this.resolver.resolveComponentFactory(MutualFundsCapitalComponent);
+          break;
+        case 'MF Capital Gain Detailed':
+          factory = this.resolver.resolveComponentFactory(MfCapitalDetailedComponent);
+          break;
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
