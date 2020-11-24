@@ -176,7 +176,7 @@
                                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                                 </mat-error>
                                 <mat-error
-                                    *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 1)"
+                                    *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 2)"
                                     class="f-12">
                                     Should be greater than or equal to {{schemeDetails.minimumRedemptionQty}}
                                 </mat-error>
