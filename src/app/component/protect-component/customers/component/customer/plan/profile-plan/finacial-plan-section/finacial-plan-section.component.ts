@@ -95,6 +95,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientId: any;
   insuranceList: any;
   insurancePlanningList: any;
+  count: any = 0;
   constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
@@ -104,6 +105,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.count = 0;
     this.moduleAdded = [];
     this.getGoalSummaryValues();
     this.getInsuranceList();
@@ -312,7 +314,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   uploadFileRes(data, displayName) {
-    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey });
+    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++ });
     console.log(data);
   }
   getGoalSummaryValues() {

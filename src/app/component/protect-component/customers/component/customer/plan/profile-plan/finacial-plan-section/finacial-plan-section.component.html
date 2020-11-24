@@ -124,7 +124,7 @@
                                 <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
                                     <div class="col-md-1">
                                         <mat-checkbox
-                                            (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Life insurance')">
+                                            (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Plan / Insurance / '+insurance.heading)">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
