@@ -148,7 +148,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.planService.mergeCall(this.moduleAdded).subscribe(
       data => this.mergeCallRes(data)
     );
-
+    setTimeout(() => {
+      this.getPDFCall()
+    }, 500);
   }
   mergeCallRes(data) {
 
