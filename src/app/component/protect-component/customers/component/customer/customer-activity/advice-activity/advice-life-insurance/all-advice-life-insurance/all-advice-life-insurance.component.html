@@ -52,13 +52,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">
-                Add new FD</button>
-            <mat-menu #menu1="matMenu">
-                <button mat-menu-item>Suggest new
-                    FD</button>
-                <button mat-menu-item>Add misc. advice</button>
-            </mat-menu>
+            <button mat-stroked-button class="btn-primary br-0 "
+                (click)="openAddEditAdvice('Term Insurance',null)">Suggest new
+                Term Insurance</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="termDataSource"
@@ -191,7 +187,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0">Suggest new RD</button>
+            <button mat-stroked-button class="btn-primary br-0 "
+                (click)="openAddEditAdvice('Traditional Insurance',null)">Suggest new
+                Traditional insurance</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="traditionalDataSource"
@@ -326,12 +324,9 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new Bond</button>
-            <mat-menu #menu3="matMenu">
-                <button mat-menu-item>Suggest new
-                    bond</button>
-                <button mat-menu-item>Add misc. advice</button>
-            </mat-menu>
+            <button mat-stroked-button class="btn-primary br-0 "
+                (click)="openAddEditAdvice('Ulip Insurance',null)">Suggest new
+                ULIP insurance</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]=" ulipDataSource"

@@ -3,6 +3,13 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
 import { MatTableDataSource } from '@angular/material';
 import { AdviceUtilsService } from '../../advice-utils.service';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { forkJoin } from 'rxjs';
+import { AddInsuranceComponent } from '../../../../../common-component/add-insurance/add-insurance.component';
+import { SuggestAdviceComponent } from '../../suggest-advice/suggest-advice.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-all-advice-life-insurance',
@@ -25,15 +32,30 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   termCount: any;
   traditionalCount: any;
   ulipCount: any;
+  displayList: any;
+  object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
 
-  constructor(private activityService: ActiityService) { }
+  constructor(private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAdviceByAsset();
+    this.getAllCategory();
   }
-
+  getAllCategory() {
+    this.isLoading = true;
+    this.termDataSource = [{}, {}, {}];
+    this.traditionalDataSource = [{}, {}, {}];
+    this.ulipDataSource = [{}, {}, {}];
+    this.activityService.getAllCategory('').subscribe(
+      data => {
+        console.log(data);
+        this.getAdviceByAsset();
+      }, (error) => {
+        this.eventService.openSnackBar('error', 'Dismiss');
+      }
+    );
+  }
   getAdviceByAsset() {
     let obj = {
       advisorId: this.advisorId,
@@ -42,12 +64,16 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       // adviceStatusId: 1,
       categoryMasterId: 3,
       categoryTypeId: 0,
-      status: 0
+      status: 1
     }
-    this.isLoading = true;
-    this.termDataSource = [{}, {}, {}];
-    this.traditionalDataSource = [{}, {}, {}];
-    this.ulipDataSource = [{}, {}, {}];
+    const displayList = this.cusService.getInsuranceGlobalData({});
+    const allAsset = this.activityService.getAllAsset(obj);
+    forkJoin(displayList, allAsset).subscribe(result => {
+      this.displayList = result[0];
+      this.getAllSchemeResponse(result[1]);
+    }, (error) => {
+      this.eventService.openSnackBar('error', 'Dismiss');
+    });
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
         this.termDataSource = [];
@@ -122,4 +148,46 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     }
   }
 
+  openAddEditAdvice(value, data) {
+    if (!data) {
+      this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 }
+      switch (value) {
+        case "Term Insurance":
+          this.object.insuranceSubTypeId = 1;
+          this.object.showInsurance = 'TERM';
+          break;
+        case "Traditional Insurance":
+          this.object.insuranceSubTypeId = 2;
+          this.object.showInsurance = 'TERM'
+          break;
+        case "Ulip Insurance":
+          this.object.insuranceSubTypeId = 3;
+          this.object.showInsurance = 'TERM'
+          break;
+      }
+    }
+    let Component = AddInsuranceComponent;
+
+    const fragmentData = {
+      flag: 'Advice Insurance',
+      data: { data: data, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'All Advice Insurance' },
+      id: 1,
+      state: 'open',
+      componentName: Component,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          this.getAdviceByAsset();
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
 }

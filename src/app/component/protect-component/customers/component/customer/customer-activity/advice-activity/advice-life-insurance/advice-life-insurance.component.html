@@ -192,17 +192,6 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0"
-                (click)="openAddEditAdvice('Ulip Insurance',null)">Suggest new RD</button>
-        </div>
-    </div>
-    <div class="row pt-32">
-        <div class="col-md-6 p-0">
-            <h5 class="m-0 text-black pt-8">Traditional insurance</h5>
-        </div>
-        <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu2">Add new</button>
             <mat-menu #menu2="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Traditional Insurance',null)">Suggest new

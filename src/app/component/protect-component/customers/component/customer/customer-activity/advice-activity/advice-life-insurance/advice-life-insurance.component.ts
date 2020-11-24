@@ -33,6 +33,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   traditionalCount: any;
   ulipCount: any;
   displayList: any;
+  object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
 
   constructor(private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
@@ -149,23 +150,23 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
   openAddEditAdvice(value, data) {
     if (!data) {
-      data = { displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 };
+      this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 }
       switch (value) {
         case "Term Insurance":
-          data.insuranceSubTypeId = 1;
-          data.showInsurance = 'TERM';
+          this.object.insuranceSubTypeId = 1;
+          this.object.showInsurance = 'TERM';
           break;
         case "Traditional Insurance":
-          data.insuranceSubTypeId = 2;
-          data.showInsurance = 'TERM'
+          this.object.insuranceSubTypeId = 2;
+          this.object.showInsurance = 'TERM'
           break;
         case "Ulip Insurance":
-          data.insuranceSubTypeId = 3;
-          data.showInsurance = 'TERM'
+          this.object.insuranceSubTypeId = 3;
+          this.object.showInsurance = 'TERM'
           break;
       }
     }
-    let Component = (value == "term insurance advice") ? AddInsuranceComponent : AddInsuranceComponent;
+    let Component = AddInsuranceComponent;
 
     const fragmentData = {
       flag: 'Advice Insurance',
@@ -174,7 +175,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      childData: { data: data, flag: value },
+      childData: { data: data, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
