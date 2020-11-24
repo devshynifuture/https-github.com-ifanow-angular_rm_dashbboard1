@@ -309,7 +309,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
-          this.generatePdf(data, sectionName, displayName);
+          //this.generatePdf(data, sectionName, displayName);
           this.uploadFile(data, sectionName, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
