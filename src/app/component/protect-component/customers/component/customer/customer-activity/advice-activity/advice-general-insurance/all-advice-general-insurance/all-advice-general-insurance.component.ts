@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ActiityService } from '../../../actiity.service';
-import { AdviceUtilsService } from '../../advice-utils.service';
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ActiityService} from '../../../actiity.service';
+import {AdviceUtilsService} from '../../advice-utils.service';
 
 @Component({
   selector: 'app-all-advice-general-insurance',
@@ -14,6 +14,9 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   clientId: any;
   isLoading: boolean;
   selectedAssetId: any = [];
+  openAddEdit;
+
+
   healthInsuranceDataSource = new MatTableDataSource([{}, {}, {}]);
   personalAccidentDataSource = new MatTableDataSource([{}, {}, {}]);
   healthCount: any;
@@ -29,7 +32,9 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   FireDataSource = new MatTableDataSource([{}, {}, {}]);
   fireCount: any;
   allAdvice = true;
-  constructor(private activityService: ActiityService) { }
+
+  constructor(private activityService: ActiityService) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -68,6 +73,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       }
     );
   }
+
   filterForAsset(data) {//filter data to for showing in the table
     let filterdData = [];
     data.forEach(element => {
@@ -87,6 +93,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     });
     return filterdData;
   }
+
   getAllSchemeResponse(data) {
     this.isLoading = false;
     let healthData = this.filterForAsset(data.HEALTH)
@@ -112,13 +119,15 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     this.FireDataSource['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
     console.log("::::::::::::::::", data)
   }
+
   checkAll(flag, tableDataList, tableFlag) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
+    const {selectedIdList, count} = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.selectedAssetId = selectedIdList;
     this.getFlagCount(tableFlag, count)
     // console.log(this.selectedAssetId);
   }
+
   getFlagCount(flag, count) {
     switch (true) {
       case (flag == 'health'):
@@ -144,12 +153,15 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         break;
     }
   }
+
+  deleteModal(flag, element) {
+  }
+
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
       this.selectedAssetId.push(selectedData.assetDetails.id)
-    }
-    else {
+    } else {
       selectedData.selected = false
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1);
     }

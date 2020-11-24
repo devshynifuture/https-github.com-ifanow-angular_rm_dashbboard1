@@ -447,7 +447,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="motorCount==motorDataSource.data.length"
                     [indeterminate]="motorCount>0 && motorCount<motorDataSource.data.length"
-                    *ngIf="isLoading==false && motorDataSource.tableFlag"
+                    *ngIf="isLoading==false && motorDataSource.data.length"
                     (change)="checkAll($event,motorDataSource,'motor')">
                 </mat-checkbox>
             </th>
