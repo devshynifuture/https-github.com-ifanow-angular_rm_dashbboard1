@@ -105,11 +105,14 @@ export class FinacialPlanSectionComponent implements OnInit {
   id: any;
   generatePDF: boolean;
   isSpinner: boolean = true;
+  sectionName: any;
+  clientData: any;
   constructor(private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
+    this.clientData = AuthService.getClientData();
   }
 
 
@@ -159,10 +162,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   mergeCallRes(data) {
     this.id = data
     this.generatePDF = false
-
+    this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
-    }, 5000);
+    }, 7000);
   }
   callRepeate() {
     if (this.generatePDF == false) {
@@ -180,7 +183,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   pdfRes(data) {
     const file = new Blob([data], { type: 'application/pdf' });
     var date = new Date();
-    const namePdf = '' + '\'s ' + 'pdfName' + ' as on ' + date;
+    const namePdf = '' + this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
     const a = document.createElement('a');
     a.href = window.URL.createObjectURL(file);
     a.download = namePdf + '.pdf';
@@ -198,6 +201,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
+        this.isSpinner = true
         const file = new Blob([data], { type: 'application/pdf' });
         //fragData.isSpinner = false;
         //fragData.size = this.formatFileSize(data.size,0);
@@ -205,7 +209,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         var date = new Date();
         // fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = 'this.client.name' + '\'s ' + 'pdfName' + ' as on ' + date;
+        const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';
@@ -374,6 +378,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       name: sectionName + '.html',
       htmlInput: String(innerHtmlData.innerHTML)
     };
+    this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, displayName)
     );
