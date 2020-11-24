@@ -336,4 +336,10 @@ export class PlanService {
   getFinPlanFileUploadUrl(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.FINPLAN_PDF_UPLOAD, data)
   }
+  mergeCall(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MEREGE_CALL, data)
+  }
+  getPDFCall() {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PDF_CALL, '')
+  }
 }

@@ -138,22 +138,22 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   download() {
-    // let list = [{ url: 'pdf/summary', id: 1 }, { url: 'pdf/allTransactions', id: 2 }, { url: 'pdf/unrealisedTransactions', id: 3 },]
-    // list.forEach(element => {
-    //   if (element.id == 1) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-    //     window.open(element.url)
-    //   } else if (element.id == 2) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18' + '&' + 'fromDate=2019%2F11%2F18'
-    //     window.open(element.url)
-    //   } else if (element.id == 3) {
-    //     element.url = 'http://localhost:4200/' + element.url + '?' + 'advisorId=' + AuthService.getAdvisorId() + '&' + 'clientId=' + AuthService.getClientId() + '&' + 'parentId=0' + '&' + 'toDate=2020%2F11%2F18'
-    //     window.open(element.url)
-    //   }
-    // });
+    let obj = {
+
+    }
+    this.planService.mergeCall(this.moduleAdded).subscribe(
+      data => this.mergeCallRes(data)
+    );
 
   }
+  mergeCallRes(data) {
 
+  }
+  getPDFCall() {
+    this.planService.getPDFCall().subscribe(
+      data => this.mergeCallRes(data)
+    );
+  }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
     let factory;
     if (value) {
