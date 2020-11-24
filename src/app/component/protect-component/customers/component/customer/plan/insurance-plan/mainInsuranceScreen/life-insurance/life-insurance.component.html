@@ -892,7 +892,8 @@
                                 <tr>
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
                                         Policy name</td>
-                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; text-align: right; border-right: texta 1px solid #dee5e7;">
                                         Sum assured</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
@@ -908,7 +909,7 @@
                                         {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
                                     </td>
                                     <td
-                                        style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                                        style="padding: 8px; border-top: 1px solid #dee5e7; text-align: right; border-right: 1px solid #dee5e7;">
                                         <span appFormatNumber>
                                             {{element.displayHolderSumInsured}} </span>
                                     </td>
@@ -950,12 +951,12 @@
                                     <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
                                         Annual premium</td>
-                                    <td
+                                    <!-- <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
                                         Returns</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
-                                        Advice</td>
+                                        Advice</td> -->
                                 </tr>
 
                                 <tr *ngFor="let element of dataSource1">
@@ -974,7 +975,7 @@
                                         <span appFormatNumber>
                                             {{element?.insurance?.premiumAmount}} </span>
                                     </td>
-                                    <td
+                                    <!-- <td
                                         style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                         {{isLoadingPlan ? '' : (element ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
 
@@ -982,7 +983,7 @@
                                     <td
                                         style="padding: 8px; text-align: right; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                         {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 <tr *ngIf="dataSource1.length == 0">
                                     <td style="text-align: center;padding-top: 20px;">
@@ -1235,7 +1236,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>5 Less : Continuous income source</b>
+                                        <b>5. Less : Continuous income source</b>
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1290,7 +1291,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>6 Less: Exisiting life Insurance (sum assured)</b>
+                                        <b>6. Less: Exisiting life Insurance (sum assured)</b>
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
@@ -1345,7 +1346,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>7 Less : Existing Assets</b>
+                                        <b>7. Less : Existing Assets</b>
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
