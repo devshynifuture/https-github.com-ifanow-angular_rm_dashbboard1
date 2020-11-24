@@ -43,6 +43,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { apiConfig } from 'src/app/config/main-config';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -100,6 +101,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   insuranceList: any;
   insurancePlanningList: any;
   count: any = 0;
+  datePipe: any;
+  id: any;
+  generatePDF: boolean;
+  isSpinner: boolean = true;
   constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
@@ -152,17 +157,63 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
   mergeCallRes(data) {
+    this.id = data
+    this.generatePDF = false
     this.getPDFCall(data)
+
+  }
+  callRepeate() {
+    if (this.generatePDF == false) {
+      this.getPDFCall(this.id)
+    }
+  }
+  formatFileSize(bytes, decimalPoint) {
+    if (bytes == 0) return '0 Bytes';
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
   pdfRes(data) {
-    // setTimeout(() => {
-    //   this.getPDFCall(data)
-    // }, 500);
+    const file = new Blob([data], { type: 'application/pdf' });
+    var date = new Date();
+    const namePdf = '' + '\'s ' + 'pdfName' + ' as on ' + date;
+    const a = document.createElement('a');
+    a.href = window.URL.createObjectURL(file);
+    a.download = namePdf + '.pdf';
+    a.click();
   }
   getPDFCall(data) {
-    this.planService.getPDFCall(data).subscribe(
-      data => this.pdfRes(data)
-    );
+    this.isSpinner = false
+    let obj = {
+      id: data.id
+    }
+    this.http
+      .post(
+        apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
+        obj,
+        { responseType: 'blob' }
+      )
+      .subscribe((data) => {
+        this.callRepeate()
+        this.generatePDF = true
+        this.isSpinner = true
+        const file = new Blob([data], { type: 'application/pdf' });
+        // fragData.isSpinner = false;
+        // fragData.size = this.formatFileSize(data.size,0);
+        // fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        var date = new Date();
+        // fragData.time = date.toLocaleTimeString('en-US');
+        // window.open(fileURL,"hello");
+        const namePdf = '' + '\'s ' + 'pdfName' + ' as on ' + date;
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(file);
+        a.download = namePdf + '.pdf';
+        a.click();
+        // a.download = fileURL;
+        //return this.fileURL ? this.fileURL : null;
+      });
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
     let factory;
