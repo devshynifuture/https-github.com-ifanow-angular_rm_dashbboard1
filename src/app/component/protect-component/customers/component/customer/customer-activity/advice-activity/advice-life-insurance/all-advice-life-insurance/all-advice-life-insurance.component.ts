@@ -10,7 +10,7 @@ import { AdviceUtilsService } from '../../advice-utils.service';
   styleUrls: ['./all-advice-life-insurance.component.scss']
 })
 export class AllAdviceLifeInsuranceComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
   lifeInsuranceList: any;
@@ -100,7 +100,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     this.ulipDataSource['tableFlag'] = (data.BONDS.length == 0) ? false : true;
   }
 
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, value) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.stockCount = count;

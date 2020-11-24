@@ -8,6 +8,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
+import { forkJoin } from 'rxjs';
+import { CustomerService } from '../../../customer.service';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -30,8 +32,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   termCount: any;
   traditionalCount: any;
   ulipCount: any;
+  displayList: any;
 
-  constructor(private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  constructor(private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -62,6 +65,14 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       categoryTypeId: 0,
       status: 1
     }
+    const displayList = this.cusService.getInsuranceGlobalData({});
+    const allAsset = this.activityService.getAllAsset(obj);
+    forkJoin(displayList, allAsset).subscribe(result => {
+      this.displayList = result[0];
+      this.getAllSchemeResponse(result[1]);
+    }, (error) => {
+      this.eventService.openSnackBar('error', 'Dismiss');
+    });
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
         this.termDataSource = [];
@@ -114,7 +125,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     this.ulipDataSource['tableFlag'] = (data.BONDS.length == 0) ? false : true;
   }
 
-  checkAll(flag, tableDataList) {
+  checkAll(flag, tableDataList, value) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
     this.stockCount = count;
@@ -137,16 +148,33 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   }
 
   openAddEditAdvice(value, data) {
-    let Component = (value == "term insurance") ? AddInsuranceComponent : AddInsuranceComponent;
+    if (!data) {
+      data = { displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 };
+      switch (value) {
+        case "Term Insurance":
+          data.insuranceSubTypeId = 1;
+          data.showInsurance = 'TERM';
+          break;
+        case "Traditional Insurance":
+          data.insuranceSubTypeId = 2;
+          data.showInsurance = 'TERM'
+          break;
+        case "Ulip Insurance":
+          data.insuranceSubTypeId = 3;
+          data.showInsurance = 'TERM'
+          break;
+      }
+    }
+    let Component = (value == "term insurance advice") ? AddInsuranceComponent : AddInsuranceComponent;
 
     const fragmentData = {
-      flag: value,
+      flag: 'Advice Insurance',
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      childData: { data: null, flag: value },
+      childData: { data: data, flag: value },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

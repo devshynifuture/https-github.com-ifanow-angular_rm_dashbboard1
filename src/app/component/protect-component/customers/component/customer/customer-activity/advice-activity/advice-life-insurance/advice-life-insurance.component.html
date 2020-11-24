@@ -55,7 +55,7 @@
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">
                 Add new</button>
             <mat-menu #menu1="matMenu">
-                <button mat-menu-item (click)="openAddEditAdvice('term insurance',null)">Suggest new
+                <button mat-menu-item (click)="openAddEditAdvice('Term Insurance',null)">Suggest new
                     Term Insurance</button>
                 <button mat-menu-item>Add misc. advice</button>
             </mat-menu>
@@ -72,8 +72,7 @@
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
-                <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,termDataSource,'term')"
-                    [(ngModel)]="element.selected" [checked]="element.selected">
+                <mat-checkbox *ngIf="isLoading==false" [(ngModel)]="element.selected" [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -174,8 +173,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEdit('adviceFixedDeposit',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('FIXED DEPOSIT',element)">Delete</button>
+                        <button mat-menu-item (click)="openAddEditAdvice('Ulip Insurance',null)">Edit</button>
+                        <button mat-menu-item>Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -194,7 +193,22 @@
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
             <button mat-stroked-button class="btn-primary br-0"
-                (click)="openAddEdit('adviceRecurringDeposit', '')">Suggest new RD</button>
+                (click)="openAddEditAdvice('Ulip Insurance',null)">Suggest new RD</button>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-6 p-0">
+            <h5 class="m-0 text-black pt-8">Traditional insurance</h5>
+        </div>
+        <div class="col-md-6 p-0 text-right">
+            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
+                    class="pr-8">Filters</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu2">Add new</button>
+            <mat-menu #menu2="matMenu">
+                <button mat-menu-item (click)="openAddEditAdvice('Traditional Insurance',null)">Suggest new
+                    Traditional Insurance</button>
+                <button mat-menu-item>Add misc. advice</button>
+            </mat-menu>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="traditionalDataSource"
@@ -207,9 +221,7 @@
                     (change)=" checkAll($event,traditionalDataSource,'recurringDeposit')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <mat-checkbox *ngIf="isLoading==false" [(ngModel)]="element.selected"
-                    (change)="checkSingle($event,element,traditionalDataSource,'recurringDeposit')"
-                    [checked]="element.selected">
+                <mat-checkbox *ngIf="isLoading==false" [(ngModel)]="element.selected" [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -313,8 +325,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEdit('adviceRecurringDeposit',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('RECURRING DEPOSIT',element)">Delete</button>
+                        <button mat-menu-item>Edit</button>
+                        <button mat-menu-item>Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -332,10 +344,10 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new Bond</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new</button>
             <mat-menu #menu3="matMenu">
-                <button mat-menu-item (click)="openAddEdit('adviceBonds',null)">Suggest new
-                    bond</button>
+                <button mat-menu-item (click)="openAddEditAdvice('Ulip Insurance',null)">Suggest new
+                    Term Insurance</button>
                 <button mat-menu-item>Add misc. advice</button>
             </mat-menu>
         </div>
@@ -350,9 +362,7 @@
                     (change)=" checkAll($event,ulipDataSource,'recurringDeposit')"></mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <mat-checkbox *ngIf="isLoading==false" [(ngModel)]="element.selected"
-                    (change)="checkSingle($event,element,ulipDataSource,'recurringDeposit')"
-                    [checked]="element.selected">
+                <mat-checkbox *ngIf="isLoading==false" [(ngModel)]="element.selected" [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -450,23 +460,23 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openAddEdit('adviceBonds',element)">Edit </button>
-                    <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
+                    <button mat-menu-item (click)="openAddEditAdvice('Ulip Insurance',null)"">Edit </button>
+                    <button mat-menu-item>Delete</button>
                 </mat-menu>
-                <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons">
-                        more_vert
-                    </i>
+                <div class=" bar">
+                        <i *ngIf="isLoading==false" class="material-icons">
+                            more_vert
+                        </i>
 
-                </div>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-    </table>
-    <div *ngIf="ulipDataSource.tableFlag==false" class="b-a bt-0">
-        <h4 class="text-center p-44">No Data Found</h4>
-    </div>
+</div>
+</td>
+</ng-container>
+<tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+</table>
+<div *ngIf="ulipDataSource.tableFlag==false" class="b-a bt-0">
+    <h4 class="text-center p-44">No Data Found</h4>
+</div>
 </div>
 <div *ngIf="allAdvice == true">
     <app-all-advice-life-insurance></app-all-advice-life-insurance>
