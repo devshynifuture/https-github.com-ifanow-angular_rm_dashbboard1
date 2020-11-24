@@ -123,7 +123,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false);
-    this.moduleAdded.push({ name: displayName });
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -308,10 +308,11 @@ export class FinacialPlanSectionComponent implements OnInit {
       htmlInput: String(innerHtmlData.innerHTML)
     };
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, innerHtmlData)
+      data => this.uploadFileRes(data, displayName)
     );
   }
-  uploadFileRes(data, innerHtmlData) {
+  uploadFileRes(data, displayName) {
+    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey });
     console.log(data);
   }
   getGoalSummaryValues() {
