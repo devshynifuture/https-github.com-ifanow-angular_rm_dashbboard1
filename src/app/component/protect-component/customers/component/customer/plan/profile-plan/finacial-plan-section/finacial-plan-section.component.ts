@@ -304,7 +304,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   uploadFile(innerHtmlData, sectionName, displayName) {
     const obj = {
       clientId: this.clientId,
-      fileName: sectionName + '.html',
+      name: sectionName + '.html',
       htmlInput: String(innerHtmlData.innerHTML)
     };
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
