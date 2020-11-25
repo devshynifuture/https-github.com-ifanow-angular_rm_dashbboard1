@@ -848,6 +848,7 @@ export const appConfig = {
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
   GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
+  GET_RANDOM_STRING: '',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

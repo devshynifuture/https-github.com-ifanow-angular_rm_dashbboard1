@@ -96,8 +96,17 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //   }
   // }
   openNew() {
+    let obj = {
+      advisorId: AuthService.getAdvisorId()
+    }
+    this.peopleService.getRandomStringForMarketPlace(obj).subscribe(
+      data => this.stringRes(data)
+    );
+
+  }
+  stringRes(data) {
     let url = 'https://marketplace.ifanow.in/admin/advisor-marketplace/engage-grow'
-    window.open(url)
+    window.open(url, data)
   }
   getActiveLink(value) {
     const link = this.router.url.split('/')[2];
