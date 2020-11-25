@@ -22,4 +22,7 @@ export class ActiityService {
   getAllCategory(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_CATEGORY, data);
   }
+  suggestNewLifeInsurance(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SUGGEST_NEW_INSURANCE, data)
+  }
 }

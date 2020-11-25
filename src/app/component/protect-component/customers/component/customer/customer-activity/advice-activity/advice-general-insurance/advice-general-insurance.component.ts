@@ -81,7 +81,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       // assetCategory: 10,
       // adviceStatusId:1
       categoryMasterId: 4,
-      categoryTypeId: 0,
+      categoryTypeId: 4,
       status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
@@ -121,19 +121,20 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    let healthData = this.filterForAsset(data.HEALTH)
+    // let healthData = this.filterForAsset(data.HEALTH)
+    let healthData = data.HEALTH
     this.healthInsuranceDataSource.data = healthData;
-    let personalData = this.filterForAsset(data.PERSONAL_ACCIDENT)
+    let personalData = data.PERSONAL_ACCIDENT
     this.personalAccidentDataSource.data = personalData;
-    let critical = this.filterForAsset(data.CRITICAL_ILLNESS)
+    let critical = data.CRITICAL_ILLNESS
     this.criticalInsDataSource.data = critical;
-    let motorData = this.filterForAsset(data.MOTOR)
+    let motorData = data.MOTOR
     this.motorDataSource.data = motorData;
-    let travelData = this.filterForAsset(data.TRAVEL)
+    let travelData = data.TRAVEL
     this.travelDataSource.data = travelData;
-    let homeData = this.filterForAsset(data.HOME)
+    let homeData = data.HOME
     this.homeInsDataSource.data = homeData;
-    let fireData = this.filterForAsset(data.FIRE)
+    let fireData = data.FIRE
     this.FireDataSource.data = fireData;
     this.healthInsuranceDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.personalAccidentDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;

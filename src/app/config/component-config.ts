@@ -536,6 +536,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_PO_SAVING: 'advice/asset/po-savings/advice/post',
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   GET_ALL_CATEGORY: 'advice/advice/all-category/get',
+  SUGGEST_NEW_INSURANCE: 'advice/insurance/life-insurance/suggest-new-policy/add',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',

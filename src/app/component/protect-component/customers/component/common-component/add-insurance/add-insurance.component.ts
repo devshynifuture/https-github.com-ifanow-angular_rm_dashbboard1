@@ -510,13 +510,13 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       /***owner***/
 
       /***nominee***/
-      if (this.editInsuranceData.nominees.length > 0) {
+      if (this.editInsuranceData.hasOwnProperty('nominees') && this.editInsuranceData.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.editInsuranceData.nominees.forEach(element => {
           this.addNewNominee(element);
         });
       }
-      if (this.editInsuranceData.ulipFundDetails.length > 0) {
+      if (this.editInsuranceData.hasOwnProperty('ulipFundDetails') && this.editInsuranceData.ulipFundDetails.length > 0) {
         this.getFundValues.removeAt(0);
         this.editInsuranceData.ulipFundDetails.forEach(element => {
           this.addFund(element);
@@ -526,7 +526,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       // this.cashFlowForm.controls.year.setValue(this.editInsuranceData.year)
       // this.cashFlowForm.controls.approxAmt.setValue(this.editInsuranceData.approxAmt)
       this.finalCashFlowData = [];
-      if (this.editInsuranceData.insuranceCashflowList.length > 0) {
+      if (this.editInsuranceData.hasOwnProperty('insuranceCashflowList') && this.editInsuranceData.insuranceCashflowList.length > 0) {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
           (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
             cashFlowType: [element.cashFlowType + '', [Validators.required]],
@@ -749,7 +749,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         familyMemberIdProposer: (this.selectedProposerData) ? (this.selectedProposerData.familyMemberId == 0 ? this.clientId : this.selectedProposerData.familyMemberId) : null,
         clientId: this.clientId,
         advisorId: this.advisorId,
-        ownerName: '',
+        // ownerName: '',
         commencementDate: this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd'),
         policyNumber: this.lifeInsuranceForm.get('policyNum').value,
         policyName: this.lifeInsuranceForm.get('policyName').value,

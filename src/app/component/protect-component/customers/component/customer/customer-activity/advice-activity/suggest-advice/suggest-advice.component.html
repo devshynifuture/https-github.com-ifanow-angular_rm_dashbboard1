@@ -26,9 +26,18 @@
                                     <p class="m-0 text-black roboto">Advice header</p>
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input matInput formControlName="header" class="form-control">
-                                            <mat-error>
-                                                This field is required
+                                            <mat-select #header autocomplete="off" class="form-control br-0"
+                                                formControlName="header" matInput>
+                                                <mat-option value=''>Select option</mat-option>
+                                                <mat-option value='1'>Continue</mat-option>
+                                                <mat-option value='2'>Discontinue</mat-option>
+                                                <mat-option value='3'>Port policy</mat-option>
+                                                <mat-option value='4'>Increase sum assured</mat-option>
+                                                <mat-option value='5'>Decrease sum assured</mat-option>
+                                                <mat-option value='6'>Add members</mat-option>
+                                                <mat-option value='7'>Remove members</mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
@@ -46,7 +55,8 @@
                                         <p class="m-0 text-black roboto pt-150">Advice status</p>
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <input matInput formControlName="status" class="form-control">
+                                                <input matInput formControlName="status" [disabled]="true"
+                                                    class="form-control">
                                                 <mat-error>
                                                     This field is required
                                                 </mat-error>
