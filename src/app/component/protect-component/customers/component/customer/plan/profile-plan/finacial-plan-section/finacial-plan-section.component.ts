@@ -165,10 +165,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
-    }, 7000);
-    while (this.generatePDF == 1) {
-      this.getPDFCall(data)
-    }
+    }, 5000);
   }
   formatFileSize(bytes, decimalPoint) {
     if (bytes == 0) return '0 Bytes';
@@ -190,15 +187,23 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
-        this.generatePDF = 1
-        this.isSpinner = true
-        const file = new Blob([data], { type: 'application/pdf' });
-        var date = new Date();
-        const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(file);
-        a.download = namePdf + '.pdf';
-        a.click();
+        if (data.type == "application/pdf") {
+          this.generatePDF = 1
+          this.isSpinner = true
+          const file = new Blob([data], { type: 'application/pdf' });
+          var date = new Date();
+          const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(file);
+          a.download = namePdf + '.pdf';
+          a.click();
+        } else {
+          this.generatePDF = 0
+          setTimeout(() => {
+            this.getPDFCall(this.id)
+          }, 5000);
+        }
+
       });
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
