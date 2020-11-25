@@ -747,6 +747,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
         (upperSliderData: any) => {
           if (UtilService.isDialogClose(upperSliderData)) {
+            this.barButtonOptions.active = false;
             if (upperSliderData.tab2view) {
               this.viewMode = 'tab4';
               this.getEmailVerification();

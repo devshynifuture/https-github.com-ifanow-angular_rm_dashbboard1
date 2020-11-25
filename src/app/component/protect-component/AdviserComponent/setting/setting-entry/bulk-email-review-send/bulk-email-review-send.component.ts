@@ -18,7 +18,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
   clientList: any = [];
   dataSource = new MatTableDataSource();
-  @ViewChild('clientTableSort', { static: false }) sort;
+  @ViewChild('clientTableSort', { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
 
   displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
@@ -152,26 +152,40 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
           }
           if (data) {
             console.log("this is all sip table data, ------", data);
+            if (this.isAllSelected) {
+              data.map(o => o.selected = true);
+            }
             this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
-            console.log(this.infiniteScrollClientList)
+
+            this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
+              return data.some(item2 => item2.advisorId !== item.advisorId);
+            });
+
+            console.log(this.infiniteScrollClientList);
             this.dataSource.data = this.infiniteScrollClientList;
           } else {
             this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
             this.dataSource.sort = this.sort;
+            this.dataSource.filteredData = [];
             this.eventService.openSnackBar('No More Data Found', "DISMISS");
             this.hasEndReached = true;
           }
+        } else {
+          this.dataSource = null;
         }
-
+      }, err => {
+        console.error(err);
       });
   }
 
   onWindowScroll(e: any) {
 
-    console.log(this.tableEl.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
-
-    if (this.tableEl.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+    console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
+    let tableOffsetTop = this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop;
+    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 38);
+    if (tableOffsetTop <= tableOffsetHeight) {
       if (!this.hasEndReached) {
+        console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
         this.infiniteScrollingFlag = true;
         // this.getAllSip(this.finalSipList.length, 20);
         this.getClientListValue(this.infiniteScrollClientList.length);
@@ -294,6 +308,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       subject: this.subject.value,
       messageBody: this.emailBody
     };
+    if (this.isAllSelected) {
+      obj['allClient'] = true;
+    }
     this.orgSetting.sendEmailToClients(obj).subscribe(
       data => {
         this.eventService.openSnackBar(data, 'Dismiss');
