@@ -1,35 +1,35 @@
-import {AddTasksComponent} from '../Activities/crm-tasks/add-tasks/add-tasks.component';
-import {CrmTaskService} from '../Activities/crm-tasks/crm-task.service';
-import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {DashboardGuideDialogComponent} from './dashboard-guide-dialog/dashboard-guide-dialog.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../Subscriptions/subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FixedFeeComponent} from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
-import {VariableFeeComponent} from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
-import {SubscriptionInject} from '../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {BillerSettingsComponent} from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
-import {InvoiceHistoryComponent} from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
-import {ChangePayeeComponent} from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
-import {DeleteSubscriptionComponent} from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
-import {ConfirmDialogComponent} from '../../common-component/confirm-dialog/confirm-dialog.component';
-import {BackOfficeService} from '../backOffice/back-office.service';
-import {OnlineTransactionService} from '../transactions/online-transaction.service';
-import {TransactionEnumService} from '../transactions/transaction-enum.service';
-import {DashboardService} from './dashboard.service';
-import {FormControl} from '@angular/forms';
-import {calendarService} from '../Activities/calendar/calendar.service';
-import {EmailServiceService} from '../Email/email-service.service';
-import {DatePipe} from '@angular/common';
-import {AppConstants} from 'src/app/services/app-constants';
-import {CustomerService} from '../../customers/component/customer/customer.service';
-import {Chart} from 'angular-highcharts';
+import { AddTasksComponent } from '../Activities/crm-tasks/add-tasks/add-tasks.component';
+import { CrmTaskService } from '../Activities/crm-tasks/crm-task.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FixedFeeComponent } from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
+import { SubscriptionInject } from '../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { BillerSettingsComponent } from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
+import { InvoiceHistoryComponent } from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
+import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
+import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { BackOfficeService } from '../backOffice/back-office.service';
+import { OnlineTransactionService } from '../transactions/online-transaction.service';
+import { TransactionEnumService } from '../transactions/transaction-enum.service';
+import { DashboardService } from './dashboard.service';
+import { FormControl } from '@angular/forms';
+import { calendarService } from '../Activities/calendar/calendar.service';
+import { EmailServiceService } from '../Email/email-service.service';
+import { DatePipe } from '@angular/common';
+import { AppConstants } from 'src/app/services/app-constants';
+import { CustomerService } from '../../customers/component/customer/customer.service';
+import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
-import {EnumDataService} from "../../../../services/enum-data.service";
-import {CancelFlagService} from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { EnumDataService } from "../../../../services/enum-data.service";
+import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 export interface PeriodicElement {
   name: string;
@@ -179,6 +179,21 @@ export class DashboardComponent implements OnInit {
       name: "HYBRID",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'COMMODITY',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    },
+    {
+      name: 'LIQUID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[6],
       dataLabels: {
         enabled: false
       }
@@ -363,9 +378,17 @@ export class DashboardComponent implements OnInit {
         enabled: false
       }
     }, {
-      name: 'SOLUTION ORIENTED',
+      name: 'COMMODITY',
       y: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    },
+    {
+      name: 'LIQUID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[6],
       dataLabels: {
         enabled: false
       }

@@ -127,10 +127,27 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: 'SOLUTION ORIENTED',
+    },
+    // {
+    //   name: 'SOLUTION ORIENTED',
+    //   y: 0,
+    //   color: AppConstants.DONUT_CHART_COLORS[4],
+    //   dataLabels: {
+    //     enabled: false
+    //   }
+    // },
+    {
+      name: 'COMMODITY',
       y: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    },
+    {
+      name: 'LIQUID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[6],
       dataLabels: {
         enabled: false
       }
@@ -612,7 +629,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         const othersData = {
           y: 0,
           name: 'Others',
-          color: AppConstants.DONUT_CHART_COLORS[4],
+          color: AppConstants.DONUT_CHART_COLORS[3],
           dataLabels: {
             enabled: false
           }
@@ -1199,11 +1216,33 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           });
           counter++;
           break;
-        case 'SOLUTION ORIENTED':
+        // case 'SOLUTION ORIENTED':
+        //   this.mfAllocationData.push({
+        //     name: element.category,
+        //     y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+        //     color: AppConstants.DONUT_CHART_COLORS[4],
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   });
+        //   counter++;
+        //   break;
+        case 'COMMODITY':
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
             color: AppConstants.DONUT_CHART_COLORS[4],
+            dataLabels: {
+              enabled: false
+            }
+          });
+          counter++;
+          break;
+        case 'LIQUID':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[6],
             dataLabels: {
               enabled: false
             }

@@ -1,6 +1,6 @@
 <!-- transactions search -->
 <div *ngIf="openMenue == true">
-  <app-mobile-left-sidenav></app-mobile-left-sidenav> 
+  <app-mobile-left-sidenav></app-mobile-left-sidenav>
 </div>
 <div class="row mob-bg-common pb-12 mobtop-navfixed">
   <div class="col-2" (click)="openMenu(openMenue)">
@@ -10,13 +10,13 @@
     <h5 class="m-0 f-18 text-white pt-4 roboto">Transaction</h5>
   </div>
 </div>
-<div id="mob-transactions-search" class="h-100vh mob-transaction-search" *ngIf="openMenue != true && !showSearchResult && !detailedScheme">
-  <div class="row bg-white br-0" >
+<div id="mob-transactions-search" class="h-100vh mob-transaction-search"
+  *ngIf="openMenue != true && !showSearchResult && !detailedScheme">
+  <div class="row bg-white br-0">
     <div class="col-12">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never">
-          <input type="text" value="Search Funds" aria-label="Number" matInput 
-            [matAutocomplete]="auto">
+          <input type="text" value="Search Funds" aria-label="Number" matInput [matAutocomplete]="auto">
           <span class="material-icons" matPrefix>arrow_back</span>
           <mat-icon matSuffix>clear</mat-icon>
           <mat-autocomplete #auto="matAutocomplete" class="w-100">
@@ -62,7 +62,8 @@
     <div class="col-12">
       <p class="m-0 pt-24 pb-10 lh-22">Category</p>
       <div class="quick-search-button" *ngFor="let item of categoryArray">
-          <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)" [ngClass]="{'mob-btn-selected': item.selected}">{{item.categoryName}}</button>
+        <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)"
+          [ngClass]="{'mob-btn-selected': item.selected}">{{item.categoryName}}</button>
 
         <!-- <button mat-stroked-button class="mr-10 mb-16 mob-btn-selected">Equity</button>
         <button mat-stroked-button class="mr-10 mb-16">Debt</button>
@@ -74,7 +75,8 @@
     <div class="col-12">
       <p class="m-0 pt-24 pb-10 lh-22">Sub Category</p>
       <div class="quick-search-button" *ngFor="let item of subCatArray">
-          <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)" [ngClass]="{'mob-btn-selected': item.selected}">{{item.subCategoryname}}</button>
+        <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)"
+          [ngClass]="{'mob-btn-selected': item.selected}">{{item.subCategoryname}}</button>
 
         <!-- <button mat-stroked-button class="mr-10 mb-16 mob-btn-selected">Growth</button>
         <button mat-stroked-button class="mr-10 mb-16">Dividend</button> -->
@@ -85,7 +87,8 @@
     <div class="col-12">
       <p class="m-0 pt-24 pb-10 lh-22">Fund House</p>
       <div class="quick-search-button" *ngFor="let item of amcArray">
-          <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)" [ngClass]="{'mob-btn-selected': item.selected}">{{item.amcName}}</button>
+        <button mat-stroked-button class="mr-10 mb-16" (click)="applyClassOnClick(item)"
+          [ngClass]="{'mob-btn-selected': item.selected}">{{item.amcName}}</button>
 
         <!-- <button mat-stroked-button class="mr-10 mb-16">ICICI Pru</button>
         <button mat-stroked-button class="mr-10 mb-16">DSP Blackrock</button>
@@ -108,79 +111,75 @@
 </div>
 <!-- serach result -->
 <div id="transactions-searchresult" class="mob-transaction-search" *ngIf="showSearchResult && !detailedScheme">
-    <div class="row bg-white br-0">
-      <div class="col-12">
-        <div class="form-group mb-0">
-          <mat-form-field floatLabel="never">
-            <input type="text"
-            value="Search Funds"
-            aria-label="Number"
-            matInput
-            [formControl]="myControl"
+  <div class="row bg-white br-0">
+    <div class="col-12">
+      <div class="form-group mb-0">
+        <mat-form-field floatLabel="never">
+          <input type="text" value="Search Funds" aria-label="Number" matInput [formControl]="myControl"
             [matAutocomplete]="auto">
-            <span class="material-icons" matPrefix>keyboard_backspace</span>
-            <mat-icon matSuffix>clear</mat-icon>
-            <mat-autocomplete #auto="matAutocomplete" class="w-100">
-              <mat-option [value]="option" class="p-0">
-                <div class="row">
-                  <div class="col-2">
-                    <mat-icon matSuffix class="text-custom">search</mat-icon>
-                  </div>
-                  <div class="col-10 pl-0">
-                    <p class="m-0 pt-20 text-custom">Reliance</p>
-                  </div>
+          <span class="material-icons" matPrefix>keyboard_backspace</span>
+          <mat-icon matSuffix>clear</mat-icon>
+          <mat-autocomplete #auto="matAutocomplete" class="w-100">
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
                 </div>
-              </mat-option>
-              <mat-option [value]="option" class="p-0">
-                <div class="row">
-                  <div class="col-2">
-                    <mat-icon matSuffix class="text-custom">search</mat-icon>
-                  </div>
-                  <div class="col-10 pl-0">
-                    <p class="m-0 pt-20 text-custom">Reliance Equity Large cap fund - Growth</p>
-                  </div>
-                </div>
-              </mat-option>
-              <mat-option [value]="option" class="p-0">
-                <div class="row">
-                  <div class="col-2">
-                    <mat-icon matSuffix class="text-custom">search</mat-icon>
-                  </div>
-                  <div class="col-10 pl-0">
-                    <p class="m-0 pt-20 text-custom">Reliance Liquid Debt fund - Regular plan</p>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-    <div class="row pt-20 pb-16">
-      <div class="col-8 pl-8">
-        <p class="m-0 pt-6">Equity Funds</p>
-      </div>
-      <div class="col-4 text-right">
-         <button mat-stroked-button class="view-all">View All</button>
-      </div>
-    </div>
-    <div class="mt-16">
-      <div class="p-8">
-        <div >
-            <div class="row pt-16 pb-16 bg-white" *ngFor="let item of equiity" (click)="changedetailedScheme(item)">
-                <div class="col-2 pt-6">
-                  <div class="circular-small"></div>
-                </div>
-                <div class="col-7 pl-0">
-                  <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
-                  <button mat-stroked-button class="eql-btn" matSuffix>{{item.subCategoryName}}</button>
-                </div>
-                <div class="col-3 pl-0 text-right">
-                  <p class="mob-text-xs">% XIRR (Yly)</p>
-                  <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance</p>
                 </div>
               </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Equity Large cap fund - Growth</p>
+                </div>
+              </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Liquid Debt fund - Regular plan</p>
+                </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20 pb-16">
+    <div class="col-8 pl-8">
+      <p class="m-0 pt-6">Equity Funds</p>
+    </div>
+    <div class="col-4 text-right">
+      <button mat-stroked-button class="view-all">View All</button>
+    </div>
+  </div>
+  <div class="mt-16">
+    <div class="p-8">
+      <div>
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of equiity" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
+          </div>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="eql-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+          </div>
         </div>
+      </div>
       <!-- <div class="mt-8">
       <div class="row pt-16 pb-16 bg-white">
         <div class="col-2 pt-6">
@@ -212,29 +211,29 @@
       </div>
     </div> -->
       <div class="row pt-36 pb-16" *ngIf="debt.length > 0">
-      <div class="col-8 pl-8">
-        <p class="m-0 pt-6">Debt Funds</p>
-      </div>
-      <div class="col-4 text-right">
-         <button mat-stroked-button class="view-all">View All</button>
-      </div>
-    </div>
-        <div class="mt-16"  *ngIf="debt.length > 0">
-      <div class="row pt-16 pb-16 bg-white"  *ngFor="let item of debt" (click)="changedetailedScheme(item)">
-        <div class="col-2 pt-6">
-          <div class="circular-small"></div>
+        <div class="col-8 pl-8">
+          <p class="m-0 pt-6">Debt Funds</p>
         </div>
-        <div class="col-7 pl-0">
-          <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
-          <button mat-stroked-button class="debt-btn" matSuffix>{{item.subCategoryName}}</button>
-        </div>
-        <div class="col-3 pl-0 text-right">
-          <p class="mob-text-xs">% XIRR (Yly)</p>
-          <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+        <div class="col-4 text-right">
+          <button mat-stroked-button class="view-all">View All</button>
         </div>
       </div>
-    </div>
-       <!-- <div class="mt-8">
+      <div class="mt-16" *ngIf="debt.length > 0">
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of debt" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
+          </div>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="debt-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="mt-8">
       <div class="row pt-16 pb-16 bg-white">
         <div class="col-2 pt-6">
           <div class="circular-small"></div>
@@ -249,7 +248,7 @@
         </div>
       </div>
     </div> -->
-       <!-- <div class="mt-8">
+      <!-- <div class="mt-8">
       <div class="row pt-16 pb-16 bg-white">
         <div class="col-2 pt-6">
           <div class="circular-small"></div>
@@ -264,30 +263,30 @@
         </div>
       </div>
     </div> -->
-     <div class="row pt-36 pb-16" *ngIf="hybrid.length > 0" >
-      <div class="col-8 pl-8">
-        <p class="m-0 pt-6">Hybrid Funds</p>
-      </div>
-      <div class="col-4 text-right">
-         <button mat-stroked-button class="view-all">View All</button>
-      </div>
-    </div>
-     <div class="mt-16" *ngIf="hybrid.length > 0">
-      <div class="row pt-16 pb-16 bg-white" *ngFor="let item of hybrid" (click)="changedetailedScheme(item)">
-        <div class="col-2 pt-6">
-          <div class="circular-small"></div>
+      <div class="row pt-36 pb-16" *ngIf="hybrid.length > 0">
+        <div class="col-8 pl-8">
+          <p class="m-0 pt-6">Hybrid Funds</p>
         </div>
-        <div class="col-7 pl-0">
-          <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
-          <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
-        </div>
-        <div class="col-3 pl-0 text-right">
-          <p class="mob-text-xs">% XIRR (Yly)</p>
-          <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+        <div class="col-4 text-right">
+          <button mat-stroked-button class="view-all">View All</button>
         </div>
       </div>
-    </div>
-    <div class="row pt-36 pb-16" *ngIf="solutionOriented.length > 0">
+      <div class="mt-16" *ngIf="hybrid.length > 0">
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of hybrid" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
+          </div>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row pt-36 pb-16" *ngIf="solutionOriented.length > 0">
         <div class="col-8 pl-8">
           <p class="m-0 pt-6">Solution oriented Funds</p>
         </div>
@@ -309,31 +308,77 @@
             <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
           </div>
         </div>
+      </div> -->
+      <div class="row pt-36 pb-16" *ngIf="commodity.length > 0">
+        <div class="col-8 pl-8">
+          <p class="m-0 pt-6">Commodity</p>
+        </div>
+        <div class="col-4 text-right">
+          <button mat-stroked-button class="view-all">View All</button>
+        </div>
+      </div>
+      <div class="mt-16" *ngIf="commodity.length > 0">
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of commodity" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
+          </div>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-36 pb-16" *ngIf="liquid.length > 0">
+        <div class="col-8 pl-8">
+          <p class="m-0 pt-6">Liquid</p>
+        </div>
+        <div class="col-4 text-right">
+          <button mat-stroked-button class="view-all">View All</button>
+        </div>
+      </div>
+      <div class="mt-16" *ngIf="liquid.length > 0">
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of liquid" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
+          </div>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
+          </div>
+        </div>
       </div>
       <div class="row pt-36 pb-16" *ngIf="others.length > 0">
-          <div class="col-8 pl-8">
-            <p class="m-0 pt-6">Others Funds</p>
+        <div class="col-8 pl-8">
+          <p class="m-0 pt-6">Others Funds</p>
+        </div>
+        <div class="col-4 text-right">
+          <button mat-stroked-button class="view-all">View All</button>
+        </div>
+      </div>
+      <div class="mt-16" *ngIf="others.length > 0">
+        <div class="row pt-16 pb-16 bg-white" *ngFor="let item of others" (click)="changedetailedScheme(item)">
+          <div class="col-2 pt-6">
+            <div class="circular-small"></div>
           </div>
-          <div class="col-4 text-right">
-             <button mat-stroked-button class="view-all">View All</button>
+          <div class="col-7 pl-0">
+            <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
+            <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
+          </div>
+          <div class="col-3 pl-0 text-right">
+            <p class="mob-text-xs">% XIRR (Yly)</p>
+            <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
           </div>
         </div>
-         <div class="mt-16" *ngIf="others.length > 0">
-          <div class="row pt-16 pb-16 bg-white" *ngFor="let item of others" (click)="changedetailedScheme(item)">
-            <div class="col-2 pt-6">
-              <div class="circular-small"></div>
-            </div>
-            <div class="col-7 pl-0">
-              <p class="m-0 f-12 pb-4">{{item.schemeName}}</p>
-              <button mat-stroked-button class="balanced-btn" matSuffix>{{item.subCategoryName}}</button>
-            </div>
-            <div class="col-3 pl-0 text-right">
-              <p class="mob-text-xs">% XIRR (Yly)</p>
-              <p class="m-0 text-success pt-12">{{item.xirr | number:'1.2-2'}}%</p>
-            </div>
-          </div>
-        </div>
-       <!-- <div class="mt-8">
+      </div>
+      <!-- <div class="mt-8">
       <div class="row pt-16 pb-16 bg-white">
         <div class="col-2 pt-6">
           <div class="circular-small"></div>
@@ -348,7 +393,7 @@
         </div>
       </div>
     </div> -->
-       <!-- <div class="mt-8 mb-28">
+      <!-- <div class="mt-8 mb-28">
       <div class="row pt-16 pb-16 bg-white">
         <div class="col-2 pt-6">
           <div class="circular-small"></div>
@@ -363,73 +408,74 @@
         </div>
       </div>
     </div> -->
-    </div>
     </div>
   </div>
+</div>
 <div id="mob-transaction-profile" class="h-100vh" *ngIf="detailedScheme">
-    <div class="bg-white mob-bx blr-40">
+  <div class="bg-white mob-bx blr-40">
     <div class="row pt-20">
       <div class="col-6">
         <span class="material-icons">
-    keyboard_backspace
-    </span>
+          keyboard_backspace
+        </span>
       </div>
-       <div class="col-6">
-       <img src="/assets/images/svg/mob-cart.svg" class="right">
-       </div>
+      <div class="col-6">
+        <img src="/assets/images/svg/mob-cart.svg" class="right">
+      </div>
     </div>
     <div class="row pt-24">
-    <div class="col-12">
-      <img src="/assets/images/svg/realinace.svg" class="left">
-    </div>
-    <div class="col-12 pt-16">
-      <p class="m-0 f-16">{{scheme.schemeName}}</p>
-    </div>
+      <div class="col-12">
+        <img src="/assets/images/svg/realinace.svg" class="left">
+      </div>
+      <div class="col-12 pt-16">
+        <p class="m-0 f-16">{{scheme.schemeName}}</p>
+      </div>
     </div>
     <div class="row pt-12 pb-24 mob-realinace">
       <div class="col-3">
         <button mat-stroked-button>Direct</button>
       </div>
-        <div class="col-8 pl-8">
-          <button mat-stroked-button >{{scheme.subCategoryName}}</button>
-        </div>
+      <div class="col-8 pl-8">
+        <button mat-stroked-button>{{scheme.subCategoryName}}</button>
+      </div>
     </div>
-    </div>
-    <div class="p-8">
+  </div>
+  <div class="p-8">
     <div class="mt-20 bg-white">
-    <div class="row pt-10">
-      <div class="col-4 pr-0">
-        <p class="mob-text-xs">NAV ({{scheme.navDate | date:'dd-MMM-yyyy'}})</p>
-        <h5 class="mb-0 mob-text-success f-16 pt-2">Rs. <span appFormatNumber>{{scheme.nav}}</span></h5>
-      </div>
-      <div class="col-4 pr-0">
-        <p class="mob-text-xs">Min. Investment</p>
-        <h5 class="mb-0 f-16 pt-2">Rs. <span appFormatNumber>{{scheme.amountInvested}}</span></h5>
-      </div>
-      <div class="col-4 pr-0">
-        <p class="mob-text-xs">Min. Investment</p>
-        <h5 class="mb-0 f-16 pt-2">Rs. <span appFormatNumber>{{scheme.amountInvested}}</span></h5>
-      </div>
-    </div>
-    <div class="row pt-44 pb-28">
-      <div class="col-12">
-        <img src="/assets/images/svg/mob-line-chart.svg">
-      </div>
-    </div>
-    </div>
-    <div class="row pt-10">
-    <div class="col-12 p-0">
-      <p class="mob-text-xs lh-18">*Mutual Funds Investments are subject to market risks, please read the Offer Document carefully before investing. </p>
-    </div>
-    </div>
-    </div>
-    <div class="mob-add-center mt-20 hw-40 pt-2">
-    <button mat-stroked-button><span class="material-icons text-white f-28">
-          add
-          </span></button>
-          
+      <div class="row pt-10">
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">NAV ({{scheme.navDate | date:'dd-MMM-yyyy'}})</p>
+          <h5 class="mb-0 mob-text-success f-16 pt-2">Rs. <span appFormatNumber>{{scheme.nav}}</span></h5>
         </div>
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">Min. Investment</p>
+          <h5 class="mb-0 f-16 pt-2">Rs. <span appFormatNumber>{{scheme.amountInvested}}</span></h5>
+        </div>
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">Min. Investment</p>
+          <h5 class="mb-0 f-16 pt-2">Rs. <span appFormatNumber>{{scheme.amountInvested}}</span></h5>
+        </div>
+      </div>
+      <div class="row pt-44 pb-28">
+        <div class="col-12">
+          <img src="/assets/images/svg/mob-line-chart.svg">
+        </div>
+      </div>
     </div>
+    <div class="row pt-10">
+      <div class="col-12 p-0">
+        <p class="mob-text-xs lh-18">*Mutual Funds Investments are subject to market risks, please read the Offer
+          Document carefully before investing. </p>
+      </div>
+    </div>
+  </div>
+  <div class="mob-add-center mt-20 hw-40 pt-2">
+    <button mat-stroked-button><span class="material-icons text-white f-28">
+        add
+      </span></button>
+
+  </div>
+</div>
 <!-- no result -->
 <!-- <div id="mob-noresult" class="mob-transaction-search">
     <div class="row bg-white br-0">
