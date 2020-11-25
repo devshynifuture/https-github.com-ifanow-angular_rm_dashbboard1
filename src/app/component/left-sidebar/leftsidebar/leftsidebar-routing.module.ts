@@ -82,7 +82,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting-support/setting-support.module').then(m => m.SettingSupportModule)
       },
       {
-        path: 'advisor-marketplace',
+        path: 'engage-grow',
         loadChildren: () => import('src/app/component/protect-component/Advisor-Marketplace/advisor-marketplce.module').then(m => m.AdvisorMarketplceModule),
       },
       {
