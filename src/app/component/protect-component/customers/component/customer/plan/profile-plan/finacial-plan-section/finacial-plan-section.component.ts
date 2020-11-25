@@ -103,7 +103,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   count: any = 0;
   datePipe: any;
   id: any;
-  generatePDF: boolean;
+  generatePDF: any;
   isSpinner: boolean = true;
   sectionName: any;
   clientData: any;
@@ -161,16 +161,11 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   mergeCallRes(data) {
     this.id = data
-    this.generatePDF = false
+    this.generatePDF = 0
     this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
-    }, 7000);
-  }
-  callRepeate() {
-    if (this.generatePDF == false) {
-      this.getPDFCall(this.id)
-    }
+    }, 5000);
   }
   formatFileSize(bytes, decimalPoint) {
     if (bytes == 0) return '0 Bytes';
@@ -179,15 +174,6 @@ export class FinacialPlanSectionComponent implements OnInit {
       sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-  }
-  pdfRes(data) {
-    const file = new Blob([data], { type: 'application/pdf' });
-    var date = new Date();
-    const namePdf = '' + this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
-    const a = document.createElement('a');
-    a.href = window.URL.createObjectURL(file);
-    a.download = namePdf + '.pdf';
-    a.click();
   }
   getPDFCall(data) {
     this.isSpinner = false
@@ -201,21 +187,23 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
-        this.isSpinner = true
-        const file = new Blob([data], { type: 'application/pdf' });
-        //fragData.isSpinner = false;
-        //fragData.size = this.formatFileSize(data.size,0);
-        //fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
-        var date = new Date();
-        // fragData.time = date.toLocaleTimeString('en-US');
-        // window.open(fileURL,"hello");
-        const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(file);
-        a.download = namePdf + '.pdf';
-        a.click();
-        // a.download = fileURL;
-        //return this.fileURL ? this.fileURL : null;
+        if (data.type == "application/pdf") {
+          this.generatePDF = 1
+          this.isSpinner = true
+          const file = new Blob([data], { type: 'application/pdf' });
+          var date = new Date();
+          const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(file);
+          a.download = namePdf + '.pdf';
+          a.click();
+        } else {
+          this.generatePDF = 0
+          setTimeout(() => {
+            this.getPDFCall(this.id)
+          }, 5000);
+        }
+
       });
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
