@@ -74,6 +74,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   hasError = false;
   domainName = new FormControl('', [Validators.required]);
   copyUrl = new FormControl('');
+  showHistoryOfBulkEmailPassword = false;
+  bulkEmailPasswordHistoryList = [];
+  isLoadingClients = false;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'BEGIN',
@@ -120,6 +123,25 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
       feviconUrl: []
     });
+  }
+
+  toggleBulkEmailPasswordView() {
+    this.showHistoryOfBulkEmailPassword = !this.showHistoryOfBulkEmailPassword;
+    if (this.showHistoryOfBulkEmailPassword) {
+      this.isLoading = true;
+      this.settingsService.getBulkEmailPasswordList({ advisorId: this.advisorId })
+        .subscribe(res => {
+          this.isLoading = false;
+          if (res) {
+            console.log(res);
+            res.map(o => o.showInnerTable = false);
+            this.bulkEmailPasswordHistoryList = res;
+          }
+        }, err => {
+          this.isLoading = false;
+          console.error(err);
+        });
+    }
   }
 
   sanitizeUrl(url) {
@@ -708,46 +730,47 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const obj = {
       advisorId: this.advisorId,
       // status: 1,
-      limit: -1,
+      limit: 50,
       offset: 0
     };
+    if (!this.isLoading) {
+      const fragmentData = {
+        flag: 'Bulk-Email',
+        id: 1,
+        data: '',
+        direction: 'top',
+        componentName: BulkEmailReviewSendComponent,
+        state: 'open'
+      };
+      // this.router.navigate(['/subscription-upper'])
+      AuthService.setSubscriptionUpperSliderData(fragmentData);
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        (upperSliderData: any) => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            if (upperSliderData.tab2view) {
+              this.viewMode = 'tab4';
+              this.getEmailVerification();
+            }
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
+        }
+      );
+    }
 
-    this.peopleService.getClientList(obj).subscribe(
-      data => {
-        // this.isLoading = false;
-        this.barButtonOptions.active = false;
-        if (data && data.length > 0) {
-          data.forEach((singleData) => {
-            if (singleData.emailList && singleData.emailList.length > 0) {
-              singleData.email = singleData.emailList[0].email;
-            }
-          });
-        }
-        if (!this.isLoading) {
-          const fragmentData = {
-            flag: 'Bulk-Email',
-            id: 1,
-            data,
-            direction: 'top',
-            componentName: BulkEmailReviewSendComponent,
-            state: 'open'
-          };
-          // this.router.navigate(['/subscription-upper'])
-          AuthService.setSubscriptionUpperSliderData(fragmentData);
-          const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-            (upperSliderData: any) => {
-              if (UtilService.isDialogClose(upperSliderData)) {
-                if (upperSliderData.tab2view) {
-                  this.viewMode = 'tab4';
-                  this.getEmailVerification();
-                }
-                // this.getClientSubscriptionList();
-                subscription.unsubscribe();
-              }
-            }
-          );
-        }
-      });
+    // this.peopleService.getClientList(obj).subscribe(
+    //   data => {
+    //     // this.isLoading = false;
+    //     this.barButtonOptions.active = false;
+    //     if (data && data.length > 0) {
+    //       data.forEach((singleData) => {
+    //         if (singleData.emailList && singleData.emailList.length > 0) {
+    //           singleData.email = singleData.emailList[0].email;
+    //         }
+    //       });
+    //     }
+
+    // });
   }
 
   openPopup(value, data) {
