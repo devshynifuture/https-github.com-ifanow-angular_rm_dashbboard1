@@ -349,8 +349,8 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
       this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       this.categoryData = data;
-      let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category'); +
-        this.categorisedHybridFund(catObj);
+      let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
+      this.categorisedHybridFund(catObj);
       Object.keys(catObj).map(key => {
         if (catObj[key][0].category != 'DEBT') {
           let tempData = this.filterCategoryWise(catObj[key], 'EQUITY');
