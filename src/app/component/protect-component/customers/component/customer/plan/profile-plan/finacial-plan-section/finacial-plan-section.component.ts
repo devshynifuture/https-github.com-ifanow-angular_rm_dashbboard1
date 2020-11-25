@@ -103,7 +103,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   count: any = 0;
   datePipe: any;
   id: any;
-  generatePDF: boolean;
+  generatePDF: any;
   isSpinner: boolean = true;
   sectionName: any;
   clientData: any;
@@ -161,15 +161,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   mergeCallRes(data) {
     this.id = data
-    this.generatePDF = false
+    this.generatePDF = 0
     this.isSpinner = false
     setTimeout(() => {
       this.getPDFCall(data)
     }, 7000);
-  }
-  callRepeate() {
-    if (this.generatePDF == false) {
-      this.getPDFCall(this.id)
+    while (this.generatePDF == 1) {
+      this.getPDFCall(data)
     }
   }
   formatFileSize(bytes, decimalPoint) {
@@ -192,6 +190,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         { responseType: 'blob' }
       )
       .subscribe((data) => {
+        this.generatePDF = 1
         this.isSpinner = true
         const file = new Blob([data], { type: 'application/pdf' });
         var date = new Date();
