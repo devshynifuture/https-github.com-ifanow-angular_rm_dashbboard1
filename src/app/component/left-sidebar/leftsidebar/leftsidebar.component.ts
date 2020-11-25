@@ -105,7 +105,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   }
   stringRes(data) {
-    let url = 'https://marketplace.ifanow.in/admin/advisor-marketplace/engage-grow'
+    let url = 'http://localhost:4300/admin/advisor-marketplace/engage-grow'
     window.open(url, data)
   }
   getActiveLink(value) {
