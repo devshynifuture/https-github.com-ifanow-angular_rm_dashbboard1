@@ -202,6 +202,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           a.click();
         } else {
           this.generatePDF = 0
+          this.getPDFCall(this.id)
         }
 
       });
