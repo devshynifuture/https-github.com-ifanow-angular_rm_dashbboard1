@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { PeopleService } from './../../../../PeopleComponent/people.service';
+import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
@@ -18,6 +19,8 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   clientList: any = [];
   dataSource = new MatTableDataSource();
   @ViewChild('clientTableSort', { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
+
   displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
   isLoading = false;
   dataCount = 0;
@@ -28,6 +31,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   step2Flag: boolean;
   subject = new FormControl('Your new money management account is created!');
   selectedFromEmail = new FormControl('');
+  isAllSelected = false;
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -44,6 +48,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     //   fontIcon: 'favorite'
     // }
   };
+  hasEndReached: any = false;
+  infiniteScrollingFlag: boolean = false;
+  infiniteScrollClientList = [];
 
   constructor(
     public authService: AuthService,
@@ -51,7 +58,8 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     public enumDataService: EnumDataService,
     private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private peopleService: PeopleService
   ) {
   }
 
@@ -98,30 +106,117 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   </html>`;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.step1Flag = true;
+    this.getClientListValue(0);
+    this.getEmailVerification();
+    this.mailForm = this.fb.group({
+      mail_body: [''],
+    });
+
+  }
+
+  getClientListValue(offset) {
+    const obj = {
+      advisorId: this.advisorId,
+      // status: 1,
+      limit: 50,
+      offset
+    };
+    if (this.infiniteScrollClientList.length === 0) {
+      this.isLoading = true;
+    } else {
+      this.infiniteScrollingFlag = true;
+    }
+    this.peopleService.getClientList(obj)
+      .subscribe(data => {
+        this.barButtonOptions.active = false;
+        if (data && data.length > 0) {
+          data.forEach((singleData) => {
+            if (singleData.emailList && singleData.emailList.length > 0) {
+              singleData.email = singleData.emailList[0].email;
+            }
+          });
+        }
+        if (data && data.length > 0) {
+          data.forEach(element => {
+            element.selected = false;
+            element.ownerName = '';
+            element.name = '';
+            element.userName = '';
+          });
+          if (this.infiniteScrollClientList.length === 0) {
+            this.isLoading = false;
+          } else {
+            this.infiniteScrollingFlag = false;
+          }
+          if (data) {
+            console.log("this is all sip table data, ------", data);
+            if (this.isAllSelected) {
+              data.map(o => o.selected = true);
+            }
+            this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
+
+            this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
+              return data.some(item2 => item2.advisorId !== item.advisorId);
+            });
+
+            console.log(this.infiniteScrollClientList);
+            this.dataSource.data = this.infiniteScrollClientList;
+          } else {
+            this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
+            this.dataSource.sort = this.sort;
+            this.dataSource.filteredData = [];
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
+            this.hasEndReached = true;
+          }
+        } else {
+          this.dataSource = null;
+        }
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  onWindowScroll(e: any) {
+
+    console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
+    let tableOffsetTop = this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop;
+    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 38);
+    if (tableOffsetTop <= tableOffsetHeight) {
+      if (!this.hasEndReached) {
+        console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
+        this.infiniteScrollingFlag = true;
+        // this.getAllSip(this.finalSipList.length, 20);
+        this.getClientListValue(this.infiniteScrollClientList.length);
+        // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
+      }
+
+    }
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
-  @Input() set data(data) {
-    this.advisorId = AuthService.getAdvisorId();
-    this.step1Flag = true;
-    if (data && data.length > 0) {
-      data.forEach(element => {
-        element.selected = false;
-        element.ownerName = '';
-        element.name = '';
-        element.userName = '';
-      });
-      this.dataSource.data = data;
-      this.dataSource.sort = this.sort;
-    }
-    this.getEmailVerification();
-    this.mailForm = this.fb.group({
-      mail_body: [''],
-    });
-  }
+  // @Input() set data(data) {
+  //   this.advisorId = AuthService.getAdvisorId();
+  //   this.step1Flag = true;
+  //   if (data && data.length > 0) {
+  //     data.forEach(element => {
+  //       element.selected = false;
+  //       element.ownerName = '';
+  //       element.name = '';
+  //       element.userName = '';
+  //     });
+  //     this.dataSource.data = data;
+  //     this.dataSource.sort = this.sort;
+  //   }
+  //   this.getEmailVerification();
+  //   this.mailForm = this.fb.group({
+  //     mail_body: [''],
+  //   });
+  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -137,6 +232,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
   selectAll(event) {
     this.dataCount = 0;
+    this.isAllSelected = true;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
@@ -212,6 +308,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       subject: this.subject.value,
       messageBody: this.emailBody
     };
+    if (this.isAllSelected) {
+      obj['allClient'] = true;
+    }
     this.orgSetting.sendEmailToClients(obj).subscribe(
       data => {
         this.eventService.openSnackBar(data, 'Dismiss');

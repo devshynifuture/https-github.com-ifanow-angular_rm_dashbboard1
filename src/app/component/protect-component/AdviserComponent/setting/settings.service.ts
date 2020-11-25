@@ -176,4 +176,8 @@ export class SettingsService {
     const httpParams = new HttpParams().set('hostName', data.hostName);
     return this.http.getWithoutAuth(apiConfig.MAIN_URL + appConfig.GET_DOMAIN_DATA, httpParams, 1);
   }
+
+  getBulkEmailPasswordList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_PASSWORD_HISTORY, data);
+  }
 }
