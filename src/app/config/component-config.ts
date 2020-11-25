@@ -849,6 +849,7 @@ export const appConfig = {
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
   GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
+  GET_RANDOM_STRING: 'user/advisor/marketplace-login/detail/add',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -859,6 +860,7 @@ export const appConfig = {
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
+  GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
