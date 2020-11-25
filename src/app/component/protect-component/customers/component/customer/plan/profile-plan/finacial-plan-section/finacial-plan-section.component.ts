@@ -180,15 +180,6 @@ export class FinacialPlanSectionComponent implements OnInit {
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
-  pdfRes(data) {
-    const file = new Blob([data], { type: 'application/pdf' });
-    var date = new Date();
-    const namePdf = '' + this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
-    const a = document.createElement('a');
-    a.href = window.URL.createObjectURL(file);
-    a.download = namePdf + '.pdf';
-    a.click();
-  }
   getPDFCall(data) {
     this.isSpinner = false
     let obj = {
@@ -203,19 +194,12 @@ export class FinacialPlanSectionComponent implements OnInit {
       .subscribe((data) => {
         this.isSpinner = true
         const file = new Blob([data], { type: 'application/pdf' });
-        //fragData.isSpinner = false;
-        //fragData.size = this.formatFileSize(data.size,0);
-        //fragData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
         var date = new Date();
-        // fragData.time = date.toLocaleTimeString('en-US');
-        // window.open(fileURL,"hello");
         const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';
         a.click();
-        // a.download = fileURL;
-        //return this.fileURL ? this.fileURL : null;
       });
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
