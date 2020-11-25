@@ -166,9 +166,6 @@ export class FinacialPlanSectionComponent implements OnInit {
     setTimeout(() => {
       this.getPDFCall(data)
     }, 5000);
-    while (this.generatePDF == 1) {
-      this.getPDFCall(data)
-    }
   }
   formatFileSize(bytes, decimalPoint) {
     if (bytes == 0) return '0 Bytes';
@@ -202,7 +199,9 @@ export class FinacialPlanSectionComponent implements OnInit {
           a.click();
         } else {
           this.generatePDF = 0
-          this.getPDFCall(this.id)
+          setTimeout(() => {
+            this.getPDFCall(this.id)
+          }, 5000);
         }
 
       });
