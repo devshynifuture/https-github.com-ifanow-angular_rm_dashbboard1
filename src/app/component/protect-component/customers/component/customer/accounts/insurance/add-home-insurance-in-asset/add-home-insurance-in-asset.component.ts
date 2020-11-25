@@ -61,6 +61,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   policyFeature: any;
   id: any;
   options: any;
+  showHeader: any;
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -72,6 +73,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     this.policyList = data.displayList.policyTypes;
     this.policyFeature = data.displayList.policyFeature;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getFamilyMemberList();
     this.getdataForm(data)
     // this.setInsuranceDataFormField(data);

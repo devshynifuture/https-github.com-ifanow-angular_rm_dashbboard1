@@ -498,8 +498,8 @@ export const appConfig = {
   ASSTES_OF_EXPENSE: 'account/expense/expense/of/asset/get',
   EXPENSE_ALL_GET: 'account/expense/graph/detail/of/expense/get',
   FINPLAN_PDF_UPLOAD: 'plan/financial-plan-html/upload',
-  MEREGE_CALL: "",
-  GET_PDF_CALL: "",
+  MEREGE_CALL: "plan/financial-plan-html/merge",
+  GET_PDF_CALL: "plan/financial-plan/pdf/get",
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',

@@ -44,14 +44,16 @@
                     <div class="col-md-2 pl-0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-4">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
+
+                    </div>
+                    <div class="col-md-3">
+                        <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="btn-success">Save plan</button>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -610,7 +612,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','Portfolio / General Insurance / All general insurances')">
+                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -687,7 +689,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils','Portfolio / General Insurance / Fire & special perils')">
+                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">

@@ -71,6 +71,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     showDeductibleSum = false;
     insuredMemberList: any;
     options: any;
+    showHeader: any;
 
     constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
@@ -85,6 +86,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         this.inputData = data;
         this.policyList = data.displayList.policyTypes;
         this.addOns = data.displayList.addOns;
+        this.showHeader = data.flag;
         this.getFamilyMemberList();
         this.getdataForm(data);
         // this.setInsuranceDataFormField(data);

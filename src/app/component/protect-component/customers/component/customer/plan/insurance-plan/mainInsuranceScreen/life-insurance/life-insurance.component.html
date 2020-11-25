@@ -13,8 +13,8 @@
         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
     </div>
     <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
-        <img (click)="generatePdf(null)" class="" matTooltip="Download PDF"
-            src="assets/images/svg/download-pdf-blue.svg" class="pr-16 h-24">
+        <img (click)="generatePdf()" class="" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg"
+            class="pr-16 h-24">
         <img (click)="deleteInsurance()" src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>
@@ -524,7 +524,7 @@
                             <mat-expansion-panel (opened)="panelOpenState = true;continuous = true" [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
-                                        5 Less : Continuous income source
+                                        5. Less : Continuous income source
                                     </mat-panel-title>
                                     <mat-panel-description class="w-20">
                                         -
@@ -597,7 +597,7 @@
                             <mat-expansion-panel hideToggle [ngClass]="isExpansionDisabled()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
-                                        6 Less: Exisiting life Insurance (sum assured)
+                                        6. Less: Exisiting life Insurance (sum assured)
                                     </mat-panel-title>
                                     <mat-panel-description class="w-20">
                                         -
@@ -613,7 +613,7 @@
                                 [expanded]="false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="f-500 w-60">
-                                        7 Less : Existing Assets
+                                        7. Less : Existing Assets
                                     </mat-panel-title>
                                     <mat-panel-description class="w-20">
                                         -

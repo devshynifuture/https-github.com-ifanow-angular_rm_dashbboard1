@@ -1,17 +1,17 @@
-import {Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer/customer.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {MAT_DATE_FORMATS, MatDialog, MatInput} from '@angular/material';
-import {DataComponent} from '../../../../../../interfaces/data.component';
-import {ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {DatePipe} from '@angular/common';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer/customer.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MAT_DATE_FORMATS, MatDialog, MatInput } from '@angular/material';
+import { DataComponent } from '../../../../../../interfaces/data.component';
+import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -28,7 +28,7 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     // [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class AddInsuranceComponent implements OnInit, DataComponent {
@@ -58,7 +58,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   flag = 'Add';
   bankList: any;
   filterNomineesList: any[];
-  cashFlowArray=[{name:"Survival benefit",disabled:false,value:"1"},{name:"Maturity benefit",disabled:false,value:"2"},{name:"Annuity",disabled:false,value:"3"}]
+  cashFlowArray = [{ name: "Survival benefit", disabled: false, value: "1" }, { name: "Maturity benefit", disabled: false, value: "2" }, { name: "Annuity", disabled: false, value: "3" }]
+  showHeader: any;
   /*_data;
   @Input()
   set data(inputData) {
@@ -78,6 +79,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.clientId = AuthService.getClientId();
     this.insuranceSubTypeId = data.insuranceSubTypeId;
     this.showInsurance = data.showInsurance;
+    this.showHeader = data.flag;
     // this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
   }
@@ -129,7 +131,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   addMoreFlag;
   insuranceFormFilledData: any;
-  @ViewChild('chnageScrollPosition', {static: false}) eleRef: ElementRef;
+  @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef;
 
   lifeInsuranceForm = this.fb.group({
     lifeAssured: [],
@@ -150,8 +152,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       familyMemberId: null,
       id: 0,
       isClient: 0,
-      userType:0,
-      clientId:0
+      userType: 0,
+      clientId: 0
     })]),
   });
   keyDetailsForm = this.fb.group({
@@ -214,13 +216,13 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   display(value) {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
-    
+
   }
-  changeNomineeList(){
-    this.filterNomineesList=[];
-    let filterArray=[];
+  changeNomineeList() {
+    this.filterNomineesList = [];
+    let filterArray = [];
     this.nomineesListFM.forEach(element => {
-      if(element.familyMemberId != this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId){
+      if (element.familyMemberId != this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId) {
         filterArray.push(element)
       }
     });
@@ -236,22 +238,22 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.familyMemberLifeData = data;
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
     this.changeNomineeList();
 
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
 
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -304,8 +306,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       familyMemberId: [data ? data.familyMemberId : 0],
       id: [data ? data.id : 0],
       isClient: [data ? data.isClient : 0],
-      clientId:[data ? data.clientId : 0],
-      userType:[data ? data.userType : 0]
+      clientId: [data ? data.clientId : 0],
+      userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -432,10 +434,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       form.get(value).setValue(event.target.value);
     }
   }
-  disabledSelected(value){
-    this.cashFlowArray.forEach(element=>{
-      if(value == '2' || value == '3'){
-        if(element.name == 'Maturity benefit' || element.name == 'Annuity'){
+  disabledSelected(value) {
+    this.cashFlowArray.forEach(element => {
+      if (value == '2' || value == '3') {
+        if (element.name == 'Maturity benefit' || element.name == 'Annuity') {
           element.disabled = true;
         }
       }
@@ -465,7 +467,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   setInsuranceDataFormField(data) {
     this.editInsuranceData = data.data;
     if (this.editInsuranceData == undefined) {
-      this.ownerData = {Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm};
+      this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm };
       return;
     } else {
       (this.editInsuranceData.id) ? this.flag = 'Edit' : this.flag = 'Add';
@@ -557,7 +559,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.Miscellaneous.controls.advisorName.setValue(this.editInsuranceData.advisorName);
       this.Miscellaneous.controls.serviceBranch.setValue(this.editInsuranceData.serviceBranch);
       this.Miscellaneous.controls.bankAccount.setValue(this.editInsuranceData.linkedBankAccountId);
-      this.ownerData = {Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm};
+      this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm };
     }
 
     // this.getFamilyMemberList();
@@ -630,23 +632,23 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     };
     this.customerService.getPolicyName(obj).subscribe(
       data => {
-        if(data.policyDetails.length>0){
+        if (data.policyDetails.length > 0) {
           this.options = data.policyDetails;
-          this.checkValidPolicy(data,inpValue);
-        }else{
+          this.checkValidPolicy(data, inpValue);
+        } else {
           this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
           this.lifeInsuranceForm.get('policyName').markAsTouched();
         }
       }
     );
   }
-  checkValidPolicy(value,input){
-    if(this.policyData){
-      if(this.policyData.policyName != input){
+  checkValidPolicy(value, input) {
+    if (this.policyData) {
+      if (this.policyData.policyName != input) {
         this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
         this.lifeInsuranceForm.get('policyName').markAsTouched();
       }
-    }else if(!this.policyData){
+    } else if (!this.policyData) {
       this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
       this.lifeInsuranceForm.get('policyName').markAsTouched();
     }
@@ -663,7 +665,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
     this.eleRef.nativeElement.scrollTop = 200;
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.keyDetailsForm};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.keyDetailsForm };
 
   }
 
@@ -678,7 +680,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   getCashFlowData() {
 
   }
-  getClientId(){
+  getClientId() {
 
     this.nomineesListFM.forEach(element => {
       for (const e in this.getCoOwner.controls) {
@@ -696,7 +698,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
 
-}
+  }
   saveAddInsurance() {
     this.getClientId();
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
@@ -739,7 +741,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return;
-  } else {
+    } else {
       this.barButtonOptions.active = true;
       this.insuranceFormFilledData = {
         familyMemberIdLifeAssured: (this.lifeInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.lifeInsuranceForm.value.getCoOwnerName[0].clientId : this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
@@ -754,7 +756,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
         policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
         // lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
-        lastUnpaidPremium :this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+        lastUnpaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
         premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
@@ -773,7 +775,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         serviceBranch: this.Miscellaneous.get('serviceBranch').value,
         linkedBankAccountId: this.Miscellaneous.get('bankAccount').value,
         policyId: this.policyData.id ? this.policyData.id : null,
-        policyTypeId: this.policyData.policyTypeId ?this.policyData.policyTypeId : null,
+        policyTypeId: this.policyData.policyTypeId ? this.policyData.policyTypeId : null,
         description: 'test data life insurance 22',
         insuranceTypeId: this.insuranceTypeId,
         insuranceSubTypeId: this.insuranceSubTypeId,
@@ -803,8 +805,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       const insuranceData = {
         insuranceTypeId: this.insuranceTypeId,
         insuranceSubTypeId: this.insuranceSubTypeId,
-        id:null,
-        isAdded:null
+        id: null,
+        isAdded: null
       };
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.editInsuranceData.id;
@@ -816,8 +818,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
             const insuranceData = {
               insuranceTypeId: this.insuranceTypeId,
               insuranceSubTypeId: this.insuranceSubTypeId,
-              id:this.editInsuranceData ? this.editInsuranceData.id : null,
-              isAdded:false
+              id: this.editInsuranceData ? this.editInsuranceData.id : null,
+              isAdded: false
             };
             this.close(insuranceData);
           }
@@ -838,7 +840,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   close(data) {
     this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
 }

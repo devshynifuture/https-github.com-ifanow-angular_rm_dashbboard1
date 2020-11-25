@@ -40,9 +40,10 @@ import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/n
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 import { HttpService } from 'src/app/http-service/http-service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { apiConfig } from 'src/app/config/main-config';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -100,11 +101,18 @@ export class FinacialPlanSectionComponent implements OnInit {
   insuranceList: any;
   insurancePlanningList: any;
   count: any = 0;
-  constructor(private http: HttpService, private util: UtilService, private resolver: ComponentFactoryResolver,
+  datePipe: any;
+  id: any;
+  generatePDF: any;
+  isSpinner: boolean = true;
+  sectionName: any;
+  clientData: any;
+  constructor(private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
+    this.clientData = AuthService.getClientData();
   }
 
 
@@ -143,20 +151,55 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   download() {
     let obj = {
-
+      clientId: AuthService.getClientId(),
+      s3Objects: this.moduleAdded
     }
-    this.planService.mergeCall(this.moduleAdded).subscribe(
+    this.planService.mergeCall(obj).subscribe(
       data => this.mergeCallRes(data)
     );
 
   }
   mergeCallRes(data) {
-
+    this.id = data
+    this.generatePDF = 0
+    this.isSpinner = false
+    setTimeout(() => {
+      this.getPDFCall(data)
+    }, 7000);
+    while (this.generatePDF == 1) {
+      this.getPDFCall(data)
+    }
   }
-  getPDFCall() {
-    this.planService.getPDFCall().subscribe(
-      data => this.mergeCallRes(data)
-    );
+  formatFileSize(bytes, decimalPoint) {
+    if (bytes == 0) return '0 Bytes';
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+  getPDFCall(data) {
+    this.isSpinner = false
+    let obj = {
+      id: data.id
+    }
+    return this.http
+      .post(
+        apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
+        obj,
+        { responseType: 'blob' }
+      )
+      .subscribe((data) => {
+        this.generatePDF = 1
+        this.isSpinner = true
+        const file = new Blob([data], { type: 'application/pdf' });
+        var date = new Date();
+        const namePdf = this.clientData.name + '\'s ' + this.sectionName + ' as on ' + date;
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(file);
+        a.download = namePdf + '.pdf';
+        a.click();
+      });
   }
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
     let factory;
@@ -303,7 +346,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         .subscribe(data => {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
-          this.generatePdf(data, sectionName, displayName);
+          //this.generatePdf(data, sectionName, displayName);
           this.uploadFile(data, sectionName, displayName);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
@@ -318,12 +361,13 @@ export class FinacialPlanSectionComponent implements OnInit {
       name: sectionName + '.html',
       htmlInput: String(innerHtmlData.innerHTML)
     };
+    this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, displayName)
     );
   }
   uploadFileRes(data, displayName) {
-    this.moduleAdded.push({ name: displayName, s3Object: data.s3ObjectKey, id: this.count++ });
+    this.moduleAdded.push({ name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName });
     console.log(data);
   }
   getGoalSummaryValues() {
