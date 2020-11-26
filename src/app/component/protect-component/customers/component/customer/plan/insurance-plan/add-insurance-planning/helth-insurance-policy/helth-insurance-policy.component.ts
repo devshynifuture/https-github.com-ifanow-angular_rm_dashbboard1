@@ -4,6 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
+import { PlanService } from '../../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-helth-insurance-policy',
@@ -13,7 +17,7 @@ import { DatePipe } from '@angular/common';
 export class HelthInsurancePolicyComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Save',
+    text: 'SAVE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -31,9 +35,11 @@ export class HelthInsurancePolicyComponent implements OnInit {
   showInsurance: DialogData;
   advice: any;
   showError = false;
-
+  todayDate = new Date();
+  insuranceData: any;
+  adviseId: number;
   constructor(private datePipe: DatePipe, private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private planService: PlanService, private eventService: EventService) { }
   adviceData = [{ value: 1, advice: 'Continue', selected: true },
   { value: 2, advice: 'Discontinue', selected: false },
   { value: 3, advice: 'Port policy', selected: false },
@@ -43,17 +49,19 @@ export class HelthInsurancePolicyComponent implements OnInit {
   { value: 7, advice: 'Remove members', selected: false }]
   ngOnInit() {
     this.getdataForm('')
-    this.showInsurance = this.data.data
+    this.showInsurance = this.data.data;
+    this.insuranceData = this.data.value.insurance
   }
   getdataForm(data) {
 
     this.healthInsurance = this.fb.group({
-      selectAdvice: [(!data) ? '' : data.selectAdvice, [Validators.required]],
-      adviceHeader: [data ? '' : data.adviceHeader, [Validators.required]],
+      selectAdvice: [(!data) ? 'Continue' : data.selectAdvice, [Validators.required]],
+      adviceHeader: [!data ? 'Continue' : data.adviceHeader, [Validators.required]],
       adviceStatus: [(!data) ? '' : data.adviceStatus],
       adviceRationale: [(!data) ? '' : data.adviceRationale],
-      adviceHeaderDate: [(!data) ? '' : new Date(data.adviceHeaderDate), [Validators.required]],
+      adviceHeaderDate: [(!data) ? new Date() : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
+      amount: [, [Validators.required]],
       consent: [(!data) ? '1' : data.consent, [Validators.required]],
       nonFinAdvice: [(!data) ? '' : '', [Validators.required]]
     });
@@ -66,7 +74,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.dialogRef.close(this.showInsurance)
   }
   setValue() {
-    this.healthInsurance.get('adviceHeader').value = this.healthInsurance.get('selectAdvice').value;
+    this.healthInsurance.get('adviceHeader').setValue(this.healthInsurance.get('selectAdvice').value);
     this.showError = false;
     this.healthInsurance.get('adviceHeader').setErrors(null);
 
@@ -102,22 +110,67 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.healthInsurance.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      let obj = {
-        selectAdvice: this.healthInsurance.controls.selectAdvice.value,
-        adviceHeader: this.healthInsurance.controls.selectAdvice.value,
-        adviceStatus: 'Given',
-        adviceRationale: this.healthInsurance.controls.adviceRationale.value,
-        adviceHeaderDate: this.healthInsurance.controls.adviceHeaderDate.value,
-        implementationDate: this.healthInsurance.controls.implementationDate.value,
-        consent: this.healthInsurance.controls.consent.value,
+      // let obj = {
+      //   selectAdvice: this.healthInsurance.controls.selectAdvice.value,
+      //   adviceHeader: this.healthInsurance.controls.selectAdvice.value,
+      //   adviceStatus: 'Given',
+      //   adviceRationale: this.healthInsurance.controls.adviceRationale.value,
+      //   adviceHeaderDate: this.healthInsurance.controls.adviceHeaderDate.value,
+      //   implementationDate: this.healthInsurance.controls.implementationDate.value,
+      //   consent: this.healthInsurance.controls.consent.value,
+      // }
+      this.getAdviseId(this.healthInsurance.get('selectAdvice').value);
+      let obj1 = {
+        stringObject: { id: this.insuranceData.id },
+        adviceDescription: this.healthInsurance.get('adviceRationale').value,
+        insuranceCategoryTypeId: 42,
+        suggestedFrom: 1,
+        adviceId: this.adviseId,
+        adviceAllotment: this.healthInsurance.get('amount').value,
+        realOrFictitious: 1,
+        clientId: AuthService.getClientId(),
+        advisorId: AuthService.getAdvisorId(),
+        adviseCategoryTypeMasterId: 2,
+        applicableDate: this.healthInsurance.get('implementationDate').value
       }
-      this.adviceHealthInsurance.push(obj);
-      this.data.value.adviceValue = obj.selectAdvice;
-      this.advice = this.data.value
-      console.log('this.advice', this.adviceHealthInsurance)
-      this.dialogRef.close(this.advice)
+
+      this.planService.addAdviseOnHealth(obj1).subscribe(
+        res => {
+          this.barButtonOptions.active = false;
+          this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
+          this.dialogRef.close(this.advice);
+        }, err => {
+          this.barButtonOptions.active = false;
+          this.eventService.openSnackBar(err, "Dimiss");
+        }
+      )
+      // this.adviceHealthInsurance.push(obj);
+      // this.data.value.adviceValue = obj.selectAdvice;
+      // this.advice = this.data.value
+      // console.log('this.advice', this.adviceHealthInsurance)
     }
-
-
+  }
+  getAdviseId(name) {
+    if (name == 'Continue') {
+      this.adviseId = 1;
+    }
+    if (name == 'Discontinue') {
+      this.adviseId = 2;
+    }
+    if (name == 'Port policy') {
+      this.adviseId = 3;
+    }
+    if (name == 'Increase sum assured') {
+      this.adviseId = 4;
+    }
+    if (name == 'Decrease sum assured') {
+      this.adviseId = 5;
+    }
+    if (name == 'Add members') {
+      this.adviseId = 6;
+    }
+    if (name == 'Remove members') {
+      this.adviseId = 7;
+    }
   }
 }

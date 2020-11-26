@@ -166,6 +166,7 @@ export class LoginComponent implements OnInit {
           if (data) {
             this.userName.disable();
             this.userData = data;
+
             this.getOtpResponse(data);
             this.getOtpFlag = true;
             this.getOtpBtnOption.active = false;
@@ -200,17 +201,48 @@ export class LoginComponent implements OnInit {
   }
 
   getOtpResponse(data) {
-    if (data.emailList && data.emailList.length > 0) {
-      data.email = data.emailList[0].email;
-      this.verifyResponseData.email = UtilService.obfuscateEmail(data.email);
+    let userEmail,
+      mobNo;
+    if ('emailList' in data && data.emailList.length > 0) {
+      if (data.emailList.some(o => o.defaultFlag === true)) {
+        userEmail = data.emailList.find(item => item.defaultFlag === true).email;
+      } else {
+        userEmail = data.emailList[0].email;
+      }
     }
-    if (data.mobileList && data.mobileList.length > 0) {
-      data.mobileNo = data.mobileList[0].mobileNo;
-      this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
+    if ('mobileList' in data && data.emailList.length > 0) {
+      if (data.mobileList.some(o => o.dafaultFlag === true)) {
+        mobNo = data.mobileList.find(item => item.defaultFlag === true).mobileNo;
+      } else {
+        mobNo = data.mobileList[0].mobileNo;
+      }
+
     }
+
+    data.email = userEmail;
+    data.mobileNo = mobNo;
+    this.verifyResponseData.email = UtilService.obfuscateEmail(data.email);
+    this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
+
+    // if (data.emailList && data.emailList.length > 0) {
+    // data.email = data.emailList[0].email;
+    // this.verifyResponseData.email = UtilService.obfuscateEmail(data.email);
+    // }
+    // if (data.mobileList && data.mobileList.length > 0) {
+    // data.mobileNo = data.mobileList[0].mobileNo;
+    // }
     if (this.verifyResponseData.mobileNo) {
       this.verifyFlag = 'Mobile';
-      const obj = { mobileNo: data.mobileNo };
+      // const obj = { mobileNo: data.mobileNo };
+
+
+      const obj = {
+        mobileNo: mobNo,
+        email: userEmail,
+        advisorId: data.advisorId,
+        userType: data.userType
+      }
+
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'Email';

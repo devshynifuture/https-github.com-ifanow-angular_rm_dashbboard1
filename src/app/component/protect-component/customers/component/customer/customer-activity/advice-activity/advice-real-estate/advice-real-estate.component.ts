@@ -43,15 +43,18 @@ export class AdviceRealAssetComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 8,
-      adviceStatusId:1
+      // assetCategory: 8,
+      // adviceStatusId:1,
+      categoryMasterId: 8,
+      categoryTypeId: 0,
+      status: 1
     }
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
         this.isLoading = false;
-        this.dataSource=[];
+        this.dataSource = [];
         this.dataSource['tableFlag'] = (this.dataSource.length == 0) ? false : true;
 
       }
@@ -59,18 +62,18 @@ export class AdviceRealAssetComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    let filterdData=[];
-    let realEstateData=data.REAL_ESTATE;
+    let filterdData = [];
+    let realEstateData = data.REAL_ESTATE;
     realEstateData.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }

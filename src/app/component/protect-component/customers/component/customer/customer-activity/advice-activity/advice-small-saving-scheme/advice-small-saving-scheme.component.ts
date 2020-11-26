@@ -62,8 +62,11 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 10,
-      adviceStatusId:1
+      // assetCategory: 10,
+      // adviceStatusId:1
+      categoryMasterId: 10,
+      categoryTypeId: 0,
+      status: 1
     }
     this.isLoading = true;
     this.ppfDataSource = new MatTableDataSource([{}, {}, {}]);
@@ -98,18 +101,18 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -119,23 +122,23 @@ export class AdviceSmallSavingSchemeComponent implements OnInit {
   }
   getAllSchemeResponse(data) {
     this.isLoading = false;
-    let ppfData=this.filterForAsset(data.PPF)
+    let ppfData = this.filterForAsset(data.PPF)
     this.ppfDataSource.data = ppfData;
-    let nscData=this.filterForAsset(data.NSC)
+    let nscData = this.filterForAsset(data.NSC)
     this.nscDataSource.data = nscData;
-    let ssyData=this.filterForAsset(data.SSY)
+    let ssyData = this.filterForAsset(data.SSY)
     this.ssyDataSource.data = ssyData;
-    let kvpData=this.filterForAsset(data.KVP)
+    let kvpData = this.filterForAsset(data.KVP)
     this.kvpDataSource.data = kvpData;
-    let scssData=this.filterForAsset(data.SCSS)
+    let scssData = this.filterForAsset(data.SCSS)
     this.scssDataSource.data = scssData;
-    let poSavingData=this.filterForAsset(data.PO_Savings)
+    let poSavingData = this.filterForAsset(data.PO_Savings)
     this.posavingDataSource.data = poSavingData;
-    let pordData=this.filterForAsset(data.PO_RD)
+    let pordData = this.filterForAsset(data.PO_RD)
     this.pordDataSource.data = pordData;
-    let pomisData=this.filterForAsset(data.PO_MIS)
+    let pomisData = this.filterForAsset(data.PO_MIS)
     this.pomisDataSource.data = pomisData;
-    let potdData=this.filterForAsset(data.PO_TD)
+    let potdData = this.filterForAsset(data.PO_TD)
     this.potdDataSource.data = potdData;
     this.ppfDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
     this.nscDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;

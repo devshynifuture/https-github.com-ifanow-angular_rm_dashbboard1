@@ -372,7 +372,7 @@
     </div>
 </div>
 <!----------------------------Gold------------------------------------------>
-<div #goldTemp id="template" class="hide" *ngIf="showRequring == 1">
+<div #goldTemp id="template" class="hide" *ngIf="showRequring == '1'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -469,14 +469,17 @@
                 <span appFormatNumber>{{item.carat}}</span></td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{item.caratGoldPrice }}</span></td>
+                {{!isLoading && item.caratGoldPrice? "₹" : ""}}<span appFormatNumber>{{item.caratGoldPrice }}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{item.marketValue }}</span>
+                {{!isLoading && item.marketValue? "₹" : ""}}<span appFormatNumber>{{item.marketValue }}</span>
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                <span appFormatNumber>{{item.approximatePurchaseValue }}</span></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && item.approximatePurchaseValue? "₹" : ""}}<span
+                    appFormatNumber>{{item.approximatePurchaseValue }}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{isLoading ? '' : item.description || '-'}}
@@ -492,22 +495,27 @@
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="totalMonthlyIncome">{{totalMonthlyIncome}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{isLoading ? '' : 'Total'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfMarketValue" appFormatNumber>{{sumOfMarketValue}}</span>
+                {{!isLoading && sumOfMarketValue  ? "₹" : ""}}<span [value]="sumOfMarketValue"
+                    appFormatNumber>{{sumOfMarketValue}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfPurchaseValue" appFormatNumber>{{sumOfPurchaseValue}}</span>
+                {{!isLoading && sumOfPurchaseValue ? "₹" : ""}}<span [value]="sumOfPurchaseValue"
+                    appFormatNumber>{{sumOfPurchaseValue}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -519,7 +527,7 @@
     </table>
 </div>
 <!----------------------------Others------------------------------------------>
-<div #othersTemp id="template" class="hide" *ngIf="showRequring == 2">
+<div #othersTemp id="template" *ngIf="showRequring == '2'" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -602,66 +610,74 @@
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of otherCommodityList.data ;index as i">
+            *ngFor="let element of otherCommodityList.data ;index as i">
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-
-            <td *ngFor="let owner of item.ownerList; let i = index"
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <span *ngIf="i == 0">{{owner.name}}</span></td>
+                <span>{{element.ownerList[0].name}}</span></td>
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading? ' ' : (item.commodityTypeId == 1)?'Art':(item.commodityTypeId == 2)?'Antiques':(item.commodityTypeId == 3)?'Liquor':(item.commodityTypeId == 4)?'Stamps':(item.commodityTypeId == 5)?'Coins':(item.commodityTypeId == 6)?'Silver':(item.commodityTypeId
-                            == 7)?'Diamond':'Other'}}
+                {{isLoading? ' ' : (element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId == 6)?'Silver':(element.commodityTypeId
+        == 7)?'Diamond':'Other'}}
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{item.marketValue }}</span></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : item.marketValueAsOnDate | date:'dd/MM/yyyy' || '-'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{item.purchaseValue? item.purchaseValue : "-"}}</span>
+                {{!isLoading && element.marketValue  ? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : item.dateOfPurchase | date:'dd/MM/yyyy' || '-'}}</td>
+                {{isLoading ? '' : element.marketValueAsOnDate | date:'dd/MM/yyyy' || '-'}}
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && element.purchaseValue ? "₹" : ""}}<span
+                    appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span>
 
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.growthRate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}</td>
+                {{isLoading ? '' : element.dateOfPurchase | date:'dd/MM/yyyy' || '-'}}
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : item.description || '-'}}</td>
+                {{element.growthRate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{isLoading ? '' : element.description || '-'}}
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{isLoading ? ' ' : 'LIVE' }}
             </td>
-
         </tr>
         <tr
             style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>Total</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td *ngIf="sumOfPurchaseValueOther "
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span [value]="sumOfPurchaseValueOther" appFormatNumber>{{sumOfPurchaseValueOther}}</span>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                Total
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && sumOfMarketValueOther ? "₹" : ""}}
+                <span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{isLoading && sumOfPurchaseValueOther? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther"
+                    appFormatNumber>{{sumOfPurchaseValueOther}}</span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

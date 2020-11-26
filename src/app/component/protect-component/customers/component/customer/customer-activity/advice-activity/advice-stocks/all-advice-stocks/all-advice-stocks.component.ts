@@ -26,9 +26,9 @@ export class AllAdviceStocksComponent implements OnInit {
   selectedAssetId: any = [];
   stockCount: number;
 
-  
+
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService,private activityService:ActiityService) { }
+    private cusService: CustomerService, private activityService: ActiityService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -40,15 +40,18 @@ export class AllAdviceStocksComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      assetCategory: 1,
-      adviceStatusId:0
+      // assetCategory: 1,
+      // adviceStatusId:0,
+      categoryMasterId: 6,
+      categoryTypeId: 0,
+      status: 1
     }
     this.stockDatasource = [{}, {}, {}]
     this.isLoading = true;
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllAssetResponse(data), (error) => {
         this.isLoading = false;
-        this.stockDatasource=[];
+        this.stockDatasource = [];
         this.stockDatasource['tableFlag'] = (this.stockDatasource.length == 0) ? false : true;
 
         // this.datasource.data = [];
@@ -76,12 +79,12 @@ export class AllAdviceStocksComponent implements OnInit {
   }
   getAllAssetResponse(data) {
     this.isLoading = false;
-    let filterdData=[];
-    let stockData=data.STOCKS;
+    let filterdData = [];
+    let stockData = data.STOCKS;
     stockData.forEach(element => {
-      var asset=element.AssetDetails;
+      var asset = element.AssetDetails;
       element.AdviceList.forEach(obj => {
-        obj.assetDetails=asset;
+        obj.assetDetails = asset;
         filterdData.push(obj);
       });
     });
@@ -143,7 +146,7 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Rahul Jain', desc: '1', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
-  { name: 'Rahul Jain', desc: '2', mvalue:'20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '1', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
+  { name: 'Rahul Jain', desc: '2', mvalue: '20000', advice: 'do trasact', adate: '2020-02-20', astatus: 'LIVE' },
 
 ];

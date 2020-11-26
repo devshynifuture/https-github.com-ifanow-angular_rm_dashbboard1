@@ -35,7 +35,7 @@
             </div>
 
             <div *ngIf="moduleAdded.length  == 0">
-                <span class="text-center">
+                <span class="text-center pt-28">
                     No module added
                 </span>
             </div>
@@ -44,14 +44,16 @@
                     <div class="col-md-2 pl-0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-4">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
+
+                    </div>
+                    <div class="col-md-3">
+                        <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="btn-success">Save plan</button>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -124,7 +126,7 @@
                                 <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
                                     <div class="col-md-1">
                                         <mat-checkbox
-                                            (change)="checkAndLoadPdf($event.checked,'Life insurance','','Life insurance')">
+                                            (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Plan / Insurance / '+insurance.heading)">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -519,6 +521,28 @@
                                             Portfolio / All Transaction </p>
                                     </div>
                                 </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'Capital Gain Summary','','Portfolio / MF Capital Gain Summary')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / MF Capital Gain Summary </p>
+                                    </div>
+                                </div>
+                                <div class="row bb-1 pt-8 pb-8">
+                                    <div class="col-md-1">
+                                        <mat-checkbox #check
+                                            (change)="checkAndLoadPdf($event.checked,'MF Capital Gain Detailed','','Portfolio / MF Capital Gain Detailed')">
+                                        </mat-checkbox>
+                                    </div>
+                                    <div class="col-md-11 pl-8">
+                                        <p class="m-0 roboto text-black roboto pt-2">
+                                            Portfolio / MF Capital Gain Detailed </p>
+                                    </div>
+                                </div>
                             </div>
 
                         </mat-expansion-panel>
@@ -588,7 +612,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','Portfolio / General Insurance / All general insurances')">
+                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -665,7 +689,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils','Portfolio / General Insurance / Fire & special perils')">
+                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
@@ -687,7 +711,7 @@
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
-                                            (change)="checkAndLoadPdf($event.checked,'All Liabltities','','All Liabltities')">
+                                            (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities')">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">

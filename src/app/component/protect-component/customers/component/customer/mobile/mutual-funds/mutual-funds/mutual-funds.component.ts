@@ -70,7 +70,7 @@ export class MutualFundsComponent implements OnInit {
   showDetails: boolean;
   mutualFundList: any;
   parentId: any;
-  adminAdvisorIds=[];
+  adminAdvisorIds = [];
 
   constructor(
     public mfServiceService: MfServiceService,
@@ -82,7 +82,7 @@ export class MutualFundsComponent implements OnInit {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
-    this.parentId=AuthService.getParentId();
+    this.parentId = AuthService.getParentId();
   }
   mfAllocationData: any[] = [
     {
@@ -106,14 +106,32 @@ export class MutualFundsComponent implements OnInit {
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: 'SOLUTION ORIENTED',
+    },
+    //  {
+    //   name: 'SOLUTION ORIENTED',
+    //   y: 0,
+    //   color: AppConstants.DONUT_CHART_COLORS[4],
+    //   dataLabels: {
+    //     enabled: false
+    //   }
+    // },
+    {
+      name: 'COMMODITY',
       y: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
         enabled: false
       }
-    }, {
+    },
+    {
+      name: 'LIQUID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[6],
+      dataLabels: {
+        enabled: false
+      }
+    },
+    {
       name: 'OTHERS',
       y: 0,
       color: AppConstants.DONUT_CHART_COLORS[3],
@@ -193,27 +211,27 @@ export class MutualFundsComponent implements OnInit {
 
   }
   //get subadvisorList
-  teamMemberListGet(){
+  teamMemberListGet() {
     this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
-    .subscribe(data => {
-      if (data && data.length !== 0) {
-        console.log('team members: ', data);
-        data.forEach(element => {
-          this.adminAdvisorIds.push(element);
-        });
-        const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
-        if (!isIncludeID) {
-          this.adminAdvisorIds.unshift(this.advisorId);
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element);
+          });
+          const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+          if (!isIncludeID) {
+            this.adminAdvisorIds.unshift(this.advisorId);
+          }
+          console.log(this.adminAdvisorIds);
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
         }
-        console.log(this.adminAdvisorIds);
-      } else {
+        this.getMFPortfolioData();
+      }, err => {
         this.adminAdvisorIds = [this.advisorId];
-      }
-      this.getMFPortfolioData();
-    }, err => {
-      this.adminAdvisorIds = [this.advisorId];
-      this.getMFPortfolioData();
-    });
+        this.getMFPortfolioData();
+      });
   }
   showDetailsFun(flag, mf) {
     this.mutualFundList = mf.mutualFundSchemeMaster[0].mutualFund;
@@ -231,7 +249,7 @@ export class MutualFundsComponent implements OnInit {
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      parentId:this.parentId ? this.parentId : this.advisorId,
+      parentId: this.parentId ? this.parentId : this.advisorId,
       advisorId: this.adminAdvisorIds,
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
@@ -328,11 +346,33 @@ export class MutualFundsComponent implements OnInit {
           })
           counter++;
           break;
-        case 'SOLUTION ORIENTED':
+        // case 'SOLUTION ORIENTED':
+        //   this.mfAllocationData.push({
+        //     name: element.category,
+        //     y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+        //     color: AppConstants.DONUT_CHART_COLORS[4],
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   })
+        //   counter++;
+        //   break;
+        case 'COMMODITY':
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
             color: AppConstants.DONUT_CHART_COLORS[4],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+        case 'LIQUID':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[6],
             dataLabels: {
               enabled: false
             }

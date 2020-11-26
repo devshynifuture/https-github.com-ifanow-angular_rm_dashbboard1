@@ -3,13 +3,15 @@ import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscri
 import { EventService } from './../../../../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../../../../services/util.service';
 import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, ViewChildren, QueryList, } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CustomerService } from '../../../customer.service';
+import { PlanService } from '../../../plan/plan.service';
+import { ActiityService } from '../../actiity.service';
 
 @Component({
   selector: 'app-suggest-advice',
@@ -21,6 +23,7 @@ import { CustomerService } from '../../../customer.service';
   ],
 })
 export class SuggestAdviceComponent implements OnInit, OnDestroy {
+  [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -50,6 +53,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   advisorId: any;
   stringObj: any;
   objTopass: any;
+  dataForEdit: any;
+  flag: string;
+  id: any;
 
   constructor(
     private fb: FormBuilder,
@@ -59,12 +65,15 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     private utilService: UtilService,
     private datePipe: DatePipe,
     private custumService: CustomerService,
-    private event: EventService
+    private event: EventService,
+    private planService: PlanService,
+    private activityService: ActiityService
   ) { }
 
   inputData;
 
   ngOnInit() {
+    console.log(this.inputData);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.adviceSlider = this.subinject.newRightSliderDataObs.subscribe((data) => {
@@ -72,6 +81,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       if (data.childComponent) {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;
+        this.getFormData(data);
       }
     });
   }
@@ -82,6 +92,35 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   goBack() {
     this.stepper.previous();
     console.log(this.stepper.selectedIndex, "check selectedIndex");
+
+  }
+  getFormData(data) {
+    if (data.data == null) {
+      data = {};
+      this.dataForEdit = data.data;
+      this.flag = 'Add';
+    } else {
+      this.dataForEdit = data.data ? data.data.adviceDetails : '';
+      this.dataForEdit.adviceStatus = (this.dataForEdit ? (this.dataForEdit.adviceStatusId == 1 ? 'GIVEN' : this.dataForEdit.adviceStatusId == 2 ? 'AWAITING CONSENT' : this.dataForEdit.adviceStatusId == 3 ? 'ACCEPTED' : this.dataForEdit.adviceStatusId == 4 ? 'IN PROGRESS' : this.dataForEdit.adviceStatusId == 5 ? 'IMPLEMENTED' : this.dataForEdit.adviceStatusId == 6 ? 'DECLINED' : this.dataForEdit.adviceStatusId == 7 ? 'PENDING' : this.dataForEdit.adviceStatusId == 8 ? 'SYSTEM GENERATED' : this.dataForEdit.adviceStatusId == 9 ? 'REVISED' : '') : null)
+      this.id = this.dataForEdit.id;
+      this.flag = 'Edit';
+    }
+    this.adviceForm = this.fb.group({
+      header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
+      rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : ''), [Validators.required]],
+      status: [(this.dataForEdit ? this.dataForEdit.adviceStatus : 'GIVEN'), [Validators.required]],
+      // deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
+      // policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
+      // insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
+      // planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
+      // premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
+      givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : null, [Validators.required]],
+      implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
+      withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
+      consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
+    });
+    // ==============owner-nominee Data ========================\\
+    /***owner***/
 
   }
   addOrNextStep() {
@@ -95,7 +134,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           this.adviceForm.controls[element].markAsTouched();
         }
       }
-      
+
     } else {
       this.stepper.next();
       console.log("this is what i need:::::::::::::::", componentRefComponentValues)
@@ -119,19 +158,19 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           );
           break;
         case this.childComponentFlag === 'adviceOTHERS' && componentRefComponentValues.others.valid:
-              componentRefFormValues = componentRefComponentValues.others.value;
-              const OthersObj = { //for non duplicate data
-                commodityTypeId: componentRefFormValues.typeOfCommodity,
-                marketValue: componentRefFormValues.marketValue,
-                purchaseValue: componentRefFormValues.purchaseValue,
-                growthRate: componentRefFormValues.growthRate,
-                dateOfPurchase: (componentRefFormValues.dateOfPurchase) ? this.datePipe.transform(componentRefFormValues.dateOfPurchase, 'yyyy-MM-dd') : null,
-              }
-              this.stringObj = this.filterForObj(componentRefFormValues, OthersObj)//for common data and merge non duplicate data
-              this.custumService.getAdviceOthers(this.objTopass).subscribe(
-                data => this.getAdviceRes(data),
-                err => this.event.openSnackBar(err, "Dismiss")
-              );
+          componentRefFormValues = componentRefComponentValues.others.value;
+          const OthersObj = { //for non duplicate data
+            commodityTypeId: componentRefFormValues.typeOfCommodity,
+            marketValue: componentRefFormValues.marketValue,
+            purchaseValue: componentRefFormValues.purchaseValue,
+            growthRate: componentRefFormValues.growthRate,
+            dateOfPurchase: (componentRefFormValues.dateOfPurchase) ? this.datePipe.transform(componentRefFormValues.dateOfPurchase, 'yyyy-MM-dd') : null,
+          }
+          this.stringObj = this.filterForObj(componentRefFormValues, OthersObj)//for common data and merge non duplicate data
+          this.custumService.getAdviceOthers(this.objTopass).subscribe(
+            data => this.getAdviceRes(data),
+            err => this.event.openSnackBar(err, "Dismiss")
+          );
 
           break;
         case this.childComponentFlag === 'adviceCashInHand' && componentRefComponentValues.cashInHand.valid:
@@ -313,7 +352,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           const ssyObj = {
             "accountBalance": componentRefFormValues.accBalance,
             "balanceAsOn": componentRefFormValues.balanceAsOn,
-            "commencementDate":componentRefFormValues.commDate,
+            "commencementDate": componentRefFormValues.commDate,
             "bankName": componentRefFormValues.bankName,
             "linkedBankAccount": componentRefFormValues.linkedAcc,
             "agentName": componentRefFormValues.agentName,
@@ -735,6 +774,121 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           break;
         case this.childComponentFlag === 'adviceAssetStock' && componentRefComponentValues.assetForm.valid:
           componentRefFormValues = componentRefComponentValues.assetForm.value;
+          break;
+        case this.childComponentFlag === 'Advice Insurance' && componentRefComponentValues.lifeInsuranceForm.valid:
+          componentRefFormValues = componentRefComponentValues.lifeInsuranceForm.value;
+          let keyDetail = componentRefComponentValues.keyDetailsForm;
+          let cashFlowForm = componentRefComponentValues.cashFlowForm;
+          let ulipFundDetails = [];
+          const ulipFundVal = keyDetail.get('fundValueForm') as FormArray;
+          ulipFundVal.controls.forEach(element => {
+            if (element.get('fundName').value) {
+              const obj = {
+                id: (element.get('id').value) ? element.get('id').value : null,
+                insuranceId: (this.editInsuranceData) ? this.editInsuranceData.id : null,
+                equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value : null,
+                debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
+                fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
+                nav: (element.get('nav').value) ? element.get('nav').value : null,
+                units: (element.get('units').value) ? element.get('units').value : null,
+                fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
+                fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+              };
+              ulipFundDetails.push(obj);
+            } else {
+              ulipFundDetails = [];
+            }
+
+          });
+          const finalCashFlowList = [];
+          const cashFlowArray = cashFlowForm.get('cashFlow') as FormArray;
+          cashFlowArray.controls.forEach(element => {
+            if (element.get('cashFlowType').value || element.get('year').value || element.get('approxAmt').value) {
+              const obj = {
+                cashFlowType: element.get('cashFlowType').value,
+                cashFlowYear: this.datePipe.transform(element.get('year').value, 'yyyy-MM-dd'),
+                cashFlowApproxAmount: element.get('approxAmt').value
+              };
+              finalCashFlowList.push(obj);
+            }
+          });
+          const insuranceObj = {
+            familyMemberIdLifeAssured: (componentRefFormValues.getCoOwnerName[0].userType == 2) ? componentRefFormValues.getCoOwnerName[0].clientId : componentRefFormValues.getCoOwnerName[0].familyMemberId,
+            // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
+            familyMemberIdProposer: (componentRefComponentValues.selectedProposerData) ? (componentRefComponentValues.selectedProposerData.familyMemberId == 0 ? this.clientId : componentRefComponentValues.selectedProposerData.familyMemberId) : null,
+            clientId: this.clientId,
+            advisorId: this.advisorId,
+            ownerName: '',
+            commencementDate: this.datePipe.transform(componentRefFormValues.commencementDate, 'yyyy-MM-dd'),
+            policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
+            policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
+            sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
+            policyStatusId: componentRefComponentValues.lifeInsuranceForm.get('policyStatus').value,
+            lastUnpaidPremium: this.datePipe.transform(componentRefComponentValues.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+            premiumAmount: parseInt(componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsAmount').value),
+            frequency: componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsFrequency').value,
+            policyTenure: componentRefComponentValues.lifeInsuranceForm.get('tenureDetailsPolicy').value,
+            premiumPayingTerm: componentRefComponentValues.lifeInsuranceForm.get('premiumPayingTerm').value,
+            riskCover: componentRefComponentValues.keyDetailsForm.get('riskCover').value,
+            surrenderValue: componentRefComponentValues.keyDetailsForm.get('surrenderName').value,
+            nominee: componentRefComponentValues.keyDetailsForm.get('nomineeName').value,
+            vestedBonus: componentRefComponentValues.keyDetailsForm.get('vestedBonus').value,
+            assumedRate: componentRefComponentValues.keyDetailsForm.get('assumedRate').value,
+            loanAvailable: componentRefComponentValues.loanDetailsForm.get('loanAvailable').value,
+            loanTaken: parseInt(componentRefComponentValues.loanDetailsForm.get('loanTaken').value),
+            // "loanTakenOn": (this.loanDetailsForm.get('loanTakenOn').value) ? this.datePipe.transform(this.loanDetailsForm.get('loanTakenOn').value, 'yyyy-MM-dd') : null,
+            loanTakenOn: componentRefComponentValues.loanDetailsForm.get('loanTakenOn').value,
+            premiumPaymentMode: componentRefComponentValues.Miscellaneous.get('permiumPaymentMode').value,
+            advisorName: componentRefComponentValues.Miscellaneous.get('advisorName').value,
+            serviceBranch: componentRefComponentValues.Miscellaneous.get('serviceBranch').value,
+            linkedBankAccountId: componentRefComponentValues.Miscellaneous.get('bankAccount').value,
+            policyId: componentRefComponentValues.policyData.id ? componentRefComponentValues.policyData.id : null,
+            policyTypeId: componentRefComponentValues.policyData.policyTypeId ? componentRefComponentValues.policyData.policyTypeId : null,
+            insuranceTypeId: componentRefComponentValues.insuranceTypeId,
+            insuranceSubTypeId: componentRefComponentValues.insuranceSubTypeId,
+            ridersAccidentalBenifits: parseInt(componentRefComponentValues.ridersForm.get('accidentalBenefit').value),
+            ridersDoubleAccidentalBenefit: parseInt(componentRefComponentValues.ridersForm.get('doubleAccidental').value),
+            ridersTermWaiver: componentRefComponentValues.ridersForm.get('termWaiver').value,
+            ridersCriticalIllness: parseInt(componentRefComponentValues.ridersForm.get('criticalIlleness').value),
+            ridersPremiumWaiver: componentRefComponentValues.ridersForm.get('premiumWaiver').value,
+            ridersFemaleCriticalIllness: componentRefComponentValues.ridersForm.get('femaleCriticalIlleness').value,
+            insuranceCashflowList: finalCashFlowList,
+            nominees: componentRefComponentValues.keyDetailsForm.value.getNomineeName,
+            ulipFundDetails: ulipFundDetails,
+            realOrFictitious: 2,
+
+          }
+          insuranceObj.policyStatusId = parseInt(insuranceObj.policyStatusId);
+          if (insuranceObj.nominees.length > 0) {
+            insuranceObj.nominees.forEach((element, index) => {
+              if (element.name == '') {
+                // this.removeNewNominee(index);
+                insuranceObj.nominees = [];
+              }
+            });
+          } else {
+            insuranceObj.nominees = [];
+          }
+          const stringObj = {
+            adviceDescription: this.adviceForm.get('rationale').value,
+            insuranceCategoryTypeId: 42,
+            suggestedFrom: 1,
+            adviceId: this.adviceForm.get('header').value,
+            adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
+            clientId: AuthService.getClientId(),
+            advisorId: AuthService.getAdvisorId(),
+            adviseCategoryTypeMasterId: 2,
+            adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
+            applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
+          }
+
+          // this.stringObj = this.filterForObj(componentRefFormValues, insuranceObj)//for common data and merge non duplicate data
+          // const assign = Object.assign(insuranceObj, stringObj);//merge both data
+          let objToSend = Object.assign(stringObj, { stringObject: insuranceObj });
+          this.activityService.suggestNewLifeInsurance(objToSend).subscribe(
+            data => this.getAdviceRes(data),
+            err => this.event.openSnackBar(err, "Dismiss")
+          );
           break;
       }
 

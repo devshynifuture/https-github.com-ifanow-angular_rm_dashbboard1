@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -58,21 +58,21 @@ export class LifeInsuranceComponent implements OnInit {
   }
   setLogo = [{
     heading: 'Life insurance',
-    logo: '/assets/images/svg/LIbig.svg',
-    bigLogo: '/assets/images/svg/LIbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIbig.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIbig.svg',
 
   }, {
     value: '1',
     header: 'Add Health Insurance',
     smallHeading: 'health insurance',
     insuranceType: 5,
-    logo: '/assets/images/svg/helth-insurance.svg',
-    bigLogo: '/assets/images/svg/HIbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/helth-insurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/Hbig.svg',
     heading: 'Health insurance',
     subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
   }, {
     value: '2',
-    logo: '/assets/images/svg/Criticalillness.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Criticalillness.svg',
     bigLogo: '/assets/images/svg/CIbig.svg',
     header: 'Add Critical Illness',
     smallHeading: 'critical illness',
@@ -81,8 +81,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
   }, {
     value: '3',
-    logo: '/assets/images/svg/Cancercare.svg',
-    bigLogo: '/assets/images/svg/CCbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Cancercare.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/CCbig.svg',
     header: 'Add Cancer Care',
     smallHeading: 'cancer care',
     insuranceType: 11,
@@ -90,8 +90,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
   }, {
     value: '4',
-    logo: '/assets/images/svg/Personalaccident.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Personalaccident.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Personal Accident',
     heading: 'Personal accident',
     smallHeading: 'personal accident',
@@ -99,8 +99,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
   }, {
     value: '5',
-    logo: '/assets/images/svg/Householders.svg',
-    bigLogo: '/assets/images/svg/Hbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Householders.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/HIbig.svg',
     header: 'Add Householders',
     smallHeading: 'householders',
     insuranceType: 9,
@@ -108,8 +108,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
   }, {
     value: '6',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/Fibig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/Fibig.svg',
     header: 'Add Fire Insurance',
     smallHeading: 'fire insurance',
     insuranceType: 10,
@@ -118,8 +118,8 @@ export class LifeInsuranceComponent implements OnInit {
   },
   {
     value: '7',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Travel Insurance',
     smallHeading: 'travel insurance',
     insuranceType: 8,
@@ -127,8 +127,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
   }, {
     value: '8',
-    logo: '/assets/images/svg/Fireinsurance.svg',
-    bigLogo: '/assets/images/svg/PAbig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Fireinsurance.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/PAbig.svg',
     header: 'Add Motor Insurance',
     smallHeading: 'motor insurance',
     insuranceType: 4,
@@ -147,6 +147,9 @@ export class LifeInsuranceComponent implements OnInit {
   @ViewChild('firstAccordion', { static: false }) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
+  @Output() loaded = new EventEmitter();
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('insuranceTemp', { static: false }) insuranceTemp: ElementRef;
   inputReceive: any;
   needAnalysisData: any;
   dataSourceLiability: any;
@@ -176,6 +179,7 @@ export class LifeInsuranceComponent implements OnInit {
   goalsToBeMate: boolean = false
   continuous: boolean = false
   existingAsset: boolean = false
+  noOpened: boolean = false
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -186,6 +190,7 @@ export class LifeInsuranceComponent implements OnInit {
     private dialog: MatDialog,
     private ipService: InsurancePlanningServiceService,
     private UtilService: UtilService,
+    private ref: ChangeDetectorRef
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -215,6 +220,7 @@ export class LifeInsuranceComponent implements OnInit {
         this.allInsuranceData = res;
       })
     this.setDetails(data)
+
     this.getGlobalDataInsurance();
   }
 
@@ -237,6 +243,15 @@ export class LifeInsuranceComponent implements OnInit {
     return this.inputReceive;
   }
   ngOnInit() {
+    this.fragmentData = { isSpinner: false };
+    console.log(this.finPlanObj)
+    if (this.finPlanObj) {
+      this.allInsuranceData = this.finPlanObj.allInsuranceList
+      this.inputData = this.finPlanObj.data
+      this.setDetails(this.finPlanObj.data)
+      this.getGlobalDataInsurance();
+
+    }
     this.dataSourceLiability = []
     this.dataSourceAsset = []
     this.dataSourceGoals = []
@@ -315,7 +330,7 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
   setDetails(data) {
-    if (this.inputData) {
+    if (data) {
       this.getData = data
       this.setLogo.forEach(element => {
         if (element.heading == data.heading) {
@@ -426,7 +441,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   generatePdf() {
     this.fragmentData = {}
-    this.fragmentData.isSpinner = true;;
+    this.fragmentData.isSpinner = true;
     let para = document.getElementById('insuranceTemplate');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.UtilService.htmlToPdf('', para.innerHTML, 'Insurance plan', false, this.fragmentData, '', '', false);
@@ -618,17 +633,21 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.dataSouce3 = [];
     }
+    this.getDetailsInsuranceRes(result[0])
     this.getNeedAnalysisData(result[3]);
     if (result[2]) {
       this.dataSource1 = result[2];
     } else {
       this.dataSource1 = [];
     }
-    this.getDetailsInsuranceRes(result[0])
     this.stopLoaderWhenReponse.emit(true);
     this.isLoadingPlan = false;
     if (this.inputData.insuranceType == 1) {
       this.firstAccordion ? this.firstAccordion.closeAll() : '';
+    }
+    if (this.finPlanObj) {
+      this.ref.detectChanges();
+      this.loaded.emit(this.insuranceTemp.nativeElement);
     }
   }
   getFilterDataNeedAnalysis(array) {

@@ -353,6 +353,7 @@ export const appConfig = {
   Edit_SUGGEST_NEW: 'insurance/planning/life/insurance/need/analysis/suggest/new/edit',
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
   FREEZE_CAL: 'goal-planning/goal/freeze',
+  ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -496,8 +497,11 @@ export const appConfig = {
   INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
   ASSTES_OF_EXPENSE: 'account/expense/expense/of/asset/get',
   EXPENSE_ALL_GET: 'account/expense/graph/detail/of/expense/get',
+  FINPLAN_PDF_UPLOAD: 'plan/financial-plan-html/upload',
+  MEREGE_CALL: "plan/financial-plan-html/merge",
+  GET_PDF_CALL: "plan/financial-plan/pdf/get",
   /////////////////////////Activity///////////////////////////////////
-  ADVICE_GET_ALL: 'advice/asset/get',
+  ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
   ADVICE_ADD_RD: 'advice/asset/fixed-income/recurring-deposit/add',
   ADVICE_ADD_PPF: 'advice/asset/small-saving-scheme/suggest-new-PPF/add',
@@ -531,6 +535,8 @@ export const appConfig = {
   GIVE_ADVICE_ON_GOLD: 'advice/asset/gold/advice/post',
   GIVE_ADVICE_ON_PO_SAVING: 'advice/asset/po-savings/advice/post',
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
+  GET_ALL_CATEGORY: 'advice/advice/all-category/get',
+  SUGGEST_NEW_INSURANCE: 'advice/insurance/life-insurance/suggest-new-policy/add',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
@@ -843,8 +849,9 @@ export const appConfig = {
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
   GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
+  GET_RANDOM_STRING: 'user/advisor/marketplace-login/detail/add',
   //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: 'user/generate/otp',
+  GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
@@ -853,6 +860,7 @@ export const appConfig = {
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   RESET_PASSWORD: 'setting/reset/password',
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
+  GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

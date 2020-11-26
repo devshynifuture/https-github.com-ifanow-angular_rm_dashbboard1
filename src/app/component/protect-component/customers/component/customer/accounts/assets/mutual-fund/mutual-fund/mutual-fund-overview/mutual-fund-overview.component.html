@@ -35,7 +35,7 @@
                     (click)="openMutualFund('addMutualFund',null)">ADD
                     NEW</button> -->
                 <mat-menu #menu2="matMenu" class="add-new">
-                    <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
+                    <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -47,7 +47,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                     <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -141,16 +141,16 @@
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
-                                            <span *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0 && !isLoading"
+                                            <span *ngIf="success && !isLoading"
                                                 class="text-success">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <i class="material-icons f-14 f-700 text-success"
-                                                *ngIf="!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0">
+                                                *ngIf="!isLoading && success">
                                                 <span *ngIf="!isLoading">arrow_upward</span>
                                             </i>
-                                            <span *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0 && !isLoading"
+                                            <span *ngIf="danger && !isLoading"
                                                 class="text-danger">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <i class="material-icons f-14 f-700 text-danger"
-                                                *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
+                                                *ngIf="!isLoading && danger">
                                                 <span *ngIf="!isLoading">arrow_downward</span>
                                             </i>
                                         </div>
@@ -258,6 +258,62 @@
                             </div>
                             <div class="row b-b pt-10 pb-10">
                                 <div class="col-md-1">
+                                    <div class="hw-16 mt-2" style="background-color: #FF7272"></div>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <p class="f-500 text-black mb-0">Commodity</p>
+                                </div>
+                                <div class="col-md-4 relClass ">
+                                    <div class="bar height24">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}
+                                            <span *ngIf="this.commodityCurrentValue && !isLoading">
+                                                {{(this.commodityCurrentValue)?this.commodityCurrentValue:0}}</span><span
+                                                *ngIf="!this.commodityCurrentValue && !isLoading">0</span>
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 relClass pl-0">
+                                    <div class="bar height24">
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
+                                                *ngIf="this.commodityPercentage && !isLoading">{{(this.commodityPercentage) ? (commodityPercentage | number:'1.2-2') : '0'}}%</span><span
+                                                appFormatNumber
+                                                *ngIf="!this.commodityPercentage && !isLoading ">0.00%</span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row b-b pt-10 pb-10">
+                                <div class="col-md-1">
+                                    <div class="hw-16 mt-2" style="background-color: #5bc0de"></div>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <p class="f-500 text-black mb-0">Liquid</p>
+                                </div>
+                                <div class="col-md-4 relClass ">
+                                    <div class="bar height24">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}
+                                            <span *ngIf="this.liquidCurrentValue && !isLoading">
+                                                {{(this.liquidCurrentValue)?this.liquidCurrentValue:0}}</span><span
+                                                *ngIf="!this.liquidCurrentValue && !isLoading">0</span>
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 relClass pl-0">
+                                    <div class="bar height24">
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
+                                                *ngIf="this.liquidPercentage && !isLoading">{{(this.liquidPercentage) ? (liquidPercentage | number:'1.2-2') : '0'}}%</span><span
+                                                appFormatNumber
+                                                *ngIf="!this.liquidPercentage && !isLoading ">0.00%</span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row b-b pt-10 pb-10">
+                                <div class="col-md-1">
                                     <div class="hw-16 mt-2 bg-danger"></div>
                                 </div>
                                 <div class="col-md-5 ">
@@ -283,7 +339,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row pt-10 pb-10">
                                 <div class="col-md-1">
                                     <div class="hw-16 mt-2 bg-grey dker"></div>
@@ -856,7 +912,7 @@
             NEW
         </button>
         <mat-menu #menu1="matMenu" class="add-new">
-            <button mat-menu-item class="b-b">
+            <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/dark-three-dot.svg">
@@ -868,7 +924,7 @@
                         </p>
                     </div>
                 </div>
-            </button>
+            </button> -->
             <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pl-4 pr-4 text-center">
@@ -1003,13 +1059,13 @@
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Returns
                                         </p>
-                                        <h2 *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0 && !isLoading"
+                                        <h2 *ngIf="danger && !isLoading"
                                             style="margin: 0px; font-size: 24px; color : #d9534f;">
                                             <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <span>&#8595;</span>
 
                                         </h2>
-                                        <h2 *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0 && !isLoading"
+                                        <h2 *ngIf="success && !isLoading"
                                             style="margin: 0px; font-size: 24px;color : #5cb85c;">
                                             <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return == 'NaN' ? 0 : (mfData.total_absolute_return)) : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <span>&#8593;</span>
@@ -1083,7 +1139,7 @@
                                     </td>
                                 </tr>
 
-                                <tr style="height: 40px;">
+                                <!-- <tr style="height: 40px;">
                                     <td style=" padding-left: 10px; font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         <span
                                             style="width: 15px; height: 15px; background: #FF6823; display: inline-block;">
@@ -1096,8 +1152,35 @@
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2'):'0'}}%
                                     </td>
+                                </tr> -->
+                                <tr style="height: 40px;">
+                                    <td style=" padding-left: 10px; font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                                        <span
+                                            style="width: 15px; height: 15px; background: #FF7272; display: inline-block;">
+                                        </span> </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Commodity
+                                    </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span>
+                                            {{this.commodityCurrentValue ? this.commodityCurrentValue : '0'}}</span>
+                                    </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                                        {{(this.commodityPercentage) ? (this.commodityPercentage | number:'1.2-2'):'0'}}%
+                                    </td>
                                 </tr>
-
+                                <tr style="height: 40px;">
+                                    <td style=" padding-left: 10px; font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                                        <span
+                                            style="width: 15px; height: 15px; background: #5bc0de; display: inline-block;">
+                                        </span> </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Liquid
+                                    </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span>
+                                            {{this.liquidCurrentValue ? this.liquidCurrentValue : '0'}}</span>
+                                    </td>
+                                    <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                                        {{(this.liquidPercentage) ? (this.liquidPercentage | number:'1.2-2'):'0'}}%
+                                    </td>
+                                </tr>
                                 <tr style="height: 40px;">
                                     <td style="padding-left: 10px; font-size: 13px;  ">
                                         <span
@@ -1634,6 +1717,13 @@
         </tr>
 
     </table>
+    <tr>
+        <div *ngIf="dataSource.data?.length == 0 && dataSource2.data?.length==0  && dataSource3.data?.length==0 && dataSource4.data?.length==0 "
+            class="d-flex flex-column align-items-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+        </div>
+    </tr>
 
     </html>
 </div>

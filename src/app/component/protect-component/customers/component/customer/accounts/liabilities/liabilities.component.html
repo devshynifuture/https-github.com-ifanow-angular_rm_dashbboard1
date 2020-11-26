@@ -541,21 +541,27 @@
                 appFormatNumber>
                 {{(item.loanTypeId == 1)?'Home Loan':(item.loanTypeId == 2)?'Vehicle':(item.loanTypeId == 3)?'Education':(item.loanTypeId == 4)?'Credit Card':(item.loanTypeId == 5)?'Personal':(item.loanTypeId == 6)?'Mortgage':''}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{(item.loanAmount)?item.loanAmount:0}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && item.loanAmount? "₹" : ""}}<span
+                    appFormatNumber>{{(item.loanAmount)?item.loanAmount:0}}</span></td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;"
                 appFormatNumber>{{(item.commencementDate)?(item.commencementDate | date:'dd/MM/yyyy'):0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && item.outstandingAmount? "₹" : ""}}<span
+                    appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</span>
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.loanTenure)?(item.remainingMonths):0}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.annualInterestRate)?(item.annualInterestRate):0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.emi)}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && item.emi? "₹" : ""}}<span appFormatNumber>
+                    {{(item.emi)}}</span></td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.financialInstitution)?(item.financialInstitution):0}}</td>
@@ -577,20 +583,24 @@
                 appFormatNumber>Total</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="totalLoanAmt">totalLoanAmt</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalLoanAmt? "₹" : ""}}<span appFormatNumber [value]="totalLoanAmt"></span>
+            </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                 appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="outStandingAmt">outStandingAmt</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && outStandingAmt? "₹" : ""}}<span appFormatNumber [value]="outStandingAmt"></span></td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="totalEmi">totalEmi
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{!isLoading && totalEmi? "₹" : ""}}<span appFormatNumber [value]="totalEmi"></span>
             </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

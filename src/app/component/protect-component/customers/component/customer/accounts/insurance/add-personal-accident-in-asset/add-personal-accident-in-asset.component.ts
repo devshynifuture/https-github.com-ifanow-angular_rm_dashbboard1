@@ -62,6 +62,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   bankList: any;
   insuredMemberList: any;
   options: any;
+  showHeader: any;
 
   constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -72,6 +73,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     this.inputData = data;
     this.policyFeature = data.displayList.policyFeature;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getdataForm(data)
     // this.setInsuranceDataFormField(data);
     console.log(data);
@@ -137,7 +139,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '',], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],clientId: [data ? data.clientId : 0],userType: [data ? data.userType : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '',], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], clientId: [data ? data.clientId : 0], userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -312,8 +314,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         familyMemberId: null,
         id: 0,
         isClient: 0,
-        userType:0,
-        clientId:0
+        userType: 0,
+        clientId: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
@@ -486,32 +488,32 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-        if(data.length>0){
-            this.options = data;
-          }else{
-            this.personalAccidentForm.controls.insurerName.setErrors({ erroInPolicy: true });
-            this.personalAccidentForm.get('insurerName').markAsTouched();
-          }
-    },
-    err=>{
+        if (data.length > 0) {
+          this.options = data;
+        } else {
+          this.personalAccidentForm.controls.insurerName.setErrors({ erroInPolicy: true });
+          this.personalAccidentForm.get('insurerName').markAsTouched();
+        }
+      },
+      err => {
         this.personalAccidentForm.controls.insurerName.setErrors({ erroInPolicy: true });
         this.personalAccidentForm.get('insurerName').markAsTouched();
-    }
+      }
     );
   }
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -521,7 +523,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     })
 
   }
-  getClientId(){
+  getClientId() {
 
     this.nomineesListFM.forEach(element => {
       for (const e in this.getCoOwner.controls) {
@@ -539,7 +541,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
 
 
-}
+  }
   savePersonalAccident() {
     this.getClientId();
     let memberList = [];
@@ -628,8 +630,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:this.dataForEdit ? this.dataForEdit.id : null,
-              isAdded:false
+              id: this.dataForEdit ? this.dataForEdit.id : null,
+              isAdded: false
             }
             this.close(insuranceData)
           }
@@ -644,8 +646,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:data,
-              isAdded:true
+              id: data,
+              isAdded: true
             }
             this.close(insuranceData)
           }

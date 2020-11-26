@@ -330,7 +330,9 @@ export class InsuranceComponent implements OnInit {
       insuranceTypeId: insuranceId,
       id: this.insuranceId ? this.insuranceId : 0
     };
-    (this.finPlanObj) ? this.dataLoaded = true : this.dataLoaded = false;
+    if (this.finPlanObj) {
+      this.dataLoaded = true
+    }
     if (insuranceId == 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {

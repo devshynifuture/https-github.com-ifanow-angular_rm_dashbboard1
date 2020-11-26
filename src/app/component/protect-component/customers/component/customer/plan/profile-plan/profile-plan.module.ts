@@ -29,6 +29,7 @@ import { AssetsModule } from '../../accounts/assets/assets.module';
 import { CustomersModule } from '../../../../customers.module';
 import { LiabilitiesModule } from '../../accounts/liabilities/liabilities.module';
 import { PlanGoalsModule } from '../goals-plan/plan-goals.module';
+import { InsurancePlanModule } from '../insurance-plan/insurance-plan.module';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { PlanGoalsModule } from '../goals-plan/plan-goals.module';
     CustomersModule,
     LiabilitiesModule,
     PlanGoalsModule,
-    AssetsModule
+    AssetsModule,
+    InsurancePlanModule
   ]
 })
 export class ProfilePlanModule { }

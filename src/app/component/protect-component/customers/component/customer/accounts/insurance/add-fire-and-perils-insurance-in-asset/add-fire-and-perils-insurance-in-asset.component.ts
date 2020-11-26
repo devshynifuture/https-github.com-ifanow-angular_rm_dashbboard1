@@ -62,7 +62,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   policyFeature: any;
   id: any;
   options: any;
-  planFeatureList=[{name:'Building',value:'39'},{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
+  planFeatureList = [{ name: 'Building', value: '39' }, { name: 'Content - Furniture/Fixture/Fittings', value: '40' }, { name: 'Content - Electrical installations', value: '41' }];
+  showHeader: any;
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -74,6 +75,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     this.policyList = data.displayList.policyTypes;
     this.policyFeature = data.displayList.policyFeature;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getFamilyMemberList();
     this.getdataForm(data)
     // this.setInsuranceDataFormField(data);
@@ -140,7 +142,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],clientId: [data ? data.clientId : 0],userType: [data ? data.userType : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], clientId: [data ? data.clientId : 0], userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -355,13 +357,13 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
-  selectPlanType(value){
-    if(value == '13'){
-      this.planFeatureList=[{name:'Building',value:'39'}];
-    }else if(value == '14'){
-      this.planFeatureList=[{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
-    }else{
-      this.planFeatureList=[{name:'Building',value:'39'},{name:'Content - Furniture/Fixture/Fittings',value:'40'},{name:'Content - Electrical installations',value:'41'}];
+  selectPlanType(value) {
+    if (value == '13') {
+      this.planFeatureList = [{ name: 'Building', value: '39' }];
+    } else if (value == '14') {
+      this.planFeatureList = [{ name: 'Content - Furniture/Fixture/Fittings', value: '40' }, { name: 'Content - Electrical installations', value: '41' }];
+    } else {
+      this.planFeatureList = [{ name: 'Building', value: '39' }, { name: 'Content - Furniture/Fixture/Fittings', value: '40' }, { name: 'Content - Electrical installations', value: '41' }];
 
     }
   }
@@ -451,17 +453,17 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-        if(data.length>0){
-            this.options = data;
-          }else{
-            this.fireInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
-            this.fireInsuranceForm.get('insurerName').markAsTouched();
-          }
-    },
-    err=>{
+        if (data.length > 0) {
+          this.options = data;
+        } else {
+          this.fireInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+          this.fireInsuranceForm.get('insurerName').markAsTouched();
+        }
+      },
+      err => {
         this.fireInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
         this.fireInsuranceForm.get('insurerName').markAsTouched();
-    }
+      }
     );
   }
   getOwnerData(value, data) {
@@ -483,7 +485,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
 
 
   }
-  getClientId(){
+  getClientId() {
     this.nomineesListFM.forEach(element => {
       for (const e in this.getCoOwner.controls) {
         const id = this.getCoOwner.controls[e].get('familyMemberId');
@@ -497,7 +499,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       }
 
     });
-}
+  }
   saveFireInsurance() {
     this.getClientId();
     let featureList = [];
@@ -580,8 +582,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:this.dataForEdit ? this.dataForEdit.id : null,
-              isAdded:false
+              id: this.dataForEdit ? this.dataForEdit.id : null,
+              isAdded: false
             }
             this.close(insuranceData)
           }
@@ -596,8 +598,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:data,
-              isAdded:true
+              id: data,
+              isAdded: true
             }
             this.close(insuranceData)
           }

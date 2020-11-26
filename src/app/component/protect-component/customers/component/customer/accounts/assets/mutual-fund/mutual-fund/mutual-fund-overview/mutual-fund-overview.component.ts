@@ -118,6 +118,12 @@ export class MutualFundOverviewComponent implements OnInit {
   parentId: any;
   adminAdvisorIds: any;
   advisorIdList: string;
+  commodityCurrentValue: any;
+  commodityPercentage: any;
+  liquidCurrentValue: any;
+  liquidPercentage: any;
+  danger: boolean;
+  success: boolean;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -511,6 +517,8 @@ export class MutualFundOverviewComponent implements OnInit {
         this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
       }
+      this.danger= this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return < 0 ? true : false) : this.mfData.total_xirr < 0 ? true : false; 
+      this.success=this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return > 0 ? true : false) : this.mfData.total_xirr > 0 ? true : false; 
       // if (this.mfData.mutualFundCategoryMastersList.length > 0) {
       //   if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
       //     if(this.mfData.mutualFundCategoryMastersList.length > 1){
@@ -555,6 +563,10 @@ export class MutualFundOverviewComponent implements OnInit {
     this.hybridPercenatge = 0;
     this.solution_OrientedPercenatge = 0;
     this.otherPercentage = 0;
+    this.commodityCurrentValue = 0
+    this.commodityPercentage = 0
+    this.liquidCurrentValue = 0
+    this.liquidPercentage = 0
     data.forEach(element => {
       if (element.category == 'DEBT') {
         this.debtCurrentValue = element.currentValue;
@@ -571,11 +583,16 @@ export class MutualFundOverviewComponent implements OnInit {
         this.hybridPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.hybridCurrentValue = this.mfService.mutualFundRoundAndFormat(this.hybridCurrentValue, 0);
         this.hybridPercenatge = parseFloat(this.hybridPercenatge);
-      } else if (element.category == 'SOLUTION ORIENTED') {
-        this.solution_OrientedCurrentValue = element.currentValue;
-        this.solution_OrientedPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.solution_OrientedCurrentValue = this.mfService.mutualFundRoundAndFormat(this.solution_OrientedCurrentValue, 0);
-        this.solution_OrientedPercenatge = parseFloat(this.solution_OrientedPercenatge);
+      } else if (element.category == 'COMMODITY') {
+        this.commodityCurrentValue = element.currentValue;
+        this.commodityPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
+        this.commodityCurrentValue = this.mfService.mutualFundRoundAndFormat(this.commodityCurrentValue, 0);
+        this.commodityPercentage = parseFloat(this.commodityPercentage);
+      } else if (element.category == 'LIQUID') {
+        this.liquidCurrentValue = element.currentValue;
+        this.liquidPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
+        this.liquidCurrentValue = this.mfService.mutualFundRoundAndFormat(this.liquidCurrentValue, 0);
+        this.liquidPercentage = parseFloat(this.liquidPercentage);
       } else {
         this.otherCurrentValue = element.currentValue;
         this.otherPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
@@ -591,7 +608,12 @@ export class MutualFundOverviewComponent implements OnInit {
 
     this.MfServiceService.setSendData(this.sendaata);
   }
-
+  // else if (element.category == 'SOLUTION ORIENTED') {
+  //   this.solution_OrientedCurrentValue = element.currentValue;
+  //   this.solution_OrientedPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
+  //   this.solution_OrientedCurrentValue = this.mfService.mutualFundRoundAndFormat(this.solution_OrientedCurrentValue, 0);
+  //   this.solution_OrientedPercenatge = parseFloat(this.solution_OrientedPercenatge);
+  // }
   getCashFlowStatus() {
     // Used for cashFlow status
     if (this.totalValue) {
@@ -924,11 +946,30 @@ export class MutualFundOverviewComponent implements OnInit {
             dataLabels: {
               enabled: false
             }
-          }, {
-            name: 'Solutions oriented',
+          },
+          // {
+          //   name: 'Solutions oriented',
+          //   // y:20,
+          //   y: (this.solution_OrientedPercenatge) ? this.solution_OrientedPercenatge : 0,
+          //   color: '#FF7272',
+          //   dataLabels: {
+          //     enabled: false
+          //   }
+          // },
+          {
+            name: 'Commodity',
             // y:20,
-            y: (this.solution_OrientedPercenatge) ? this.solution_OrientedPercenatge : 0,
+            y: (this.commodityPercentage) ? this.commodityPercentage : 0,
             color: '#FF7272',
+            dataLabels: {
+              enabled: false
+            }
+          },
+          {
+            name: 'Liquid',
+            // y:20,
+            y: (this.liquidPercentage) ? this.liquidPercentage : 0,
+            color: '#5bc0de',
             dataLabels: {
               enabled: false
             }
@@ -957,7 +998,7 @@ export class MutualFundOverviewComponent implements OnInit {
       flag,
       data: { flag },
       id: 1,
-      state: 'open65',
+      state: flag == 'addMutualFund' ? 'open' : 'open65',
       componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

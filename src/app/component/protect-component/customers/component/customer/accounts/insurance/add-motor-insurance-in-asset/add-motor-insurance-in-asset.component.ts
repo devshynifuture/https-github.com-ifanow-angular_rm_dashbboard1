@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {MAT_DATE_FORMATS, MatDialog, MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { MAT_DATE_FORMATS, MatDialog, MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-motor-insurance-in-asset',
@@ -18,7 +18,7 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
   styleUrls: ['./add-motor-insurance-in-asset.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class AddMotorInsuranceInAssetComponent implements OnInit {
@@ -70,6 +70,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   accountList: any;
 
   validatorType = ValidatorType;
+  showHeader: any;
 
   constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
   }
@@ -82,6 +83,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     this.inputData = data;
     this.policyList = data.displayList.policyTypes;
     this.addOns = data.displayList.addOns;
+    this.showHeader = data.flag;
     this.getFamilyMemberList();
     this.getdataForm(data);
     // this.setInsuranceDataFormField(data);
@@ -287,8 +289,8 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         familyMemberId: null,
         id: 0,
         isClient: 0,
-        userType:0,
-        clientId:0
+        userType: 0,
+        clientId: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       // additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
@@ -373,8 +375,8 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       }
     }
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.motorInsuranceForm};
-    this.bankAccountDetails = {accountList: this.accountList, controleData: this.motorInsuranceForm};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.motorInsuranceForm };
+    this.bankAccountDetails = { accountList: this.accountList, controleData: this.motorInsuranceForm };
 
     // this.finalCashFlowData = [];
     // ==============owner-nominee Data ========================\\
@@ -398,7 +400,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd');
       if (policyExpiryDate < comparedDate) {
-        this.motorInsuranceForm.get('policyExpiryDate').setErrors({max: 'Date of repayment'});
+        this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
       } else {
         this.motorInsuranceForm.get('policyExpiryDate').setErrors();
@@ -409,7 +411,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         const policyStartDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd');
 
         if (policyStartDate >= policyExpiryDate) {
-          this.motorInsuranceForm.get('policyExpiryDate').setErrors({max: 'Date of repayment'});
+          this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
           this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
         } else {
           this.motorInsuranceForm.get('policyExpiryDate').setErrors();
@@ -486,34 +488,34 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       data => {
         console.log(data);
         this.options = data;
-        if(data.length>0){
-            this.options = data;
-          }else{
-            this.motorInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
-            this.motorInsuranceForm.get('insurerName').markAsTouched();
-          }
-    },
-    err=>{
+        if (data.length > 0) {
+          this.options = data;
+        } else {
+          this.motorInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
+          this.motorInsuranceForm.get('insurerName').markAsTouched();
+        }
+      },
+      err => {
         this.motorInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
         this.motorInsuranceForm.get('insurerName').markAsTouched();
-    }
+      }
     );
   }
 
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -523,7 +525,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     });
 
   }
-  getClientId(){
+  getClientId() {
     this.nomineesListFM.forEach(element => {
       for (const e in this.getCoOwner.controls) {
         const id = this.getCoOwner.controls[e].get('familyMemberId');
@@ -537,7 +539,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       }
 
     });
-}
+  }
   saveMotorInsurance() {
     this.getClientId();
     let addOns = [];
@@ -620,8 +622,8 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
             const insuranceData = {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:this.dataForEdit ? this.dataForEdit.id : null,
-              isAdded:false
+              id: this.dataForEdit ? this.dataForEdit.id : null,
+              isAdded: false
             };
             this.close(insuranceData);
           }
@@ -635,8 +637,8 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
             const insuranceData = {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id:data,
-              isAdded:true
+              id: data,
+              isAdded: true
             };
             this.close(insuranceData);
           }
@@ -647,7 +649,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
   close(data) {
     this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
 }
