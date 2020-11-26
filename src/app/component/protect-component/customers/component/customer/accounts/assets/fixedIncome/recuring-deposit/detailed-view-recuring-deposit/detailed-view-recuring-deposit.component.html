@@ -164,7 +164,7 @@
             <img [src]="doc.imageUrl" height="200" width="250"> <br />
         </div>
         <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
-            <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
+            <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
             </ngx-doc-viewer>
         </div>
         <a class="text-left f-14 roboto p-0" [href]="doc.imageUrl" download>
