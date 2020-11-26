@@ -181,6 +181,6 @@ export class PeopleService {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_EMAIL, data);
   }
   getRandomStringForMarketPlace(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_RANDOM_STRING, data);
+    return this.http.post(apiConfig.USER + appConfig.GET_RANDOM_STRING, data);
   }
 }
