@@ -53,14 +53,14 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public authService: AuthService, private _eref: ElementRef,
-    protected eventService: EventService, protected subinject: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-    protected dynamicComponentService: DynamicComponentService,
-    public enumDataService: EnumDataService,
-    private settingsService: SettingsService,
-    private auth: AuthService,
-    private utilService: UtilService, private peopleService: PeopleService,
-    public roleService: RoleService) {
+              protected eventService: EventService, protected subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+              protected dynamicComponentService: DynamicComponentService,
+              public enumDataService: EnumDataService,
+              private settingsService: SettingsService,
+              private auth: AuthService,
+              private utilService: UtilService, private peopleService: PeopleService,
+              public roleService: RoleService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -96,17 +96,17 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //   }
   // }
   openNew() {
-    let obj = {
+    const obj = {
       advisorId: AuthService.getAdvisorId()
-    }
+    };
     this.peopleService.getRandomStringForMarketPlace(obj).subscribe(
       data => this.stringRes(data)
     );
 
   }
   stringRes(data) {
-    let url = 'https://marketplace.ifanow.in/admin/advisor-marketplace/engage-grow'
-    window.open(url, data)
+    const url = 'https://experts.ifanow.com/admin/advisor-marketplace/engage-grow';
+    window.open(url, data);
   }
   getActiveLink(value) {
     const link = this.router.url.split('/')[2];
