@@ -32,16 +32,18 @@ export class DetailedViewRecuringDepositComponent implements OnInit {
     console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
     this.recuringDeposit = this.inputData;
     this.fileUpload.getAssetsDoc(this.inputData).then((data) => {
-      this.getMapDoc(data)
+      this.getMapDoc(data);
     });
 
   }
-
+  docType: string;
   getMapDoc(docs) {
     docs.forEach(d => {
       if (d.documentId == this.inputData.id) {
+
+        this.docType = d.fileOgName.split('.').pop();
         this.doc = d;
-        console.log(this.doc, "this.doc 123", this.inputData);
+        console.log(this.doc, "this.doc 123", this.docType);
       }
     });
   }

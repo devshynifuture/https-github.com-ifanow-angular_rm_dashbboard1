@@ -158,15 +158,17 @@
             </div>
         </div>
     </div>
-    <div>
-        <!-- *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'" -->
-        <div *ngIf="doc">
+    <div *ngIf="doc">
+        <!--  -->
+        <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
             <img [src]="doc.imageUrl" height="200" width="250"> <br />
         </div>
-        <!-- <div
-                                *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
-                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
-                                </ngx-doc-viewer>
-                            </div> -->
+        <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+            <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
+            </ngx-doc-viewer>
+        </div>
+        <a class="text-left f-14 roboto p-0" [href]="doc.imageUrl" download>
+            {{doc.fileOgName}}
+        </a>
     </div>
 </div>
