@@ -31,6 +31,31 @@ export class AdviceUtilsService {
     return { selectedIdList, count };
 
   }
+
+  static selectAllIns(flag, dataList, selectedIdList) {
+    console.log(dataList)
+    let count = 0;
+    dataList.forEach(element => {
+      element.selected = false;
+    });
+    dataList.forEach(element => {
+      // (element.selected) ? count++ : '';
+      element.selected = flag.checked;
+      if (flag.checked) {
+        count++;
+        selectedIdList.push(element.adviceDetails);
+      }
+      else {
+        count--;
+        selectedIdList.forEach(singleId => {
+          (singleId == element.adviceDetails) ? selectedIdList.splice(selectedIdList.indexOf(singleId), 1) : ''
+        });
+      }
+    });
+    console.log(count)
+    return { selectedIdList, count };
+
+  }
   static selectSingleCheckbox(tableDataSource) {
     let count = 0;
     tableDataSource.filteredData.forEach(element => {

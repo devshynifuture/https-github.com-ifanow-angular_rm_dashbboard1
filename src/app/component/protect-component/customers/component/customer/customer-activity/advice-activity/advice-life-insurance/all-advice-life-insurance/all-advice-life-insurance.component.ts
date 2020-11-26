@@ -35,13 +35,14 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   ulipCount: any;
   displayList: any;
   object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
-
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '4', value: 'Take loan' }, { id: '5', value: 'Partial withdrawl' }]
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAllCategory();
+    this.getAdviceByAsset()
+    // this.getAllCategory();
   }
   getAllCategory() {
     this.isLoading = true;
@@ -58,6 +59,10 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     );
   }
   getAdviceByAsset() {
+    this.isLoading = true;
+    this.termDataSource = [{}, {}, {}];
+    this.traditionalDataSource = [{}, {}, {}];
+    this.ulipDataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -105,16 +110,16 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    let termData = data.TERM_LIFE_INSURANCE
+    let termData = this.setCatId(data.TERM_LIFE_INSURANCE);
     // let termData = this.filterForAsset(data.TERM_LIFE_INSURANCE)
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
-    let traditionalData = data.TRADITIONAL_LIFE_INSURANCE;
+    let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE);
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
-    let ulipData = data.ULIP_LIFE_INSURANCE;
+    let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE);
     this.ulipDataSource = new MatTableDataSource(ulipData);
     console.log('ulipData', ulipData)
 
@@ -125,25 +130,38 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
 
 
-  checkAll(flag, tableDataList, tableFlag) {
-    console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.getFlagCount(tableFlag, count)
-    this.selectedAssetId = selectedIdList;
-    console.log(this.selectedAssetId);
+  setCatId(data) {
+    let array = [];
+    if (data.length > 0) {
+      data.forEach(element => {
+        if (element.adviceDetails.adviceStatusId == 1) {
+          element.adviceDetails.adviceToCategoryTypeMasterId = 3
+          array.push(element);
+        }
+      });
+    }
+    return array;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.InsuranceDetails.id)
+      this.selectedAssetId.push(selectedData.adviceDetails)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.InsuranceDetails.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.adviceDetails), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue)
     console.log(this.selectedAssetId)
+  }
+
+  checkAll(flag, tableDataList, tableFlag, ) {
+    console.log(flag, tableDataList)
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
+    this.getFlagCount(tableFlag, count)
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   getFlagCount(flag, count) {
     switch (true) {
@@ -159,6 +177,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     }
   }
   deleteModal(value, subData) {
+    let deletedId = subData.adviceDetails.id;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -167,7 +186,13 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-
+        this.activityService.deleteAdvice(deletedId).subscribe(
+          data => {
+            this.eventService.openSnackBar("Deleted successfully", "Dismiss")
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -206,15 +231,17 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
         break;
     }
-
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     let Component = AddInsuranceComponent;
 
     const fragmentData = {
       flag: 'Advice Insurance',
-      data: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'All Advice Insurance' },
+      data,
       id: 1,
       state: 'open',
-      componentName: Component,
+      componentName: SuggestAdviceComponent,
+      childComponent: Component,
+      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

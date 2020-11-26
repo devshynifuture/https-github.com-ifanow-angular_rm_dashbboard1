@@ -25,4 +25,7 @@ export class ActiityService {
   suggestNewLifeInsurance(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SUGGEST_NEW_INSURANCE, data)
   }
+  deleteAdvice(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_ADVICE, data)
+  }
 }

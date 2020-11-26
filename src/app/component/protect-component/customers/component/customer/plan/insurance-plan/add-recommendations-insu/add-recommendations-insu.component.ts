@@ -87,6 +87,9 @@ export class AddRecommendationsInsuComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result && result.isRefreshedRequired) {
+        this.getRecommendations()
+      }
       console.log('The dialog was closed', result);
     });
   }
