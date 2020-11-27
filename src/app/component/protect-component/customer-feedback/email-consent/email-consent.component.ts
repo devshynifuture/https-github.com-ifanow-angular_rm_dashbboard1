@@ -16,7 +16,7 @@ export class EmailConsentComponent implements OnInit {
 
   constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource([{}, {}, {}]);
   selectedConsent = [];
   ngOnInit() {
     this.activateRoute.queryParams.subscribe(
@@ -37,9 +37,9 @@ export class EmailConsentComponent implements OnInit {
         data.forEach(element => {
           let obj =
           {
-            id: element.adviceConsent.id,
-            acceptedOrDeclined: element.adviceConsent.acceptedOrDeclined,
-            actionPerformed: this.datePipe.transform(new Date(element.adviceConsent.actionPerformed), 'yyyy-MM-dd')
+            id: element.id,
+            acceptedOrDeclined: element.acceptedOrDeclined,
+            actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd')
           }
           this.consentData.push(obj)
         });

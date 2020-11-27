@@ -1,7 +1,7 @@
 <!-- <button (click)="OpenProceedConsent()" class="btn-primary">
     PROCEED
 </button> -->
-<div class="popup-header-fix-60">
+<!-- <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">EMAIL ADVICE</h4>
@@ -48,6 +48,111 @@
             </div>
         </div>
     </div>
+</div> -->
+<div class="custom-email">
+    <div class="wrapper-16 bb-1 popup-header-fix w-60">
+        <div class="row">
+            <div class="col-md-11 pl-0">
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400">EMAIL ADVICE</h5>
+            </div>
+            <div class="col-md-1 full-end">
+                <i (click)="close(false)" class="material-icons text-black c-p">
+                    clear
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12 pt-90">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
+                <p class="m-0 text-black roboto f-400">From</p>
+            </div>
+            <div class="col-md-9 col-lg-9 pr-0" *ngIf="_inputData.fromEmail">
+                <!-- <p *ngIf="this.emailData" class="m-0 text-black"> -->
+                <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
+                <!-- <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
+                    <mat-option value="" disabled>Select Email</mat-option>
+                    <mat-option *ngFor="let verifiedEmail of emailLists" [value]="verifiedEmail.emailAddress">
+                        {{verifiedEmail.emailAddress}}</mat-option>
+                    <mat-option>{{_inputData.fromEmail}}
+                    </mat-option>
+                </mat-select> -->
+                <mat-form-field>
+                    <input matInput [(ngModel)]="_inputData.fromEmail" class="form-control h-40" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12 pt-24 new-email-chips-height">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
+                <p class="m-0 text-black roboto f-400">To</p>
+            </div>
+
+            <div class="col-md-9 col-lg-9  pr-0" id="new-mail-chips">
+                <mat-form-field class="h-auto form-control">
+                    <mat-chip-list #chipListEmail>
+                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
+                            [selectable]="false" (removed)="removeEmailId(i)">
+                            {{singleEmailId.emailAddress}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="pl-28 pb-12 pt-24">
+        <div class="row">
+            <div class="col-md-2 col-lg-1 d-flex align-items-center justify-content-end pr-0">
+                <p class="m-0 text-black roboto f-400 pt-8">Subject</p>
+            </div>
+            <div class="col-md-9 col-lg-9 pr-0">
+                <mat-form-field *ngIf="_inputData.subjectEditable==false">
+                    <input matInput [formControl]="subjectFormCOntrol" [(ngModel)]="_inputData.subject"
+                        class="form-control h-40" [readonly]="_inputData.subjectEditable==false" readonly>
+                    <mat-error *ngIf="subjectFormCOntrol.errors?.invalid">Subject is invalid</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="_inputData.subjectEditable==true">
+                    <input matInput [(ngModel)]="_inputData.subject" class="form-control h-40"
+                        [readonly]="_inputData.subject" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="pl-28 pb-12">
+        <div class="row pt-24">
+            <div class="col-md-12 pl-0">
+                <div class="form-group mb-0 mt-8">
+                    <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+                </div>
+                <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
+                    style="min-height: 550px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- <div *ngIf="docObj" class="row" class="pl-28 pb-12 pt-12">
+        <div class="col-md-10 pl-0">
+            <div class="row">
+                <div class="col-md-12 pl-0">
+                    <p class="mb-10 text-black f-400 pt-12">Attachment</p>
+                </div>
+                <div class="col-md-12 pl-0">
+                    <mat-chip-list #chipList aria-label="docName selection">
+                        <mat-chip (click)="previewDocument(doc)" *ngFor="let doc of docObj ; let i = index">
+                            {{doc.documentName}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
