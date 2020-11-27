@@ -213,6 +213,9 @@ export class InvestorDetailComponent implements OnInit {
       }
       return;
     }
+    else {
+      this.eventService.openSnackBar('File type is not image/tiff');
+    }
     if (documentType == 1) {
       this.addbarWidth(30);
       this.loader1 = true
