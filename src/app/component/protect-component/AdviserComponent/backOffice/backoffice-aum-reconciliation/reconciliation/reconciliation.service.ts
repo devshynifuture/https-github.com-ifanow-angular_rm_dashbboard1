@@ -111,6 +111,9 @@ export class ReconciliationService {
     getBackOfficeFileToUpload(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
     }
+    uploadNJFile(data) {
+        return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_NJ_FILE, data);
+    }
     uploadStock(data) {
         return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_STOCK, data);
     }
