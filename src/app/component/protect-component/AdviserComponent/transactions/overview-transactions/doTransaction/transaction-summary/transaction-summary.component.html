@@ -15,8 +15,8 @@
         </div>
         <div *ngIf="allData" class="col-md-2">
           <button (click)="showPlatform = true;openPlatform()"
-                  *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true"
-                  class="primary-sm" mat-stroked-button>Edit
+            *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true"
+            class="primary-sm" mat-stroked-button>Edit
           </button>
         </div>
       </div>
@@ -31,9 +31,8 @@
         </div>
         <div class="col-md-2">
           <button (click)="openDialog()"
-                  *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true"
-                  class="primary-sm"
-                  mat-stroked-button>Edit
+            *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true"
+            class="primary-sm" mat-stroked-button>Edit
           </button>
         </div>
       </div>
@@ -59,13 +58,13 @@
             </h5>
           </div>
           <div *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')"
-               class="bar">
+            class="bar">
             <h5 class="m-0"><span class="f-500">Scheme switch in:</span>
               {{(transactionSummary == undefined) ? '' : transactionSummary.schemeNameTranfer}}
             </h5>
           </div>
           <h5 class="m-0"> <span
-            class="f-500">Folio:</span>{{(transactionSummary == undefined) ? '' : transactionSummary.folioNumber}}
+              class="f-500">Folio:</span>{{(transactionSummary == undefined) ? '' : transactionSummary.folioNumber}}
           </h5>
           <h5 class="m-0"><span class="f-500">Amount:</span>
             ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/Lumpsum
@@ -102,12 +101,12 @@
       </div> -->
       <div *ngIf="selectedPlatform== 1 && bankDetails">
         <div class="row  pt-16 pb-16">
-          <div class="col-md-10 p-0" >
+          <div class="col-md-10 p-0">
             <p class="m-0 roboto text-custom">Bank A/c details</p>
             <h5 class="m-0">
             </h5>
             <div *ngIf="defaultBank">
-              <h5 class="m-0" >
+              <h5 class="m-0">
                 <span class="f-500">Bank name:</span>
                 {{defaultBank.bankName}}</h5>
               <h5 class="m-0">
@@ -115,7 +114,7 @@
                 {{defaultBank.accountNo}}</h5>
             </div>
           </div>
-          <div 
+          <div
             *ngIf="bankDetails.length > 1 && transactionSummary && showBankEdit == true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
             class="col-md-2">
             <button (click)="showbank = true;openBank(bankDetails)" class="primary-sm" mat-stroked-button>Edit</button>
@@ -164,8 +163,8 @@
       </p>
       <div class="row pt-12">
         <div class="col-md-12 p-0">
-          <button class="bg-white pl-12 text-custom" mat-stroked-button><img
-            class="pr-8" src="/assets/images/svg/attech-light.svg">Fact
+          <button class="bg-white pl-12 text-custom" mat-stroked-button><img class="pr-8"
+              src="/assets/images/svg/attech-light.svg">Fact
             sheet.pdf<img class="pl-8" src="/assets/images/svg/s-cross.svg"></button>
 
         </div>
