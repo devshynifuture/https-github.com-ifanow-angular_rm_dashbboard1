@@ -204,6 +204,7 @@ export class InvestorDetailComponent implements OnInit {
 
   getFileDetails(documentType, e) {
     if (e.target.files[0].type !== 'image/tiff') {
+      this.eventService.openSnackBar('File type is not image/tiff');
       if (documentType == 1) {
         this.addbarWidth(0);
         this.loader1 = false
@@ -212,9 +213,6 @@ export class InvestorDetailComponent implements OnInit {
         this.loader2 = false
       }
       return;
-    }
-    else {
-      this.eventService.openSnackBar('File type is not image/tiff');
     }
     if (documentType == 1) {
       this.addbarWidth(30);
