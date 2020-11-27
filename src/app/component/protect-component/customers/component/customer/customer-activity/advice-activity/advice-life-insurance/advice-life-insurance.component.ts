@@ -36,6 +36,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   displayList: any;
   object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '4', value: 'Take loan' }, { id: '5', value: 'Partial withdrawl' }]
+  ulipCpy: any;
+  tradCopy: any;
+  termCpy: any[];
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
@@ -121,24 +124,39 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     console.log('data', data)
     this.dataSource = data;
     let termData = this.setCatId(data.TERM_LIFE_INSURANCE);
+    this.termCpy = termData;
     // let termData = this.filterForAsset(data.TERM_LIFE_INSURANCE)
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
     let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE);
+    this.tradCopy = traditionalData
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
     let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE);
+    this.ulipCpy = ulipData
     this.ulipDataSource = new MatTableDataSource(ulipData);
     console.log('ulipData', ulipData)
-
     // this.ulipDataSource.sort = this.sort
     this.termDataSource['tableFlag'] = data.TERM_LIFE_INSURANCE.length == 0 ? false : true;
     this.traditionalDataSource['tableFlag'] = data.TRADITIONAL_LIFE_INSURANCE.length == 0 ? false : true;
     this.ulipDataSource['tableFlag'] = data.ULIP_LIFE_INSURANCE.length == 0 ? false : true;
   }
+  filterInsurance(key: string, value: any, name, array, dataSource) {
+    let dataFiltered;
+    array = (name == 'Term insurance') ? this.termCpy : (name == 'Traditional insurance') ? this.tradCopy : this.ulipCpy;
+    dataFiltered = array.filter(function (item) {
+      return item.adviceDetails[key] === parseInt(value);
+    });
+    if (dataFiltered.length > 0) {
+      dataSource.data = dataFiltered;
+      dataSource = new MatTableDataSource(dataSource.data);
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
 
+  }
   setCatId(data) {
     let array = [];
     if (data.length > 0) {

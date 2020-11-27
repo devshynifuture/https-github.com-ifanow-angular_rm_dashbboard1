@@ -537,6 +537,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   GET_ALL_CATEGORY: 'advice/advice/all-category/get',
   SUGGEST_NEW_INSURANCE: 'advice/insurance/life-insurance/suggest-new-policy/add',
+  SUGGEST_NEW_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/suggest-new-policy/add',
   DELETE_ADVICE: 'advice/delete/id',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',

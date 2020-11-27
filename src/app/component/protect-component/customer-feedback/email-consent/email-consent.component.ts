@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material';
 export class EmailConsentComponent implements OnInit {
   consentData = [];
   isLoading: boolean;
+  id: any;
+  sumAssured: any;
 
   constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
@@ -23,6 +25,7 @@ export class EmailConsentComponent implements OnInit {
       params => {
         this.isLoading = true;
         this.getConsentDetails(params.gropID);
+        console.log(params)
       }
     )
 
@@ -31,10 +34,44 @@ export class EmailConsentComponent implements OnInit {
     this.isLoading = true;
     const getAdviceSubs = this.cusService.getAdviceConsent(data).subscribe(
       data => {
-
-        this.isLoading = false;
+        this.sumAssured = 0;
         this.dataSource.data = data;
         data.forEach(element => {
+          this.id = element.advice.adviceToCategoryTypeMasterId;
+          if (this.id == 4) {
+            if (element.stringObject.hasOwnProperty("insuredMembers") &&
+              element.stringObject.insuredMembers.length > 0) {
+              element.stringObject.displayHolderName = element.stringObject.insuredMembers[0].name;
+              if (element.stringObject.insuredMembers.length > 1) {
+                for (let i = 1; i < element.stringObject.insuredMembers.length; i++) {
+                  if (element.stringObject.insuredMembers[i].name) {
+                    const firstName = (element.stringObject.insuredMembers[i].name as string).split(' ')[0];
+                    element.stringObject.displayHolderName += ', ' + firstName;
+                  }
+                }
+              }
+            } else {
+              element.stringObject.displayHolderName = element.stringObject.policyHolderName;
+            }
+            if (element.stringObject.hasOwnProperty("policyFeatures") &&
+              element.stringObject.policyFeatures.length > 0) {
+              element.stringObject.policyFeatures.forEach(ele => {
+                this.sumAssured += ele.featureSumInsured;
+              });
+              element.stringObject.sumAssured = this.sumAssured;
+              if (element.stringObject.sumAssured == 0) {
+                element.stringObject.sumAssured = element.stringObject.sumInsuredIdv;
+              }
+            } else {
+              element.stringObject.sumAssured = element.stringObject.sumInsuredIdv;
+            }
+            if (element.stringObject.hasOwnProperty("addOns") &&
+              element.stringObject.addOns.length > 0 && !element.stringObject.sumAssured) {
+              element.stringObject.addOns.forEach(ele => {
+                element.stringObject.sumAssured += ele.addOnSumInsured;
+              });
+            }
+          }
           let obj =
           {
             id: element.id,
@@ -43,6 +80,7 @@ export class EmailConsentComponent implements OnInit {
           }
           this.consentData.push(obj)
         });
+        this.isLoading = false;
         getAdviceSubs.unsubscribe();
       }
     )

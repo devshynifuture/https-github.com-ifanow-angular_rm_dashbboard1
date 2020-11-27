@@ -54,8 +54,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Surrender', selected: false },
       { value: 3, advice: 'Stop paying premium', selected: false },
-      { value: 4, advice: 'Take loan', selected: false },
-      { value: 5, advice: 'Partial withdrawl', selected: false }]
+      { value: 4, advice: 'Partial withdrawl', selected: false }]
     } else {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Discontinue', selected: false },

@@ -51,7 +51,6 @@ export class EmailAdviceComponent implements OnInit {
 
   validatorType = ValidatorType;
   getData: any;
-
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { }
   @Input() set data(data) {
     this.getData = data.selectedAssetData;

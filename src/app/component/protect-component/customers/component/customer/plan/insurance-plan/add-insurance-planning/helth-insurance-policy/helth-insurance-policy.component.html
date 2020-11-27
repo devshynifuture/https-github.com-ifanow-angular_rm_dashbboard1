@@ -114,8 +114,8 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-4">Amount</p>
-                    <div class="form-group">
+                    <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Surrender' && healthInsurance.get('selectAdvice').value != 'Discontinue'">Amount</p>
+                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Surrender' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
                         <mat-form-field class="ba-date">
                             <input autocomplete="off" maxlength="10" matInput #amount class="form-control b-0"
                                 formControlName="amount">

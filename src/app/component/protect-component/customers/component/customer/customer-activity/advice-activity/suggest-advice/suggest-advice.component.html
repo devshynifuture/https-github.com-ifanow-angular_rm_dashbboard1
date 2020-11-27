@@ -25,7 +25,7 @@
                                 <div class="col-md-6 pl-0">
                                     <p class="m-0 text-black roboto">Advice header</p>
                                     <div class="form-group">
-                                        <mat-form-field>
+                                        <!-- <mat-form-field>
                                             <mat-select #header autocomplete="off" class="form-control br-0"
                                                 formControlName="header" matInput>
 
@@ -34,15 +34,16 @@
                                                     [value]="option.id">
                                                     {{option.value}}
                                                 </mat-option>
-                                                <!-- <mat-option value=''>Select option</mat-option>
-                                                <mat-option value='1'>Continue</mat-option>
-                                                <mat-option value='2'>Surrender</mat-option>
-                                                <mat-option value='3'>Stop paying premium</mat-option>
-                                                <mat-option value='4'>Take loan</mat-option>
-                                                <mat-option value='5'>Partial withdrawl</mat-option> -->
                                             </mat-select>
                                             <mat-error>This field is required
                                             </mat-error>
+                                        </mat-form-field> -->
+                                        <mat-form-field>
+                                            <input matInput formControlName="status" [value]="'Suggest new policy'" [disabled]="true"
+                                                class="form-control" readonly>
+                                            <!-- <mat-error>
+                                                This field is required
+                                            </mat-error> -->
                                         </mat-form-field>
                                     </div>
                                     <p class="m-0 text-black roboto pt-20">Advice rationale</p>
@@ -107,15 +108,19 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <p class="m-0 text-black roboto pt-60">Withdrawal amount</p>
-                                    <div class="form-group">
-                                        <mat-form-field class="ba-date">
-                                            <input matInput formControlName="withdrawalAmt" class="form-control b-0">
+                                    <!-- <p class="m-0 text-black roboto pt-60" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">Withdrawal amount</p> -->
+                                    <!-- <div class="form-group" >
+                                        <mat-form-field class="ba-date" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">
+                                            <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"
+                                                [maxLength]="10" appInputValueValidation formControlName="withdrawalAmt"
+                                                class="form-control b-0">
+                                            <mat-hint align="end" class="f-12">{{withdrawalAmt.value.length}}/10
+                                            </mat-hint>
                                             <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row pt-44">

@@ -1,7 +1,7 @@
 import { DynamicComponentService } from './../../../../../../../../services/dynamic-component.service';
 import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from './../../../../../../../../Data-service/event.service';
-import { UtilService } from './../../../../../../../../services/util.service';
+import { UtilService, ValidatorType } from './../../../../../../../../services/util.service';
 import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, ViewChildren, QueryList, } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -31,14 +31,15 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   adviceSlider: Subscription;
   formStep: number = 1;
   componentRef;
+  validatorType = ValidatorType;
 
   adviceForm: FormGroup = this.fb.group({
-    "header": [, Validators.required],
+    "header": [],
     "rationale": [, Validators.required],
     "status": [, Validators.required],
     "givenOnDate": [, Validators.required],
     "implementDate": [, Validators.required],
-    "withdrawalAmt": [, Validators.required],
+    // "withdrawalAmt": [, Validators.required],
     "consentOption": ['1', Validators.required],
   })
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -83,7 +84,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       if (data.childComponent) {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;
-        this.adviceHeaderList = data.data.adviceHeaderList;
+        this.adviceHeaderList = data.data ? data.data.adviceHeaderList : '';
         this.getFormData(data);
       }
     });
@@ -122,7 +123,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
   }
   getFormData(data) {
-    if (data.data.adviceDetails == null) {
+    if (data.data ? data.data.adviceDetails == null : data.data == null) {
       data = {};
       this.dataForEdit = null;
       this.flag = 'Add';
@@ -133,12 +134,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       this.flag = 'Edit';
     }
     this.adviceForm = this.fb.group({
-      header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
+      header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : ''), [Validators.required]],
       status: [(this.dataForEdit ? this.dataForEdit.adviceStatus : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
-      withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
+      // withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
     });
     // ==============owner-nominee Data ========================\\
@@ -895,8 +896,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             adviceDescription: this.adviceForm.get('rationale').value,
             insuranceCategoryTypeId: 42,
             suggestedFrom: 1,
-            adviceId: this.adviceForm.get('header').value,
-            adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
+            // adviceId: this.adviceForm.get('header').value,
+            adviceId: '1',
+            // adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
             clientId: AuthService.getClientId(),
             advisorId: AuthService.getAdvisorId(),
             adviseCategoryTypeMasterId: 2,
@@ -912,55 +914,152 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             err => this.event.openSnackBar(err, "Dismiss")
           );
           break;
+        case this.childComponentFlag === 'Advice General Insurance' && componentRefComponentValues.healthInsuranceForm.valid:
+          componentRefFormValues = componentRefComponentValues.healthInsuranceForm.value;
+          let memberList = [];
+          let finalMemberList = componentRefComponentValues.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
+          finalMemberList.controls.forEach(element => {
+            let obj =
+            {
+              familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
+              sumInsured: element.get('sumAssured').value,
+              relationshipId: element.get('relationshipId').value,
+              insuredOrNominee: 1,
+              id: (element.get('id').value) ? element.get('id').value : null
+            };
+            memberList.push(obj);
+          });
+          componentRefComponentValues.healthInsuranceForm.get('inceptionDate').setErrors(null);
+          const obj = {
+            'clientId': this.clientId,
+            'advisorId': this.advisorId,
+            'policyHolderId': (componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+            'policyStartDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+            'policyExpiryDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+            'cumulativeBonus': componentRefComponentValues.healthInsuranceForm.get('cumulativeBonus').value,
+            'cumulativeBonusRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('bonusType').value,
+            'policyTypeId': componentRefComponentValues.healthInsuranceForm.get('PlanType').value,
+            'deductibleSumInsured': componentRefComponentValues.healthInsuranceForm.get('deductibleAmt').value,
+            'exclusion': componentRefComponentValues.healthInsuranceForm.get('exclusion').value,
+            'copay': componentRefComponentValues.healthInsuranceForm.get('copay').value,
+            'planName': componentRefComponentValues.healthInsuranceForm.get('planeName').value,
+            'policyNumber': componentRefComponentValues.healthInsuranceForm.get('policyNum').value,
+            'copayRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('copayType').value,
+            'tpaName': componentRefComponentValues.healthInsuranceForm.get('tpaName').value,
+            'advisorName': componentRefComponentValues.healthInsuranceForm.get('advisorName').value,
+            'serviceBranch': componentRefComponentValues.healthInsuranceForm.get('serviceBranch').value,
+            'linkedBankAccount': componentRefComponentValues.healthInsuranceForm.get('bankAccount').value,
+            'insurerName': componentRefComponentValues.healthInsuranceForm.get('insurerName').value,
+            'policyInceptionDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+            'insuranceSubTypeId': 5,
+            'premiumAmount': componentRefComponentValues.healthInsuranceForm.get('premium').value,
+            'policyFeatureId': componentRefComponentValues.healthInsuranceForm.get('planDetails').value,
+            'sumInsuredIdv': componentRefComponentValues.healthInsuranceForm.get('sumAssuredIdv').value,
+            'id': (this.id) ? this.id : null,
+            'addOns': [],
+            realOrFictitious: 2,
+            insuredMembers: memberList,
+            nominees: componentRefComponentValues.healthInsuranceForm.value.getNomineeName,
+          };
+          if (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value && componentRefComponentValues.healthInsuranceForm.get('coversAmount').value) {
+            obj.addOns = [{
+              'addOnId': (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value),
+              'addOnSumInsured': componentRefComponentValues.healthInsuranceForm.get('coversAmount').value
+            }];
+          }
+          if (obj.insuredMembers.length > 0) {
+            obj.insuredMembers.forEach(element => {
+              if (element.sumInsured == '') {
+                element.sumInsured = null
+              }
+            });
+          }
+          if (obj.nominees.length > 0) {
+            obj.nominees.forEach((element, index) => {
+              if (element.name == '') {
+                obj.nominees = [];
+              }
+            });
+            obj.nominees = componentRefComponentValues.healthInsuranceForm.value.getNomineeName;
+            obj.nominees.forEach(element => {
+              if (element.sharePercentage) {
+                element.sumInsured = element.sharePercentage;
+              }
+              element.insuredOrNominee = 2;
+            });
+          } else {
+            obj.nominees = [];
+          }
+
+          this.mergeAndhitApi(obj);
+          break;
+
+
+          console.log(this.adviceForm);
+          // if (componentRefFormValues) {
+          //   this.stringObj = this.filterForObj(componentRefFormValues)
+          //   this.removeObj(this.stringObj);
+
+          // }
+
+          this.objTopass = {
+            adviceHeader: this.adviceForm.controls.header.value,
+            clientId: this.clientId,
+            adviceId: 1,
+            advisorId: this.advisorId,
+            assetCategoryTypeId: 14,
+            applicableDate: this.datePipe.transform(this.adviceForm.controls.implementDate.value, 'yyyy-MM-dd'),
+            givenDate: this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy-MM-dd'),
+            adviceDescription: this.adviceForm.controls.rationale.value,
+            status: this.adviceForm.controls.status.value,
+            consentOption: this.adviceForm.controls.consentOption.value,
+            // withdrawAmount: this.adviceForm.controls.withdrawalAmt.value,
+          }
       }
 
-      console.log(this.adviceForm);
-      // if (componentRefFormValues) {
-      //   this.stringObj = this.filterForObj(componentRefFormValues)
-      //   this.removeObj(this.stringObj);
+      const bothFormValues = {
+        ...this.adviceForm.value,
+        ...componentRefFormValues
+      }
 
-      // }
-
-      this.objTopass = {
-        adviceHeader: this.adviceForm.controls.header.value,
-        clientId: this.clientId,
-        adviceId: 1,
+      console.log("this is form value::::::::::::", bothFormValues);
+    }
+    }
+    mergeAndhitApi(obj){
+      const stringObjHealth = {
+        adviceDescription: this.adviceForm.get('rationale').value,
+        insuranceCategoryTypeId: 42,
+        suggestedFrom: 1,
+        adviceId: '1',
+        clientId: AuthService.getClientId(),
+        advisorId: AuthService.getAdvisorId(),
+        adviseCategoryTypeMasterId: 2,
+        adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
+        applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
+      }
+      let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
+      this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
+        data => this.getAdviceRes(data),
+        err => this.event.openSnackBar(err, "Dismiss")
+      );
+    }
+    filterForObj(data, mergeData) {
+      const stringObject = {
         advisorId: this.advisorId,
-        assetCategoryTypeId: 14,
-        applicableDate: this.datePipe.transform(this.adviceForm.controls.implementDate.value, 'yyyy-MM-dd'),
-        givenDate: this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy-MM-dd'),
-        adviceDescription: this.adviceForm.controls.rationale.value,
-        status: this.adviceForm.controls.status.value,
-        consentOption: this.adviceForm.controls.consentOption.value,
-        withdrawAmount: this.adviceForm.controls.withdrawalAmt.value,
+        clientId: this.clientId,
+        familyMemberId: (data.familyMemberId) ? data.familyMemberId : null,
+        ownerName: data.ownerName,
+        description: data.description
       }
+      const assign = Object.assign(mergeData, stringObject);//merge both data
+      Object.assign(this.objTopass, { stringObject: assign });
+      return assign;
     }
-
-    const bothFormValues = {
-      ...this.adviceForm.value,
-      ...componentRefFormValues
+    getAdviceRes(data) {
+      console.log(data)
+      this.dialogClose();
     }
-
-    console.log("this is form value::::::::::::", bothFormValues);
-
-  }
-  filterForObj(data, mergeData) {
-    const stringObject = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: (data.familyMemberId) ? data.familyMemberId : null,
-      ownerName: data.ownerName,
-      description: data.description
+    dialogClose() {
+      this.subinject.changeNewRightSliderState({ state: 'close' });
     }
-    const assign = Object.assign(mergeData, stringObject);//merge both data
-    Object.assign(this.objTopass, { stringObject: assign });
-    return assign;
   }
-  getAdviceRes(data) {
-    console.log(data)
-    this.dialogClose();
-  }
-  dialogClose() {
-    this.subinject.changeNewRightSliderState({ state: 'close' });
-  }
-}
