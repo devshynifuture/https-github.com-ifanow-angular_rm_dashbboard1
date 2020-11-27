@@ -25,7 +25,7 @@ export class EmailAdviceComponent implements OnInit {
   flag: any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   subjectFormCOntrol = new FormControl();
-  _inputData = { fromEmail: '', subjectEditable: false, subject: '' };
+  _inputData = { fromEmail: '', subjectEditable: false, subject: '', bodyChange: '' };
   getOrgData = AuthService.getOrgDetails();
   emailBody = `
   <html>
