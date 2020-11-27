@@ -33,6 +33,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   subject = new FormControl('Your new money management account is created!');
   selectedFromEmail = new FormControl('');
   isAllSelected = false;
+  selectedClientsCount = 0;
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -61,6 +62,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   fromSearch: boolean = false;
   searchFC: FormControl;
   searchName: string;
+  selectedClientArray = [];
 
   constructor(
     public authService: AuthService,
@@ -138,7 +140,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         this.isLoading = true;
         if (this.dataSource) {
-          this.dataSource.data = [];
+          this.dataSource.data = ELEMENT_DATA;
         }
         return this.getFilteredClientList(data);
       })
@@ -197,6 +199,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         if (this.fromSearch || this.searchName === '') {
           this.infiniteScrollClientList = [];
+          if (this.searchName == '') {
+
+          }
         }
         this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
 
@@ -310,6 +315,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   selectAll(event) {
     this.dataCount = 0;
     this.isAllSelected = true;
+    if (!event.checked) {
+      this.selectedClientsCount = 0;
+      this.isAllSelected = false;
+    }
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
@@ -320,9 +329,14 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeSelect() {
+  changeSelect(element) {
     this.dataCount = 0;
-
+    this.selectedClientArray.push(element.clientId);
+    if (element.selected) {
+      this.selectedClientsCount++;
+    } else {
+      this.selectedClientsCount--;
+    }
     this.dataSource.filteredData.forEach((item: any) => {
       if (item.selected) {
         this.dataCount++;
@@ -339,7 +353,6 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.getEmailVerificationRes(data);
-        this.isLoading = false;
       },
     );
   }
@@ -378,9 +391,29 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       return;
     }
     this.barButtonOptions.active = true;
+    let arr = [];
+    if (this.selectedClientArray.length > 0) {
+      this.selectedClientArray.forEach(item => {
+        if (!arr.includes(item)) {
+          arr.push(item);
+        }
+      })
+    }
+
+    if (this.clientList.length > 0) {
+      this.clientList.forEach(element => {
+        if (!arr.includes(element)) {
+          arr.push(element);
+        }
+      });
+
+    }
+
+
+
     const obj = {
       advisorId: this.advisorId,
-      clientIds: this.clientList,
+      clientIds: arr,
       fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
       subject: this.subject.value,
       messageBody: this.emailBody
@@ -388,17 +421,19 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     if (this.isAllSelected) {
       obj['allClient'] = true;
     }
-    this.orgSetting.sendEmailToClients(obj).subscribe(
-      data => {
-        this.eventService.openSnackBar(data, 'Dismiss');
-        this.close(true);
-        this.barButtonOptions.active = false;
-      },
-      err => {
-        this.barButtonOptions.active = false;
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+
+    console.log(arr);
+    // this.orgSetting.sendEmailToClients(obj).subscribe(
+    //   data => {
+    //     this.eventService.openSnackBar(data, 'Dismiss');
+    //     this.close(true);
+    //     this.barButtonOptions.active = false;
+    //   },
+    //   err => {
+    //     this.barButtonOptions.active = false;
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //   }
+    // );
   }
 
   bulkEmail(value) {
