@@ -203,7 +203,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFileDetails(documentType, e) {
-    if (e.target.files[0].type !== 'image/tiff') {
+    if (this.data.aggregatorType == 2 && e.target.files[0].type !== 'image/tiff') {
       this.eventService.openSnackBar('File type is not image/tiff');
       if (documentType == 1) {
         this.addbarWidth(0);
@@ -213,49 +213,51 @@ export class InvestorDetailComponent implements OnInit {
         this.loader2 = false
       }
       return;
-    }
-    if (documentType == 1) {
-      this.addbarWidth(30);
-      this.loader1 = true
     } else {
-      this.addbarWidth1(30);
-      this.loader2 = true
+      if (documentType == 1) {
+        this.addbarWidth(30);
+        this.loader1 = true
+      } else {
+        this.addbarWidth1(30);
+        this.loader2 = true
+      }
+      this.file = e.target.files[0];
+      const file = e.target.files[0];
+      const requestMap = {
+        tpUserRequestId: this.details.id,
+        documentType
+      };
+      this.isFileUploading = true;
+      // this.addbarWidth(50);
+      if (documentType == 1) {
+        this.addbarWidth(50);
+        this.loader1 = true
+      } else {
+        this.addbarWidth1(0);
+        this.loader2 = true
+      }
+      FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+        file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          this.isFileUploading = false;
+          if (documentType == 1) {
+            this.addbarWidth(100);
+            this.loader1 = true
+          } else {
+            this.addbarWidth1(100);
+            this.loader2 = true
+          }
+          if (status == 200) {
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false;
+            const responseObject = JSON.parse(response);
+            this.eventService.openSnackBar('File uploaded successfully');
+            this.getFormUploadDetail();
+          } else {
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false
+            const responseObject = JSON.parse(response);
+            this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
+          }
+        });
     }
-    this.file = e.target.files[0];
-    const file = e.target.files[0];
-    const requestMap = {
-      tpUserRequestId: this.details.id,
-      documentType
-    };
-    this.isFileUploading = true;
-    // this.addbarWidth(50);
-    if (documentType == 1) {
-      this.addbarWidth(50);
-      this.loader1 = true
-    } else {
-      this.addbarWidth1(0);
-      this.loader2 = true
-    }
-    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
-      file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        this.isFileUploading = false;
-        if (documentType == 1) {
-          this.addbarWidth(100);
-          this.loader1 = true
-        } else {
-          this.addbarWidth1(100);
-          this.loader2 = true
-        }
-        if (status == 200) {
-          (documentType == 1) ? this.loader1 = false : this.loader2 = false;
-          const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar('File uploaded successfully');
-          this.getFormUploadDetail();
-        } else {
-          (documentType == 1) ? this.loader1 = false : this.loader2 = false
-          const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
-        }
-      });
+
   }
 }
