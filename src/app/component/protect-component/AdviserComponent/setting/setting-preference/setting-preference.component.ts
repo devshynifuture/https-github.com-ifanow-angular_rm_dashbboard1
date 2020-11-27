@@ -136,8 +136,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
             console.log(res);
             res.map(o => o.showInnerTable = false);
             this.bulkEmailPasswordHistoryList = res;
+          } else {
+            this.bulkEmailPasswordHistoryList = null;
           }
         }, err => {
+          this.bulkEmailPasswordHistoryList = null;
           this.isLoading = false;
           console.error(err);
         });
