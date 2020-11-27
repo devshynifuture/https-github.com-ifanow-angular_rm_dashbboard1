@@ -656,6 +656,7 @@ export const appConfig = {
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  UPLOAD_NJ_FILE: 'backoffice/file-upload/upload/NJ',
   UPLOAD_STOCK: 'account/asset/upload/excel',
   TRANSACTION_UPLOAD: 'account/asset/stock-transaction/bulk/upload',
   HOLDING_UPLOAD: 'account/asset/stock-holding/bulk/upload',
