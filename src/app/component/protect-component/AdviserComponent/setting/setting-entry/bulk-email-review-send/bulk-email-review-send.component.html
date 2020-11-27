@@ -18,8 +18,8 @@
     </div>
 </div>
 <div *ngIf="step1Flag">
-<!--  (scroll)="on"-->
-    <div class="pt-90 pb-100" >
+    <!--  (scroll)="on"-->
+    <div class="pt-90 pb-100">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -37,7 +37,7 @@
                 <div class="form-group mb-28">
                     <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
                         <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0"
-                            matInput placeholder="Start typing to see client names">
+                            matInput placeholder="Start typing to see client names" [formControl]="searchFC">
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
@@ -82,7 +82,7 @@
                                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status
                                 </th>
                                 <td *matCellDef="let element" class="c-p br" mat-cell>
-                                    <div class="bar">
+                                    <div class="bar" *ngIf="!isLoading">
                                         {{element.status==1? 'Client':'Lead'}}
                                     </div>
                                 </td>
