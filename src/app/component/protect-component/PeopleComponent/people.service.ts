@@ -24,6 +24,10 @@ export class PeopleService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);
   }
 
+  getFilteredClientListForBulkReviewSend(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_FILTER_FOR_BULK_EMAIL_REVIEW, data, 1);
+  }
+
   getClientLogo(data) {
     // this.authService.setToken('data');
     return this.http.getWithoutAuth(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LOGO, data);

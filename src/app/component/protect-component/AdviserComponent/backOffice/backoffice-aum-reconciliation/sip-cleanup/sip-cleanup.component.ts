@@ -219,30 +219,33 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   }
 
   putSipCleanUpFolioKeepOrRemove(value, singleOrMultiple) {
-    this.backOfficeService.putSipCleanUpUpdateStatus(value).subscribe((res) => {
-      if (res) {
-        console.log(res);
-        this.eventService.openSnackBar('Successfully Changed Status.', "DISMISS");
-        if (singleOrMultiple === 'single') {
-          let index = this.dataSource.data.indexOf(this.selectedData);
-          this.dataSource.data[index]['removeStatus'] = value[0].removeStatus;
+    this.backOfficeService.putSipCleanUpUpdateStatus(value)
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+          this.eventService.openSnackBar('Successfully Changed Status.', "DISMISS");
+          if (singleOrMultiple === 'single') {
+            let index = this.dataSource.data.indexOf(this.selectedData);
+            this.dataSource.data[index]['removeStatus'] = value[0].removeStatus;
 
-          let index1 = this.tableData.indexOf(this.selectedData);
-          this.tableData[index1].removeStatus = value[0].removeStatus;
+            let index1 = this.tableData.indexOf(this.selectedData);
+            this.tableData[index1].removeStatus = value[0].removeStatus;
 
-        } else if (singleOrMultiple == 'multiple') {
-          this.selection.selected.map(item => {
-            item.removeStatus = value[0].removeStatus;
-            let objIndex = this.tableData.indexOf(item);
+          } else if (singleOrMultiple == 'multiple') {
+            this.selection.selected.map(item => {
+              item.removeStatus = value[0].removeStatus;
+              let objIndex = this.tableData.indexOf(item);
 
-            this.tableData[objIndex].removeStatus = value[0].removeStatus;
-          });
+              this.tableData[objIndex].removeStatus = value[0].removeStatus;
+              this.selection.clear();
+              this.showMultipleKeepBtn = false;
+            });
+          }
+          this.getSipCleanUpList(true);
+        } else {
+          this.eventService.openSnackBar('Failed to change Status!', "DISMISS");
         }
-        this.getSipCleanUpList(true);
-      } else {
-        this.eventService.openSnackBar('Failed to change Status!', "DISMISS");
-      }
-    }, err => console.error(err));
+      }, err => console.error(err));
   }
 
   filterTableValues(value) {

@@ -90,6 +90,15 @@ export class SupportUpperNjComponent implements OnInit {
         console.log(this.filteredSchemes);
       });
   }
+  close() {
+    const fragmentData = {
+      direction: 'top',
+      state: 'close'
+    };
+
+    this.eventService.changeUpperSliderState(fragmentData);
+    //this.closeRightSlider('');
+  }
   checkIfDataNotPresentAndShowError(data) {
     if (data && data.length > 0) {
       this.filteredSchemeError = false;

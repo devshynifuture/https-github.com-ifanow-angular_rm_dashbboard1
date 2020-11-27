@@ -48,11 +48,11 @@
     <div class="col-md-12" [ngClass]="showMultipleKeepBtn ? '': 'd-none'">
         <div class="d-flex">
             <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
-                (click)="setMultipleKeepOrRemove(1)">
+                (click)="setMultipleKeepOrRemove(0)">
                 Keep
             </button>
             <button mat-stroked-button class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
-                (click)="setMultipleKeepOrRemove(0)">
+                (click)="setMultipleKeepOrRemove(1)">
                 Remove
             </button>
         </div>

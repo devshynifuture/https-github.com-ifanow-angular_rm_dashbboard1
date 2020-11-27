@@ -657,6 +657,7 @@ export const appConfig = {
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  UPLOAD_NJ_FILE: 'backoffice/file-upload/upload/NJ',
   UPLOAD_STOCK: 'account/asset/upload/excel',
   TRANSACTION_UPLOAD: 'account/asset/stock-transaction/bulk/upload',
   HOLDING_UPLOAD: 'account/asset/stock-holding/bulk/upload',
@@ -803,6 +804,7 @@ export const appConfig = {
   //////////////////////////people/////////////////////////////////////
   UNMAP_FAMILY_MEMBER: 'user/family-member/split',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
+  GET_PEOPLE_CLIENT_FILTER_FOR_BULK_EMAIL_REVIEW: 'user/client/filter/details/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
