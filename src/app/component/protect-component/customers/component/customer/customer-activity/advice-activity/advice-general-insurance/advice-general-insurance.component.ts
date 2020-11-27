@@ -24,6 +24,7 @@ import { AddFireAndPerilsInsuranceInAssetComponent } from '../../../accounts/ins
 })
 export class AdviceGeneralInsuranceComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, { id: '6', value: 'Add members' }, { id: '7', value: 'Remove members' }]
   advisorId: any;
   clientId: any;
   isLoading: boolean;
@@ -195,7 +196,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
           break;
       }
     }
-
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     const fragmentData = {
       flag: 'Advice Insurance',
       data,

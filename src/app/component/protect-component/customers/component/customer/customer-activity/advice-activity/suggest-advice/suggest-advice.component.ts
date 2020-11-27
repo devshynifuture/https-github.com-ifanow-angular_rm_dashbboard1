@@ -23,6 +23,7 @@ import { ActiityService } from '../../actiity.service';
   ],
 })
 export class SuggestAdviceComponent implements OnInit, OnDestroy {
+  adviceHeaderList: any;
   [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
@@ -56,6 +57,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   dataForEdit: any;
   flag: string;
   id: any;
+  todayDate = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -81,11 +83,36 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       if (data.childComponent) {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;
+        this.adviceHeaderList = data.data.adviceHeaderList;
         this.getFormData(data);
       }
     });
   }
+  dateChange(value) {
+    let adviceHeaderDate = this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy/MM/dd')
+    console.log(adviceHeaderDate);
+    let implementDate = this.datePipe.transform(this.adviceForm.controls.implementDate.value, 'yyyy/MM/dd')
+    if (adviceHeaderDate && implementDate) {
+      if (value == 'givenOnDate') {
+        if (implementDate > adviceHeaderDate) {
+          this.adviceForm.get('givenOnDate').setErrors(null);
+        } else {
+          this.adviceForm.get('givenOnDate').setErrors({ max: 'Date Issue' });
+          this.adviceForm.get('givenOnDate').markAsTouched();
+        }
+      } else {
+        if (implementDate > adviceHeaderDate) {
+          this.adviceForm.get('implementDate').setErrors(null);
+        } else {
+          this.adviceForm.get('implementDate').setErrors({ max: 'Date of repayment' });
+          this.adviceForm.get('implementDate').markAsTouched();
+        }
 
+      }
+    }
+
+
+  }
   ngOnDestroy() {
     this.adviceSlider.unsubscribe();
   }
@@ -95,9 +122,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
   }
   getFormData(data) {
-    if (data.data == null) {
+    if (data.data.adviceDetails == null) {
       data = {};
-      this.dataForEdit = data.data;
+      this.dataForEdit = null;
       this.flag = 'Add';
     } else {
       this.dataForEdit = data.data ? data.data.adviceDetails : '';
@@ -109,12 +136,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : ''), [Validators.required]],
       status: [(this.dataForEdit ? this.dataForEdit.adviceStatus : 'GIVEN'), [Validators.required]],
-      // deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
-      // policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
-      // insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      // planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
-      // premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
-      givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : null, [Validators.required]],
+      givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
       withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
