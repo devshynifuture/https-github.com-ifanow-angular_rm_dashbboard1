@@ -12,6 +12,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CustomerService } from '../../../customer.service';
 import { PlanService } from '../../../plan/plan.service';
 import { ActiityService } from '../../actiity.service';
+import { AdviceUtilsService } from '../advice-utils.service';
 
 @Component({
   selector: 'app-suggest-advice',
@@ -24,6 +25,7 @@ import { ActiityService } from '../../actiity.service';
 })
 export class SuggestAdviceComponent implements OnInit, OnDestroy {
   adviceHeaderList: any;
+  count = 0;
   [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
@@ -70,7 +72,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     private custumService: CustomerService,
     private event: EventService,
     private planService: PlanService,
-    private activityService: ActiityService
+    private activityService: ActiityService,
+    private adviceService: AdviceUtilsService
   ) { }
 
   inputData;
@@ -147,8 +150,11 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
   }
   addOrNextStep() {
+    this.count++
     let componentRefFormValues;
     let componentRefComponentValues = this.componentRef._component;
+    let form;
+    form = this.adviceService.getForm(componentRefComponentValues)
     // proceed on creating new suggest
     if (this.adviceForm.invalid) {
       for (let element in this.adviceForm.controls) {
@@ -798,200 +804,432 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         case this.childComponentFlag === 'adviceAssetStock' && componentRefComponentValues.assetForm.valid:
           componentRefFormValues = componentRefComponentValues.assetForm.value;
           break;
-        case this.childComponentFlag === 'Advice Insurance' && componentRefComponentValues.lifeInsuranceForm.valid:
-          componentRefFormValues = componentRefComponentValues.lifeInsuranceForm.value;
-          let keyDetail = componentRefComponentValues.keyDetailsForm;
-          let cashFlowForm = componentRefComponentValues.cashFlowForm;
-          let ulipFundDetails = [];
-          const ulipFundVal = keyDetail.get('fundValueForm') as FormArray;
-          ulipFundVal.controls.forEach(element => {
-            if (element.get('fundName').value) {
-              const obj = {
-                id: (element.get('id').value) ? element.get('id').value : null,
-                insuranceId: (this.editInsuranceData) ? this.editInsuranceData.id : null,
-                equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value : null,
-                debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
-                fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
-                nav: (element.get('nav').value) ? element.get('nav').value : null,
-                units: (element.get('units').value) ? element.get('units').value : null,
-                fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
-                fundName: (element.get('fundName').value) ? element.get('fundName').value : null
-              };
-              ulipFundDetails.push(obj);
-            } else {
-              ulipFundDetails = [];
-            }
+        case this.childComponentFlag === 'Advice Insurance':
+          if (this.count >= 2 && componentRefComponentValues.lifeInsuranceForm.invalid) {
+            componentRefComponentValues.lifeInsuranceForm.markAllAsTouched();
+          } else {
+            if (componentRefComponentValues.lifeInsuranceForm.valid) {
+              componentRefFormValues = componentRefComponentValues.lifeInsuranceForm.value;
+              let keyDetail = componentRefComponentValues.keyDetailsForm;
+              let cashFlowForm = componentRefComponentValues.cashFlowForm;
+              let ulipFundDetails = [];
+              const ulipFundVal = keyDetail.get('fundValueForm') as FormArray;
+              ulipFundVal.controls.forEach(element => {
+                if (element.get('fundName').value) {
+                  const obj = {
+                    id: (element.get('id').value) ? element.get('id').value : null,
+                    insuranceId: (this.editInsuranceData) ? this.editInsuranceData.id : null,
+                    equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value : null,
+                    debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
+                    fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
+                    nav: (element.get('nav').value) ? element.get('nav').value : null,
+                    units: (element.get('units').value) ? element.get('units').value : null,
+                    fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
+                    fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+                  };
+                  ulipFundDetails.push(obj);
+                } else {
+                  ulipFundDetails = [];
+                }
 
-          });
-          const finalCashFlowList = [];
-          const cashFlowArray = cashFlowForm.get('cashFlow') as FormArray;
-          cashFlowArray.controls.forEach(element => {
-            if (element.get('cashFlowType').value || element.get('year').value || element.get('approxAmt').value) {
-              const obj = {
-                cashFlowType: element.get('cashFlowType').value,
-                cashFlowYear: this.datePipe.transform(element.get('year').value, 'yyyy-MM-dd'),
-                cashFlowApproxAmount: element.get('approxAmt').value
-              };
-              finalCashFlowList.push(obj);
-            }
-          });
-          const insuranceObj = {
-            familyMemberIdLifeAssured: (componentRefFormValues.getCoOwnerName[0].userType == 2) ? componentRefFormValues.getCoOwnerName[0].clientId : componentRefFormValues.getCoOwnerName[0].familyMemberId,
-            // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-            familyMemberIdProposer: (componentRefComponentValues.selectedProposerData) ? (componentRefComponentValues.selectedProposerData.familyMemberId == 0 ? this.clientId : componentRefComponentValues.selectedProposerData.familyMemberId) : null,
-            clientId: this.clientId,
-            advisorId: this.advisorId,
-            ownerName: '',
-            commencementDate: this.datePipe.transform(componentRefFormValues.commencementDate, 'yyyy-MM-dd'),
-            policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
-            policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
-            sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
-            policyStatusId: componentRefComponentValues.lifeInsuranceForm.get('policyStatus').value,
-            lastUnpaidPremium: this.datePipe.transform(componentRefComponentValues.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
-            premiumAmount: parseInt(componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsAmount').value),
-            frequency: componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsFrequency').value,
-            policyTenure: componentRefComponentValues.lifeInsuranceForm.get('tenureDetailsPolicy').value,
-            premiumPayingTerm: componentRefComponentValues.lifeInsuranceForm.get('premiumPayingTerm').value,
-            riskCover: componentRefComponentValues.keyDetailsForm.get('riskCover').value,
-            surrenderValue: componentRefComponentValues.keyDetailsForm.get('surrenderName').value,
-            nominee: componentRefComponentValues.keyDetailsForm.get('nomineeName').value,
-            vestedBonus: componentRefComponentValues.keyDetailsForm.get('vestedBonus').value,
-            assumedRate: componentRefComponentValues.keyDetailsForm.get('assumedRate').value,
-            loanAvailable: componentRefComponentValues.loanDetailsForm.get('loanAvailable').value,
-            loanTaken: parseInt(componentRefComponentValues.loanDetailsForm.get('loanTaken').value),
-            // "loanTakenOn": (this.loanDetailsForm.get('loanTakenOn').value) ? this.datePipe.transform(this.loanDetailsForm.get('loanTakenOn').value, 'yyyy-MM-dd') : null,
-            loanTakenOn: componentRefComponentValues.loanDetailsForm.get('loanTakenOn').value,
-            premiumPaymentMode: componentRefComponentValues.Miscellaneous.get('permiumPaymentMode').value,
-            advisorName: componentRefComponentValues.Miscellaneous.get('advisorName').value,
-            serviceBranch: componentRefComponentValues.Miscellaneous.get('serviceBranch').value,
-            linkedBankAccountId: componentRefComponentValues.Miscellaneous.get('bankAccount').value,
-            policyId: componentRefComponentValues.policyData.id ? componentRefComponentValues.policyData.id : null,
-            policyTypeId: componentRefComponentValues.policyData.policyTypeId ? componentRefComponentValues.policyData.policyTypeId : null,
-            insuranceTypeId: componentRefComponentValues.insuranceTypeId,
-            insuranceSubTypeId: componentRefComponentValues.insuranceSubTypeId,
-            ridersAccidentalBenifits: parseInt(componentRefComponentValues.ridersForm.get('accidentalBenefit').value),
-            ridersDoubleAccidentalBenefit: parseInt(componentRefComponentValues.ridersForm.get('doubleAccidental').value),
-            ridersTermWaiver: componentRefComponentValues.ridersForm.get('termWaiver').value,
-            ridersCriticalIllness: parseInt(componentRefComponentValues.ridersForm.get('criticalIlleness').value),
-            ridersPremiumWaiver: componentRefComponentValues.ridersForm.get('premiumWaiver').value,
-            ridersFemaleCriticalIllness: componentRefComponentValues.ridersForm.get('femaleCriticalIlleness').value,
-            insuranceCashflowList: finalCashFlowList,
-            nominees: componentRefComponentValues.keyDetailsForm.value.getNomineeName,
-            ulipFundDetails: ulipFundDetails,
-            realOrFictitious: 2,
+              });
+              const finalCashFlowList = [];
+              const cashFlowArray = cashFlowForm.get('cashFlow') as FormArray;
+              cashFlowArray.controls.forEach(element => {
+                if (element.get('cashFlowType').value || element.get('year').value || element.get('approxAmt').value) {
+                  const obj = {
+                    cashFlowType: element.get('cashFlowType').value,
+                    cashFlowYear: this.datePipe.transform(element.get('year').value, 'yyyy-MM-dd'),
+                    cashFlowApproxAmount: element.get('approxAmt').value
+                  };
+                  finalCashFlowList.push(obj);
+                }
+              });
+              const insuranceObj = {
+                familyMemberIdLifeAssured: (componentRefFormValues.getCoOwnerName[0].userType == 2) ? componentRefFormValues.getCoOwnerName[0].clientId : componentRefFormValues.getCoOwnerName[0].familyMemberId,
+                familyMemberIdProposer: (componentRefComponentValues.selectedProposerData) ? (componentRefComponentValues.selectedProposerData.familyMemberId == 0 ? this.clientId : componentRefComponentValues.selectedProposerData.familyMemberId) : null,
+                clientId: this.clientId,
+                advisorId: this.advisorId,
+                ownerName: '',
+                commencementDate: this.datePipe.transform(componentRefFormValues.commencementDate, 'yyyy-MM-dd'),
+                policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
+                policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
+                sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
+                policyStatusId: componentRefComponentValues.lifeInsuranceForm.get('policyStatus').value,
+                lastUnpaidPremium: this.datePipe.transform(componentRefComponentValues.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+                premiumAmount: parseInt(componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsAmount').value),
+                frequency: componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsFrequency').value,
+                policyTenure: componentRefComponentValues.lifeInsuranceForm.get('tenureDetailsPolicy').value,
+                premiumPayingTerm: componentRefComponentValues.lifeInsuranceForm.get('premiumPayingTerm').value,
+                riskCover: componentRefComponentValues.keyDetailsForm.get('riskCover').value,
+                surrenderValue: componentRefComponentValues.keyDetailsForm.get('surrenderName').value,
+                nominee: componentRefComponentValues.keyDetailsForm.get('nomineeName').value,
+                vestedBonus: componentRefComponentValues.keyDetailsForm.get('vestedBonus').value,
+                assumedRate: componentRefComponentValues.keyDetailsForm.get('assumedRate').value,
+                loanAvailable: componentRefComponentValues.loanDetailsForm.get('loanAvailable').value,
+                loanTaken: parseInt(componentRefComponentValues.loanDetailsForm.get('loanTaken').value),
+                loanTakenOn: componentRefComponentValues.loanDetailsForm.get('loanTakenOn').value,
+                premiumPaymentMode: componentRefComponentValues.Miscellaneous.get('permiumPaymentMode').value,
+                advisorName: componentRefComponentValues.Miscellaneous.get('advisorName').value,
+                serviceBranch: componentRefComponentValues.Miscellaneous.get('serviceBranch').value,
+                linkedBankAccountId: componentRefComponentValues.Miscellaneous.get('bankAccount').value,
+                policyId: componentRefComponentValues.policyData.id ? componentRefComponentValues.policyData.id : null,
+                policyTypeId: componentRefComponentValues.policyData.policyTypeId ? componentRefComponentValues.policyData.policyTypeId : null,
+                insuranceTypeId: componentRefComponentValues.insuranceTypeId,
+                insuranceSubTypeId: componentRefComponentValues.insuranceSubTypeId,
+                ridersAccidentalBenifits: parseInt(componentRefComponentValues.ridersForm.get('accidentalBenefit').value),
+                ridersDoubleAccidentalBenefit: parseInt(componentRefComponentValues.ridersForm.get('doubleAccidental').value),
+                ridersTermWaiver: componentRefComponentValues.ridersForm.get('termWaiver').value,
+                ridersCriticalIllness: parseInt(componentRefComponentValues.ridersForm.get('criticalIlleness').value),
+                ridersPremiumWaiver: componentRefComponentValues.ridersForm.get('premiumWaiver').value,
+                ridersFemaleCriticalIllness: componentRefComponentValues.ridersForm.get('femaleCriticalIlleness').value,
+                insuranceCashflowList: finalCashFlowList,
+                nominees: componentRefComponentValues.keyDetailsForm.value.getNomineeName,
+                ulipFundDetails: ulipFundDetails,
+                realOrFictitious: 2,
 
-          }
-          insuranceObj.policyStatusId = parseInt(insuranceObj.policyStatusId);
-          if (insuranceObj.nominees.length > 0) {
-            insuranceObj.nominees.forEach((element, index) => {
-              if (element.name == '') {
-                // this.removeNewNominee(index);
+              }
+              insuranceObj.policyStatusId = parseInt(insuranceObj.policyStatusId);
+              if (insuranceObj.nominees.length > 0) {
+                insuranceObj.nominees.forEach((element, index) => {
+                  if (element.name == '') {
+                    insuranceObj.nominees = [];
+                  }
+                });
+              } else {
                 insuranceObj.nominees = [];
               }
-            });
-          } else {
-            insuranceObj.nominees = [];
-          }
-          const stringObj = {
-            adviceDescription: this.adviceForm.get('rationale').value,
-            insuranceCategoryTypeId: 42,
-            suggestedFrom: 1,
-            // adviceId: this.adviceForm.get('header').value,
-            adviceId: '1',
-            // adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
-            clientId: AuthService.getClientId(),
-            advisorId: AuthService.getAdvisorId(),
-            adviseCategoryTypeMasterId: 2,
-            adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
-            applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
-          }
-
-          // this.stringObj = this.filterForObj(componentRefFormValues, insuranceObj)//for common data and merge non duplicate data
-          // const assign = Object.assign(insuranceObj, stringObj);//merge both data
-          let objToSend = Object.assign(stringObj, { stringObject: insuranceObj });
-          this.activityService.suggestNewLifeInsurance(objToSend).subscribe(
-            data => this.getAdviceRes(data),
-            err => this.event.openSnackBar(err, "Dismiss")
-          );
-          break;
-        case this.childComponentFlag === 'Advice General Insurance' && componentRefComponentValues.healthInsuranceForm.valid:
-          componentRefFormValues = componentRefComponentValues.healthInsuranceForm.value;
-          let memberList = [];
-          let finalMemberList = componentRefComponentValues.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
-          finalMemberList.controls.forEach(element => {
-            let obj =
-            {
-              familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
-              sumInsured: element.get('sumAssured').value,
-              relationshipId: element.get('relationshipId').value,
-              insuredOrNominee: 1,
-              id: (element.get('id').value) ? element.get('id').value : null
-            };
-            memberList.push(obj);
-          });
-          componentRefComponentValues.healthInsuranceForm.get('inceptionDate').setErrors(null);
-          const obj = {
-            'clientId': this.clientId,
-            'advisorId': this.advisorId,
-            'policyHolderId': (componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
-            'policyStartDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-            'policyExpiryDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
-            'cumulativeBonus': componentRefComponentValues.healthInsuranceForm.get('cumulativeBonus').value,
-            'cumulativeBonusRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('bonusType').value,
-            'policyTypeId': componentRefComponentValues.healthInsuranceForm.get('PlanType').value,
-            'deductibleSumInsured': componentRefComponentValues.healthInsuranceForm.get('deductibleAmt').value,
-            'exclusion': componentRefComponentValues.healthInsuranceForm.get('exclusion').value,
-            'copay': componentRefComponentValues.healthInsuranceForm.get('copay').value,
-            'planName': componentRefComponentValues.healthInsuranceForm.get('planeName').value,
-            'policyNumber': componentRefComponentValues.healthInsuranceForm.get('policyNum').value,
-            'copayRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('copayType').value,
-            'tpaName': componentRefComponentValues.healthInsuranceForm.get('tpaName').value,
-            'advisorName': componentRefComponentValues.healthInsuranceForm.get('advisorName').value,
-            'serviceBranch': componentRefComponentValues.healthInsuranceForm.get('serviceBranch').value,
-            'linkedBankAccount': componentRefComponentValues.healthInsuranceForm.get('bankAccount').value,
-            'insurerName': componentRefComponentValues.healthInsuranceForm.get('insurerName').value,
-            'policyInceptionDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
-            'insuranceSubTypeId': 5,
-            'premiumAmount': componentRefComponentValues.healthInsuranceForm.get('premium').value,
-            'policyFeatureId': componentRefComponentValues.healthInsuranceForm.get('planDetails').value,
-            'sumInsuredIdv': componentRefComponentValues.healthInsuranceForm.get('sumAssuredIdv').value,
-            'id': (this.id) ? this.id : null,
-            'addOns': [],
-            realOrFictitious: 2,
-            insuredMembers: memberList,
-            nominees: componentRefComponentValues.healthInsuranceForm.value.getNomineeName,
-          };
-          if (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value && componentRefComponentValues.healthInsuranceForm.get('coversAmount').value) {
-            obj.addOns = [{
-              'addOnId': (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value),
-              'addOnSumInsured': componentRefComponentValues.healthInsuranceForm.get('coversAmount').value
-            }];
-          }
-          if (obj.insuredMembers.length > 0) {
-            obj.insuredMembers.forEach(element => {
-              if (element.sumInsured == '') {
-                element.sumInsured = null
+              const stringObj = {
+                adviceDescription: this.adviceForm.get('rationale').value,
+                insuranceCategoryTypeId: 42,
+                suggestedFrom: 1,
+                // adviceId: this.adviceForm.get('header').value,
+                adviceId: '1',
+                // adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
+                clientId: AuthService.getClientId(),
+                advisorId: AuthService.getAdvisorId(),
+                adviseCategoryTypeMasterId: 2,
+                adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
+                applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
               }
-            });
+
+              // this.stringObj = this.filterForObj(componentRefFormValues, insuranceObj)//for common data and merge non duplicate data
+              // const assign = Object.assign(insuranceObj, stringObj);//merge both data
+              let objToSend = Object.assign(stringObj, { stringObject: insuranceObj });
+              this.activityService.suggestNewLifeInsurance(objToSend).subscribe(
+                data => this.getAdviceRes(data),
+                err => this.event.openSnackBar(err, "Dismiss")
+              );
+            }
           }
-          if (obj.nominees.length > 0) {
-            obj.nominees.forEach((element, index) => {
-              if (element.name == '') {
+          break;
+        case this.childComponentFlag === 'Advice General Insurance':
+          if (this.count >= 2 && componentRefComponentValues[form].invalid) {
+            componentRefComponentValues[form].markAllAsTouched();
+          } else {
+            let obj;
+            let memberList = [];
+            let finalMemberList = componentRefComponentValues[form].get('InsuredMemberForm') as FormArray;
+            if (finalMemberList && finalMemberList.controls.length > 0) {
+              finalMemberList.controls.forEach(element => {
+                let obj =
+                {
+                  familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
+                  sumInsured: element.get('sumAssured').value,
+                  relationshipId: element.get('relationshipId').value,
+                  insuredOrNominee: 1,
+                  id: (element.get('id').value) ? element.get('id').value : null
+                };
+                memberList.push(obj);
+              });
+            }
+            let addOns = [];
+            const addOnList = componentRefComponentValues[form].get('addOnForm') as FormArray;
+            if (addOnList && addOnList.controls.length > 0) {
+              addOnList.controls.forEach(element => {
+                if (element.get('additionalCovers').value && element.get('sumAddOns').value) {
+                  let obj =
+                  {
+                    addOnId: element.get('additionalCovers').value,
+                    addOnSumInsured: element.get('sumAddOns').value,
+                  }
+                  addOns.push(obj)
+                } else if(element.get('additionalCovers').value){
+                  const obj = {
+                    addOnId: element.get('additionalCovers').value,
+                    addOnSumInsured: null
+                  };
+                  addOns.push(obj);
+                }
+              });
+            }
+            let featureList = [];
+            let finalplanFeatureList = componentRefComponentValues[form].get('planFeatureForm') as FormArray
+            if (finalplanFeatureList && finalplanFeatureList.controls.length > 0) {
+              finalplanFeatureList.controls.forEach(element => {
+                if (element.get('planfeatures').value && element.get('sumInsured').value) {
+                  let obj =
+                  {
+                    policyFeatureId: element.get('planfeatures').value,
+                    featureSumInsured: element.get('sumInsured').value,
+                  }
+                  featureList.push(obj)
+                } else if(element.get('planfeatures').value) {
+                  let obj =
+                  {
+                    policyFeatureId: element.get('planfeatures').value,
+                  }
+                  featureList.push(obj)
+                }
+              })
+            }
+            if (componentRefComponentValues.hasOwnProperty('healthInsuranceForm')) {
+              componentRefFormValues = componentRefComponentValues.healthInsuranceForm.value;
+              obj = {
+                'clientId': this.clientId,
+                'advisorId': this.advisorId,
+                'policyHolderId': (componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+                'policyStartDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                'policyExpiryDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                'cumulativeBonus': componentRefComponentValues.healthInsuranceForm.get('cumulativeBonus').value,
+                'cumulativeBonusRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('bonusType').value,
+                'policyTypeId': componentRefComponentValues.healthInsuranceForm.get('PlanType').value,
+                'deductibleSumInsured': componentRefComponentValues.healthInsuranceForm.get('deductibleAmt').value,
+                'exclusion': componentRefComponentValues.healthInsuranceForm.get('exclusion').value,
+                'copay': componentRefComponentValues.healthInsuranceForm.get('copay').value,
+                'planName': componentRefComponentValues.healthInsuranceForm.get('planeName').value,
+                'policyNumber': componentRefComponentValues.healthInsuranceForm.get('policyNum').value,
+                'copayRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('copayType').value,
+                'tpaName': componentRefComponentValues.healthInsuranceForm.get('tpaName').value,
+                'advisorName': componentRefComponentValues.healthInsuranceForm.get('advisorName').value,
+                'serviceBranch': componentRefComponentValues.healthInsuranceForm.get('serviceBranch').value,
+                'linkedBankAccount': componentRefComponentValues.healthInsuranceForm.get('bankAccount').value,
+                'insurerName': componentRefComponentValues.healthInsuranceForm.get('insurerName').value,
+                'policyInceptionDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+                'insuranceSubTypeId': 5,
+                'premiumAmount': componentRefComponentValues.healthInsuranceForm.get('premium').value,
+                'policyFeatureId': componentRefComponentValues.healthInsuranceForm.get('planDetails').value,
+                'sumInsuredIdv': componentRefComponentValues.healthInsuranceForm.get('sumAssuredIdv').value,
+                'id': (this.id) ? this.id : null,
+                'addOns': [],
+                realOrFictitious: 2,
+                insuredMembers: memberList,
+                nominees: componentRefComponentValues.healthInsuranceForm.value.getNomineeName,
+              };
+              if (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value && componentRefComponentValues.healthInsuranceForm.get('coversAmount').value) {
+                obj.addOns = [{
+                  'addOnId': (componentRefComponentValues.healthInsuranceForm.get('additionalCovers').value),
+                  'addOnSumInsured': componentRefComponentValues.healthInsuranceForm.get('coversAmount').value
+                }];
+              }
+            } else if (componentRefComponentValues.hasOwnProperty('personalAccidentForm')) {
+              componentRefFormValues = componentRefComponentValues.personalAccidentForm.value;
+              obj = {
+                "clientId": this.clientId,
+                "advisorId": this.advisorId,
+                'policyHolderId': (componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].familyMemberId,
+                "policyStartDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                "cumulativeBonus": componentRefComponentValues.personalAccidentForm.get('cumulativeBonus').value,
+                "cumulativeBonusRupeesOrPercent": componentRefComponentValues.personalAccidentForm.get('bonusType').value,
+                "planName": componentRefComponentValues.personalAccidentForm.get('planeName').value,
+                "exclusion": componentRefComponentValues.personalAccidentForm.get('exclusion').value,
+                "premiumAmount": componentRefComponentValues.personalAccidentForm.get('premium').value,
+                "tpaName": componentRefComponentValues.personalAccidentForm.get('tpaName').value,
+                "advisorName": componentRefComponentValues.personalAccidentForm.get('advisorName').value,
+                "serviceBranch": componentRefComponentValues.personalAccidentForm.get('serviceBranch').value,
+                "linkedBankAccount": componentRefComponentValues.personalAccidentForm.get('bankAccount').value,
+                "policyNumber": componentRefComponentValues.personalAccidentForm.get('policyNum').value,
+                "policyInceptionDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+                "policyFeatures": featureList,
+                "insurerName": componentRefComponentValues.personalAccidentForm.get('insurerName').value,
+                "insuranceSubTypeId": 7,
+                "id": (this.id) ? this.id : null,
+                insuredMembers: memberList,
+                realOrFictitious: 2,
+                nominees: componentRefComponentValues.personalAccidentForm.value.getNomineeName,
+              }
+            } else if (componentRefComponentValues.hasOwnProperty('critialIllnessForm')) {
+              componentRefFormValues = componentRefComponentValues.critialIllnessForm.value;
+              obj = {
+                "clientId": this.clientId,
+                "advisorId": this.advisorId,
+                'policyHolderId': (componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].familyMemberId,
+                "policyTypeId": componentRefComponentValues.critialIllnessForm.get('PlanType').value,
+                "policyNumber": componentRefComponentValues.critialIllnessForm.get('policyNum').value,
+                "insurerName": componentRefComponentValues.critialIllnessForm.get('insurerName').value,
+                "planName": componentRefComponentValues.critialIllnessForm.get('planeName').value,
+                "premiumAmount": componentRefComponentValues.critialIllnessForm.get('premium').value,
+                "policyStartDate": this.datePipe.transform(componentRefComponentValues.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                "cumulativeBonus": componentRefComponentValues.critialIllnessForm.get('cumulativeBonus').value,
+                "cumulativeBonusRupeesOrPercent": componentRefComponentValues.critialIllnessForm.get('bonusType').value,
+                "exclusion": componentRefComponentValues.critialIllnessForm.get('exclusion').value,
+                "policyInceptionDate": this.datePipe.transform(componentRefComponentValues.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+                "tpaName": componentRefComponentValues.critialIllnessForm.get('tpaName').value,
+                "advisorName": componentRefComponentValues.critialIllnessForm.get('advisorName').value,
+                "serviceBranch": componentRefComponentValues.critialIllnessForm.get('serviceBranch').value,
+                "linkedBankAccount": componentRefComponentValues.critialIllnessForm.get('bankAccount').value,
+                "insuranceSubTypeId": 6,
+                'sumInsuredIdv': componentRefComponentValues.critialIllnessForm.get('sumAssuredIdv').value,
+                "id": (this.id) ? this.id : null,
+                realOrFictitious: 2,
+                insuredMembers: memberList,
+                nominees: componentRefComponentValues.critialIllnessForm.value.getNomineeName,
+              }
+            } else if (componentRefComponentValues.hasOwnProperty('motorInsuranceForm')) {
+              componentRefFormValues = componentRefComponentValues.motorInsuranceForm.value;
+              componentRefComponentValues.motorInsuranceForm.get('registrationDate').setErrors(null);
+              obj = {
+                clientId: this.clientId,
+                advisorId: this.advisorId,
+                policyHolderId: (componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+                policyTypeId: componentRefComponentValues.motorInsuranceForm.get('PlanType').value,
+                policyNumber: componentRefComponentValues.motorInsuranceForm.get('policyNum').value,
+                insurerName: componentRefComponentValues.motorInsuranceForm.get('insurerName').value,
+                policyName: componentRefComponentValues.motorInsuranceForm.get('policyName').value,
+                policyStartDate: this.datePipe.transform(componentRefComponentValues.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                policyExpiryDate: this.datePipe.transform(componentRefComponentValues.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                ccGvw: componentRefComponentValues.motorInsuranceForm.get('cgGvw').value,
+                sumInsuredIdv: componentRefComponentValues.motorInsuranceForm.get('declaredValue').value,
+                premiumAmount: componentRefComponentValues.motorInsuranceForm.get('premium').value,
+                vehicleTypeId: componentRefComponentValues.motorInsuranceForm.get('vehicleType').value,
+                vehicleRegNo: componentRefComponentValues.motorInsuranceForm.get('registrationNumber').value,
+                vehicleRegistrationDate: componentRefComponentValues.motorInsuranceForm.get('registrationDate').value ? this.datePipe.transform(componentRefComponentValues.motorInsuranceForm.get('registrationDate').value, 'yyyy-MM-dd') : undefined,
+                vehicleModel: componentRefComponentValues.motorInsuranceForm.get('modelName').value,
+                engineNo: componentRefComponentValues.motorInsuranceForm.get('engineNumber').value,
+                chasisNo: componentRefComponentValues.motorInsuranceForm.get('chassisNumber').value,
+                fuelTypeId: componentRefComponentValues.motorInsuranceForm.get('fuelType').value,
+                noClaimBonus: componentRefComponentValues.motorInsuranceForm.get('claimBonus').value,
+                specialDiscount: componentRefComponentValues.motorInsuranceForm.get('discount').value,
+                exclusion: componentRefComponentValues.motorInsuranceForm.get('exclusion').value,
+                hypothetication: componentRefComponentValues.motorInsuranceForm.get('financierName').value,
+                advisorName: componentRefComponentValues.motorInsuranceForm.get('advisorName').value,
+                serviceBranch: componentRefComponentValues.motorInsuranceForm.get('serviceBranch').value,
+                linkedBankAccount: componentRefComponentValues.motorInsuranceForm.get('bankAccount').value,
+                insuranceSubTypeId: 4,
+                id: (this.id) ? this.id : null,
+                addOns: addOns,
+                nominees: componentRefComponentValues.motorInsuranceForm.value.getNomineeName,
+                realOrFictitious: 2,
+              };
+            } else if (componentRefComponentValues.hasOwnProperty('travelInsuranceForm')) {
+              componentRefFormValues = componentRefComponentValues.travelInsuranceForm.value;
+              if (componentRefComponentValues[form].invalid) {
+                if (componentRefComponentValues.travelInsuranceForm.get('planDetails').value == '1') {
+                  componentRefComponentValues.travelInsuranceForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+                }
+              } else {
+                obj = {
+                  "clientId": this.clientId,
+                  "advisorId": this.advisorId,
+                  'policyHolderId': (componentRefComponentValues.travelInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.travelInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.travelInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+                  "policyTypeId": componentRefComponentValues.travelInsuranceForm.get('PlanType').value,
+                  "policyFeatureId": componentRefComponentValues.travelInsuranceForm.get('planDetails').value,
+                  "insurerName": componentRefComponentValues.travelInsuranceForm.get('insurerName').value,
+                  "policyNumber": componentRefComponentValues.travelInsuranceForm.get('policyNum').value,
+                  "planName": componentRefComponentValues.travelInsuranceForm.get('planeName').value,
+                  "premiumAmount": componentRefComponentValues.travelInsuranceForm.get('premium').value,
+                  "policyStartDate": this.datePipe.transform(componentRefComponentValues.travelInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                  "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.travelInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                  "geographyId": componentRefComponentValues.travelInsuranceForm.get('geography').value,
+                  "exclusion": componentRefComponentValues.travelInsuranceForm.get('exclusion').value,
+                  "tpaName": componentRefComponentValues.travelInsuranceForm.get('tpaName').value,
+                  "advisorName": componentRefComponentValues.travelInsuranceForm.get('advisorName').value,
+                  "serviceBranch": componentRefComponentValues.travelInsuranceForm.get('serviceBranch').value,
+                  "insuranceSubTypeId": 8,
+                  'sumInsuredIdv': componentRefComponentValues.travelInsuranceForm.get('sumAssuredIdv').value,
+                  'linkedBankAccount': componentRefComponentValues.travelInsuranceForm.get('bankAccount').value,
+                  "policyFeatures": featureList,
+                  "id": (this.id) ? this.id : null,
+                  insuredMembers: memberList,
+                  realOrFictitious: 2,
+                  nominees: componentRefComponentValues.travelInsuranceForm.value.getNomineeName,
+                }
+              }
+            } else if (componentRefComponentValues.hasOwnProperty('homeInsuranceForm')) {
+              componentRefFormValues = componentRefComponentValues.homeInsuranceForm.value;
+               obj = {
+                "clientId": this.clientId,
+                "advisorId": this.advisorId,
+                'policyHolderId': (componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+                "insurerName": componentRefComponentValues.homeInsuranceForm.get('insurerName').value,
+                "policyNumber": componentRefComponentValues.homeInsuranceForm.get('policyNum').value,
+                "policyTypeId": componentRefComponentValues.homeInsuranceForm.get('PlanType').value,
+                "planName": componentRefComponentValues.homeInsuranceForm.get('planeName').value,
+                "premiumAmount": componentRefComponentValues.homeInsuranceForm.get('premium').value,
+                "policyStartDate": this.datePipe.transform(componentRefComponentValues.homeInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.homeInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                "exclusion": componentRefComponentValues.homeInsuranceForm.get('exclusion').value,
+                "hypothetication": componentRefComponentValues.homeInsuranceForm.get('financierName').value,
+                "advisorName": componentRefComponentValues.homeInsuranceForm.get('advisorName').value,
+                "serviceBranch": componentRefComponentValues.homeInsuranceForm.get('serviceBranch').value,
+                "insuranceSubTypeId": 9,
+                "id": (this.id) ? this.id : null,
+                "policyFeatures": featureList,
+                "addOns": addOns,
+                realOrFictitious: 2,
+                nominees: componentRefComponentValues.homeInsuranceForm.value.getNomineeName,
+              }
+            } else if (componentRefComponentValues.hasOwnProperty('fireInsuranceForm')) {
+              componentRefFormValues = componentRefComponentValues.fireInsuranceForm.value;
+              obj = {
+                "clientId": this.clientId,
+                "advisorId": this.advisorId,
+                "policyHolderId": (componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+                "insurerName": componentRefComponentValues.fireInsuranceForm.get('insurerName').value,
+                "policyNumber": componentRefComponentValues.fireInsuranceForm.get('policyNum').value,
+                "policyTypeId": componentRefComponentValues.fireInsuranceForm.get('PlanType').value,
+                "planName": componentRefComponentValues.fireInsuranceForm.get('planeName').value,
+                "premiumAmount": componentRefComponentValues.fireInsuranceForm.get('premium').value,
+                "policyStartDate": this.datePipe.transform(componentRefComponentValues.fireInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.fireInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                "exclusion": componentRefComponentValues.fireInsuranceForm.get('exclusion').value,
+                "hypothetication": componentRefComponentValues.fireInsuranceForm.get('financierName').value,
+                "advisorName": componentRefComponentValues.fireInsuranceForm.get('advisorName').value,
+                "serviceBranch": componentRefComponentValues.fireInsuranceForm.get('serviceBranch').value,
+                "insuranceSubTypeId":10,
+                "policyFeatures": featureList,
+                "id": (this.id) ? this.id : null,
+                "addOns": addOns,
+                realOrFictitious: 2,
+                nominees: componentRefComponentValues.fireInsuranceForm.value.getNomineeName,
+              }
+            }
+            if (obj) {
+              if (obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+                obj.insuredMembers.forEach(element => {
+                  if (element.sumInsured == '') {
+                    element.sumInsured = null
+                  }
+                });
+              }
+              if (obj.hasOwnProperty('nominees') && obj.nominees.length > 0) {
+                obj.nominees.forEach((element, index) => {
+                  if (element.name == '') {
+                    obj.nominees = [];
+                  }
+                });
+                obj.nominees = componentRefComponentValues[form].value.getNomineeName;
+                obj.nominees.forEach(element => {
+                  if (element.sharePercentage) {
+                    element.sumInsured = element.sharePercentage;
+                  }
+                  element.insuredOrNominee = 2;
+                  if (element.name == '') {
+                    obj.nominees = [];
+                  }
+                });
+              } else {
                 obj.nominees = [];
               }
-            });
-            obj.nominees = componentRefComponentValues.healthInsuranceForm.value.getNomineeName;
-            obj.nominees.forEach(element => {
-              if (element.sharePercentage) {
-                element.sumInsured = element.sharePercentage;
-              }
-              element.insuredOrNominee = 2;
-            });
-          } else {
-            obj.nominees = [];
+            }
+            if (componentRefComponentValues[form].valid) {
+              this.mergeAndhitApi(obj);
+            }
+
           }
 
-          this.mergeAndhitApi(obj);
           break;
 
 
@@ -1024,42 +1262,43 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
       console.log("this is form value::::::::::::", bothFormValues);
     }
-    }
-    mergeAndhitApi(obj){
-      const stringObjHealth = {
-        adviceDescription: this.adviceForm.get('rationale').value,
-        insuranceCategoryTypeId: 42,
-        suggestedFrom: 1,
-        adviceId: '1',
-        clientId: AuthService.getClientId(),
-        advisorId: AuthService.getAdvisorId(),
-        adviseCategoryTypeMasterId: 2,
-        adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
-        applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
-      }
-      let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
-      this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
-        data => this.getAdviceRes(data),
-        err => this.event.openSnackBar(err, "Dismiss")
-      );
-    }
-    filterForObj(data, mergeData) {
-      const stringObject = {
-        advisorId: this.advisorId,
-        clientId: this.clientId,
-        familyMemberId: (data.familyMemberId) ? data.familyMemberId : null,
-        ownerName: data.ownerName,
-        description: data.description
-      }
-      const assign = Object.assign(mergeData, stringObject);//merge both data
-      Object.assign(this.objTopass, { stringObject: assign });
-      return assign;
-    }
-    getAdviceRes(data) {
-      console.log(data)
-      this.dialogClose();
-    }
-    dialogClose() {
-      this.subinject.changeNewRightSliderState({ state: 'close' });
-    }
   }
+  mergeAndhitApi(obj) {
+    const stringObjHealth = {
+      adviceDescription: this.adviceForm.get('rationale').value,
+      insuranceCategoryTypeId: 42,
+      suggestedFrom: 1,
+      adviceId: '1',
+      clientId: AuthService.getClientId(),
+      advisorId: AuthService.getAdvisorId(),
+      adviseCategoryTypeMasterId: 2,
+      adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
+      applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
+    }
+    let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
+    this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
+      data => this.getAdviceRes(data),
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
+  }
+  filterForObj(data, mergeData) {
+    const stringObject = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: (data.familyMemberId) ? data.familyMemberId : null,
+      ownerName: data.ownerName,
+      description: data.description
+    }
+    const assign = Object.assign(mergeData, stringObject);//merge both data
+    Object.assign(this.objTopass, { stringObject: assign });
+    return assign;
+  }
+  getAdviceRes(data) {
+    console.log(data)
+    this.event.openSnackBar('Added successfully', "Ok")
+    this.dialogClose(true);
+  }
+  dialogClose(flag) {
+    this.subinject.changeNewRightSliderState({ state: 'close',isRefreshedRequired:flag });
+  }
+}

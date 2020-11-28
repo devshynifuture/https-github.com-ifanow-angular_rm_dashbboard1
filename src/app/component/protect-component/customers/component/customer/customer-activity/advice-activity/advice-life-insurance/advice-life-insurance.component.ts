@@ -278,9 +278,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
-          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 

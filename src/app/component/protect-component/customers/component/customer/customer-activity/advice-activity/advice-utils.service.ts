@@ -63,4 +63,23 @@ export class AdviceUtilsService {
     });
     return count;
   }
+  getForm(data){
+  let form;
+   if(data.hasOwnProperty('healthInsuranceForm')){
+    form = 'healthInsuranceForm';
+   }else if(data.hasOwnProperty('personalAccidentForm')){
+    form = 'personalAccidentForm';
+   }else if(data.hasOwnProperty('critialIllnessForm')){
+    form = 'critialIllnessForm';
+   }else if(data.hasOwnProperty('motorInsuranceForm')){
+    form = 'motorInsuranceForm';
+   }else if(data.hasOwnProperty('travelInsuranceForm')){
+    form = 'travelInsuranceForm';
+   }else if(data.hasOwnProperty('homeInsuranceForm')){
+    form = 'homeInsuranceForm';
+   }else if(data.hasOwnProperty('fireInsuranceForm')){
+    form = 'fireInsuranceForm';
+   }
+   return form;
+  }
 }

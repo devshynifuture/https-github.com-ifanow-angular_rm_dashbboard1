@@ -48,6 +48,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   displayList: any;
   object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
   sumAssured: any;
+  healthCpy: any;
+  presonalCpy: any;
+  criticalCpy: any;
+  motorCpy: any;
+  travelCpy: any;
+  homeCpy: any;
+  fireCpy: any;
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
@@ -126,18 +133,25 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     this.isLoading = false;
     // let healthData = this.filterForAsset(data.HEALTH)
     let healthData = this.filterData(data.HEALTH);
+    this.healthCpy = healthData;
     this.healthInsuranceDataSource.data = healthData;
     let personalData = this.filterData(data.PERSONAL_ACCIDENT);
+    this.presonalCpy = healthData;
     this.personalAccidentDataSource.data = personalData;
     let critical = this.filterData(data.CRITICAL_ILLNESS);
+    this.criticalCpy = healthData;
     this.criticalInsDataSource.data = critical;
     let motorData = this.filterData(data.MOTOR);
+    this.motorCpy = healthData;
     this.motorDataSource.data = motorData;
     let travelData = this.filterData(data.TRAVEL);
+    this.travelCpy = healthData;
     this.travelDataSource.data = travelData;
     let homeData = this.filterData(data.HOME);
+    this.homeCpy = healthData;
     this.homeInsDataSource.data = homeData;
     let fireData = this.filterData(data.FIRE);
+    this.fireCpy = healthData;
     this.FireDataSource.data = fireData;
     this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
     this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
@@ -265,14 +279,28 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
-          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
+  }
+  filterInsurance(key: string, value: any, name, array, dataSource) {
+    let dataFiltered;
+    array = (name == 'Health Insurance') ? this.healthCpy : (name == 'Personal accident') ? this.presonalCpy :(name == 'Critical illness') ? this.criticalCpy : (name == 'Motor insurance') ? this.motorCpy : (name == 'Travel insurance') ? this.travelCpy : (name == 'Home insurance') ? this.homeCpy :(name == 'Fire & special perils insurance') ? this.fireCpy : this.fireCpy;
+    dataFiltered = array.filter(function (item) {
+      return item.adviceDetails[key] === parseInt(value);
+    });
+    if (dataFiltered.length > 0) {
+      dataSource.data = dataFiltered;
+      dataSource = new MatTableDataSource(dataSource.data);
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
+
   }
   deleteModal(value, subData) {
     let deletedId = subData.adviceDetails.id;

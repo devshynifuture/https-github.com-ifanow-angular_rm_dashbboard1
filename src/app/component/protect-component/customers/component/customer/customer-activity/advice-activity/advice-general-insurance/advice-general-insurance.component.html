@@ -50,8 +50,49 @@
             <h5 class="m-0 text-black pt-8">Health insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu1" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu1>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '1','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '2','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '3','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '4','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '5','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '6','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '7','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '8','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '9','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">Add new</button>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Health Insurance',null)">Suggest new
@@ -189,8 +230,49 @@
             <h5 class="m-0 text-black pt-8">Personal accident insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu2" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu2>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '1','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '2','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '3','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '4','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '5','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '6','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '7','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '8','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '9','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button [matMenuTriggerFor]="menu2" mat-stroked-button class="btn-primary br-0">Add new</button>
             <mat-menu #menu2="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Personal accident',null)">Suggest new
@@ -328,8 +410,49 @@
             <h5 class="m-0 text-black pt-8">Critical illness insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu3" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu3>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '1','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '2','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '3','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '4','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '5','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '6','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '7','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '8','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '9','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new</button>
             <mat-menu #menu3="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Critical illness',null)">Suggest new
@@ -467,8 +590,40 @@
             <h5 class="m-0 text-black pt-8">Motor insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu4" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu4>
+                <button (click)="filterInsurance('adviceStatusId', '1','Motor insurance',motorCpy,termDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button (click)="filterInsurance('adviceStatusId', '2','Motor insurance',motorCpy,termDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button (click)="filterInsurance('adviceStatusId', '3','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '4','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button (click)="filterInsurance('adviceStatusId', '5','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '6','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button (click)="filterInsurance('adviceStatusId', '7','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button (click)="filterInsurance('adviceStatusId', '8','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button (click)="filterInsurance('adviceStatusId', '9','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu4">Add new</button>
             <mat-menu #menu4="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',null)">Suggest new
@@ -606,8 +761,40 @@
             <h5 class="m-0 text-black pt-8">Travel insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu5" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu5>
+                <button (click)="filterInsurance('adviceStatusId', '1','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button (click)="filterInsurance('adviceStatusId', '2','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button (click)="filterInsurance('adviceStatusId', '3','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '4','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button (click)="filterInsurance('adviceStatusId', '5','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '6','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button (click)="filterInsurance('adviceStatusId', '7','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button (click)="filterInsurance('adviceStatusId', '8','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button (click)="filterInsurance('adviceStatusId', '9','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu5">Add new</button>
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',null)">Suggest new
@@ -745,8 +932,40 @@
             <h5 class="m-0 text-black pt-8">Home insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu6" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu6>
+                <button (click)="filterInsurance('adviceStatusId', '1','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button (click)="filterInsurance('adviceStatusId', '2','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button (click)="filterInsurance('adviceStatusId', '3','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '4','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button (click)="filterInsurance('adviceStatusId', '5','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button (click)="filterInsurance('adviceStatusId', '6','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button (click)="filterInsurance('adviceStatusId', '7','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button (click)="filterInsurance('adviceStatusId', '8','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button (click)="filterInsurance('adviceStatusId', '9','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu6">Add new</button>
             <mat-menu #menu6="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Home insurance',null)">Suggest new
@@ -884,8 +1103,49 @@
             <h5 class="m-0 text-black pt-8">Fire & special perils insurance</h5>
         </div>
         <div class="col-md-6 p-0 text-right">
-            <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
-                    class="pr-8">Filters</button>
+            <button [matMenuTriggerFor]="insuranceMenu7" class="btn-default addon ml-8 mr-8 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
+            <mat-menu #insuranceMenu7>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '1','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    GIVEN</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '2','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>AWAITING
+                    CONSENT
+                </button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '3','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    ACCEPTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '4','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item> IN
+                    PROGRESS</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '5','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    IMPLEMENTED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '6','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    DECLINED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '7','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    PENDING</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '8','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item> SYSTEM
+                    GENERATED</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '9','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    REVISED</button>
+
+            </mat-menu>
             <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu7">Add new</button>
             <mat-menu #menu7="matMenu">
                 <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',null)">Suggest new
