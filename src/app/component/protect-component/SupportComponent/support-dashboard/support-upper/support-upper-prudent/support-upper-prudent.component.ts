@@ -133,7 +133,7 @@ export class SupportUpperPrudentComponent implements OnInit {
         element.nav = res.nav
         element.amfiCode = res.amfiCode
         element.njPrudentCount = res.njPrudentCount
-        element.schemeCode = res.schemeCode;
+        element.schemeCode = scheme.schemeCode;
         element.njCount = scheme.njCount;
       });
   }
