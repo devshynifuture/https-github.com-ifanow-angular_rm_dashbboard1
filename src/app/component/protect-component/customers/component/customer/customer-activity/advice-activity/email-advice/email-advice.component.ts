@@ -153,6 +153,10 @@ export class EmailAdviceComponent implements OnInit {
     this.cusService.sentEmailConsent(obj).subscribe(
       data => {
         console.log(data)
+        // const obj={
+        //   adviceToCategoryTypeMasterId: this.getData[0].adviceToCategoryTypeMasterId,
+        //   adviceId : this.getData[0].id
+        // }
         this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: this.groupId } });
         // this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: 'abe26153-d112-410e-8ee1-5268a8911b4a', } });
 

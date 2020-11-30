@@ -39,6 +39,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   termCpy: any;
   tradCopy: any;
   ulipCpy: any;
+  LIData: unknown;
+  totalFundValues: number;
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
@@ -75,10 +77,18 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       categoryTypeId: 3,
       status: 0
     }
+    const obj2 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      insuranceTypeId: 1,
+      id: 0
+    };
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
-    forkJoin(displayList, allAsset).subscribe(result => {
+    const portfolioLi = this.cusService.getInsuranceData(obj2);
+    forkJoin(displayList, allAsset , portfolioLi).subscribe(result => {
       this.displayList = result[0];
+      this.LIData = this.filterLiData(result[2].insuranceList);
       this.getAllSchemeResponse(result[1]);
     }, (error) => {
       this.eventService.openSnackBar('error', 'Dismiss');
@@ -89,6 +99,18 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       this.traditionalDataSource['tableFlag'] = (this.traditionalDataSource.length == 0) ? false : true;
       this.ulipDataSource['tableFlag'] = (this.ulipDataSource.length == 0) ? false : true;
     });
+  }
+  filterLiData(data){
+   data.forEach(element => {
+      this.totalFundValues = 0;
+      if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
+        element.ulipFundDetails.forEach(ele => {
+          this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+          element.currentValue = this.totalFundValues
+        });
+      }
+    });
+    return data;
   }
   filterForAsset(data) {//filter data to for showing in the table
     let filterdData = [];
@@ -113,18 +135,18 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    let termData = this.setCatId(data.TERM_LIFE_INSURANCE);
+    let termData = this.setCatId(data.TERM_LIFE_INSURANCE,1);
     this.termCpy = termData;
     // let termData = this.filterForAsset(data.TERM_LIFE_INSURANCE)
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
-    let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE);
+    let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE,2);
     this.tradCopy = traditionalData
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
-    let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE);
+    let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE,3);
     this.ulipCpy = ulipData
     this.ulipDataSource = new MatTableDataSource(ulipData);
     console.log('ulipData', ulipData)
@@ -148,17 +170,31 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
   }
 
-  setCatId(data) {
+  setCatId(data,id) {
+    let liArray = this.getFilterLi(data,this.LIData,id);
     let array = [];
     if (data.length > 0) {
       data.forEach(element => {
-        if (element.adviceDetails.adviceStatusId == 1) {
           element.adviceDetails.adviceToCategoryTypeMasterId = 3
           array.push(element);
-        }
       });
     }
+    if(liArray.length > 0 && array.length > 0){
+      array = [...liArray, ...array];
+    }
     return array;
+  }
+  getFilterLi(adviceData,data,id){
+    if(data.length > 0){
+      data = data.filter(item => item.insuranceSubTypeId === id);
+      data.forEach(element => {
+        element.adviceDetails={adviceToCategoryTypeMasterId: 3};
+        element.InsuranceDetails = element
+      });
+    }else{
+      data =[];
+    }
+    return data;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {

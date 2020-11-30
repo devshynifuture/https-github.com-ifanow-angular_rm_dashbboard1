@@ -69,7 +69,42 @@ export class SupportUpperPrudentComponent implements OnInit {
     return scheme ? scheme.schemeName : undefined;
   }
 
-
+  searchSchemeName(element) {
+    console.log(element);
+    this.isLoading = true;
+    this.isLoadingForDropDown = true;
+    let threeWords = element;
+    //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    //this.apiCallingStack.push(threeWords);
+    if (this.apiCallingStack[1] !== threeWords && element.length >= 3) {
+      this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
+        .subscribe(res => {
+          this.isLoading = false;
+          let dataTable: elementI[] = [];
+          this.apiCallingStack = [];
+          this.isLoadingForDropDown = false;
+          res.forEach(item => {
+            console.log(item);
+            dataTable.push({
+              name: item.schemeName,
+              nav: '',
+              schemeName: '',
+              schemeCode: '',
+              amficode: '',
+              navTwo: '',
+              navDate: '',
+              njCount: '',
+              map: ''
+            });
+          });
+          console.log("this is some data::::::", dataTable);
+          this.dataTable = dataTable;
+          this.dataSource.data = dataTable;
+          console.log(res);
+          // this.checkIfDataNotPresentAndShowError(res);
+        });
+    }
+  }
   showSuggestionsBasedOnSchemeName(element) {
     console.log(element);
     this.selectedElement = element;
@@ -93,8 +128,16 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
   mapSchemeCodeAndOther(element, scheme) {
-    element.schemeCode = scheme.schemeCode;
-    element.njCount = scheme.njCount;
+    this.supportUpperService.getSchemesDetails({ id: scheme.id })
+      .subscribe(res => {
+        console.log('scheme details', res)
+        element.navDate = res.navDate
+        element.nav = res.nav
+        element.amfiCode = res.amfiCode
+        element.njPrudentCount = res.njPrudentCount
+        element.schemeCode = scheme.schemeCode;
+        element.njCount = scheme.njCount;
+      });
   }
 
   getFilteredSchemesList(value) {
@@ -109,7 +152,11 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
   getUnmappedPrudentList() {
-    const data = {};
+    let data = {
+      rtMasterId: 4,
+      startLimit: 0,
+      endLimit: 50
+    };
     this.supportUpperService.getUnmappedSchemesPrudent(data).subscribe(res => {
       console.log("this is unmapped Prudent schemes::::::::::", res);
       this.isLoading = false;

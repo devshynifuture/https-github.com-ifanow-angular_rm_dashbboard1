@@ -114,18 +114,18 @@
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        {{element?.InsuranceDetails?.lifeAssuredName}}
+                        {{element?.InsuranceDetails?.lifeAssuredName ? element?.InsuranceDetails?.lifeAssuredName : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.sumAssured}}
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
             </td>
@@ -134,19 +134,20 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.currentValue}}
+                    {{!isLoading &&  element?.InsuranceDetails?.currentValue ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.currentValue ? element?.InsuranceDetails?.currentValue : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium amount </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.premiumAmount}}
+                    {{!isLoading &&  element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}
                     </span>
                 </div>
             </td>
@@ -156,7 +157,7 @@
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        <span>{{element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
+                        <span>{{element.InsuranceDetails.maturityDate ? (element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy') : '-'}}</span>
                     </span>
                 </div>
             </td>
@@ -170,7 +171,8 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
                         </span>
                     </span>
                 </div>
@@ -190,6 +192,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
                     </span>
                 </div>
             </td>
@@ -197,7 +200,11 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar"> {{element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy'}}</div>
+                <div class="bar">
+                    <span *ngIf="element?.adviceDetails">
+                        {{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -280,15 +287,15 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br">
-                <mat-checkbox *ngIf="isLoading==false && traditionalDataSource.tableFlag"
-                    [checked]="traditionalCount==traditionalDataSource.data.length"
-                    [indeterminate]="traditionalCount>0 && traditionalCount<traditionalDataSource.data.length"
-                    (change)="checkAll($event,traditionalDataSource,'traditional')">
+                <mat-checkbox *ngIf="isLoading==false && termDataSource.tableFlag"
+                    [checked]="termCount==termDataSource.data.length"
+                    [indeterminate]="termCount>0 && termCount<termDataSource.data.length"
+                    (change)="checkAll($event,termDataSource,'term')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
-                <mat-checkbox (change)="checkSingle($event,element,traditionalDataSource,'traditional')"
-                    *ngIf="isLoading==false" [(ngModel)]="element.selected" [checked]="element.selected">
+                <mat-checkbox (change)="checkSingle($event,element,termDataSource,'term')" *ngIf="isLoading==false"
+                    [(ngModel)]="element.selected" [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -297,18 +304,18 @@
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        {{element?.InsuranceDetails?.lifeAssuredName}}
+                        {{element?.InsuranceDetails?.lifeAssuredName ? element?.InsuranceDetails?.lifeAssuredName : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.sumAssured}}
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
             </td>
@@ -317,19 +324,20 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.currentValue}}
+                    {{!isLoading &&  element?.InsuranceDetails?.currentValue ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.currentValue ? element?.InsuranceDetails?.currentValue : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium amount </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.premiumAmount}}
+                    {{!isLoading &&  element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}
                     </span>
                 </div>
             </td>
@@ -339,7 +347,7 @@
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        <span>{{element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
+                        <span>{{element.InsuranceDetails.maturityDate ? (element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy') : '-'}}</span>
                     </span>
                 </div>
             </td>
@@ -349,10 +357,13 @@
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element">
-                        <span *ngIf="element?.adviceDetails?.adviceId==1">Open bank FD"</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==2">Withdraw</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==3">Premature closure</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan against bank FD</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
+                        </span>
                     </span>
                 </div>
             </td>
@@ -371,6 +382,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
                     </span>
                 </div>
             </td>
@@ -378,7 +390,11 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar"> {{element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy'}}</div>
+                <div class="bar">
+                    <span *ngIf="element?.adviceDetails">
+                        {{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
@@ -452,14 +468,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef class="br">
-                <mat-checkbox *ngIf="isLoading==false && ulipDataSource.tableFlag"
-                    [checked]="ulipCount==ulipDataSource.data.length"
-                    [indeterminate]="ulipCount>0 && ulipCount<ulipDataSource.data.length"
-                    (change)="checkAll($event,ulipDataSource,'ulip')">
+                <mat-checkbox *ngIf="isLoading==false && termDataSource.tableFlag"
+                    [checked]="termCount==termDataSource.data.length"
+                    [indeterminate]="termCount>0 && termCount<termDataSource.data.length"
+                    (change)="checkAll($event,termDataSource,'term')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
-                <mat-checkbox (change)="checkSingle($event,element,ulipDataSource,'ulip')" *ngIf="isLoading==false"
+                <mat-checkbox (change)="checkSingle($event,element,termDataSource,'term')" *ngIf="isLoading==false"
                     [(ngModel)]="element.selected" [checked]="element.selected">
                 </mat-checkbox>
             </td>
@@ -469,18 +485,18 @@
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        {{element?.InsuranceDetails?.lifeAssuredName}}
+                        {{element?.InsuranceDetails?.lifeAssuredName ? element?.InsuranceDetails?.lifeAssuredName : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.sumAssured}}
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
             </td>
@@ -489,19 +505,20 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.currentValue}}
+                    {{!isLoading &&  element?.InsuranceDetails?.currentValue ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.currentValue ? element?.InsuranceDetails?.currentValue : '-'}}
                     </span>
                 </div>
             </td>
         </ng-container>
-
         <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium amount </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    <span *ngIf="element?.InsuranceDetails" appFormatNumber>
-                        {{element?.InsuranceDetails?.premiumAmount}}
+                    {{!isLoading &&  element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        *ngIf="element?.InsuranceDetails" appFormatNumber>
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}
                     </span>
                 </div>
             </td>
@@ -511,7 +528,7 @@
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
-                        <span>{{element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
+                        <span>{{element.InsuranceDetails.maturityDate ? (element.InsuranceDetails.maturityDate | date:'dd/MM/yyyy') : '-'}}</span>
                     </span>
                 </div>
             </td>
@@ -521,10 +538,13 @@
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element">
-                        <span *ngIf="element?.adviceDetails?.adviceId==1">Open bank FD"</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==2">Withdraw</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==3">Premature closure</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan against bank FD</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
+                        </span>
                     </span>
                 </div>
             </td>
@@ -543,6 +563,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
                         <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
                     </span>
                 </div>
             </td>
@@ -550,7 +571,11 @@
         <ng-container matColumnDef="adate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar"> {{element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy'}}</div>
+                <div class="bar">
+                    <span *ngIf="element?.adviceDetails">
+                        {{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">

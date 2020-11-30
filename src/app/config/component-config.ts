@@ -623,8 +623,8 @@ export const appConfig = {
 
   BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
   BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'rmdashboard/get/unmapped/njprudent/schemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'rmdashboard/get/unmapped/njprudent/schemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
   BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
@@ -657,7 +657,8 @@ export const appConfig = {
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
-  UPLOAD_NJ_FILE: 'backoffice/file-upload/upload/NJ',
+  UPLOAD_NJ_FILE: 'backoffice/upload/NJ',
+  UPLOAD_PRUDENT_FILE: 'backoffice/upload/Prudent',
   UPLOAD_STOCK: 'account/asset/upload/excel',
   TRANSACTION_UPLOAD: 'account/asset/stock-transaction/bulk/upload',
   HOLDING_UPLOAD: 'account/asset/stock-holding/bulk/upload',
@@ -683,6 +684,7 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
 
   /********************************* TASKS Section ****************************************/
 

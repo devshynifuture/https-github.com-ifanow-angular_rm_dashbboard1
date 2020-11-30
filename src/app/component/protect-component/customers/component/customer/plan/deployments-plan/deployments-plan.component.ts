@@ -12,6 +12,7 @@ import { DeploymentDetailsComponent } from './deployment-details/deployment-deta
 import { PlanService } from '../plan.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { element } from 'protractor';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-investments-plan',
@@ -28,13 +29,32 @@ export class DeploymentsPlanComponent implements OnInit {
   advisorId: any;
   selectedDeployments: any = [];
   type: number;
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
+  viewMode: string;
+  familyMemberList: any;
+  selected = 0;
+  constructor(private peopleService:PeopleService,private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
+    this.viewMode = "tab1";
     this.type = 1;
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
-    this.getDeploymentData();
+    this.getFamilyMemberList();
+  }
+
+  getFamilyMemberList() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        console.log(data);
+        this.familyMemberList = data;
+        this.getDeploymentData();
+      }
+    );
   }
   getDeploymentData() {
     this.isLoading = true;
@@ -43,7 +63,7 @@ export class DeploymentsPlanComponent implements OnInit {
     {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      familyMemberId: 2
+      familyMemberId: this.selected
     }
     this.cusService.getAdviceDeploymentsData(obj).subscribe(
       data => {
@@ -51,9 +71,17 @@ export class DeploymentsPlanComponent implements OnInit {
         this.isLoading = false;
         this.dataSource = (this.type == 1) ? data.GoalBaseDeploymentList : data.nonGoalBasedDeploymentList;
       },
-      err => this.eventService.openSnackBar("something went wrong", "Dismiss")
+      err => {
+        this.eventService.openSnackBar("something went wrong", "Dismiss")
+        this.dataSource=[];
+      }
+     
     )
 
+  }
+  changTab(data){
+    this.selected = data.id
+    this.getDeploymentData();
   }
   selectSingleDeployment(flag, value) {
     console.log(flag, value);
