@@ -269,7 +269,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     });
     this.storeData = data ? data.plannerNotes : '';
 
-    this.storeDataNeed = this.insuranceData.needAnalysisSaved ? (data ? data.plannerNotes : '') : '';
+    // this.storeDataNeed = this.insuranceData.needAnalysisSaved ? (data ? data.plannerNotes : '') : '';
 
   }
   saveData(data) {
@@ -501,12 +501,14 @@ export class AddPlaninsuranceComponent implements OnInit {
       if (element.needTypeId == 2) {
         this.getdataForm(element);
         this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
+        this.plannerNotes =element.plannerNotes ? element.plannerNotes : '';
         this.manualObj = element
 
       } else {
         this.needBase = element
-        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
-
+        // this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
+        this.storeDataNeed = element.plannerNotes ? element.plannerNotes : '';
+        this.plannerNotesNeed = element.plannerNotes ? element.plannerNotes : '';
       }
     });
     if (this.isAddtoPlan) {
@@ -595,7 +597,8 @@ export class AddPlaninsuranceComponent implements OnInit {
           needTypeId: 1,
           id: this.needBase ? this.needBase.id : 0,
           adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
-          plannerNotes: this.needBase ? (this.needBase.plannerNotes ? this.needBase.plannerNotes : this.plannerNotesNeed) : this.plannerNotesNeed,
+          // plannerNotes: this.needBase ? (this.needBase.plannerNotes ? this.needBase.plannerNotes : this.plannerNotesNeed) : this.plannerNotesNeed,
+          plannerNotes: this.plannerNotesNeed,
           needBasedObject: needBasedAnalysis,
           mainDependentId: this.familyMemberId,
           lifeExpectency: this.expectancy.value,
@@ -620,7 +623,8 @@ export class AddPlaninsuranceComponent implements OnInit {
           lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
           needTypeId: 2,
           adviceAmount: this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0,
-          plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+          // plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
+          plannerNotes:this.plannerNotes,
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),
