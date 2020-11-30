@@ -128,9 +128,14 @@ export class SupportUpperPrudentComponent implements OnInit {
   mapSchemeCodeAndOther(element, scheme) {
     this.supportUpperService.getSchemesDetails({ id: scheme.id })
       .subscribe(res => {
+        console.log('scheme details', res)
+        element.navDate = res.navDate
+        element.nav = res.nav
+        element.amfiCode = res.amfiCode
+        element.njPrudentCount = res.njPrudentCount
+        element.schemeCode = res.schemeCode;
+        element.njCount = scheme.njCount;
       });
-    element.schemeCode = scheme.schemeCode;
-    element.njCount = scheme.njCount;
   }
 
   getFilteredSchemesList(value) {

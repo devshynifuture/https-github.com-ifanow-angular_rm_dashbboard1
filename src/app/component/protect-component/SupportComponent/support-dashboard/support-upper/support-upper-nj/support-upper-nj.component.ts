@@ -132,6 +132,13 @@ export class SupportUpperNjComponent implements OnInit {
     this.logValue('again clicked');
     this.supportUpperService.getSchemesDetails({ id: scheme.id })
       .subscribe(res => {
+        console.log('scheme details', res)
+        element.navDate = res.navDate
+        element.nav = res.nav
+        element.amfiCode = res.amfiCode
+        element.njPrudentCount = res.njPrudentCount
+        element.schemeCode = res.schemeCode;
+        element.njCount = scheme.njCount;
       });
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;

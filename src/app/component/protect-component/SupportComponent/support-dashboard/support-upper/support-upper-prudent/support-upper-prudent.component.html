@@ -111,7 +111,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.navTwo}}
+                        {{element.nav}}
                     </div>
                 </td>
             </ng-container>
@@ -120,7 +120,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.navDate}}
+                        {{element.navDate | date: 'dd/MM/yyyy'}}
                     </div>
                 </td>
             </ng-container>
