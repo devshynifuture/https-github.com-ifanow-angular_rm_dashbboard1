@@ -145,7 +145,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   //   }
   // }
   fileTypeSelectMF(type) {
-    this.typeMF = type.id
+    this.typeMF = type.name
     console.log(this.typeMF)
   }
   uploadTargetFile() {
@@ -158,7 +158,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       advisorId: this.advisorId,
       arnRiaDetailId: this.arnRiaId,
     };
-    if (this.typeMF = '') {
+    if (this.typeMF == 'NJ') {
       let obj = {
         advisorId: this.advisorId,
         arnId: this.arnRiaId
@@ -178,14 +178,31 @@ export class BackofficeFileUploadComponent implements OnInit {
           }
 
         });
+    } else if (this.typeMF == 'Prudent') {
+      const file = this.targetFile.target.files[0];
+      const requestMap = {
+        advisorId: this.advisorId,
+        arnId: this.arnRiaId
+      };
+      FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_PRUDENT_FILE,
+        file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+
+          }
+
+        });
+    } else {
+      this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
+        // this.fileType = data;
+        if (data) {
+          this.addbarWidth(30);
+          this.uploadFileRes(data, this.targetFile.target.files[0]);
+        }
+      });
     }
-    this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
-      // this.fileType = data;
-      if (data) {
-        this.addbarWidth(30);
-        this.uploadFileRes(data, this.targetFile.target.files[0]);
-      }
-    });
+
   }
   fileTypeSelect(type) {
     this.type = type.id

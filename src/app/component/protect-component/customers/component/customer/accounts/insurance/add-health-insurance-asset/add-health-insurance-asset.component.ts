@@ -478,7 +478,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         }
         /***nominee***/
         if (this.dataForEdit) {
-            if(this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0){
+            if(this.dataForEdit.hasOwnProperty('insuredMembers') && this.dataForEdit.insuredMembers.length > 0){
                 this.insuredMembersForm.removeAt(0);
                 this.dataForEdit.insuredMembers.forEach(element => {
                     this.addTransaction(element);
