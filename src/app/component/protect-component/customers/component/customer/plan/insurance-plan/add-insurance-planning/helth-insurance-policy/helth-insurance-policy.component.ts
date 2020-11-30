@@ -75,7 +75,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       adviceRationale: [(!data) ? '' : data.adviceRationale],
       adviceHeaderDate: [(!data) ? new Date() : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
-      amount: [, [Validators.required]],
+      amount: [],
       consent: [(!data) ? '1' : data.consent, [Validators.required]],
       nonFinAdvice: [(!data) ? '' : '', [Validators.required]]
     });
@@ -168,13 +168,13 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (name == 'Continue') {
       this.adviseId = 1;
     }
-    if (name == 'Discontinue') {
+    if (name == 'Discontinue' || name == 'Surrender'){
       this.adviseId = 2;
     }
-    if (name == 'Port policy') {
+    if (name == 'Port policy' || name == 'Stop paying premium') {
       this.adviseId = 3;
     }
-    if (name == 'Increase sum assured') {
+    if (name == 'Increase sum assured' || name == 'Partial withdrawl') {
       this.adviseId = 4;
     }
     if (name == 'Decrease sum assured') {

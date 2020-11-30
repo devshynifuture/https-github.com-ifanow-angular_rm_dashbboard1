@@ -41,13 +41,7 @@ export class ManageExclusionsComponent implements OnInit {
   }
   addExclusions() {
     if (this.manageExclusionsForm.invalid) {
-      for (let key in this.manageExclusionsForm.controls) {
-        if (this.manageExclusionsForm.get(key).invalid) {
-          this.manageExclusionsForm.get(key).markAsTouched();
-          return false;
-        }
-      }
-      return (this.manageExclusionsForm.valid) ? true : false;
+      this.manageExclusionsForm.markAllAsTouched();
     }
     else {
       let obj = {
