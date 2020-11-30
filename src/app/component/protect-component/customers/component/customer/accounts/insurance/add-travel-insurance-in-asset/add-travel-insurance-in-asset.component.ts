@@ -397,7 +397,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      if (this.dataForEdit.nominees.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.dataForEdit.nominees.forEach(element => {
           this.addNewNominee(element);
@@ -406,14 +406,16 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     }
     /***nominee***/
     if (this.dataForEdit) {
-      this.insuredMembersForm.removeAt(0);
-      this.dataForEdit.insuredMembers.forEach(element => {
-        this.addTransaction(element);
-      });
+      if (this.dataForEdit.hasOwnProperty('insuredMembers') && this.dataForEdit.insuredMembers.length > 0) {
+        this.insuredMembersForm.removeAt(0);
+        this.dataForEdit.insuredMembers.forEach(element => {
+          this.addTransaction(element);
+        });
+      }
     }
 
     if (this.dataForEdit) {
-      if (this.dataForEdit.policyFeatures.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('policyFeatures') && this.dataForEdit.policyFeatures.length > 0) {
         this.planFeatureForm.removeAt(0);
         this.dataForEdit.policyFeatures.forEach(element => {
           this.addNewFeature(element);
@@ -421,11 +423,13 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       }
     }
     if (this.dataForEdit) {
-      this.dataForEdit.insuredMembers.forEach(element => {
-        if (element.sumInsured == 0) {
-          this.showinsuredMemberSum = false
-        }
-      });
+      if (this.dataForEdit.hasOwnProperty('insuredMembers') && this.dataForEdit.insuredMembers.length > 0) {
+        this.dataForEdit.insuredMembers.forEach(element => {
+          if (element.sumInsured == 0) {
+            this.showinsuredMemberSum = false
+          }
+        });
+      }
     }
 
     if (this.travelInsuranceForm.get('planDetails').value == '1') {

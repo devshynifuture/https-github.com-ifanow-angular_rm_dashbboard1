@@ -263,27 +263,29 @@ export class ForgotPasswordComponent implements OnInit {
       this.verify('Mobile', false);
       this.intervallTimer.unsubscribe();
       this.verifyFlag = 'Mobile';
-    } else if (flag == 'Mobile' && this.otpData.length == 4) {
-      const obj = {
-        userId: this.saveVerifyData.userData.userId,
-        userType: this.saveVerifyData.userData.userType,
-        mobileNo: this.saveVerifyData.mobileNo,
-        otp: otpString
-      };
-      this.loginService.saveAfterVerification(obj).subscribe(
-        data => {
-          this.signUpBarList[2].flag = true;
-          this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
-          this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
-        },
-        err => {
-          if (err == "Something went wrong !") {
-            this.eventService.openSnackBar(err, "Dismiss")
-            return
-          }
-          (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
-        }
-      );
+    } else if (flag == 'Mobile' && this.otpData.length == 4 && this.otpResponse == otpString) {
+      // const obj = {
+      //   userId: this.saveVerifyData.userData.userId,
+      //   userType: this.saveVerifyData.userData.userType,
+      //   mobileNo: this.saveVerifyData.mobileNo,
+      //   otp: otpString
+      // };
+      // this.loginService.saveAfterVerification(obj).subscribe(
+      //   data => {
+      //     this.signUpBarList[2].flag = true;
+      //     this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+      //     this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
+      //   },
+      //   err => {
+      //     if (err == "Something went wrong !") {
+      //       this.eventService.openSnackBar(err, "Dismiss")
+      //       return
+      //     }
+      //     (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+      //   }
+      // );
+      this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+      this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
     } else {
       // err => this.eventService.openSnackBar(err, 'Dismiss');
       (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
