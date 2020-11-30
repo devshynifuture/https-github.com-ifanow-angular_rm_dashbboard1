@@ -21,8 +21,8 @@
 <div class="col-md-12 row pt-72">
     <h5> Search Prudent scheme</h5>
     <mat-form-field appearance="standard" floatLabel="never">
-        <input class="form-control" matInput placeholder="Search" (focus)="searchSchemeName(element)" aria-label="State"
-            [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
+        <input #inputSearch class="form-control" matInput placeholder="Search" (focus)="searchSchemeName(element)"
+            aria-label="State" [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
             <!-- <ng-container *ngIf="!isLoadingForDropDown">
@@ -63,8 +63,8 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
                 <td class="b-a matInputClass" mat-cell *matCellDef="let element">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input #inputSearch class="form-control" matInput placeholder="Search"
-                            (focus)="showSuggestionsBasedOnSchemeName(inputSearch.value)" aria-label="State"
+                        <input class="form-control" matInput placeholder="Search"
+                            (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
                             [matAutocomplete]="auto" [formControl]="schemeControl">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>

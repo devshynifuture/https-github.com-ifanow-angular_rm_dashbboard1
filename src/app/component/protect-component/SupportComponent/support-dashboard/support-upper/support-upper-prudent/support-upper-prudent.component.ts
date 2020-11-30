@@ -126,6 +126,9 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
   mapSchemeCodeAndOther(element, scheme) {
+    this.supportUpperService.getSchemesDetails({ id: scheme.id })
+      .subscribe(res => {
+      });
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;
   }

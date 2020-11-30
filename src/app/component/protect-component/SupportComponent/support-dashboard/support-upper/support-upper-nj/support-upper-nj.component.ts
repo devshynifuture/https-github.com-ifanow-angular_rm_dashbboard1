@@ -130,6 +130,9 @@ export class SupportUpperNjComponent implements OnInit {
 
   mapSchemeCodeAndOther(element, scheme) {
     this.logValue('again clicked');
+    this.supportUpperService.getSchemesDetails({ id: scheme.id })
+      .subscribe(res => {
+      });
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;
   }

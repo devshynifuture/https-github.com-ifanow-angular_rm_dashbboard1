@@ -684,6 +684,7 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
 
   /********************************* TASKS Section ****************************************/
 
