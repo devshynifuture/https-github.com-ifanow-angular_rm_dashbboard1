@@ -69,7 +69,40 @@ export class SupportUpperPrudentComponent implements OnInit {
     return scheme ? scheme.schemeName : undefined;
   }
 
-
+  searchSchemeName(element) {
+    console.log(element);
+    this.isLoadingForDropDown = true;
+    let threeWords = element;
+    //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    //this.apiCallingStack.push(threeWords);
+    if (this.apiCallingStack[1] !== threeWords) {
+      this.supportUpperService.getSearchScheme({ scheme: threeWords })
+        .subscribe(res => {
+          let dataTable: elementI[] = [];
+          this.apiCallingStack = [];
+          this.isLoadingForDropDown = false;
+          res.forEach(item => {
+            console.log(item);
+            dataTable.push({
+              name: item.schemeName,
+              nav: '',
+              schemeName: '',
+              schemeCode: '',
+              amficode: '',
+              navTwo: '',
+              navDate: '',
+              njCount: '',
+              map: ''
+            });
+          });
+          console.log("this is some data::::::", dataTable);
+          this.dataTable = dataTable;
+          this.dataSource.data = dataTable;
+          console.log(res);
+          // this.checkIfDataNotPresentAndShowError(res);
+        });
+    }
+  }
   showSuggestionsBasedOnSchemeName(element) {
     console.log(element);
     this.selectedElement = element;

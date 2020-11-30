@@ -36,7 +36,9 @@ export class SupportUpperService {
   getFilteredSchemes(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FILTERED_SCHEMES, data)
   }
-
+  getSearchScheme(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SEARCH_SCHEMES, data)
+  }
 
   // common functions
 
