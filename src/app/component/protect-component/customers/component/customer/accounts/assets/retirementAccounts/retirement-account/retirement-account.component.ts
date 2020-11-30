@@ -270,13 +270,15 @@ export class RetirementAccountComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
   }
+
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
-      asset: value
+      asset: value,
+      element: element
     }
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {

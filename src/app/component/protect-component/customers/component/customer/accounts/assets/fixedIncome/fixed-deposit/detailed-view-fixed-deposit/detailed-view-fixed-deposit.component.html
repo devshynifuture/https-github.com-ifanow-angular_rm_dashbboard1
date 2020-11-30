@@ -38,7 +38,8 @@ Description description: "this is futurewise Tech" -->
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} <span *ngIf="fixedDeposit.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
+                        {{owner.name}} <span *ngIf="fixedDeposit.ownerList.length > 1">sharing {{owner.share}}%
+                            ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -66,7 +67,7 @@ Description description: "this is futurewise Tech" -->
                         {{(fixedDeposit.fdType == 1)?'Bank FD':'Corporate FD'}}
                     </div>
                 </div> -->
-                
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Commencement date
@@ -80,9 +81,12 @@ Description description: "this is futurewise Tech" -->
                         Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ ' Year ':fixedDeposit.tenureInYear+ ' Years '}}</span>
-                        <span *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ ' Month ':fixedDeposit.tenureInMonth+ ' Months '}}</span>
-                        <span *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ ' Days'}}</span>
+                        <span
+                            *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ ' Year ':fixedDeposit.tenureInYear+ ' Years '}}</span>
+                        <span
+                            *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ ' Month ':fixedDeposit.tenureInMonth+ ' Months '}}</span>
+                        <span
+                            *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ ' Days'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -127,7 +131,8 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}} payout
+                        {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}}
+                        payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         ₹<span appFormatNumber>{{fixedDeposit.payoutAmount}}</span>
@@ -141,14 +146,16 @@ Description description: "this is futurewise Tech" -->
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         <!-- ₹<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span> -->
                         <div *ngIf="!matured">
-                            {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span>
+                            {{fixedDeposit.currentValue? "₹" : ""}}<span
+                                appFormatNumber>{{fixedDeposit.payoutTillToday}}</span>
                         </div>
                         <div *ngIf="matured">
-                            {{fixedDeposit.maturityValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.payoutTillMaturity}}</span>
+                            {{fixedDeposit.maturityValue? "₹" : ""}}<span
+                                appFormatNumber>{{fixedDeposit.payoutTillMaturity}}</span>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="fixedDeposit.interestPayoutOption == 2"F class="row bb p-8 b-l br">
+                <div *ngIf="fixedDeposit.interestPayoutOption == 2" F class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till maturity
                     </div>
@@ -171,7 +178,8 @@ Description description: "this is futurewise Tech" -->
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.currentValue?fixedDeposit.currentValue:'-'}}</span>
+                        {{fixedDeposit.currentValue? "₹" : ""}}<span
+                            appFormatNumber>{{fixedDeposit.currentValue?fixedDeposit.currentValue:'-'}}</span>
                         <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}} -->
                     </div>
                 </div>
@@ -186,18 +194,20 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total interest earned 
+                        Total interest earned
                     </div>
-                   
-                    <div  class="col-md-4 text-right f-14 roboto p-0" >
+
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         <!-- ₹{{}} -->
                         <div *ngIf="!matured">
-                            {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
+                            {{fixedDeposit.currentValue? "₹" : ""}}<span
+                                appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
                         </div>
                         <div *ngIf="matured">
-                            {{fixedDeposit.maturityValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.maturityValue - fixedDeposit.amountInvested}}</span>
+                            {{fixedDeposit.maturityValue? "₹" : ""}}<span
+                                appFormatNumber>{{fixedDeposit.maturityValue - fixedDeposit.amountInvested}}</span>
                         </div>
-                        
+
                         <!-- ₹{{utils.formatter(}} -->
 
                     </div>
@@ -214,7 +224,7 @@ Description description: "this is futurewise Tech" -->
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Bank account number
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!fixedDeposit.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!fixedDeposit.userBankMappingId">
                         <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="fixedDeposit.userBankMappingId">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -240,19 +250,46 @@ Description description: "this is futurewise Tech" -->
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="fixedDeposit.nomineeList.length == 0 ">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         -
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" [hidden]="!fixedDeposit.nomineeList" *ngFor="let obj of fixedDeposit.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                <div class="row bb p-8 b-l br" [hidden]="!fixedDeposit.nomineeList"
+                    *ngFor="let obj of fixedDeposit.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} <span *ngIf="fixedDeposit.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        {{obj.name}} <span *ngIf="fixedDeposit.nomineeList.length > 1">sharing {{obj.sharePercentage}}%
+                            Nominee share</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document
+                    </div>
+                    <div *ngIf="!doc && isLoadingUpload==true" style="width:275px;height:350px;"
+                        class="p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner [diameter]="30"></mat-spinner> Loading document
+                    </div>
+                    <div *ngIf="noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document not found
+                    </div>
+                    <div *ngIf="doc">
+                        <!--  -->
+                        <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
+                            <img [src]="doc.imageUrl" height="200" width="250"> <br />
+                        </div>
+                        <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+                            <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
+                            </ngx-doc-viewer>
+                        </div>
+                        <a class="text-left f-14 roboto p-0 docFileName" [href]="doc.imageUrl" download>
+                            {{doc.fileOgName}}
+                        </a>
                     </div>
                 </div>
             </div>

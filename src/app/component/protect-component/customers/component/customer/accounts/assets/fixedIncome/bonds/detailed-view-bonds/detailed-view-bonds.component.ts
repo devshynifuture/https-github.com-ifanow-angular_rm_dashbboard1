@@ -21,9 +21,13 @@ export class DetailedViewBondsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  doc: any;
   matured: boolean = false;
   clientFamilybankList: any = [];
+
+
+  doc: any;
+  isLoadingUpload: boolean = false;
+  noDoc: boolean = false;
   ngOnInit() {
     this.bankList = this.enumService.getBank();
     this.clientFamilybankList = this.enumService.getclientFamilybankList();
@@ -35,18 +39,38 @@ export class DetailedViewBondsComponent implements OnInit {
     else {
       this.matured = false;
     }
+    this.isLoadingUpload = true;
     this.fileUpload.getAssetsDoc(this.inputData).then((data) => {
-      this.getMapDoc(data);
-    });
+      if (data != 0) {
+        this.getMapDoc(data);
+      }
+      else {
+        this.isLoadingUpload = false;
+        this.noDoc = true;
+      }
+    },
+      err => {
+        this.isLoadingUpload = false;
+        this.noDoc = true;
+      }
+    );
   }
   docType: string;
   getMapDoc(docs) {
-    docs.forEach(d => {
+    docs.forEach((d, i) => {
       if (d.documentId == this.inputData.id) {
-
+        this.isLoadingUpload = false;
         this.docType = d.fileOgName.split('.').pop();
         this.doc = d;
         console.log(this.doc, "this.doc 123", this.docType);
+      }
+      else {
+        if (docs.length - 1 == i) {
+          if (!this.doc) {
+            this.noDoc = true;
+          }
+          this.isLoadingUpload = false;
+        }
       }
     });
   }

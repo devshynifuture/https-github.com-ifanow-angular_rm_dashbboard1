@@ -40,10 +40,11 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Last drawn salary (basic + DA) 
+                        Last drawn salary (basic + DA)
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.amountReceived? "₹" : ""}}<span appFormatNumber>{{gratuity.amountReceived? gratuity.amountReceived : "-"}}</span>
+                        {{gratuity.amountReceived? "₹" : ""}}<span
+                            appFormatNumber>{{gratuity.amountReceived? gratuity.amountReceived : "-"}}</span>
                         <!-- {{gratuity.amountReceived ?gratuity.amountReceived:'-'}} -->
                     </div>
                 </div>
@@ -67,8 +68,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount accumulated
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{gratuity.gratuityReceived? "₹" : ""}}<span appFormatNumber>{{gratuity.gratuityReceived? gratuity.gratuityReceived : "-"}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{gratuity.gratuityReceived? "₹" : ""}}<span
+                            appFormatNumber>{{gratuity.gratuityReceived? gratuity.gratuityReceived : "-"}}</span>
                     </div>
                 </div>
 
@@ -76,7 +78,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Link bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!gratuity.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!gratuity.userBankMappingId">
                         <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="gratuity.userBankMappingId">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -94,19 +96,46 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf=" gratuity.nomineeList.length == 0 ">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         -
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" [hidden]="! gratuity.nomineeList" *ngFor="let obj of  gratuity.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                <div class="row bb p-8 b-l br" [hidden]="! gratuity.nomineeList"
+                    *ngFor="let obj of  gratuity.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} <span *ngIf=" gratuity.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        {{obj.name}} <span *ngIf=" gratuity.nomineeList.length > 1">sharing {{obj.sharePercentage}}%
+                            Nominee share</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document
+                    </div>
+                    <div *ngIf="!doc && isLoadingUpload==true" style="width:275px;height:350px;"
+                        class="p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner [diameter]="30"></mat-spinner> Loading document
+                    </div>
+                    <div *ngIf="noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document not found
+                    </div>
+                    <div *ngIf="doc">
+                        <!--  -->
+                        <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
+                            <img [src]="doc.imageUrl" height="200" width="250"> <br />
+                        </div>
+                        <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+                            <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
+                            </ngx-doc-viewer>
+                        </div>
+                        <a class="text-left f-14 roboto p-0 docFileName" [href]="doc.imageUrl" download>
+                            {{doc.fileOgName}}
+                        </a>
                     </div>
                 </div>
             </div>

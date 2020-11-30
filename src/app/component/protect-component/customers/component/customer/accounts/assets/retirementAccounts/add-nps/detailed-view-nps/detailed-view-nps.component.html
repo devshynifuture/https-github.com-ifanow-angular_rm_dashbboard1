@@ -13,10 +13,10 @@
 <div class="pl-20 pr-20 mt-44 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
-            <h4 class="mb-10" >Basic details</h4>
+            <h4 class="mb-10">Basic details</h4>
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.ownerList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -37,7 +37,8 @@
                         Total amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <div *ngIf="npsData.totalAmountInvested != 0">₹<span appFormatNumber>{{npsData.totalAmountInvested}}</span>
+                        <div *ngIf="npsData.totalAmountInvested != 0">₹<span
+                                appFormatNumber>{{npsData.totalAmountInvested}}</span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +47,8 @@
                         Current valuation
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <div *ngIf="npsData.currentValuation != 0">₹<span appFormatNumber>{{npsData.currentValuation}}</span>
+                        <div *ngIf="npsData.currentValuation != 0">₹<span
+                                appFormatNumber>{{npsData.currentValuation}}</span>
                         </div>
                     </div>
                 </div>
@@ -70,8 +72,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!npsData.userBankMappingId" >
-                        <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="npsData.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!npsData.userBankMappingId">
+                        <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="npsData.userBankMappingId">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
                     </div>
@@ -87,12 +89,37 @@
                         {{npsData.description ? npsData.description:'-'}}
                     </div>
                 </div>
+                <div class="row bb p-8 b-l br">
+                    <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document
+                    </div>
+                    <div *ngIf="!doc && isLoadingUpload==true" style="width:275px;height:350px;"
+                        class="p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner [diameter]="30"></mat-spinner> Loading document
+                    </div>
+                    <div *ngIf="noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document not found
+                    </div>
+                    <div *ngIf="doc">
+                        <!--  -->
+                        <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
+                            <img [src]="doc.imageUrl" height="200" width="250"> <br />
+                        </div>
+                        <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+                            <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
+                            </ngx-doc-viewer>
+                        </div>
+                        <a class="text-left f-14 roboto p-0 docFileName" [href]="doc.imageUrl" download>
+                            {{doc.fileOgName}}
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <h4 class="mt-32 mb-10" >Nominees details</h4>
+            <h4 class="mt-32 mb-10">Nominees details</h4>
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br" *ngIf="npsData.nomineeList.length <= 0">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -100,7 +127,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -108,6 +135,6 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 </div>

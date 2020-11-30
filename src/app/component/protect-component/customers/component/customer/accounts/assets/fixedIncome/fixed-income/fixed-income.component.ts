@@ -534,10 +534,12 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.getFixedDepositList();
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getFixedDepositList();
+          }
+          rightSideDataSub.unsubscribe();
         }
-        rightSideDataSub.unsubscribe();
       }
     );
   }
