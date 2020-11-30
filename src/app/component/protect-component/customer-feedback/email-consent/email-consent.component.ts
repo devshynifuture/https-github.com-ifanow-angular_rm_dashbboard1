@@ -15,6 +15,7 @@ export class EmailConsentComponent implements OnInit {
   isLoading: boolean;
   id: any;
   sumAssured: any;
+  paramData: any;
 
   constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
@@ -25,6 +26,7 @@ export class EmailConsentComponent implements OnInit {
       params => {
         this.isLoading = true;
         this.getConsentDetails(params.gropID);
+        this.paramData = params;
         console.log(params)
       }
     )
@@ -76,12 +78,21 @@ export class EmailConsentComponent implements OnInit {
           {
             id: element.id,
             acceptedOrDeclined: element.acceptedOrDeclined,
-            actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd')
+            adviceId: element.adviceId,
+            adviceUuid: this.paramData.gropID,
+            actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd'),
+            advice: {
+              "id": element.adviceId,
+              "adviceToCategoryTypeMasterId": element.adviceToCategoryTypeMasterId
+            },
           }
           this.consentData.push(obj)
         });
         this.isLoading = false;
         getAdviceSubs.unsubscribe();
+      },
+      error=>{
+        this.dataSource.data = [];
       }
     )
   }

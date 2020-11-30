@@ -75,11 +75,14 @@ export class HelthInsurancePolicyComponent implements OnInit {
       adviceRationale: [(!data) ? '' : data.adviceRationale],
       adviceHeaderDate: [(!data) ? new Date() : new Date(data.adviceHeaderDate), [Validators.required]],
       implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
-      amount: [],
+      amount: [,[Validators.required]],
       consent: [(!data) ? '1' : data.consent, [Validators.required]],
       nonFinAdvice: [(!data) ? '' : '', [Validators.required]]
     });
     this.healthInsurance.controls['adviceStatus'].disable()
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
+      this.healthInsurance.get('amount').setErrors(null);
+    }
   }
   getFormControl(): any {
     return this.healthInsurance.controls;
@@ -91,6 +94,9 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.healthInsurance.get('adviceHeader').setValue(this.healthInsurance.get('selectAdvice').value);
     this.showError = false;
     this.healthInsurance.get('adviceHeader').setErrors(null);
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
+      this.healthInsurance.get('amount').setErrors(null);
+    }
 
   }
   dateChange(value) {
@@ -119,6 +125,9 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   }
   saveAdviceOnHealth() {
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
+      this.healthInsurance.get('amount').setErrors(null);
+    }
     if (this.healthInsurance.invalid) {
       this.healthInsurance.get('selectAdvice').value ? '' : this.showError = true;
       this.healthInsurance.markAllAsTouched();

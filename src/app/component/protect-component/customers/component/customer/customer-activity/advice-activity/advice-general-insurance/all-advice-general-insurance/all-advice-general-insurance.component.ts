@@ -55,12 +55,14 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   travelCpy: any;
   homeCpy: any;
   fireCpy: any;
+  GIData: any;
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAllCategory();
+    // this.getAllCategory();
+    this.getAdviceByAsset();
   }
   getAllCategory() {
     this.isLoading = true;
@@ -74,6 +76,12 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     //   this.travelDataSource =  [{}, {}, {}];
     //   this.homeInsDataSource =  [{}, {}, {}];
     //   this.FireDataSource =  [{}, {}, {}];
+    const obj2 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      insuranceTypeId: 1,
+      insuranceSubTypeId:0  
+    };
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allCat = this.activityService.getAllCategory({});
     forkJoin(displayList, allCat).subscribe(result => {
@@ -85,6 +93,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
   }
   getAdviceByAsset() {
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -94,21 +103,30 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       categoryTypeId: 4,
       status: 1
     }
-    this.activityService.getAllAsset(obj).subscribe(
-      data => {
-        this.getAllSchemeResponse(data);
-      }, (error) => {
-        this.eventService.openSnackBar('error', 'Dismiss');
-        this.isLoading = false;
-        this.healthInsuranceDataSource.data = [];
-        this.personalAccidentDataSource.data = [];
-        this.criticalInsDataSource.data = [];
-        this.motorDataSource.data = [];
-        this.travelDataSource.data = [];
-        this.homeInsDataSource.data = [];
-        this.FireDataSource.data = [];
-      }
-    );
+    const obj2 = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      insuranceSubTypeId: 0,
+      id: 0
+    };
+    const displayList = this.cusService.getInsuranceGlobalData({});
+    const allAsset = this.activityService.getAllAsset(obj);
+    const portfoliGi = this.cusService.getGeneralInsuranceData(obj2);
+    forkJoin(displayList, allAsset , portfoliGi).subscribe(result => {
+      this.displayList = result[0];
+      this.GIData = result[2].generalInsuranceList;
+      this.getAllSchemeResponse(result[1]);
+    }, (error) => {
+      this.eventService.openSnackBar('error', 'Dismiss');
+      this.isLoading = false;
+      this.healthInsuranceDataSource.data = [];
+      this.personalAccidentDataSource.data = [];
+      this.criticalInsDataSource.data = [];
+      this.motorDataSource.data = [];
+      this.travelDataSource.data = [];
+      this.homeInsDataSource.data = [];
+      this.FireDataSource.data = [];
+    });
   }
   filterForAsset(data) {//filter data to for showing in the table
     let filterdData = [];
@@ -132,25 +150,25 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   getAllSchemeResponse(data) {
     this.isLoading = false;
     // let healthData = this.filterForAsset(data.HEALTH)
-    let healthData = this.filterData(data.HEALTH);
+    let healthData = this.filterData(data.HEALTH,5);
     this.healthCpy = healthData;
     this.healthInsuranceDataSource.data = healthData;
-    let personalData = this.filterData(data.PERSONAL_ACCIDENT);
+    let personalData = this.filterData(data.PERSONAL_ACCIDENT,7);
     this.presonalCpy = healthData;
     this.personalAccidentDataSource.data = personalData;
-    let critical = this.filterData(data.CRITICAL_ILLNESS);
+    let critical = this.filterData(data.CRITICAL_ILLNESS,6);
     this.criticalCpy = healthData;
     this.criticalInsDataSource.data = critical;
-    let motorData = this.filterData(data.MOTOR);
+    let motorData = this.filterData(data.MOTOR,4);
     this.motorCpy = healthData;
     this.motorDataSource.data = motorData;
-    let travelData = this.filterData(data.TRAVEL);
+    let travelData = this.filterData(data.TRAVEL,8);
     this.travelCpy = healthData;
     this.travelDataSource.data = travelData;
-    let homeData = this.filterData(data.HOME);
+    let homeData = this.filterData(data.HOME,9);
     this.homeCpy = healthData;
     this.homeInsDataSource.data = homeData;
-    let fireData = this.filterData(data.FIRE);
+    let fireData = this.filterData(data.FIRE,10);
     this.fireCpy = healthData;
     this.FireDataSource.data = fireData;
     this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
@@ -162,43 +180,58 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
     console.log("::::::::::::::::", data)
   }
-  filterData(data) {
-    this.sumAssured = 0;
-    data.forEach(element => {
-      element.adviceDetails.adviceToCategoryTypeMasterId = 4
-      if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
-        element.InsuranceDetails.insuredMembers.length > 0) {
-        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
-        if (element.InsuranceDetails.insuredMembers.length > 1) {
-          for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
-            if (element.InsuranceDetails.insuredMembers[i].name) {
-              const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
-              element.InsuranceDetails.displayHolderName += ', ' + firstName;
+  filterData(data,id) {
+    let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
+    if(GIArry.length > 0){
+      GIArry.forEach(element => {
+        element.adviceDetails={adviceToCategoryTypeMasterId: 4,adviceStatusId:0,adviceId:0};
+        element.InsuranceDetails = element
+      });
+    }else{
+      GIArry = [];
+    }
+    if(data.length > 0){
+      if(GIArry.length > 0 && data.length > 0){
+        data = [...GIArry, ...data];
+      }
+      this.sumAssured = 0;
+      data.forEach(element => {
+        element.adviceDetails.adviceToCategoryTypeMasterId = 4
+        if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+          element.InsuranceDetails.insuredMembers.length > 0) {
+          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
+          if (element.InsuranceDetails.insuredMembers.length > 1) {
+            for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
+              if (element.InsuranceDetails.insuredMembers[i].name) {
+                const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
+                element.InsuranceDetails.displayHolderName += ', ' + firstName;
+              }
             }
           }
+        } else {
+          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
         }
-      } else {
-        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
-      }
-      if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
-        element.InsuranceDetails.policyFeatures.length > 0) {
-        element.InsuranceDetails.policyFeatures.forEach(ele => {
-          this.sumAssured += ele.featureSumInsured;
-        });
-        element.InsuranceDetails.sumAssured = this.sumAssured;
-        if (element.InsuranceDetails.sumAssured == 0) {
+        if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
+          element.InsuranceDetails.policyFeatures.length > 0) {
+          element.InsuranceDetails.policyFeatures.forEach(ele => {
+            this.sumAssured += ele.featureSumInsured;
+          });
+          element.InsuranceDetails.sumAssured = this.sumAssured;
+          if (element.InsuranceDetails.sumAssured == 0) {
+            element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+          }
+        } else {
           element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
         }
-      } else {
-        element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
-      }
-      if (element.InsuranceDetails.hasOwnProperty("addOns") &&
-        element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
-        element.InsuranceDetails.addOns.forEach(ele => {
-          element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
-        });
-      }
-    });
+        if (element.InsuranceDetails.hasOwnProperty("addOns") &&
+          element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
+          element.InsuranceDetails.addOns.forEach(ele => {
+            element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
+          });
+        }
+      });
+    }
+   
     return data;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
