@@ -109,7 +109,11 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
   getUnmappedPrudentList() {
-    const data = {};
+    let data = {
+      rtMasterId: 4,
+      startLimit: 0,
+      endLimit: 50
+    };
     this.supportUpperService.getUnmappedSchemesPrudent(data).subscribe(res => {
       console.log("this is unmapped Prudent schemes::::::::::", res);
       this.isLoading = false;

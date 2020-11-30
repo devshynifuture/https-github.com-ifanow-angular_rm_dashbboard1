@@ -160,7 +160,11 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   getUnmappedNjSchemes() {
-    const data = {};
+    let data = {
+      rtMasterId: 5,
+      startLimit: 0,
+      endLimit: 50
+    };
     this.supportUpperService.getUnmappedSchemesNj(data).subscribe(res => {
       console.log("this is unmapped Nj schemes::::::::::", res);
       this.isLoading = false;
