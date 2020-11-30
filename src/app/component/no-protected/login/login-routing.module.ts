@@ -14,7 +14,7 @@ import { SetTeamMemberPasswordComponent } from './set-team-member-password/set-t
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: SupportLoginComponent
   },
   {
     path: 'signup',

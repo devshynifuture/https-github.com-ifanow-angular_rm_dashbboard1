@@ -159,7 +159,7 @@ export class SupportUpperNjComponent implements OnInit {
     //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
     //this.apiCallingStack.push(threeWords);
     if (this.apiCallingStack[1] !== threeWords) {
-      this.supportUpperService.getSearchScheme({ scheme: threeWords })
+      this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
         .subscribe(res => {
           let dataTable: elementI[] = [];
           this.apiCallingStack = [];
