@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
 import { AdviceUtilsService } from '../../advice-utils.service';
@@ -16,6 +16,7 @@ import { AddFireAndPerilsInsuranceInAssetComponent } from '../../../../accounts/
 import { SuggestAdviceComponent } from '../../suggest-advice/suggest-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-all-advice-general-insurance',
@@ -24,6 +25,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class AllAdviceGeneralInsuranceComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'desc', 'cvalue', 'empcon', 'emprcon', 'advice', 'astatus', 'adate', 'icon'];
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, { id: '6', value: 'Add members' }, { id: '7', value: 'Remove members' }]
   advisorId: any;
   clientId: any;
   isLoading: boolean;
@@ -45,7 +47,15 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   allAdvice = true
   displayList: any;
   object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
-  constructor(private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  sumAssured: any;
+  healthCpy: any;
+  presonalCpy: any;
+  criticalCpy: any;
+  motorCpy: any;
+  travelCpy: any;
+  homeCpy: any;
+  fireCpy: any;
+  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -81,7 +91,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       // assetCategory: 10,
       // adviceStatusId:1
       categoryMasterId: 4,
-      categoryTypeId: 0,
+      categoryTypeId: 4,
       status: 1
     }
     this.activityService.getAllAsset(obj).subscribe(
@@ -122,39 +132,98 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   getAllSchemeResponse(data) {
     this.isLoading = false;
     // let healthData = this.filterForAsset(data.HEALTH)
-    let healthData = data.HEALTH
+    let healthData = this.filterData(data.HEALTH);
+    this.healthCpy = healthData;
     this.healthInsuranceDataSource.data = healthData;
-    let personalData = data.PERSONAL_ACCIDENT
+    let personalData = this.filterData(data.PERSONAL_ACCIDENT);
+    this.presonalCpy = healthData;
     this.personalAccidentDataSource.data = personalData;
-    let critical = data.CRITICAL_ILLNESS
+    let critical = this.filterData(data.CRITICAL_ILLNESS);
+    this.criticalCpy = healthData;
     this.criticalInsDataSource.data = critical;
-    let motorData = data.MOTOR
+    let motorData = this.filterData(data.MOTOR);
+    this.motorCpy = healthData;
     this.motorDataSource.data = motorData;
-    let travelData = data.TRAVEL
+    let travelData = this.filterData(data.TRAVEL);
+    this.travelCpy = healthData;
     this.travelDataSource.data = travelData;
-    let homeData = data.HOME
+    let homeData = this.filterData(data.HOME);
+    this.homeCpy = healthData;
     this.homeInsDataSource.data = homeData;
-    let fireData = data.FIRE
+    let fireData = this.filterData(data.FIRE);
+    this.fireCpy = healthData;
     this.FireDataSource.data = fireData;
-    this.healthInsuranceDataSource['tableFlag'] = (data.PPF.length == 0) ? false : true;
-    this.personalAccidentDataSource['tableFlag'] = (data.NSC.length == 0) ? false : true;
-    this.criticalInsDataSource['tableFlag'] = (data.SSY.length == 0) ? false : true;
-    this.motorDataSource['tableFlag'] = (data.KVP.length == 0) ? false : true;
-    this.travelDataSource['tableFlag'] = (data.SCSS.length == 0) ? false : true;
-    this.homeInsDataSource['tableFlag'] = (data.PO_Savings.length == 0) ? false : true;
-    this.FireDataSource['tableFlag'] = (data.PO_RD.length == 0) ? false : true;
+    this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
+    this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
+    this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
+    this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
+    this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
+    this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
+    this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
     console.log("::::::::::::::::", data)
   }
-  checkAll(flag, tableDataList, tableFlag) {
+  filterData(data) {
+    this.sumAssured = 0;
+    data.forEach(element => {
+      element.adviceDetails.adviceToCategoryTypeMasterId = 4
+      if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+        element.InsuranceDetails.insuredMembers.length > 0) {
+        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
+        if (element.InsuranceDetails.insuredMembers.length > 1) {
+          for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
+            if (element.InsuranceDetails.insuredMembers[i].name) {
+              const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
+              element.InsuranceDetails.displayHolderName += ', ' + firstName;
+            }
+          }
+        }
+      } else {
+        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
+      }
+      if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
+        element.InsuranceDetails.policyFeatures.length > 0) {
+        element.InsuranceDetails.policyFeatures.forEach(ele => {
+          this.sumAssured += ele.featureSumInsured;
+        });
+        element.InsuranceDetails.sumAssured = this.sumAssured;
+        if (element.InsuranceDetails.sumAssured == 0) {
+          element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+        }
+      } else {
+        element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+      }
+      if (element.InsuranceDetails.hasOwnProperty("addOns") &&
+        element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
+        element.InsuranceDetails.addOns.forEach(ele => {
+          element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
+        });
+      }
+    });
+    return data;
+  }
+  checkSingle(flag, selectedData, tableData, tableFlag) {
+    if (flag.checked) {
+      selectedData.selected = true;
+      this.selectedAssetId.push(selectedData.adviceDetails)
+    }
+    else {
+      selectedData.selected = false
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.adviceDetails), 1)
+    }
+    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
+    this.getFlagCount(tableFlag, countValue)
+    console.log(this.selectedAssetId)
+  }
+
+  checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAll(flag, tableDataList._data._value, this.selectedAssetId);
-    this.selectedAssetId = selectedIdList;
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
     this.getFlagCount(tableFlag, count)
-    // console.log(this.selectedAssetId);
+    this.selectedAssetId = selectedIdList;
+    console.log(this.selectedAssetId);
   }
   openAddEditAdvice(value, data) {
     let component;
-    if (!data) {
       this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
       switch (value) {
         case "Health Insurance":
@@ -194,14 +263,15 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
           break;
       }
-    }
-
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {
-      flag: 'All Advice Insurance',
-      data: { data: data, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'All Advice Insurance' },
+      flag: 'Advice General Insurance',
+      data,
       id: 1,
       state: 'open',
-      componentName: component,
+      componentName: SuggestAdviceComponent,
+      childComponent: component,
+      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -209,14 +279,64 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
-          this.getAdviceByAsset();
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
+  }
+  filterInsurance(key: string, value: any, name, array, dataSource) {
+    let dataFiltered;
+    array = (name == 'Health Insurance') ? this.healthCpy : (name == 'Personal accident') ? this.presonalCpy :(name == 'Critical illness') ? this.criticalCpy : (name == 'Motor insurance') ? this.motorCpy : (name == 'Travel insurance') ? this.travelCpy : (name == 'Home insurance') ? this.homeCpy :(name == 'Fire & special perils insurance') ? this.fireCpy : this.fireCpy;
+    dataFiltered = array.filter(function (item) {
+      return item.adviceDetails[key] === parseInt(value);
+    });
+    if (dataFiltered.length > 0) {
+      dataSource.data = dataFiltered;
+      dataSource = new MatTableDataSource(dataSource.data);
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
+
+  }
+  deleteModal(value, subData) {
+    let deletedId = subData.adviceDetails.id;
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.activityService.deleteAdvice(deletedId).subscribe(
+          data => {
+            this.eventService.openSnackBar("Deleted successfully", "Dismiss")
+            this.getAdviceByAsset()
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getFlagCount(flag, count) {
     switch (true) {
@@ -242,18 +362,5 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         this.fireCount = count;
         break;
     }
-  }
-  checkSingle(flag, selectedData, tableData, tableFlag) {
-    if (flag.checked) {
-      selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.assetDetails.id)
-    }
-    else {
-      selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1);
-    }
-    let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    this.getFlagCount(tableFlag, countValue)
-    console.log(this.selectedAssetId)
   }
 }

@@ -18,8 +18,8 @@
     </div>
 </div>
 <div *ngIf="step1Flag">
-<!--  (scroll)="on"-->
-    <div class="pt-90 pb-100" >
+    <!--  (scroll)="on"-->
+    <div class="pt-90 pb-100">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -37,13 +37,18 @@
                 <div class="form-group mb-28">
                     <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
                         <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0"
-                            matInput placeholder="Start typing to see client names">
+                            matInput placeholder="Start typing to see client names" [formControl]="searchFC">
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">
-                        {{dataCount}} clients
-                        selected</p>
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}" *ngIf="!isAllSelected"
+                        class="text-right italicText text-primitive mb-0 f-14">
+                        {{selectedClientsCount}} clients
+                        selected
+                    </p>
+                    <p *ngIf="isAllSelected">
+                        All clients selected
+                    </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
                         [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
@@ -57,7 +62,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="c-p br">
                                     <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
-                                        (change)="changeSelect()" *ngIf="!isLoading">
+                                        (change)="changeSelect(element)" *ngIf="!isLoading">
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
@@ -82,7 +87,7 @@
                                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status
                                 </th>
                                 <td *matCellDef="let element" class="c-p br" mat-cell>
-                                    <div class="bar">
+                                    <div class="bar" *ngIf="!isLoading">
                                         {{element.status==1? 'Client':'Lead'}}
                                     </div>
                                 </td>
@@ -196,8 +201,12 @@
 
         </div>
         <div class="col-md-3">
-            <p class="mb-0 posP text-primary">Email will be sent to {{dataCount}} <span
-                    *ngIf="dataCount==1">client</span><span *ngIf="dataCount>1">clients</span></p>
+            <p class="mb-0 posP text-primary" *ngIf="!isAllSelected">Email will be sent to {{selectedClientsCount}}
+                <span *ngIf="selectedClientsCount==1">client</span><span *ngIf="selectedClientsCount>1">clients</span>
+            </p>
+            <p *ngIf="isAllSelected" class="mb-0 posP text-primary">
+                Email will be sent to all clients
+            </p>
         </div>
     </div>
 

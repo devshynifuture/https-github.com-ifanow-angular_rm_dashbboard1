@@ -1,3 +1,4 @@
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { PeopleService } from './../../../../PeopleComponent/people.service';
 import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -17,7 +18,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
   clientList: any = [];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild('clientTableSort', { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
 
@@ -32,6 +33,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   subject = new FormControl('Your new money management account is created!');
   selectedFromEmail = new FormControl('');
   isAllSelected = false;
+  selectedClientsCount = 0;
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -51,6 +53,16 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   hasEndReached: any = false;
   infiniteScrollingFlag: boolean = false;
   infiniteScrollClientList = [];
+  storedObj: boolean;
+  obj: {
+    advisorId: any;
+    // status: 1,
+    limit: number; offset: any;
+  };
+  fromSearch: boolean = false;
+  searchFC: FormControl;
+  searchName: string;
+  selectedClientArray = [];
 
   constructor(
     public authService: AuthService,
@@ -110,72 +122,131 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.step1Flag = true;
     this.getClientListValue(0);
     this.getEmailVerification();
+    this.searchFC = new FormControl();
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
 
+    this.searchFC.valueChanges.pipe(
+      debounceTime(1000),
+      switchMap(data => {
+        this.searchName = data;
+        if (data === '') {
+          this.storedObj = false;
+          this.fromSearch = false;
+        } else {
+          this.storedObj = true;
+          this.fromSearch = true;
+        }
+        this.isLoading = true;
+        if (this.dataSource) {
+          this.dataSource.data = ELEMENT_DATA;
+        }
+        return this.getFilteredClientList(data);
+      })
+    ).subscribe(data => this.responseHandlerForClientApi(data));
+  }
+
+  getFilteredClientList(data) {
+    if (data !== '') {
+      let obj = {
+        advisorId: this.advisorId,
+        displayName: data
+      }
+      return this.peopleService.getFilteredClientListForBulkReviewSend(obj)
+    } else {
+      this.getClientListValue(0);
+    }
   }
 
   getClientListValue(offset) {
-    const obj = {
+    let obj = {
       advisorId: this.advisorId,
       // status: 1,
       limit: 50,
       offset
     };
+
     if (this.infiniteScrollClientList.length === 0) {
       this.isLoading = true;
     } else {
       this.infiniteScrollingFlag = true;
     }
     this.peopleService.getClientList(obj)
-      .subscribe(data => {
-        this.barButtonOptions.active = false;
-        if (data && data.length > 0) {
-          data.forEach((singleData) => {
-            if (singleData.emailList && singleData.emailList.length > 0) {
-              singleData.email = singleData.emailList[0].email;
-            }
-          });
-        }
-        if (data && data.length > 0) {
-          data.forEach(element => {
-            element.selected = false;
-            element.ownerName = '';
-            element.name = '';
-            element.userName = '';
-          });
-          if (this.infiniteScrollClientList.length === 0) {
-            this.isLoading = false;
-          } else {
-            this.infiniteScrollingFlag = false;
-          }
-          if (data) {
-            console.log("this is all sip table data, ------", data);
-            if (this.isAllSelected) {
-              data.map(o => o.selected = true);
-            }
-            this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
+      .subscribe(data => this.responseHandlerForClientApi(data));
+  }
 
-            this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
-              return data.some(item2 => item2.advisorId !== item.advisorId);
-            });
-
-            console.log(this.infiniteScrollClientList);
-            this.dataSource.data = this.infiniteScrollClientList;
-          } else {
-            this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
-            this.dataSource.sort = this.sort;
-            this.dataSource.filteredData = [];
-            this.eventService.openSnackBar('No More Data Found', "DISMISS");
-            this.hasEndReached = true;
-          }
-        } else {
-          this.dataSource = null;
+  responseHandlerForClientApi(data) {
+    this.barButtonOptions.active = false;
+    if (data && data.length > 0) {
+      data.forEach((singleData) => {
+        if (singleData.emailList && singleData.emailList.length > 0) {
+          singleData.email = singleData.emailList[0].email;
         }
-      }, err => {
-        console.error(err);
       });
+    }
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        element.selected = false;
+        element.ownerName = '';
+        element.name = '';
+        element.userName = '';
+      });
+      if (data) {
+        console.log("this is all sip table data, ------", data);
+        if (this.isAllSelected) {
+          data.map(o => o.selected = true);
+        }
+        if (this.fromSearch || this.searchName === '') {
+          this.infiniteScrollClientList = [];
+          if (this.searchName == '') {
+
+          }
+        }
+        this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
+
+        this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
+          return data.some(item2 => item2.advisorId !== item.advisorId);
+        });
+
+        console.log(this.infiniteScrollClientList);
+        this.dataSource.data = this.infiniteScrollClientList;
+
+        this.dataSource.sort = this.sort;
+        if (this.infiniteScrollClientList.length === 0) {
+          this.isLoading = false;
+        } else {
+          this.infiniteScrollingFlag = false;
+        }
+        if (this.infiniteScrollingFlag) {
+          this.infiniteScrollingFlag = false;
+        }
+        if (this.isLoading) {
+          this.isLoading = false;
+        }
+
+      } else {
+        this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
+        this.dataSource.sort = this.sort;
+        if (this.infiniteScrollClientList.length === 0) {
+          this.isLoading = false;
+        } else {
+          this.infiniteScrollingFlag = false;
+        }
+        if (this.infiniteScrollingFlag) {
+          this.infiniteScrollingFlag = false;
+        }
+        if (this.isLoading) {
+          this.isLoading = false;
+        }
+        this.dataSource.filteredData = [];
+        this.eventService.openSnackBar('No More Data Found', "DISMISS");
+        this.hasEndReached = true;
+      }
+    } else {
+      this.dataSource = null;
+    }
+
   }
 
   onWindowScroll(e: any) {
@@ -187,8 +258,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       if (!this.hasEndReached) {
         console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
         this.infiniteScrollingFlag = true;
+        if (!this.fromSearch) {
+          this.getClientListValue(this.infiniteScrollClientList.length);
+        }
         // this.getAllSip(this.finalSipList.length, 20);
-        this.getClientListValue(this.infiniteScrollClientList.length);
         // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
       }
 
@@ -219,20 +292,33 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   // }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.sort = this.sort;
-    this.dataCount = 0;
-    this.dataSource.filteredData.forEach((element: any) => {
-      if (element.selected) {
-        this.dataCount++;
-      }
-    });
+    let filterValue = (event.target as HTMLInputElement).value;
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    // this.dataSource.sort = this.sort;
+    // this.dataCount = 0;
+    // this.dataSource.filteredData.forEach((element: any) => {
+    //   if (element.selected) {
+    //     this.dataCount++;
+    //   }
+    // });
+    if (filterValue === '') {
+      this.storedObj = false;
+      this.fromSearch = false;
+      filterValue === null;
+    } else {
+      this.storedObj = true;
+      this.fromSearch = true;
+    }
+    // this.getClientListValue(0, filterValue);
   }
 
   selectAll(event) {
     this.dataCount = 0;
     this.isAllSelected = true;
+    if (!event.checked) {
+      this.selectedClientsCount = 0;
+      this.isAllSelected = false;
+    }
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
@@ -243,9 +329,14 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeSelect() {
+  changeSelect(element) {
     this.dataCount = 0;
-
+    this.selectedClientArray.push(element.clientId);
+    if (element.selected) {
+      this.selectedClientsCount++;
+    } else {
+      this.selectedClientsCount--;
+    }
     this.dataSource.filteredData.forEach((item: any) => {
       if (item.selected) {
         this.dataCount++;
@@ -262,7 +353,6 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.getEmailVerificationRes(data);
-        this.isLoading = false;
       },
     );
   }
@@ -301,9 +391,29 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       return;
     }
     this.barButtonOptions.active = true;
+    let arr = [];
+    if (this.selectedClientArray.length > 0) {
+      this.selectedClientArray.forEach(item => {
+        if (!arr.includes(item)) {
+          arr.push(item);
+        }
+      })
+    }
+
+    if (this.clientList.length > 0) {
+      this.clientList.forEach(element => {
+        if (!arr.includes(element)) {
+          arr.push(element);
+        }
+      });
+
+    }
+
+
+
     const obj = {
       advisorId: this.advisorId,
-      clientIds: this.clientList,
+      clientIds: arr,
       fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
       subject: this.subject.value,
       messageBody: this.emailBody
@@ -311,17 +421,19 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     if (this.isAllSelected) {
       obj['allClient'] = true;
     }
-    this.orgSetting.sendEmailToClients(obj).subscribe(
-      data => {
-        this.eventService.openSnackBar(data, 'Dismiss');
-        this.close(true);
-        this.barButtonOptions.active = false;
-      },
-      err => {
-        this.barButtonOptions.active = false;
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+
+    console.log(arr);
+    // this.orgSetting.sendEmailToClients(obj).subscribe(
+    //   data => {
+    //     this.eventService.openSnackBar(data, 'Dismiss');
+    //     this.close(true);
+    //     this.barButtonOptions.active = false;
+    //   },
+    //   err => {
+    //     this.barButtonOptions.active = false;
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //   }
+    // );
   }
 
   bulkEmail(value) {
@@ -364,6 +476,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
   }
 }
+
+const ELEMENT_DATA = [
+  {}, {}, {}
+]
 
 
 

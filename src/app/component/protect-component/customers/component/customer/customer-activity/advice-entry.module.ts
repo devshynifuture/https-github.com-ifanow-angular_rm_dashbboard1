@@ -8,11 +8,12 @@ import { GiveAdviceComponent } from './advice-activity/give-advice/give-advice.c
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdviceSIPComponent } from './advice-activity/advice-sip/advice-sip.component';
 import { MiscellaneousAdviceComponent } from './advice-activity/miscellaneous-advice/miscellaneous-advice.component';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 export const componentList = [
   EmailAdviceComponent,
   SuggestAdviceComponent,
-  GiveAdviceComponent,AdviceSIPComponent,MiscellaneousAdviceComponent
+  GiveAdviceComponent, AdviceSIPComponent, MiscellaneousAdviceComponent
 ];
 
 
@@ -24,6 +25,7 @@ export const componentList = [
     ReactiveFormsModule,
     CustomDirectiveModule,
     MaterialModule,
+    CommonComponentModule
   ]
 })
 export class AdviceEntryModule {

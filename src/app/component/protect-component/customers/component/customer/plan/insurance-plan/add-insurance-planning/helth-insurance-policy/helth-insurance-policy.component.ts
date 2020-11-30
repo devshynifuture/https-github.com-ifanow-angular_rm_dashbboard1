@@ -50,6 +50,20 @@ export class HelthInsurancePolicyComponent implements OnInit {
   ngOnInit() {
     this.getdataForm('')
     this.showInsurance = this.data.data;
+    if (this.data.data.smallHeading == 'life insurance') {
+      this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
+      { value: 2, advice: 'Surrender', selected: false },
+      { value: 3, advice: 'Stop paying premium', selected: false },
+      { value: 4, advice: 'Partial withdrawl', selected: false }]
+    } else {
+      this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
+      { value: 2, advice: 'Discontinue', selected: false },
+      { value: 3, advice: 'Port policy', selected: false },
+      { value: 4, advice: 'Increase sum assured', selected: false },
+      { value: 5, advice: 'Decrease sum assured', selected: false },
+      { value: 6, advice: 'Add members', selected: false },
+      { value: 7, advice: 'Remove members', selected: false }]
+    }
     this.insuranceData = this.data.value.insurance
   }
   getdataForm(data) {
@@ -70,8 +84,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
   getFormControl(): any {
     return this.healthInsurance.controls;
   }
-  close() {
-    this.dialogRef.close(this.showInsurance)
+  close(data, flag) {
+    this.dialogRef.close({ data: data, isRefreshedRequired: flag })
   }
   setValue() {
     this.healthInsurance.get('adviceHeader').setValue(this.healthInsurance.get('selectAdvice').value);
@@ -138,7 +152,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
         res => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
-          this.dialogRef.close(this.advice);
+          this.close(this.advice, true);
         }, err => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar(err, "Dimiss");

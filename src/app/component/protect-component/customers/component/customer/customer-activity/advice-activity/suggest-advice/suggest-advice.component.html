@@ -3,7 +3,7 @@
         <h4 class="mb-0 l-22 wrapper-20">ADVICE</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16" (click)="dialogClose()">
+        <i class="material-icons pt-20 c-p pr-16" (click)="dialogClose(false)">
             clear
         </i>
     </div>
@@ -25,20 +25,25 @@
                                 <div class="col-md-6 pl-0">
                                     <p class="m-0 text-black roboto">Advice header</p>
                                     <div class="form-group">
-                                        <mat-form-field>
+                                        <!-- <mat-form-field>
                                             <mat-select #header autocomplete="off" class="form-control br-0"
                                                 formControlName="header" matInput>
+
                                                 <mat-option value=''>Select option</mat-option>
-                                                <mat-option value='1'>Continue</mat-option>
-                                                <mat-option value='2'>Discontinue</mat-option>
-                                                <mat-option value='3'>Port policy</mat-option>
-                                                <mat-option value='4'>Increase sum assured</mat-option>
-                                                <mat-option value='5'>Decrease sum assured</mat-option>
-                                                <mat-option value='6'>Add members</mat-option>
-                                                <mat-option value='7'>Remove members</mat-option>
+                                                <mat-option *ngFor="let option of adviceHeaderList ;index as i"
+                                                    [value]="option.id">
+                                                    {{option.value}}
+                                                </mat-option>
                                             </mat-select>
                                             <mat-error>This field is required
                                             </mat-error>
+                                        </mat-form-field> -->
+                                        <mat-form-field>
+                                            <input matInput formControlName="status" [value]="'Suggest new policy'" [disabled]="true"
+                                                class="form-control" readonly>
+                                            <!-- <mat-error>
+                                                This field is required
+                                            </mat-error> -->
                                         </mat-form-field>
                                     </div>
                                     <p class="m-0 text-black roboto pt-20">Advice rationale</p>
@@ -56,7 +61,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput formControlName="status" [disabled]="true"
-                                                    class="form-control">
+                                                    class="form-control" readonly>
                                                 <mat-error>
                                                     This field is required
                                                 </mat-error>
@@ -66,39 +71,56 @@
 
                                 </div>
                                 <div class="col-md-3 pr-0">
-                                    <p class="m-0 text-black roboto">Advice given on</p>
+                                    <p class="m-0 text-black roboto">Advice given
+                                        only
+                                    </p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
-                                            <input matInput (focus)="picker.open()" formControlName="givenOnDate"
+                                            <input [min]="todayDate" [max]="todayDate"
+                                                (ngModelChange)="dateChange('givenOnDate')" matInput
+                                                (focus)="picker.open()" formControlName="givenOnDate"
                                                 [matDatepicker]="picker" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
-                                            <mat-error>
-                                                This field is required
+                                            <mat-error class="f-12"
+                                                *ngIf="(adviceForm.get('givenOnDate').errors?.required)">
+                                                This field is required</mat-error>
+                                            <mat-error class="f-12" *ngIf="(adviceForm.get('givenOnDate').errors?.max)">
+                                                Date should be less than implementation date
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <p class="m-0 text-black roboto pt-24">Implementation date</p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
-                                            <input matInput (focus)="picker1.open()" formControlName="implementDate"
+                                            <input [min]="todayDate" (ngModelChange)="dateChange('implementDate')"
+                                                matInput (focus)="picker1.open()" formControlName="implementDate"
                                                 [matDatepicker]="picker1" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error class="f-12"
+                                                *ngIf="(adviceForm.get('implementDate').errors?.required)">This
+                                                field is
+                                                required</mat-error>
+                                            <mat-error class="f-12"
+                                                *ngIf="(adviceForm.get('implementDate').errors?.max)">
+                                                Date should be greater than given on date
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <p class="m-0 text-black roboto pt-60" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">Withdrawal amount</p> -->
+                                    <!-- <div class="form-group" >
+                                        <mat-form-field class="ba-date" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">
+                                            <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"
+                                                [maxLength]="10" appInputValueValidation formControlName="withdrawalAmt"
+                                                class="form-control b-0">
+                                            <mat-hint align="end" class="f-12">{{withdrawalAmt.value.length}}/10
+                                            </mat-hint>
                                             <mat-error>
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
-                                    </div>
-                                    <p class="m-0 text-black roboto pt-60">Withdrawal amount</p>
-                                    <div class="form-group">
-                                        <mat-form-field class="ba-date">
-                                            <input matInput formControlName="withdrawalAmt" class="form-control b-0">
-                                            <mat-error>
-                                                This field is required
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row pt-44">
@@ -147,7 +169,7 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
         </div>
         <div class="col-md-8 text-right">
             <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
