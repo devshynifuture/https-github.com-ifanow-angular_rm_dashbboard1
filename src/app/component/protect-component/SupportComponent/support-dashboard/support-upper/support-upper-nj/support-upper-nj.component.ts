@@ -171,6 +171,7 @@ export class SupportUpperNjComponent implements OnInit {
     if (this.apiCallingStack[1] !== threeWords && element.length >= 3) {
       this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
         .subscribe(res => {
+          console.log('serach scheme', res)
           let dataTable: elementI[] = [];
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
@@ -205,6 +206,7 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   getUnmappedNjSchemes() {
+    this.isLoading = true;
     let data = {
       rtMasterId: 5,
       startLimit: 0,

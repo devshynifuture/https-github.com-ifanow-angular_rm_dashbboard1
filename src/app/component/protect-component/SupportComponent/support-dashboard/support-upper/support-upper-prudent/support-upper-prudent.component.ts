@@ -71,6 +71,7 @@ export class SupportUpperPrudentComponent implements OnInit {
 
   searchSchemeName(element) {
     console.log(element);
+    this.isLoading = true;
     this.isLoadingForDropDown = true;
     let threeWords = element;
     //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
@@ -78,6 +79,7 @@ export class SupportUpperPrudentComponent implements OnInit {
     if (this.apiCallingStack[1] !== threeWords && element.length >= 3) {
       this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
         .subscribe(res => {
+          this.isLoading = false;
           let dataTable: elementI[] = [];
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
