@@ -337,7 +337,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      if (this.dataForEdit.nominees.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.dataForEdit.nominees.forEach(element => {
           this.addNewNominee(element);
@@ -346,7 +346,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     }
     /***nominee***/
     if (this.dataForEdit) {
-      if (this.dataForEdit.addOns.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('addOns') && this.dataForEdit.addOns.length > 0) {
         this.addOnForm.removeAt(0);
         this.dataForEdit.addOns.forEach(element => {
           this.addNewAddOns(element);
@@ -354,7 +354,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
       }
     }
     if (this.dataForEdit) {
-      if (this.dataForEdit.policyFeatures.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('policyFeatures') && this.dataForEdit.policyFeatures.length > 0) {
         this.planFeatureForm.removeAt(0);
         this.dataForEdit.policyFeatures.forEach(element => {
           this.addNewFeature(element);

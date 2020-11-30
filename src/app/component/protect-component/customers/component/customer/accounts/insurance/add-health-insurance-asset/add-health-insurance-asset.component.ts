@@ -380,7 +380,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         } else {
             this.dataForEdit = data.data;
             this.id = this.dataForEdit.id;
-            if (this.dataForEdit.addOns.length > 0) {
+            if (this.dataForEdit.hasOwnProperty('addOns') && this.dataForEdit.addOns.length > 0) {
                 this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
                 this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
             }
@@ -469,24 +469,30 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
         /***nominee***/
         if (this.dataForEdit) {
-            this.getNominee.removeAt(0);
-            this.dataForEdit.nominees.forEach(element => {
-                this.addNewNominee(element);
-            });
+            if(this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0){
+                this.getNominee.removeAt(0);
+                this.dataForEdit.nominees.forEach(element => {
+                    this.addNewNominee(element);
+                });
+            }
         }
         /***nominee***/
         if (this.dataForEdit) {
-            this.insuredMembersForm.removeAt(0);
-            this.dataForEdit.insuredMembers.forEach(element => {
-                this.addTransaction(element);
-            });
+            if(this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0){
+                this.insuredMembersForm.removeAt(0);
+                this.dataForEdit.insuredMembers.forEach(element => {
+                    this.addTransaction(element);
+                });
+            }
         }
         if (this.dataForEdit) {
-            this.dataForEdit.insuredMembers.forEach(element => {
-                if (element.sumInsured == 0) {
-                    this.showinsuredMemberSum = false
-                }
-            });
+            if(this.dataForEdit.hasOwnProperty('insuredMembers')){
+                this.dataForEdit.insuredMembers.forEach(element => {
+                    if (element.sumInsured == 0) {
+                        this.showinsuredMemberSum = false
+                    }
+                });
+            }
         }
 
         if (this.healthInsuranceForm.get('PlanType').value == '8') {
