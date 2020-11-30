@@ -328,7 +328,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      if (this.dataForEdit.nominees.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('nominees') && this.dataForEdit.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.dataForEdit.nominees.forEach(element => {
           this.addNewNominee(element);
@@ -337,7 +337,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
     /***nominee***/
     if (this.dataForEdit) {
-      if (this.dataForEdit.insuredMembers.length > 0) {
+      if (this.dataForEdit.hasOwnProperty('insuredMembers') && this.dataForEdit.insuredMembers.length > 0) {
         this.insuredMembersForm.removeAt(0);
         this.dataForEdit.insuredMembers.forEach(element => {
           this.addTransaction(element);
@@ -346,11 +346,13 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
 
     if (this.dataForEdit) {
-      this.dataForEdit.insuredMembers.forEach(element => {
-        if (element.sumInsured == 0) {
-          this.showinsuredMemberSum = false
-        }
-      });
+      if (this.dataForEdit.hasOwnProperty('insuredMembers') && this.dataForEdit.insuredMembers.length > 0) {
+        this.dataForEdit.insuredMembers.forEach(element => {
+          if (element.sumInsured == 0) {
+            this.showinsuredMemberSum = false
+          }
+        });
+      }
     }
     if (this.critialIllnessForm.get('PlanType').value == '8') {
       this.showSumAssured = true;
