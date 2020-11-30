@@ -50,6 +50,7 @@ export class SupportUpperNjComponent implements OnInit {
   filteredSchemeError: boolean = false;
   selectedElement: any;
   apiCallingStack: any[] = [];
+  searchSchemes: any[];
 
   constructor(
     private supportUpperService: SupportUpperService,
@@ -57,6 +58,7 @@ export class SupportUpperNjComponent implements OnInit {
   ) { }
 
   schemeControl: FormControl = new FormControl();
+  searchSchemeControl: FormControl = new FormControl();
   filteredSchemes: any[] = [];
   errorMsg: string;
   isLoading: boolean = false;
@@ -128,6 +130,16 @@ export class SupportUpperNjComponent implements OnInit {
 
   mapSchemeCodeAndOther(element, scheme) {
     this.logValue('again clicked');
+    this.supportUpperService.getSchemesDetails({ id: scheme.id })
+      .subscribe(res => {
+        console.log('scheme details', res)
+        element.navDate = res.navDate
+        element.nav = res.nav
+        element.amfiCode = res.amfiCode
+        element.njPrudentCount = res.njPrudentCount
+        element.schemeCode = res.schemeCode;
+        element.njCount = scheme.njCount;
+      });
     element.schemeCode = scheme.schemeCode;
     element.njCount = scheme.njCount;
   }
@@ -150,7 +162,40 @@ export class SupportUpperNjComponent implements OnInit {
         });
     }
   }
-
+  searchSchemeName(element) {
+    console.log(element);
+    this.isLoadingForDropDown = true;
+    let threeWords = element;
+    //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    //this.apiCallingStack.push(threeWords);
+    if (this.apiCallingStack[1] !== threeWords && element.length >= 3) {
+      this.supportUpperService.getFilteredSchemes({ scheme: threeWords })
+        .subscribe(res => {
+          let dataTable: elementI[] = [];
+          this.apiCallingStack = [];
+          this.isLoadingForDropDown = false;
+          res.forEach(item => {
+            console.log(item);
+            dataTable.push({
+              name: item.schemeName,
+              nav: '',
+              schemeName: '',
+              schemeCode: '',
+              amficode: '',
+              navTwo: '',
+              navDate: '',
+              njCount: '',
+              map: ''
+            });
+          });
+          console.log("this is some data::::::", dataTable);
+          this.dataTable = dataTable;
+          this.dataSource.data = dataTable;
+          console.log(res);
+          this.checkIfDataNotPresentAndShowError(res);
+        });
+    }
+  }
   displayFn(scheme?: Scheme): string | undefined {
     return scheme ? scheme.schemeName : undefined;
   }
