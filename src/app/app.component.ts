@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import {
+  ActivatedRoute,
   Event,
   NavigationCancel,
   NavigationEnd,
@@ -18,6 +19,7 @@ import { OnInit } from "@angular/core/src/metadata/*";
 import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
 import { AuthService } from './auth-service/authService';
 import { EnumDataService } from "./services/enum-data.service";
+import { LoginService } from './component/no-protected/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -81,11 +83,26 @@ export class AppComponent implements AfterViewInit, OnInit {
     private _router: Router, private eventService: EventService,
     private routingState: RoutingState,
     private location: PlatformLocation,
+    private router: Router,
+    private loginService: LoginService,
+    private route: ActivatedRoute,
     private connectionService: ConnectionService,
     private settingService: SettingsService,
     public enumDataService: EnumDataService,
     @Inject(DOCUMENT) private document
   ) {
+    this.route.queryParams.subscribe((params) => {
+      if (params) {
+        this.settingService.getRandomStringFromPlanner(params)
+          .subscribe(res => {
+            if (res) {
+              this.loginService.handleUserData(undefined, this.router, res);
+            }
+          }, err => {
+            console.error(err);
+          });
+      }
+    });
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
