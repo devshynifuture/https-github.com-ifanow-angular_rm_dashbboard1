@@ -245,14 +245,22 @@
    color: #fff;
  }
 
-
- @media(max-width:1300px) {
-  .in-btn {
-    width: 125px;
-  }
-  
- }
-
+ 
  .borderDrag{ 
  border: 1px solid #478fff;
     padding: 10px;}
+
+
+
+
+ @media screen and (min-width: 1025px) and (max-width: 1400px){
+  .fix-sticky {
+    position: relative;
+    width: auto;
+  }
+
+  .in-btn {
+    width: 125px;
+  }
+ 
+}
