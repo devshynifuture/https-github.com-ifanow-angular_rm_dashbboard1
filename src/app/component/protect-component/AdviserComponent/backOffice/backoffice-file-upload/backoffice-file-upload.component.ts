@@ -173,6 +173,8 @@ export class BackofficeFileUploadComponent implements OnInit {
         file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
 
           if (status == 200) {
+            this.numlimit = 70;
+            this.addbarWidth(50);
             const responseObject = JSON.parse(response);
 
           }
@@ -188,6 +190,8 @@ export class BackofficeFileUploadComponent implements OnInit {
         file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
 
           if (status == 200) {
+            this.numlimit = 70;
+            this.addbarWidth(50);
             const responseObject = JSON.parse(response);
 
           }
