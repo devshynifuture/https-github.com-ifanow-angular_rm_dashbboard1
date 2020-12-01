@@ -37,6 +37,10 @@ export class AuthGuard implements CanActivate {
           this.myRoute.navigate(['/']);
           return false;
         }
+      } else if (state && state.url.split('/').includes('admin') && !this.authService.isAdvisor()) {
+        console.log('advisorGuard failed general: ', next, state);
+        this.myRoute.navigate(['unauthorized']);
+        return false;
       }
       // const user = this.authService.decode();
       //
@@ -50,6 +54,8 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       const winName = window.name;
+      console.log('AppComponent getRandomStringFromPlanner winName: ', winName);
+
       if (winName.includes('uniqueString')) {
         return this.peopleService.getLoginDataFromUniqueString(winName)
 
@@ -57,8 +63,10 @@ export class AuthGuard implements CanActivate {
             console.log('AppComponent getRandomStringFromPlanner response: ', response);
             window.name = undefined;
             if (response) {
-              this.loginService.handleUserData(undefined, this.myRoute, response);
+              this.loginService.handleUserData(this.authService, this.myRoute, response);
               return true;
+            } else {
+              return false;
             }
           }, catchError(err => {
             this.myRoute.navigate(['/login']);
