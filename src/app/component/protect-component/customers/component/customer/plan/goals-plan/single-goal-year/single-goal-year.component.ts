@@ -104,7 +104,7 @@ export class SingleGoalYearComponent implements OnInit {
       "goalName": this.singleYearGoalForm.get('goalName').value,
       "notes": this.singleYearGoalForm.get('goalDescription').value,
       "imageUrl": this.logoImg,
-      "goalType": this.goalTypeData.id,
+      "goalType": this.goalTypeData.goalTypeId,
       "savingStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
     }
 
