@@ -110,7 +110,7 @@ export class SingleGoalYearComponent implements OnInit {
 
     let ageDiff = 0;
     let futureDate = new Date(currentDate);
-    switch (this.goalTypeData.id) {
+    switch (this.goalTypeData.goalTypeId) {
       case AppConstants.HOUSE_GOAL: // House
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;

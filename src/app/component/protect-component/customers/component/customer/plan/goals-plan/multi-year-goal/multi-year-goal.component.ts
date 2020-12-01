@@ -104,7 +104,7 @@ export class MultiYearGoalComponent implements OnInit {
     const date = new Date();
     const monthAndDayString = '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-01';
 
-    switch (this.goalTypeData.id) {
+    switch (this.goalTypeData.goalTypeId) {
       case AppConstants.VACATION_GOAL:
         obj['planningforGroupHead'] = 1;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
