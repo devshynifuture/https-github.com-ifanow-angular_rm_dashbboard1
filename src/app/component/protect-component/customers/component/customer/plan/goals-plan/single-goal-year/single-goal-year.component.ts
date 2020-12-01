@@ -318,6 +318,9 @@ export class SingleGoalYearComponent implements OnInit {
 
       )
     }
+    if (this.goalTypeData.goalTypeId === 5) {
+      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
+    }
   }
 
   get getMilestone() {
