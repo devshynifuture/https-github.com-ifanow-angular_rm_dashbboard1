@@ -11,6 +11,7 @@ import { AddInsuranceComponent } from '../../../../../common-component/add-insur
 import { SuggestAdviceComponent } from '../../suggest-advice/suggest-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-suggested-advice.component';
 
 @Component({
   selector: 'app-all-advice-life-insurance',
@@ -34,7 +35,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   traditionalCount: any;
   ulipCount: any;
   displayList: any;
-  object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
+  object:any;
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '4', value: 'Take loan' }, { id: '5', value: 'Partial withdrawl' }]
   termCpy: any;
   tradCopy: any;
@@ -308,6 +309,60 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       componentName: SuggestAdviceComponent,
       childComponent: Component,
       childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  editAdvice(value, data) {
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    switch (value) {
+      case "Term Insurance":
+        this.object.insuranceSubTypeId = 1;
+        this.object.adviceToCategoryId = 42;
+        this.object.showInsurance = 'TERM';
+        data ? data.InsuranceDetails.insuranceSubTypeId = 1 : '';
+        break;
+      case "Traditional Insurance":
+        this.object.insuranceSubTypeId = 2;
+        this.object.showInsurance = 'TRADITIONAL'
+        this.object.adviceToCategoryId = 42;
+        data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
+        break;
+      case "Ulip Insurance":
+        this.object.insuranceSubTypeId = 3;
+        this.object.showInsurance = 'ULIP';
+        this.object.adviceToCategoryId = 43;
+        data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
+
+        break;
+    }
+    // this.getCategoriId(this.object.insuranceSubTypeId);
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
+    let Component = AddInsuranceComponent;
+    data['displayList']=this.displayList;
+    data['showInsurance']=this.object.showInsurance;
+    data['insuranceSubTypeId']=data.InsuranceDetails.insuranceSubTypeId;
+    data['insuranceTypeId'] = 1;
+    data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    const fragmentData = {
+      flag: 'Advice Insurance',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: EditSuggestedAdviceComponent,
+    
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
