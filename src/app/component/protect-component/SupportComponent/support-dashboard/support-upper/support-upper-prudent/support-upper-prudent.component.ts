@@ -24,6 +24,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   apiCallingStack: any = [];
   dataTable: elementI[];
   isLoading: boolean = false;
+  searchSchemeControl = new FormControl();
 
   constructor(
     public supportUpperService: SupportUpperService,

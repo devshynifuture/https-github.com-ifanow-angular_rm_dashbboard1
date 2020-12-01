@@ -213,11 +213,11 @@
             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
             <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
                 <div>
-                    <div *ngIf="!isLoding">
-                        <button *ngIf="!isLoding"
+                    <div *ngIf="!isLoading">
+                        <button *ngIf="!isLoading"
                             [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
                             (click)="acceptOrDeclineConsent( i, 1)">ACCEPTED</button>
-                        <button *ngIf="!isLoding"
+                        <button *ngIf="!isLoading"
                             [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
                             (click)="acceptOrDeclineConsent(i, 2)">DECLINE</button>
                     </div>
@@ -229,8 +229,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="dataSource.data.length == 0"
-        class="w-100 mt-70 d-flex flex-column align-items-center">
+    <div *ngIf="dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
         <img src="assets/images/svg/documents-empty-states.svg">
         <h4 class="text-center mt-12 mb-20">No Data Found</h4>
     </div>

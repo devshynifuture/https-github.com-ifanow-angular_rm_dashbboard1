@@ -84,13 +84,15 @@ export class ScssSchemeComponent implements OnInit {
       this.getKvpSchemedataResponse(this.dataList);
     }
   }
-  fetchData(value, fileName, element) {
+  fetchData(value, fileName, element, type) {
+    element['subCatTypeId'] = type;
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
-      asset: value
+      asset: value,
+      element: element
     }
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {

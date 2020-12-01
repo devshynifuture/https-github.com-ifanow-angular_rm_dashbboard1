@@ -219,7 +219,7 @@
                                 view
                             </button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('EPF',$event,element)" class="uploadInput" id="file-4"
+                                <input (change)="fetchData('EPF',$event,element, 16)" class="uploadInput" id="file-4"
                                     multiple type="file">
                             </button>
                             <!-- <button mat-menu-item class="c-p">Activity</button> -->
@@ -469,8 +469,8 @@
                                     (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed
                                     view</button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
-                                        multiple type="file">
+                                    <input (change)="fetchData('NPS',$event,element, 17)" class="uploadInput"
+                                        id="file-4" multiple type="file">
                                 </button>
                                 <!-- <button mat-menu-item class="c-p">Activity</button> -->
                                 <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
@@ -744,8 +744,8 @@
                                 view
                             </button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('Gratuity',$event,element)" class="uploadInput" id="file-4"
-                                    multiple type="file">
+                                <input (change)="fetchData('Gratuity',$event,element, 18)" class="uploadInput"
+                                    id="file-4" multiple type="file">
                             </button>
                             <!-- <button class="c-p" mat-menu-item>Activity</button> -->
                             <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
@@ -921,7 +921,7 @@
                                 mat-menu-item>Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('Superannuation',$event,element)" class="uploadInput"
+                                <input (change)="fetchData('Superannuation',$event,element, 19)" class="uploadInput"
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button class="c-p" mat-menu-item>Activity</button> -->
@@ -1082,7 +1082,7 @@
                                     mat-menu-item>Detailed
                                     view</button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('EPS',$event,element)" class="uploadInput" id="file-4"
+                                    <input (change)="fetchData('EPS',$event,element,20)" class="uploadInput" id="file-4"
                                         multiple type="file">
                                 </button>
                                 <!-- <button class="c-p" mat-menu-item>Activity</button> -->

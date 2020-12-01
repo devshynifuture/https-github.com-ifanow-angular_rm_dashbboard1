@@ -95,7 +95,7 @@ export class MultiYearGoalComponent implements OnInit {
       "name": this.multiYearGoalForm.get('field4').value,
       "notes": this.multiYearGoalForm.get('field5').value,
       "imageUrl": this.logoImg,
-      "goalType": this.goalTypeData.id,
+      "goalType": this.goalTypeData.goalTypeId,
       "planningFor": this.multiYearGoalForm.get('field1').value.id,
       // "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
       //"frequency": (this.multiYearGoalForm.get('field3').value),
@@ -104,7 +104,7 @@ export class MultiYearGoalComponent implements OnInit {
     const date = new Date();
     const monthAndDayString = '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-01';
 
-    switch (this.goalTypeData.id) {
+    switch (this.goalTypeData.goalTypeId) {
       case AppConstants.VACATION_GOAL:
         obj['planningforGroupHead'] = 1;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
@@ -115,7 +115,7 @@ export class MultiYearGoalComponent implements OnInit {
         obj['savingEndDate'] = obj['goalStartDate']
         if (obj['frequency'] == "") {
           obj['frequency'] = (this.multiYearGoalForm.get('field2').value[1] - this.multiYearGoalForm.get('field2').value[0])
-        }else if(this.goalTypeData.goalTypeId == 5){
+        } else if (this.goalTypeData.goalTypeId == 5) {
           obj['frequency'] = parseInt(this.multiYearGoalForm.get('field3').value);
         }
         if (this.detailedSpendingFormArray.length > 1) {
@@ -146,9 +146,9 @@ export class MultiYearGoalComponent implements OnInit {
         obj["presentAge"] = this.multiYearGoalForm.get('field1').value.familyMemberAge;
         futureDate = new Date(currentDate);
         obj["savingStartDate"] = this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
-        birth.setFullYear(birth.getFullYear() - this.multiYearGoalForm.get('field1').value.familyMemberAge);
+          birth.setFullYear(birth.getFullYear() - this.multiYearGoalForm.get('field1').value.familyMemberAge);
         birth2.setFullYear(birth2.getFullYear() - this.multiYearGoalForm.get('field1').value.familyMemberAge);
-        startAge =  this.multiYearGoalForm.get('field2').value[0];
+        startAge = this.multiYearGoalForm.get('field2').value[0];
         endAge = this.multiYearGoalForm.get('field2').value[1];
         birth.setFullYear(birth.getFullYear() + startAge);
         obj['goalStartDate'] = this.datePipe.transform(birth, 'yyyy-MM-dd');
@@ -167,7 +167,7 @@ export class MultiYearGoalComponent implements OnInit {
     this.planService.addMultiYearGoal(obj).subscribe(
       data => {
         this.eventService.setRefreshRequired();
-        switch (this.goalTypeData.id) {
+        switch (this.goalTypeData.goalTypeId) {
           case 5:
             this.eventService.openSnackBar("Vacation goal is added", "Dismiss");
             break;
@@ -188,7 +188,7 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   saveGoal() {
-    if(this.goalTypeData.goalTypeId != 5){
+    if (this.goalTypeData.goalTypeId != 5) {
       this.multiYearGoalForm.get('field3').setValue(0);
     }
     if (this.multiYearGoalForm.invalid || this.barButtonOptions.active) {
@@ -209,12 +209,12 @@ export class MultiYearGoalComponent implements OnInit {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(value){
+    if (value) {
       if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
         this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
       }
     }
-    
+
 
     const newOptions: Options = Object.assign({}, this.rangeFieldOptions);
     newOptions.floor = this.minAgeYear;
@@ -235,7 +235,7 @@ export class MultiYearGoalComponent implements OnInit {
       field5: [''],  // goal description
       logo: ['']
     });
-    if(this.goalTypeData.goalTypeId != 5){
+    if (this.goalTypeData.goalTypeId != 5) {
       this.multiYearGoalForm.get('field3').setValue(1)
     }
   }

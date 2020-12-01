@@ -201,6 +201,7 @@ export class AuthService {
     localStorage.removeItem('roleObj');
     localStorage.removeItem('successStoringToken');
     localStorage.removeItem('googleOAuthToken');
+    window.name = undefined;
     localStorage.clear();
     sessionStorage.removeItem('clientList');
     sessionStorage.clear();

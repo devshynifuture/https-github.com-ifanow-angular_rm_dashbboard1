@@ -104,13 +104,13 @@ export class SingleGoalYearComponent implements OnInit {
       "goalName": this.singleYearGoalForm.get('goalName').value,
       "notes": this.singleYearGoalForm.get('goalDescription').value,
       "imageUrl": this.logoImg,
-      "goalType": this.goalTypeData.id,
+      "goalType": this.goalTypeData.goalTypeId,
       "savingStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
     }
 
     let ageDiff = 0;
     let futureDate = new Date(currentDate);
-    switch (this.goalTypeData.id) {
+    switch (this.goalTypeData.goalTypeId) {
       case AppConstants.HOUSE_GOAL: // House
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
@@ -126,7 +126,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       case AppConstants.RETIREMENT_GOAL: // retirement
-       obj['milestoneModels'] = [];
+        obj['milestoneModels'] = [];
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100 + this.singleYearGoalForm.get('costReduction').value)) / 100
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -142,10 +142,10 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
         obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
-         this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
-           if(element.onRetirementOrDemise != 0){
+        this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
+          if (element.onRetirementOrDemise != 0) {
             obj['milestoneModels'].push(element)
-           }
+          }
         });
         break;
       case AppConstants.CAR_GOAL: // Car
@@ -303,9 +303,9 @@ export class SingleGoalYearComponent implements OnInit {
     });
 
     // if goal is retirement
-    if (this.goalTypeData.id === 1) {
+    if (this.goalTypeData.goalTypeId === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
-    //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
+      //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());
@@ -317,6 +317,9 @@ export class SingleGoalYearComponent implements OnInit {
         })]),
 
       )
+    }
+    if (this.goalTypeData.goalTypeId === 5) {
+      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
     }
   }
 
