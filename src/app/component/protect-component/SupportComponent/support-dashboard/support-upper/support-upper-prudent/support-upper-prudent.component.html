@@ -21,8 +21,9 @@
 <div class="col-md-12 row pt-72">
     <h5> Search Prudent scheme</h5>
     <mat-form-field appearance="standard" floatLabel="never">
-        <input #inputSearch class="form-control" matInput placeholder="Search" (focus)="searchSchemeName(element)"
-            aria-label="State" [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
+        <input #inputSearch class="form-control" matInput placeholder="Search"
+            (focus)="searchSchemeName(inputSearch.value)" aria-label="State" [matAutocomplete]="auto1"
+            [formControl]="searchSchemeControl">
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
             <!-- <ng-container *ngIf="!isLoadingForDropDown">
