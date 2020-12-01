@@ -25,7 +25,7 @@ export class EmailAdviceComponent implements OnInit {
   flag: any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   subjectFormCOntrol = new FormControl();
-  _inputData = { fromEmail: '', subjectEditable: false, subject: '', bodyChange: '' };
+  _inputData = { toEmail :'',fromEmail: '', subjectEditable: false, subject: '', bodyChange: '' };
   getOrgData = AuthService.getOrgDetails();
   emailBody = `
   <html>
@@ -59,6 +59,7 @@ export class EmailAdviceComponent implements OnInit {
     this._inputData.fromEmail = 'sarvesh@futurewise.co.in';
     this._inputData.subjectEditable = false;
     this._inputData.subject = 'Email advice request for consent ';
+    this._inputData.toEmail = 'gayatri@futurewise.co.in';
 
     console.log(this.selectedAssetId, "selected id")
   }
@@ -134,7 +135,7 @@ export class EmailAdviceComponent implements OnInit {
       "messageBody": "Test",
       "toEmail": [
         {
-          "emailAddress": this._inputData.fromEmail
+          "emailAddress": 'gayatri@futurewise.co.in'
         }
       ],
       "targetObject": {
