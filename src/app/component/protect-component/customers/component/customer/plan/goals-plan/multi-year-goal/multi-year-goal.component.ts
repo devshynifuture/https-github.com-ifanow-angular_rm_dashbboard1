@@ -167,7 +167,7 @@ export class MultiYearGoalComponent implements OnInit {
     this.planService.addMultiYearGoal(obj).subscribe(
       data => {
         this.eventService.setRefreshRequired();
-        switch (this.goalTypeData.id) {
+        switch (this.goalTypeData.goalTypeId) {
           case 5:
             this.eventService.openSnackBar("Vacation goal is added", "Dismiss");
             break;
