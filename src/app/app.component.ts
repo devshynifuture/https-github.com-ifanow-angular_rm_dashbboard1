@@ -91,18 +91,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     public enumDataService: EnumDataService,
     @Inject(DOCUMENT) private document
   ) {
-    this.route.queryParams.subscribe((params) => {
-      if (params) {
-        this.settingService.getRandomStringFromPlanner(params)
-          .subscribe(res => {
-            if (res) {
-              this.loginService.handleUserData(undefined, this.router, res);
-            }
-          }, err => {
-            console.error(err);
-          });
-      }
-    });
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
