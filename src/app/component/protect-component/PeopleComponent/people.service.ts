@@ -1,9 +1,9 @@
-import { AuthService } from './../../../auth-service/authService';
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import {AuthService} from './../../../auth-service/authService';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpParams, HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -184,7 +184,12 @@ export class PeopleService {
   deleteEmail(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_EMAIL, data);
   }
-  getRandomStringForMarketPlace(data) {
-    return this.http.post(apiConfig.USER + appConfig.GET_RANDOM_STRING, data);
+
+  getUniqueStringForLogin(data) {
+    return this.http.post(apiConfig.USER + appConfig.GET_UNIQUE_STRING_FOR_LOGIN, data);
+  }
+
+  getLoginDataFromUniqueString(data) {
+    return this.http.post(apiConfig.USER + appConfig.GET_LOGIN_DATA_FROM_RANDOM_STRING, data);
   }
 }

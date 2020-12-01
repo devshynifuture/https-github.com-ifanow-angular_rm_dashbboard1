@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core/src/metadata/*';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from '../auth-service/authService';
+import {of} from "rxjs";
+import {PeopleService} from "../component/protect-component/PeopleComponent/people.service";
+import {LoginService} from "../component/no-protected/login/login.service";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

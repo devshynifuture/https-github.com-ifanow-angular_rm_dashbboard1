@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../auth-service/authService';
-import { RoleService } from "../auth-service/role.service";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {AuthService} from '../auth-service/authService';
+import {RoleService} from '../auth-service/role.service';
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
+import {LoginService} from '../component/no-protected/login/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private myRoute: Router, private authService: AuthService,
-    private roleService: RoleService) {
+              private roleService: RoleService, private peopleService: PeopleService, private loginService: LoginService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -33,6 +37,10 @@ export class AuthGuard implements CanActivate {
           this.myRoute.navigate(['/']);
           return false;
         }
+      } else if (state && state.url.split('/').includes('admin') && !this.authService.isAdvisor()) {
+        console.log('advisorGuard failed general: ', next, state);
+        this.myRoute.navigate(['unauthorized']);
+        return false;
       }
       // const user = this.authService.decode();
       //
@@ -45,13 +53,32 @@ export class AuthGuard implements CanActivate {
 
       return true;
     } else {
+      const winName = window.name;
+      console.log('AppComponent getRandomStringFromPlanner winName: ', winName);
 
-      if (state && state.url.split('/').includes('login')) {
+      if (winName.includes('uniqueString')) {
+        return this.peopleService.getLoginDataFromUniqueString(winName)
+
+          ./*pipe(*/map((response) => {
+            console.log('AppComponent getRandomStringFromPlanner response: ', response);
+            window.name = undefined;
+            if (response) {
+              this.loginService.handleUserData(this.authService, this.myRoute, response);
+              return true;
+            } else {
+              return false;
+            }
+          }, catchError(err => {
+            this.myRoute.navigate(['/login']);
+            console.log('AppComponent getRandomStringFromPlanner err: ', err);
+            return of(false);
+          }));
+      } else if (state && state.url.split('/').includes('login')) {
         return true;
       }
       if (state && state.url.split('/').includes('invite')) {
-        console.log(next, this.myRoute)
-        this.myRoute.navigate(['/login/signup'], { queryParams: { code: next.params ? next.params.param : '' } });
+        console.log(next, this.myRoute);
+        this.myRoute.navigate(['/login/signup'], {queryParams: {code: next.params ? next.params.param : ''}});
         return true;
       }
       this.myRoute.navigate(['/login']);
