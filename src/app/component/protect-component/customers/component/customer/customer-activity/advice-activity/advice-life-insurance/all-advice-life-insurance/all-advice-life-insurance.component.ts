@@ -18,7 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   styleUrls: ['./all-advice-life-insurance.component.scss']
 })
 export class AllAdviceLifeInsuranceComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
+  displayedColumns3: string[] = ['checkbox', 'position', 'policyName', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
   lifeInsuranceList: any;
@@ -41,6 +41,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   ulipCpy: any;
   LIData: unknown;
   totalFundValues: number;
+  allTrad: any;
+  allUlip: any;
+  allTerm: any;
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
@@ -75,7 +78,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       // adviceStatusId: 1,
       categoryMasterId: 3,
       categoryTypeId: 3,
-      status: 0
+      statusFlag: 0
     }
     const obj2 = {
       advisorId: this.advisorId,
@@ -135,17 +138,20 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
+    this.allTerm = data.TERM_LIFE_INSURANCE
     let termData = this.setCatId(data.TERM_LIFE_INSURANCE,1);
     this.termCpy = termData;
     // let termData = this.filterForAsset(data.TERM_LIFE_INSURANCE)
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
+    this.allTrad  = data.TRADITIONAL_LIFE_INSURANCE;
     let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE,2);
     this.tradCopy = traditionalData
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
+    this.allUlip  = data.ULIP_LIFE_INSURANCE;
     let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE,3);
     this.ulipCpy = ulipData
     this.ulipDataSource = new MatTableDataSource(ulipData);
@@ -158,15 +164,21 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
     array = (name == 'Term insurance') ? this.termCpy : (name == 'Traditional insurance') ? this.tradCopy : this.ulipCpy;
-    dataFiltered = array.filter(function (item) {
-      return item.adviceDetails[key] === parseInt(value);
-    });
-    if (dataFiltered.length > 0) {
-      dataSource.data = dataFiltered;
-      dataSource = new MatTableDataSource(dataSource.data);
-    } else {
-      this.eventService.openSnackBar("No data found", "Dismiss")
+    if(value != 0){
+      dataFiltered = array.filter(function (item) {
+        return item.adviceDetails[key] === parseInt(value);
+      });
+      if (dataFiltered.length > 0) {
+        dataSource.data = dataFiltered;
+        dataSource = new MatTableDataSource(dataSource.data);
+      } else {
+        this.eventService.openSnackBar("No data found", "Dismiss")
+      }
+    }else{
+      dataSource.data = array;
     }
+
+
 
   }
 
@@ -188,7 +200,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     if(data.length > 0){
       data = data.filter(item => item.insuranceSubTypeId === id);
       data.forEach(element => {
-        element.adviceDetails={adviceToCategoryTypeMasterId: 3};
+        element.adviceDetails={adviceToCategoryTypeMasterId: 3,adviceStatusId:0,adviceId:0};
         element.InsuranceDetails = element
       });
     }else{

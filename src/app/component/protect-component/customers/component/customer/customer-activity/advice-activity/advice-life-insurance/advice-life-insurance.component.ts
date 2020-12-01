@@ -11,6 +11,8 @@ import { AddInsuranceComponent } from '../../../../common-component/add-insuranc
 import { forkJoin } from 'rxjs';
 import { CustomerService } from '../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EditSuggestedAdviceComponent } from '../edit-suggested-advice/edit-suggested-advice.component';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -18,7 +20,22 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   styleUrls: ['./advice-life-insurance.component.scss']
 })
 export class AdviceLifeInsuranceComponent implements OnInit {
-  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+};
+  displayedColumns3: string[] = ['checkbox', 'position', 'policyName', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
   lifeInsuranceList: any;
@@ -34,28 +51,33 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   traditionalCount: any;
   ulipCount: any;
   displayList: any;
-  object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
-  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '4', value: 'Take loan' }, { id: '5', value: 'Partial withdrawl' }]
+  object: any;
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '5', value: 'Partial withdrawl' }]
   ulipCpy: any;
   tradCopy: any;
   termCpy: any[];
+  allTerm: any;
+  allTrad: any;
+  allUlip: any;
+  catObj: any;
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    // this.getAllCategory();
+    this.getAllCategory();
     this.getAdviceByAsset();
   }
   getAllCategory() {
-    this.isLoading = true;
-    this.termDataSource = [{}, {}, {}];
-    this.traditionalDataSource = [{}, {}, {}];
-    this.ulipDataSource = [{}, {}, {}];
+    // this.isLoading = true;
+    // this.termDataSource = [{}, {}, {}];
+    // this.traditionalDataSource = [{}, {}, {}];
+    // this.ulipDataSource = [{}, {}, {}];
     this.activityService.getAllCategory('').subscribe(
       data => {
+        this.catObj = data;
         console.log(data);
-        this.getAdviceByAsset();
+        // this.getAdviceByAsset();
       }, (error) => {
         this.eventService.openSnackBar('error', 'Dismiss');
       }
@@ -123,17 +145,20 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
+    this.allTerm = data.TERM_LIFE_INSURANCE
     let termData = this.setCatId(data.TERM_LIFE_INSURANCE);
     this.termCpy = termData;
     // let termData = this.filterForAsset(data.TERM_LIFE_INSURANCE)
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
+    this.allTrad  = data.TRADITIONAL_LIFE_INSURANCE;
     let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE);
     this.tradCopy = traditionalData
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
+    this.allUlip  = data.ULIP_LIFE_INSURANCE;
     let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE);
     this.ulipCpy = ulipData
     this.ulipDataSource = new MatTableDataSource(ulipData);
@@ -145,17 +170,20 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   }
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
-    array = (name == 'Term insurance') ? this.termCpy : (name == 'Traditional insurance') ? this.tradCopy : this.ulipCpy;
-    dataFiltered = array.filter(function (item) {
-      return item.adviceDetails[key] === parseInt(value);
-    });
-    if (dataFiltered.length > 0) {
-      dataSource.data = dataFiltered;
-      dataSource = new MatTableDataSource(dataSource.data);
-    } else {
-      this.eventService.openSnackBar("No data found", "Dismiss")
+    array = (name == 'Term insurance') ? this.allTerm : (name == 'Traditional insurance') ? this.allTrad : this.allUlip;
+    if(value != 0){
+      dataFiltered = array.filter(function (item) {
+        return item.adviceDetails[key] === parseInt(value);
+      });
+      if (dataFiltered.length > 0) {
+        dataSource.data = dataFiltered;
+        dataSource = new MatTableDataSource(dataSource.data);
+      } else {
+        this.eventService.openSnackBar("No data found", "Dismiss")
+      }
+    }else{
+      dataSource.data = array;
     }
-
   }
   setCatId(data) {
     let array = [];
@@ -240,29 +268,37 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
     });
   }
+  getCategoriId(){
+    this.catObj.forEach(element => {
+      
+    });
+  }
   openAddEditAdvice(value, data) {
-    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 }
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
     switch (value) {
       case "Term Insurance":
         this.object.insuranceSubTypeId = 1;
+        this.object.adviceToCategoryId = 42;
         this.object.showInsurance = 'TERM';
         data ? data.InsuranceDetails.insuranceSubTypeId = 1 : '';
         break;
       case "Traditional Insurance":
         this.object.insuranceSubTypeId = 2;
-        this.object.showInsurance = 'TERM'
+        this.object.showInsurance = 'TRADITIONAL'
+        this.object.adviceToCategoryId = 42;
         data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
         break;
       case "Ulip Insurance":
         this.object.insuranceSubTypeId = 3;
-        this.object.showInsurance = 'TERM';
+        this.object.showInsurance = 'ULIP';
+        this.object.adviceToCategoryId = 43;
         data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
 
         break;
     }
+    // this.getCategoriId(this.object.insuranceSubTypeId);
     data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     let Component = AddInsuranceComponent;
-
     const fragmentData = {
       flag: 'Advice Insurance',
       data,
@@ -270,7 +306,61 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
+      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  editAdvice(value, data) {
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    switch (value) {
+      case "Term Insurance":
+        this.object.insuranceSubTypeId = 1;
+        this.object.adviceToCategoryId = 42;
+        this.object.showInsurance = 'TERM';
+        data ? data.InsuranceDetails.insuranceSubTypeId = 1 : '';
+        break;
+      case "Traditional Insurance":
+        this.object.insuranceSubTypeId = 2;
+        this.object.showInsurance = 'TRADITIONAL'
+        this.object.adviceToCategoryId = 42;
+        data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
+        break;
+      case "Ulip Insurance":
+        this.object.insuranceSubTypeId = 3;
+        this.object.showInsurance = 'ULIP';
+        this.object.adviceToCategoryId = 43;
+        data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
+
+        break;
+    }
+    // this.getCategoriId(this.object.insuranceSubTypeId);
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
+    let Component = AddInsuranceComponent;
+    data['displayList']=this.displayList;
+    data['showInsurance']=this.object.showInsurance;
+    data['insuranceSubTypeId']=data.InsuranceDetails.insuranceSubTypeId;
+    data['insuranceTypeId'] = 1;
+    data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    const fragmentData = {
+      flag: 'Advice Insurance',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: EditSuggestedAdviceComponent,
+    
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

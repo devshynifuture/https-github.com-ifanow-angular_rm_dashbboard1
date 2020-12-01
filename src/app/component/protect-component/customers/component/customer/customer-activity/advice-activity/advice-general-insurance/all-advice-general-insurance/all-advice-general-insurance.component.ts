@@ -101,7 +101,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       // adviceStatusId:1
       categoryMasterId: 4,
       categoryTypeId: 4,
-      status: 1
+      statusFlag: 0
     }
     const obj2 = {
       advisorId: this.advisorId,
@@ -324,15 +324,20 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
     array = (name == 'Health Insurance') ? this.healthCpy : (name == 'Personal accident') ? this.presonalCpy :(name == 'Critical illness') ? this.criticalCpy : (name == 'Motor insurance') ? this.motorCpy : (name == 'Travel insurance') ? this.travelCpy : (name == 'Home insurance') ? this.homeCpy :(name == 'Fire & special perils insurance') ? this.fireCpy : this.fireCpy;
-    dataFiltered = array.filter(function (item) {
-      return item.adviceDetails[key] === parseInt(value);
-    });
-    if (dataFiltered.length > 0) {
-      dataSource.data = dataFiltered;
-      dataSource = new MatTableDataSource(dataSource.data);
-    } else {
-      this.eventService.openSnackBar("No data found", "Dismiss")
+    if(value != 0){
+      dataFiltered = array.filter(function (item) {
+        return item.adviceDetails[key] === parseInt(value);
+      });
+      if (dataFiltered.length > 0) {
+        dataSource.data = dataFiltered;
+        dataSource = new MatTableDataSource(dataSource.data);
+      } else {
+        this.eventService.openSnackBar("No data found", "Dismiss")
+      }
+    }else{
+      dataSource.data = array;
     }
+
 
   }
   deleteModal(value, subData) {

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/delete-progress-button/delete-progress-button.component';
 
 @Component({
   selector: 'app-email-advice',
@@ -16,6 +17,21 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./email-advice.component.scss']
 })
 export class EmailAdviceComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Send',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+};
   groupId: any;
   @ViewChild('tempRef', { static: true }) tempRef: ElementRef;
   @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
@@ -112,6 +128,7 @@ export class EmailAdviceComponent implements OnInit {
   }
 
   sendEmail() {
+    this.barButtonOptions.active = true;
     this.emailBody.replace('$company_name', this.getOrgData.companyName);
     let obj = this.selectedAssetId;
     if (this.flag == 'BypassConsent') {
@@ -151,6 +168,7 @@ export class EmailAdviceComponent implements OnInit {
         }
       ]
     }
+    this.barButtonOptions.active = false;
     this.cusService.sentEmailConsent(obj).subscribe(
       data => {
         console.log(data)

@@ -23,8 +23,8 @@
                         <div class="pt-40">
                             <div class="row">
                                 <div class="col-md-6 pl-0">
-                                    <p class="m-0 text-black roboto">Advice header</p>
-                                    <div class="form-group">
+                                    <p class="m-0 text-black roboto" *ngIf="!dataForEdit">Advice header</p>
+                                    <div class="form-group" *ngIf="!dataForEdit">
                                         <!-- <mat-form-field>
                                             <mat-select #header autocomplete="off" class="form-control br-0"
                                                 formControlName="header" matInput>
@@ -46,14 +46,30 @@
                                             </mat-error> -->
                                         </mat-form-field>
                                     </div>
+                                     <p class="m-0 text-black roboto" *ngIf="dataForEdit">Advice header</p>
+                                        <div class="form-group" *ngIf="dataForEdit">
+                                            <mat-form-field>
+                                                <mat-select #headerEdit autocomplete="off" class="form-control br-0"
+                                                    formControlName="headerEdit" matInput>
+    
+                                                    <mat-option value=''>Select option</mat-option>
+                                                    <mat-option *ngFor="let option of adviceHeaderList ;index as i"
+                                                        [value]="option.id">
+                                                        {{option.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>This field is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
                                     <p class="m-0 text-black roboto pt-20">Advice rationale</p>
                                     <div class="form-group">
                                         <mat-form-field>
                                             <textarea matInput formControlName="rationale" class="form-control"
                                                 rows="7"></textarea>
-                                            <mat-error>
+                                            <!-- <mat-error>
                                                 This field is required
-                                            </mat-error>
+                                            </mat-error> -->
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6 p-0">
@@ -172,9 +188,12 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
         </div>
         <div class="col-md-8 text-right">
-            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+            <button *ngIf="this.stepper.selectedIndex == 1" (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
             </button>
-            <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button>
+            <app-progress-button  (click)="addOrNextStep()" class="btn-bottom br-0"
+            [options]="barButtonOptions">
+        </app-progress-button>
+            <!-- <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button> -->
         </div>
     </div>
 </div>

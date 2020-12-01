@@ -54,32 +54,35 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu1>
-                <button (click)="filterInsurance('adviceStatusId', '1','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '0','Term insurance',allTerm,termDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button (click)="filterInsurance('adviceStatusId', '1','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     GIVEN</button>
-                <button (click)="filterInsurance('adviceStatusId', '2','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '2','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>AWAITING
                     CONSENT
                 </button>
-                <button (click)="filterInsurance('adviceStatusId', '3','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '3','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     ACCEPTED</button>
-                <button (click)="filterInsurance('adviceStatusId', '4','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '4','Term insurance',allTerm,termDataSource)"
                     mat-menu-item> IN
                     PROGRESS</button>
-                <button (click)="filterInsurance('adviceStatusId', '5','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '5','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     IMPLEMENTED</button>
-                <button (click)="filterInsurance('adviceStatusId', '6','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '6','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     DECLINED</button>
-                <button (click)="filterInsurance('adviceStatusId', '7','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '7','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     PENDING</button>
-                <button (click)="filterInsurance('adviceStatusId', '8','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '8','Term insurance',allTerm,termDataSource)"
                     mat-menu-item> SYSTEM
                     GENERATED</button>
-                <button (click)="filterInsurance('adviceStatusId', '9','Term insurance',termCpy,termDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '9','Term insurance',allTerm,termDataSource)"
                     mat-menu-item>
                     REVISED</button>
 
@@ -119,8 +122,18 @@
                 </div>
             </td>
         </ng-container>
+        <ng-container matColumnDef="policyName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Policy name </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br">
+                    <div class="bar">
+                        <span *ngIf="element?.InsuranceDetails">
+                            {{element?.InsuranceDetails?.policyName ? element?.InsuranceDetails?.policyName : '-'}}
+                        </span>
+                    </div>
+                </td>
+            </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum assured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
@@ -170,7 +183,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
+                        <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
                         </span>
@@ -215,7 +228,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Term Insurance',element)">Edit</button>
+                        <button mat-menu-item (click)="editAdvice('Term Insurance',element)">Edit</button>
                         <button mat-menu-item (click)="deleteModal('Term Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -237,40 +250,44 @@
             </button>
             <mat-menu #insuranceMenu2>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '1','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '0','Traditional insurance',allTrad,traditionalDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '1','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     GIVEN</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '2','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '2','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>AWAITING
                     CONSENT
                 </button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '3','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '3','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     ACCEPTED</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '4','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '4','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item> IN
                     PROGRESS</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '5','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '5','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     IMPLEMENTED</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '6','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '6','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     DECLINED</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '7','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '7','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     PENDING</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '8','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '8','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item> SYSTEM
                     GENERATED</button>
                 <button
-                    (click)="filterInsurance('adviceStatusId', '9','Traditional insurance',traditionalDataSource,traditionalDataSource)"
+                    (click)="filterInsurance('adviceStatusId', '9','Traditional insurance',allTrad,traditionalDataSource)"
                     mat-menu-item>
                     REVISED</button>
 
@@ -309,8 +326,18 @@
                 </div>
             </td>
         </ng-container>
+        <ng-container matColumnDef="policyName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Policy name </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br">
+                    <div class="bar">
+                        <span *ngIf="element?.InsuranceDetails">
+                            {{element?.InsuranceDetails?.policyName ? element?.InsuranceDetails?.policyName : '-'}}
+                        </span>
+                    </div>
+                </td>
+            </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum assured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
@@ -360,7 +387,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
+                        <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
                         </span>
@@ -405,7 +432,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Traditional Insurance',element)">Edit</button>
+                        <button mat-menu-item (click)="editAdvice('Traditional Insurance',element)">Edit</button>
                         <button mat-menu-item (click)="deleteModal('Traditional Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -426,32 +453,35 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu3>
-                <button (click)="filterInsurance('adviceStatusId', '1','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '0','ULIP insurance',allUlip,ulipDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button (click)="filterInsurance('adviceStatusId', '1','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     GIVEN</button>
-                <button (click)="filterInsurance('adviceStatusId', '2','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '2','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>AWAITING
                     CONSENT
                 </button>
-                <button (click)="filterInsurance('adviceStatusId', '3','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '3','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     ACCEPTED</button>
-                <button (click)="filterInsurance('adviceStatusId', '4','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '4','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item> IN
                     PROGRESS</button>
-                <button (click)="filterInsurance('adviceStatusId', '5','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '5','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     IMPLEMENTED</button>
-                <button (click)="filterInsurance('adviceStatusId', '6','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '6','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     DECLINED</button>
-                <button (click)="filterInsurance('adviceStatusId', '7','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '7','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     PENDING</button>
-                <button (click)="filterInsurance('adviceStatusId', '8','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '8','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item> SYSTEM
                     GENERATED</button>
-                <button (click)="filterInsurance('adviceStatusId', '9','ULIP insurance',ulipCpy,ulipDataSource)"
+                <button (click)="filterInsurance('adviceStatusId', '9','ULIP insurance',allUlip,ulipDataSource)"
                     mat-menu-item>
                     REVISED</button>
 
@@ -490,8 +520,18 @@
                 </div>
             </td>
         </ng-container>
+        <ng-container matColumnDef="policyName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Policy name </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br">
+                    <div class="bar">
+                        <span *ngIf="element?.InsuranceDetails">
+                            {{element?.InsuranceDetails?.policyName ? element?.InsuranceDetails?.policyName : '-'}}
+                        </span>
+                    </div>
+                </td>
+            </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum ssured </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Sum assured </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span
@@ -541,7 +581,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==2">Surrender</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span>
+                        <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
                         <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
                         </span>
@@ -586,7 +626,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Ulip Insurance',element)">Edit</button>
+                        <button mat-menu-item (click)="editAdvice('Ulip Insurance',element)">Edit</button>
                         <button mat-menu-item (click)="deleteModal('Ulip Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>

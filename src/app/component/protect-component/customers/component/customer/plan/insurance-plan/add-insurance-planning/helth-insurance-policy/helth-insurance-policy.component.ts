@@ -54,7 +54,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Surrender', selected: false },
       { value: 3, advice: 'Stop paying premium', selected: false },
-      { value: 4, advice: 'Partial withdrawl', selected: false }]
+      { value: 5, advice: 'Partial withdrawl', selected: false }]
     } else {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Discontinue', selected: false },
@@ -183,10 +183,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (name == 'Port policy' || name == 'Stop paying premium') {
       this.adviseId = 3;
     }
-    if (name == 'Increase sum assured' || name == 'Partial withdrawl') {
+    if (name == 'Increase sum assured') {
       this.adviseId = 4;
     }
-    if (name == 'Decrease sum assured') {
+    if (name == 'Decrease sum assured' || name == 'Partial withdrawl') {
       this.adviseId = 5;
     }
     if (name == 'Add members') {

@@ -45,4 +45,7 @@
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
-  
+  .active {
+    background-color: #008FFF !important;
+    color: white;
+  }

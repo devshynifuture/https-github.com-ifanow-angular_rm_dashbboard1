@@ -18,6 +18,7 @@ export class EmailConsentComponent implements OnInit {
   paramData: any;
 
   constructor(private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
+  displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium', 'rate', 'maturityDate','applicableDate','actions'];
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'advice', 'adviceStatus', 'applicableDate', 'actions'];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   selectedConsent = [];
@@ -109,7 +110,8 @@ export class EmailConsentComponent implements OnInit {
     )
   }
 
-  acceptOrDeclineConsent(index, choice) {
+  acceptOrDeclineConsent(ele,index, choice) {
+    ele.acceptedOrDeclined = choice;
     this.consentData[index].acceptedOrDeclined = choice;
     this.consentData[index].actionPerformed = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
   }
