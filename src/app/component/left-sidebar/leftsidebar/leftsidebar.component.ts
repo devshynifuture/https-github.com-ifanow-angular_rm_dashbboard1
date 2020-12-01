@@ -1,21 +1,20 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from '../../../Data-service/event.service';
-import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormControl } from '@angular/forms';
-import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { Router } from '@angular/router';
-import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
-import { DynamicComponentService } from '../../../services/dynamic-component.service';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
-import { EnumDataService } from '../../../services/enum-data.service';
-import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from 'src/app/services/util.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
-import { map, startWith, debounceTime } from 'rxjs/operators';
-import { Subscription, Observable } from 'rxjs';
-import { apiConfig } from '../../../config/main-config';
-import { RoleService } from '../../../auth-service/role.service';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from '../../../Data-service/event.service';
+import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormControl} from '@angular/forms';
+import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {Router} from '@angular/router';
+import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
+import {EnumDataService} from '../../../services/enum-data.service';
+import {SettingsService} from '../../protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from 'src/app/services/util.service';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import {debounceTime, startWith} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
+import {RoleService} from '../../../auth-service/role.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -45,7 +44,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   showDefaultDropDownOnSearch: boolean;
   isOpen: boolean;
   roleObj: any = {};
-  @ViewChild('inputSearch', { static: true }) inputRef: ElementRef;
+  @ViewChild('inputSearch', {static: true}) inputRef: ElementRef;
   logoText = 'Your Logo here';
   role: any;
   isLoding: boolean;
@@ -53,14 +52,14 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public authService: AuthService, private _eref: ElementRef,
-    protected eventService: EventService, protected subinject: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-    protected dynamicComponentService: DynamicComponentService,
-    public enumDataService: EnumDataService,
-    private settingsService: SettingsService,
-    private auth: AuthService,
-    private utilService: UtilService, private peopleService: PeopleService,
-    public roleService: RoleService) {
+              protected eventService: EventService, protected subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+              protected dynamicComponentService: DynamicComponentService,
+              public enumDataService: EnumDataService,
+              private settingsService: SettingsService,
+              private auth: AuthService,
+              private utilService: UtilService, private peopleService: PeopleService,
+              public roleService: RoleService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -99,15 +98,18 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     const obj = {
       advisorId: AuthService.getAdvisorId()
     };
-    this.peopleService.getRandomStringForMarketPlace(obj).subscribe(
+    this.peopleService.getUniqueStringForLogin(obj).subscribe(
       data => this.stringRes(data)
     );
 
   }
+
   stringRes(data) {
     const url = 'https://experts.ifanow.com/admin/advisor-marketplace/engage-grow';
+    data.appName = 'marketplace';
     window.open(url, data);
   }
+
   getActiveLink(value) {
     const link = this.router.url.split('/')[2];
 
@@ -136,7 +138,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             this.auth.setClientData(data);
             this.myControl.setValue(singleClientData.displayName);
             this.ngZone.run(() => {
-              this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...data } });
+              this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], {state: {...data}});
             });
           }
         },
@@ -148,7 +150,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.auth.setClientData(singleClientData);
       this.myControl.setValue(singleClientData.displayName);
       this.ngZone.run(() => {
-        this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
+        this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], {state: {...singleClientData}});
       });
     }
   }
@@ -214,29 +216,29 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
     this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
       debounceTime(700)).subscribe(
-        data => {
-          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-            if (responseArray) {
-              if (value.length >= 0) {
-                this.clientList = responseArray;
-                this.showDefaultDropDownOnSearch = false;
-                this.isLoding = false;
-              } else {
-                this.showDefaultDropDownOnSearch = undefined;
-                this.isLoding = undefined;
-                this.clientList = undefined;
-              }
-            } else {
-              this.showDefaultDropDownOnSearch = true;
+      data => {
+        this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+          if (responseArray) {
+            if (value.length >= 0) {
+              this.clientList = responseArray;
+              this.showDefaultDropDownOnSearch = false;
               this.isLoding = false;
+            } else {
+              this.showDefaultDropDownOnSearch = undefined;
+              this.isLoding = undefined;
               this.clientList = undefined;
             }
-          }, error => {
+          } else {
+            this.showDefaultDropDownOnSearch = true;
+            this.isLoding = false;
             this.clientList = undefined;
-            console.log('getFamilyMemberListRes error : ', error);
-          });
-        }
-      );
+          }
+        }, error => {
+          this.clientList = undefined;
+          console.log('getFamilyMemberListRes error : ', error);
+        });
+      }
+    );
   }
 
   getPersonalProfiles() {
