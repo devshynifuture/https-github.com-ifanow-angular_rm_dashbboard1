@@ -126,7 +126,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       case AppConstants.RETIREMENT_GOAL: // retirement
-       obj['milestoneModels'] = [];
+        obj['milestoneModels'] = [];
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100 + this.singleYearGoalForm.get('costReduction').value)) / 100
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -142,10 +142,10 @@ export class SingleGoalYearComponent implements OnInit {
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['monthlyExpense'] = this.singleYearGoalForm.get('cost').value;
         obj['goalAdditionDate'] = this.datePipe.transform(new Date, 'yyyy-MM-dd')
-         this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
-           if(element.onRetirementOrDemise != 0){
+        this.singleYearGoalForm.value.getMilestoneName.forEach(element => {
+          if (element.onRetirementOrDemise != 0) {
             obj['milestoneModels'].push(element)
-           }
+          }
         });
         break;
       case AppConstants.CAR_GOAL: // Car
@@ -303,9 +303,9 @@ export class SingleGoalYearComponent implements OnInit {
     });
 
     // if goal is retirement
-    if (this.goalTypeData.id === 1) {
+    if (this.goalTypeData.goalTypeId === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
-    //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
+      //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType3', new FormControl());
@@ -317,6 +317,9 @@ export class SingleGoalYearComponent implements OnInit {
         })]),
 
       )
+    }
+    if (this.goalTypeData.goalTypeId === 5) {
+      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
     }
   }
 
