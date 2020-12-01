@@ -83,7 +83,7 @@ export class EmailConsentComponent implements OnInit {
             actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd'),
             advice: {
               "id": element.adviceId,
-              "adviceToCategoryTypeMasterId": element.adviceToCategoryTypeMasterId
+              "adviceToCategoryTypeMasterId": element.advice.adviceToCategoryTypeMasterId
             },
           }
           this.consentData.push(obj)
