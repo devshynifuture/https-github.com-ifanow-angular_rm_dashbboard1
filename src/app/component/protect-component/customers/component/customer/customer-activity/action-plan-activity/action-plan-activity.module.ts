@@ -1,20 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ActionPlanActivityRoutingModule } from './action-plan-activity-routing.module';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { MaterialModule } from 'src/app/material/material';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AdviceActivityModule } from '../advice-activity/advice-activity.module';
+import { ActionPlanActivityRoutingModule } from './action-plan-activity-routing.module';
 import { ActionPlanActivityComponent } from './action-plan-activity.component';
 
 
+
 @NgModule({
-  declarations: [ActionPlanActivityComponent],
+  declarations: [ActionPlanActivityComponent,
+  ],
   imports: [
     CommonModule,
     ActionPlanActivityRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CustomDirectiveModule,
+    AdviceActivityModule
   ]
 })
 export class ActionPlanActivityModule { }
