@@ -203,7 +203,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFileDetails(documentType, e) {
-    if (this.data.aggregatorType == 2 && e.target.files[0].type !== 'image/tiff') {
+    if (this.data.aggregatorType == 1 && e.target.files[0].type !== 'image/tiff') {
       this.eventService.openSnackBar('File type is not image/tiff');
       if (documentType == 1) {
         this.addbarWidth(0);
