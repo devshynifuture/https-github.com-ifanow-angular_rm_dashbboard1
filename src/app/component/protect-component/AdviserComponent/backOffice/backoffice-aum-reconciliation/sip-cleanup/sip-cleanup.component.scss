@@ -2,3 +2,12 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+::ng-deep .paginationClass {
+  .mat-paginator-range-label {
+    margin: 0px;
+  }
+  .mat-paginator-container {
+    min-height: auto;
+  }
+}
