@@ -1,8 +1,8 @@
 <div class="row pt-150">
-    <div class="col-lg-2 col-md-2 d-flex align-items-center">
+    <!-- <div class="col-lg-2 col-md-2 d-flex align-items-center">
         <h3 class="m-0 roboto f-400">SIP Cleanup</h3>
-    </div>
-    <div class="col-lg-8 col-md-12 md-pt-16">
+    </div> -->
+    <div class="col-lg-9 pl-0 col-md-12 md-pt-16">
         <div class="row" [formGroup]="filterForm">
             <div class="col-md-2 pr-0 pl-0-991">
                 <mat-form-field>
@@ -43,7 +43,7 @@
 
     </div>
 
-    <div class="col-md-2 pl-0 paginationClass pr-0">
+    <div class="col-md-3 pl-0 paginationClass pr-0">
         <mat-paginator [length]="totalSipCount" [hidePageSize]="true" [pageSize]="200"
             [ngClass]="{'cursor-not-allowed': isLoading}"
             (page)="!isLoading ? pageEvent = onPaginationChange($event): event.preventDefault()">
