@@ -52,7 +52,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   ulipCount: any;
   displayList: any;
   object: any;
-  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }, { id: '5', value: 'Partial withdrawl' }]
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' }]
   ulipCpy: any;
   tradCopy: any;
   termCpy: any[];
@@ -60,13 +60,41 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   allTrad: any;
   allUlip: any;
   catObj: any;
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  globalObj: {};
+  clientIdToClearStorage: string;
+  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAllCategory();
-    this.getAdviceByAsset();
+    this.adviceUtilService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.adviceUtilService.clearStorage();
+      }
+    }
+    this.adviceUtilService.setClientId(this.clientId);
+    this.adviceUtilService.getStoredAdviceData()
+    .subscribe(res => {
+      this.globalObj = {};
+      if(res == ""){
+        this.globalObj ={}
+      }else{
+        this.globalObj = res;
+      }
+    });
+    // if (this.chekToCallApi()) {
+      this.getAdviceByAsset();
+    // } else {
+    //   this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
+    //   this.displayList = this.globalObj['displayList'];
+    // }
+    // this.getAllCategory();
+  }
+  chekToCallApi() {
+    return this.globalObj && this.globalObj['adviceLifeInsurance'] && Object.keys(this.globalObj['adviceLifeInsurance']).length > 0 ? false : true;
   }
   getAllCategory() {
     // this.isLoading = true;
@@ -95,13 +123,19 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       // adviceStatusId: 1,
       categoryMasterId: 3,
       categoryTypeId: 3,
-      status: 1
+      statusFlag: 1
     }
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
     forkJoin(displayList, allAsset).subscribe(result => {
+      this.globalObj={
+        displayList:result[0],
+        adviceLifeInsurance:result[1]
+      }
+      this.adviceUtilService.setStoredAdviceData(this.globalObj);
       this.displayList = result[0];
       this.getAllSchemeResponse(result[1]);
+
     }, (error) => {
       this.eventService.openSnackBar('error', 'Dismiss');
       this.termDataSource = [];
@@ -189,6 +223,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     let array = [];
     if (data.length > 0) {
       data.forEach(element => {
+        element.selected = false;
         if (element.adviceDetails.adviceStatusId == 1) {
           element.adviceDetails.adviceToCategoryTypeMasterId = 3
           array.push(element);
@@ -245,7 +280,17 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         this.activityService.deleteAdvice(deletedId).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully", "Dismiss")
-            this.getAdviceByAsset()
+             if(this.globalObj && this.globalObj['adviceLifeInsurance'] && Object.keys(this.globalObj['adviceLifeInsurance']).length > 0){
+                if(value == 'Term Insurance'){
+                  this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'],deletedId)
+                }else if(value == 'Traditional Insurance'){
+                  this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'],deletedId)
+                }else{
+                  this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'],deletedId)
+                }
+             }
+           
+             this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
@@ -268,10 +313,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
     });
   }
-  getCategoriId(){
-    this.catObj.forEach(element => {
-      
-    });
+  deleteValue(data,id){
+    data = data.filter(d => d.adviceDetails.id != id);
+    return data;
   }
   openAddEditAdvice(value, data) {
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
@@ -285,13 +329,13 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       case "Traditional Insurance":
         this.object.insuranceSubTypeId = 2;
         this.object.showInsurance = 'TRADITIONAL'
-        this.object.adviceToCategoryId = 42;
+        this.object.adviceToCategoryId = 43;
         data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
         break;
       case "Ulip Insurance":
         this.object.insuranceSubTypeId = 3;
         this.object.showInsurance = 'ULIP';
-        this.object.adviceToCategoryId = 43;
+        this.object.adviceToCategoryId = 44;
         data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
 
         break;
@@ -335,13 +379,13 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       case "Traditional Insurance":
         this.object.insuranceSubTypeId = 2;
         this.object.showInsurance = 'TRADITIONAL'
-        this.object.adviceToCategoryId = 42;
+        this.object.adviceToCategoryId = 43;
         data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
         break;
       case "Ulip Insurance":
         this.object.insuranceSubTypeId = 3;
         this.object.showInsurance = 'ULIP';
-        this.object.adviceToCategoryId = 43;
+        this.object.adviceToCategoryId = 44;
         data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
 
         break;

@@ -248,8 +248,11 @@ export class FixedIncomeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }
-    this.ref.detectChanges();
-    this.loaded.emit(this.fixedDepositeTemp.nativeElement);
+    if(this.finPlanObj){
+      this.ref.detectChanges();
+      this.loaded.emit(this.fixedDepositeTemp.nativeElement);
+    }
+
   }
 
   getRecurringDepositList() {
@@ -294,8 +297,12 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
-    this.ref.detectChanges();
-    this.loaded.emit(this.recurringDepositeTemp.nativeElement);
+    if(this.finPlanObj){
+      this.ref.detectChanges();
+      this.loaded.emit(this.recurringDepositeTemp.nativeElement);
+    }
+
+  
   }
 
   getBondsList() {
@@ -338,8 +345,10 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
-    this.ref.detectChanges();
-    this.loaded.emit(this.bondsTemp.nativeElement);
+    if(this.finPlanObj){
+      this.ref.detectChanges();
+      this.loaded.emit(this.bondsTemp.nativeElement);
+    }
   }
 
   activeFilter: any = 'All';

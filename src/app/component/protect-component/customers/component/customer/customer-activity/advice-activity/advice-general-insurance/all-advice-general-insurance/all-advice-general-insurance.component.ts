@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ActiityService } from '../../../actiity.service';
 import { AdviceUtilsService } from '../../advice-utils.service';
 import { CustomerService } from '../../../../customer.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddHealthInsuranceAssetComponent } from '../../../../accounts/insurance/add-health-insurance-asset/add-health-insurance-asset.component';
 import { AddPersonalAccidentInAssetComponent } from '../../../../accounts/insurance/add-personal-accident-in-asset/add-personal-accident-in-asset.component';
@@ -17,6 +17,8 @@ import { SuggestAdviceComponent } from '../../suggest-advice/suggest-advice.comp
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { catchError } from 'rxjs/operators';
+import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-suggested-advice.component';
 
 @Component({
   selector: 'app-all-advice-general-insurance',
@@ -46,7 +48,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   fireCount: any;
   allAdvice = true
   displayList: any;
-  object: { data: any; displayList: any; showInsurance: string; insuranceSubTypeId: number; insuranceTypeId: number; };
+  object:any;
   sumAssured: any;
   healthCpy: any;
   presonalCpy: any;
@@ -56,13 +58,42 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   homeCpy: any;
   fireCpy: any;
   GIData: any;
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
-
+  constructor(private adviceUtilService: AdviceUtilsService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  globalObj: {};
+  clientIdToClearStorage: string;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     // this.getAllCategory();
-    this.getAdviceByAsset();
+    this.adviceUtilService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.adviceUtilService.clearStorage();
+      }
+    }
+    this.adviceUtilService.setClientId(this.clientId);
+    this.adviceUtilService.getStoredAdviceData()
+      .subscribe(res => {
+        this.globalObj = {};
+      if(res == ""){
+        this.globalObj ={}
+      }else{
+        this.globalObj = res;
+      }
+      });
+    // if (this.chekToCallApi()) {
+      this.getAdviceByAsset();
+    // } else {
+    //   this.GIData = this.globalObj['GIData'];
+    //   this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);
+    //   this.displayList = this.globalObj['displayList'];
+    // }
+
+  }
+  chekToCallApi() {
+    return this.globalObj && this.globalObj['AllAdviceGeneralInsurance'] && Object.keys(this.globalObj['AllAdviceGeneralInsurance']).length > 0 ? false : true;
   }
   getAllCategory() {
     this.isLoading = true;
@@ -109,10 +140,22 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       insuranceSubTypeId: 0,
       id: 0
     };
-    const displayList = this.cusService.getInsuranceGlobalData({});
-    const allAsset = this.activityService.getAllAsset(obj);
-    const portfoliGi = this.cusService.getGeneralInsuranceData(obj2);
+    // const displayList = this.cusService.getInsuranceGlobalData({});
+    // const allAsset = this.activityService.getAllAsset(obj);
+    // const portfoliGi = this.cusService.getGeneralInsuranceData(obj2);
+    const displayList = this.cusService.getInsuranceGlobalData({}).pipe(
+      catchError(error => of(error))
+    );
+    const allAsset = this.activityService.getAllAsset(obj).pipe(
+      catchError(error => of(error))
+    );
+    const portfoliGi = this.cusService.getGeneralInsuranceData(obj2).pipe(
+      catchError(error => of(error))
+    );
     forkJoin(displayList, allAsset , portfoliGi).subscribe(result => {
+      this.globalObj['AllAdviceGeneralInsurance'] = result[1];
+      this.globalObj['displayList'] = result[0];
+      this.globalObj['GIData'] = result[2].generalInsuranceList;
       this.displayList = result[0];
       this.GIData = result[2].generalInsuranceList;
       this.getAllSchemeResponse(result[1]);
@@ -148,37 +191,49 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     return filterdData;
   }
   getAllSchemeResponse(data) {
-    this.isLoading = false;
-    // let healthData = this.filterForAsset(data.HEALTH)
-    let healthData = this.filterData(data.HEALTH,5);
-    this.healthCpy = healthData;
-    this.healthInsuranceDataSource.data = healthData;
-    let personalData = this.filterData(data.PERSONAL_ACCIDENT,7);
-    this.presonalCpy = healthData;
-    this.personalAccidentDataSource.data = personalData;
-    let critical = this.filterData(data.CRITICAL_ILLNESS,6);
-    this.criticalCpy = healthData;
-    this.criticalInsDataSource.data = critical;
-    let motorData = this.filterData(data.MOTOR,4);
-    this.motorCpy = healthData;
-    this.motorDataSource.data = motorData;
-    let travelData = this.filterData(data.TRAVEL,8);
-    this.travelCpy = healthData;
-    this.travelDataSource.data = travelData;
-    let homeData = this.filterData(data.HOME,9);
-    this.homeCpy = healthData;
-    this.homeInsDataSource.data = homeData;
-    let fireData = this.filterData(data.FIRE,10);
-    this.fireCpy = healthData;
-    this.FireDataSource.data = fireData;
-    this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
-    this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
-    this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
-    this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
-    this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
-    this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
-    this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
-    console.log("::::::::::::::::", data)
+    if(data.HEALTH || data.PERSONAL_ACCIDENT || data.CRITICAL_ILLNESS){
+      this.isLoading = false;
+      // let healthData = this.filterForAsset(data.HEALTH)
+      let healthData = this.filterData(data.HEALTH,5);
+      this.healthCpy = healthData;
+      this.healthInsuranceDataSource.data = healthData;
+      let personalData = this.filterData(data.PERSONAL_ACCIDENT,7);
+      this.presonalCpy = healthData;
+      this.personalAccidentDataSource.data = personalData;
+      let critical = this.filterData(data.CRITICAL_ILLNESS,6);
+      this.criticalCpy = healthData;
+      this.criticalInsDataSource.data = critical;
+      let motorData = this.filterData(data.MOTOR,4);
+      this.motorCpy = healthData;
+      this.motorDataSource.data = motorData;
+      let travelData = this.filterData(data.TRAVEL,8);
+      this.travelCpy = healthData;
+      this.travelDataSource.data = travelData;
+      let homeData = this.filterData(data.HOME,9);
+      this.homeCpy = healthData;
+      this.homeInsDataSource.data = homeData;
+      let fireData = this.filterData(data.FIRE,10);
+      this.fireCpy = healthData;
+      this.FireDataSource.data = fireData;
+      this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
+      this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
+      this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
+      this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
+      this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
+      this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
+      this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
+      console.log("::::::::::::::::", data)
+    }else{
+      this.isLoading = false;
+      this.healthInsuranceDataSource.data = [];
+      this.personalAccidentDataSource.data = [];
+      this.criticalInsDataSource.data = [];
+      this.motorDataSource.data = [];
+      this.travelDataSource.data = [];
+      this.homeInsDataSource.data = [];
+      this.FireDataSource.data = [];
+    }
+    
   }
   filterData(data,id) {
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
@@ -190,10 +245,10 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     }else{
       GIArry = [];
     }
+    if(GIArry.length > 0){
+      data = [...GIArry, ...data];
+    }
     if(data.length > 0){
-      if(GIArry.length > 0 && data.length > 0){
-        data = [...GIArry, ...data];
-      }
       this.sumAssured = 0;
       data.forEach(element => {
         element.adviceDetails.adviceToCategoryTypeMasterId = 4
@@ -262,41 +317,53 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         case "Health Insurance":
           this.object.insuranceSubTypeId = 5;
           this.object.showInsurance = 'Health';
+          this.object.adviceToCategoryId = 34;
           component = AddHealthInsuranceAssetComponent;
           break;
         case "Personal accident":
           this.object.insuranceSubTypeId = 7;
           this.object.showInsurance = 'Personal accident';
+          this.object.adviceToCategoryId = 35;
           component = AddPersonalAccidentInAssetComponent;
           break;
         case "Critical illness":
           this.object.insuranceSubTypeId = 6;
           this.object.showInsurance = 'Critical illness';
+          this.object.adviceToCategoryId = 36;
           component = AddCriticalIllnessInAssetComponent;
           break;
         case "Motor insurance":
           this.object.insuranceSubTypeId = 4;
           this.object.showInsurance = 'Motor';
+          this.object.adviceToCategoryId = 37;
           component = AddMotorInsuranceInAssetComponent;
           break;
         case "Travel insurance":
           this.object.insuranceSubTypeId = 8;
           this.object.showInsurance = 'Travel';
+          this.object.adviceToCategoryId = 38;
           component = AddTravelInsuranceInAssetComponent;
           break;
         case "Home insurance":
           this.object.insuranceSubTypeId = 9;
           this.object.showInsurance = 'Home';
+          this.object.adviceToCategoryId = 39;
           component = AddHomeInsuranceInAssetComponent;
           break;
         case "Fire & special perils insurance":
           this.object.insuranceSubTypeId = 10;
+          this.object.adviceToCategoryId = 40;
           this.object.showInsurance = 'Fire & special perils';
           component = AddFireAndPerilsInsuranceInAssetComponent;
 
           break;
       }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
+    data['displayList'] = this.displayList;
+    data['showInsurance'] = this.object.showInsurance;
+    data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
+    data['insuranceTypeId'] = 1;
+    data['adviceToCategoryId'] = this.object.adviceToCategoryId;
     const fragmentData = {
       flag: 'Advice General Insurance',
       data,
@@ -305,6 +372,76 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       componentName: SuggestAdviceComponent,
       childComponent: component,
       childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'Advice General Insurance' },
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAdviceByAsset();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+  editAdvice(value, data) {
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    switch (value) {
+      case "Health Insurance":
+        this.object.insuranceSubTypeId = 5;
+        this.object.showInsurance = 'Health';
+        this.object.adviceToCategoryId = 34;
+        break;
+      case "Personal accident":
+        this.object.insuranceSubTypeId = 7;
+        this.object.showInsurance = 'Personal accident';
+        this.object.adviceToCategoryId = 35;
+        break;
+      case "Critical illness":
+        this.object.insuranceSubTypeId = 6;
+        this.object.showInsurance = 'Critical illness';
+        this.object.adviceToCategoryId = 36;
+        break;
+      case "Motor insurance":
+        this.object.insuranceSubTypeId = 4;
+        this.object.showInsurance = 'Motor';
+        this.object.adviceToCategoryId = 37;
+        break;
+      case "Travel insurance":
+        this.object.insuranceSubTypeId = 8;
+        this.object.showInsurance = 'Travel';
+        this.object.adviceToCategoryId = 38;
+        break;
+      case "Home insurance":
+        this.object.insuranceSubTypeId = 9;
+        this.object.showInsurance = 'Home';
+        this.object.adviceToCategoryId = 39;
+        break;
+      case "Fire & special perils insurance":
+        this.object.insuranceSubTypeId = 10;
+        this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'Fire & special perils';
+
+        break;
+    }
+    // this.getCategoriId(this.object.insuranceSubTypeId);
+    data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
+    data['displayList'] = this.displayList;
+    data['showInsurance'] = this.object.showInsurance;
+    data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
+    data['insuranceTypeId'] = 1;
+    data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    const fragmentData = {
+      flag: 'Advice General Insurance',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: EditSuggestedAdviceComponent,
+    
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -353,8 +490,25 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         this.activityService.deleteAdvice(deletedId).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully", "Dismiss")
-            this.getAdviceByAsset()
-            dialogRef.close();
+            if(this.globalObj && this.globalObj['AllAdviceGeneralInsurance'] && Object.keys(this.globalObj['AllAdviceGeneralInsurance']).length > 0){
+              if(value == 'Health Insurance'){
+                this.globalObj['AllAdviceGeneralInsurance']['HEALTH'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HEALTH'],deletedId)
+              }else if(value == 'Personal accident'){
+                this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'],deletedId)
+              }else if(value == 'Critical illness'){
+                this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'],deletedId)
+              }else if(value == 'Motor insurance'){
+                this.globalObj['AllAdviceGeneralInsurance']['MOTOR'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['MOTOR'],deletedId)
+              }else if(value == 'Travel insurance'){
+                this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'],deletedId)
+              }else if(value == 'Home insurance'){
+                this.globalObj['AllAdviceGeneralInsurance']['HOME'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HOME'],deletedId)
+              }else{
+                this.globalObj['AllAdviceGeneralInsurance']['FIRE'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['FIRE'],deletedId)
+              }
+           }
+         
+           this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);                dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
         )
@@ -375,6 +529,10 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  deleteValue(data,id){
+    data = data.filter(d => d.adviceDetails.id != id);
+    return data;
   }
   getFlagCount(flag, count) {
     switch (true) {

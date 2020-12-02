@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
         <div class="row bb-1">
             <div class="col-md-8 p-0">
-                <h3 class="mb-0 wrapper-20 f-500"> Edit advice
+                <h3 class="mb-0 wrapper-20 f-500"> {{dataForEdit ?  'Edit advice' : 'Add advice'}}
                 </h3>
             </div>
             <div class="col-md-4 text-right">
@@ -11,17 +11,24 @@
             </div>
         </div>
     </div>
-    <div class="pt-90 pr-28 pl-28" [formGroup]="adviceForm">
+    <div #chnageScrollPosition class="pt-100 pl-24 pr-24 pb-24 mb-48" [formGroup]="adviceForm">
                     <div class="pt-40">
                         <div class="row">
                             <div class="col-md-6 pl-0">
+                                    <p class="m-0 text-black roboto" *ngIf="!dataForEdit">Advice header</p>
+                                    <div class="form-group" *ngIf="!dataForEdit">
+                                        <mat-form-field>
+                                            <input matInput formControlName="header" [value]="'Suggest new policy'" [disabled]="true"
+                                                class="form-control" readonly>
+                                        </mat-form-field>
+                                    </div>
                                  <p class="m-0 text-black roboto" *ngIf="dataForEdit">Advice header</p>
                                     <div class="form-group" *ngIf="dataForEdit">
                                         <mat-form-field>
                                             <mat-select #headerEdit autocomplete="off" class="form-control br-0"
                                                 formControlName="headerEdit" matInput>
 
-                                                <mat-option value='' aria-disabled="true">Select option</mat-option>
+                                                <mat-option value='' [disabled]="true">Select option</mat-option>
                                                 <mat-option *ngFor="let option of adviceHeaderList ;index as i"
                                                     [value]="option.id">
                                                     {{option.value}}
@@ -93,9 +100,9 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <!-- <p class="m-0 text-black roboto pt-60" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">Withdrawal amount</p> -->
-                                <!-- <div class="form-group" >
-                                    <mat-form-field class="ba-date" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">
+                                <p class="m-0 text-black roboto pt-24" *ngIf="adviceForm.get('headerEdit').value != '1' && adviceForm.get('headerEdit').value != '3'">Amount</p>
+                                <div class="form-group" >
+                                    <mat-form-field class="ba-date" *ngIf="adviceForm.get('headerEdit').value != '1' && adviceForm.get('headerEdit').value != '3'">
                                         <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"
                                             [maxLength]="10" appInputValueValidation formControlName="withdrawalAmt"
                                             class="form-control b-0">
@@ -105,7 +112,7 @@
                                             This field is required
                                         </mat-error>
                                     </mat-form-field>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                         <div class="row pt-44">
@@ -114,32 +121,29 @@
                                         src="/assets/images/svg/info.svg">
                                 </p>
                                 <mat-radio-group aria-label="Select an option" formControlName="consentOption">
-                                    <mat-radio-button value="1">Take client consent
-
-                                    </mat-radio-button>
-                                    <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
-                                        further
-                                        action on this advice is possible only after your client gives
-                                        explicit
-                                        consent via email.</p>
-                                    <mat-radio-button value="2">Bypass client consent
-
-                                    </mat-radio-button>
-                                    <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
-                                        you
-                                        can
-                                        directly start further work on this advice without taking any
-                                        explicit
-                                        consent from your client.</p>
-                                    <!-- <mat-error class=" f-10 f-500 mt-4">
-                                        This field is required
-                                    </mat-error> -->
+                                    <div class="col-md-12 p-0">
+                                        <mat-radio-button class="p-0" value="1">Take client consent <button mat-stroked-button
+                                                class="btn-primary-outline br-4 btn-xs h-20 f-12">RECOMMENDED</button>
+                                        </mat-radio-button>
+        
+                                        <p class="f-12 ml-32 mb-0 roboto text-custom">If this option is selected, further action
+                                            on this advice is
+                                            possible only after your client
+                                            gives explicit consent via email.</p>
+                                        <mat-checkbox class="ml-44">Create a linked task</mat-checkbox>
+                                    </div>
+                                    <div class="col-md-12 p-0">
+                                        <mat-radio-button value="2">Bypass client consent</mat-radio-button>
+                                        <p class="f-12 roboto ml-32 text-custom">If this option is selected, you can directly
+                                            start further
+                                            work on this advice without taking any explicit consent from your client.</p>
+                                    </div>
                                 </mat-radio-group>
                             </div>
                         </div>
                     </div>
     </div>
-    <div class="bottom-fixed wrapper-12 pt-16">
+    <div class="bottom-fixed wrapper-16 pb-12">
         <div class="row">
             <div class="col-md-4">
                 <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
