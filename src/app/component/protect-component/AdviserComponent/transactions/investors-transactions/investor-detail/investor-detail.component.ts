@@ -203,8 +203,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFileDetails(documentType, e) {
-    if (this.data.aggregatorType == 2 && e.target.files[0].type !== 'image/tiff') {
-      this.eventService.openSnackBar('File type is not image/tiff');
+    if (this.data.aggregatorType == 1 && e.target.files[0].type !== 'image/tiff') {
       if (documentType == 1) {
         this.addbarWidth(0);
         this.loader1 = false
@@ -212,8 +211,37 @@ export class InvestorDetailComponent implements OnInit {
         this.addbarWidth1(0);
         this.loader2 = false
       }
-      return;
+      this.file = e.target.files[0];
+      const file = e.target.files[0];
+      const requestMap = {
+        tpUserRequestId: this.details.id,
+        documentType
+      };
+      FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+        file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          this.isFileUploading = false;
+          if (documentType == 1) {
+            this.addbarWidth(100);
+            this.loader1 = true
+          } else {
+            this.addbarWidth1(100);
+            this.loader2 = true
+          }
+          if (status == 200) {
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false;
+            const responseObject = JSON.parse(response);
+            this.eventService.openSnackBar('File uploaded successfully');
+            this.getFormUploadDetail();
+          } else {
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false
+            const responseObject = JSON.parse(response);
+            this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
+          }
+        });
+    } else if (this.data.aggregatorType == 2 && e.target.files[0].type !== 'image/tiff') {
+      this.eventService.openSnackBar('File type is not image/tiff');
     } else {
+      //
       if (documentType == 1) {
         this.addbarWidth(30);
         this.loader1 = true

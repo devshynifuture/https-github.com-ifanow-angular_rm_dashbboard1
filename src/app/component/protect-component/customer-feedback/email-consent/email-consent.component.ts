@@ -110,8 +110,8 @@ export class EmailConsentComponent implements OnInit {
     )
   }
 
-  acceptOrDeclineConsent(index, choice) {
-    // ele.acceptedOrDeclined = choice;
+  acceptOrDeclineConsent(ele,index, choice) {
+    ele.acceptedOrDeclined = choice;
     this.consentData[index].acceptedOrDeclined = choice;
     this.consentData[index].actionPerformed = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
   }

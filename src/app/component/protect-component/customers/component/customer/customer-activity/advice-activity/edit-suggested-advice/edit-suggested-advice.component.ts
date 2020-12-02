@@ -87,7 +87,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
     });
     // ==============owner-nominee Data ========================\\
     /***owner***/
-
+    this.dateChange('givenOnDate')
   }
   editAdvice(){
     this.barButtonOptions.active = true;

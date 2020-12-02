@@ -64,7 +64,7 @@ export class SingleGoalYearComponent implements OnInit {
     this.logoImg = this.goalTypeData.imageUrl;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
     this.initializeForm();
-    if (this.goalTypeData.id == 1) {
+    if (this.goalTypeData.goalTypeId == 1) {
       this.getKeyParameter()
     }
     this.setDefaultOwner();
@@ -221,7 +221,7 @@ export class SingleGoalYearComponent implements OnInit {
     this.barButtonOptions.active = true;
     this.planService.addSingleYearGoal(obj).subscribe(
       data => {
-        switch (this.goalTypeData.id) {
+        switch (this.goalTypeData.goalTypeId) {
           case AppConstants.HOUSE_GOAL:
             this.eventService.openSnackBar("House goal is added", "Dismiss");
             break;
@@ -251,7 +251,7 @@ export class SingleGoalYearComponent implements OnInit {
             break;
 
           default:
-            console.error("Unidentified goal id found", this.goalTypeData.id)
+            console.error("Unidentified goal id found", this.goalTypeData.goalTypeId)
             break;
         }
         this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, data: { resetSelectedCursor: true } });
