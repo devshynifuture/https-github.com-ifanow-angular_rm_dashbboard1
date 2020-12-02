@@ -76,7 +76,8 @@ export class RealEstateComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle);
   }
 
-  fetchData(value, fileName, element) {
+  fetchData(value, fileName, element, type) {
+    element['subCatTypeId'] = type;
     this.isLoadingUpload = true;
     let obj = {
       advisorId: this.advisorId,

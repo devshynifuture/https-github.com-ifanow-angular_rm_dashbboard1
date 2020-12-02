@@ -28,6 +28,9 @@ export class ActiityService {
   suggestNewGeneralInsurance(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SUGGEST_NEW_GENERAL_INSURANCE, data)
   }
+  editAdvice(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ADVICE, data)
+  }
   deleteAdvice(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_ADVICE, data)
   }

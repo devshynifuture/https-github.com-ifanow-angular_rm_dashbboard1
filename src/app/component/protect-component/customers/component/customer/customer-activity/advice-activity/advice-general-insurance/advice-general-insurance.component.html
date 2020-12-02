@@ -55,6 +55,10 @@
             </button>
             <mat-menu #insuranceMenu1>
                 <button
+                    (click)="filterInsurance('adviceStatusId', '0','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button
                     (click)="filterInsurance('adviceStatusId', '1','Health Insurance',healthCpy,healthInsuranceDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -142,7 +146,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -242,6 +247,10 @@
             </button>
             <mat-menu #insuranceMenu2>
                 <button
+                    (click)="filterInsurance('adviceStatusId', '0','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button
                     (click)="filterInsurance('adviceStatusId', '1','Personal accident',presonalCpy,personalAccidentDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -329,7 +338,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -429,6 +439,10 @@
             </button>
             <mat-menu #insuranceMenu3>
                 <button
+                    (click)="filterInsurance('adviceStatusId', '0','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button
                     (click)="filterInsurance('adviceStatusId', '1','Critical illness',criticalCpy,criticalInsDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -516,7 +530,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -615,6 +630,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu4>
+                <button (click)="filterInsurance('adviceStatusId', '0','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Motor insurance',motorCpy,motorDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -694,7 +712,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -793,6 +812,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu5>
+                <button (click)="filterInsurance('adviceStatusId', '0','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Travel insurance',travelCpy,travelDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -872,7 +894,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -971,6 +994,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu6>
+                <button (click)="filterInsurance('adviceStatusId', '0','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Home insurance',homeCpy,homeInsDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -1050,7 +1076,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>
@@ -1150,6 +1177,10 @@
             </button>
             <mat-menu #insuranceMenu7>
                 <button
+                    (click)="filterInsurance('adviceStatusId', '0','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    ALL</button>
+                <button
                     (click)="filterInsurance('adviceStatusId', '1','Fire & special perils insurance',fireCpy,FireDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -1237,7 +1268,8 @@
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
-                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
                         {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
                     </span>
                 </div>

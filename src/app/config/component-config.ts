@@ -539,6 +539,7 @@ export const appConfig = {
   SUGGEST_NEW_INSURANCE: 'advice/insurance/life-insurance/suggest-new-policy/add',
   SUGGEST_NEW_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/suggest-new-policy/add',
   DELETE_ADVICE: 'advice/delete/id',
+  EDIT_ADVICE: 'advice/advice/edit',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',

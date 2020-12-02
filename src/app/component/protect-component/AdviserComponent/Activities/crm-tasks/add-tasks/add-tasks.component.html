@@ -86,6 +86,12 @@
                                 Add task template
                             </span>
                         </mat-option>
+
+                        <mat-option *ngIf="taskTemplateLoading" class="skeletonAnimation">
+                            <div class="relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </mat-option>
                     </mat-select>
                     <mat-error>
                         This field is required
@@ -116,7 +122,7 @@
 
         </div>
 
-        
+
 
         <div class="row pt-24">
             <div class="w-18 pl-16">

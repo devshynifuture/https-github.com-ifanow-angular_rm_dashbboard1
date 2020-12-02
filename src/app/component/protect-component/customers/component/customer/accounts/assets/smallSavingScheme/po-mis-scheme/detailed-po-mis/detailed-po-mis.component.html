@@ -15,7 +15,7 @@
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br" *ngFor="let obj of data.ownerList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -68,12 +68,13 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
-                        {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue?data.currentValue:'-'}}</span>
+                        {{data.currentValue? "₹" : ""}}<span
+                            appFormatNumber>{{data.currentValue?data.currentValue:'-'}}</span>
 
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly Payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.monthlyPayout != 0">
@@ -81,7 +82,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till now
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.totalPayoutTillToday != 0">
@@ -89,7 +90,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till maturity
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.totalPayoutTillToday != 0">
@@ -135,7 +136,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Bank account number
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId">
                         <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.userBankMappingId">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -153,19 +154,46 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="!data.nomineeList">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         -
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" [hidden]="!data.nomineeList" *ngFor="let obj of data.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                <div class="row bb p-8 b-l br" [hidden]="!data.nomineeList"
+                    *ngFor="let obj of data.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee
+                            share</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document
+                    </div>
+                    <div *ngIf="!doc && isLoadingUpload==true" style="width:275px;height:350px;"
+                        class="p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner [diameter]="30"></mat-spinner> Loading document
+                    </div>
+                    <div *ngIf="noDoc" class="col-md-8 text-left f-14 roboto p-0">
+                        Document not found
+                    </div>
+                    <div *ngIf="doc">
+                        <!--  -->
+                        <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
+                            <img [src]="doc.imageUrl" height="200" width="250"> <br />
+                        </div>
+                        <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+                            <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
+                            </ngx-doc-viewer>
+                        </div>
+                        <a class="text-left f-14 roboto p-0 docFileName" [href]="doc.imageUrl" download>
+                            {{doc.fileOgName}}
+                        </a>
                     </div>
                 </div>
             </div>

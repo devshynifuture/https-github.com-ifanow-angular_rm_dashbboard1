@@ -29,6 +29,8 @@ import { AdviceActionComponent } from './advice-action/advice-action.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { AllAdviceLifeInsuranceComponent } from './advice-life-insurance/all-advice-life-insurance/all-advice-life-insurance.component';
 import { AllAdviceGeneralInsuranceComponent } from './advice-general-insurance/all-advice-general-insurance/all-advice-general-insurance.component';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 //import { MiscellaneousAdviceComponent } from './miscellaneous-advice/miscellaneous-advice.component';
 //import { AdviceSIPComponent } from './advice-sip/advice-sip.component';
 //import { EmailAdviceComponent } from './email-advice/email-advice.component';
@@ -66,11 +68,12 @@ import { AllAdviceGeneralInsuranceComponent } from './advice-general-insurance/a
   ],
   imports: [
     CommonModule,
+    CustomCommonModule,
     AdviceActivityRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
   ]
 })
 export class AdviceActivityModule { }

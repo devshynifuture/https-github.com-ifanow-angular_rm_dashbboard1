@@ -182,8 +182,8 @@
                             </button>
                             <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('Bank A/c',$event,element)" class="uploadInput" id="file-4"
-                                    multiple type="file">
+                                <input (change)="fetchData('Bank A/c',$event,element, 30)" class="uploadInput"
+                                    id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
                             <button (click)="deleteModal('BANK',element)" mat-menu-item>Delete</button>
@@ -324,7 +324,7 @@
                             <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('Cash In Hand',$event,element)" class="uploadInput"
+                                <input (change)="fetchData('Cash In Hand',$event,element,30)" class="uploadInput"
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->

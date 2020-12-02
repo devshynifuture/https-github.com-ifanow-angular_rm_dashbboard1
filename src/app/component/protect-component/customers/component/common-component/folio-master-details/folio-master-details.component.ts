@@ -11,10 +11,12 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class FolioMasterDetailsComponent implements OnInit {
   inputData: any;
   folioDetails = [];
+  isLoading: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
   @Input()
   set data(data) {
+    this.isLoading = true;
     this.inputData = data;
     this.getFolioMasterDetails(this.inputData)
   }
@@ -30,11 +32,14 @@ export class FolioMasterDetailsComponent implements OnInit {
     }
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {
+        this.isLoading = false;
         this.folioDetails = [];
+
       }
     );
   }
   getFolioMasterResponse(data) {
+    this.isLoading = false;
     console.log(data);
     // this.folioDetails=data.folioMasterList;
     if(data){
