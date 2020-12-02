@@ -107,7 +107,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;
         this.adviceToCategoryId = data.childData.adviceToCategoryId;
-        this.adviceToCategoryTypeMasterId = data.data ? data.data.adviceDetails.adviceToCategoryTypeMasterId : ''
+        this.adviceToCategoryTypeMasterId = data.data ? (data.data.adviceDetails.adviceToCategoryTypeMasterId ? data.data.adviceDetails.adviceToCategoryTypeMasterId : '') : ''
         this.adviceHeaderList = data.data ? data.data.adviceHeaderList : '';
         this.getFormData(data);
       }
