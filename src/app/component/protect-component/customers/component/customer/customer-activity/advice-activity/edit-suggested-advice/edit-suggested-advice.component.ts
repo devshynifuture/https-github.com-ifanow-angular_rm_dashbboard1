@@ -30,6 +30,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  todayDate = new Date();
   adviceHeaderList: any;
   count = 0;
   adviceToCategoryTypeMasterId: any;
