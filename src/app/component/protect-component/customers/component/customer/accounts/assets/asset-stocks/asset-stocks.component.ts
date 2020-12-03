@@ -171,7 +171,9 @@ export class AssetStocksComponent implements OnInit {
   }
 
   generatePdf() {
-    this.svg = this.chart.getSVG();
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
     const obj = {
@@ -297,7 +299,9 @@ export class AssetStocksComponent implements OnInit {
       this.isLoading = false;
     }
     this.ref.detectChanges();
-    this.loaded.emit(this.StocksTemplate.nativeElement);
+    if (this.StocksTemplate) {
+      this.loaded.emit(this.StocksTemplate.nativeElement);
+    }
   }
 
   checkAndFillDataSource(singlePortfolio) {
