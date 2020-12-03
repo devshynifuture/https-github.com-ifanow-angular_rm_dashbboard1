@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div *ngIf="moduleAdded.length  == 0">
+            <div *ngIf="moduleAdded.length  == 0 && clientDetails == 0">
                 <span class="text-center pt-28">
                     No module added
                 </span>
@@ -54,7 +54,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{element.ClientName}}
+                                {{element.clientName}}
                             </div>
                         </td>
                     </ng-container>
@@ -99,7 +99,7 @@
             </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
-                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
+                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
                     <div class="col-md-3" *ngIf="moduleAdded.length > 0">
@@ -530,7 +530,7 @@
                 </div>
                 <div class="pt-12 pl-20 pr-20 pb-20">
                     <mat-accordion id="fp-modules">
-                        <mat-expansion-panel *ngIf="mfCount.mutual_fund != 0">
+                        <mat-expansion-panel *ngIf="mfCount.mutualFund != 0">
                             <mat-expansion-panel-header>
                                 <mat-panel-title (click)="getAssetCountGlobalData()">
                                     <h5 class="m-0">Mutual Fund</h5>
