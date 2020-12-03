@@ -16,15 +16,21 @@
     <div [formGroup]="scipLevelTransactionForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <div formArrayName="getCoOwnerName">
-                <div [ngClass]="{'pt-36': pointIndex>0}" *ngFor="let obj of scipLevelTransactionForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+                <div [ngClass]="{'pt-36': pointIndex>0}"
+                    *ngFor="let obj of scipLevelTransactionForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
                     <h5 class="m-0 pb-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
                     <div class="pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (emitBank)='getBank()' (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'owner')" (emitBank)='getBank()'
+                                    (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                    class="form-control br-0" [callMethod]='callMethod'>
                                     <!-- || f.familyMemberAge <= 60 -->
                                     <mat-option value='' disabled>Select family members</mat-option>
-                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                        [value]="f.userName">
                                         <span>{{f.userName}}</span>
                                     </mat-option>
                                 </mat-select>
@@ -37,7 +43,8 @@
                     <div class="col-md-2" *ngIf="scipLevelTransactionForm.value.getCoOwnerName.length > 1">
                         <div class="form-group mb-0 iconPetage">
                             <mat-form-field>
-                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                                <input matInput class="form-control br-0 percentage" type="number"
+                                    formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                                 <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                                     This field is required
                                 </mat-error>
@@ -51,7 +58,9 @@
                         <!-- <i *ngIf="scipLevelTransactionForm.value.getCoOwnerName.length < 3"
                             class="material-icons text-primitive f-20 c-p float-left"
                             (click)="addNewCoOwner(undefined)">add</i> -->
-                        <i *ngIf="scipLevelTransactionForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
+                        <i *ngIf="scipLevelTransactionForm.value.getCoOwnerName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10"
+                            (click)="removeCoOwner(pointIndex)">remove</i>
                     </div>
                 </div>
             </div>
@@ -63,7 +72,8 @@
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <div class="form-group mb-0">
-                <app-portfolio-field [ownerId]="portfolioFieldData" [checkValid]='checkValid' [owner]="scipLevelTransactionForm.controls" (outputEvent)="getPortfolioData($event)">
+                <app-portfolio-field [ownerId]="portfolioFieldData" [checkValid]='checkValid'
+                    [owner]="scipLevelTransactionForm.controls" (outputEvent)="getPortfolioData($event)">
                 </app-portfolio-field>
             </div>
         </div>
@@ -91,7 +101,8 @@
     </div>
 
     <div [formGroup]="transactionListForm">
-        <div class="row pb-36 pl-28" *ngFor="let singleTransaction of transactionArray.controls; let i = index;" [formGroup]="singleTransaction">
+        <div class="row pb-36 pl-28" *ngFor="let singleTransaction of transactionArray.controls; let i = index;"
+            [formGroup]="singleTransaction">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
@@ -116,7 +127,8 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" matInput autocomplete="off" [max]="maxDate" formControlName="date" [matDatepicker]="picker" class="form-control br-0 b-0">
+                        <input (click)="picker.open()" matInput autocomplete="off" [max]="maxDate"
+                            formControlName="date" [matDatepicker]="picker" class="form-control br-0 b-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>
@@ -128,7 +140,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" #totalUnits type="number" formControlName="transactionAmount" maxlength="20" class="form-control br-0 rupess">
+                        <input matInput autocomplete="off" #totalUnits type="number" formControlName="transactionAmount"
+                            maxlength="20" class="form-control br-0 rupess">
                         <mat-error>
                             This field is required
                         </mat-error>
@@ -138,7 +151,8 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" #totalNetContribution formControlName="quantity" type="number" maxlength="20" class="form-control br-0 rupess">
+                        <input matInput autocomplete="off" #totalNetContribution formControlName="quantity"
+                            type="number" maxlength="20" class="form-control br-0 rupess">
                         <mat-error>
                             This field is required
                         </mat-error>
@@ -152,13 +166,14 @@
                 <i class="material-icons text-custom c-p pl-10" (click)="addTransactions()">
                     add
                 </i>
-                <i class="material-icons text-custom c-p pl-10" *ngIf="transactionArray.length > 1" (click)="removeTransactions(i)">
+                <i class="material-icons text-custom c-p pl-10" *ngIf="transactionArray.length > 1"
+                    (click)="removeTransactions(i)">
                     remove
                 </i>
             </div>
 
         </div>
-       
+
     </div>
     <div [formGroup]="optionForm">
         <hr class="ml-16 mr-16">
@@ -174,9 +189,10 @@
             <div class="col-md-5 ">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control" formControlName="linkedDematAccount" matInput>
-                            <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                                {{option.bankNameAndLast4Digit}}
+                        <mat-select class="form-control" (click)="checkOwner()" formControlName="linkedDematAccount"
+                            matInput>
+                            <mat-option *ngFor="let option of bankDematList ;index as i" [value]="option.dematId">
+                                {{option.brokerName}}-{{option.dematClientId}}
                                 <!-- {{option.bankName}} -->
                             </mat-option>
                         </mat-select>
@@ -186,7 +202,9 @@
                 </div>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                <i class="material-icons text-primitive c-p float-left"
+                    *ngIf="this.scipLevelTransactionForm.value.getCoOwnerName[0].name != ''"
+                    (click)="openDialog('demat')">add</i>
             </div>
         </div>
         <div class="row pt-32">
@@ -196,7 +214,8 @@
             <div class="col-md-5 ">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control" formControlName="linkedBankAccount" matInput>
+                        <mat-select class="form-control" (click)="checkOwner()" formControlName="linkedBankAccount"
+                            matInput>
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                                 {{option.bankNameAndLast4Digit}}
                                 <!-- {{option.bankName}} -->
@@ -208,7 +227,9 @@
                 </div>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                <i class="material-icons text-primitive c-p float-left"
+                    *ngIf="this.scipLevelTransactionForm.value.getCoOwnerName[0].name != ''"
+                    (click)="openDialog(null)">add</i>
             </div>
         </div>
         <div class="row pt-32">
@@ -218,7 +239,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-    
+
                         <input matInput class="form-control" formControlName="description">
                         <mat-hint class="ml-8">Optional</mat-hint>
                     </mat-form-field>
@@ -242,8 +263,7 @@
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                                 (selectionChange)="disabledMember($event.value,'nominee')"
-                                (valueChange1)='lisNominee($event)' class="form-control br-0"
-                                [callMethod]='callMethod'>
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                     [value]="f.userName">
@@ -278,7 +298,7 @@
                         class="material-icons text-primitive f-20 c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
-    
+
             </div>
         </div>
     </div>

@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 import { objectEach } from 'highcharts';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -45,15 +46,15 @@ export class StockScripLevelHoldingComponent implements OnInit {
   ownerInfo: any;
   portfolioData: any;
   scripForm: any;
-  maxDate= new Date();
+  maxDate = new Date();
   portfolioFieldData: { familyMemberId: any; };
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   nomineesList: any[] = [];
   optionForm;
-  checkValid:boolean= false;
+  checkValid: boolean = false;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(public dialog: MatDialog, private enumService: EnumServiceService,  private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -63,7 +64,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.getFormData(data);
   }
 
- 
+
   getPortfolioData(data) {
     console.log("getPortfolioData", data)
     this.portfolioData = data;
@@ -71,161 +72,161 @@ export class StockScripLevelHoldingComponent implements OnInit {
   }
 
   // ===================owner-nominee directive=====================//
-display(value) {
-  console.log('value selected', value)
-  this.ownerName = value.userName;
-  this.familyMemberId = value.id
-}
-
-lisNominee(value) {
-  this.ownerData.Fmember = value;
-  this.nomineesListFM = Object.assign([], value);
-}
-holdingData:any;
-disabledMember(value, type) {
-  this.callMethod = {
-    methodName : "disabledMember",
-    ParamValue : value,
-  //  disControl : type
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
 
-  
-  this.holdingData=this.scipLevelHoldingForm.controls;
-setTimeout(() => {
-  this.portfolioFieldData= {
-    familyMemberId: this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
-}, 500);
-}
+  holdingData: any;
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: "disabledMember",
+      ParamValue: value,
+      //  disControl : type
+    }
 
-displayControler(con) {
-  console.log('value selected', con);
-  if(con.owner != null && con.owner){
-    this.scipLevelHoldingForm.controls.getCoOwnerName = con.owner;
-  }
-  if(con.nominee != null && con.nominee){
-    this.optionForm.controls.getNomineeName = con.nominee;
-  }
-}
 
-onChangeJointOwnership(data) {
-  this.callMethod = {
-    methodName : "onChangeJointOwnership",
-    ParamValue : data
-  }
-}
-
-/***owner***/ 
-
-get getCoOwner() {
-  return this.scipLevelHoldingForm.get('getCoOwnerName') as FormArray;
-}
-
-addNewCoOwner(data) {
-  this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (data) {
+    this.holdingData = this.scipLevelHoldingForm.controls;
     setTimeout(() => {
-     this.disabledMember(null,null);
-    }, 1300);
+      this.portfolioFieldData = {
+        familyMemberId: this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId
+      }
+    }, 500);
   }
 
-  if(this.getCoOwner.value.length > 1 && !data){
-   let share = 100/this.getCoOwner.value.length;
-   for (let e in this.getCoOwner.controls) {
-    if(!Number.isInteger(share) && e == "0"){
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.scipLevelHoldingForm.controls.getCoOwnerName = con.owner;
     }
-    else{
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-    }
-   }
-  }
- 
-}
-
-removeCoOwner(item) {
-  this.getCoOwner.removeAt(item);
-  if (this.scipLevelHoldingForm.value.getCoOwnerName.length == 1) {
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  } else {
-    let share = 100/this.getCoOwner.value.length;
-    for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-    }
-  }
-  this.disabledMember(null, null);
-}
-/***owner***/ 
-
-/***nominee***/ 
-
-get getNominee() {
-  return this.optionForm.get('getNomineeName') as FormArray;
-}
-
-removeNewNominee(item) {
-this.disabledMember(null, null);
-  this.getNominee.removeAt(item);
-  if (this.optionForm.value.getNomineeName.length == 1) {
-    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-  } else {
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-      }
-    }
-  }
-}
-
-
-
-addNewNominee(data) {
-  this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (!data || this.getNominee.value.length < 1) {
-    for (let e in this.getNominee.controls) {
-      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    if (con.nominee != null && con.nominee) {
+      this.optionForm.controls.getNomineeName = con.nominee;
     }
   }
 
-  if(this.getNominee.value.length > 1 && !data){
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
+    }
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.scipLevelHoldingForm.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
-   }
-   
-  
-}
-/***nominee***/ 
-// ===================owner-nominee directive=====================//
-  selectedScript:any=[];
+
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.scipLevelHoldingForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.optionForm.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.optionForm.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+  /***nominee***/
+  // ===================owner-nominee directive=====================//
+  selectedScript: any = [];
   getFormData(data) {
-    
+
     this.scipLevelHoldingForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['', [Validators.required]],
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       portfolioName: ['', [Validators.required]]
     })
@@ -240,7 +241,7 @@ addNewNominee(data) {
       this.editApiData = data;
       this.familyMemberId = data.familyMemberId;
       this.ownerName = data.ownerName;
-     
+
       this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
     }
 
@@ -254,9 +255,9 @@ addNewNominee(data) {
       linkedBankAccount: [''],
       linkedDematAccount: [''],
       description: ['']
-  })
+    })
 
-  this.holdingData=this.scipLevelHoldingForm.value
+    this.holdingData = this.scipLevelHoldingForm.value
 
     if (data.transactionOrHoldingSummaryList) {
       data.stockListForEditView.forEach(s => {
@@ -275,7 +276,7 @@ addNewNominee(data) {
       });
     }
     this.familyMemberId = data.familyMemberId;
-    
+
 
     // ==============owner-nominee Data ========================\\
     /***owner***/
@@ -313,7 +314,7 @@ addNewNominee(data) {
   get HoldingList() { return this.holdingListForm.controls };
   get HoldingArray() { return this.HoldingList.holdingListArray as FormArray };
 
-    addHoldings() {
+  addHoldings() {
     let singleForm = this.fb.group({
       scripName: [, [Validators.required]],
       holdings: [, [Validators.required]],
@@ -327,11 +328,11 @@ addNewNominee(data) {
     this.HoldingArray.push(singleForm);
   }
 
-  removed:any=[];
+  removed: any = [];
   removeHoldings(index) {
     // this.HoldingArray.controls[index].get('isDeleted').setValue(true);
     const reControls = this.HoldingArray.controls[index];
-    if(reControls.value.id != null){
+    if (reControls.value.id != null) {
       this.removed.push(reControls.value);
     }
     (this.HoldingArray.length == 1) ? console.log("cannot remove") : this.HoldingArray.removeAt(index)
@@ -352,14 +353,14 @@ addNewNominee(data) {
         element.get('scripName').markAsTouched();
       })
     }
-    else{
+    else {
       this.barButtonOptions.active = true;
 
       // if (this.editApiData) {
       //   let finalStocks = []
       //   this.HoldingArray.controls.forEach(element => {
       //     let singleList = {
-  
+
       //       "id": element.get('id').value,
       //       "stockId": this.editApiData.id,
       //       "holdingOrTransaction": 1,
@@ -384,145 +385,145 @@ addNewNominee(data) {
       //     },
       //     error => this.eventService.showErrorMessage(error)
       //   )
-  
+
       // }
       // else {
-        const finalStocks:any = [];
-        this.HoldingArray.controls.forEach((element, i) => {
-            let objStock = {
-              'id':null,
-              "scripNameId": element.value.scripNameId,
-              "currentMarketValue": 0,
-              "stockType": 2,
-              "amountInvested": 0,
-              "valueAsOn": null,
-              "isDeleted":false,
-              "portfolioId": this.portfolioData.id,
-              //  "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
-              "transactionOrHoldingSummaryList": [
-                  {
-                    "holdingOrTransaction": 1,
-                    "quantity": element.get('holdings').value,
-                    "transactionTypeOrScripNameId":element.value.scripNameId?element.value.scripNameId:this.scripData.id,
-                    "holdingOrTransactionDate": this.datePipe.transform(element.get('holdingAsOn').value, 'yyyy-MM-dd'),
-                    "investedOrTransactionAmount": element.get('investedAmt').value,
-                    // "isDeleted": element.get('isDeleted').value,
-                    'id':element.get('id').value
-                  }
-              ]
-
+      const finalStocks: any = [];
+      this.HoldingArray.controls.forEach((element, i) => {
+        let objStock = {
+          'id': null,
+          "scripNameId": element.value.scripNameId,
+          "currentMarketValue": 0,
+          "stockType": 2,
+          "amountInvested": 0,
+          "valueAsOn": null,
+          "isDeleted": false,
+          "portfolioId": this.portfolioData.id,
+          //  "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
+          "transactionOrHoldingSummaryList": [
+            {
+              "holdingOrTransaction": 1,
+              "quantity": element.get('holdings').value,
+              "transactionTypeOrScripNameId": element.value.scripNameId ? element.value.scripNameId : this.scripData.id,
+              "holdingOrTransactionDate": this.datePipe.transform(element.get('holdingAsOn').value, 'yyyy-MM-dd'),
+              "investedOrTransactionAmount": element.get('investedAmt').value,
+              // "isDeleted": element.get('isDeleted').value,
+              'id': element.get('id').value
             }
-                if(element.get('id').value != null){
-                  objStock.id = this.editApiData.stockListForEditView[i].id;
-                  // objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
-                }
-                if(objStock.id == null){
-                  // objStock.ownerList[0].id = null;
-                }
+          ]
 
-                if(this.editApiData && this.portfolioData.id == 0){
-                  // objStock.ownerList[0].id = null;
-                }
-          
+        }
+        if (element.get('id').value != null) {
+          objStock.id = this.editApiData.stockListForEditView[i].id;
+          // objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
+        }
+        if (objStock.id == null) {
+          // objStock.ownerList[0].id = null;
+        }
+
+        if (this.editApiData && this.portfolioData.id == 0) {
+          // objStock.ownerList[0].id = null;
+        }
+
+        finalStocks.push(objStock);
+      })
+
+      if (this.removed.length > 0) {
+        this.removed.forEach(d => {
+          // for(let element in d.controls){
+          let objStock = {
+            'id': null,
+            "scripNameId": d.scripNameId,
+            "currentMarketValue": 0,
+            "stockType": 2,
+            "amountInvested": 0,
+            "valueAsOn": null,
+            "isDeleted": true,
+            "portfolioId": this.portfolioData.id,
+            //  "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
+            "transactionOrHoldingSummaryList": [
+              {
+                "id": d.id,
+                "holdingOrTransaction": 2,
+                "quantity": d.holdings,
+                "holdingOrTransactionDate": this.datePipe.transform(d.holdingAsOn, 'yyyy-MM-dd'),
+                "transactionTypeOrScripNameId": d.scripNameId,
+                "investedOrTransactionAmount": d.investedAmt,
+                // 'isDeleted':  d.isDeleted, 
+              }
+            ]
+
+          }
+          if (d.id != null) {
+            objStock.id = this.editApiData.id;
+          }
           finalStocks.push(objStock);
-        })
-
-        if(this.removed.length > 0){
-          this.removed.forEach(d => {
-            // for(let element in d.controls){
-              let objStock = {
-                'id':null,
-                "scripNameId": d.scripNameId,
-                "currentMarketValue": 0,
-                "stockType": 2,
-                "amountInvested": 0,
-                "valueAsOn": null,
-                "isDeleted":true,
-                "portfolioId": this.portfolioData.id,
-                //  "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
-                "transactionOrHoldingSummaryList": [
-                  {
-                    "id": d.id,
-                      "holdingOrTransaction": 2,
-                      "quantity": d.holdings,
-                      "holdingOrTransactionDate": this.datePipe.transform(d.holdingAsOn, 'yyyy-MM-dd'),
-                      "transactionTypeOrScripNameId": d.scripNameId,
-                      "investedOrTransactionAmount": d.investedAmt,
-                      // 'isDeleted':  d.isDeleted, 
-                  }
-                ]
-  
-              }
-              if(d.id != null){
-                objStock.id = this.editApiData.id;
-              }
-              finalStocks.push(objStock);
-            // }
-            // let deleted ={ transactionOrHoldingSummaryList:}
+          // }
+          // let deleted ={ transactionOrHoldingSummaryList:}
           //   objStock.isDeleted = true;
           //   objStock.transactionOrHoldingSummaryList[0]=Object.assign(objStock.transactionOrHoldingSummaryList[0],deleted.transactionOrHoldingSummaryList)
           //   // objStock.transactionOrHoldingSummaryList[0]= deleted.transactionOrHoldingSummaryList;
           // finalStocks.push(objStock);
-            
-      });
-    }
-        const obj =
-        {
-          "id": this.editApiData && this.portfolioData.id != 0?this.editApiData.portfolioId:this.portfolioData.id,
-          "clientId": this.clientId,
-          "advisorId": this.advisorId,
-          "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
-          "ownerList": this.editApiData && this.portfolioData.id != 0?this.editApiData.ownerList:this.scipLevelHoldingForm.value.getCoOwnerName,
-          "portfolioName": this.portfolioData.portfolioName,
-          "stockList": finalStocks,
-          "nomineeList": this.optionForm.value.getNomineeName,
-          "linkedBankAccount": this.optionForm.value.linkedBankAccount,
-          "linkedDematAccount": this.optionForm.value.linkedDematAccount,
-          "description": this.optionForm.value.description,
-        }
 
-        if(this.editApiData && this.portfolioData.id == 0){
-          obj.ownerList[0].id = null;
-        }
+        });
+      }
+      const obj =
+      {
+        "id": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.portfolioId : this.portfolioData.id,
+        "clientId": this.clientId,
+        "advisorId": this.advisorId,
+        "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
+        "ownerList": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.ownerList : this.scipLevelHoldingForm.value.getCoOwnerName,
+        "portfolioName": this.portfolioData.portfolioName,
+        "stockList": finalStocks,
+        "nomineeList": this.optionForm.value.getNomineeName,
+        "linkedBankAccount": this.optionForm.value.linkedBankAccount,
+        "linkedDematAccount": this.optionForm.value.linkedDematAccount,
+        "description": this.optionForm.value.description,
+      }
 
-        if (this.editApiData) {
-          this.cusService.editStockData(obj).subscribe(
-            data => {
-              console.log(data);
-              this.barButtonOptions.active = false;
-              this.Close();
-            },
-            error => {
-              this.barButtonOptions.active = false;
-              this.eventService.showErrorMessage(error)
-            }
-          )
-        }
-        else{
-          console.log(obj)
-          this.cusService.addAssetStocks(obj).subscribe(
-            data => {
-              console.log(data);
-              this.Close();
-              this.barButtonOptions.active = false;
-            },
-            error => {
-              this.barButtonOptions.active = false;
-              this.eventService.showErrorMessage(error)
-            }
-          )
-        }
+      if (this.editApiData && this.portfolioData.id == 0) {
+        obj.ownerList[0].id = null;
+      }
+
+      if (this.editApiData) {
+        this.cusService.editStockData(obj).subscribe(
+          data => {
+            console.log(data);
+            this.barButtonOptions.active = false;
+            this.Close();
+          },
+          error => {
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
+        )
+      }
+      else {
+        console.log(obj)
+        this.cusService.addAssetStocks(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+            this.barButtonOptions.active = false;
+          },
+          error => {
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
+        )
+      }
       // }
     }
   }
 
-  scripDataList:any=[];
-  getScriptList(data){
+  scripDataList: any = [];
+  getScriptList(data) {
     this.scripDataList = data;
   }
 
-  scripData:any;
-  getScript(data, i){
+  scripData: any;
+  getScript(data, i) {
     this.scripData = data;
     this.HoldingArray.controls[i].get('scripNameId').setValue(this.scripData.id);
   }
@@ -531,31 +532,66 @@ addNewNominee(data) {
   }
 
 
+  bankDematList: any = [];
   bankList = [];
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+
+    if (this.enumService.getDematBank().length > 0) {
+      this.bankDematList = this.enumService.getDematBank();
+    }
+    else {
+      this.bankDematList = [];
+    }
+    console.log(this.bankList, "this.bankList2");
   }
 
+
+  checkOwner() {
+    if (this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '') {
+      this.eventService.showErrorMessage("Please select owner");
+    }
+    // console.log(this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '', "test owner");
+
+  }
   //link bank
   openDialog(eventData): void {
-    const dialogRef = this.dialog.open(LinkBankComponent, {
-      width: '50%',
-      data:{bankList: this.bankList, userInfo: true, ownerList : this.getCoOwner} 
-    });
+    let dailogCompo;
+    let obj
+    if (eventData == 'demat') {
+      dailogCompo = ClientDematComponent;
+      obj = {
+        width: '50%',
+        height: '100%',
+        data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
+      };
+    }
+    else {
+      dailogCompo = LinkBankComponent;
+      obj = {
+        width: '50%',
+        data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
+      };
+    }
+    const dialogRef = this.dialog.open(dailogCompo, obj);
 
     dialogRef.afterClosed().subscribe(result => {
       setTimeout(() => {
-        this.bankList = this.enumService.getBank();
+        if (this.enumService.getBank().length > 0) {
+          this.bankList = this.enumService.getBank();
+        }
+        if (this.enumService.getDematBank().length > 0) {
+          this.bankDematList = this.enumService.getDematBank();
+        }
       }, 5000);
     });
 
   }
 
-//link bank
+  //link bank
 }

@@ -96,6 +96,8 @@ export class CashAndBankComponent implements OnInit {
 
     }
     this.bankAccountList = new MatTableDataSource(this.data);
+    this.accountTypes = this.enumDataService.accountTypes;
+    this.clientFamilybankList = this.enumService.clientFamilybankList;
     this.bankList = this.enumService.getBank();
     this.unSubcrip = this.enumDataService.getBankAccountViewTypes().subscribe(data => {
       this.accountTypes = data;
