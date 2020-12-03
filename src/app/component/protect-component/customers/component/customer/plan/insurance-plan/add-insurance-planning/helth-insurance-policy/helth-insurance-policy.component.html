@@ -66,7 +66,7 @@
                                     on this advice is
                                     possible only after your client
                                     gives explicit consent via email.</p>
-                                <mat-checkbox class="ml-44">Create a linked task</mat-checkbox>
+                                <!-- <mat-checkbox class="ml-44">Create a linked task</mat-checkbox> -->
                             </div>
 
                             <div class="col-md-12 p-0">
@@ -94,7 +94,8 @@
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
                                 This field is required</mat-error>
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.max)">
-                                Date should be less than implementation date
+                                Date should be less than <br>
+                                implementation date
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -110,12 +111,13 @@
                                 *ngIf="(healthInsurance.get('implementationDate').errors?.required)">This field is
                                 required</mat-error>
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
-                                Date should be greater than advice date
+                                Date should be greater than 
+                                <br>advice date
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Surrender' && healthInsurance.get('selectAdvice').value != 'Discontinue'">Amount</p>
-                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Surrender' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
+                    <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">Amount</p>
+                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
                         <mat-form-field class="ba-date">
                             <input autocomplete="off" maxlength="10" matInput #amount class="form-control b-0"
                                 formControlName="amount">
@@ -131,11 +133,20 @@
 
     </div>
 </div>
-<div class="row pt-10">
+<!-- <div class="row pt-10">
     <div class="col-md-12 text-right mb-20">
         <button mat-button (click)="close(showInsurance,false)">CANCEL</button>
         <app-progress-button (btnClick)="saveAdviceOnHealth()" [options]="barButtonOptions"
             class="br-0 text-inherit ml-12">
+        </app-progress-button>
+    </div>
+</div> -->
+<div class="row pt-10 pb-20">
+    <div class="col-md-12 d-flex align-items-center justify-content-end">
+        <p class="c-p br-0 text-primitive mb-0 mr-20 f-14" (click)="close(showInsurance,false)">
+            CANCEL
+        </p>
+        <app-progress-button (btnClick)="saveAdviceOnHealth()" class="br-0 text-inherit  " [options]="barButtonOptions">
         </app-progress-button>
     </div>
 </div>

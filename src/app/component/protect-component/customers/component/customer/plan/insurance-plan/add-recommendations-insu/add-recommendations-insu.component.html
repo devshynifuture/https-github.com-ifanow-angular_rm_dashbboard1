@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="pt-90 pr-28 pl-28">
+<div class="pt-100 pl-24 pr-24 pb-24 mb-48">
     <div class="recommendationTable" *ngIf="!isLoading">
         <table mat-table *ngIf="dataSource?.length > 0" [dataSource]="dataSource" id="table-low" appSkeletonLoading
             [appSkeletonLoading]="isLoading" class=" skeletonAnimation">
@@ -93,15 +93,10 @@
 
 </div>
 
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4" (click)="close()">
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-
-
-
-
-
     </div>
 </div>

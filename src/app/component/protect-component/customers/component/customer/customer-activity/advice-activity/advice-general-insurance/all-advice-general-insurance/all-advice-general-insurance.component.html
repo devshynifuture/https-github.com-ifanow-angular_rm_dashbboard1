@@ -6,7 +6,7 @@
             <button mat-stroked-button class="btn-primary br-0">All General
                 Insurance</button>
         </div>
-        <div class="col-md-6 p-0 text-right">
+        <!-- <div class="col-md-6 p-0 text-right">
             <button mat-button [matMenuTriggerFor]="menu" class="right b-a br-0 pr-8">Scenario 2<i
                     class="material-icons pl-8 text-light">
                     keyboard_arrow_down
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </mat-menu>
-        </div>
+        </div> -->
     </div>
     <div class="row">
         <div class="col-md-12 p-0">
@@ -54,6 +54,10 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu1>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '0','Health Insurance',healthCpy,healthInsuranceDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button
                     (click)="filterInsurance('adviceStatusId', '1','Health Insurance',healthCpy,healthInsuranceDataSource)"
                     mat-menu-item>
@@ -101,122 +105,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
+    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
         [dataSource]="healthInsuranceDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                    <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Health Insurance',element)">Delete</button>
+                        <button mat-menu-item (click)="editAdvice('Health Insurance',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Health Insurance',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Health Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -236,6 +247,10 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu2>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '0','Personal accident',presonalCpy,personalAccidentDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button
                     (click)="filterInsurance('adviceStatusId', '1','Personal accident',presonalCpy,personalAccidentDataSource)"
                     mat-menu-item>
@@ -283,122 +298,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
+    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
         [dataSource]="personalAccidentDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                        <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                    </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Personal accident',element)">Delete</button>
+                            <button mat-menu-item (click)="editAdvice('Personal accident',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Personal accident',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Personal accident',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -418,6 +440,10 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu3>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '0','Critical illness',criticalCpy,criticalInsDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button
                     (click)="filterInsurance('adviceStatusId', '1','Critical illness',criticalCpy,criticalInsDataSource)"
                     mat-menu-item>
@@ -465,122 +491,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
+    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                    <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Critical illness',element)">Delete</button>
+                            <button mat-menu-item (click)="editAdvice('Critical illness',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Critical illness',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Critical illness',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -600,6 +633,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu4>
+                <button (click)="filterInsurance('adviceStatusId', '0','Motor insurance',motorCpy,motorDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Motor insurance',motorCpy,motorDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -638,122 +674,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
+    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                        <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                    </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Motor insurance',element)">Delete</button>
+                            <button mat-menu-item (click)="editAdvice('Motor insurance',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Motor insurance',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Motor insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -773,6 +816,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu5>
+                <button (click)="filterInsurance('adviceStatusId', '0','Travel insurance',travelCpy,travelDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Travel insurance',travelCpy,travelDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -811,122 +857,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
+    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                        <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                    </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Travel insurance',element)">Delete</button>
+                            <button mat-menu-item (click)="editAdvice('Travel insurance',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Travel insurance',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Travel insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -946,6 +999,9 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu6>
+                <button (click)="filterInsurance('adviceStatusId', '0','Home insurance',homeCpy,homeInsDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button (click)="filterInsurance('adviceStatusId', '1','Home insurance',homeCpy,homeInsDataSource)"
                     mat-menu-item>
                     GIVEN</button>
@@ -984,122 +1040,129 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
+    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                        <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                    </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
-                        <button mat-menu-item (click)="deleteModal('Home insurance',element)">Delete</button>
+                            <button mat-menu-item (click)="editAdvice('Home insurance',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Home insurance',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Home insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -1119,6 +1182,10 @@
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #insuranceMenu7>
+                <button
+                    (click)="filterInsurance('adviceStatusId', '0','Fire & special perils insurance',fireCpy,FireDataSource)"
+                    mat-menu-item>
+                    ALL</button>
                 <button
                     (click)="filterInsurance('adviceStatusId', '1','Fire & special perils insurance',fireCpy,FireDataSource)"
                     mat-menu-item>
@@ -1166,123 +1233,130 @@
             </mat-menu>
         </div>
     </div>
-    <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
+    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
-                    <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                        [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                        *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <mat-checkbox *ngIf="isLoading==false"
-                        (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                        [checked]="element.selected"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insured members </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.displayHolderName}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Name of insurer & Plan
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
-    
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Sum insured
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar">
-                            {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="empcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Premium<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="emprcon">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Policy expiry date<br>
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right">
-                    <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
-                            {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}} </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="advice">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
-                            <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="astatus">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <span *ngIf="element">
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
-                            <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
-                        </span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="adate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
-                <td mat-cell *matCellDef="let element" class="br text-left">
-                        <div class="bar"> <span *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span></div>
-                    </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef  class="br">
+                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
+                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
+                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <mat-checkbox *ngIf="isLoading==false"
+                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.displayHolderName}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> <span *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.insurerName}}{{element?.InsuranceDetails?.planName ? '-'+ element?.InsuranceDetails?.planName : ''}}
+
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar">
+                    {{!isLoading && element?.InsuranceDetails?.sumAssured? "₹" : ""}}<span appFormatNumber
+                        *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.sumAssured ? element?.InsuranceDetails?.sumAssured : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="empcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
+                        appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.premiumAmount ? element?.InsuranceDetails?.premiumAmount :'-'}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="emprcon">
+            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
+                        {{element?.InsuranceDetails?.policyExpiryDate ? (element?.InsuranceDetails?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="advice">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceId==1">Continue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==2">Discontinue</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==3">Port policy</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==4">Increase sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==5">Decrease sum assured</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==6">Add members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==7">Remove members</span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="astatus">
+            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                    <span *ngIf="element">
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==1">GIVEN</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==2">AWAITING CONSENT</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==3">ACCEPTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==4">IN PROGRESS</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==5">IMPLEMENTED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==6">DECLINED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==7">PENDING</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==8">SYSTEM GENERATED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==9">REVISED</span>
+                        <span *ngIf="element?.adviceDetails?.adviceStatusId==0">{{'-'}}</span>
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="adate">
+            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> <span
+                        *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
+                </div>
+            </td>
+        </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef > </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item
-                            (click)="openAddEditAdvice('Fire & special perils insurance',element)">Edit</button>
-                        <button mat-menu-item
+                            <button mat-menu-item (click)="editAdvice('Fire & special perils insurance',element)">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="editAdvice('Fire & special perils insurance',element)">Edit</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Fire & special perils insurance',element)">Delete</button>
                     </mat-menu>
                 </div>

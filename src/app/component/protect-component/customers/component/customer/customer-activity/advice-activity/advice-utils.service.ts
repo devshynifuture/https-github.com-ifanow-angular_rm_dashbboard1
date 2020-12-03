@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdviceUtilsService {
+  private allAdviceData = new BehaviorSubject('');
+  private clientId = new BehaviorSubject('')
 
   constructor() { }
 
@@ -31,7 +34,22 @@ export class AdviceUtilsService {
     return { selectedIdList, count };
 
   }
+  setStoredAdviceData(value) {
+    this.allAdviceData.next(value);
 
+  }
+  getStoredAdviceData() {
+    return this.allAdviceData.asObservable();
+  }
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setStoredAdviceData({});
+  }
   static selectAllIns(flag, dataList, selectedIdList) {
     console.log(dataList)
     let count = 0;
@@ -40,7 +58,7 @@ export class AdviceUtilsService {
     });
     dataList.forEach(element => {
       // (element.selected) ? count++ : '';
-      element.selected = flag.checked;
+      element.selected = element.adviceDetails.id ? flag.checked : false;
       if (flag.checked) {
         count++;
         selectedIdList.push(element.adviceDetails);

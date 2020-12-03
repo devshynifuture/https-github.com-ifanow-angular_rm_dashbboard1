@@ -431,7 +431,7 @@
             <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
         </div>
     </div>
-    <app-froala *ngIf="showRecommendation" (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
+    <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
 
 </div>
 

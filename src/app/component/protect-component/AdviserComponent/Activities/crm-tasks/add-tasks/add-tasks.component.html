@@ -78,13 +78,19 @@
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
-                            {{ item.taskDescription }}
+                            {{ (item.categoryName? item.categoryName  + ' - ' : '') + item.taskDescription }}
                         </mat-option>
                         <mat-option value="-1" class="d-flex align-items-center">
                             <span class="d-flex align-items-center">
                                 <i class="material-icons pr-8">add</i>
                                 Add task template
                             </span>
+                        </mat-option>
+
+                        <mat-option *ngIf="taskTemplateLoading" class="skeletonAnimation">
+                            <div class="relClass">
+                                <div class="bar height24"></div>
+                            </div>
                         </mat-option>
                     </mat-select>
                     <mat-error>
@@ -116,7 +122,7 @@
 
         </div>
 
-        
+
 
         <div class="row pt-24">
             <div class="w-18 pl-16">

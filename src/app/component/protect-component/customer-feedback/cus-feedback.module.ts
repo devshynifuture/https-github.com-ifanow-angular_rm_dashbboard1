@@ -4,6 +4,7 @@ import { CusFeedbackRoutingModule } from './cus-feedback-routing.module';
 import { EmailConsentComponent } from './email-consent/email-consent.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,11 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     CommonModule,
     CusFeedbackRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class CusFeedbackModule { }

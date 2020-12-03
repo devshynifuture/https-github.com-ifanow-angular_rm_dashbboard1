@@ -7,7 +7,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { UtilService } from "src/app/services/util.service";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { SubscriptionInject } from "../../../Subscriptions/subscription-inject.service";
-import { MatTableDataSource, MatSort } from "@angular/material";
+import { MatTableDataSource, MatSort, PageEvent, MatPaginator } from "@angular/material";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { element } from 'protractor';
@@ -40,6 +40,10 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   selectedData: any;
   selectedRow: any = [];
   prevFilterFormValue: any;
+  totalSipCount: any = 0;
+  pageEvent: PageEvent;
+  currentPageIndex: any = 1;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -148,13 +152,19 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
             this.filterForm.get("brokerCode").enable({ emitEvent: false });
             this.filterForm.get("brokerCode").setValue(-1, { emitEvent: false });
           }
-          this.getSipCleanUpList(true);
+          this.getSipCleanUpList(true, 1);
         }
       });
 
     this.filterSub = this.filterForm.valueChanges.subscribe((res) => {
       if (!this.util.areTwoObjectsSame(this.prevFilterFormValue, res)) {
-        this.getSipCleanUpList(true);
+        this.getSipCleanUpList(true, 1);
+        this.currentPageIndex = 1;
+        this.totalSipCount = 0;
+        this.paginator.pageIndex = 0;
+        this.selectedRow = [];
+        this.selection.clear();
+        this.showMultipleKeepBtn = false;
         this.prevFilterFormValue = res;
       }
     });
@@ -170,7 +180,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     // }
   }
 
-  getSipCleanUpList(byFilter) {
+  getSipCleanUpList(byFilter, pageNumber) {
     let data;
     if (byFilter) {
       data = {
@@ -178,6 +188,8 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
         arnRiaDetailsId: this.filterForm.get("brokerCode").value,
         markedStatus: this.filterForm.get("markUnmark").value,
         activeStatus: this.filterForm.get("activeCeased").value,
+        pageNumber,
+        limit: 200
       };
       this.dataSource.data = ELEMENT_DATA;
     } else {
@@ -186,6 +198,8 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
         arnRiaDetailsId: -1,
         markedStatus: 0,
         activeStatus: -1,
+        pageNumber,
+        limit: 200
       };
     }
 
@@ -195,6 +209,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         if (res) {
           console.log("this is backoffice sip cleanup data", res);
+          this.totalSipCount = res[0].totalSipCount;
           res.map(element => {
             element.registeredDate = this.datePipe.transform(element.registeredDate, 'dd/MM/yy');
             element.from_date = this.datePipe.transform(element.from_date, 'dd/MM/yy')
@@ -217,6 +232,14 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  onPaginationChange(event) {
+    const { pageIndex } = event;
+    this.currentPageIndex = pageIndex + 1;
+    this.getSipCleanUpList(true, this.currentPageIndex);
+    return event;
+  }
+
 
   putSipCleanUpFolioKeepOrRemove(value, singleOrMultiple) {
     this.backOfficeService.putSipCleanUpUpdateStatus(value)
@@ -241,7 +264,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
               this.showMultipleKeepBtn = false;
             });
           }
-          this.getSipCleanUpList(true);
+          this.getSipCleanUpList(true, 1);
         } else {
           this.eventService.openSnackBar('Failed to change Status!', "DISMISS");
         }
@@ -269,6 +292,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
 
   selectMultipleData(flag, value, index) {
     this.showMultipleKeepBtn = flag;
+    console.log(this.selectedRow);
     (flag == true) ? this.selectedRow.push(value) : this.selectedRow.splice(index, 1)
   }
 

@@ -183,15 +183,12 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (singleData.emailList && singleData.emailList.length > 0) {
           singleData.email = singleData.emailList[0].email;
         }
+        singleData.selected = false;
+        singleData.ownerName = '';
+        singleData.name = '';
+        singleData.userName = '';
       });
-    }
-    if (data && data.length > 0) {
-      data.forEach(element => {
-        element.selected = false;
-        element.ownerName = '';
-        element.name = '';
-        element.userName = '';
-      });
+
       if (data) {
         console.log("this is all sip table data, ------", data);
         if (this.isAllSelected) {
@@ -203,11 +200,21 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
           }
         }
-        this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
 
-        this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
-          return data.some(item2 => item2.advisorId !== item.advisorId);
-        });
+        this.infiniteScrollClientList = this.infiniteScrollClientList.concat(data);
+        if (this.infiniteScrollClientList.length > 0) {
+          // this.infiniteScrollClientList = this.infiniteScrollClientList.filter(item => {
+          //   return data.some(item2 => item2.advisorId !== item.advisorId);
+          // });
+          // taking out duplicate datas from list
+
+          let jsonObjArr = this.infiniteScrollClientList.map(item => JSON.stringify(item));
+          console.log(jsonObjArr);
+          let uniqueSet = new Set(jsonObjArr);
+          let uniqueArray = Array.from(uniqueSet).map(item => JSON.parse(item));
+          this.infiniteScrollClientList = [];
+          this.infiniteScrollClientList = [...uniqueArray];
+        }
 
         console.log(this.infiniteScrollClientList);
         this.dataSource.data = this.infiniteScrollClientList;
@@ -243,8 +250,6 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         this.eventService.openSnackBar('No More Data Found', "DISMISS");
         this.hasEndReached = true;
       }
-    } else {
-      this.dataSource = null;
     }
 
   }

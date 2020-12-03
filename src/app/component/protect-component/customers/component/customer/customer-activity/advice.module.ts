@@ -5,14 +5,22 @@ import { CustomerActivityRoutingModule } from './customer-activity-routing.modul
 // import { CustomerActivityComponent } from './customer-activity.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    CustomCommonModule,
     CustomerActivityRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CustomDirectiveModule,
   ]
 })
 export class AdviceModule { }

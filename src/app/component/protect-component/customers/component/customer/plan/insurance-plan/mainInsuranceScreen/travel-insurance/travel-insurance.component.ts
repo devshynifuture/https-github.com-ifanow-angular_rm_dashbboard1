@@ -700,7 +700,8 @@ export class TravelInsuranceComponent implements OnInit {
 				"policyFeatures": featureList,
 				"id": (this.id) ? this.id : null,
 				'realOrFictitious':2,
-            	'suggestion':this.plannerNotes,
+				'suggestion':this.plannerNotes,
+				'isRecommend':this.showRecommendation,
 				insuredMembers: memberList,
 				nominees: this.travelInsuranceForm.value.getNomineeName,
 			}

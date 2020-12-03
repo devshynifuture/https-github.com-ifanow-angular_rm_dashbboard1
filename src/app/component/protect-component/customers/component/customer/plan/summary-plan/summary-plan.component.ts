@@ -1,14 +1,17 @@
-import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {AuthService} from './../../../../../../../auth-service/authService';
-import {EventService} from './../../../../../../../Data-service/event.service';
-import {PlanService} from './../plan.service';
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {DatePipe} from '@angular/common';
-import {forkJoin} from 'rxjs';
-import {ConstantsService} from 'src/app/constants/constants.service';
-import {UtilService} from 'src/app/services/util.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { AuthService } from './../../../../../../../auth-service/authService';
+import { EventService } from './../../../../../../../Data-service/event.service';
+import { PlanService } from './../plan.service';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { DatePipe } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { ConstantsService } from 'src/app/constants/constants.service';
+import { UtilService } from 'src/app/services/util.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SummaryPlanServiceService } from './summary-plan-service.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { apiConfig } from 'src/app/config/main-config';
 
 @Component({
     selector: 'app-summary-plan',
@@ -37,8 +40,8 @@ export class SummaryPlanComponent implements OnInit {
     annualSurplus: any;
     incomePercent: number;
     expensePercent: number;
-    @ViewChild('summaryPlan', {static: false}) summaryTemplateHeader: any;
-    fragmentData = {isSpinner: false, date: '', time: '', size: ''};
+    @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+    fragmentData = { isSpinner: false, date: '', time: '', size: '' };
     map: any;
     loopEle: number;
     isLoadingSummary = true;
@@ -51,8 +54,13 @@ export class SummaryPlanComponent implements OnInit {
     clientData = AuthService.getClientData();
     details = AuthService.getProfileDetails();
     getOrgData = AuthService.getOrgDetails();
+    clientIdToClearStorage: any;
+    finPlanId: any;
+    isSpinner: boolean;
+    generatePDF: number;
 
     constructor(
+        private summaryPlanService: SummaryPlanServiceService,
         private planService: PlanService,
         private eventService: EventService,
         private peopleService: PeopleService,
@@ -60,14 +68,28 @@ export class SummaryPlanComponent implements OnInit {
         private constantService: ConstantsService,
         private util: UtilService,
         private sanitizer: DomSanitizer,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private http: HttpClient
     ) {
     }
 
-    @ViewChild(MatPaginator, {static: false}) paginator;
+    @ViewChild(MatPaginator, { static: false }) paginator;
 
     ngOnInit() {
         this.isLoadingBudget = true;
+        this.summaryPlanService.getClientId().subscribe(res => {
+            this.clientIdToClearStorage = res;
+        });
+        if (this.clientIdToClearStorage) {
+            if (this.clientIdToClearStorage != this.clientId) {
+                this.summaryPlanService.clearStorage();
+            }
+        }
+        this.summaryPlanService.setClientId(this.clientId);
+        this.summaryPlanService.getFinPlanId()
+            .subscribe(res => {
+                this.finPlanId = res;
+            });
         this.getStartAndEndDate();
         this.getGoalSummaryValues();
         this.getSummeryInsurance();
@@ -146,35 +168,65 @@ export class SummaryPlanComponent implements OnInit {
         return this.sanitizer.bypassSecurityTrustHtml(cinemaLoc);
     }
 
-    generatePdf(tmp) {
-        this.fragmentData.isSpinner = true;
-        let pdfArray = [];
-        this.dataSource.data.forEach(element => {
-            this.singleGoalData = element;
-            this.cd.markForCheck();
-            this.cd.detectChanges();
-            let para = document.getElementById('planSummary');
-            pdfArray.push({goalName: element.details, para: para.innerHTML})
-        });
-        console.log(pdfArray)
-        let para = '';
-        pdfArray.forEach(element => {
-            para += element.para
-        })
-        // for (let i = 0; i <= 5; i++) {
-        //   this.loopEle = i
-        //   this.cd.markForCheck();
-        //   this.cd.detectChanges();
-        //   let para = document.getElementById('planSummary');
-        //   console.log(para.innerHTML)
-        // }
-
-        const header = this.summaryTemplateHeader.nativeElement.innerHTML
-        this.util.htmlToPdf('', para, 'Financial plan', 'true', this.fragmentData, '', '', false);
-
-
+    // generatePdf(tmp) {
+    //     this.fragmentData.isSpinner = true;
+    //     let pdfArray = [];
+    //     this.dataSource.data.forEach(element => {
+    //         this.singleGoalData = element;
+    //         this.cd.markForCheck();
+    //         this.cd.detectChanges();
+    //         let para = document.getElementById('planSummary');
+    //         pdfArray.push({ goalName: element.details, para: para.innerHTML })
+    //     });
+    //     console.log(pdfArray)
+    //     let para = '';
+    //     pdfArray.forEach(element => {
+    //         para += element.para
+    //     })
+    //     const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    //     this.util.htmlToPdf('', para, 'Financial plan', 'true', this.fragmentData, '', '', false);
+    // }
+    generatePdfFinPlan(){
+        if(this.finPlanId){
+            this.fragmentData.isSpinner = true
+            let obj = {
+              id: this.finPlanId
+            }
+            return this.http
+              .post(
+                apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
+                obj,
+                { responseType: 'blob' }
+              )
+              .subscribe((data) => {
+                if (data.type == "application/pdf") {
+                  this.generatePDF = 1
+                  this.fragmentData.isSpinner = false
+                  const file = new Blob([data], { type: 'application/pdf' });
+                  this.fragmentData.size = this.formatFileSize(data.size,0);
+                  this.fragmentData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+                  var date = new Date();
+                  const namePdf = this.clientData.name + '\'s ' + 'Financial plan' + ' as on ' + date;
+                  const a = document.createElement('a');
+                  a.href = window.URL.createObjectURL(file);
+                  a.download = namePdf + '.pdf';
+                  a.click();
+                } 
+        
+              });
+        }else{
+            this.eventService.openSnackBar("Financial plan not saved", "Ok")
+        }
+        
     }
-
+    formatFileSize(bytes,decimalPoint) {
+        if(bytes == 0) return '0 Bytes';
+        var k = 1000,
+            dm = decimalPoint || 2,
+            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+     }
     getAssetData(data) {
         let finalArray = [];
         if (data) {
@@ -556,7 +608,7 @@ export class SummaryPlanComponent implements OnInit {
             endDate: this.endDate,
             clientDob: this.clientDob,
             fmDobList: JSON.stringify(this.familyList),
-            id:0
+            id: 0
         };
         this.planService.getCashFlow(obj).subscribe(
             data => {

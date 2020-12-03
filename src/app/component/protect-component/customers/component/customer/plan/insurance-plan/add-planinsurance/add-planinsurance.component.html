@@ -16,7 +16,7 @@
         <button mat-button *ngIf="manualObj && manualObj.isMapped == 1" class="btn-danger br-0 right"
             (click)="addToPlan()">REMOVE FROM PLAN</button>
         <app-progress-button *ngIf="manualObj && manualObj.isMapped == 0" class="btn-primary br-0 right"
-            (click)="addToPlan()" [options]="barButtonOptions">
+            (click)="saveAndAddToPlan()" [options]="barButtonOptions">
         </app-progress-button>
         <app-progress-button *ngIf="!manualObj" class="btn-primary br-0 right" (click)="saveAndAddToPlan()"
             [options]="barButtonOptions">

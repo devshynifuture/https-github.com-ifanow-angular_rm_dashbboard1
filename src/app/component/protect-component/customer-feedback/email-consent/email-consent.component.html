@@ -19,99 +19,122 @@
 <div class="overflow-hidden mt-8 real-estate">
     <!-- appSkeletonLoading [appSkeletonLoading]="isLoading" -->
     <table mat-table *ngIf="id != 4 && dataSource.data.length > 0" appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
-            </td>
-            <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="investorName">
-            <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-20">
-                <div class="bar"> {{!isLoading ? (element?.stringObject?.lifeAssuredName) : ''}} </div>
-            </td>
-            <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+            [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br">
+                    <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
+                </td>
+                <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
+            </ng-container>
+            <ng-container matColumnDef="investorName">
+                <th mat-header-cell *matHeaderCellDef class="br"> Owner </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar"> {{!isLoading ? (element?.stringObject?.lifeAssuredName) : ''}} </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
 
-        </ng-container>
-        <ng-container matColumnDef="schemeDetails">
-            <th mat-header-cell *matHeaderCellDef class="br t-10 textRight text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-10 amt text-right">
-                <div class="bar">
-                    <!-- <span *ngIf="!isLoading">
-                        {{!isLoading ? (element?.stringObject?.currentValue ? element?.stringObject?.currentValue : '') : ''}}
-                    </span> -->
+            </ng-container>
+            <ng-container matColumnDef="policyName">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Policy name </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{!isLoading ? (element?.stringObject?.policyName) : ''}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+
+                </ng-container>
+            <ng-container matColumnDef="currentValue">
+                <th mat-header-cell *matHeaderCellDef class="br t-10 textRight text-right"> Current value </th>
+                <td mat-cell *matCellDef="let element" class="br t-10 amt text-right">
                     <div class="bar">
-                        {{!isLoading ? (element?.stringObject?.assumedRate) : ''}}
+                        <!-- <span *ngIf="!isLoading">
+                            {{!isLoading ? (element?.stringObject?.currentValue ? element?.stringObject?.currentValue : '') : ''}}
+                        </span> -->
+                        <div class="bar">
+                                {{!isLoading &&  element?.stringObject?.currentValue ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>{{(element?.stringObject?.currentValue ? element?.stringObject?.currentValue : '-')}}</span>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="currentValue">
-            <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar">
-                    {{!isLoading ? (element?.stringObject?.assumedRate) : ''}}
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="notionalGain">
-            <th mat-header-cell *matHeaderCellDef class="br textRight text-right" matTooltip="Total amount invested"
-                aria-label="Button that displays a tooltip when focused or hovered over"> Total amt... </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar"> {{ !isLoading ? (element?.stringObject?.amt || '-') : ''}} </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef class="br textRight text-right t-12"> Account number </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right t-12">
-                <div class="bar"> {{!isLoading ? (element?.stringObject?.linkedBankAccount || '-') : ''}} </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="adviceStatus">
-            <th mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity date </th>
-            <td mat-cell *matCellDef="let element" class="br t-12 text-left">
-                <div class="bar">
-                    {{!isLoading ? (element?.stringObject?.maturityDate |date:'dd/MM/yyyy') : ''}} </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container>
 
-        <ng-container matColumnDef="applicableDate">
-            <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar">
-                    {{!isLoading ? (element?.stringObject?.description ? element?.stringObject?.description : '-') : ''}}
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
-                <div>
-                    <div *ngIf="!isLoading">
-                        <button *ngIf="!isLoading"
-                            [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
-                            (click)="acceptOrDeclineConsent( i, 1)">ACCEPTED</button>
-                        <button *ngIf="!isLoading"
-                            [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
-                            (click)="acceptOrDeclineConsent(i, 2)">DECLINE</button>
+            <ng-container matColumnDef="sumAssured">
+                <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
+                    aria-label="Button that displays a tooltip when focused or hovered over"> Sum assured </th>
+                <td mat-cell *matCellDef="let element" class="br amt text-right">
+                    <div class="bar">
+                            {{!isLoading &&  element?.stringObject?.sumAssured ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>
+                                    {{element?.stringObject?.sumAssured ? element?.stringObject?.sumAssured : '-'}}
+                            </span> </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container>
+            <ng-container matColumnDef="premium">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
+                        aria-label="Button that displays a tooltip when focused or hovered over"> Premium amount </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar">
+                                {{!isLoading &&  element?.stringObject?.premiumAmount ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>
+                                        {{element?.stringObject?.premiumAmount ? element?.stringObject?.premiumAmount :'-'}}
+                                </span>
+                             </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="rate">
+                        <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Rate </th>
+                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                            <div class="bar">
+                                <span *ngIf="!isLoading">{{!isLoading ? (element?.stringObject?.assumedRate) : ''}}{{element?.stringObject?.assumedRate ? '%' : ''}}</span>
+                            </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                    </ng-container>
+            <!-- <ng-container matColumnDef="accNumber">
+                <th mat-header-cell *matHeaderCellDef class="br textRight text-right t-12"> Account number </th>
+                <td mat-cell *matCellDef="let element" class="br amt text-right t-12">
+                    <div class="bar"> {{!isLoading ? (element?.stringObject?.linkedBankAccount || '-') : ''}} </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container> -->
+            <ng-container matColumnDef="maturityDate">
+                <th mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity date </th>
+                <td mat-cell *matCellDef="let element" class="br t-12 text-left">
+                    <div class="bar">
+                            <span *ngIf="!isLoading">{{!isLoading ? (element?.stringObject?.maturityDate ? (element?.stringObject?.maturityDate |date:'dd/MM/yyyy') : '-') : '-'}}</span> </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container>
+
+            <ng-container matColumnDef="applicableDate">
+                <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
+                <td mat-cell *matCellDef="let element" class="br t-10">
+                    <div class="bar">
+                        {{!isLoading ? (element?.stringObject?.description ? element?.stringObject?.description : '-') : ''}}
                     </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
+                    <div>
+                        <div *ngIf="!isLoading">
+                            <button *ngIf="!isLoading"
+                                [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1,'active':element.acceptedOrDeclined==1}"
+                                (click)="acceptOrDeclineConsent(element,i, 1)">ACCEPTED</button>
+                            <button *ngIf="!isLoading"
+                                [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2,'active':element.acceptedOrDeclined==2}"
+                                (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
+                        </div>
 
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
-    </table>
+                    </div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
     <table mat-table *ngIf="id==4 && dataSource.data.length > 0" appSkeletonLoading [appSkeletonLoading]="isLoading"
         [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
         <ng-container matColumnDef="position">
@@ -148,7 +171,7 @@
             <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Sum insured </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">
-                    <span appFormatNumber>{{element?.stringObject?.sumAssured}}</span>
+                        {{!isLoading &&  element?.stringObject?.sumAssured ? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">{{element?.stringObject?.sumAssured ? element?.stringObject?.sumAssured :'-'}}</span>
                 </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
@@ -157,8 +180,8 @@
             <th mat-header-cell *matHeaderCellDef class="br textRight text-right" matTooltip="Total amount invested"
                 aria-label="Button that displays a tooltip when focused or hovered over"> Premium</th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar"><span appFormatNumber>
-                        {{element?.stringObject?.premiumAmount}}</span> </div>
+                <div class="bar">{{!isLoading &&  element?.stringObject?.sumAssured ? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">
+                        {{element?.stringObject?.premiumAmount ? element?.stringObject?.premiumAmount : '-'}}</span> </div>
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
         </ng-container>
@@ -193,10 +216,10 @@
                     <div *ngIf="!isLoading">
                         <button *ngIf="!isLoading"
                             [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
-                            (click)="acceptOrDeclineConsent( i, 1)">ACCEPTED</button>
+                            (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
                         <button *ngIf="!isLoading"
                             [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
-                            (click)="acceptOrDeclineConsent(i, 2)">DECLINE</button>
+                            (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
                     </div>
 
                 </div>
@@ -205,12 +228,13 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
     <div *ngIf="dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
         <img src="assets/images/svg/documents-empty-states.svg">
         <h4 class="text-center mt-12 mb-20">No Data Found</h4>
     </div>
 </div>
-<button class="btn-primary" *ngIf="!isLoading && dataSource.data.length > 0" (click)="save()">Ok</button>
-<button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0" class="txt pr-16">Cancel</button>
+<div class="pt-20">
+        <button class="btn-primary" *ngIf="!isLoading && dataSource.data.length > 0" (click)="save()">Ok</button>
+        <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0" class="txt pr-16">Cancel</button>
+</div>
