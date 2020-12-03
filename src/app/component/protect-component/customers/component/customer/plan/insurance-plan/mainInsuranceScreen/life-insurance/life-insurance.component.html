@@ -172,8 +172,10 @@
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
-                    <div class="text-center bl-1 br bb-1" *ngIf="!isLoadingPlan && dataSouce3?.length == 0">
-                        <span class="align-items-center">No data found</span>
+                    <div *ngIf="!isLoadingPlan && dataSouce3?.length == 0"
+                        class="d-flex flex-column align-items-center">
+                        <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
@@ -985,7 +987,7 @@
                                     <td
                                         style="padding: 8px; text-align: left; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                                         {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
-                                    </td> -->
+                                    </td> 
                                 </tr>
                                 <tr *ngIf="dataSource1.length == 0" style="text-align: center;">
                                     <td style="text-align: center;padding-top: 15px;padding-bottom:15px;border-top: 1px solid #dee5e7;"

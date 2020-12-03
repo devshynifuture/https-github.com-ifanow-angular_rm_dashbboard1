@@ -647,7 +647,6 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.tab = event.index
   }
   addToPlan() {
-    this.barButtonOptions.active = true;
     if (this.tab == 1) {
       this.id = this.manualObj.id
     } else {
@@ -657,7 +656,6 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.planService.addLifeInsuranceAnalysisMapToPlan(this.id).subscribe(
       data => {
         console.log(data);
-        this.barButtonOptions.active = false;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data: true });
 
       },
@@ -672,6 +670,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     if (this.manualForm.invalid) {
       this.manualForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       this.sendObj = {
         lifeInsurancePlanningId: this.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id.manualObj ? this.manualObj.lifeInsurancePlanningId : this.insuranceData.id,
         needTypeId: 2,
@@ -680,6 +679,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       }
       this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
         data => {
+          this.barButtonOptions.active = false;
           this.getAnalysis();
         },
         err => {

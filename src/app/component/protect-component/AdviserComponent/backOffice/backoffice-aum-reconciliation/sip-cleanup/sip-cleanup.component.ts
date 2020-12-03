@@ -237,6 +237,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     const { pageIndex } = event;
     this.currentPageIndex = pageIndex + 1;
     this.getSipCleanUpList(true, this.currentPageIndex);
+    return event;
   }
 
 

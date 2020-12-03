@@ -45,6 +45,7 @@ import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fun
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { CustomerService } from '../../../customer.service';
+import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -114,6 +115,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
+    private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -219,6 +221,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     let obj = {
       id: data.id
     }
+    this.summaryPlanService.setFinPlanId(data.id);
     return this.http
       .post(
         apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
