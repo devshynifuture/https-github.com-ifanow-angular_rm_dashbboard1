@@ -46,7 +46,7 @@
     <div class="col-md-3 pl-0 paginationClass pr-0">
         <mat-paginator [length]="totalSipCount" [hidePageSize]="true" [pageSize]="200"
             [ngClass]="{'cursor-not-allowed': isLoading}"
-            (page)="!isLoading ? pageEvent = onPaginationChange($event): event.preventDefault()">
+            (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
         </mat-paginator>
     </div>
 </div>
