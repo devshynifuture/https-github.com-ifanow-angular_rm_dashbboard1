@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType } from 'src/app/services/util.service';
@@ -8,9 +8,10 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EnumDataService } from "../../../../../../../../services/enum-data.service";
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+
 
 @Component({
   selector: 'app-client-demat',
@@ -42,6 +43,8 @@ export class ClientDematComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  public dialogRef = null;
+  private dialogData;
   clientData: any;
   disableBtn = false;
   saveAndNextFlag: any;
@@ -51,10 +54,16 @@ export class ClientDematComponent implements OnInit {
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
   bankList: any = [];
 
-  constructor(private cusService: CustomerService, private fb: FormBuilder,
+  constructor(private cusService: CustomerService, private fb: FormBuilder, private injector: Injector,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, public dialog: MatDialog,
     public enumDataService: EnumDataService, private enumService: EnumDataService) {
+    this.createDematForm(null);
+
+    this.dialogRef = this.injector.get(MatDialogRef, null);
+    this.dialogData = this.injector.get(MAT_DIALOG_DATA, null);
+    console.log(this.dialogData, 'userData');
+
   }
 
   validatorType = ValidatorType;
@@ -319,10 +328,19 @@ export class ClientDematComponent implements OnInit {
   }
 
   getDematList(data) {
-    const obj = {
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    };
+    let obj;
+    if (this.dialogRef) {
+      obj = {
+        userId: data.familyMemberId,
+        userType: data.isClient == 1 ? 2 : 3
+      }
+    }
+    else {
+      obj = {
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      };
+    }
     this.cusService.getDematList(obj).subscribe(
       data => {
         console.log(data);
@@ -342,7 +360,18 @@ export class ClientDematComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getBankList();
+    if (!this.dialogRef) {
+      this.getBankList();
+    }
+    else {
+      this.bankList = this.dialogData.bankList;
+      this.userData = this.dialogData.ownerList.value;
+      this.userData['headerFlag'] = "Add";
+      this.userData['clientId'] = AuthService.getClientId();
+      this.getDematList(this.userData);
+      this.barButtonOptions.text = 'SAVE';
+    }
+
   }
 
   getBankList() {
@@ -449,8 +478,15 @@ export class ClientDematComponent implements OnInit {
         dematClientId: this.dematForm.get('dematClientId').value,
         userBankMappingId: this.dematForm.get('linkedBankAccount').value
       };
+      if (this.dialogRef) {
+        obj.userType = this.userData.isClient == 1 ? 2 : 3;
+      }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
+          if (this.dialogRef) {
+            this.enumDataService.getDematList(this.enumDataService.userData);
+            this.dialogRef.close(data);
+          }
           console.log(data);
           this.disableBtn = false;
           this.barButtonOptions.active = false;
@@ -459,7 +495,9 @@ export class ClientDematComponent implements OnInit {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
           } else {
-            this.closeAndSave();
+            if (!this.dialogRef) {
+              this.closeAndSave();
+            }
           }
         },
         err => {
@@ -516,8 +554,13 @@ export class ClientDematComponent implements OnInit {
   }
 
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+    else {
+      (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    }
   }
 
   closeAndSave() {

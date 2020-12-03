@@ -9,6 +9,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { DatePipe } from '@angular/common';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 
 
 @Component({
@@ -264,7 +265,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
       linkedBankAccount: [''],
       linkedDematAccount: [''],
       description: ['']
-  })
+    })
 
     if (data.transactionOrHoldingSummaryList) {
       data.transactionOrHoldingSummaryList.forEach(element => {
@@ -324,11 +325,11 @@ export class StockScripLevelTransactionComponent implements OnInit {
       date: [, [Validators.required]],
       transactionAmount: [, [Validators.required]],
       quantity: [, [Validators.required]],
-      isDeleted: [false],  
+      isDeleted: [false],
       id: []
     }))
   }
-  removed:any=[];
+  removed: any = [];
   removeTransactions(index) {
     this.transactionArray.controls[index].get('isDeleted').setValue(true);
     const reControls = this.transactionArray.controls[index];
@@ -406,64 +407,64 @@ export class StockScripLevelTransactionComponent implements OnInit {
       // }
       // else {
 
-        let finalStocks = [];
-          let transObj = {
-            "valueAsOn": null,
-            "currentMarketValue": 0,
-            "amountInvested": 0,
-            // "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
-            "scripNameId": this.scripData?this.scripData.id:this.editApiData.scripNameId,
-            // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
-            "stockType": 3,
-            "id":this.editApiData?this.editApiData.id:null,
-            "portfolioId": this.portfolioData.id,
-            "transactionOrHoldingSummaryList": []
-          }
-        this.transactionArray.controls.forEach(element => {
-          let tran = {
-            "id": element.get('id').value,
-            "holdingOrTransaction": 2,
-            "quantity": element.get('quantity').value,
-            "holdingOrTransactionDate": this.datePipe.transform(element.get('date').value, 'yyyy-MM-dd'),
-            "transactionTypeOrScripNameId": element.get('transactionType').value,
-            "investedOrTransactionAmount": element.get('transactionAmount').value,
-            'isDeleted':  element.get('isDeleted').value,  
-          }
-          transObj.transactionOrHoldingSummaryList.push(tran);
+      let finalStocks = [];
+      let transObj = {
+        "valueAsOn": null,
+        "currentMarketValue": 0,
+        "amountInvested": 0,
+        // "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
+        "scripNameId": this.scripData ? this.scripData.id : this.editApiData.scripNameId,
+        // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
+        "stockType": 3,
+        "id": this.editApiData ? this.editApiData.id : null,
+        "portfolioId": this.portfolioData.id,
+        "transactionOrHoldingSummaryList": []
+      }
+      this.transactionArray.controls.forEach(element => {
+        let tran = {
+          "id": element.get('id').value,
+          "holdingOrTransaction": 2,
+          "quantity": element.get('quantity').value,
+          "holdingOrTransactionDate": this.datePipe.transform(element.get('date').value, 'yyyy-MM-dd'),
+          "transactionTypeOrScripNameId": element.get('transactionType').value,
+          "investedOrTransactionAmount": element.get('transactionAmount').value,
+          'isDeleted': element.get('isDeleted').value,
+        }
+        transObj.transactionOrHoldingSummaryList.push(tran);
 
-        })
-            if(this.removed.length > 0){
-              this.removed.forEach(d => {
-                // for(let element in d.controls){
-  
-                // }
-                let deleted = {
-                  "id": d.id,
-                    "holdingOrTransaction": 2,
-                    "quantity": d.quantity,
-                    "holdingOrTransactionDate": this.datePipe.transform(d.date, 'yyyy-MM-dd'),
-                    "transactionTypeOrScripNameId": d.transactionType,
-                    "investedOrTransactionAmount": d.transactionAmount,
-                    'isDeleted':  d.isDeleted, 
-                }
-                transObj.transactionOrHoldingSummaryList.push(deleted);
-                // d.controls.forEach(d => {
-                  
-                // });
-              });
-            }
-            if(this.editApiData && this.portfolioData.id == 0){
-              // transObj.ownerList[0].id = null;
-            }
+      })
+      if (this.removed.length > 0) {
+        this.removed.forEach(d => {
+          // for(let element in d.controls){
+
+          // }
+          let deleted = {
+            "id": d.id,
+            "holdingOrTransaction": 2,
+            "quantity": d.quantity,
+            "holdingOrTransactionDate": this.datePipe.transform(d.date, 'yyyy-MM-dd'),
+            "transactionTypeOrScripNameId": d.transactionType,
+            "investedOrTransactionAmount": d.transactionAmount,
+            'isDeleted': d.isDeleted,
+          }
+          transObj.transactionOrHoldingSummaryList.push(deleted);
+          // d.controls.forEach(d => {
+
+          // });
+        });
+      }
+      if (this.editApiData && this.portfolioData.id == 0) {
+        // transObj.ownerList[0].id = null;
+      }
       finalStocks.push(transObj)
       console.log(finalStocks)
       const obj =
       {
-        "id": this.editApiData && this.portfolioData.id != 0? this.editApiData.portfolioId : this.portfolioData.id,
+        "id": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.portfolioId : this.portfolioData.id,
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
-        "ownerList": this.editApiData && this.portfolioData.id != 0 ?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
+        "ownerList": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.portfolioOwner : this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.portfolioData ? this.portfolioData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
         "nomineeList": this.optionForm.value.getNomineeName,
         "linkedBankAccount": this.optionForm.value.linkedBankAccount,
@@ -471,7 +472,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "description": this.optionForm.value.description,
         "stockList": finalStocks
       }
-      if(this.editApiData && this.portfolioData.id == 0){
+      if (this.editApiData && this.portfolioData.id == 0) {
         obj.ownerList[0].id = null;
       }
       console.log(obj)
@@ -482,7 +483,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             this.Close();
             this.barButtonOptions.active = false;
           },
-          error =>{
+          error => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error)
           }
@@ -494,7 +495,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             this.barButtonOptions.active = false;
             this.Close();
           },
-          error =>{
+          error => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error)
           }
@@ -512,31 +513,66 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
+  bankDematList: any = [];
   bankList = [];
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+
+    if (this.enumService.getDematBank().length > 0) {
+      this.bankDematList = this.enumService.getDematBank();
+    }
+    else {
+      this.bankDematList = [];
+    }
+    console.log(this.bankList, "this.bankList2");
+  }
+
+  checkOwner() {
+    if (this.scipLevelTransactionForm.value.getCoOwnerName[0].name == '') {
+      this.eventService.showErrorMessage("Please select owner");
+    }
+    // console.log(this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '', "test owner");
+
   }
 
   //link bank
   openDialog(eventData): void {
-    const dialogRef = this.dialog.open(LinkBankComponent, {
-      width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
-    });
+    let dailogCompo;
+    let obj
+    if (eventData == 'demat') {
+      dailogCompo = ClientDematComponent;
+      obj = {
+        width: '50%',
+        height: '100%',
+        data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
+      };
+    }
+    else {
+      dailogCompo = LinkBankComponent;
+      obj = {
+        width: '50%',
+        data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
+      };
+    }
+    const dialogRef = this.dialog.open(dailogCompo, obj);
 
     dialogRef.afterClosed().subscribe(result => {
       setTimeout(() => {
-        this.bankList = this.enumService.getBank();
+        if (this.enumService.getBank().length > 0) {
+          this.bankList = this.enumService.getBank();
+        }
+        if (this.enumService.getDematBank().length > 0) {
+          this.bankDematList = this.enumService.getDematBank();
+        }
       }, 5000);
     });
 
   }
 
-//link bank
+  //link bank
 }

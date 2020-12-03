@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {element} from 'protractor';
-import {Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { element } from 'protractor';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ import {Subject} from 'rxjs';
 export class EnumServiceService {
   roleList: any = [];
   bankList: any = [];
+  bankDematList: any = [];
   clientFamilybankList = [];
   clientViewbankList = new Subject();
   clientRoleList: any = [];
@@ -93,6 +94,10 @@ export class EnumServiceService {
     this.bankList = data;
   }
 
+  public addDematBank(data) {
+    this.bankDematList = data;
+  }
+
   public addclientFamilyBanks(data) {
 
     this.clientFamilybankList = data;
@@ -111,6 +116,10 @@ export class EnumServiceService {
 
   public getBank() {
     return this.bankList;
+  }
+
+  public getDematBank() {
+    return this.bankDematList;
   }
 
   getclientFamilybankList() {
@@ -140,11 +149,11 @@ export class EnumServiceService {
 
   getRealEstateType() {
     if (this.realEstateTypeList.length == 0) {
-      this.realEstateTypeList.push({value: '0', name: 'Self Occupied property'});
-      this.realEstateTypeList.push({value: '1', name: 'Let out property'});
-      this.realEstateTypeList.push({value: '2', name: 'Commercial land'});
-      this.realEstateTypeList.push({value: '3', name: 'Agricultural land'});
-      this.realEstateTypeList.push({value: '4', name: 'Non agricultural land'});
+      this.realEstateTypeList.push({ value: '0', name: 'Self Occupied property' });
+      this.realEstateTypeList.push({ value: '1', name: 'Let out property' });
+      this.realEstateTypeList.push({ value: '2', name: 'Commercial land' });
+      this.realEstateTypeList.push({ value: '3', name: 'Agricultural land' });
+      this.realEstateTypeList.push({ value: '4', name: 'Non agricultural land' });
     }
     return this.realEstateTypeList;
   }
