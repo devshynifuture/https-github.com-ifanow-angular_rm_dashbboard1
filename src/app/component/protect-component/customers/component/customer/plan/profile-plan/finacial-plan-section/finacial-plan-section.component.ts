@@ -140,7 +140,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   //     this.loadedSection = sectionName
   //   }
   // }
-  downloadPrevoius() {
+  downloadPrevoius(element) {
+
+  }
+  addNew() {
 
   }
   getAssetCountGlobalData() {
@@ -248,7 +251,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
       });
   }
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
     let factory;
     if (value) {
       this.fragmentData.isSpinner = true;
@@ -394,7 +397,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName);
+          this.uploadFile(data, sectionName, displayName, flag);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -402,7 +405,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   }
-  uploadFile(innerHtmlData, sectionName, displayName) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
@@ -410,11 +413,14 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName)
+      data => this.uploadFileRes(data, displayName, flag)
     );
   }
-  uploadFileRes(data, displayName) {
-    this.moduleAdded.push({ name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName });
+  uploadFileRes(data, displayName, flag) {
+    this.moduleAdded.push({
+      name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
+      landscape: flag,
+    });
     console.log(data);
   }
   getGoalSummaryValues() {
