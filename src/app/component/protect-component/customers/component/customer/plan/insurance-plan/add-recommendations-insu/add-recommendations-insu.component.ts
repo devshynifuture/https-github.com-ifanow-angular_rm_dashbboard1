@@ -4,6 +4,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../customer.service';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -15,7 +17,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   dataSource: any;
   inputData: any;
   isLoading: any;
-  constructor(public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -45,10 +47,36 @@ export class AddRecommendationsInsuComponent implements OnInit {
   }
   getRecommendations() {
     this.isLoading = true;
-    this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
+    // this.planService.getInsuranceRecommendation(this.inputData.id).subscribe(
+    //   data => {
+    //     if (data) {
+    //       this.dataSource = data
+    //       this.isLoading = false;
+    //       console.log(data)
+    //     } else {
+    //       this.dataSource = [];
+    //       this.isLoading = false;
+    //     }
+    //   },
+    //   err => {
+    //     this.dataSource = [];
+    //     this.isLoading = false;
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //   }
+    // );
+    const obj2 = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
+      insuranceTypeId: 1,
+      id: 0
+    };
+    this.cusService.getInsuranceData(obj2).subscribe(
       data => {
         if (data) {
-          this.dataSource = data
+          data.insuranceList.forEach(element => {
+            element.insurance = element  
+          });
+          this.dataSource = data.insuranceList
           this.isLoading = false;
           console.log(data)
         } else {

@@ -354,6 +354,7 @@ export const appConfig = {
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
   FREEZE_CAL: 'goal-planning/goal/freeze',
   ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
+  ADVISE_ON_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
