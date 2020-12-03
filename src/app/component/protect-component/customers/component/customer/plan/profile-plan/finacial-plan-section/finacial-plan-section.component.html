@@ -41,18 +41,18 @@
             </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
-                    <div class="col-md-2 pl-0">
+                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
 
                     </div>
                     <div class="col-md-3">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-3 p-0 text-right">
-                        <button mat-stroked-button class="btn-success">Save plan</button>
+                    <div class="col-md-3 p-0 text-right" *ngIf="moduleAdded.length > 0">
+                        <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
                 </div>
             </div>

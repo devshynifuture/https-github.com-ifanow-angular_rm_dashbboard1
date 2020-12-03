@@ -343,4 +343,11 @@ export class PlanService {
     let httpParams = new HttpParams().set('id', data.id)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PDF_CALL, httpParams)
   }
+  savePlanSection(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_PLAN_SECTION, data)
+  }
+  getPlanSection(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_SECTION, httpParams)
+  }
 }
