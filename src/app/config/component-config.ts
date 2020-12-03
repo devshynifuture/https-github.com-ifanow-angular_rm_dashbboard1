@@ -500,7 +500,7 @@ export const appConfig = {
   FINPLAN_PDF_UPLOAD: 'plan/financial-plan-html/upload',
   MEREGE_CALL: "plan/financial-plan-html/merge",
   GET_PDF_CALL: "plan/financial-plan/pdf/get",
-  SAVE_PLAN_SECTION: "",
+  SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "",
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',

@@ -46,6 +46,8 @@ import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund
 import { apiConfig } from 'src/app/config/main-config';
 import { CustomerService } from '../../../customer.service';
 import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
+import * as jsPDF from 'jspdf';
+import { DatePipe } from '@angular/common';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -103,7 +105,6 @@ export class FinacialPlanSectionComponent implements OnInit {
   insuranceList: any;
   insurancePlanningList: any;
   count: any = 0;
-  datePipe: any;
   id: any;
   generatePDF: any;
   isSpinner: boolean = true;
@@ -115,6 +116,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
+    private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
@@ -132,6 +134,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getInsuranceList();
     this.getAssetCountGlobalData()
     this.getPlanSection()
+    this.pdfFromImage()
     console.log('clientData', this.clientData)
   }
 
@@ -145,6 +148,15 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   addNew() {
 
+  }
+  pdfFromImage() {
+    let imageData = "http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png"
+    var pdfsize = 'a4';
+    var obj = new jsPDF(pdfsize);
+    obj.addImage(imageData, 'JPEG', 5, 5, 200, 287, 'index');
+    obj.setFontSize(14);
+    obj.setFontStyle("bold");
+    obj.save('a4.pdf');
   }
   getAssetCountGlobalData() {
     const obj = {
@@ -574,8 +586,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       ClientName: this.clientData.name,
       OwnerName: AuthService.getUserInfo().name,
       ReportName: this.clientData.name + '`s Plan',
-      ReportDate: date,
-      moduleList: this.moduleAdded
+      ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
+      modules: this.moduleAdded,
+      financialPlanPdfLogId: 0
     }
     this.planService.savePlanSection(obj).subscribe(
       data => this.savePlanSectionRes(data),
