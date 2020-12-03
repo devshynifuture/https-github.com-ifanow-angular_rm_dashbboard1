@@ -44,6 +44,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { apiConfig } from 'src/app/config/main-config';
+import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -107,7 +108,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   isSpinner: boolean = true;
   sectionName: any;
   clientData: any;
-  constructor(private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
+  constructor(private summaryPlanService :SummaryPlanServiceService,private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -180,6 +181,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     let obj = {
       id: data.id
     }
+    this.summaryPlanService.setFinPlanId(data.id);
     return this.http
       .post(
         apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',

@@ -633,8 +633,9 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       this.dataSouce3 = [];
     }
-    this.getDetailsInsuranceRes(result[0])
+    this.insuranceDetails = result[0];
     this.getNeedAnalysisData(result[3]);
+    this.getDetailsInsuranceRes(result[0])
     if (result[2]) {
       this.dataSource1 = result[2];
     } else {
@@ -783,7 +784,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   setAdviceAmountToAllIns() {
     let singleData = this.allInsuranceData.filter(d => d.id == this.inputData.id);
-    singleData[0].adviceAmount = this.insuranceDetails ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
+    singleData[0].adviceAmount = this.insuranceDetails ? (this.insuranceDetails.advice ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns) : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
     this.ipService.setAllInsuranceData(this.allInsuranceData);
 
   }

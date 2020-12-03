@@ -123,7 +123,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       // adviceStatusId: 1,
       categoryMasterId: 3,
       categoryTypeId: 3,
-      statusFlag: 1
+      statusFlag: 0
     }
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
