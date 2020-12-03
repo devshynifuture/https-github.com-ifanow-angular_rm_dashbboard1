@@ -122,6 +122,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.moduleAdded = [];
     this.getGoalSummaryValues();
     this.getInsuranceList();
+    this.getPlanSection()
   }
 
   // checkAndLoadPdf(value, sectionName) {
@@ -130,8 +131,21 @@ export class FinacialPlanSectionComponent implements OnInit {
   //   }
   // }
 
-
-
+  getPlanSection() {
+    let obj = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId()
+    }
+    this.planService.getPlanSection(obj).subscribe(
+      data => this.getPlanSectionRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  getPlanSectionRes(data) {
+    this.moduleAdded = data
+  }
 
   generatePdf(data, sectionName, displayName) {
     this.fragmentData.isSpinner = true;
@@ -147,6 +161,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   removeModule(module, i) {
+    module.checked = false
     this.moduleAdded.splice(i, 1);
   }
 
@@ -519,6 +534,22 @@ export class FinacialPlanSectionComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+  savePlanSection() {
+    let obj = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
+      moduleList: this.moduleAdded
+    }
+    this.planService.savePlanSection(obj).subscribe(
+      data => this.savePlanSectionRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  savePlanSectionRes(data) {
+
   }
   getInsurancePlaningListRes(data) {
     if (data) {
