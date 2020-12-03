@@ -580,7 +580,7 @@
                 <div class="b-b pl-12">
                     <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
                     <div class="d-flex mb-20">
-                        <img src="assets/images/svg/financial-plan.svg" (click)="generatePdfFinPlan(null)">
+                        <img class="c-p" src="assets/images/svg/financial-plan.svg" (click)="generatePdfFinPlan()">
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         <div class="detailsPDF">
                             <p class="f-12 l-18 f-500 roboto mb-10">Financial plan.pdf</p>
@@ -651,7 +651,7 @@
 <!-- <div #summaryPlan id="planSummary">
         <div >
             <h1>{{'helooo'}}{{loopEle}}</h1>
-               
+
               </div>
 </div> -->
 

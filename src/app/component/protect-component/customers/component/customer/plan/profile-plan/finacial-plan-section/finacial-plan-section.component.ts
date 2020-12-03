@@ -44,6 +44,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { apiConfig } from 'src/app/config/main-config';
+import { CustomerService } from '../../../customer.service';
 import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
@@ -108,7 +109,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   isSpinner: boolean = true;
   sectionName: any;
   clientData: any;
-  constructor(private summaryPlanService :SummaryPlanServiceService,private http: HttpClient, private util: UtilService, private resolver: ComponentFactoryResolver,
+  mfCount: any;
+  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download'];
+  clientDetails: any[];
+  constructor(private http: HttpClient, private util: UtilService,
+    private cusService: CustomerService,
+    private resolver: ComponentFactoryResolver,
+    private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
@@ -120,9 +127,12 @@ export class FinacialPlanSectionComponent implements OnInit {
   ngOnInit() {
     this.count = 0;
     this.moduleAdded = [];
+    this.clientDetails = []
     this.getGoalSummaryValues();
     this.getInsuranceList();
+    this.getAssetCountGlobalData()
     this.getPlanSection()
+    console.log('clientData', this.clientData)
   }
 
   // checkAndLoadPdf(value, sectionName) {
@@ -130,7 +140,22 @@ export class FinacialPlanSectionComponent implements OnInit {
   //     this.loadedSection = sectionName
   //   }
   // }
+  downloadPrevoius() {
 
+  }
+  getAssetCountGlobalData() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getAssetCountGlobalData(obj).subscribe(
+      data => this.getAssetCountGLobalDataRes(data)
+    );
+  }
+  getAssetCountGLobalDataRes(data) {
+    console.log('Mf Count', data)
+    this.mfCount = data
+  }
   getPlanSection() {
     let obj = {
       advisorId: AuthService.getAdvisorId(),
@@ -536,9 +561,14 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   savePlanSection() {
+    var date = new Date()
     let obj = {
       advisorId: AuthService.getAdvisorId(),
       clientId: AuthService.getClientId(),
+      ClientName: this.clientData.name,
+      OwnerName: AuthService.getUserInfo().name,
+      ReportName: this.clientData.name + '`s Plan',
+      ReportDate: date,
       moduleList: this.moduleAdded
     }
     this.planService.savePlanSection(obj).subscribe(
