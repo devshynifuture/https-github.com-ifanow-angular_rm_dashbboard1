@@ -501,7 +501,8 @@ export const appConfig = {
   MEREGE_CALL: "plan/financial-plan-html/merge",
   GET_PDF_CALL: "plan/financial-plan/pdf/get",
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
-  GET_PLAN_SECTION: "",
+  GET_PLAN_SECTION: "plan/financial-plan/list/get",
+  DELETE_FP_SECTION: '',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',

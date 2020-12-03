@@ -20,7 +20,7 @@ import { MutualFundOverviewComponent } from '../../../accounts/assets/mutual-fun
 import { MutualFundUnrealizedTranComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import { LiabilitiesComponent } from '../../../accounts/liabilities/liabilities.component';
 import { OtherPayablesComponent } from '../../../accounts/liabilities/other-payables/other-payables.component';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { PlanService } from '../../plan.service';
 import { GoalsPlanComponent } from '../../goals-plan/goals-plan.component';
 import { CommoditiesComponent } from '../../../accounts/assets/commodities/commodities/commodities.component';
@@ -48,6 +48,8 @@ import { CustomerService } from '../../../customer.service';
 import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
 import * as jsPDF from 'jspdf';
 import { DatePipe } from '@angular/common';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -111,11 +113,14 @@ export class FinacialPlanSectionComponent implements OnInit {
   sectionName: any;
   clientData: any;
   mfCount: any;
-  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download'];
+  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
   clientDetails: any[];
+  hideTable: boolean = false;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
+    private eventService: EventService,
+    public dialog: MatDialog,
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
@@ -134,7 +139,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getInsuranceList();
     this.getAssetCountGlobalData()
     this.getPlanSection()
-    this.pdfFromImage()
+    this.isLoading = false
+    // this.pdfFromImage()
     console.log('clientData', this.clientData)
   }
 
@@ -147,13 +153,49 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
   addNew() {
+    this.hideTable = true
+  }
+  deletePlanSection(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.planService.deletePlanSection(data.id).subscribe(
+          data => {
+            this.eventService.openSnackBar('Income deleted successfully', 'Dismiss');
+            // this.deleteId(incomeData.id);
+            // this.getIncomeList();
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   pdfFromImage() {
-    let imageData = "http://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png"
+    let imageData = "https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png"
     var pdfsize = 'a4';
     var obj = new jsPDF(pdfsize);
-    obj.addImage(imageData, 'JPEG', 5, 5, 200, 287, 'index');
+    obj.addImage(imageData, 'PNG', 145, 10);
     obj.setFontSize(14);
     obj.setFontStyle("bold");
     obj.save('a4.pdf');
@@ -172,6 +214,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.mfCount = data
   }
   getPlanSection() {
+    this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
       clientId: AuthService.getClientId()
@@ -184,7 +227,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   getPlanSectionRes(data) {
-    this.moduleAdded = data
+    this.isLoading = false
+    console.log('get plan section data', data)
+    this.clientDetails = data
   }
 
   generatePdf(data, sectionName, displayName) {
@@ -598,7 +643,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   savePlanSectionRes(data) {
-
+    this.hideTable = false
   }
   getInsurancePlaningListRes(data) {
     if (data) {

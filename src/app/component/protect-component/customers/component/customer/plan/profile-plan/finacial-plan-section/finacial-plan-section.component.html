@@ -39,14 +39,14 @@
                     No module added
                 </span>
             </div>
-            <div *ngIf="clientDetails.length > 0">
+            <div *ngIf="clientDetails.length > 0 && hideTable == false">
                 <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.OwnerName}}Ronak
+                                {{element.advisorName}}
                             </div>
                         </td>
                     </ng-container>
@@ -54,7 +54,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.ClientName}}
+                                {{element.ClientName}}
                             </div>
                         </td>
                     </ng-container>
@@ -62,7 +62,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.ReportName}}Ronak
+                                {{element.ReportName}}
                             </div>
                         </td>
                     </ng-container>
@@ -70,7 +70,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{(isLoading) ? '':element.ReportDate}}Ronak
+                                {{element.createdDate | date:'dd-MMM-yyyy'}}
                             </div>
                         </td>
                     </ng-container>
@@ -80,6 +80,17 @@
                             <div class="bar" (click)="downloadPrevoius(element)">
                             </div>
                         </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons" sticky>
+                        <th mat-header-cell *matHeaderCellDef class=""></th>
+                        <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p">
+                            <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
+                            <mat-menu #menu4="matMenu">
+                                <button (click)="deleteModal('FIXED DEPOSIT',element)" mat-menu-item>Delete</button>
+                            </mat-menu>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br"></td>
                     </ng-container>
                     <!-- Name Column -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
@@ -101,7 +112,7 @@
                     <div class="col-md-3 p-0 text-right" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
-                    <div class="col-md-2 p-0 text-right" *ngIf="moduleAdded.length > 0">
+                    <div class="col-md-2 text-right" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
                     </div>
                 </div>
