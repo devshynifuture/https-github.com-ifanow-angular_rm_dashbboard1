@@ -454,6 +454,9 @@ export class LifeInsuranceComponent implements OnInit {
         element.id = element.insurance.id
       });
       suggestPolicy = suggestPolicy.filter(d => d.id != deletedId);
+      if(suggestPolicy.length == 0){
+        this.recommendOrNot = false;
+      }
       singleData[0][1] = suggestPolicy
     } else {
       let suggested = suggestPolicy.suggested.length > 0 ? suggestPolicy.suggested : []
