@@ -734,7 +734,8 @@ export class CriticalInsuranceComponent implements OnInit {
                 'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
                 "id": (this.id) ? this.id : null,
                 'realOrFictitious':2,
-            	'suggestion':this.plannerNotes,
+                'suggestion':this.plannerNotes,
+                'isRecommend':this.showRecommendation,
                 insuredMembers: memberList,
                 nominees: this.critialIllnessForm.value.getNomineeName,
             }

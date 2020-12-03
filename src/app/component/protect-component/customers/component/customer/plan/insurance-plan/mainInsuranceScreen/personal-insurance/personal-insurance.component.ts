@@ -683,7 +683,8 @@ export class PersonalInsuranceComponent implements OnInit {
 				"insuranceSubTypeId": this.insuranceType,
 				"id": (this.id) ? this.id : null,
 				'realOrFictitious':2,
-            	'suggestion':this.plannerNotes,
+				'suggestion':this.plannerNotes,
+				'isRecommend':this.showRecommendation,
 				insuredMembers: memberList,
 				nominees: this.personalAccidentForm.value.getNomineeName,
 			}

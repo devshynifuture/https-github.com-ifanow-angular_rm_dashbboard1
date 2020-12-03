@@ -489,7 +489,7 @@ export class LifeInsuranceComponent implements OnInit {
 
       positiveMethod: () => {
         this.planService.deleteInsurancePlanning(obj).subscribe((data) => {
-          this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
+          this.eventService.openSnackBar("Insurance has been deleted successfully", "Dismiss");
           // this.deleteId(this.inputData.id);
           this.allInsuranceData = this.allInsuranceData.filter(d => d.id != obj.id);
           this.ipService.setAllInsuranceData(this.allInsuranceData);
@@ -621,6 +621,7 @@ export class LifeInsuranceComponent implements OnInit {
         let suggestionId;
         this.dataSouce3.forEach(ele => {
           if (ele['insurance'].suggestion) {
+            // if (ele['insurance'].isRecommend) {
             suggestionId = ele['insurance'].id;
             countSuggest++
             this.recommendOrNot = true;
