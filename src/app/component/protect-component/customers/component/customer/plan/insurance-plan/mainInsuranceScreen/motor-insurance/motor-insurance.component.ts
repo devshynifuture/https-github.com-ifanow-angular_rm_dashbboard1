@@ -138,6 +138,7 @@ export class MotorInsuranceComponent implements OnInit {
 	plannerNotes: any;
 	ownerIds =[];
 	insData: any;
+	isRecommended: boolean;
 
 	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
 	}
@@ -348,6 +349,11 @@ export class MotorInsuranceComponent implements OnInit {
 			this.dataForEdit = data.data;
 			this.id = this.dataForEdit.id;
 			this.flag = 'Edit';
+			if (this.dataForEdit) {
+                this.storeData = this.dataForEdit.suggestion;
+                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+                this.showRecommendation = this.isRecommended;
+            }
 		}
 		this.motorInsuranceForm = this.fb.group({
 			// ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -787,13 +793,13 @@ export class MotorInsuranceComponent implements OnInit {
 	saveData(data) {
 		this.plannerNotes = data;
 	}
-	checkRecommendation(value) {
-		if (!value) {
-			this.showRecommendation = true;
-		} else {
-			this.showRecommendation = false
-		}
-	}
+    checkRecommendation(value) {
+        if (value) {
+            this.showRecommendation = true;
+        } else {
+            this.showRecommendation = false;
+        }
+    }
     close(data, flag) {
         if (data.id) {
             this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });

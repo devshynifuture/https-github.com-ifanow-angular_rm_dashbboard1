@@ -136,6 +136,7 @@ export class CriticalInsuranceComponent implements OnInit {
     plannerNotes: any;
     ownerIds =[];
     insData: any;
+    isRecommended: boolean;
 
 
     constructor(private planService :PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
@@ -180,10 +181,10 @@ export class CriticalInsuranceComponent implements OnInit {
 		this.plannerNotes = data;
     }
     checkRecommendation(value) {
-        if (!value) {
+        if (value) {
             this.showRecommendation = true;
         } else {
-            this.showRecommendation = false
+            this.showRecommendation = false;
         }
     }
     display(value) {
@@ -345,6 +346,11 @@ export class CriticalInsuranceComponent implements OnInit {
                 this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
             }
             this.flag = "Edit";
+            if (this.dataForEdit) {
+                this.storeData = this.dataForEdit.suggestion;
+                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+                this.showRecommendation = this.isRecommended;
+            }
         }
         this.critialIllnessForm = this.fb.group({
             // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],

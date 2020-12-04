@@ -131,6 +131,7 @@ export class FireInsuranceComponent implements OnInit {
 	plannerNotes: any;
 	ownerIds =[];
 	insData: any;
+	isRecommended: boolean;
 	constructor(private planService :PlanService,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
 	validatorType = ValidatorType
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -312,6 +313,11 @@ export class FireInsuranceComponent implements OnInit {
 			this.dataForEdit = data.data;
 			this.id = this.dataForEdit.id;
 			this.flag = "Edit";
+			if (this.dataForEdit) {
+                this.storeData = this.dataForEdit.suggestion;
+                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+                this.showRecommendation = this.isRecommended;
+            }
 		}
 		this.fireInsuranceForm = this.fb.group({
 			// ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -747,12 +753,12 @@ export class FireInsuranceComponent implements OnInit {
 		this.plannerNotes = data;
 	}
 	checkRecommendation(value) {
-		if (!value) {
-			this.showRecommendation = true;
-		} else {
-			this.showRecommendation = false
-		}
-	}
+        if (value) {
+            this.showRecommendation = true;
+        } else {
+            this.showRecommendation = false;
+        }
+    }
 	
     close(data, flag) {
         if (data.id) {
