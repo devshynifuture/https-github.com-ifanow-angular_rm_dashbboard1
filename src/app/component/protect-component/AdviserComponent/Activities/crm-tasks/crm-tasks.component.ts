@@ -38,8 +38,8 @@ export class CrmTasksComponent implements OnInit {
   filterTaskWithStatus: any = 0;
   statusFC: FormControl;
   statusList = [
-    { name: 'Done', value: 1},
-    { name: 'Not Done', value: 0},
+    { name: 'Done', value: 1 },
+    { name: 'Not Done', value: 0 },
   ]
 
   constructor(
@@ -118,7 +118,7 @@ export class CrmTasksComponent implements OnInit {
   setFilterToDefault() {
     this.filterFormControl.patchValue('');
     this.isFilterSet = false;
-    this.statusFC.patchValue(0, {emitEvent: false});
+    this.statusFC.patchValue(0, { emitEvent: false });
     this.initPoint();
   }
 
@@ -128,9 +128,9 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  setTaskFilterWithStatus(event){
+  setTaskFilterWithStatus(event) {
     const value = event.value;
-    if(value !== ""){
+    if (value !== "") {
       this.filterTaskWithStatus = parseInt(value);
     }
     this.finalTaskList = [];
@@ -167,7 +167,7 @@ export class CrmTasksComponent implements OnInit {
               client: element.clientName,
               member: element.familyMemberName,
               des: element.description,
-              cat: element.description,
+              cat: 'category' in element ? element.category : element.description,
               assigned: element.assignedToName,
               dueDate,
               dueDateTimeStamp: element.dueDate,
@@ -216,9 +216,9 @@ export class CrmTasksComponent implements OnInit {
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
-      }, err=> {
+      }, err => {
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong!","DISMISS");
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
       })
   }
 
@@ -240,12 +240,12 @@ export class CrmTasksComponent implements OnInit {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
           this.finalTaskList = [];
-          
+
           this.initPoint();
         }
-      }, err=> {
+      }, err => {
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong!","DISMISS");
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
       })
   }
 
