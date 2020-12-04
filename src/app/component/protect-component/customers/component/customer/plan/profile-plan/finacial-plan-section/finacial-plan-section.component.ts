@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ComponentFactoryResolver,
-  ComponentFactory,
-  ViewContainerRef,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { delay } from 'rxjs/operators';
@@ -52,6 +45,9 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { ViewChild } from '@angular/core';
+import { ComponentFactoryResolver } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
