@@ -131,6 +131,7 @@ export class TravelInsuranceComponent implements OnInit {
 	plannerNotes: any;
 	ownerIds =[];
 	insData: any;
+	isRecommended: boolean;
 	constructor(private planService :PlanService,private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
 	validatorType = ValidatorType
 	@Output() sendOutput = new EventEmitter<any>();
@@ -249,10 +250,10 @@ export class TravelInsuranceComponent implements OnInit {
 		this.plannerNotes = data;
     }
     checkRecommendation(value) {
-        if (!value) {
+        if (value) {
             this.showRecommendation = true;
         } else {
-            this.showRecommendation = false
+            this.showRecommendation = false;
         }
     }
 	removeCoOwner(item) {
@@ -402,6 +403,11 @@ export class TravelInsuranceComponent implements OnInit {
 			this.dataForEdit = data.data;
 			this.id = this.dataForEdit.id;
 			this.flag = "Edit";
+			if (this.dataForEdit) {
+                this.storeData = this.dataForEdit.suggestion;
+                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+                this.showRecommendation = this.isRecommended;
+            }
 		}
 		this.travelInsuranceForm = this.fb.group({
 			// ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
