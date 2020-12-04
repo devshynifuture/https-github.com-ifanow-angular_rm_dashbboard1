@@ -26,10 +26,11 @@
           account statement at your registered email address. For security reasons the statement will be password
           protected using the password provided by you.
         </p>
-        <p class="roboto f-400 m-0 text-dark pt-16">
+        <!-- Ankita told to remove this phrase -->
+        <!-- <p class="roboto f-400 m-0 text-dark pt-16">
           Note: If you have uploaded CAS in the past too, then the system will
           delete those records and upload the entire transaction history again.
-        </p>
+        </p> -->
       </div>
     </div>
     <div class="row pt-28">
@@ -53,7 +54,14 @@
         <h5 class="m-0 pt-28 roboto f-400 pb-6">Password to unlock CAS file</h5>
         <mat-form-field floatLabel="never" appearance="standard">
           <input matInput class="form-control" placeholder="Enter password provided while ordering file."
-            formControlName="password" type="password">
+            formControlName="password" [type]="hide ? 'password':'text'">
+          <i (click)="hide = !hide" *ngIf="hide" class="material-icons eyesPassword c-p text-primitive pos-ab-t-r-7">
+            visibility
+          </i>
+          <i (click)="hide = !hide" *ngIf="hide==false"
+            class="material-icons eyesPassword c-p text-primitive pos-ab-t-r-7">
+            visibility_off
+          </i>
           <mat-error *ngIf="uploadCasFileForm.get('password').touched && uploadCasFileForm.get('password').invalid">
             This field is required
           </mat-error>

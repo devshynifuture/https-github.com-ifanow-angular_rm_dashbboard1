@@ -21,6 +21,7 @@ import { BackOfficeService } from 'src/app/component/protect-component/AdviserCo
 import { MfImportCasFileComponent } from './../../mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
 import { Input } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 HC_exporting(Highcharts);
 
@@ -124,6 +125,7 @@ export class MutualFundOverviewComponent implements OnInit {
   liquidPercentage: any;
   danger: boolean;
   success: boolean;
+  getMfDataSubs: Subscription;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -236,7 +238,12 @@ export class MutualFundOverviewComponent implements OnInit {
 
       // this.getMutualFundData();
     }
-
+    this.getMfDataSubs = this.mfService.refreshMutualFundDataThroughObs()
+      .subscribe(res => {
+        if (res) {
+          this.getMutualFundData();
+        }
+      })
 
   }
   teamMemberListGet() {
@@ -517,8 +524,8 @@ export class MutualFundOverviewComponent implements OnInit {
         this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
       }
-      this.danger= this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return < 0 ? true : false) : this.mfData.total_xirr < 0 ? true : false; 
-      this.success=this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return > 0 ? true : false) : this.mfData.total_xirr > 0 ? true : false; 
+      this.danger = this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return < 0 ? true : false) : this.mfData.total_xirr < 0 ? true : false;
+      this.success = this.mfData.total_xirr == 0 ? (this.mfData.total_absolute_return > 0 ? true : false) : this.mfData.total_xirr > 0 ? true : false;
       // if (this.mfData.mutualFundCategoryMastersList.length > 0) {
       //   if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
       //     if(this.mfData.mutualFundCategoryMastersList.length > 1){
@@ -1242,6 +1249,12 @@ export class MutualFundOverviewComponent implements OnInit {
     this.clientData = data.clientData;
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
+  }
+
+  ngOnDestroy(): void {
+    if (this.getMfDataSubs) {
+      this.getMfDataSubs.unsubscribe();
+    }
   }
 }
 
