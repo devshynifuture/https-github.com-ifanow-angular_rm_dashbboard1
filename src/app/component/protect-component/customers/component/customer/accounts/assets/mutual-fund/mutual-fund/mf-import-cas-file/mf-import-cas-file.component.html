@@ -54,7 +54,14 @@
         <h5 class="m-0 pt-28 roboto f-400 pb-6">Password to unlock CAS file</h5>
         <mat-form-field floatLabel="never" appearance="standard">
           <input matInput class="form-control" placeholder="Enter password provided while ordering file."
-            formControlName="password" type="password">
+            formControlName="password" [type]="hide ? 'password':'text'">
+          <i (click)="hide = !hide" *ngIf="hide" class="material-icons eyesPassword c-p text-primitive pos-ab-t-r-7">
+            visibility
+          </i>
+          <i (click)="hide = !hide" *ngIf="hide==false"
+            class="material-icons eyesPassword c-p text-primitive pos-ab-t-r-7">
+            visibility_off
+          </i>
           <mat-error *ngIf="uploadCasFileForm.get('password').touched && uploadCasFileForm.get('password').invalid">
             This field is required
           </mat-error>

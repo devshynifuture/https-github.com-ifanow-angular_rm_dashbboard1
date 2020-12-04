@@ -1,3 +1,4 @@
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { ClientSggestionListService } from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
 import { CancelFlagService } from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 import { UtilService } from './../../../../../../../../../../services/util.service';
@@ -43,7 +44,8 @@ export class MfImportCasFileComponent implements OnInit {
     private dialog: MatDialog,
     private enumDataService: EnumDataService,
     private cancelFlagService: CancelFlagService,
-    private clientSuggeService: ClientSggestionListService
+    private clientSuggeService: ClientSggestionListService,
+    private mfService: MfServiceService
   ) { }
 
   filename: any;
@@ -72,7 +74,7 @@ export class MfImportCasFileComponent implements OnInit {
   shouldShowSaveAndProceed = false;
   selectionInvestor = new SelectionModel<any>(true, []);
   selectionTransaction = new SelectionModel<any>(true, []);
-
+  hide = true;
 
   ngOnInit() {
     this.getFamilyMemberList();
@@ -400,6 +402,7 @@ export class MfImportCasFileComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
+          this.mfService.sendRefreshMFDataSignalOnObs(true);
           if (choice === 'single') {
             this.dataSource.data.map(item1 => {
               if (item1['id'] === element.id) {
@@ -460,6 +463,7 @@ export class MfImportCasFileComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
+          this.mfService.sendRefreshMFDataSignalOnObs(true);
           if (choice == 'single') {
             this.dataSource2.data.map(item1 => {
               if (item1['id'] === element.id) {
@@ -507,6 +511,9 @@ export class MfImportCasFileComponent implements OnInit {
                 break;
 
               case 2: item.status = 'Data Processed';
+                break;
+
+              case -2: item.status = 'Duplicate Data';
                 break;
             }
           });
@@ -562,7 +569,7 @@ export class MfImportCasFileComponent implements OnInit {
               case -1:
                 this.uploadFileStatusMsg = 'Error, Please import file again';
                 this.isFileStatusProceed = false;
-                this.showPointsIfRefreshed = true;
+                this.showPointsIfRefreshed = false;
                 break;
 
               case 0:
@@ -572,13 +579,22 @@ export class MfImportCasFileComponent implements OnInit {
 
               case 1:
                 this.uploadFileStatusMsg = 'File Imported';
+                this.showPointsIfRefreshed = true;
                 this.setCasFileObject(res);
                 this.isFileStatusProceed = true;
+                this.mfService.sendRefreshMFDataSignalOnObs(true);
                 break;
 
               case 2:
                 this.uploadFileStatusMsg = 'Data Processed';
                 this.isFileStatusProceed = true;
+                this.showPointsIfRefreshed = false;
+                break;
+
+              case -2:
+                this.uploadFileStatusMsg = 'Duplicate Data';
+                this.isFileStatusProceed = false;
+                this.showPointsIfRefreshed = false;
                 break;
             }
 
@@ -591,9 +607,13 @@ export class MfImportCasFileComponent implements OnInit {
                 break;
 
               case 1: res.status = 'File Imported';
+                this.mfService.sendRefreshMFDataSignalOnObs(true);
                 break;
 
               case 2: res.status = 'Data Processed';
+                break;
+
+              case -2: res.status = 'Duplicate Data';
                 break;
             }
             let arr = [...this.dataSource5.data];
@@ -659,6 +679,7 @@ export class MfImportCasFileComponent implements OnInit {
     if (this.successFileUpload) {
       obj['refreshRequired'] = true;
     }
+    this.mfService.sendRefreshMFDataSignalOnObs(true);
     this.subInjectService.changeNewRightSliderState(obj);
   }
 }

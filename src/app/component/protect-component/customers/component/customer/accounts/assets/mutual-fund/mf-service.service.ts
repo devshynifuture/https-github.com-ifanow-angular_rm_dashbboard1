@@ -31,6 +31,7 @@ export class MfServiceService {
   private sendDataCapitalDetailed = new BehaviorSubject('')
   private setCashFlow = new BehaviorSubject('')
   private advisorIdList = new BehaviorSubject('')
+  refreshMutualFundData = new BehaviorSubject(null);
 
   getPersonalDetails(data) {
     const obj = {
@@ -716,5 +717,13 @@ export class MfServiceService {
   }
   getadvisorList() {
     return this.advisorIdList.asObservable();
+  }
+
+  refreshMutualFundDataThroughObs() {
+    return this.refreshMutualFundData.asObservable();
+  }
+
+  sendRefreshMFDataSignalOnObs(data) {
+    this.refreshMutualFundData.next(data);
   }
 }
