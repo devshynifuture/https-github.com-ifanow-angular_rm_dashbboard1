@@ -140,7 +140,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getPlanSection()
     this.isLoading = false
-    // this.pdfFromImage()
+    //this.pdfFromImage()
     console.log('clientData', this.clientData)
   }
 
@@ -150,7 +150,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   //   }
   // }
   downloadPrevoius(element) {
-
+    let obj = {
+      clientId: AuthService.getClientId(),
+      s3Objects: element.modules
+    }
+    this.planService.mergeCall(obj).subscribe(
+      data => this.mergeCallRes(data)
+    );
   }
   addNew() {
     this.hideTable = true
@@ -191,14 +197,10 @@ export class FinacialPlanSectionComponent implements OnInit {
 
     });
   }
-  pdfFromImage() {
-    let imageData = "https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png"
-    var pdfsize = 'a4';
-    var obj = new jsPDF(pdfsize);
-    obj.addImage(imageData, 'PNG', 145, 10);
-    obj.setFontSize(14);
-    obj.setFontStyle("bold");
-    obj.save('a4.pdf');
+  pdfFromImage(url) {
+    var el = document.getElementById("yabanner");
+    el.innerHTML = "<img src=\"" + url + "\" width=\"400px\" height=\"150px\">";
+    this.uploadFile(el, 'Template', 'display Name', false)
   }
   getAssetCountGlobalData() {
     const obj = {
@@ -281,7 +283,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     let obj = {
       id: data.id
     }
-    this.summaryPlanService.setFinPlanId(data.id);
+    // this.summaryPlanService.setFinPlanId(data.id);
     return this.http
       .post(
         apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',

@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div *ngIf="moduleAdded.length  == 0 && clientDetails == 0">
+            <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
                 <span class="text-center pt-28">
                     No module added
                 </span>
@@ -77,8 +77,8 @@
                     <ng-container matColumnDef="download">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky>Download </th>
                         <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar" (click)="downloadPrevoius(null,element)">
-                                <img (click)="downloadPrevoius(null,element)"
+                            <div class="bar" (click)="downloadPrevoius(element)">
+                                <img class="c-p text-center" (click)="downloadPrevoius(element)"
                                     src="assets/images/svg/download-pdf-blue.svg">
                             </div>
                         </td>
@@ -88,7 +88,7 @@
                         <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p">
                             <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menu4="matMenu">
-                                <button (click)="deleteModal('FIXED DEPOSIT',element)" mat-menu-item>Delete</button>
+                                <button (click)="deletePlanSection('FIN PLAN',element)" mat-menu-item>Delete</button>
                             </mat-menu>
 
                         </td>
@@ -136,7 +136,7 @@
             <!-- id="ui-dashboard-guide" -->
             <mat-tab label="Plan">
                 <div class="row pt-12 pl-20 pb-12">
-                    <div class="col-md-12 p-0 row">
+                    <!-- <div class="col-md-12 p-0 row">
                         <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
                                 class="material-icons text-right">
                                 arrow_drop_down
@@ -174,7 +174,7 @@
                             </button>
                         </mat-menu>
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="pt-12 pl-20 pr-20 pb-20">
                     <mat-accordion id="fp-modules">
@@ -419,7 +419,7 @@
                                 </div>
                             </div>
                         </mat-expansion-panel>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                        <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="mt-12">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
@@ -484,13 +484,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </mat-expansion-panel>
+                        </mat-expansion-panel> -->
                     </mat-accordion>
                 </div>
             </mat-tab>
             <mat-tab label="Portfolio">
                 <div class="row pt-12 pl-20 pb-12">
-                    <div class="col-md-12 p-0 row">
+                    <!-- <div class="col-md-12 p-0 row">
                         <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
                                 class="material-icons text-right">
                                 arrow_drop_down
@@ -528,7 +528,7 @@
                             </button>
                         </mat-menu>
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="pt-12 pl-20 pr-20 pb-20">
                     <mat-accordion id="fp-modules">
@@ -1203,7 +1203,7 @@
             </mat-tab>
             <mat-tab label="Templates">
                 <div class="pt-12 pb-12 pl-20 pr-20" id="ui-profileplan-card">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12 p-0">
                             <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Menu<i
                                     class="material-icons text-right icon-light">
@@ -1214,7 +1214,7 @@
                                 <button mat-menu-item>Item 2</button>
                             </mat-menu>
                         </div>
-                    </div>
+                    </div> -->
                     <mat-accordion>
                         <mat-expansion-panel class="mt-12 br-0">
                             <mat-expansion-panel-header>
@@ -1232,7 +1232,8 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage('/assets/images/svg/img.svg')">Add</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1244,7 +1245,8 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary">Add</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage('/assets/images/svg/img.svg')">Add</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1282,3 +1284,4 @@
 </div>
 <ng-container #pdfContainer>
 </ng-container>
+<div id="yabanner"></div>

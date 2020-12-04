@@ -67,6 +67,7 @@ export class SummaryPlanServiceService {
     this.setBudgetData('');
     this.setclientDob('');
     this.setFamilyList('');
+
     this.setFinPlanId('');
   }
   setFinPlanId(value) {
