@@ -8,7 +8,7 @@
             </mat-option> -->
             <mat-option *ngFor="let singleScrip of scripList" [hidden]="!singleScrip.name"
                 [disabled]='singleScrip.disable' (click)="selectedScript(singleScrip)" [value]="singleScrip.name">
-                {{singleScrip.disable}} {{singleScrip.name}}
+                {{singleScrip.name}}
             </mat-option>
 
         </mat-autocomplete>
