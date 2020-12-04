@@ -1,11 +1,12 @@
-import {Component, OnInit, ViewChild, Output, EventEmitter, Input} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {BackOfficeService} from '../../../../back-office.service';
-import {SipComponent} from '../sip.component';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from '../../../../../../../../Data-service/event.service';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { BackOfficeService } from '../../../../back-office.service';
+import { SipComponent } from '../sip.component';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from '../../../../../../../../Data-service/event.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { ELEMENT_DATA } from '../../../../backoffice-aum-reconciliation/duplicate-data/duplicate-data.component';
 
 @Component({
   selector: 'app-all-sip',
@@ -25,13 +26,15 @@ export class AllSipComponent implements OnInit {
   @Input() data;
   @Output() changedValue = new EventEmitter();
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
   arnRiaValue: any;
   viewMode: any;
   hasEndReached: any = false;
   infiniteScrollingFlag: boolean;
   finalSipList: any = [];
+  currentPageIndex: any = 0;
+  totalSipCount: any;
 
   constructor(
     private backoffice: BackOfficeService,
@@ -60,17 +63,16 @@ export class AllSipComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
-    this.getAllSip(0, 20);
+    this.getAllSip(200, 1);
   }
 
-  getAllSIPdataThenCreateExcel(){
-    this.getAllSip(0, 50000);
+  getAllSIPdataThenCreateExcel() {
+    this.getAllSip(50000, 1);
+  }
 
-  } 
-
-  formatDataForExcel(data){
+  formatDataForExcel(data) {
     let arr = [];
-    if(data.length>0){
+    if (data.length > 0) {
       data.forEach((element, index) => {
         const data = [
           index + 1,
@@ -111,13 +113,13 @@ export class AllSipComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  getAllSip(offset, limit) {
+  getAllSip(limit, pageNumber) {
     // this.isLoading = true;
     // this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       limit,
-      offset,
-      advisorId: (this.parentId > 0 )? this.advisorId : 0,
+      pageNumber,
+      advisorId: (this.parentId > 0) ? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
     };
@@ -127,16 +129,12 @@ export class AllSipComponent implements OnInit {
           (this.finalSipList.length > 0) ? '' : this.isLoading = false;
           this.isLoading = false;
           if (data) {
-            console.log("this is all sip table data, ------",data)
-            if(limit > 20){
-              this.formatDataForExcel(data);
-            } else {
-              this.response(data);
-            }
+            console.log("this is all sip table data, ------", data)
+            this.response(data);
           } else {
             this.dataSource.filteredData = [];
             this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
-            this.eventService.openSnackBar('No More Data Found',"DISMISS");
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
             this.hasEndReached = true;
           }
 
@@ -146,7 +144,7 @@ export class AllSipComponent implements OnInit {
           this.dataSource.filteredData = [];
           this.hasEndReached = true;
           this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
-          this.eventService.openSnackBar('No More Data Found',"DISMISS");
+          this.eventService.openSnackBar('No More Data Found', "DISMISS");
         }
       );
     } else if (this.mode == 'expired') {
@@ -158,7 +156,7 @@ export class AllSipComponent implements OnInit {
           } else {
             this.dataSource.filteredData = [];
             this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
-          this.eventService.openSnackBar('No More Data Found',"DISMISS");
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
           }
 
         },
@@ -176,7 +174,7 @@ export class AllSipComponent implements OnInit {
           } else {
             this.dataSource.filteredData = [];
             this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
-            this.eventService.openSnackBar('No More Data Found',"DISMISS");
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
           }
 
         },
@@ -189,23 +187,33 @@ export class AllSipComponent implements OnInit {
 
   }
 
-  onWindowScroll(e: any) {
-
-    console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
-
-    if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
-      if (!this.hasEndReached) {
-        this.infiniteScrollingFlag = true;
-        this.getAllSip(this.finalSipList.length, 20);
-        // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
-      }
-
-    }
+  onPaginationChange(event) {
+    const { pageIndex } = event;
+    this.currentPageIndex = pageIndex + 1;
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    this.getAllSip(200, this.currentPageIndex);
+    return event;
   }
 
+  // onWindowScroll(e: any) {
+
+  //   console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
+
+  //   if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+  //     if (!this.hasEndReached) {
+  //       this.infiniteScrollingFlag = true;
+  //       this.getAllSip(this.finalSipList.length, 20);
+  //       // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
+  //     }
+
+  //   }
+  // }
+
   response(data) {
-    console.log(data);
-    this.finalSipList = this.finalSipList.concat(data);
+    // this.finalSipList = this.finalSipList.concat(data);
+    this.finalSipList = data;
+    this.totalSipCount = data[0].totalSipCount;
     this.dataSource = new MatTableDataSource(this.finalSipList);
     this.dataSource.sort = this.sort;
     this.dataSource.filteredData.forEach(element => {

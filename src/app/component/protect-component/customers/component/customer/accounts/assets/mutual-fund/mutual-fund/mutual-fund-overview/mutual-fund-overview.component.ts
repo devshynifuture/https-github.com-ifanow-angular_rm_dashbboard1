@@ -126,6 +126,7 @@ export class MutualFundOverviewComponent implements OnInit {
   danger: boolean;
   success: boolean;
   getMfDataSubs: Subscription;
+  queryParamsSubs: Subscription;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -163,18 +164,33 @@ export class MutualFundOverviewComponent implements OnInit {
   uploadData(data) {
     this.clientId = data.clientId;
     if (this.clientId) {
-      this.ngOnInit();
+      this.initPoint();
     }
     return this.sendaata;
   }
 
   ngOnInit() {
+    this.initPoint();
+    this.getMfDataSubs = this.mfService.refreshMutualFundDataThroughObs()
+      .subscribe(res => {
+        if (res) {
+          this.addedData = true;
+          this.MfServiceService.setDataForMfGet('');
+          this.MfServiceService.setMfData('');
+          this.mfGetData = '';
+          this.initPoint();
+        }
+      })
+
+  }
+
+  initPoint() {
     // token :
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
 
-    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+    this.queryParamsSubs = this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
@@ -238,13 +254,6 @@ export class MutualFundOverviewComponent implements OnInit {
 
       // this.getMutualFundData();
     }
-    this.getMfDataSubs = this.mfService.refreshMutualFundDataThroughObs()
-      .subscribe(res => {
-        if (res) {
-          this.getMutualFundData();
-        }
-      })
-
   }
   teamMemberListGet() {
     this.adminAdvisorIds = [];
@@ -1015,9 +1024,9 @@ export class MutualFundOverviewComponent implements OnInit {
             this.addedData = true;
             this.MfServiceService.setDataForMfGet('');
             this.MfServiceService.setMfData('');
-
+            this.mfGetData = '';
             // this.getMutualFundData();
-            this.ngOnInit();
+            this.initPoint();
           }
           rightSideDataSub.unsubscribe();
 
@@ -1254,6 +1263,10 @@ export class MutualFundOverviewComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.getMfDataSubs) {
       this.getMfDataSubs.unsubscribe();
+    }
+
+    if (this.queryParamsSubs) {
+      this.queryParamsSubs.unsubscribe();
     }
   }
 }
