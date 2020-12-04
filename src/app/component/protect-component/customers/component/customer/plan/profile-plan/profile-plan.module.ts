@@ -30,10 +30,11 @@ import { CustomersModule } from '../../../../customers.module';
 import { LiabilitiesModule } from '../../accounts/liabilities/liabilities.module';
 import { PlanGoalsModule } from '../goals-plan/plan-goals.module';
 import { InsurancePlanModule } from '../insurance-plan/insurance-plan.module';
+import { PreviewFinPlanComponent } from './preview-fin-plan/preview-fin-plan.component';
 
 
 @NgModule({
-  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent, FinacialPlanSectionComponent],
+  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent, FinacialPlanSectionComponent, PreviewFinPlanComponent],
   imports: [
     CommonModule,
     ProfilePlanRoutingModule,
