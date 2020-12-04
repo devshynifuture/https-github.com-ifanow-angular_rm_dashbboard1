@@ -114,8 +114,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientData: any;
   mfCount: any;
   displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
-  clientDetails: any[];
+  clientDetails: any;
   hideTable: boolean = false;
+  STOCK;
   quotes: any;
   fincialPlan: any;
   miscellaneous: any;
@@ -137,13 +138,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   ngOnInit() {
     this.count = 0;
     this.moduleAdded = [];
-    this.clientDetails = []
+    this.clientDetails = [{}, {}, {}];
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
     this.getTemplateSection()
     this.getPlanSection()
-    this.isLoading = false
+    this.isLoading = true
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
   }
@@ -161,6 +162,17 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.planService.mergeCall(obj).subscribe(
       data => this.mergeCallRes(data)
     );
+  }
+  getPreview() {
+    let obj = {
+      id: this.id
+    }
+    this.planService.getPreview(obj).subscribe(
+      data => this.getPreviewRes(data)
+    );
+  }
+  getPreviewRes(data) {
+    console.log('preview', data)
   }
   addNew() {
     this.hideTable = true
@@ -201,13 +213,17 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getPlanSection()
     });
   }
-  pdfFromImage(url) {
-    var el = document.getElementById("yabanner");
-    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"595px\" height=\"842px\">";
-    this.uploadFile(el, 'Template', 'display Name', false)
+  pdfFromImage(element) {
+    if (element.name == "Miscellaneous") {
+
+    } else {
+      var el = document.getElementById("yabanner");
+      el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"795px\" height=\"1042px\">";
+      this.uploadFile(el, 'Template', 'display Name', false)
+    }
   }
   getAssetCountGlobalData() {
     const obj = {
@@ -234,8 +250,17 @@ export class FinacialPlanSectionComponent implements OnInit {
   getTemplatesRes(data) {
     console.log('template listd', data)
     this.quotes = data[1];
+    this.quotes.templates.forEach(element => {
+      element.add = false
+    });
     this.fincialPlan = data[0];
+    this.fincialPlan.templates.forEach(element => {
+      element.add = false
+    });
     this.miscellaneous = data[2]
+    this.miscellaneous.templates.forEach(element => {
+      element.add = false
+    });
   }
   getPlanSection() {
     this.isLoading = true
@@ -254,6 +279,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.isLoading = false
     console.log('get plan section data', data)
     this.clientDetails = data
+    if (this.clientDetails.length == 0) {
+      this.hideTable = false
+    }
   }
 
   generatePdf(data, sectionName, displayName) {

@@ -86,7 +86,7 @@
                     <p class="m-0 text-black pb-4">Advice date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input autocomplete="off" matInput #adviceHeaderDate [min]="todayDate" [max]="todayDate"
+                            <input autocomplete="off" matInput #adviceHeaderDate 
                                 (ngModelChange)="dateChange('adviceHeaderDate')" [matDatepicker]="picker"
                                 class="form-control b-0" formControlName="adviceHeaderDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -116,7 +116,7 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-4"
+                    <p class="m-0 text-black pb-4 pt-10"
                         *ngIf="healthInsurance.get('selectAdvice').value != 'Add members' && healthInsurance.get('selectAdvice').value != 'Remove members' && healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
                         Amount</p>
                     <div class="form-group"

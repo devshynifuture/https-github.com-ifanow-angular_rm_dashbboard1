@@ -83,7 +83,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
       headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '1'],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
-      status: [(this.dataForEdit ? this.dataForEdit.adviceStatus : 'GIVEN'), [Validators.required]],
+      status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
       withdrawalAmt: [(this.dataForEdit ? (this.dataForEdit.adviceAllotment ? this.dataForEdit.adviceAllotment : '') : null),[Validators.required]],

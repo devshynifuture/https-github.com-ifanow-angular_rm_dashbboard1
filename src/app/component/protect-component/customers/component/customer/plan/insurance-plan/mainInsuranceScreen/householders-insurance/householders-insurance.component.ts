@@ -129,6 +129,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
     insData: any;
 	showRecommendation: boolean;
 	plannerNotes: any;
+	isRecommended: boolean;
 	constructor(private planService :PlanService,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
 	validatorType = ValidatorType
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -167,13 +168,13 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		this.familyMemberLifeData = data;
 		console.log('family Member', this.FamilyMember);
 	}
-	checkRecommendation(value) {
-		if (!value) {
-			this.showRecommendation = true;
-		} else {
-			this.showRecommendation = false
-		}
-	}
+    checkRecommendation(value) {
+        if (value) {
+            this.showRecommendation = true;
+        } else {
+            this.showRecommendation = false;
+        }
+    }
 	saveData(data) {
 		this.plannerNotes = data;
 	}
@@ -336,6 +337,11 @@ export class HouseholdersInsuranceComponent implements OnInit {
 			this.dataForEdit = data.data;
 			this.id = this.dataForEdit.id;
 			this.flag = "Edit";
+			if (this.dataForEdit) {
+                this.storeData = this.dataForEdit.suggestion;
+                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+                this.showRecommendation = this.isRecommended;
+            }
 		}
 		this.homeInsuranceForm = this.fb.group({
 			// ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],

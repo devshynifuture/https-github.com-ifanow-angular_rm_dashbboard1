@@ -164,6 +164,9 @@ export class AddHealthInsuranceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result && result.isRefreshedRequired) {
+        this.getAddMore();
+      }
       console.log('The dialog was closed', result);
     });
   }
@@ -201,7 +204,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.isLoading = true;
     let obj = {
       clientId: this.clientId,
-      insuranceType: this.inputData.insuranceType,
+      insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.showInsurance ? (this.showInsurance ? this.showInsurance.insuranceType : this.insuranceType) : this.insuranceType,
       realOrFictious:1
     }
     const obj2 = {
@@ -250,7 +253,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.isLoading = true;
     let obj = {
       clientId: this.clientId,
-      insuranceType: this.insuranceType,
+      insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.showInsurance ? (this.showInsurance ? this.showInsurance.insuranceType : this.insuranceType) : this.insuranceType,
       realOrFictious:1
     }
     const obj2 = {

@@ -20,6 +20,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { forkJoin, empty } from 'rxjs';
 import { InsurancePlanningServiceService } from '../insurance-planning-service.service';
 import { defaultIfEmpty } from 'rxjs/operators';
+import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 
 @Component({
   selector: 'app-show-health-planning',
@@ -289,6 +290,22 @@ export class ShowHealthPlanningComponent implements OnInit {
       }
     });
 
+  }
+  openDialog(value, data): void {
+    const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
+      width: '780px',
+      height: '600px',
+      data: { value, data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.isRefreshedRequired) {
+        this.isRefreshRequired = true;
+        // this.addGeneralInsurance(sideBarData.data.id);
+        this.getStepOneAndTwoData();
+      }
+      console.log('The dialog was closed', result);
+    });
   }
   deleteModal(value, data) {
     let deletedId = data ? data.id : null;
