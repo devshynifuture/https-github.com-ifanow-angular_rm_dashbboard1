@@ -144,7 +144,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getTemplateSection()
     this.getPlanSection()
-    this.isLoading = false
+    this.isLoading = true
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
   }
@@ -162,6 +162,17 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.planService.mergeCall(obj).subscribe(
       data => this.mergeCallRes(data)
     );
+  }
+  getPreview() {
+    let obj = {
+      id: this.id
+    }
+    this.planService.getPreview(obj).subscribe(
+      data => this.getPreviewRes(data)
+    );
+  }
+  getPreviewRes(data) {
+    console.log('preview', data)
   }
   addNew() {
     this.hideTable = true
