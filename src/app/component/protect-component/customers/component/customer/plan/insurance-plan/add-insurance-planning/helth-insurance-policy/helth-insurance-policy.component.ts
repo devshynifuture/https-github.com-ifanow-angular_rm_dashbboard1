@@ -170,7 +170,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.healthInsurance.get('amount').setErrors(null);
       this.healthInsurance.get('famMember').setErrors(null);
     }
-    if (this.healthInsurance.get('selectAdvice').value == 'Surrender') {
+    if (this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Port policy'|| this.healthInsurance.get('selectAdvice').value == 'Increase sum assured' || this.healthInsurance.get('selectAdvice').value == 'Decrease sum assured') {
       this.healthInsurance.get('famMember').setErrors(null);
     }
   }
@@ -216,11 +216,11 @@ export class HelthInsurancePolicyComponent implements OnInit {
   }
   saveAdviceOnHealth() {
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
-      || this.healthInsurance.get('selectAdvice').value == 'Discontinue') {
+      || this.healthInsurance.get('selectAdvice').value == 'Discontinue' ) {
       this.healthInsurance.get('amount').setErrors(null);
       this.healthInsurance.get('famMember').setErrors(null);
     }
-    if (this.healthInsurance.get('selectAdvice').value == 'Surrender') {
+    if (this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Port policy'|| this.healthInsurance.get('selectAdvice').value == 'Increase sum assured' || this.healthInsurance.get('selectAdvice').value == 'Decrease sum assured') {
       this.healthInsurance.get('famMember').setErrors(null);
     }
     if (this.healthInsurance.invalid) {
