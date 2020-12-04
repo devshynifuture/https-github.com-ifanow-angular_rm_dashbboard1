@@ -516,10 +516,14 @@ export class MfImportCasFileComponent implements OnInit {
             }
           });
           this.dataSource5.data = res;
-
+        } else {
+          this.isLoading = false;
+          this.dataSource5.data = null;
         }
       }, err => {
+        this.isLoading = false;
         console.error(err);
+        this.dataSource5.data = null;
         this.eventService.openSnackBar('Something went wrong!', "DISMISS");
       })
   }
