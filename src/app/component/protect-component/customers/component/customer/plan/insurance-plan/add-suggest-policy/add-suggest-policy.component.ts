@@ -87,7 +87,7 @@ export class AddSuggestPolicyComponent implements OnInit {
     })
     if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;
-      this.isRecommended = this.dataForEdit ? (this.dataForEdit.suggestion ? true : false) : false
+      this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
       this.showRecommendation = this.isRecommended;
     }
 

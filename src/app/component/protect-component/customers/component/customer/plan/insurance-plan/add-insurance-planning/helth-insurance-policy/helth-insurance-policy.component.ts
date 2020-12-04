@@ -44,6 +44,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   insuranceCategoryTypeId: any;
   adviseCategoryTypeMasterId: any;
   familyList: any;
+  inputData: any;
   constructor(private peopleService: PeopleService, private activityService: ActiityService, private datePipe: DatePipe, private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private planService: PlanService, private eventService: EventService) { }
   adviceData = [{ value: 1, advice: 'Continue', selected: true },
@@ -55,6 +56,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   { value: 7, advice: 'Remove members', selected: false }]
   ngOnInit() {
     // this.getAllCategory();
+    this.inputData = this.data.value;
     this.getListFamilyMem();
     this.getdataForm('')
     this.showInsurance = this.data.data;
@@ -104,38 +106,47 @@ export class HelthInsurancePolicyComponent implements OnInit {
   }
 
   getCategoryId() {
+    
     switch (this.showInsurance.insuranceType) {
       case 4:
-        this.adviseCategoryTypeMasterId = 37
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 37
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 5:
-        this.adviseCategoryTypeMasterId = 34
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 34
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 6:
-        this.adviseCategoryTypeMasterId = 36
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 36
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 7:
-        this.adviseCategoryTypeMasterId = 35
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 35
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 8:
-        this.adviseCategoryTypeMasterId = 38
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 38
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 9: 
-        this.adviseCategoryTypeMasterId = 39
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 39
+        this.adviseCategoryTypeMasterId = 4
         break;
       case 10:
-        this.adviseCategoryTypeMasterId = 40
-        this.insuranceCategoryTypeId = 4
+        this.insuranceCategoryTypeId = 40
+        this.adviseCategoryTypeMasterId = 4
         break;
       default:
-        this.adviseCategoryTypeMasterId =
-          this.insuranceCategoryTypeId = 3
+        if(this.inputData.insuranceSubTypeId == 1 ){
+          this.adviseCategoryTypeMasterId = 3
+          this.insuranceCategoryTypeId = 42
+        }else if(this.inputData.insuranceSubTypeId == 2){
+          this.adviseCategoryTypeMasterId = 3
+          this.insuranceCategoryTypeId = 43
+        }else if(this.inputData.insuranceSubTypeId == 3){
+          this.adviseCategoryTypeMasterId = 3
+          this.insuranceCategoryTypeId = 44
+        }
         break;
     }
   }
@@ -227,31 +238,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       //   consent: this.healthInsurance.controls.consent.value,
       // }
       this.getAdviseId(this.healthInsurance.get('selectAdvice').value);
-      if(this.showInsurance.insuranceType <= 3){
-        let obj1 = {
-          stringObject: { id: this.insuranceData.id },
-          adviceDescription: this.healthInsurance.get('adviceRationale').value,
-          insuranceCategoryTypeId: this.insuranceCategoryTypeId,
-          adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
-          suggestedFrom: 1,
-          adviceId: this.adviseId,
-          adviceAllotment: parseInt(this.healthInsurance.get('amount').value),
-          realOrFictitious: 1,
-          clientId: AuthService.getClientId(),
-          advisorId: AuthService.getAdvisorId(),
-          applicableDate: this.healthInsurance.get('implementationDate').value
-        }
-        this.planService.addAdviseOnHealth(obj1).subscribe(
-          res => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
-            this.close(this.advice, true);
-          }, err => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar(err, "Dimiss");
-          }
-        )
-      }else{
+      if(this.showInsurance.insuranceType && this.showInsurance.insuranceType > 3){
         let obj1 = {
           stringObject: { 
             'clientId': AuthService.getClientId(),
@@ -308,6 +295,30 @@ export class HelthInsurancePolicyComponent implements OnInit {
           applicableDate: this.healthInsurance.get('implementationDate').value
         }
         this.planService.addAdviseOnGeneralInsurance(obj1).subscribe(
+          res => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
+            this.close(this.advice, true);
+          }, err => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, "Dimiss");
+          }
+        )
+      }else{
+        let obj1 = {
+          stringObject: { id: this.insuranceData.id },
+          adviceDescription: this.healthInsurance.get('adviceRationale').value,
+          insuranceCategoryTypeId: this.insuranceCategoryTypeId,
+          adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
+          suggestedFrom: 1,
+          adviceId: this.adviseId,
+          adviceAllotment: parseInt(this.healthInsurance.get('amount').value),
+          realOrFictitious: 1,
+          clientId: AuthService.getClientId(),
+          advisorId: AuthService.getAdvisorId(),
+          applicableDate: this.healthInsurance.get('implementationDate').value
+        }
+        this.planService.addAdviseOnHealth(obj1).subscribe(
           res => {
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");

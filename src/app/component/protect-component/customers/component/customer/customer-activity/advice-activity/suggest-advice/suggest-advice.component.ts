@@ -107,7 +107,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
         this.childComponentFlag = data.flag;
         this.adviceToCategoryId = data.childData.adviceToCategoryId;
-        this.adviceToCategoryTypeMasterId = data.data ? (data.data.adviceDetails.adviceToCategoryTypeMasterId ? data.data.adviceDetails.adviceToCategoryTypeMasterId : '') : ''
+        this.adviceToCategoryTypeMasterId = data.data ? (data.data.adviceDetails ? data.data.adviceDetails.adviceToCategoryTypeMasterId : '') : ''
         this.adviceHeaderList = data.data ? data.data.adviceHeaderList : '';
         this.getFormData(data);
       }
@@ -161,7 +161,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
       headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '1'],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
-      status: [(this.dataForEdit ? this.dataForEdit.adviceStatus : 'GIVEN'), [Validators.required]],
+      status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
       // withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
