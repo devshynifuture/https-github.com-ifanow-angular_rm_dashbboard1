@@ -11,33 +11,30 @@
     <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'">
         <div class="row">
             <div class="col-md-9">
-                <h3 class="m-0 bb-1 pb-8">Modules added</h3>
+                <h3 class="m-0 pb-8">Modules added</h3>
             </div>
             <div class="col-md-3 text-right">
-                <button mat-stroked-button class="btn-success" (click)="addNew()"
+                <button mat-stroked-button class="btn-primary pb-8" (click)="addNew()"
                     *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false"> ADD
                     NEW</button>
             </div>
         </div>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
-                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                    <div class="row p-4 b-a pt-8 pb-8 c-p">
-                        <div class="col-md-1 pl-8">
-                            <div class="bar">
-                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                            </div>
+            <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index">
+                <div class="row p-4 b-a pt-8 pb-8 c-p">
+                    <div class="col-md-1 pl-8">
+                        <div class="bar">
+                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
                         </div>
-                        <div class="col-md-10 pl-0">
-                            <div class="bar">
-                                <p class="m-0 pt-4">{{module.name}}</p>
-                            </div>
+                    </div>
+                    <div class="col-md-10 pl-0">
+                        <div class="bar">
+                            <p class="m-0 pt-4">{{module.name}}</p>
                         </div>
-                        <div class="col-md-1" (click)="removeModule(module,i)">
-                            <div class="bar">
-                                <img src="/assets/images/svg/close.svg" class="c-p">
-                            </div>
+                    </div>
+                    <div class="col-md-1" (click)="removeModule(module,i)">
+                        <div class="bar">
+                            <img src="/assets/images/svg/close.svg" class="c-p">
                         </div>
                     </div>
                 </div>
@@ -56,7 +53,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{element.advisorName}}
+                                    {{(isLoading) ? '':element.advisorName}}
                                 </div>
                             </td>
                         </ng-container>
@@ -64,7 +61,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{element.clientName}}
+                                    {{(isLoading) ? '':element.clientName}}
                                 </div>
                             </td>
                         </ng-container>
@@ -72,7 +69,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{element.ReportName}}
+                                    {{(isLoading) ? '':element.ReportName}}
                                 </div>
                             </td>
                         </ng-container>
@@ -80,7 +77,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{element.createdDate | date:'dd-MMM-yyyy'}}
+                                    {{(isLoading) ? '':element.createdDate | date:'dd-MMM-yyyy'}}
                                 </div>
                             </td>
                         </ng-container>
@@ -114,7 +111,8 @@
             <div class="mt-12">
                 <div class="row b-t pt-12">
                     <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                        <button mat-stroked-button class="text-primary b-a-custom"
+                            (click)="getPreview()">Preview</button>
                     </div>
                     <div class="col-md-3" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
@@ -1237,29 +1235,31 @@
 
                             </mat-expansion-panel-header>
                             <div class="row">
-                                <div class="col-md-6 pl-0 pr-8">
+                                <div class="col-md-6 pl-0 pr-8"
+                                    *ngFor="let q of quotes.templates | slice:0:10; let i=index">
                                     <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="/assets/images/svg/img.svg" class="w-100">
+                                        <img mat-card-image src="{{q.imageUrl}}" class="w-100">
                                         <mat-card-content>
-                                            <h5 class="m-0 text-center">Index</h5>
+                                            <h5 class="m-0 text-center">{{q.name}}</h5>
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                                             <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage('/assets/images/svg/img.svg')">Add</button>
+                                                (click)="pdfFromImage(q.imageUrl)">Add</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="col-md-6 pr-0 pl-8">
+                                <div class="col-md-6 pr-0 pl-8"
+                                    *ngFor="let q of quotes.templates | slice:11:31; let i=index">
                                     <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="/assets/images/svg/img.svg" class="w-100">
+                                        <img mat-card-image src="{{q.imageUrl}}" class="w-100">
                                         <mat-card-content>
-                                            <h5 class="m-0 text-center">Index</h5>
+                                            <h5 class="m-0 text-center">{{q.name}}</h5>
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                                             <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage('/assets/images/svg/img.svg')">Add</button>
+                                                (click)="pdfFromImage(q.imageUrl)">Add</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1276,7 +1276,36 @@
                                 </mat-panel-title>
 
                             </mat-expansion-panel-header>
-
+                            <div class="row">
+                                <div class="col-md-6 pl-0 pr-8"
+                                    *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                        <img mat-card-image src="{{f.imageUrl}}" class="w-100">
+                                        <mat-card-content>
+                                            <h5 class="m-0 text-center">{{f.name}}</h5>
+                                        </mat-card-content>
+                                        <mat-card-actions class="text-center">
+                                            <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage(f.imageUrl)">Add</button>
+                                        </mat-card-actions>
+                                    </mat-card>
+                                </div>
+                                <div class="col-md-6 pr-0 pl-8"
+                                    *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                        <img mat-card-image src="{{f.imageUrl}}" class="w-100">
+                                        <mat-card-content>
+                                            <h5 class="m-0 text-center">{{f.name}}</h5>
+                                        </mat-card-content>
+                                        <mat-card-actions class="text-center">
+                                            <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                        </mat-card-actions>
+                                    </mat-card>
+                                </div>
+                            </div>
                         </mat-expansion-panel>
                     </mat-accordion>
                     <mat-accordion>
@@ -1287,7 +1316,36 @@
                                 </mat-panel-title>
 
                             </mat-expansion-panel-header>
-
+                            <div class="row">
+                                <div class="col-md-6 pl-0 pr-8"
+                                    *ngFor="let m of miscellaneous.templates | slice:0:2; let i=index">
+                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                        <img mat-card-image src="{{m.imageUrl}}" class="w-100">
+                                        <mat-card-content>
+                                            <h5 class="m-0 text-center">{{m.name}}</h5>
+                                        </mat-card-content>
+                                        <mat-card-actions class="text-center">
+                                            <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                        </mat-card-actions>
+                                    </mat-card>
+                                </div>
+                                <div class="col-md-6 pr-0 pl-8"
+                                    *ngFor="let m of miscellaneous.templates | slice:2:3; let i=index">
+                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                        <img mat-card-image src="{{m.imageUrl}}" class="w-100">
+                                        <mat-card-content>
+                                            <h5 class="m-0 text-center">{{m.name}}</h5>
+                                        </mat-card-content>
+                                        <mat-card-actions class="text-center">
+                                            <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                                            <button mat-stroked-button class="btn-primary"
+                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                        </mat-card-actions>
+                                    </mat-card>
+                                </div>
+                            </div>
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>

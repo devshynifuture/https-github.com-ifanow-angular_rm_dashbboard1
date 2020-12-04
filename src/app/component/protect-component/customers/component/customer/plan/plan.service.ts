@@ -359,4 +359,8 @@ export class PlanService {
   getTemplates(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, '')
   }
+  getPreview(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PREVIEW, httpParams)
+  }
 }
