@@ -1,16 +1,15 @@
-import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
-import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
-import { BackOfficeService } from '../../../../back-office.service';
-import { SipComponent } from '../sip.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { FormBuilder } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
-import { MatDialog } from '@angular/material';
-import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
+import {DateChangeDialogComponent} from './../../date-change-dialog/date-change-dialog.component';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChildren} from '@angular/core';
+import {BackOfficeService} from '../../../../back-office.service';
+import {SipComponent} from '../sip.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {FormBuilder} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-sip-amc-wise',
@@ -603,7 +602,7 @@ export class SipAmcWiseComponent implements OnInit {
       this.selectedAmcName = amcName;
       this.selectedSchemeName = schemeName;
       this.selectedInvestorName = applicantData.investorName;
-      
+
       this.selectedClientIndex = index;
       this.isLoadingApplicant = true;
       applicantData.applicantList = [];

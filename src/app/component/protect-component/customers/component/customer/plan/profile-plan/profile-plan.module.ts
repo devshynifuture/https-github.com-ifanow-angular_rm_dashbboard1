@@ -34,7 +34,8 @@ import { PreviewFinPlanComponent } from './preview-fin-plan/preview-fin-plan.com
 
 
 @NgModule({
-  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent, FinacialPlanSectionComponent, PreviewFinPlanComponent],
+  declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent,
+    FinacialPlanSectionComponent, PreviewFinPlanComponent],
   imports: [
     CommonModule,
     ProfilePlanRoutingModule,

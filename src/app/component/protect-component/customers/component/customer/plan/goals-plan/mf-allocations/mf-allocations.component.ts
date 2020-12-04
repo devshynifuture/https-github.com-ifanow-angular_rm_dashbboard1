@@ -1,18 +1,16 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { PlanService } from '../../plan.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { UtilService, LoaderFunction, ValidatorType } from 'src/app/services/util.service';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { AddGoalService } from '../add-goal/add-goal.service';
-import { Subscriber, Subject } from 'rxjs';
-import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import {PlanService} from '../../plan.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {LoaderFunction, UtilService, ValidatorType} from 'src/app/services/util.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {AddGoalService} from '../add-goal/add-goal.service';
+import {Subscriber} from 'rxjs';
+import {ReallocateAssetComponent} from '../reallocate-asset/reallocate-asset.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-allocations',

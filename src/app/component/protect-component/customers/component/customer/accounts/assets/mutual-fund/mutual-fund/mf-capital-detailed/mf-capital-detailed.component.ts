@@ -1,15 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { MfServiceService } from '../../mf-service.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import { DatePipe } from '@angular/common';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {MfServiceService} from '../../mf-service.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import {DatePipe} from '@angular/common';
 
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
