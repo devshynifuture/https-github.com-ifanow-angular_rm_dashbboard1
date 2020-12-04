@@ -50,6 +50,8 @@ import * as jsPDF from 'jspdf';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -120,6 +122,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   quotes: any;
   fincialPlan: any;
   miscellaneous: any;
+  element: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -173,6 +176,19 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   getPreviewRes(data) {
     console.log('preview', data)
+    const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
+      width: '500px',
+      height: '600px',
+      data: { bank: data, selectedElement: data }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==', this.element)
+    });
   }
   addNew() {
     this.hideTable = true
@@ -216,13 +232,26 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.getPlanSection()
     });
   }
-  pdfFromImage(element) {
-    if (element.name == "Miscellaneous") {
-
+  pdfFromImage(element, list, i) {
+    if (list.name == "Miscellaneous") {
+      var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
+      const obj = {
+        clientId: this.clientId,
+        name: element.name + '.html',
+        htmlInput: String(Content)
+      };
+      this.sectionName = element.name
+      this.planService.getFinPlanFileUploadUrl(obj).subscribe(
+        data => this.uploadFileRes(data, list.name, false)
+      );
     } else {
-      var el = document.getElementById("yabanner");
-      el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"795px\" height=\"1042px\">";
-      this.uploadFile(el, 'Template', 'display Name', false)
+      if (element.add == true) {
+        list.splice(i, 1);
+      } else {
+        var el = document.getElementById("yabanner");
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"895px\" height=\"1142px\">";
+        this.uploadFile(el, list.name, element.name, false)
+      }
     }
   }
   getAssetCountGlobalData() {
@@ -685,7 +714,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       reportName: this.clientData.name + '`s Plan',
       ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
       modules: this.moduleAdded,
-      financialPlanPdfLogId: 0
+      financialPlanPdfLogId: this.id
     }
     this.planService.savePlanSection(obj).subscribe(
       data => this.savePlanSectionRes(data),
