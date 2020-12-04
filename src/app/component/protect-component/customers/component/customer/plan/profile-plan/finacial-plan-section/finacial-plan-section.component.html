@@ -9,7 +9,16 @@
                 </div> -->
 <div class="row pt-28">
     <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'">
-        <h3 class="m-0 bb-1 pb-8">Modules added</h3>
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="m-0 bb-1 pb-8">Modules added</h3>
+            </div>
+            <div class="col-md-3 text-right">
+                <button mat-stroked-button class="btn-success" (click)="addNew()"
+                    *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false"> ADD
+                    NEW</button>
+            </div>
+        </div>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div cdkDropList (cdkDropListDropped)="drop($event)">
                 <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
@@ -34,13 +43,14 @@
                 </div>
             </div>
             <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
-                <span class="text-center pt-28">
+                <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
+                    <img src="assets/images/svg/documents-empty-states.svg">
                     No module added
                 </span>
             </div>
             <div class="scrollHieght">
                 <div *ngIf="clientDetails.length > 0 && hideTable == false">
-                    <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
+                    <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
                         [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
@@ -103,7 +113,7 @@
             </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
-                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
                     <div class="col-md-3" *ngIf="moduleAdded.length > 0">
@@ -113,14 +123,13 @@
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-3 p-0 text-right"
-                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == true">
+                    <div class="col-md-4 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
-                    <div class="col-md-2 text-right"
+                    <!-- <div class="col-md-2 text-right"
                         *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
                         <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -1205,7 +1214,7 @@
                     </mat-accordion>
                 </div>
             </mat-tab>
-            <mat-tab label="Templates">
+            <mat-tab label="Templates" (click)="getTemplateSection()">
                 <div class="pt-12 pb-12 pl-20 pr-20" id="ui-profileplan-card">
                     <!-- <div class="row">
                         <div class="col-md-12 p-0">

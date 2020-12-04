@@ -504,6 +504,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
+  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
