@@ -402,7 +402,6 @@ export class MfImportCasFileComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
-          this.mfService.sendRefreshMFDataSignalOnObs(true);
           if (choice === 'single') {
             this.dataSource.data.map(item1 => {
               if (item1['id'] === element.id) {
@@ -463,7 +462,6 @@ export class MfImportCasFileComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
-          this.mfService.sendRefreshMFDataSignalOnObs(true);
           if (choice == 'single') {
             this.dataSource2.data.map(item1 => {
               if (item1['id'] === element.id) {
@@ -582,7 +580,6 @@ export class MfImportCasFileComponent implements OnInit {
                 this.showPointsIfRefreshed = true;
                 this.setCasFileObject(res);
                 this.isFileStatusProceed = true;
-                this.mfService.sendRefreshMFDataSignalOnObs(true);
                 break;
 
               case 2:
@@ -607,7 +604,6 @@ export class MfImportCasFileComponent implements OnInit {
                 break;
 
               case 1: res.status = 'File Imported';
-                this.mfService.sendRefreshMFDataSignalOnObs(true);
                 break;
 
               case 2: res.status = 'Data Processed';
