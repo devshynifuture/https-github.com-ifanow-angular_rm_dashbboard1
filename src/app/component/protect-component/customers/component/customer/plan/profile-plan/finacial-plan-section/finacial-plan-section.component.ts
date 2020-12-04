@@ -199,7 +199,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   pdfFromImage(url) {
     var el = document.getElementById("yabanner");
-    el.innerHTML = "<img src=\"" + url + "\" width=\"400px\" height=\"150px\">";
+    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"400px\" height=\"150px\">";
     this.uploadFile(el, 'Template', 'display Name', false)
   }
   getAssetCountGlobalData() {
