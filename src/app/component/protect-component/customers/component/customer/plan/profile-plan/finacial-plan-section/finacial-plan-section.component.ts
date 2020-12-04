@@ -199,7 +199,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   pdfFromImage(url) {
     var el = document.getElementById("yabanner");
-    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"400px\" height=\"150px\">";
+    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"595px\" height=\"842px\">";
     this.uploadFile(el, 'Template', 'display Name', false)
   }
   getAssetCountGlobalData() {
@@ -632,7 +632,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       clientId: AuthService.getClientId(),
       ClientName: this.clientData.name,
       OwnerName: AuthService.getUserInfo().name,
-      ReportName: this.clientData.name + '`s Plan',
+      reportName: this.clientData.name + '`s Plan',
       ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
       modules: this.moduleAdded,
       financialPlanPdfLogId: 0
