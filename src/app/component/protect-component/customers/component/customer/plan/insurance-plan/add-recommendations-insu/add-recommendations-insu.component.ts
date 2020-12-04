@@ -6,6 +6,9 @@ import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-i
 import { MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
+import { catchError } from 'rxjs/operators';
+import { of, forkJoin } from 'rxjs';
+import { ActiityService } from '../../../customer-activity/actiity.service';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -13,11 +16,12 @@ import { CustomerService } from '../../../customer.service';
   styleUrls: ['./add-recommendations-insu.component.scss']
 })
 export class AddRecommendationsInsuComponent implements OnInit {
-  displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice', 'empty'];
+  displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice'];
   dataSource: any;
   inputData: any;
   isLoading: any;
-  constructor(private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  adviceData: any;
+  constructor(private activityService:ActiityService,private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -70,26 +74,59 @@ export class AddRecommendationsInsuComponent implements OnInit {
       insuranceTypeId: 1,
       id: 0
     };
-    this.cusService.getInsuranceData(obj2).subscribe(
-      data => {
-        if (data) {
-          data.insuranceList.forEach(element => {
-            element.insurance = element  
-          });
-          this.dataSource = data.insuranceList
-          this.isLoading = false;
-          console.log(data)
-        } else {
-          this.dataSource = [];
-          this.isLoading = false;
-        }
-      },
-      err => {
+    let obj = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
+      categoryMasterId: 3,
+      categoryTypeId: 3,
+      statusFlag: 0
+    }
+    const AdviceAsset = this.activityService.getAllAsset(obj).pipe(
+      catchError(error => of(error))
+    );
+    const portfolioLi = this.cusService.getInsuranceData(obj2).pipe(
+      catchError(error => of(error))
+    );
+    forkJoin(AdviceAsset,portfolioLi).subscribe(result => {
+      this.adviceData = result[0]
+      let data = this.compareData(result[1]);
+      if (data.length > 0) {
+        this.dataSource = data
+        this.isLoading = false;
+        console.log(result[1])
+      } else {
         this.dataSource = [];
         this.isLoading = false;
-        this.eventService.openSnackBar(err, 'Dismiss');
       }
-    );
+    }, (error) => {
+      this.dataSource = [];
+      this.isLoading = false;
+      this.eventService.openSnackBar(error, 'Dismiss');
+    });
+  }
+  compareData(data){
+    let mergeArray;
+    if(this.adviceData){
+      mergeArray = [...this.adviceData['TERM_LIFE_INSURANCE'],...this.adviceData['TRADITIONAL_LIFE_INSURANCE'],...this.adviceData['ULIP_LIFE_INSURANCE']]
+      console.log(mergeArray);
+    }
+    if(data.insuranceList.length > 0){
+      data.insuranceList.forEach(element => {
+        element.insurance = element  
+        if(mergeArray.length > 0){
+          mergeArray.forEach(ele => {
+            if(ele.InsuranceDetails.id == element.id){
+              let adviceId = ele.adviceDetails.adviceId;
+              element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
+            }
+          });
+        }
+      });
+    }else{
+      data.insuranceList = [];
+    }
+    
+    return data.insuranceList;
   }
   recommend(data) {
     const obj = {
