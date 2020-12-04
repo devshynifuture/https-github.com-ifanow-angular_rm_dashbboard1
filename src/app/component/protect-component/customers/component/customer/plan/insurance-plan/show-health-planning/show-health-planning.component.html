@@ -67,7 +67,7 @@
                                     <span *ngIf="element.advice && !isLoading">
                                             {{isLoading ? '' : (element.advice ? element.advice : '-')}}
                                     </span>
-                                    <span *ngIf="!element.advice !isLoading">
+                                    <span *ngIf="!element.advice && !isLoading">
                                         <img src="/assets/images/svg/plus-rounded.svg"
                                             (click)="openDialog(element,showInsurance)">
                                     </span>

@@ -78,7 +78,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       { value: 6, advice: 'Add members', selected: false },
       { value: 7, advice: 'Remove members', selected: false }]
     }
-    this.insuranceData = this.data.value.insurance
+    this.insuranceData = this.data.value.insurance ? this.data.value.insurance : this.data.value.insuranceDetails;
   }
   // getAllCategory() {
   //   // this.isLoading = true;
