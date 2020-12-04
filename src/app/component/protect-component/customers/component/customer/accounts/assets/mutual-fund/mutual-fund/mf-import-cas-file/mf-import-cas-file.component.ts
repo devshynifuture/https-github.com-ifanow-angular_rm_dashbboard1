@@ -263,7 +263,7 @@ export class MfImportCasFileComponent implements OnInit {
       }, err => {
         console.error(err);
         this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+      });
   }
 
   getClientLatestCasLog() {
