@@ -111,13 +111,16 @@
                                 *ngIf="(healthInsurance.get('implementationDate').errors?.required)">This field is
                                 required</mat-error>
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
-                                Date should be greater than 
+                                Date should be greater than
                                 <br>advice date
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">Amount</p>
-                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
+                    <p class="m-0 text-black pb-4"
+                        *ngIf="healthInsurance.get('selectAdvice').value != 'Add members' && healthInsurance.get('selectAdvice').value != 'Remove members' && healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
+                        Amount</p>
+                    <div class="form-group"
+                        *ngIf="healthInsurance.get('selectAdvice').value != 'Add members' && healthInsurance.get('selectAdvice').value != 'Remove members' && healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
                         <mat-form-field class="ba-date">
                             <input autocomplete="off" maxlength="10" matInput #amount class="form-control b-0"
                                 formControlName="amount">
@@ -125,6 +128,22 @@
                                 is
                                 required</mat-error>
                             <mat-hint align="end" class="f-12">{{amount.value.length}}/15</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <p class="m-0 text-black pb-4"
+                        *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
+                        Family members</p>
+                    <div class="form-group"
+                        *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
+                        <mat-form-field>
+                            <mat-select autocomplete="true"
+                                class="form-control br-0" #famMember formControlName="famMember" matInput>
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option *ngFor="let item of familyList" [value]=item.id>{{item.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

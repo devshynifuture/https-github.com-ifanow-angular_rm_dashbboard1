@@ -177,7 +177,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
         'realOrFictitious': 2,
         'suggestion': this.storeData,
-        'isRecommend': this.showRecommendation
+        'isRecommend': this.showRecommendation ? 1 : 0,
       }
       if (this.dataForEdit) {
         this.planService.editSuggestNew(obj).subscribe(

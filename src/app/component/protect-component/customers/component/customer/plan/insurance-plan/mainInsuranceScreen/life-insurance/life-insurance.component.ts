@@ -621,7 +621,7 @@ export class LifeInsuranceComponent implements OnInit {
         let suggestionId;
         this.dataSouce3.forEach(ele => {
           if (ele['insurance'].suggestion) {
-            // if (ele['insurance'].isRecommend) {
+            // if (ele['insurance'].isRecommend == 1) {
             suggestionId = ele['insurance'].id;
             countSuggest++
             this.recommendOrNot = true;

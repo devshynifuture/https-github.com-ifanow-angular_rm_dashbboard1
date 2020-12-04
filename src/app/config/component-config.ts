@@ -354,6 +354,7 @@ export const appConfig = {
   DELETE_SUGGESTED_POLICY: 'insurance/planning/life/insurance/need/analysis/suggest/new/delete?',
   FREEZE_CAL: 'goal-planning/goal/freeze',
   ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
+  ADVISE_ON_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -500,8 +501,9 @@ export const appConfig = {
   FINPLAN_PDF_UPLOAD: 'plan/financial-plan-html/upload',
   MEREGE_CALL: "plan/financial-plan-html/merge",
   GET_PDF_CALL: "plan/financial-plan/pdf/get",
-  SAVE_PLAN_SECTION: "",
-  GET_PLAN_SECTION: "",
+  SAVE_PLAN_SECTION: "plan/financial-plan/save",
+  GET_PLAN_SECTION: "plan/financial-plan/list/get",
+  DELETE_FP_SECTION: '',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',

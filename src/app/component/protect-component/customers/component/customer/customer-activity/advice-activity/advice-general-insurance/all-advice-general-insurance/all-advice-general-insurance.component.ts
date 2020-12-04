@@ -371,7 +371,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: component,
-      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'Advice General Insurance' },
+      childData: { data: data ? data.InsuranceDetails : null,adviceToCategoryId:this.object.adviceToCategoryId, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

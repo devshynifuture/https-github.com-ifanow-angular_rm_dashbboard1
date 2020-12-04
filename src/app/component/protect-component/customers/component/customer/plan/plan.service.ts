@@ -333,6 +333,9 @@ export class PlanService {
   addAdviseOnHealth(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVISE_ON_HEALTH, data);
   }
+  addAdviseOnGeneralInsurance(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADVISE_ON_GENERAL_INSURANCE, data);
+  }
   getFinPlanFileUploadUrl(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.FINPLAN_PDF_UPLOAD, data)
   }
@@ -347,7 +350,10 @@ export class PlanService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_PLAN_SECTION, data)
   }
   getPlanSection(data) {
-    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId)
+    let httpParams = new HttpParams().set('clientId', data.clientId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_SECTION, httpParams)
+  }
+  deletePlanSection(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FP_SECTION + 'id=' + data, '')
   }
 }
