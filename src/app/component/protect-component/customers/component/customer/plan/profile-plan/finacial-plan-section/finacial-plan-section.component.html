@@ -111,7 +111,8 @@
             <div class="mt-12">
                 <div class="row b-t pt-12">
                     <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
+                        <button mat-stroked-button class="text-primary b-a-custom"
+                            (click)="getPreview()">Preview</button>
                     </div>
                     <div class="col-md-3" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
