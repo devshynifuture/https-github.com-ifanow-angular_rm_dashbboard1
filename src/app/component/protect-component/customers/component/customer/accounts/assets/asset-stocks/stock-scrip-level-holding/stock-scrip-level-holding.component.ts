@@ -482,8 +482,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
         "description": this.optionForm.value.description,
       }
 
-      if (this.editApiData && this.portfolioData.id == 0) {
-        obj.ownerList[0].id = null;
+      if (this.portfolioData.id != 0) {
+        obj.ownerList[0].id = this.portfolioData.ownerList[0].id;
       }
 
       if (this.editApiData) {
@@ -554,7 +554,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
 
   checkOwner() {
     if (this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '') {
-      this.eventService.showErrorMessage("Please select owner");
+      this.eventService.openSnackBar("Please select owner");
     }
     // console.log(this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '', "test owner");
 

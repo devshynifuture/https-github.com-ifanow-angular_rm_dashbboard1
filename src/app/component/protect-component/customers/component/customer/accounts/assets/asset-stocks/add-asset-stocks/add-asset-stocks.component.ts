@@ -443,7 +443,7 @@ export class AddAssetStocksComponent implements OnInit {
 
   checkOwner() {
     if (this.assetForm.value.getCoOwnerName[0].name == '') {
-      this.eventService.showErrorMessage("Please select owner");
+      this.eventService.openSnackBar("Please select owner");
     }
     // console.log(this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '', "test owner");
 
