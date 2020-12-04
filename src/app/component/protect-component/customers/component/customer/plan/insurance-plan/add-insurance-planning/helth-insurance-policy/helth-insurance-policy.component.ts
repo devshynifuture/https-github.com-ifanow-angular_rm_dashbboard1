@@ -215,7 +215,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   }
   saveAdviceOnHealth() {
-    if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
+    if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Port policy' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
       || this.healthInsurance.get('selectAdvice').value == 'Discontinue' ) {
       this.healthInsurance.get('amount').setErrors(null);
       this.healthInsurance.get('famMember').setErrors(null);

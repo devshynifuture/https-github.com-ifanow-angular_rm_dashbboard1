@@ -383,9 +383,20 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getReviewExistingPolicy();
   }
   addPolicy(event, element) {
-    element.selected = event.checked;
-    this.isChecked = event.checked
-    if (this.isChecked) {
+    element.selected = event.source.checked;
+  
+
+    this.dataSource2.forEach(item => item.selected = false);
+
+    this.dataSource2.forEach(ele => {
+      if(ele.insurance.id == element.insurance.id){
+        element.selected = true
+        ele.insurance.selected = true
+        this.isChecked = true
+      }
+    });
+    if (element.selected) {
+      this.needAnalysis=[];
       this.needAnalysis.push(element.insurance.id)
       if(element.insurance.insuredMembers.length > 0){
         element.insurance.insuredMembers.forEach(ele => {

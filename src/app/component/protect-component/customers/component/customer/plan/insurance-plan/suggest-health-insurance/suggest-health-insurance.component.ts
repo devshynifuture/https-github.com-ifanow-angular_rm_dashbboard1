@@ -811,7 +811,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                 'addOns': [],
                 'realOrFictitious': 2,
                 'suggestion': this.plannerNotes,
-                'isRecommend': this.showRecommendation,
+                'isRecommend': this.showRecommendation ? 1 : 0,
                 insuredMembers: memberList,
                 nominees: this.healthInsuranceForm.value.getNomineeName,
             };

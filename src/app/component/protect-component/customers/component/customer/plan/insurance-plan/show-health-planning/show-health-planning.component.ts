@@ -49,6 +49,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   storedData: any;
   needAnalysisData: any;
   globalArray =[];
+  adviceName: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
@@ -237,6 +238,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     if (array) {
       this.getSumAssured(array);
       array.forEach(singleInsuranceData => {
+        this.adviceName = singleInsuranceData.advice;
         singleInsuranceData.insuranceDetails = singleInsuranceData.insurance ? singleInsuranceData.insurance : singleInsuranceData.insuranceDetails;
         if (singleInsuranceData.insuranceDetails && singleInsuranceData.insuranceDetails.insuredMembers.length > 0) {
           singleInsuranceData.displayHolderName = singleInsuranceData.insuranceDetails.insuredMembers[0].name;
