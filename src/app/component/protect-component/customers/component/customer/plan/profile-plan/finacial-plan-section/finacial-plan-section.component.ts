@@ -645,7 +645,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   savePlanSectionRes(data) {
-    this.hideTable = false
+    this.getPlanSection()
+    this.hideTable = true
   }
   getInsurancePlaningListRes(data) {
     if (data) {

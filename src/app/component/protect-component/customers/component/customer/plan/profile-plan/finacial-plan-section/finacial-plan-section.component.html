@@ -113,17 +113,19 @@
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-3 p-0 text-right" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <div class="col-md-3 p-0 text-right"
+                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
-                    <div class="col-md-2 text-right" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <div class="col-md-2 text-right"
+                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == true">
                         <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div [ngClass]="hideTable == false ? 'col-md-6': 'col-md-12'" *ngIf="moduleAdded.length  == 0 && hideTable == true">
+    <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'" *ngIf="hideTable == true">
         <div class="row bb-1">
             <div class="col-md-6 p-0">
                 <h3 class="m-0">Modules available</h3>
