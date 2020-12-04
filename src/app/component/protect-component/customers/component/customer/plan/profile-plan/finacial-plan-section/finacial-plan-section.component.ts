@@ -114,7 +114,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientData: any;
   mfCount: any;
   displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
-  clientDetails: any[];
+  clientDetails: any;
   hideTable: boolean = false;
   quotes: any;
   fincialPlan: any;
@@ -137,7 +137,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   ngOnInit() {
     this.count = 0;
     this.moduleAdded = [];
-    this.clientDetails = []
+    this.clientDetails = [{}, {}, {}];
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
@@ -201,7 +201,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getPlanSection()
     });
   }
   pdfFromImage(url) {
@@ -254,6 +254,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.isLoading = false
     console.log('get plan section data', data)
     this.clientDetails = data
+    if (this.clientDetails.length == 0) {
+      this.hideTable = false
+    }
   }
 
   generatePdf(data, sectionName, displayName) {
