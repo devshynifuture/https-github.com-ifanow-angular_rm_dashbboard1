@@ -8,8 +8,17 @@
                     </div>
                 </div> -->
 <div class="row pt-28">
-    <div class="col-md-6">
-        <h3 class="m-0 bb-1 pb-8">Modules added</h3>
+    <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="m-0 bb-1 pb-8">Modules added</h3>
+            </div>
+            <div class="col-md-3 text-right">
+                <button mat-stroked-button class="btn-success" (click)="addNew()"
+                    *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false"> ADD
+                    NEW</button>
+            </div>
+        </div>
         <div class="h-100vh skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div cdkDropList (cdkDropListDropped)="drop($event)">
                 <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
@@ -33,75 +42,78 @@
                     </div>
                 </div>
             </div>
-
             <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
-                <span class="text-center pt-28">
+                <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
+                    <img src="assets/images/svg/documents-empty-states.svg">
                     No module added
                 </span>
             </div>
-            <div *ngIf="clientDetails.length > 0 && hideTable == false">
-                <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
-                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
-                    <ng-container matColumnDef="name">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
-                        <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar">
-                                {{element.advisorName}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="clientName">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
-                        <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar">
-                                {{element.clientName}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="mfoverview">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
-                        <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar">
-                                {{element.ReportName}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="date">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
-                        <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar">
-                                {{element.createdDate | date:'dd-MMM-yyyy'}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="download">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Download </th>
-                        <td class="br" mat-cell *matCellDef="let element">
-                            <div class="bar" (click)="downloadPrevoius(element)">
-                                <img class="c-p text-center" (click)="downloadPrevoius(element)"
-                                    src="assets/images/svg/download-pdf-blue.svg">
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons" sticky>
-                        <th mat-header-cell *matHeaderCellDef class=""></th>
-                        <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p">
-                            <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
-                            <mat-menu #menu4="matMenu">
-                                <button (click)="deletePlanSection('FIN PLAN',element)" mat-menu-item>Delete</button>
-                            </mat-menu>
+            <div class="scrollHieght">
+                <div *ngIf="clientDetails.length > 0 && hideTable == false">
+                    <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
+                        [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                        <ng-container matColumnDef="name">
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.advisorName}}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="clientName">
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.clientName}}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="mfoverview">
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.ReportName}}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="date">
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.createdDate | date:'dd-MMM-yyyy'}}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="download">
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky>Download </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar" (click)="downloadPrevoius(element)">
+                                    <img class="c-p text-center" (click)="downloadPrevoius(element)"
+                                        src="assets/images/svg/download-pdf-blue.svg">
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="icons" sticky>
+                            <th mat-header-cell *matHeaderCellDef class=""></th>
+                            <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p">
+                                <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
+                                <mat-menu #menu4="matMenu">
+                                    <button (click)="deletePlanSection('FIN PLAN',element)"
+                                        mat-menu-item>Delete</button>
+                                </mat-menu>
 
-                        </td>
-                        <td mat-footer-cell *matFooterCellDef class="br"></td>
-                    </ng-container>
-                    <!-- Name Column -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br"></td>
+                        </ng-container>
+                        <!-- Name Column -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
             </div>
             <div class="mt-12">
                 <div class="row b-t pt-12">
-                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
                     </div>
                     <div class="col-md-3" *ngIf="moduleAdded.length > 0">
@@ -111,17 +123,18 @@
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-3 p-0 text-right" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <div class="col-md-4 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
-                    <div class="col-md-2 text-right" *ngIf="moduleAdded.length > 0 || clientDetails.length > 0">
+                    <!-- <div class="col-md-2 text-right"
+                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
                         <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'" *ngIf="hideTable == true">
         <div class="row bb-1">
             <div class="col-md-6 p-0">
                 <h3 class="m-0">Modules available</h3>
@@ -1201,7 +1214,7 @@
                     </mat-accordion>
                 </div>
             </mat-tab>
-            <mat-tab label="Templates">
+            <mat-tab label="Templates" (click)="getTemplateSection()">
                 <div class="pt-12 pb-12 pl-20 pr-20" id="ui-profileplan-card">
                     <!-- <div class="row">
                         <div class="col-md-12 p-0">

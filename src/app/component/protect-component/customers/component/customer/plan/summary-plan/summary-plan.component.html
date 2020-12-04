@@ -231,7 +231,7 @@
                                                 appFormatNumber [shouldRoundOff]="true"
                                                 [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals ? goalSummaryCountObj?.monthlyInvestmentMappedToGoals : 0"></span>
                                         </h4>
-                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                        <div class="relClass" *ngIf="isLoadingGoals">
                                             <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
                                                 <p class="text-primary roboto f-400">
                                                     {{''}}</p>
@@ -242,7 +242,7 @@
                                                 appFormatNumber [shouldRoundOff]="true"
                                                 [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals ? goalSummaryCountObj?.lumpsumInvestmentMappedToGoals : 0"></span>
                                         </h4>
-                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
+                                        <div class="relClass" *ngIf="isLoadingGoals">
                                             <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
                                                 <p class="text-primary roboto f-400">
                                                     {{''}}</p>
@@ -356,9 +356,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-20 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
+                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-8" [appSkeletonLoading]="isLoadingCashFlow"
                         appSkeletonLoading>
-                        <div class="bg-white col-md-12 planTable p-0">
+                        <div class="bg-white p-20">
                             <div class="row d-flex align-items-center justify-content-between b-b">
                                 <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
                                 <p class="f-14 text-primitive mb-10">{{ yearToShow }}</p>
@@ -557,7 +557,7 @@
                         </div>
                     </div> -->
 
-                    <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
+                    <!-- <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
                         appSkeletonLoading>
                         <div class="bg-white p-20">
                             <div class="row d-flex align-items-center justify-content-between b-b">
@@ -648,7 +648,7 @@
 
 
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 

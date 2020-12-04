@@ -354,6 +354,9 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_SECTION, httpParams)
   }
   deletePlanSection(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FP_SECTION + 'id=' + data, '')
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FP_SECTION, data)
+  }
+  getTemplates(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, '')
   }
 }

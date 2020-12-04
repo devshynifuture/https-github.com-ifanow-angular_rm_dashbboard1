@@ -41,7 +41,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumnsNeedAnalysis: string[] = ['details', 'outstanding', 'consider', 'edit'];
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice', 'icon'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
   displayedColumns3 = ['name', 'sum', 'premium', 'status', 'icons'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
@@ -620,8 +620,8 @@ export class LifeInsuranceComponent implements OnInit {
       if (this.dataSouce3.length > 0) {
         let suggestionId;
         this.dataSouce3.forEach(ele => {
-          if (ele['insurance'].suggestion) {
-            // if (ele['insurance'].isRecommend == 1) {
+          // if (ele['insurance'].suggestion) {
+            if (ele['insurance'].isRecommend == 1) {
             suggestionId = ele['insurance'].id;
             countSuggest++
             this.recommendOrNot = true;
@@ -913,7 +913,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.getForkJoinResponse(singleData[0])
   }
   suggestPolicy(data) {
-    this.inputData.recommendOrNot = data ? (data.insurance.suggestion ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false);
+    this.inputData.recommendOrNot = data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false);
     if (data) {
       data.inputData = this.inputData
     } else {

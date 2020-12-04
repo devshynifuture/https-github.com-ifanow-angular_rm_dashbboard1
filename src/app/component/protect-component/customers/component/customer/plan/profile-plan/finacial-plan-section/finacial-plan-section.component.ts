@@ -116,6 +116,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
   clientDetails: any[];
   hideTable: boolean = false;
+  STOCK;
+  quotes: any;
+  fincialPlan: any;
+  miscellaneous: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -138,6 +142,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
+    this.getTemplateSection()
     this.getPlanSection()
     this.isLoading = false
     //this.pdfFromImage()
@@ -162,6 +167,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.hideTable = true
   }
   deletePlanSection(value, data) {
+    let obj = {
+      id: data.id
+    }
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -170,7 +178,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.planService.deletePlanSection(data.id).subscribe(
+        this.planService.deletePlanSection(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Income deleted successfully', 'Dismiss');
             // this.deleteId(incomeData.id);
@@ -199,7 +207,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   pdfFromImage(url) {
     var el = document.getElementById("yabanner");
-    el.innerHTML = "<img src=\"" + url + "\" width=\"400px\" height=\"150px\">";
+    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"595px\" height=\"842px\">";
     this.uploadFile(el, 'Template', 'display Name', false)
   }
   getAssetCountGlobalData() {
@@ -214,6 +222,21 @@ export class FinacialPlanSectionComponent implements OnInit {
   getAssetCountGLobalDataRes(data) {
     console.log('Mf Count', data)
     this.mfCount = data
+  }
+  getTemplateSection() {
+
+    this.planService.getTemplates('').subscribe(
+      data => this.getTemplatesRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  getTemplatesRes(data) {
+    console.log('template listd', data)
+    this.quotes = data[1];
+    this.fincialPlan = data[0];
+    this.miscellaneous = data[2]
   }
   getPlanSection() {
     this.isLoading = true
@@ -632,7 +655,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       clientId: AuthService.getClientId(),
       ClientName: this.clientData.name,
       OwnerName: AuthService.getUserInfo().name,
-      ReportName: this.clientData.name + '`s Plan',
+      reportName: this.clientData.name + '`s Plan',
       ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
       modules: this.moduleAdded,
       financialPlanPdfLogId: 0
@@ -645,6 +668,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   savePlanSectionRes(data) {
+    this.getPlanSection()
     this.hideTable = false
   }
   getInsurancePlaningListRes(data) {
