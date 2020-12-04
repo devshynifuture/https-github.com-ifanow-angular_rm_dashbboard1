@@ -116,6 +116,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
   clientDetails: any[];
   hideTable: boolean = false;
+  STOCK;
   quotes: any;
   fincialPlan: any;
   miscellaneous: any;
