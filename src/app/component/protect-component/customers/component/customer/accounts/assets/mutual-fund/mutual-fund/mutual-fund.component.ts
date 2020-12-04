@@ -49,7 +49,7 @@ export class MutualFundComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
     public routerActive: ActivatedRoute, private assetValidation: AssetValidationService,
-    private mfService: MfServiceService, private settingService: SettingsService,private cd: ChangeDetectorRef) {
+    private mfService: MfServiceService, private settingService: SettingsService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class MutualFundComponent implements OnInit {
           let param1 = queryParamMap['params'];
           this.clientId = param1.clientId
           this.advisorId = param1.advisorId
-          console.log('2423425',param1)
+          console.log('2423425', param1)
         }
       }
     });
@@ -110,7 +110,7 @@ export class MutualFundComponent implements OnInit {
       }
     );
   }
-  getDataCount(){
+  getDataCount() {
     this.assetValidation.getAssetCountGLobalData()
   }
   doFiltering(data) {

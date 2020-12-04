@@ -187,6 +187,10 @@
                 <div class="bar c-red" *ngIf="element.processStatus === -1">
                   {{element.status}}
                 </div>
+
+                <div class="bar c-purple" *ngIf="element.processStatus === -2">
+                  {{element.status}}
+                </div>
               </div>
             </div>
             <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;"></div>
@@ -196,6 +200,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
       </table>
+      <div class="row b-a" *ngIf="dataSource5.data ===null">
+        <div class="col-md-12 text-center p-44">
+          No Data Found
+        </div>
+      </div>
     </div>
   </div>
 

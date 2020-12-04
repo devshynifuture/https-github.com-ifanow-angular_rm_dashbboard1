@@ -176,7 +176,7 @@ export class BackOfficeService {
   }
 
   allSipGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('pageNumber', data.pageNumber).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.ALL_SIP_GET, httpParams);
   }
 
@@ -363,11 +363,11 @@ export class BackOfficeService {
   saveSettingAll(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING_ALL, data);
   }
-  getSipCleanUpListData(data){
+  getSipCleanUpListData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SIP_CLEANUP_LIST, data);
   }
 
-  putSipCleanUpUpdateStatus(data){
+  putSipCleanUpUpdateStatus(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE, data)
   }
 }
