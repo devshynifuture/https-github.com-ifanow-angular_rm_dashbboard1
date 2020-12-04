@@ -428,17 +428,17 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     }
 
     console.log(arr);
-    // this.orgSetting.sendEmailToClients(obj).subscribe(
-    //   data => {
-    //     this.eventService.openSnackBar(data, 'Dismiss');
-    //     this.close(true);
-    //     this.barButtonOptions.active = false;
-    //   },
-    //   err => {
-    //     this.barButtonOptions.active = false;
-    //     this.eventService.openSnackBar(err, 'Dismiss');
-    //   }
-    // );
+    this.orgSetting.sendEmailToClients(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar(data, 'Dismiss');
+        this.close(true);
+        this.barButtonOptions.active = false;
+      },
+      err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
 
   bulkEmail(value) {
