@@ -216,10 +216,14 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.getPlanSection()
     });
   }
-  pdfFromImage(url) {
-    var el = document.getElementById("yabanner");
-    el.innerHTML = "<img src=\"" + url + "\"" + "\" width=\"595px\" height=\"842px\">";
-    this.uploadFile(el, 'Template', 'display Name', false)
+  pdfFromImage(element) {
+    if (element.name == "Miscellaneous") {
+
+    } else {
+      var el = document.getElementById("yabanner");
+      el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"795px\" height=\"1042px\">";
+      this.uploadFile(el, 'Template', 'display Name', false)
+    }
   }
   getAssetCountGlobalData() {
     const obj = {
@@ -246,8 +250,17 @@ export class FinacialPlanSectionComponent implements OnInit {
   getTemplatesRes(data) {
     console.log('template listd', data)
     this.quotes = data[1];
+    this.quotes.templates.forEach(element => {
+      element.add = false
+    });
     this.fincialPlan = data[0];
+    this.fincialPlan.templates.forEach(element => {
+      element.add = false
+    });
     this.miscellaneous = data[2]
+    this.miscellaneous.templates.forEach(element => {
+      element.add = false
+    });
   }
   getPlanSection() {
     this.isLoading = true

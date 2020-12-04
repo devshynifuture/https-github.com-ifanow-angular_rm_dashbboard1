@@ -903,7 +903,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="bl br bb">{{mfCount.fixed_deposit}}
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.fixed_deposit != 0">
+                                <div *ngIf="mfCount && mfCount.fixed_deposit != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Fixed deposit','','Portfolio / Fixed deposit',false)">
@@ -915,7 +915,7 @@
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.recurring_deposit!= 0">
+                                    <div *ngIf="mfCount && mfCount.recurring_deposit!= 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
                                                 (change)="checkAndLoadPdf($event.checked,'Recurring deposits','','Portfolio / Recurring deposits',false)">
@@ -928,7 +928,7 @@
                                     </div>
                                 </div>
                                 <div class="row bb-1 pt-8 pb-8">
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.bond != 0">
+                                    <div *ngIf="mfCount && mfCount.bond != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
                                                 (change)="checkAndLoadPdf($event.checked,'Bonds','','Portfolio / Bonds',false)">
@@ -1244,8 +1244,10 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(q.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(q);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(q)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1258,8 +1260,10 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(q.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(q);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(q)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1286,22 +1290,26 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(f.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(f);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(f)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
                                 <div class="col-md-6 pr-0 pl-8"
                                     *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
                                     <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{f.imageUrl}}" class="w-100">
+                                        <img mat-card-image src="{{f}}" class="w-100">
                                         <mat-card-content>
                                             <h5 class="m-0 text-center">{{f.name}}</h5>
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(f);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(f)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1326,8 +1334,10 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(m);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(m)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -1340,8 +1350,10 @@
                                         </mat-card-content>
                                         <mat-card-actions class="text-center">
                                             <button mat-stroked-button class="text-primary b-a-custom">Preview</button>
-                                            <button mat-stroked-button class="btn-primary"
-                                                (click)="pdfFromImage(m.imageUrl)">Add</button>
+                                            <button mat-stroked-button class="btn-primary" *ngIf="add == false"
+                                                (click)="pdfFromImage(m);add=true">Add</button>
+                                            <button mat-stroked-button class="btn-success" *ngIf="add == true"
+                                                (click)="pdfFromImage(m)">Remove</button>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
