@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angu
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { EventService } from '../../../../../../../../Data-service/event.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
@@ -35,6 +35,7 @@ export class AllSipComponent implements OnInit {
   finalSipList: any = [];
   currentPageIndex: any = 0;
   totalSipCount: any;
+  pageEvent: PageEvent;
 
   constructor(
     private backoffice: BackOfficeService,
