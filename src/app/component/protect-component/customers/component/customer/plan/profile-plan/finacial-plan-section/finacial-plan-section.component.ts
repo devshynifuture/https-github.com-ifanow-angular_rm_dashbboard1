@@ -163,21 +163,21 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
 
-  getPreview() {
+  getPreview(element, value) {
     let obj = {
-      id: this.id
+      id: element.financialPlanPdfLogId
     }
     this.planService.getPreview(obj).subscribe(
-      data => this.getPreviewRes(data)
+      data => this.getPreviewRes(data, value)
     );
   }
 
-  getPreviewRes(data) {
+  getPreviewRes(data, element) {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '500px',
       height: '600px',
-      data: { bank: data, selectedElement: data }
+      data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {

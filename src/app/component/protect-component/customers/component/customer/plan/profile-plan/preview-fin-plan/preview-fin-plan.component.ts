@@ -22,7 +22,7 @@ export class PreviewFinPlanComponent implements OnInit {
 
   ngOnInit() {
     console.log('preview == ', this.data);
-    this.link = this.data.bank;
+    this.link = this.data.selectedElement.preSignedUrl;
     this.selectedElement = this.data.selectedElement
     console.log('preview == ', this.selectedElement);
     console.log('link == ', this.link);
