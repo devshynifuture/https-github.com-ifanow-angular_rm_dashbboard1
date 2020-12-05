@@ -819,6 +819,43 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeEmail(value, data) {
+    const dialogData = {
+      data: 'EMAIL',
+      header: "REMOVE",
+      body: `Are you sure you want to remove?`,
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: "REMOVE",
+      positiveMethod: () => {
+        this.orgSetting.removeEmail(data.id).subscribe(
+          data => {
+            this.eventService.openSnackBar('Removed sucessfully', 'Dismiss');
+            dialogRef.close();
+            this.getEmailTemplate();
+          }, err => {
+          this.eventService.openSnackBar(err, "Dimiss");
+        }
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
   openFeviconUrl(data, flag) {
     if (data.feviconUrl == 'NA') {
       data['feviconUrl'] = "https://www.my-planner.in/img/logo.ico";

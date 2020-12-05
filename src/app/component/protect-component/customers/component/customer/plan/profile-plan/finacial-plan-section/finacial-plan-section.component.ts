@@ -42,6 +42,7 @@ import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -124,6 +125,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private resolver: ComponentFactoryResolver,
     private eventService: EventService,
     public dialog: MatDialog,
+    private cd: ChangeDetectorRef,
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
@@ -168,6 +170,13 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getPreview(element, value) {
     if (value == 'table') {
+      let obj = {
+        id: element.financialPlanPdfLogId
+      }
+      this.planService.getPreview(obj).subscribe(
+        data => this.getPreviewRes(data, value)
+      );
+    } else {
       const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
         width: '500px',
         height: '600px',
@@ -181,13 +190,6 @@ export class FinacialPlanSectionComponent implements OnInit {
         this.element = result;
         console.log('result -==', this.element)
       });
-    } else {
-      let obj = {
-        id: element.financialPlanPdfLogId
-      }
-      this.planService.getPreview(obj).subscribe(
-        data => this.getPreviewRes(data, value)
-      );
     }
 
   }
@@ -288,21 +290,21 @@ export class FinacialPlanSectionComponent implements OnInit {
       );
     } else {
       if (element.add == true) {
-        list.splice(i, 1);
+        this.moduleAdded.splice(i, 1);
+        element.add = false
+        this.cd.detectChanges()
       } else {
-        if (element.name == 'Index') {
-          // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
-          //   align: 'right',
-          //   width: 180
-          // });
-          // element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
-          //   align: 'right',
-          //   width: 180
-          // });
-          // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
-          var el = document.getElementById("yabanner");
-          el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
-        }
+        // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
+        //   align: 'right',
+        //   width: 180
+        // });
+        // element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
+        //   align: 'right',
+        //   width: 180
+        // });
+        // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
+        var el = document.getElementById("yabanner");
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
         this.uploadFile(el, list.name, element.name, false)
       }
     }
