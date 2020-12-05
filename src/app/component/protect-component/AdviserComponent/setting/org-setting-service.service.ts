@@ -186,4 +186,8 @@ export class OrgSettingServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.DOMAIN_LIST, data);
   }
 
+  removeEmail(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_EMAIL, data);
+  }
+
 }
