@@ -113,6 +113,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   fincialPlan: any;
   miscellaneous: any;
   element: any;
+  getOrgData: any;
+  userInfo: any;
 
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
@@ -126,6 +128,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
     this.clientData = AuthService.getClientData();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.userInfo = AuthService.getUserInfo();
+
   }
 
 
@@ -231,6 +236,11 @@ export class FinacialPlanSectionComponent implements OnInit {
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
       var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
+      content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
+      content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+      content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
+      content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
+      content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
       const obj = {
         clientId: this.clientId,
         name: element.name + '.html',
@@ -238,7 +248,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       };
       this.sectionName = element.name
       this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-        data => this.uploadFileRes(data, list.name, false)
+        data => this.uploadFileRes(data, element.name, false)
       );
     } else {
       if (element.add == true) {
