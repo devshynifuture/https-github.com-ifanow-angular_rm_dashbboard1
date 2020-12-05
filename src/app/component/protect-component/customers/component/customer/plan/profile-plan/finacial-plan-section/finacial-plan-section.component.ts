@@ -236,15 +236,29 @@ export class FinacialPlanSectionComponent implements OnInit {
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
       var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
-      content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
-      content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
-      content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
-      content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
-      content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
+      var clientNameReg1 = "<clientname>";
+      element.content = element.content.replace(new RegExp(clientNameReg1, 'g'), this.clientData.name)
+      var clientNameReg2 = "<clientname>";
+      element.content = element.content.replace(new RegExp(clientNameReg2, 'g'), this.clientData.name)
+      var advisorNameReg1 = "<advisorname>";
+      element.content = element.content.replace(new RegExp(advisorNameReg1, 'g'), this.userInfo.name)
+      var advisorNameReg2 = "<advisorname>";
+      element.content = element.content.replace(new RegExp(advisorNameReg2, 'g'), this.userInfo.name)
+      var emailIdReg = "<advisoremailId>";
+      element.content = element.content.replace(new RegExp(emailIdReg, 'g'), this.getOrgData.email)
+      var mobileNoReg = "<advisormobileno>";
+      element.content = element.content.replace(new RegExp(mobileNoReg, 'g'), this.userInfo.mobile)
+      var currentDateReg = "<currentdate>";
+      element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
+      element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
+      element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+      element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
+      element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
+      element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
       const obj = {
         clientId: this.clientId,
         name: element.name + '.html',
-        htmlInput: String(content)
+        htmlInput: String(element.content)
       };
       this.sectionName = element.name
       this.planService.getFinPlanFileUploadUrl(obj).subscribe(
@@ -255,7 +269,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         list.splice(i, 1);
       } else {
         var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"895px\" height=\"1142px\">";
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
         this.uploadFile(el, list.name, element.name, false)
       }
     }
