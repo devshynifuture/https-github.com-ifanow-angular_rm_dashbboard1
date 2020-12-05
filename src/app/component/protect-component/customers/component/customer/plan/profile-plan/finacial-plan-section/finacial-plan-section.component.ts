@@ -756,7 +756,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       reportName: this.clientData.name + '`s Plan',
       ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
       modules: this.moduleAdded,
-      financialPlanPdfLogId: this.id
+      financialPlanPdfLogId: this.id.id
     }
     this.planService.savePlanSection(obj).subscribe(
       data => this.savePlanSectionRes(data),
