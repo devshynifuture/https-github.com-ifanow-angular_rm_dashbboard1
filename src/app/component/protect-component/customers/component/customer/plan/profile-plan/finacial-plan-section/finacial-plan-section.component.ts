@@ -168,6 +168,13 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getPreview(element, value) {
     if (value == 'table') {
+      let obj = {
+        id: element.financialPlanPdfLogId
+      }
+      this.planService.getPreview(obj).subscribe(
+        data => this.getPreviewRes(data, value)
+      );
+    } else {
       const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
         width: '500px',
         height: '600px',
@@ -181,13 +188,6 @@ export class FinacialPlanSectionComponent implements OnInit {
         this.element = result;
         console.log('result -==', this.element)
       });
-    } else {
-      let obj = {
-        id: element.financialPlanPdfLogId
-      }
-      this.planService.getPreview(obj).subscribe(
-        data => this.getPreviewRes(data, value)
-      );
     }
 
   }
@@ -288,7 +288,8 @@ export class FinacialPlanSectionComponent implements OnInit {
       );
     } else {
       if (element.add == true) {
-        list.splice(i, 1);
+        element.splice(i, 1);
+        element.add = false
       } else {
         if (element.name == 'Index') {
           // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
