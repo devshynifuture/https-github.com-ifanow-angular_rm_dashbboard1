@@ -62,6 +62,7 @@ export class PersonalInsuranceComponent implements OnInit {
 	storeData: string;
 	showInsurance: any;
 	insuranceType: any;
+	recommendOrNot;
 	insuranceData = [{
 		value: '1',
 		header: 'Add Health Insurance',
