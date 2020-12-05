@@ -286,15 +286,15 @@ export class FinacialPlanSectionComponent implements OnInit {
         list.splice(i, 1);
       } else {
         if (element.name == 'Index') {
-          element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
-            align: 'right',
-            width: 180
-          });
-          element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
-            align: 'right',
-            width: 180
-          });
-          element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
+          // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
+          //   align: 'right',
+          //   width: 180
+          // });
+          // element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
+          //   align: 'right',
+          //   width: 180
+          // });
+          // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
         }
