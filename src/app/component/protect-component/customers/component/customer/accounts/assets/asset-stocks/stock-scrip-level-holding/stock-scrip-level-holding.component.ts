@@ -474,7 +474,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
         "advisorId": this.advisorId,
         "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
         "ownerList": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.ownerList : this.scipLevelHoldingForm.value.getCoOwnerName,
-        "portfolioName": this.portfolioData.portfolioName,
+        "portfolioName": this.editApiData ? this.editApiData.portfolioName : this.scipLevelHoldingForm.get('portfolioName').value,
         "stockList": finalStocks,
         "nomineeList": this.optionForm.value.getNomineeName,
         "linkedBankAccount": this.optionForm.value.linkedBankAccount,
@@ -483,7 +483,16 @@ export class StockScripLevelHoldingComponent implements OnInit {
       }
 
       if (this.portfolioData.id != 0) {
-        obj.ownerList[0].id = this.portfolioData.ownerList[0].id;
+        obj.stockList.forEach(s => {
+          s.portfolioId = this.portfolioData.id
+        });
+        // obj.ownerList[0].name = this.portfolioData.ownerList[0].name;
+        // obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
+        // obj.id = this.portfolioData.id;
+      }
+      else {
+        obj.id = 0
+        obj.ownerList[0].id = 0;
       }
 
       if (this.editApiData) {
