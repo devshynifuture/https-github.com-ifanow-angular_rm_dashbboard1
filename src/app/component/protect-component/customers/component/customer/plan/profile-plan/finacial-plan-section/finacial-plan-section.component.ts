@@ -105,7 +105,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   sectionName: any;
   clientData: any;
   mfCount: any;
-  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
+  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'preview', 'icons'];
   clientDetails: any;
   hideTable: boolean = false;
   STOCK;
@@ -163,21 +163,38 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
 
-  getPreview() {
-    let obj = {
-      id: this.id
+  getPreview(element, value) {
+    if (value == 'table') {
+      const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
+        width: '500px',
+        height: '600px',
+        data: { bank: element, selectedElement: '' }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return
+        }
+        console.log('The dialog was closed');
+        this.element = result;
+        console.log('result -==', this.element)
+      });
+    } else {
+      let obj = {
+        id: element.financialPlanPdfLogId
+      }
+      this.planService.getPreview(obj).subscribe(
+        data => this.getPreviewRes(data, value)
+      );
     }
-    this.planService.getPreview(obj).subscribe(
-      data => this.getPreviewRes(data)
-    );
+
   }
 
-  getPreviewRes(data) {
+  getPreviewRes(data, element) {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '500px',
       height: '600px',
-      data: { bank: data, selectedElement: data }
+      data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -236,15 +253,29 @@ export class FinacialPlanSectionComponent implements OnInit {
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
       var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
-      content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
-      content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
-      content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
-      content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
-      content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
+      var clientNameReg1 = "<clientname>";
+      element.content = element.content.replace(new RegExp(clientNameReg1, 'g'), this.clientData.name)
+      var clientNameReg2 = "<clientname>";
+      element.content = element.content.replace(new RegExp(clientNameReg2, 'g'), this.clientData.name)
+      var advisorNameReg1 = "<advisorname>";
+      element.content = element.content.replace(new RegExp(advisorNameReg1, 'g'), this.userInfo.name)
+      var advisorNameReg2 = "<advisorname>";
+      element.content = element.content.replace(new RegExp(advisorNameReg2, 'g'), this.userInfo.name)
+      var emailIdReg = "<advisoremailId>";
+      element.content = element.content.replace(new RegExp(emailIdReg, 'g'), this.getOrgData.email)
+      var mobileNoReg = "<advisormobileno>";
+      element.content = element.content.replace(new RegExp(mobileNoReg, 'g'), this.userInfo.mobile)
+      var currentDateReg = "<currentdate>";
+      element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
+      element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
+      element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+      element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
+      element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
+      element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
       const obj = {
         clientId: this.clientId,
         name: element.name + '.html',
-        htmlInput: String(content)
+        htmlInput: String(element.content)
       };
       this.sectionName = element.name
       this.planService.getFinPlanFileUploadUrl(obj).subscribe(
@@ -254,8 +285,19 @@ export class FinacialPlanSectionComponent implements OnInit {
       if (element.add == true) {
         list.splice(i, 1);
       } else {
-        var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"895px\" height=\"1142px\">";
+        if (element.name == 'Index') {
+          element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
+            align: 'right',
+            width: 180
+          });
+          element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
+            align: 'right',
+            width: 180
+          });
+          element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
+          var el = document.getElementById("yabanner");
+          el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
+        }
         this.uploadFile(el, list.name, element.name, false)
       }
     }
@@ -742,7 +784,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       reportName: this.clientData.name + '`s Plan',
       ReportDate: this.datePipe.transform(new Date(), 'dd-MMM-yyyy'),
       modules: this.moduleAdded,
-      financialPlanPdfLogId: this.id
+      financialPlanPdfLogId: this.id.id
     }
     this.planService.savePlanSection(obj).subscribe(
       data => this.savePlanSectionRes(data),
@@ -753,6 +795,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   savePlanSectionRes(data) {
+    this.moduleAdded = []
     this.getPlanSection()
     this.hideTable = false
   }
