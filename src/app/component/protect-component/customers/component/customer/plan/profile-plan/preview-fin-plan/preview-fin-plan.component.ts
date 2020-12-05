@@ -16,6 +16,7 @@ export class PreviewFinPlanComponent implements OnInit {
   link: any;
   loadSpinner: boolean = false;
   selectedElement: any;
+  imgPreview: any;
   constructor(public dialogRef: MatDialogRef<PreviewFinPlanComponent>, private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
   }
@@ -23,6 +24,7 @@ export class PreviewFinPlanComponent implements OnInit {
   ngOnInit() {
     console.log('preview == ', this.data);
     this.link = this.data.selectedElement.preSignedUrl;
+    this.imgPreview = this.data.bank
     this.selectedElement = this.data.selectedElement
     console.log('preview == ', this.selectedElement);
     console.log('link == ', this.link);
