@@ -69,7 +69,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(isLoading) ? '':element.ReportName}}
+                                    {{(isLoading) ? '':element.reportName}}
                                 </div>
                             </td>
                         </ng-container>
@@ -911,7 +911,7 @@
                                     </h5>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
-                            <div class="bl br bb">{{mfCount.fixed_deposit}}
+                            <div class="bl br bb">
                                 <div *ngIf="mfCount && mfCount.fixed_deposit != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
