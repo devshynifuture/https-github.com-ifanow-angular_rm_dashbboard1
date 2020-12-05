@@ -249,7 +249,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.getPlanSection()
     });
   }
-
+  close() {
+    this.hideTable = false
+  }
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
       var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
