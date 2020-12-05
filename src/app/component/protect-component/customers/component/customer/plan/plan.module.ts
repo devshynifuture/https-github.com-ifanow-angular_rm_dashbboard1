@@ -32,6 +32,7 @@ import { CashflowUpperLiabilitiesComponent } from './cashflows-plan/cashflow-upp
 import { AddNewInsuranceComponent } from './insurance-plan/add-new-insurance/add-new-insurance.component';
 import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 // import { AddInsurancePlanningComponent } from './insurance-plan/add-insurance-planning/add-insurance-planning.component';
 // import { EditApplicableTaxComponent } from './texes-plan/edit-applicable-tax/edit-applicable-tax.component';
 // import { SetupLumpsumDeploymentComponent } from './investments-plan/add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
@@ -88,7 +89,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     FormsModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    NgxDocViewerModule
   ],
   // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
   //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
