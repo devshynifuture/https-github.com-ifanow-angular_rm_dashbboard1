@@ -42,6 +42,7 @@ import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -124,6 +125,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private resolver: ComponentFactoryResolver,
     private eventService: EventService,
     public dialog: MatDialog,
+    private cd: ChangeDetectorRef,
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
@@ -290,6 +292,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       if (element.add == true) {
         this.moduleAdded.splice(i, 1);
         element.add = false
+        this.cd.detectChanges()
       } else {
         // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
         //   align: 'right',
