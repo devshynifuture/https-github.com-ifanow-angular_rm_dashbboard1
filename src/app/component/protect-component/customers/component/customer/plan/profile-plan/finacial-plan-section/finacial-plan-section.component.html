@@ -50,7 +50,7 @@
                     <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
                         [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                         <ng-container matColumnDef="name">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner name </th>
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepaid by </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
                                     {{(isLoading) ? '':element.advisorName}}
@@ -66,24 +66,24 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="mfoverview">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Report name </th>
-                            <td class="br" mat-cell *matCellDef="let element">
+                            <th class="br w-15" mat-header-cell *matHeaderCellDef sticky> Report name </th>
+                            <td class="br w-15" mat-cell *matCellDef="let element">
                                 <div class="bar">
                                     {{(isLoading) ? '':element.reportName}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="date">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
-                            <td class="br" mat-cell *matCellDef="let element">
+                            <th class="br w-5" mat-header-cell *matHeaderCellDef sticky>Report Date </th>
+                            <td class="br w-10" mat-cell *matCellDef="let element">
                                 <div class="bar">
                                     {{(isLoading) ? '':element.createdDate | date:'dd-MMM-yyyy'}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="download">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky>Download </th>
-                            <td class="br" mat-cell *matCellDef="let element">
+                            <th class="br w-5" mat-header-cell *matHeaderCellDef sticky>Download </th>
+                            <td class="br w-5" mat-cell *matCellDef="let element">
                                 <div class="bar" (click)="downloadPrevoius(element)">
                                     <img class="c-p align-items-center" (click)="downloadPrevoius(element)"
                                         src="assets/images/svg/download-pdf-blue.svg">
@@ -123,14 +123,14 @@
                         <button mat-stroked-button class="text-primary b-a-custom"
                             (click)="getPreview()">Preview</button>
                     </div> -->
-                    <div class="col-md-3" *ngIf="moduleAdded.length > 0">
+                    <div class="col-md-3 p-0" *ngIf="moduleAdded.length > 0">
                         <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
 
                     </div>
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-4 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
+                    <div class="col-md-7 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
                     <!-- <div class="col-md-2 text-right"
@@ -155,7 +155,7 @@
         <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide" [(selectedIndex)]="selected" class="mt-20">
             <!-- id="ui-dashboard-guide" -->
             <mat-tab label="Plan">
-                <div class="row pt-12 pl-20 pb-12">
+                <div class="row pl-20 pb-12">
                     <!-- <div class="col-md-12 p-0 row">
                         <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
                                 class="material-icons text-right">
@@ -196,10 +196,11 @@
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                     </div> -->
                 </div>
-                <div class="pt-12 pl-20 pr-20 pb-20">
+                <div class="pt-12 pb-20">
                     <mat-accordion id="fp-modules">
                         <mat-expansion-panel>
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Insurance planning</h5>
                                 </mat-panel-title>
@@ -222,7 +223,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Profile</h5>
                                 </mat-panel-title>
@@ -420,7 +422,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             class="mt-12">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Goals</h5>
                                 </mat-panel-title>
@@ -550,10 +553,11 @@
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                     </div> -->
                 </div>
-                <div class="pt-12 pl-20 pr-20 pb-20">
+                <div class="pt-12 pb-20">
                     <mat-accordion id="fp-modules">
                         <mat-expansion-panel *ngIf="mfCount && mfCount.mutualFund != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title (click)="getAssetCountGlobalData()">
                                     <h5 class="m-0">Mutual Fund</h5>
                                 </mat-panel-title>
@@ -629,7 +633,8 @@
 
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Life insurance</h5>
                                 </mat-panel-title>
@@ -685,7 +690,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">General insurance</h5>
                                 </mat-panel-title>
@@ -783,7 +789,8 @@
 
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Liabilities</h5>
                                 </mat-panel-title>
@@ -882,7 +889,8 @@
 
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true" *ngIf="STOCK != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Stocks</h5>
                                 </mat-panel-title>
@@ -905,14 +913,15 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.fixedIncome != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Fixed income
                                     </h5>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div *ngIf="mfCount && mfCount.fixed_deposit != 0">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.fixed_deposit != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Fixed deposit','','Portfolio / Fixed deposit',false)">
@@ -923,8 +932,8 @@
                                             Portfolio / Fixed deposit </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div *ngIf="mfCount && mfCount.recurring_deposit!= 0">
+                                <div class=" ">
+                                    <div *ngIf="mfCount && mfCount.recurring_deposit!= 0" class="row bb-1 pt-8 pb-8">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
                                                 (change)="checkAndLoadPdf($event.checked,'Recurring deposits','','Portfolio / Recurring deposits',false)">
@@ -936,8 +945,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div *ngIf="mfCount && mfCount.bond != 0">
+                                <div class=" ">
+                                    <div *ngIf="mfCount && mfCount.bond != 0" class="row pt-8 pb-8">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
                                                 (change)="checkAndLoadPdf($event.checked,'Bonds','','Portfolio / Bonds',false)">
@@ -954,7 +963,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.real_estate != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class=" m-0">Real estate
                                     </h5>
@@ -978,7 +988,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.retirementAccounts != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Retirement accounts
                                     </h5>
@@ -997,7 +1008,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="">
                                     <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.nps != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
@@ -1010,8 +1021,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div *ngIf="mfCount && mfCount.gratuity != 0">
+                                <div>
+                                    <div class="row pt-8 pb-8" *ngIf="mfCount && mfCount.gratuity != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #check
                                                 (change)="checkAndLoadPdf($event.checked,'Gratuity','','Portfolio / Gratuity',false)">
@@ -1028,7 +1039,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.smallSavingSchemes != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Small saving scheme
                                     </h5>
@@ -1150,7 +1162,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.cashAndBank != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Cash & Bank
                                     </h5>
@@ -1185,7 +1198,8 @@
                         </mat-expansion-panel>
                         <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
                             *ngIf="mfCount && mfCount.commodities != 0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     <h5 class="m-0">Commodities
                                     </h5>
@@ -1222,7 +1236,7 @@
                 </div>
             </mat-tab>
             <mat-tab label="Templates" (click)="getTemplateSection()">
-                <div class="pt-12 pb-12 pl-20 pr-20" id="ui-profileplan-card">
+                <div class="pt-12 pb-12" id="ui-profileplan-card">
                     <!-- <div class="row">
                         <div class="col-md-12 p-0">
                             <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Menu<i
@@ -1237,7 +1251,8 @@
                     </div> -->
                     <mat-accordion>
                         <mat-expansion-panel class="mt-12 br-0">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     Quotes
                                 </mat-panel-title>
@@ -1285,7 +1300,8 @@
                     </mat-accordion>
                     <mat-accordion>
                         <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     Financial planning
                                 </mat-panel-title>
@@ -1331,7 +1347,8 @@
                     </mat-accordion>
                     <mat-accordion>
                         <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header>
+                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                [expandedHeight]="customExpandedHeight">
                                 <mat-panel-title>
                                     Miscellaenous
                                 </mat-panel-title>

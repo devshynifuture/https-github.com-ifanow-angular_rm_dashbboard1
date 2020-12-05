@@ -115,7 +115,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   element: any;
   getOrgData: any;
   userInfo: any;
+  panelOpenState: boolean = false;
 
+  customCollapsedHeight: string = '40px';
+  customExpandedHeight: string = '40px';
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -875,6 +878,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     }
     return sum;
   }
+
 }
 
 export interface PeriodicElement {
