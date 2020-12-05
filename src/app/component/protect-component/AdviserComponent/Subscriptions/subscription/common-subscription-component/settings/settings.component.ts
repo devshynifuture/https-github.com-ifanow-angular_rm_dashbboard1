@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { PayeeSettingsComponent } from '../payee-settings/payee-settings.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {FormBuilder} from '@angular/forms';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UtilService} from 'src/app/services/util.service';
+import {PayeeSettingsComponent} from '../payee-settings/payee-settings.component';
 
 @Component({
   selector: 'app-settings',

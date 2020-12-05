@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { delay } from 'rxjs/operators';
@@ -32,22 +32,16 @@ import { SsySchemeComponent } from '../../../accounts/assets/smallSavingScheme/s
 import { NscSchemeComponent } from '../../../accounts/assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
 import { PPFSchemeComponent } from '../../../accounts/assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { LifeInsuranceComponent } from '../../insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
-import { HttpService } from 'src/app/http-service/http-service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MutualFundsCapitalComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from '../../../accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { CustomerService } from '../../../customer.service';
 import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
-import * as jsPDF from 'jspdf';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
-import { ViewChild } from '@angular/core';
-import { ComponentFactoryResolver } from '@angular/core';
-import { ViewContainerRef } from '@angular/core';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -119,6 +113,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   fincialPlan: any;
   miscellaneous: any;
   element: any;
+
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -162,6 +157,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       data => this.mergeCallRes(data)
     );
   }
+
   getPreview() {
     let obj = {
       id: this.id
@@ -170,6 +166,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       data => this.getPreviewRes(data)
     );
   }
+
   getPreviewRes(data) {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
@@ -186,9 +183,11 @@ export class FinacialPlanSectionComponent implements OnInit {
       console.log('result -==', this.element)
     });
   }
+
   addNew() {
     this.hideTable = true
   }
+
   deletePlanSection(value, data) {
     let obj = {
       id: data.id
@@ -228,13 +227,14 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.getPlanSection()
     });
   }
+
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
       var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
       const obj = {
         clientId: this.clientId,
         name: element.name + '.html',
-        htmlInput: String(Content)
+        htmlInput: String(content)
       };
       this.sectionName = element.name
       this.planService.getFinPlanFileUploadUrl(obj).subscribe(
@@ -250,6 +250,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     }
   }
+
   getAssetCountGlobalData() {
     const obj = {
       advisorId: this.advisorId,
@@ -259,10 +260,12 @@ export class FinacialPlanSectionComponent implements OnInit {
       data => this.getAssetCountGLobalDataRes(data)
     );
   }
+
   getAssetCountGLobalDataRes(data) {
     console.log('Mf Count', data)
     this.mfCount = data
   }
+
   getTemplateSection() {
 
     this.planService.getTemplates('').subscribe(
@@ -272,6 +275,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+
   getTemplatesRes(data) {
     console.log('template listd', data)
     this.quotes = data[1];
@@ -287,6 +291,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       element.add = false
     });
   }
+
   getPlanSection() {
     this.isLoading = true
     let obj = {
@@ -300,13 +305,21 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+
   getPlanSectionRes(data) {
-    this.isLoading = false
-    console.log('get plan section data', data)
-    this.clientDetails = data
-    if (this.clientDetails.length == 0) {
-      this.hideTable = false
+    if (data) {
+      this.isLoading = false
+      console.log('get plan section data', data)
+      this.clientDetails = data
+      if (this.clientDetails.length == 0) {
+        this.hideTable = false
+      }
+    } else {
+      this.isLoading = false
+      this.clientDetails = []
+      this.hideTable = true
     }
+
   }
 
   generatePdf(data, sectionName, displayName) {
@@ -337,6 +350,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
 
   }
+
   mergeCallRes(data) {
     this.id = data
     this.generatePDF = 0
@@ -345,6 +359,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.getPDFCall(data)
     }, 5000);
   }
+
   formatFileSize(bytes, decimalPoint) {
     if (bytes == 0) return '0 Bytes';
     var k = 1000,
@@ -353,6 +368,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
+
   getPDFCall(data) {
     this.isSpinner = false
     let obj = {
@@ -385,6 +401,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
       });
   }
+
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
     let factory;
     if (value) {
@@ -539,6 +556,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   }
+
   uploadFile(innerHtmlData, sectionName, displayName, flag) {
     const obj = {
       clientId: this.clientId,
@@ -550,6 +568,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       data => this.uploadFileRes(data, displayName, flag)
     );
   }
+
   uploadFileRes(data, displayName, flag) {
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
@@ -557,6 +576,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
     console.log(data);
   }
+
   getGoalSummaryValues() {
     let data = {
       advisorId: this.advisorId,
@@ -688,6 +708,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   }
+
   getInsuranceList() {
     let obj = {
       clientId: this.clientId,
@@ -700,6 +721,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+
   savePlanSection() {
     var date = new Date()
     let obj = {
@@ -719,10 +741,12 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+
   savePlanSectionRes(data) {
     this.getPlanSection()
     this.hideTable = false
   }
+
   getInsurancePlaningListRes(data) {
     if (data) {
       data.forEach(singleInsuranceData => {
@@ -788,6 +812,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.insurancePlanningList = this.dataSource;
     }
   }
+
   getSumOfJsonMap(json: Object = {}) {
     let sum = 0;
     for (let k in json) {
@@ -798,6 +823,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     return sum;
   }
 }
+
 export interface PeriodicElement {
   details: string;
   value: string;
