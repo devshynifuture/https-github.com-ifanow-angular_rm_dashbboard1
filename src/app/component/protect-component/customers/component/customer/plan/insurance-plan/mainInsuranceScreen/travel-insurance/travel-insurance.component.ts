@@ -59,6 +59,7 @@ export class TravelInsuranceComponent implements OnInit {
 	insuredMemberList: any;
 	options: any;
 	bankList: any;
+	recommendOrNot;
 	insuranceData = [{
 		value: '1',
 		header: 'Add Health Insurance',
@@ -129,10 +130,10 @@ export class TravelInsuranceComponent implements OnInit {
 	insuranceType: number;
 	showInsurance: { value: string; header: string; smallHeading: string; insuranceType: number; logo: string; heading: string; subHeading: string; };
 	plannerNotes: any;
-	ownerIds =[];
+	ownerIds = [];
 	insData: any;
 	isRecommended: boolean;
-	constructor(private planService :PlanService,private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
+	constructor(private planService: PlanService, private dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private enumService: EnumServiceService) { }
 	validatorType = ValidatorType
 	@Output() sendOutput = new EventEmitter<any>();
 	@ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -246,16 +247,16 @@ export class TravelInsuranceComponent implements OnInit {
 		}
 
 	}
-    saveData(data) {
+	saveData(data) {
 		this.plannerNotes = data;
-    }
-    checkRecommendation(value) {
-        if (value) {
-            this.showRecommendation = true;
-        } else {
-            this.showRecommendation = false;
-        }
-    }
+	}
+	checkRecommendation(value) {
+		if (value) {
+			this.showRecommendation = true;
+		} else {
+			this.showRecommendation = false;
+		}
+	}
 	removeCoOwner(item) {
 		this.getCoOwner.removeAt(item);
 		if (this.travelInsuranceForm.value.getCoOwnerName.length == 1) {
@@ -404,10 +405,10 @@ export class TravelInsuranceComponent implements OnInit {
 			this.id = this.dataForEdit.id;
 			this.flag = "Edit";
 			if (this.dataForEdit) {
-                this.storeData = this.dataForEdit.suggestion;
-                this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
-                this.showRecommendation = this.isRecommended;
-            }
+				this.storeData = this.dataForEdit.suggestion;
+				this.isRecommended = this.dataForEdit ? (this.dataForEdit.isRecommend ? true : false) : false
+				this.showRecommendation = this.isRecommended;
+			}
 		}
 		this.travelInsuranceForm = this.fb.group({
 			// ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -593,14 +594,14 @@ export class TravelInsuranceComponent implements OnInit {
 			data => {
 				console.log(data);
 				this.options = data;
-				if(data.length>0){
+				if (data.length > 0) {
 					this.options = data;
-				  }else{
+				} else {
 					this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
 					this.travelInsuranceForm.get('insurerName').markAsTouched();
-				  }
+				}
 			},
-			err=>{
+			err => {
 				this.travelInsuranceForm.controls.insurerName.setErrors({ erroInPolicy: true });
 				this.travelInsuranceForm.get('insurerName').markAsTouched();
 			}
@@ -705,9 +706,9 @@ export class TravelInsuranceComponent implements OnInit {
 				'linkedBankAccount': this.travelInsuranceForm.get('bankAccount').value,
 				"policyFeatures": featureList,
 				"id": (this.id) ? this.id : null,
-				'realOrFictitious':2,
-				'suggestion':this.plannerNotes,
-				'isRecommend':this.showRecommendation,
+				'realOrFictitious': 2,
+				'suggestion': this.plannerNotes,
+				'isRecommend': this.showRecommendation,
 				insuredMembers: memberList,
 				nominees: this.travelInsuranceForm.value.getNomineeName,
 			}
@@ -735,17 +736,17 @@ export class TravelInsuranceComponent implements OnInit {
 					}
 				});
 			}
-            if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
-                obj.insuredMembers.forEach(ele => {
-                    this.ownerIds.push({
-                        'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
-                    })
-                });
-            } else {
-                this.ownerIds.push({
-                    'ownerId': obj.policyHolderId == this.clientId ? 0 : obj.policyHolderId
-                })
-            }
+			if (obj && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+				obj.insuredMembers.forEach(ele => {
+					this.ownerIds.push({
+						'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
+					})
+				});
+			} else {
+				this.ownerIds.push({
+					'ownerId': obj.policyHolderId == this.clientId ? 0 : obj.policyHolderId
+				})
+			}
 			console.log(obj);
 
 
@@ -760,88 +761,88 @@ export class TravelInsuranceComponent implements OnInit {
 						{
 							insuranceTypeId: this.inputData.insuranceTypeId,
 							insuranceSubTypeId: this.insuranceType,
-							id:data ? data : null
+							id: data ? data : null
 						}
-						this.close(insuranceData,true)
+						this.close(insuranceData, true)
 					}
 				);
 			} else {
 				this.planService.addGenralInsurancePlan(obj).subscribe(
 					data => {
 						console.log(data);
-                        if (this.inputData.flag == 'ExistingSuggestNew') {
-                            const obj = {
-                                "id": this.inputData.id,
-                                "insuranceIds": JSON.stringify([data])
-                            }
-                            this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
-                                data => {
-                                    this.barButtonOptions.active = false;
-                                    console.log(data);
-                                    const insuranceData =
-                                    {
-                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
-                                        insuranceSubTypeId: this.insuranceType,
-                                        id: data ? data : null
-                                    };
-                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-                                    this.close(insuranceData, true);
-                                },
-                                err => {
-                                    this.eventService.openSnackBar(err, 'Dismiss');
-                                }
-                            );
-                        } else {
-                            let obj = {
-                                "planningList":
-                                    JSON.stringify({
-                                        "advisorId": this.advisorId,
-                                        "clientId": this.clientId,
-                                        "insuranceType": this.insuranceType,
-                                        "owners": this.ownerIds
-                                    }),
-                                "needAnalysis": JSON.stringify([data])
-                            }
-                            this.planService.addGeneralInsurance(obj).subscribe(
-                                data => {
-                                    this.barButtonOptions.active = false;
-                                    suggestNewData = data;
-                                    //   this.barButtonOptions.active = false;
-                                    //   this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-                                    console.log(data);
-                                    const insuranceData =
-                                    {
-                                        insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
-                                        insuranceSubTypeId: this.insuranceType,
-                                        id: data ? data : null
-                                    };
-                                    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-                                    this.close(insuranceData, true);
-                                },
-                                err => {
-                                    this.eventService.openSnackBar(err, 'Dismiss');
-                                }
-                            );
-                        }
-					},err=>{
-						this.close('',true);
+						if (this.inputData.flag == 'ExistingSuggestNew') {
+							const obj = {
+								"id": this.inputData.id,
+								"insuranceIds": JSON.stringify([data])
+							}
+							this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+								data => {
+									this.barButtonOptions.active = false;
+									console.log(data);
+									const insuranceData =
+									{
+										insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+										insuranceSubTypeId: this.insuranceType,
+										id: data ? data : null
+									};
+									this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+									this.close(insuranceData, true);
+								},
+								err => {
+									this.eventService.openSnackBar(err, 'Dismiss');
+								}
+							);
+						} else {
+							let obj = {
+								"planningList":
+									JSON.stringify({
+										"advisorId": this.advisorId,
+										"clientId": this.clientId,
+										"insuranceType": this.insuranceType,
+										"owners": this.ownerIds
+									}),
+								"needAnalysis": JSON.stringify([data])
+							}
+							this.planService.addGeneralInsurance(obj).subscribe(
+								data => {
+									this.barButtonOptions.active = false;
+									suggestNewData = data;
+									//   this.barButtonOptions.active = false;
+									//   this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+									console.log(data);
+									const insuranceData =
+									{
+										insuranceTypeId: suggestNewData ? suggestNewData : this.inputData.insuranceTypeId,
+										insuranceSubTypeId: this.insuranceType,
+										id: data ? data : null
+									};
+									this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+									this.close(insuranceData, true);
+								},
+								err => {
+									this.eventService.openSnackBar(err, 'Dismiss');
+								}
+							);
+						}
+					}, err => {
+						this.close('', true);
 					}
 				);
 			}
 		}
 	}
-    close(data, flag) {
-        if (data.id) {
-            this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
-            this.sendOutput.emit(data);
-        } else {
-            if (data.flag == 'SuggestNew') {
-                this.sendOutput.emit(false);
-            } else {
-                this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
-            }
-        }
-    }
+	close(data, flag) {
+		if (data.id) {
+			this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+			this.sendOutput.emit(data);
+		} else {
+			if (data.flag == 'SuggestNew') {
+				this.sendOutput.emit(false);
+			} else {
+				this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
+			}
+		}
+	}
 
 
 }
