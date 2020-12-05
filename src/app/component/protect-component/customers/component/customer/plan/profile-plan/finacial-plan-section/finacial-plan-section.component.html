@@ -553,7 +553,7 @@
                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                     </div> -->
                 </div>
-                <div class="pt-12 pb-20">
+                <div class="pb-20">
                     <mat-accordion id="fp-modules">
                         <mat-expansion-panel *ngIf="mfCount && mfCount.mutualFund != 0">
                             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -1372,7 +1372,7 @@
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="col-md-6 pr-0 pl-8"
+                                <div class="col-md-6 pr-0 pl-0"
                                     *ngFor="let m of miscellaneous.templates | slice:2:3; let i=index">
                                     <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
                                         <img mat-card-image src="{{m.imageUrl}}" class="w-100">
