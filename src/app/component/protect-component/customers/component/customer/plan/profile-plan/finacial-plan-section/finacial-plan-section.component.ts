@@ -105,7 +105,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   sectionName: any;
   clientData: any;
   mfCount: any;
-  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'icons'];
+  displayedColumns: string[] = ['name', 'clientName', 'mfoverview', 'date', 'download', 'preview', 'icons'];
   clientDetails: any;
   hideTable: boolean = false;
   STOCK;
@@ -767,6 +767,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   savePlanSectionRes(data) {
+    this.moduleAdded = []
     this.getPlanSection()
     this.hideTable = false
   }
