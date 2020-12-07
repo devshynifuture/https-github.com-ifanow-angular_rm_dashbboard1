@@ -31,6 +31,10 @@ export const appConfig = {
   RM_LOGIN: 'rmdashboard/rm/sign-in',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
   CLIENT_WITHOUT_MF: 'backoffice/clientWithoutMf/get',
+  GET_SCHEME_LIST_MIS_AUM: 'backoffice/scheme/list/get',
+
+  GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
+  GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',

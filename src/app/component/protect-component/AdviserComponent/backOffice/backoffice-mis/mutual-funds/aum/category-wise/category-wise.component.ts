@@ -22,6 +22,7 @@ export class CategoryWiseComponent implements OnInit {
   totalAumForSubSchemeName: any;
   amcWiseData: any;
   @Input() data;
+  isSubCatLoading = false;
 
   arrayOfHeaders: any[][] = [
     [
@@ -103,14 +104,17 @@ export class CategoryWiseComponent implements OnInit {
   selectedSchemeName: any;
   selectedSubCategoryName: any;
   selectedCategoryName: any;
+  isSchemeLoading: boolean;
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
   // schemeTotal: number = 0;
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent, private mfService: MfServiceService
-  ) {
-  }
+    private backoffice: BackOfficeService,
+    private dataService: EventService,
+    public aum: AumComponent,
+    private mfService: MfServiceService
+  ) { }
 
   selectedCategory;
 
@@ -126,8 +130,6 @@ export class CategoryWiseComponent implements OnInit {
     }
     this.getArnRiaList();
     this.getSubCatSchemeName();
-
-
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
@@ -143,21 +145,22 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getArnRiaList() {
-    this.backoffice.getArnRiaList(this.advisorId).subscribe(
-      data => {
-        if (data) {
-          // this.advisorId = 0;
-          this.arnRiaList = data;
-          const obj = {
-            number: 'All',
-            id: -1
-          };
-          this.arnRiaList.unshift(obj);
-        } else {
-          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+    this.backoffice.getArnRiaList(this.advisorId)
+      .subscribe(
+        data => {
+          if (data) {
+            // this.advisorId = 0;
+            this.arnRiaList = data;
+            const obj = {
+              number: 'All',
+              id: -1
+            };
+            this.arnRiaList.unshift(obj);
+          } else {
+            // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+          }
         }
-      }
-    );
+      );
   }
 
   sortBy(applicant, propertyName) {
@@ -250,29 +253,56 @@ export class CategoryWiseComponent implements OnInit {
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
 
-    if (!category.showCategory) {
-      if (this.category[this.selectedCategory].hasOwnProperty('subCategoryList') && this.category[this.selectedCategory].subCategoryList.length !== 0) {
-        this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, index, 'sub-category');
-      }
-    } else {
-      // remove
-      this.removeValuesFromExcel('sub-category', index);
-      if (category.subCategoryList.length !== 0) {
-        category.subCategoryList.forEach(subCatElement => {
-          subCatElement.showSubCategory = true;
-          if (subCatElement.schemes.length !== 0) {
-            subCatElement.schemes.forEach(schemeElement => {
-              schemeElement.showScheme = true;
-              if (schemeElement.clientList.length !== 0) {
-                schemeElement.clientList.forEach(element => {
-                  element.show = true;
-                });
-              }
-            });
-          }
-        });
-      }
+
+    this.isSubCatLoading = true;
+    let data = {
+      advisorId: this.advisorId,
+      arnRiaDetailId: this.arnRiaValue,
+      categoryId: category.id,
+      parentId: this.parentId
     }
+    category.subCategoryList = [{}, {}, {}];
+    this.backoffice.getSubCategoryListMisAUM(data)
+      .subscribe(res => {
+        if (res) {
+          this.isSubCatLoading = false;
+          console.log(res);
+
+          res.subcategory.map(item => {
+            item.showSubCategory = true;
+          });
+          category.subCategoryList = res.subcategory;
+          if (!category.showCategory) {
+            if (this.category[this.selectedCategory].hasOwnProperty('subCategoryList') && this.category[this.selectedCategory].subCategoryList.length !== 0) {
+              this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, index, 'sub-category');
+            }
+          } else {
+            // remove
+            this.removeValuesFromExcel('sub-category', index);
+            if (category.subCategoryList.length !== 0) {
+              category.subCategoryList.forEach(subCatElement => {
+                subCatElement.showSubCategory = true;
+                if (subCatElement.schemes.length !== 0) {
+                  subCatElement.schemes.forEach(schemeElement => {
+                    schemeElement.showScheme = true;
+                    if (schemeElement.clientList.length !== 0) {
+                      schemeElement.clientList.forEach(element => {
+                        element.show = true;
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          }
+        } else {
+          this.isSubCatLoading = false;
+        }
+      }, err => {
+        this.isSubCatLoading = false;
+        console.error(err);
+      })
+
   }
 
   removeValuesFromExcel(whichList, index) {
@@ -308,9 +338,11 @@ export class CategoryWiseComponent implements OnInit {
       this.totalWeight += o.weightInPercentage;
       this.subCategoryList.push(o.subCategoryList);
 
-      o.subCategoryList.forEach(sub => {
-        sub.showSubCategory = true;
-      });
+      // o.subCategoryList.forEach(sub => {
+      //   sub.showSubCategory = true;
+      // });
+
+
     });
 
 
@@ -333,24 +365,47 @@ export class CategoryWiseComponent implements OnInit {
     this.selectedCategory = catIndex;
     subCategory.showSubCategory = !subCategory.showSubCategory;
 
-    subCategory.schemes.forEach(element => {
-      element.showScheme = true;
-    });
-    if (!subCategory.showSubCategory) {
-      this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes, index, 'schemes');
-    } else {
-      this.removeValuesFromExcel('schemes', index);
-      if (subCategory.schemes.length !== 0) {
-        subCategory.schemes.forEach(schemeElement => {
-          schemeElement.showScheme = true;
-          if (schemeElement.clientList.length !== 0) {
-            schemeElement.clientList.forEach(element => {
-              element.show = true;
-            });
-          }
-        });
-      }
+
+    subCategory.schemes = [{}, {}, {}];
+    let data = {
+      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
+      arnRiaDetailId: this.arnRiaValue,
+      parentId: this.parentId,
+      subCategoryId: subCategory.id,
+      totalAum: subCategory.totalAum,
     }
+    this.isSchemeLoading = true;
+    this.backoffice.getSchemeListMisAUM(data)
+      .subscribe(res => {
+        if (res) {
+          this.isSchemeLoading = false;
+          console.log("schemes :: ", res);
+          subCategory.schemes = res;
+          subCategory.schemes.map(element => {
+            element.showScheme = true;
+          });
+
+          if (!subCategory.showSubCategory) {
+            this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes, index, 'schemes');
+          } else {
+            this.removeValuesFromExcel('schemes', index);
+            if (subCategory.schemes.length !== 0) {
+              subCategory.schemes.forEach(schemeElement => {
+                schemeElement.showScheme = true;
+                if (schemeElement.clientList.length !== 0) {
+                  schemeElement.clientList.forEach(element => {
+                    element.show = true;
+                  });
+                }
+              });
+            }
+          }
+        }
+      }, err => {
+        this.isSchemeLoading = false;
+        console.error(err);
+      });
+
   }
 
   closeAllBottomOpenedCat(category) {
