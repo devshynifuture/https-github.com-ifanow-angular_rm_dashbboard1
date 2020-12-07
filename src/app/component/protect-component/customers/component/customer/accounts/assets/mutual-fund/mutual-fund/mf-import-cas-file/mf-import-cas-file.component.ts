@@ -657,6 +657,10 @@ export class MfImportCasFileComponent implements OnInit {
     }
   }
 
+  onTabChange(event) {
+    this.matTabIndex = event.index;
+  }
+
   changeMatTabIndex() {
     this.matTabIndex += 1;
     if (this.matTabIndex === 3) {
