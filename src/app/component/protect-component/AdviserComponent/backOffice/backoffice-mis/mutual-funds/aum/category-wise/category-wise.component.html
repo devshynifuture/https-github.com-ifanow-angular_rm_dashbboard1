@@ -154,30 +154,49 @@
                                             </tr>
                                         </thead>
                                         <tbody
-                                            *ngFor="let subcategory of category.subCategoryList; let subCatIndex = index">
+                                            *ngFor="let subcategory of category.subCategoryList; let subCatIndex = index"
+                                            class="skeletonAnimation" [appSkeletonLoading]="isSubCatLoading">
                                             <tr>
-                                                <td>{{subCatIndex+1}}</td>
                                                 <td>
-                                                    {{subcategory.name}}
+                                                    <div class="bar">
+                                                        {{isSubCatLoading? '':subCatIndex+1}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{subcategory.name}}
+                                                    </div>
                                                 </td>
                                                 <td class="text-right">
-                                                    {{'₹ '}}<span appFormatNumber [value]="subcategory.totalAum"
-                                                        [shouldRoundOff]="true"></span>
+                                                    <div class="bar">
+                                                        {{isSubCatLoading?'':'₹ '}}<span appFormatNumber
+                                                            [value]="subcategory.totalAum"
+                                                            [shouldRoundOff]="true"></span>
+                                                    </div>
                                                 </td>
                                                 <td class="text-right">
-                                                    {{subcategory.weightInPercentage | number :'1.2-2'}}%</td>
+                                                    <div class="bar">
+                                                        {{subcategory.weightInPercentage | number :'1.2-2'}}
+                                                        {{isSubCatLoading?'':'%'}}
+                                                    </div>
+                                                </td>
                                                 <td class="text-center"
                                                     (click)="showSchemeName(subcategory, subCatIndex, categoryIndex, category.name)">
-                                                    <i *ngIf="subcategory.showSubCategory==true"
-                                                        class="material-icons  b-a f-14 mt-4 c-p">add</i>
-                                                    <i *ngIf="subcategory.showSubCategory==false"
-                                                        class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
+                                                    <div class="bar">
+                                                        <i *ngIf="subcategory.showSubCategory==true"
+                                                            class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                                                        <i *ngIf="subcategory.showSubCategory==false"
+                                                            class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-block text-right"
-                                                        *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
-                                                        <img (click)="exportToExcelReport('schemes', categoryIndex, subCatIndex, null)"
-                                                            class="c-p" src="assets/images/svg/download-bordered.svg">
+                                                    <div class="bar">
+                                                        <div class="d-block text-right"
+                                                            *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
+                                                            <img (click)="exportToExcelReport('schemes', categoryIndex, subCatIndex, null)"
+                                                                class="c-p"
+                                                                src="assets/images/svg/download-bordered.svg">
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -217,35 +236,47 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody
-                                                            *ngFor="let scheme of subcategory.schemes;let schemeIndex = index">
+                                                            *ngFor="let scheme of subcategory.schemes;let schemeIndex = index"
+                                                            [appSkeletonLoading]="isSchemeLoading">
                                                             <tr>
-                                                                <td>{{schemeIndex+1}}</td>
-                                                                <td>{{scheme.schemeName}}
-
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{isSchemeLoading? "":schemeIndex+1}}</div>
                                                                 </td>
-                                                                <td class="text-right">{{'₹ '}}<span appFormatNumber
-                                                                        [value]="scheme.totalAum"
-                                                                        [shouldRoundOff]="true"></span>
+                                                                <td>
+                                                                    <div class="bar">{{scheme.schemeName}}</div>
                                                                 </td>
                                                                 <td class="text-right">
-                                                                    {{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}
+                                                                    <div class="bar">
+                                                                        {{ isSchemeLoading ? "":'₹ '}}<span
+                                                                            appFormatNumber [value]="scheme.totalAum"
+                                                                            [shouldRoundOff]="true"></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <div class="bar">
+                                                                        {{scheme.weightInPercentage | number :'1.2-2'}}{{isSchemeLoading?'':'%'}}
+                                                                    </div>
                                                                 </td>
                                                                 <td class="text-center"
                                                                     (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex, subcategory.name, category.name)">
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                                        *ngIf="scheme.showScheme">add</i>
-                                                                    <i class="material-icons b-a f-14 mt-4 c-p"
-                                                                        *ngIf="!scheme.showScheme">
-                                                                        remove
-                                                                    </i>
+                                                                    <div class="bar">
+                                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                            *ngIf="scheme.showScheme">add</i>
+                                                                        <i class="material-icons b-a f-14 mt-4 c-p"
+                                                                            *ngIf="!scheme.showScheme">
+                                                                            remove
+                                                                        </i>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-block text-right"
                                                                         *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
-
-                                                                        <img (click)="exportToExcelReport('applicant', categoryIndex, subCatIndex, schemeIndex)"
-                                                                            class="c-p"
-                                                                            src="assets/images/svg/download-bordered.svg">
+                                                                        <div class="bar">
+                                                                            <img (click)="exportToExcelReport('applicant', categoryIndex, subCatIndex, schemeIndex)"
+                                                                                class="c-p"
+                                                                                src="assets/images/svg/download-bordered.svg">
+                                                                        </div>
 
                                                                     </div>
                                                                 </td>

@@ -25,6 +25,10 @@ export class SupportUpperPrudentComponent implements OnInit {
   dataTable: elementI[];
   isLoading: boolean = false;
   searchSchemeControl = new FormControl();
+  prudentSelectOptionList = [
+    { id: 1, title: 'Unmapped' },
+    { id: 2, title: 'Mapped' }
+  ];
 
   constructor(
     public supportUpperService: SupportUpperService,

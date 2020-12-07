@@ -66,6 +66,10 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME, UtilService.getHttpParam(data));
   }
 
+  getSubCategoryListMisAUM(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAT_LIST_MIS_AUM, data);
+  }
+
   //
   // getClientFolioWiseInCategory(data) {
   //   return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_FOLIO_WISE, UtilService.getHttpParam(data));
@@ -374,5 +378,9 @@ export class BackOfficeService {
 
   getCatSubCatListData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAT_SUBCAT_LIST_MIS_AUM, data);
+  }
+
+  getSchemeListMisAUM(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SCHEME_LIST_MIS_AUM, data);
   }
 }

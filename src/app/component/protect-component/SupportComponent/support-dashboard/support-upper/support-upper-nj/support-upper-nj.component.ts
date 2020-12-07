@@ -3,7 +3,7 @@ import { UtilService } from './../../../../../../services/util.service';
 import { SupportUpperService } from './../support-upper.service';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, PageEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 // import { Observable } from 'rxjs';
@@ -51,6 +51,13 @@ export class SupportUpperNjComponent implements OnInit {
   selectedElement: any;
   apiCallingStack: any[] = [];
   searchSchemes: any[];
+  njOptionsDropdown = [
+    { id: 1, title: 'Unmapped' },
+    { id: 2, title: 'Mapped' }
+  ];
+
+  pageEvent: PageEvent;
+  totalNjCount: number = 0;
 
   constructor(
     private supportUpperService: SupportUpperService,
@@ -220,7 +227,7 @@ export class SupportUpperNjComponent implements OnInit {
         console.log(item);
         dataTable.push({
           name: item.schemeName,
-          nav: '',
+          nav: item.nav,
           schemeName: '',
           schemeCode: '',
           amficode: '',
@@ -243,8 +250,13 @@ export class SupportUpperNjComponent implements OnInit {
     this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
+  onDropdownChange(event): void {
+    console.log('dropdown,changed', event);
+  }
 
-
+  onPaginationChange(event): void {
+    console.log(event);
+  }
 }
 
 export interface Scheme {
