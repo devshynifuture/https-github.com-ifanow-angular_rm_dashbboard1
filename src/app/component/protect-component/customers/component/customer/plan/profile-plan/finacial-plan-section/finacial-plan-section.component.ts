@@ -115,7 +115,6 @@ export class FinacialPlanSectionComponent implements OnInit {
   element: any;
   getOrgData: any;
   userInfo: any;
-  panelOpenState: boolean = false;
 
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';

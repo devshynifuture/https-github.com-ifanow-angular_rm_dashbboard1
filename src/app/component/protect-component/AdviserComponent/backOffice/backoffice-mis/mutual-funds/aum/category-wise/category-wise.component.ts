@@ -108,9 +108,11 @@ export class CategoryWiseComponent implements OnInit {
   // applicantTotal: number = 0;
   // schemeTotal: number = 0;
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent, private mfService: MfServiceService
-  ) {
-  }
+    private backoffice: BackOfficeService,
+    private dataService: EventService,
+    public aum: AumComponent,
+    private mfService: MfServiceService
+  ) { }
 
   selectedCategory;
 
@@ -127,9 +129,23 @@ export class CategoryWiseComponent implements OnInit {
     this.getArnRiaList();
     this.getSubCatSchemeName();
 
+    this.getCatSubcatData();
 
     // this.clientFolioWise();
     // this.getSubCatAum();
+  }
+  getCatSubcatData() {
+    let obj = {
+      advisorId: this.advisorId,
+      arnRiaDetailId: -1,
+      parentId: this.parentId
+    }
+    this.backoffice.getCatSubCatListData(obj)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+        }
+      });
   }
 
   changeValueOfArnRia(item) {
@@ -143,21 +159,22 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getArnRiaList() {
-    this.backoffice.getArnRiaList(this.advisorId).subscribe(
-      data => {
-        if (data) {
-          // this.advisorId = 0;
-          this.arnRiaList = data;
-          const obj = {
-            number: 'All',
-            id: -1
-          };
-          this.arnRiaList.unshift(obj);
-        } else {
-          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+    this.backoffice.getArnRiaList(this.advisorId)
+      .subscribe(
+        data => {
+          if (data) {
+            // this.advisorId = 0;
+            this.arnRiaList = data;
+            const obj = {
+              number: 'All',
+              id: -1
+            };
+            this.arnRiaList.unshift(obj);
+          } else {
+            // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+          }
         }
-      }
-    );
+      );
   }
 
   sortBy(applicant, propertyName) {
