@@ -101,7 +101,7 @@
     .example-card {
       border: 1px solid #E8ECEF !important;
       margin-bottom: 16px;
-      margin-right: 16px;
+      // margin-right: 16px;
 
       h5 {
         padding-top: 10px;
@@ -120,6 +120,9 @@
 
     .mat-expansion-indicator {
       display: none;
+    }
+    .mat-accordion .mat-expansion-panel:last-of-type{
+          border-radius: 0px !important;
     }
   }
 }
