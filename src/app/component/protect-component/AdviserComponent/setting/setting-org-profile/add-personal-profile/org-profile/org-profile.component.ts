@@ -448,6 +448,7 @@ export class OrgProfileComponent implements OnInit {
   resetWebImage() {
     this.settingsService.resetWebImage(this.data.id).subscribe(
       res => {
+        this.subInjectService.setRefreshRequired();
         this.profileImg = res;
         const orgDetails = this.authService.orgData;
         orgDetails.logoUrl = res;
@@ -461,6 +462,7 @@ export class OrgProfileComponent implements OnInit {
   resetLogoImage() {
     this.settingsService.resetReportLogoImage(this.data.id).subscribe(
       res => {
+        this.subInjectService.setRefreshRequired();
         this.reportImg = res;
         const orgDetails = this.authService.orgData;
         orgDetails.reportLogoUrl = res;
