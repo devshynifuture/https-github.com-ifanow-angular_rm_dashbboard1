@@ -68,6 +68,7 @@ import { EditPercentComponent } from './insurance-plan/edit-percent/edit-percent
 import { TravelInsuranceComponent } from './insurance-plan/mainInsuranceScreen/travel-insurance/travel-insurance.component';
 import { MotorInsuranceComponent } from './insurance-plan/mainInsuranceScreen/motor-insurance/motor-insurance.component';
 import { AddMilestoneComponent } from './goals-plan/add-milestone/add-milestone.component';
+import { SuggestAndGiveAdviceComponent } from './insurance-plan/suggest-and-give-advice/suggest-and-give-advice.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -119,7 +120,8 @@ export const componentList = [
   PersonalInsuranceComponent,
   HouseholdersInsuranceComponent,
   FireInsuranceComponent,
-  CriticalInsuranceComponent
+  CriticalInsuranceComponent,
+  SuggestAndGiveAdviceComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 

@@ -82,22 +82,28 @@ export class AddRecommendationsInsuComponent implements OnInit {
       statusFlag: 0
     }
     const AdviceAsset = this.activityService.getAllAsset(obj).pipe(
-      catchError(error => of(error))
+      catchError(error => of(''))
     );
     const portfolioLi = this.cusService.getInsuranceData(obj2).pipe(
-      catchError(error => of(error))
+      catchError(error => of(''))
     );
     forkJoin(AdviceAsset,portfolioLi).subscribe(result => {
-      this.adviceData = result[0]
-      let data = this.compareData(result[1]);
-      if (data.length > 0) {
-        this.dataSource = data
-        this.isLoading = false;
-        console.log(result[1])
-      } else {
+      if(result[0] && result[1]){
+        this.adviceData = result[0]
+        let data = this.compareData(result[1]);
+        if (data.length > 0) {
+          this.dataSource = data
+          this.isLoading = false;
+          console.log(result[1])
+        } else {
+          this.dataSource = [];
+          this.isLoading = false;
+        }
+      }else{
         this.dataSource = [];
-        this.isLoading = false;
+          this.isLoading = false;
       }
+      
     }, (error) => {
       this.dataSource = [];
       this.isLoading = false;
@@ -111,16 +117,20 @@ export class AddRecommendationsInsuComponent implements OnInit {
       console.log(mergeArray);
     }
     if(data.insuranceList.length > 0){
+      if(this.inputData.displayHolderId == 0){
+        this.inputData.displayHolderId = AuthService.getClientId()
+      }
+      data.insuranceList = data.insuranceList.filter(d => d.familyMemberIdLifeAssured == this.inputData.displayHolderId);
       data.insuranceList.forEach(element => {
-        element.insurance = element  
-        if(mergeArray.length > 0){
-          mergeArray.forEach(ele => {
-            if(ele.InsuranceDetails.id == element.id){
-              let adviceId = ele.adviceDetails.adviceId;
-              element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
-            }
-          });
-        }
+        element.insurance = element;
+          if(mergeArray.length > 0){
+            mergeArray.forEach(ele => {
+              if(ele.InsuranceDetails.id == element.id){
+                let adviceId = ele.adviceDetails.adviceId;
+                element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
+              }
+            });
+          }
       });
     }else{
       data.insuranceList = [];

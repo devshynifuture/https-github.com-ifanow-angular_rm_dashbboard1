@@ -139,6 +139,12 @@ export class MotorInsuranceComponent implements OnInit {
 	ownerIds =[];
 	insData: any;
 	isRecommended: boolean;
+	recommendOrNot: any;
+	adviceName: string;
+	fakeData: any;
+	showHeader: any;
+	adviceData: any;
+	adviceDetails: any;
 
 	constructor(private planService :PlanService,private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) {
 	}
@@ -151,9 +157,14 @@ export class MotorInsuranceComponent implements OnInit {
 		this.clientId = AuthService.getClientId();
 		this.insData = data;
 		this.inputData = data.inputData;
+		this.adviceDetails = data.adviceDetails
+		this.adviceName = data.adviceNameObj.adviceName;
+        this.adviceData = data.adviceStringObj;
+        this.showHeader = data.flag;
 		this.policyList = data.displayList.policyTypes;
 		this.addOns = data.displayList.addOns;
 		this.getFamilyMemberList();
+		this.recommendOrNot = data.recommendOrNot;
 		this.getdataForm(data);
 		// this.setInsuranceDataFormField(data);
 		console.log(data);
@@ -162,7 +173,17 @@ export class MotorInsuranceComponent implements OnInit {
 	get data() {
 		return this.inputData;
 	}
-
+    changeAdviceName(data){
+        this.adviceName = data.adviceName; 
+        this.fakeData = this.insData.data ?this.insData.data : this.fakeData;
+        if(this.adviceName == 'Port policy'){
+            this.insData.data = null   
+        }else{
+            this.insData.data = this.fakeData;
+        }
+        this.adviceName == 'Port policy' ? this.insData.data = null : '';
+        this.getdataForm(this.insData);
+      }
 	getFormDataNominee(data) {
 		console.log(data);
 		this.nomineesList = data.controls;
@@ -460,7 +481,6 @@ export class MotorInsuranceComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.storeData = '';
         console.log('heder', this.inputData)
         this.insuranceData.forEach(element => {
             if (element.value == this.inputData.value) {

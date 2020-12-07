@@ -76,4 +76,44 @@ export class SummaryPlanServiceService {
   getFinPlanId() {
     return this.finplanId.asObservable();
   }
+  getCategoryId(type) {
+    let obj={
+      insuranceCategoryTypeId:0,
+      adviseCategoryTypeMasterId:0
+    }
+    
+    switch (type) {
+      case 4:
+        obj.insuranceCategoryTypeId = 37
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 5:
+        obj.insuranceCategoryTypeId = 34
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 6:
+        obj.insuranceCategoryTypeId = 36
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 7:
+        obj.insuranceCategoryTypeId = 35
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 8:
+        obj.insuranceCategoryTypeId = 38
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 9: 
+        obj.insuranceCategoryTypeId = 39
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      case 10:
+        obj.insuranceCategoryTypeId = 40
+        obj.adviseCategoryTypeMasterId = 4
+        break;
+      default:
+        break;
+    }
+    return obj;
+  }
 }

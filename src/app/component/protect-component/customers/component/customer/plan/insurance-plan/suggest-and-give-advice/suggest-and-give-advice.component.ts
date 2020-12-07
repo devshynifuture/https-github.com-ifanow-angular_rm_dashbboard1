@@ -1,30 +1,25 @@
-import { DynamicComponentService } from './../../../../../../../../services/dynamic-component.service';
-import { SubscriptionInject } from './../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from './../../../../../../../../Data-service/event.service';
-import { UtilService, ValidatorType } from './../../../../../../../../services/util.service';
-import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef, ViewChildren, QueryList, } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { CustomerService } from '../../../customer.service';
-import { PlanService } from '../../../plan/plan.service';
-import { ActiityService } from '../../actiity.service';
-import { AdviceUtilsService } from '../advice-utils.service';
+import { Component, OnInit, QueryList, ViewChildren, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
+import { Subscription, forkJoin } from 'rxjs';
+import { MatInput } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
+import { DatePipe } from '@angular/common';
+import { CustomerService } from '../../../customer.service';
+import { PlanService } from '../../plan.service';
+import { ActiityService } from '../../../customer-activity/actiity.service';
+import { AdviceUtilsService } from '../../../customer-activity/advice-activity/advice-utils.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
-  selector: 'app-suggest-advice',
-  templateUrl: './suggest-advice.component.html',
-  styleUrls: ['./suggest-advice.component.scss'],
-  providers: [
-    [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-  ],
+  selector: 'app-suggest-and-give-advice',
+  templateUrl: './suggest-and-give-advice.component.html',
+  styleUrls: ['./suggest-and-give-advice.component.scss']
 })
-export class SuggestAdviceComponent implements OnInit, OnDestroy {
+export class SuggestAndGiveAdviceComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'PROCEED',
@@ -44,6 +39,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   count = 0;
   adviceToCategoryTypeMasterId: any;
   adviceToCategoryId: any;
+  formName: any;
+  componentRefComponentVal: any;
+  adviceNameObj: any;
   [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
@@ -53,9 +51,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   componentRef;
   validatorType = ValidatorType;
 
-  adviceForm: FormGroup = this.fb.group({
+  adviceForm: FormGroup = this._formBuilder.group({
     "header": [],
-    "headerEdit": [],
+    "headerEdit": [, [Validators.required]],
     "rationale": [],
     "status": [, Validators.required],
     "givenOnDate": [, Validators.required],
@@ -76,12 +74,15 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   advisorId: any;
   stringObj: any;
   objTopass: any;
+  isEditable = false;
+
   dataForEdit: any;
   flag: string;
   id: any;
   todayDate = new Date();
-
+  adviceName;
   constructor(
+    private _formBuilder: FormBuilder,
     private fb: FormBuilder,
     protected eventService: EventService,
     protected subinject: SubscriptionInject,
@@ -94,8 +95,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     private activityService: ActiityService,
     private adviceService: AdviceUtilsService
   ) { }
-
   inputData;
+
 
   ngOnInit() {
     console.log(this.inputData);
@@ -105,13 +106,22 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       console.log("suggest", data)
       if (data.childComponent) {
         this.componentRef = this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, data.childComponent, data.childData);
+        this.componentRefComponentVal = this.componentRef._component;
+        this.formName = this.adviceService.getForm(this.componentRefComponentVal)
         this.childComponentFlag = data.flag;
         this.adviceToCategoryId = data.childData.adviceToCategoryId;
-        this.adviceToCategoryTypeMasterId = data.data ? (data.data.adviceDetails ? data.data.adviceDetails.adviceToCategoryTypeMasterId : '') : ''
-        this.adviceHeaderList = data.data ? data.data.adviceHeaderList : '';
+        this.adviceToCategoryTypeMasterId = 4
+        this.adviceNameObj = data.adviceNameObj;
+        this.adviceHeaderList = data ? data.adviceHeaderList : '';
         this.getFormData(data);
       }
     });
+  }
+  changeAdviceName(data) {
+    this.adviceNameObj.adviceName = data.value;
+    this.adviceName = this.adviceNameObj.adviceName;
+    this.componentRef._component.adviceName = this.adviceNameObj
+    this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
   }
   dateChange(value) {
     let adviceHeaderDate = this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy/MM/dd')
@@ -159,7 +169,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     }
     this.adviceForm = this.fb.group({
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
-      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '1'],
+      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
       status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
@@ -171,13 +181,20 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     /***owner***/
 
   }
+  stepForward() {
+    this.stepper.previous();
+  }
   addOrNextStep() {
     this.count++
-
+    let form;
     let componentRefFormValues;
     let componentRefComponentValues = this.componentRef._component;
-    let form;
+    this.componentRefComponentVal = this.componentRef._component;
+    this.formName = this.adviceService.getForm(componentRefComponentValues)
     form = this.adviceService.getForm(componentRefComponentValues)
+    if (this.childComponentFlag == 'suggestNew') {
+      this.adviceForm.controls.headerEdit.setErrors(null);
+    }
     // proceed on creating new suggest
     if (this.adviceForm.invalid) {
       for (let element in this.adviceForm.controls) {
@@ -188,7 +205,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       }
 
     } else {
-      this.stepper.next();
+      if (this.adviceName != 'Continue' && this.adviceName != 'Discontinue') {
+        this.stepper.next();
+      }
       console.log("this is what i need:::::::::::::::", componentRefComponentValues)
 
       switch (true) {
@@ -926,7 +945,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 adviceDescription: this.adviceForm.get('rationale').value,
                 insuranceCategoryTypeId: this.adviceToCategoryId,
                 suggestedFrom: 1,
-                adviceToCategoryTypeMasterId:this.adviceToCategoryTypeMasterId,
+                adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
                 adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
@@ -960,7 +979,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             }
           }
           break;
-        case this.childComponentFlag === 'Advice General Insurance':
+        case this.childComponentFlag === 'suggestNew':
+        case this.childComponentFlag === 'existingAdvice':
           if (this.count >= 2 && componentRefComponentValues[form].invalid) {
             componentRefComponentValues[form].markAllAsTouched();
           } else {
@@ -1026,8 +1046,6 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 'clientId': this.clientId,
                 'advisorId': this.advisorId,
                 'policyHolderId': (componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
-                'policyStartDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                'policyExpiryDate': this.datePipe.transform(componentRefComponentValues.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 'cumulativeBonus': componentRefComponentValues.healthInsuranceForm.get('cumulativeBonus').value,
                 'cumulativeBonusRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('bonusType').value,
                 'policyTypeId': componentRefComponentValues.healthInsuranceForm.get('PlanType').value,
@@ -1035,7 +1053,6 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 'exclusion': componentRefComponentValues.healthInsuranceForm.get('exclusion').value,
                 'copay': componentRefComponentValues.healthInsuranceForm.get('copay').value,
                 'planName': componentRefComponentValues.healthInsuranceForm.get('planeName').value,
-                'policyNumber': componentRefComponentValues.healthInsuranceForm.get('policyNum').value,
                 'copayRupeesOrPercent': componentRefComponentValues.healthInsuranceForm.get('copayType').value,
                 'tpaName': componentRefComponentValues.healthInsuranceForm.get('tpaName').value,
                 'advisorName': componentRefComponentValues.healthInsuranceForm.get('advisorName').value,
@@ -1047,8 +1064,10 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 'premiumAmount': componentRefComponentValues.healthInsuranceForm.get('premium').value,
                 'policyFeatureId': componentRefComponentValues.healthInsuranceForm.get('planDetails').value,
                 'sumInsuredIdv': componentRefComponentValues.healthInsuranceForm.get('sumAssuredIdv').value,
-                'id': (this.id) ? this.id : null,
+                'id': (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 'addOns': [],
+                'suggestion': componentRefComponentValues.plannerNotes,
+                'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                 realOrFictitious: 2,
                 insuredMembers: memberList,
                 nominees: componentRefComponentValues.healthInsuranceForm.value.getNomineeName,
@@ -1065,8 +1084,6 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "clientId": this.clientId,
                 "advisorId": this.advisorId,
                 'policyHolderId': (componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.personalAccidentForm.value.getCoOwnerName[0].familyMemberId,
-                "policyStartDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 "cumulativeBonus": componentRefComponentValues.personalAccidentForm.get('cumulativeBonus').value,
                 "cumulativeBonusRupeesOrPercent": componentRefComponentValues.personalAccidentForm.get('bonusType').value,
                 "planName": componentRefComponentValues.personalAccidentForm.get('planeName').value,
@@ -1076,12 +1093,13 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "advisorName": componentRefComponentValues.personalAccidentForm.get('advisorName').value,
                 "serviceBranch": componentRefComponentValues.personalAccidentForm.get('serviceBranch').value,
                 "linkedBankAccount": componentRefComponentValues.personalAccidentForm.get('bankAccount').value,
-                "policyNumber": componentRefComponentValues.personalAccidentForm.get('policyNum').value,
                 "policyInceptionDate": this.datePipe.transform(componentRefComponentValues.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
                 "policyFeatures": featureList,
                 "insurerName": componentRefComponentValues.personalAccidentForm.get('insurerName').value,
                 "insuranceSubTypeId": 7,
-                "id": (this.id) ? this.id : null,
+                "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
+                'suggestion': componentRefComponentValues.plannerNotes,
+                'isRecommend': componentRefComponentValues.showRecommendation,
                 insuredMembers: memberList,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.personalAccidentForm.value.getNomineeName,
@@ -1093,12 +1111,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "advisorId": this.advisorId,
                 'policyHolderId': (componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.critialIllnessForm.value.getCoOwnerName[0].familyMemberId,
                 "policyTypeId": componentRefComponentValues.critialIllnessForm.get('PlanType').value,
-                "policyNumber": componentRefComponentValues.critialIllnessForm.get('policyNum').value,
                 "insurerName": componentRefComponentValues.critialIllnessForm.get('insurerName').value,
                 "planName": componentRefComponentValues.critialIllnessForm.get('planeName').value,
                 "premiumAmount": componentRefComponentValues.critialIllnessForm.get('premium').value,
-                "policyStartDate": this.datePipe.transform(componentRefComponentValues.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 "cumulativeBonus": componentRefComponentValues.critialIllnessForm.get('cumulativeBonus').value,
                 "cumulativeBonusRupeesOrPercent": componentRefComponentValues.critialIllnessForm.get('bonusType').value,
                 "exclusion": componentRefComponentValues.critialIllnessForm.get('exclusion').value,
@@ -1109,9 +1124,10 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "linkedBankAccount": componentRefComponentValues.critialIllnessForm.get('bankAccount').value,
                 "insuranceSubTypeId": 6,
                 'sumInsuredIdv': componentRefComponentValues.critialIllnessForm.get('sumAssuredIdv').value,
-                "id": (this.id) ? this.id : null,
+                "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 realOrFictitious: 2,
                 insuredMembers: memberList,
+                
                 nominees: componentRefComponentValues.critialIllnessForm.value.getNomineeName,
               }
             } else if (componentRefComponentValues.hasOwnProperty('motorInsuranceForm')) {
@@ -1122,11 +1138,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 advisorId: this.advisorId,
                 policyHolderId: (componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.motorInsuranceForm.value.getCoOwnerName[0].familyMemberId,
                 policyTypeId: componentRefComponentValues.motorInsuranceForm.get('PlanType').value,
-                policyNumber: componentRefComponentValues.motorInsuranceForm.get('policyNum').value,
                 insurerName: componentRefComponentValues.motorInsuranceForm.get('insurerName').value,
                 policyName: componentRefComponentValues.motorInsuranceForm.get('policyName').value,
-                policyStartDate: this.datePipe.transform(componentRefComponentValues.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                policyExpiryDate: this.datePipe.transform(componentRefComponentValues.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 ccGvw: componentRefComponentValues.motorInsuranceForm.get('cgGvw').value,
                 sumInsuredIdv: componentRefComponentValues.motorInsuranceForm.get('declaredValue').value,
                 premiumAmount: componentRefComponentValues.motorInsuranceForm.get('premium').value,
@@ -1145,8 +1158,10 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 serviceBranch: componentRefComponentValues.motorInsuranceForm.get('serviceBranch').value,
                 linkedBankAccount: componentRefComponentValues.motorInsuranceForm.get('bankAccount').value,
                 insuranceSubTypeId: 4,
-                id: (this.id) ? this.id : null,
+                id: (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 addOns: addOns,
+                suggestion:componentRefComponentValues.plannerNotes,
+				        isRecommend:componentRefComponentValues.showRecommendation,
                 nominees: componentRefComponentValues.motorInsuranceForm.value.getNomineeName,
                 realOrFictitious: 2,
               };
@@ -1164,11 +1179,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                   "policyTypeId": componentRefComponentValues.travelInsuranceForm.get('PlanType').value,
                   "policyFeatureId": componentRefComponentValues.travelInsuranceForm.get('planDetails').value,
                   "insurerName": componentRefComponentValues.travelInsuranceForm.get('insurerName').value,
-                  "policyNumber": componentRefComponentValues.travelInsuranceForm.get('policyNum').value,
                   "planName": componentRefComponentValues.travelInsuranceForm.get('planeName').value,
                   "premiumAmount": componentRefComponentValues.travelInsuranceForm.get('premium').value,
-                  "policyStartDate": this.datePipe.transform(componentRefComponentValues.travelInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                  "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.travelInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                   "geographyId": componentRefComponentValues.travelInsuranceForm.get('geography').value,
                   "exclusion": componentRefComponentValues.travelInsuranceForm.get('exclusion').value,
                   "tpaName": componentRefComponentValues.travelInsuranceForm.get('tpaName').value,
@@ -1178,7 +1190,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                   'sumInsuredIdv': componentRefComponentValues.travelInsuranceForm.get('sumAssuredIdv').value,
                   'linkedBankAccount': componentRefComponentValues.travelInsuranceForm.get('bankAccount').value,
                   "policyFeatures": featureList,
-                  "id": (this.id) ? this.id : null,
+                  "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
+                  suggestion:componentRefComponentValues.plannerNotes,
+                  isRecommend:componentRefComponentValues.showRecommendation,
                   insuredMembers: memberList,
                   realOrFictitious: 2,
                   nominees: componentRefComponentValues.travelInsuranceForm.value.getNomineeName,
@@ -1191,20 +1205,19 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "advisorId": this.advisorId,
                 'policyHolderId': (componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.homeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
                 "insurerName": componentRefComponentValues.homeInsuranceForm.get('insurerName').value,
-                "policyNumber": componentRefComponentValues.homeInsuranceForm.get('policyNum').value,
                 "policyTypeId": componentRefComponentValues.homeInsuranceForm.get('PlanType').value,
                 "planName": componentRefComponentValues.homeInsuranceForm.get('planeName').value,
                 "premiumAmount": componentRefComponentValues.homeInsuranceForm.get('premium').value,
-                "policyStartDate": this.datePipe.transform(componentRefComponentValues.homeInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.homeInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 "exclusion": componentRefComponentValues.homeInsuranceForm.get('exclusion').value,
                 "hypothetication": componentRefComponentValues.homeInsuranceForm.get('financierName').value,
                 "advisorName": componentRefComponentValues.homeInsuranceForm.get('advisorName').value,
                 "serviceBranch": componentRefComponentValues.homeInsuranceForm.get('serviceBranch').value,
                 "insuranceSubTypeId": 9,
-                "id": (this.id) ? this.id : null,
+                "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 "policyFeatures": featureList,
                 "addOns": addOns,
+                suggestion:componentRefComponentValues.plannerNotes,
+				        isRecommend:componentRefComponentValues.showRecommendation,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.homeInsuranceForm.value.getNomineeName,
               }
@@ -1215,19 +1228,18 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "advisorId": this.advisorId,
                 "policyHolderId": (componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].userType == 2) ? componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].clientId : componentRefComponentValues.fireInsuranceForm.value.getCoOwnerName[0].familyMemberId,
                 "insurerName": componentRefComponentValues.fireInsuranceForm.get('insurerName').value,
-                "policyNumber": componentRefComponentValues.fireInsuranceForm.get('policyNum').value,
                 "policyTypeId": componentRefComponentValues.fireInsuranceForm.get('PlanType').value,
                 "planName": componentRefComponentValues.fireInsuranceForm.get('planeName').value,
                 "premiumAmount": componentRefComponentValues.fireInsuranceForm.get('premium').value,
-                "policyStartDate": this.datePipe.transform(componentRefComponentValues.fireInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                "policyExpiryDate": this.datePipe.transform(componentRefComponentValues.fireInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 "exclusion": componentRefComponentValues.fireInsuranceForm.get('exclusion').value,
                 "hypothetication": componentRefComponentValues.fireInsuranceForm.get('financierName').value,
                 "advisorName": componentRefComponentValues.fireInsuranceForm.get('advisorName').value,
                 "serviceBranch": componentRefComponentValues.fireInsuranceForm.get('serviceBranch').value,
                 "insuranceSubTypeId": 10,
                 "policyFeatures": featureList,
-                "id": (this.id) ? this.id : null,
+                "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
+                suggestion:componentRefComponentValues.plannerNotes,
+				        isRecommend:componentRefComponentValues.showRecommendation,
                 "addOns": addOns,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.fireInsuranceForm.value.getNomineeName,
@@ -1261,9 +1273,17 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 obj.nominees = [];
               }
             }
-            if (componentRefComponentValues[form].valid) {
-              this.barButtonOptions.active = true;
-              this.mergeAndhitApi(obj);
+         
+            if(this.adviceName != 'Continue' && this.adviceName != 'Discontinue'){
+              if (this.count >= 2 && componentRefComponentValues[form].valid) {
+                this.barButtonOptions.active = true;
+                this.mergeAndhitApi(obj);
+              }
+            }else{
+              if (componentRefComponentValues[form].valid) {
+                this.barButtonOptions.active = true;
+                this.mergeAndhitApi(obj);
+              }
             }
 
           }
@@ -1306,21 +1326,63 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
-      adviceId: this.adviceForm.get('headerEdit').value,
+      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 1,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
-      adviceToCategoryTypeMasterId:this.adviceToCategoryTypeMasterId,
+      adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceToGenInsurance: { genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
-      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,                   
+      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
       applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
     }
     let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
-    this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
-      data => this.getAdviceRes(data),
-      err => this.event.openSnackBar(err, "Dismiss")
-    );
+    if (this.flag == 'Add') {
+      if (this.childComponentFlag == 'suggestNew') {
+        this.planService.addAdviseOnGeneralInsurance(ObjHealth).subscribe(
+          data => {
+            this.planService.addGenralInsurancePlan(obj).subscribe(
+              data => {
+                const addPlan = {
+                  "id": this.componentRefComponentVal.inputData.id,
+                  "insuranceIds": JSON.stringify([data])
+                }
+                const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
+                const giveAdvice = this.planService.addAdviseOnHealth(ObjHealth);
+                forkJoin(UpadtePolicy, giveAdvice).subscribe(result => {
+                  this.barButtonOptions.active = false;
+                  this.getAdviceRes(result);
+                }, (error) => {
+                  this.eventService.openSnackBar('error', 'Dismiss');
+                });
+              },
+            );
+          },
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      } else {
+        this.planService.addAdviseOnGeneralInsurance(ObjHealth).subscribe(
+          data => this.getAdviceRes(data),
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      }
+    } else {
+      if (this.childComponentFlag == 'suggestNew') {
+        const editGeneral = this.planService.editGenralInsurancePlan(obj);
+        const editAdvice = this.activityService.editAdvice(ObjHealth);
+        forkJoin(editGeneral, editAdvice).subscribe(result => {
+          this.barButtonOptions.active = false;
+          this.getAdviceRes(result);
+        }, (error) => {
+          this.eventService.openSnackBar('error', 'Dismiss');
+        });
+      } else {
+        this.activityService.editAdvice(ObjHealth).subscribe(
+          data => this.getAdviceRes(data),
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      }
+    }
   }
   filterForObj(data, mergeData) {
     const stringObject = {
@@ -1337,9 +1399,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   getAdviceRes(data) {
     this.barButtonOptions.active = false;
     console.log(data)
-    if(this.dataForEdit){
+    if (this.dataForEdit) {
       this.event.openSnackBar('Edited successfully', "Ok")
-    }else{
+    } else {
       this.event.openSnackBar('Added successfully', "Ok")
     }
     this.dialogClose(true);
@@ -1347,4 +1409,5 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   dialogClose(flag) {
     this.subinject.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
+
 }
