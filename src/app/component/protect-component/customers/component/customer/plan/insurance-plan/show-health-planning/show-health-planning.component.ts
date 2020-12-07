@@ -347,7 +347,11 @@ export class ShowHealthPlanningComponent implements OnInit {
   }
 
   openAddEditAdvice(value, data,flag) {
-    this.adviceNameObj = {adviceName:this.adviceName};
+    if(flag!='suggestNew'){
+      this.adviceNameObj = {adviceName:this.adviceName};
+    }else{
+      this.adviceNameObj = {adviceName:null};
+    }
     let component;
       this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
       switch (this.showInsurance.insuranceType) {
