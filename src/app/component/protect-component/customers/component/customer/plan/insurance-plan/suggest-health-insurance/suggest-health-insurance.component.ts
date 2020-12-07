@@ -146,7 +146,6 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     isRecommended: boolean;
     adviceName: any;
     obj1: any;
-    recommendOrNot: any;
     adviceData: any;
     cateIdObj: any;
     adviceDetails: any;
@@ -187,9 +186,9 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         this.inputData = data.inputData;
         this.policyList = data.displayList.policyTypes;
         this.addOns = data.displayList.addOns;
-        this.adviceDetails = data.adviceDetails
-        this.adviceName = data.adviceNameObj.adviceName;
-        this.adviceData = data.adviceStringObj;
+        this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
+        this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
+        this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
         this.showHeader = data.flag;
         this.getFamilyMemberList();
         this.recommendOrNot = data.recommendOrNot;
@@ -201,6 +200,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         this.adviceName = data.adviceName; 
         this.fakeData = this.insData.data ?this.insData.data : this.fakeData;
         if(this.adviceName == 'Port policy'){
+            this.nomineesListFM=[];
             this.insData.data = null   
         }else{
             this.insData.data = this.fakeData;

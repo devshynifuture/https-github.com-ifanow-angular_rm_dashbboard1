@@ -148,9 +148,9 @@ export class FireInsuranceComponent implements OnInit {
 		this.clientId = AuthService.getClientId();
 		this.insData = data;
 		this.inputData = data.inputData;
-		this.adviceDetails = data.adviceDetails
-        this.adviceName = data.adviceNameObj.adviceName;
-        this.adviceData = data.adviceStringObj;
+		this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
+        this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
+        this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
         this.showHeader = data.flag;
 		this.policyList = data.displayList.policyTypes;
 		this.policyFeature = data.displayList.policyFeature;

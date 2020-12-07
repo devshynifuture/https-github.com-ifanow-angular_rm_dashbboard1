@@ -17,9 +17,9 @@ import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fi
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { forkJoin, empty } from 'rxjs';
+import { forkJoin, empty, of } from 'rxjs';
 import { InsurancePlanningServiceService } from '../insurance-planning-service.service';
-import { defaultIfEmpty } from 'rxjs/operators';
+import { defaultIfEmpty, catchError } from 'rxjs/operators';
 import { HelthInsurancePolicyComponent } from '../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
 import { AddHealthInsuranceAssetComponent } from '../../../accounts/insurance/add-health-insurance-asset/add-health-insurance-asset.component';
 import { AddPersonalAccidentInAssetComponent } from '../../../accounts/insurance/add-personal-accident-in-asset/add-personal-accident-in-asset.component';
@@ -224,7 +224,11 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
   }
   checkAndPushSuggestedData(array) {
-    let singleData = this.storedData.filter(d => d.id == this.inputData.id);
+    const myArray = this.storedData;
+    let list = [];
+    myArray.forEach(val => list.push(Object.assign({}, val)));
+    let arrStoreData = list;
+    let singleData = arrStoreData.filter(d => d.id == this.inputData.id);
     if (singleData.length > 0) {
       let suggestPolicy = singleData[0][1];
       this.pushData(array, suggestPolicy, singleData, 'suggested');
@@ -235,19 +239,28 @@ export class ShowHealthPlanningComponent implements OnInit {
     let dataArray = suggestPolicy[value].length > 0 ? suggestPolicy[value] : []
     dataArray = dataArray.flat();
     dataArray = this.ipService.pushId(dataArray)
+    dataArray =[];
     dataArray.push(array[value]);
     dataArray = dataArray.flat();
     dataArray = this.ipService.pushId(dataArray)
     dataArray = [...new Map(dataArray.map(item => [item.id, item])).values()];
     singleData[0][1][value] = dataArray;
-    singleData[0][2] = dataArray;
+    //  singleData[0][2] = dataArray;
+     if(array && singleData[0][2]){
+      singleData[0][2] =[];
+       let merge =[...array.current,...array.suggested]
+      singleData[0][2]=merge
+      singleData[0][2] = singleData[0][2].flat();
+     }
     if (singleData[0][2]) {
       let arr = singleData[0][2]
       arr.forEach(element => {
-        element.insurance = element.insuranceDetails
-      });
+        element.insurance = element.insuranceDetails ?  element.insuranceDetails :  element.insurance
+        });
     }
+    singleData[0][2] = [...new Map(singleData[0][2].map(item => [item['insurance'].id, item])).values()];
     console.log('recommendation', singleData[0][2])
+    this.storedData = singleData;
     this.ipService.setIpData(this.storedData);
   }
   getPolicyHolderName(data) {
@@ -348,6 +361,8 @@ export class ShowHealthPlanningComponent implements OnInit {
 
   openAddEditAdvice(value, data,flag) {
     if(flag!='suggestNew'){
+      let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
+      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : ''
       this.adviceNameObj = {adviceName:this.adviceName};
     }else{
       this.adviceNameObj = {adviceName:null};
@@ -404,12 +419,15 @@ export class ShowHealthPlanningComponent implements OnInit {
       flag:flag,
       adviceHeaderList:flag!='suggestNew' ? this.adviceHeaderList : '',
       adviceNameObj:this.adviceNameObj,
+      recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
-      childData: { data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+      childData: {
+        recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -417,6 +435,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.isRefreshRequired = true;
             this.getStepOneAndTwoData();
             // this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
@@ -427,8 +446,9 @@ export class ShowHealthPlanningComponent implements OnInit {
       }
     );
   }
-  deleteModal(value, data) {
+  deleteModal(value, data,flag) {
     let deletedId = data ? data.id : null;
+    let deletedAdviceId = data ? (data.adviceDetails ? data.adviceDetails.id : null) : null
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -437,17 +457,37 @@ export class ShowHealthPlanningComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const deleteInsurance = this.planService.deleteSuggestNew(data.id);
-        const deleteAdvice = this.activityService.deleteAdvice(data.id);
-        forkJoin(deleteInsurance, deleteAdvice).subscribe(result => {
-          this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-            dialogRef.close();
-            this.deleteNewPolicy(deletedId);
-            // this.getStepOneAndTwoData();
-            this.isRefreshRequired = true;
-        }, (error) => {
-          this.eventService.openSnackBar('error', 'Dismiss');
-        });
+        if(flag != 'existingAdvice'){
+          const deleteInsurance = this.planService.deleteSuggestNew(data.id);
+          const deleteAdvice = this.activityService.deleteAdvice(deletedAdviceId).pipe(
+            catchError(error => of(''))
+          );
+          forkJoin(deleteInsurance, deleteAdvice).subscribe(result => {
+            this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+              dialogRef.close();
+              this.isRefreshRequired = true;
+              this.deleteNewPolicy(deletedId);
+              // this.getStepOneAndTwoData();
+              this.isRefreshRequired = true;
+          }, (error) => {
+            this.eventService.openSnackBar('error', 'Dismiss');
+          })
+        }else{
+          this.activityService.deleteAdvice(deletedAdviceId).subscribe(
+            data => {
+              // this.isRefresh = true;
+              this.eventService.openSnackBar('Advice deleted successfully', 'Dismiss');
+              this.isRefreshRequired = true;
+              this.getStepOneAndTwoData();
+              dialogRef.close();
+              // this.isRefreshRequired = true;
+            },
+            error => {
+              this.eventService.openSnackBar('error', 'Dismiss');
+            }
+          );
+        }
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -477,10 +517,9 @@ export class ShowHealthPlanningComponent implements OnInit {
     singleData[0][0].suggested = suggested;
     this.ipService.setNeedAnlysisData(this.needAnalysisData);
     this.forkJoinResponse(singleData[0]);
+    this.checkAndPushSuggestedData(singleData[0])
   }
   close(data) {
-    this.dataSource[0].advice = null;
-    this.stringObject = {}
     data.isRefreshRequired = this.isRefreshRequired
     const fragmentData = {
       direction: 'top',

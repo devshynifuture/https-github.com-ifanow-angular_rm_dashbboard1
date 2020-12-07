@@ -18,7 +18,7 @@
         <h5 class="m-0 f-500 text-black">{{showInsurance.heading}}</h5>
 
         <div class="row b-a">
-            <div class="col-md-6" *ngIf="dataSource.length > 0">
+            <div class="col-md-6">
                 <h5 class="text-center f-500 text-black bb-1 pt-8 pb-8">Step 1 - Select existing policy</h5>
                 <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource" class="mt-20 skeletonAnimation"
                     id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -69,7 +69,8 @@
                                 <span *ngIf="element.advice && !isLoading">
                                     {{isLoading ? '' : (element.advice ? element.advice : '-')}}
                                 </span>
-                                <span (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')"
+                                <span
+                                    (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')"
                                     *ngIf="!element.advice && !isLoading">
                                     <img src="/assets/images/svg/plus-rounded.svg">
                                     <!-- (click)="openDialog(element,showInsurance)" -->
@@ -84,12 +85,12 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <div [matTooltip]="adviceName == null ? 'Advice is not given' : null">
-                                    <button mat-menu-item [disabled]="!adviceName"
+                                <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
+                                    <button mat-menu-item [disabled]="!element.advice"
                                         (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
                                 </div>
                                 <button mat-menu-item
-                                    (click)="deleteModal('INSURANCE',element.insuranceDetails)">Delete</button>
+                                    (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete</button>
                             </mat-menu>
                         </td>
                     </ng-container>
@@ -167,12 +168,10 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <div [matTooltip]="adviceName == null ? 'Advice is not given' : null">
-                                    <button mat-menu-item [disabled]="!adviceName"
-                                        (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
-                                </div>
                                 <button mat-menu-item
-                                    (click)="deleteModal('INSURANCE',element.insuranceDetails)">Delete</button>
+                                    (click)="openSuggestHealth(showInsurance,element.insuranceDetails)">Edit</button>
+                                <button mat-menu-item
+                                    (click)="deleteModal('INSURANCE',element.insuranceDetails,'suggestNew')">Delete</button>
                             </mat-menu>
                         </td>
                     </ng-container>
@@ -228,14 +227,10 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <div [matTooltip]="adviceName == null ? 'Advice is not given' : null">
-                                    <div [matTooltip]="adviceName == null ? 'Advice is not given' : null">
-                                        <button mat-menu-item [disabled]="!adviceName"
-                                            (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
-                                    </div>
-                                </div>
                                 <button mat-menu-item
-                                    (click)="deleteModal('INSURANCE',element.insuranceDetails)">Delete</button>
+                                    (click)="openSuggestHealth(showInsurance,element.insuranceDetails)">Edit</button>
+                                <button mat-menu-item
+                                    (click)="deleteModal('INSURANCE',element.insuranceDetails,'suggestNew')">Delete</button>
                             </mat-menu>
                         </td>
                     </ng-container>
@@ -331,8 +326,9 @@
             </h5>
         </div>
         <div class="col-md-6 text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveAdviceAndClose(showInsurance)">Save
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="close(showInsurance)">Save
             </button>
+            <!-- (click)="saveAdviceAndClose(showInsurance)" -->
         </div>
     </div>
 </div>

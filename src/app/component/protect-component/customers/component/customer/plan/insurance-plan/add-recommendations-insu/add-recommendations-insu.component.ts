@@ -9,6 +9,7 @@ import { CustomerService } from '../../../customer.service';
 import { catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { ActiityService } from '../../../customer-activity/actiity.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -16,6 +17,19 @@ import { ActiityService } from '../../../customer-activity/actiity.service';
   styleUrls: ['./add-recommendations-insu.component.scss']
 })
 export class AddRecommendationsInsuComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+
+  };
   displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice'];
   dataSource: any;
   inputData: any;
@@ -153,6 +167,10 @@ export class AddRecommendationsInsuComponent implements OnInit {
       }
     );
   }
+  saveRecommendations(){
+    this.barButtonOptions.active = false;
+    this.close(true);
+  }
   openDialog(value, data): void {
     data = { smallHeading: 'life insurance' }
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
@@ -168,8 +186,8 @@ export class AddRecommendationsInsuComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }

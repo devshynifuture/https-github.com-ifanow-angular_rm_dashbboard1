@@ -112,6 +112,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
         this.adviceToCategoryId = data.childData.adviceToCategoryId;
         this.adviceToCategoryTypeMasterId = 4
         this.adviceNameObj = data.adviceNameObj;
+        this.adviceName = this.adviceNameObj.adviceName;
         this.adviceHeaderList = data ? data.adviceHeaderList : '';
         this.getFormData(data);
       }
@@ -168,12 +169,12 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       this.flag = 'Edit';
     }
     this.adviceForm = this.fb.group({
-      header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
-      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
-      rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
+      header: [this.dataForEdit ? (this.dataForEdit.adviceId ? this.dataForEdit.adviceId + '' : this.dataForEdit.gen_insurance_advice_id +'') : ''],
+      headerEdit: [this.dataForEdit ? (this.dataForEdit.adviceId ? this.dataForEdit.adviceId + '' : this.dataForEdit.gen_insurance_advice_id +'') : '', [Validators.required]],
+      rationale: [(this.dataForEdit ? (this.dataForEdit.adviceDescription ? this.dataForEdit.adviceDescription : this.dataForEdit.advice_description) : '')],
       status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
-      givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
-      implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
+      givenOnDate: [this.dataForEdit ? (this.dataForEdit.adviceGivenDate ? new Date(this.dataForEdit.adviceGivenDate) : new Date(this.dataForEdit.created_date)) : new Date(), [Validators.required]],
+      implementDate: [this.dataForEdit ? (this.dataForEdit.applicableDate ? new Date( this.dataForEdit.applicableDate) : new Date( this.dataForEdit.applicable_date)) : null, [Validators.required]],
       // withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
     });
@@ -1331,7 +1332,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceToGenInsurance: { genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
-      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
+      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
       applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
@@ -1348,7 +1349,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
                   "insuranceIds": JSON.stringify([data])
                 }
                 const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
-                const giveAdvice = this.planService.addAdviseOnHealth(ObjHealth);
+                const giveAdvice = this.planService.addAdviseOnGeneralInsurance(ObjHealth);
                 forkJoin(UpadtePolicy, giveAdvice).subscribe(result => {
                   this.barButtonOptions.active = false;
                   this.getAdviceRes(result);
