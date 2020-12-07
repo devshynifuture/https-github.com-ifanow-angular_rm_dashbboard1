@@ -33,6 +33,7 @@ export class CriticalInsuranceComponent implements OnInit {
         //   fontIcon: 'favorite'
         // }
     };
+    recommendOrNot;
     maxDate = new Date();
     minDate = new Date();
     addMoreFlag = false;
@@ -76,7 +77,7 @@ export class CriticalInsuranceComponent implements OnInit {
         logo: '/assets/images/svg/helth-insurance.svg',
         heading: 'Health insurance',
         subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
-      }, {
+    }, {
         value: '2',
         logo: '/assets/images/svg/Criticalillness.svg',
         header: 'Add Critical Illness',
@@ -84,7 +85,7 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 6,
         heading: 'Critical illness',
         subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
-      }, {
+    }, {
         value: '3',
         logo: '/assets/images/svg/Cancercare.svg',
         header: 'Add Cancer Care',
@@ -92,7 +93,7 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 11,
         heading: 'Cancer care',
         subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
-      }, {
+    }, {
         value: '4',
         logo: '/assets/images/svg/Personalaccident.svg',
         header: 'Add Personal Accident',
@@ -100,7 +101,7 @@ export class CriticalInsuranceComponent implements OnInit {
         smallHeading: 'personal accident',
         insuranceType: 7,
         subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
-      }, {
+    }, {
         value: '5',
         logo: '/assets/images/svg/Householders.svg',
         header: 'Add Householders',
@@ -108,7 +109,7 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 9,
         heading: 'Householders',
         subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
-      }, {
+    }, {
         value: '6',
         logo: '/assets/images/svg/Fireinsurance.svg',
         header: 'Add Fire Insurance',
@@ -116,7 +117,7 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 10,
         heading: 'Fire insurance',
         subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
-      }, {
+    }, {
         value: '7',
         logo: '/assets/images/svg/Fireinsurance.svg',
         header: 'Add Travel Insurance',
@@ -124,7 +125,7 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 8,
         heading: 'Travel insurance',
         subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
-      }, {
+    }, {
         value: '8',
         logo: '/assets/images/svg/Fireinsurance.svg',
         header: 'Add Motor Insurance',
@@ -132,9 +133,9 @@ export class CriticalInsuranceComponent implements OnInit {
         insuranceType: 4,
         heading: 'Motor insurance',
         subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
-      }]
+    }]
     plannerNotes: any;
-    ownerIds =[];
+    ownerIds = [];
     insData: any;
     isRecommended: boolean;
     recommendOrNot: any;
@@ -145,7 +146,7 @@ export class CriticalInsuranceComponent implements OnInit {
     fakeData: any;
 
 
-    constructor(private planService :PlanService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
+    constructor(private planService: PlanService, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
     validatorType = ValidatorType
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -199,7 +200,7 @@ export class CriticalInsuranceComponent implements OnInit {
     }
 
     saveData(data) {
-		this.plannerNotes = data;
+        this.plannerNotes = data;
     }
     checkRecommendation(value) {
         if (value) {
@@ -594,14 +595,14 @@ export class CriticalInsuranceComponent implements OnInit {
             data => {
                 console.log(data);
                 this.options = data;
-                if(data.length>0){
+                if (data.length > 0) {
                     this.options = data;
-                  }else{
+                } else {
                     this.critialIllnessForm.controls.insurerName.setErrors({ erroInPolicy: true });
                     this.critialIllnessForm.get('insurerName').markAsTouched();
-                  }
+                }
             },
-            err=>{
+            err => {
                 this.critialIllnessForm.controls.insurerName.setErrors({ erroInPolicy: true });
                 this.critialIllnessForm.get('insurerName').markAsTouched();
             }
@@ -760,9 +761,9 @@ export class CriticalInsuranceComponent implements OnInit {
                 "insuranceSubTypeId": this.insuranceType,
                 'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
                 "id": (this.id) ? this.id : null,
-                'realOrFictitious':2,
-                'suggestion':this.plannerNotes,
-                'isRecommend':this.showRecommendation,
+                'realOrFictitious': 2,
+                'suggestion': this.plannerNotes,
+                'isRecommend': this.showRecommendation,
                 insuredMembers: memberList,
                 nominees: this.critialIllnessForm.value.getNomineeName,
             }
@@ -815,12 +816,12 @@ export class CriticalInsuranceComponent implements OnInit {
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
                             insuranceSubTypeId: this.insuranceType,
-                            id:data ? data : null
+                            id: data ? data : null
                         }
-                        this.close(insuranceData,true)
-                    },err=>{
-						this.close('',true);
-					}
+                        this.close(insuranceData, true)
+                    }, err => {
+                        this.close('', true);
+                    }
                 );
             } else {
                 this.planService.addGenralInsurancePlan(obj).subscribe(

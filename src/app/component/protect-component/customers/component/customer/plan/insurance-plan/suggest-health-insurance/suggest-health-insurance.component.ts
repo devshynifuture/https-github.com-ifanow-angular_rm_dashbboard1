@@ -73,6 +73,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     storeData: string;
     showRecommendation = false;
     @Output() sendOutput = new EventEmitter<any>();
+    recommendOrNot;
     insuranceData = [{
         value: '1',
         header: 'Add Health Insurance',
