@@ -65,4 +65,16 @@ export class SupportUpperService {
     this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
+  getMappedUnmappedCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RM_MAPPED_UNMAPPED_SCHEME_COUNT_NJ_PRUDENT, data);
+  }
+
+  postUnmapUnmappedNjPrudentScheme(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES, data);
+  }
+
+  postMapUnmappedNjPrudentScheme(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES, data);
+  }
+
 }

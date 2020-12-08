@@ -29,9 +29,12 @@ export const appConfig = {
   AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
+  RM_MAPPED_UNMAPPED_SCHEME_COUNT_NJ_PRUDENT: 'rmdashboard/count/mapped/unmapped/schemes',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
   CLIENT_WITHOUT_MF: 'backoffice/clientWithoutMf/get',
   GET_SCHEME_LIST_MIS_AUM: 'backoffice/scheme/list/get',
+  RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/unmap/njprudent/schemes',
+  RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/map/njprudent/schemes',
 
   GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
   GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',

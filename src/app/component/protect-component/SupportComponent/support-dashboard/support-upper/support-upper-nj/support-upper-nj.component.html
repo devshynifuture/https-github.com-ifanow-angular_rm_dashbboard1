@@ -40,7 +40,7 @@
 
         </mat-form-field>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 pt-11">
         <mat-select (selectionChange)="onDropdownChange($event)">
             <mat-option *ngFor="let item of njOptionsDropdown" value="item.id">
                 {{item.title}}
@@ -143,7 +143,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.navDate  | date: 'dd/MM/yyyy'}}
+                        {{element.navDate == ''?'':(element.navDate | date: 'dd/MM/yyyy')}}
                     </div>
                 </td>
             </ng-container>
