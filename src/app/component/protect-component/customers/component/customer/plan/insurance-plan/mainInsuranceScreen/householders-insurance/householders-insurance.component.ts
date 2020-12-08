@@ -149,7 +149,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
         this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
         this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
-        this.showHeader = data.flag;
+		this.showHeader = data.flag;
 		this.policyFeature = data.displayList.policyFeature;
 		this.addOns = data.displayList.addOns;
 		this.getFamilyMemberList();

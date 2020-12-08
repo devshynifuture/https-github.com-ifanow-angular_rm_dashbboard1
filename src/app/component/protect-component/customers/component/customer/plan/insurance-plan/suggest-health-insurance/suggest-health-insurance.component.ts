@@ -189,7 +189,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
         this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
         this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
-        this.showHeader = data.flag;
+        this.showHeader = data.flag
         this.getFamilyMemberList();
         this.recommendOrNot = data.recommendOrNot;
         if(this.adviceName == 'Port policy'){

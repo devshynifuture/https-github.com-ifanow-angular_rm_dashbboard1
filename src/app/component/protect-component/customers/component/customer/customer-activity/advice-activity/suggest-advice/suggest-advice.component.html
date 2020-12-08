@@ -53,7 +53,7 @@
                                                     formControlName="headerEdit" matInput>
     
                                                     <mat-option value=''>Select option</mat-option>
-                                                    <mat-option *ngFor="let option of adviceHeaderList ;index as i"
+                                                    <mat-option (click)="changeHeader(option)" *ngFor="let option of adviceHeaderList ;index as i"
                                                         [value]="option.id">
                                                         {{option.value}}
                                                     </mat-option>
@@ -124,9 +124,9 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <!-- <p class="m-0 text-black roboto pt-60" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">Withdrawal amount</p> -->
-                                    <!-- <div class="form-group" >
-                                        <mat-form-field class="ba-date" *ngIf="adviceForm.get('header').value != '1' && adviceForm.get('header').value != '2'">
+                                    <p class="m-0 text-black roboto pt-60" *ngIf="hideAmount">Amount</p>
+                                    <div class="form-group" >
+                                        <mat-form-field class="ba-date" *ngIf="hideAmount">
                                             <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"
                                                 [maxLength]="10" appInputValueValidation formControlName="withdrawalAmt"
                                                 class="form-control b-0">
@@ -136,7 +136,7 @@
                                                 This field is required
                                             </mat-error>
                                         </mat-form-field>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="row pt-44">

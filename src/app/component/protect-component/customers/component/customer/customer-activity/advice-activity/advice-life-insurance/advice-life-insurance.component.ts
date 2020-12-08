@@ -13,6 +13,7 @@ import { CustomerService } from '../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EditSuggestedAdviceComponent } from '../edit-suggested-advice/edit-suggested-advice.component';
+import { AddNewLifeInsComponent } from './add-new-life-ins/add-new-life-ins.component';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -62,6 +63,8 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   catObj: any;
   globalObj: {};
   clientIdToClearStorage: string;
+  adviceName: string;
+  adviceNameObj: { adviceName: string; };
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
 
   ngOnInit() {
@@ -318,6 +321,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     return data;
   }
   openAddEditAdvice(value, data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : ''
+    this.adviceNameObj = {adviceName:this.adviceName};
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
     switch (value) {
       case "Term Insurance":
@@ -342,15 +348,16 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
     // this.getCategoriId(this.object.insuranceSubTypeId);
     data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
-    let Component = AddInsuranceComponent;
+    let Component = AddNewLifeInsComponent;
     const fragmentData = {
       flag: 'Advice Insurance',
       data,
       id: 1,
+      adviceNameObj:this.adviceNameObj,
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
+      childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -392,7 +399,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
     // this.getCategoriId(this.object.insuranceSubTypeId);
     data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
-    let Component = AddInsuranceComponent;
+    let Component = AddNewLifeInsComponent;
     data['displayList']=this.displayList;
     data['showInsurance']=this.object.showInsurance;
     data['insuranceSubTypeId']=data.InsuranceDetails.insuranceSubTypeId;
