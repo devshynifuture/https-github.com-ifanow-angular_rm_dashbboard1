@@ -90,7 +90,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     return this.inputData;
   }
   dataSource2: any;
-  displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
+  displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname'];
   // dataSource2 = ELEMENT_DATA2;
   showExisting = false;
   selectPolicy=''

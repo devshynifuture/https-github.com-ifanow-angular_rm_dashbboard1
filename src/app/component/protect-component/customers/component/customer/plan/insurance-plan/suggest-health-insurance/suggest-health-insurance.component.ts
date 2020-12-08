@@ -192,12 +192,16 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         this.showHeader = data.flag;
         this.getFamilyMemberList();
         this.recommendOrNot = data.recommendOrNot;
-        this.getdataForm(data);
+        if(this.adviceName == 'Port policy'){
+            this.changeAdviceName(data)
+        }else{
+            this.getdataForm(data);
+        }
         // this.setInsuranceDataFormField(data);
         console.log(data);
     }
     changeAdviceName(data){
-        this.adviceName = data.adviceName; 
+        this.adviceName = data.adviceName ? data.adviceName :  this.adviceName; 
         this.fakeData = this.insData.data ?this.insData.data : this.fakeData;
         if(this.adviceName == 'Port policy'){
             this.nomineesListFM=[];

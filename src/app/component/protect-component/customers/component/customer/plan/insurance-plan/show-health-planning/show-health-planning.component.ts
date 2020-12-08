@@ -419,14 +419,14 @@ export class ShowHealthPlanningComponent implements OnInit {
       flag:flag,
       adviceHeaderList:flag!='suggestNew' ? this.adviceHeaderList : '',
       adviceNameObj:this.adviceNameObj,
-      recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+      recommendOrNot :flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
       childData: {
-        recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        recommendOrNot : flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
         data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
