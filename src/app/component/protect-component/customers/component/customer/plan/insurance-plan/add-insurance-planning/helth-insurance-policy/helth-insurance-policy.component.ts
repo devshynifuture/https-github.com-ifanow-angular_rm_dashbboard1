@@ -33,6 +33,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
     // }
   };
   healthInsurance: any;
+  validatorType = ValidatorType;
+  obj1:any;
   adviceHealthInsurance = [];
   showInsurance: DialogData;
   advice: any;
@@ -195,14 +197,14 @@ export class HelthInsurancePolicyComponent implements OnInit {
     let implementationDate = this.datePipe.transform(this.healthInsurance.controls.implementationDate.value, 'yyyy/MM/dd')
     if (adviceHeaderDate && implementationDate) {
       if (value == 'adviceHeaderDate') {
-        if (implementationDate > adviceHeaderDate) {
+        if (implementationDate >= adviceHeaderDate) {
           this.healthInsurance.get('adviceHeaderDate').setErrors();
         } else {
           this.healthInsurance.get('adviceHeaderDate').setErrors({ max: 'Date Issue' });
           this.healthInsurance.get('adviceHeaderDate').markAsTouched();
         }
       } else {
-        if (implementationDate > adviceHeaderDate) {
+        if (implementationDate >= adviceHeaderDate) {
           this.healthInsurance.get('implementationDate').setErrors();
         } else {
           this.healthInsurance.get('implementationDate').setErrors({ max: 'Date of repayment' });
@@ -215,7 +217,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   }
   saveAdviceOnHealth() {
-    if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
+    if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Port policy' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
       || this.healthInsurance.get('selectAdvice').value == 'Discontinue' ) {
       this.healthInsurance.get('amount').setErrors(null);
       this.healthInsurance.get('famMember').setErrors(null);
@@ -239,7 +241,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       // }
       this.getAdviseId(this.healthInsurance.get('selectAdvice').value);
       if(this.showInsurance.insuranceType && this.showInsurance.insuranceType > 3){
-        let obj1 = {
+        this.obj1 = {
           stringObject: { 
             'clientId': AuthService.getClientId(),
             'advisorId': AuthService.getAdvisorId(),
@@ -294,16 +296,21 @@ export class HelthInsurancePolicyComponent implements OnInit {
           advisorId: AuthService.getAdvisorId(),
           applicableDate: this.healthInsurance.get('implementationDate').value
         }
-        this.planService.addAdviseOnGeneralInsurance(obj1).subscribe(
-          res => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
-            this.close(this.advice, true);
-          }, err => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar(err, "Dimiss");
-          }
-        )
+        if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
+          this.planService.addAdviseOnGeneralInsurance(this.obj1).subscribe(
+            res => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
+              this.close(this.obj1, true);
+            }, err => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dimiss");
+            }
+          )
+        }else{
+          this.close(this.obj1, true);
+        }
+      
       }else{
         let obj1 = {
           stringObject: { id: this.insuranceData.id },

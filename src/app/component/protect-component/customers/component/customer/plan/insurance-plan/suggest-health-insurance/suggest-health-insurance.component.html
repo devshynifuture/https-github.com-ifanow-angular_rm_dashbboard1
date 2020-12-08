@@ -1,4 +1,4 @@
-<div class="popup-header-fix w-60">
+<div class="popup-header-fix w-60" *ngIf="showHeader == 'SuggestNew'">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{dataForEdit ? 'Edit '+showInsurance.heading :showInsurance.header}}</h4>
@@ -8,6 +8,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <div class="pt-80 pl-28 pr-28 pb-44 mb-44" [formGroup]="healthInsuranceForm">
     <div formArrayName="getCoOwnerName">

@@ -20,6 +20,7 @@ import { AddInsuranceComponent } from '../../../../common-component/add-insuranc
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { forkJoin } from 'rxjs';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { InsurancePlanningServiceService } from '../insurance-planning-service.service';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -68,12 +69,17 @@ export class AddHealthInsuranceComponent implements OnInit {
   dislayList: any;
   newPolicyData: any;
   familyMemberList:any;
+  storedData: any;
 
   @Input()
   set data(data) {
     this.inputData = data;
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
+    this.ipService.getIpData()
+    .subscribe(res => {
+      this.storedData = res;
+    })
     this.getGlobalDataInsurance();
     if(this.inputData.flag == 'suggestExistingPolicy'){
       this.getAddMore();
@@ -84,7 +90,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     return this.inputData;
   }
   dataSource2: any;
-  displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname', 'advice'];
+  displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'sum', 'mname'];
   // dataSource2 = ELEMENT_DATA2;
   showExisting = false;
   selectPolicy=''
@@ -155,7 +161,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
   }]
 
-  constructor(private peopleService:PeopleService,public planService: PlanService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
+  constructor(private ipService: InsurancePlanningServiceService,private peopleService:PeopleService,public planService: PlanService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
   openDialog(value, data): void {
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
@@ -234,6 +240,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
       this.familyMemberList = result[1];
       if(result[0]){
+        // this.inputData.currentData.forEach(item => item.isSelected = true);
+        // let arry= [...this.inputData.currentData,...result[0]]
         let data = this.getHolderNameAndSumAssured(result[0]);
         this.dataSource2 = data;
         this.isLoading = false;
@@ -301,6 +309,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getSumAssured(data);
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
+        // this.addPolicy(singleInsuranceData.isSelected ? singleInsuranceData.isSelected : false, singleInsuranceData) 
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
         singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured ? singleInsuranceData.insurance.insuredMembers[0].sumInsured : singleInsuranceData.insurance.sumInsuredIdv);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
@@ -383,9 +392,18 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getReviewExistingPolicy();
   }
   addPolicy(event, element) {
-    element.selected = event.checked;
-    this.isChecked = event.checked
-    if (this.isChecked) {
+    // element.selected = event.checked ? event.checked : event;
+    element.selected = event.checked
+    // this.dataSource2.forEach(item => item.selected = false);
+
+    // this.dataSource2.forEach(ele => {
+    //   if(ele.insurance.id == element.insurance.id){
+    //     element.selected = true
+    //     ele.insurance.selected = true
+    //     this.isChecked = true
+    //   }
+    // });
+    if (element.selected) {
       this.needAnalysis.push(element.insurance.id)
       if(element.insurance.insuredMembers.length > 0){
         element.insurance.insuredMembers.forEach(ele => {
@@ -401,7 +419,10 @@ export class AddHealthInsuranceComponent implements OnInit {
 
       this.ownerIds = [...new Map(this.ownerIds.map(item => [item.ownerId, item])).values()];
       this.showError = false;
+    }else{
+      this.needAnalysis = this.needAnalysis.filter(d => d != element.insurance.id);
     }
+    this.needAnalysis.length > 0 ? this.isChecked = true : this.isChecked=false;
   }
   getGlobalDataInsurance() {
     const obj = {};
@@ -414,6 +435,9 @@ export class AddHealthInsuranceComponent implements OnInit {
   }
 
   openNewPolicy(){
+    this.storedData.forEach(element => {
+      element
+    });
     this.newPolicyData = {
       data:null,
       insuranceTypeId: 2,

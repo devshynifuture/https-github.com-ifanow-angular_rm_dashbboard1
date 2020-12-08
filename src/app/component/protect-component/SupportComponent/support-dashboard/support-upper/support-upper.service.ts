@@ -20,7 +20,7 @@ export class SupportUpperService {
   }
 
   getUnmappedSchemesNj(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT, data)
   }
 
   // get apis for prudent
@@ -30,7 +30,7 @@ export class SupportUpperService {
 
 
   getUnmappedSchemesPrudent(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT, data)
   }
 
   getFilteredSchemes(data) {
@@ -63,6 +63,18 @@ export class SupportUpperService {
 
   dialogClose() {
     this.eventService.changeUpperSliderState({ state: 'close' });
+  }
+
+  getMappedUnmappedCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RM_MAPPED_UNMAPPED_SCHEME_COUNT_NJ_PRUDENT, data);
+  }
+
+  postUnmapUnmappedNjPrudentScheme(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES, data);
+  }
+
+  postMapUnmappedNjPrudentScheme(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES, data);
   }
 
 }

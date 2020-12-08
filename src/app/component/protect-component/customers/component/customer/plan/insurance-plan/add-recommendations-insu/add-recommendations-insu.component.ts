@@ -9,6 +9,7 @@ import { CustomerService } from '../../../customer.service';
 import { catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { ActiityService } from '../../../customer-activity/actiity.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-recommendations-insu',
@@ -16,11 +17,25 @@ import { ActiityService } from '../../../customer-activity/actiity.service';
   styleUrls: ['./add-recommendations-insu.component.scss']
 })
 export class AddRecommendationsInsuComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+
+  };
   displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice'];
   dataSource: any;
   inputData: any;
   isLoading: any;
   adviceData: any;
+  isAdviceGiven: boolean;
   constructor(private activityService:ActiityService,private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
@@ -82,22 +97,28 @@ export class AddRecommendationsInsuComponent implements OnInit {
       statusFlag: 0
     }
     const AdviceAsset = this.activityService.getAllAsset(obj).pipe(
-      catchError(error => of(error))
+      catchError(error => of(''))
     );
     const portfolioLi = this.cusService.getInsuranceData(obj2).pipe(
-      catchError(error => of(error))
+      catchError(error => of(''))
     );
     forkJoin(AdviceAsset,portfolioLi).subscribe(result => {
-      this.adviceData = result[0]
-      let data = this.compareData(result[1]);
-      if (data.length > 0) {
-        this.dataSource = data
-        this.isLoading = false;
-        console.log(result[1])
-      } else {
+      if(result[0] && result[1]){
+        this.adviceData = result[0]
+        let data = this.compareData(result[1]);
+        if (data.length > 0) {
+          this.dataSource = data
+          this.isLoading = false;
+          console.log(result[1])
+        } else {
+          this.dataSource = [];
+          this.isLoading = false;
+        }
+      }else{
         this.dataSource = [];
-        this.isLoading = false;
+          this.isLoading = false;
       }
+      
     }, (error) => {
       this.dataSource = [];
       this.isLoading = false;
@@ -111,16 +132,20 @@ export class AddRecommendationsInsuComponent implements OnInit {
       console.log(mergeArray);
     }
     if(data.insuranceList.length > 0){
+      if(this.inputData.displayHolderId == 0){
+        this.inputData.displayHolderId = AuthService.getClientId()
+      }
+      data.insuranceList = data.insuranceList.filter(d => d.familyMemberIdLifeAssured == this.inputData.displayHolderId);
       data.insuranceList.forEach(element => {
-        element.insurance = element  
-        if(mergeArray.length > 0){
-          mergeArray.forEach(ele => {
-            if(ele.InsuranceDetails.id == element.id){
-              let adviceId = ele.adviceDetails.adviceId;
-              element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
-            }
-          });
-        }
+        element.insurance = element;
+          if(mergeArray.length > 0){
+            mergeArray.forEach(ele => {
+              if(ele.InsuranceDetails.id == element.id){
+                let adviceId = ele.adviceDetails.adviceId;
+                element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
+              }
+            });
+          }
       });
     }else{
       data.insuranceList = [];
@@ -143,6 +168,10 @@ export class AddRecommendationsInsuComponent implements OnInit {
       }
     );
   }
+  saveRecommendations(){
+    this.barButtonOptions.active = false;
+    this.close(true);
+  }
   openDialog(value, data): void {
     data = { smallHeading: 'life insurance' }
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
@@ -153,13 +182,18 @@ export class AddRecommendationsInsuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.isRefreshedRequired) {
+        this.isAdviceGiven = true;
         this.getRecommendations()
       }
       console.log('The dialog was closed', result);
     });
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    if(this.isAdviceGiven){
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    }else{
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    }
   }
 
 }

@@ -12,7 +12,7 @@
             <mat-error class="f-12">
                 {{showError ? 'Please select primary advise' : ''}}
             </mat-error>
-            <div class="col-md-11 pl-0 pr-24">
+            <!-- <div class="col-md-11 pl-0 pr-24">
                 <p class="m-0 text-black pb-8 pt-20">Non financial advice</p>
                 <div class="form-group">
                     <mat-form-field>
@@ -24,7 +24,7 @@
                         <mat-error class="f-12">This field is required</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-8 p-0 bl-1">
             <div class="row">
@@ -117,12 +117,13 @@
                         </mat-form-field>
                     </div>
                     <p class="m-0 text-black pb-4 pt-10"
-                        *ngIf="healthInsurance.get('selectAdvice').value != 'Add members' && healthInsurance.get('selectAdvice').value != 'Remove members' && healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
+                        *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
                         Amount</p>
                     <div class="form-group"
-                        *ngIf="healthInsurance.get('selectAdvice').value != 'Add members' && healthInsurance.get('selectAdvice').value != 'Remove members' && healthInsurance.get('selectAdvice').value != 'Continue' && healthInsurance.get('selectAdvice').value != 'Stop paying premium' && healthInsurance.get('selectAdvice').value != 'Discontinue'">
+                        *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
                         <mat-form-field class="ba-date">
-                            <input autocomplete="off" maxlength="10" matInput #amount class="form-control b-0"
+                            <input autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                            appInputValueValidation matInput #amount class="form-control b-0"
                                 formControlName="amount">
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('amount').errors?.required)">This field
                                 is

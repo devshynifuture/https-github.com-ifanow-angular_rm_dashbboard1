@@ -209,7 +209,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         }
       });
       this.dataSource = this.getFilterData(needSavedData[1], 'liabilities', 'name', 'total_loan_outstanding');
-      this.plannerObj.lifeInsurancePremiums = needSavedData[2.1][0].total_amount;
+      this.plannerObj.lifeInsurancePremiums = needSavedData[2.1][0].amount;
       this.dataSource1 = this.getFilterData(needSavedData[2.2], 'dependantNeeds', 'name', 'amount');
       this.plannerObj.livingExpense = 0;
       this.dataSource1.forEach(element => {
@@ -223,6 +223,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = needSavedData[6][0].total_amount;
       this.dataSource2 = this.getFilterData(needSavedData[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = needSavedData[8] ? needSavedData[8][0].total_amount : 0;
+      this.calculateGrossAndadditional();
     } else {
       if (!this.mainDependent.value && !this.retirementAgeControl.value && !this.expectancy.value) {
         this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
@@ -319,12 +320,13 @@ export class AddPlaninsuranceComponent implements OnInit {
         } else {
           this.dependantYears = this.dependantYearsSelection;
         }
+        this.insuranceData.needAnalysisSaved = null;
         console.log('dependent years$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', this.dependantYears);
-        this.dataSource = this.getDataForTable(this.needAnalysis.liabilities, 'total_loan_outstanding');
-        this.dataSource1 = this.getDataForTable(this.needAnalysis.livingExpenses, 'amount');
-        this.dataSource2 = this.getDataForTable(this.needAnalysis.assets, 'currentValue');
-        this.dataSource3 = this.getDataForTable(this.needAnalysis.goals, 'goalFV');
-        this.dataSource4 = this.getDataForTableWithPMT(this.needAnalysis.income, 'annualIncome');
+        this.dataSource = this.getDataForTable(this.needAnalysis.liabilities, 'total_loan_outstanding', 'liabilities');
+        this.dataSource1 = this.getDataForTable(this.needAnalysis.livingExpenses, 'amount', 'livingExpense');
+        this.dataSource2 = this.getDataForTable(this.needAnalysis.assets, 'currentValue', 'existingAsset');
+        this.dataSource3 = this.getDataForTable(this.needAnalysis.goals, 'goalFV', 'goalsMeet');
+        this.dataSource4 = this.getDataForTableWithPMT(this.needAnalysis.income,'annualIncome', 'incomeSource');
         // if (this.needAnalysis.livingExpenses) {
         //   this.plannerObj.livingExpense = this.needAnalysis.livingExpenses.livingExpense
         // }
@@ -374,28 +376,31 @@ export class AddPlaninsuranceComponent implements OnInit {
     });
     return obj;
   }
-  getDataForTable(array, value) {
+  getDataForTable(array, value, name) {
     if (array && array.length > 0) {
       array.forEach(element => {
         element.currentValueDupl = element[value];
-        element.selected = false;
+        element.selected = true;
         element.percent = 100;
+        this.changeValue(element, element.selected, array, name)
       });
       array = array.filter(item => item[value] > 0)
     } else {
       array = [];
     }
-
     return array;
   }
-  getDataForTableWithPMT(array, value) {
+  getDataForTableWithPMT(array, value,name) {
     if (array && array.length > 0) {
       array.forEach(element => {
-        element.amount = element[value]
-        element[value] = this.PMT(element[value], element.inflationAdjustedIncome, element.dependentYears)
+        element.amount = element[value];
         element.currentValueDupl = element[value];
-        element.selected = false;
+        if(element[value] > 0){
+          element[value] = this.PMT(element[value], element.inflationAdjustedIncome ? element.inflationAdjustedIncome : this.inflationAdjustedRate, element.dependentYears ? element.dependentYears : this.dependantYears)
+        }
+        element.selected = true;
         element.percent = 100;
+        this.changeValue(element, element.selected, array, name)
       });
       array = array.filter(item => item[value] > 0)
     } else {
@@ -442,10 +447,18 @@ export class AddPlaninsuranceComponent implements OnInit {
   changeValue(data, value, array, storeObjName) {
     data.selected = value;
     this.plannerObj[storeObjName] = 0;
+    if (this.insuranceData && this.insuranceData.hasOwnProperty('needAnalysisSaved') && this.insuranceData.needAnalysisSaved && storeObjName == 'incomeSource') {
+      array.forEach(element => {
+        element.currentValueDupl = this.PMT(element.amount, element.inflation_adjusted_income ? element.inflation_adjusted_income : this.inflationAdjustedRate, element.dependent_years ? element.dependent_years : this.dependantYears)
+      });
+    }
     array.forEach(element => {
-
       if (element.selected) {
-        this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : element.amount
+        if (storeObjName == 'incomeSource') {
+          this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : (element.amount ? element.amount : element.annualIncome)
+        } else {
+          this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : element.amount
+        }
       }
     });
     this.calculateGrossAndadditional();
@@ -501,7 +514,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       if (element.needTypeId == 2) {
         this.getdataForm(element);
         this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
-        this.plannerNotes =element.plannerNotes ? element.plannerNotes : '';
+        this.plannerNotes = element.plannerNotes ? element.plannerNotes : '';
         this.manualObj = element
 
       } else {
@@ -577,7 +590,9 @@ export class AddPlaninsuranceComponent implements OnInit {
         "name": element[name],
         "percentage": element.percent,
         "isSelected": (element.selected) ? 1 : 0,
-        "totalAmount": totalAmount
+        "totalAmount": totalAmount,
+        "dependentYears": element.dependentYears ? element.dependentYears : 0,
+        "inflationAdjustedIncome": element.inflationAdjustedIncome ? element.inflationAdjustedIncome : 0
       }
       mainArray.push(obj);
     });
@@ -624,7 +639,7 @@ export class AddPlaninsuranceComponent implements OnInit {
           needTypeId: 2,
           adviceAmount: this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0,
           // plannerNotes: this.manualObj ? (this.manualObj.plannerNotes ? this.manualObj.plannerNotes : this.plannerNotes) : this.plannerNotes,
-          plannerNotes:this.plannerNotes,
+          plannerNotes: this.plannerNotes,
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),

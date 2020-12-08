@@ -157,14 +157,14 @@ export class EditSuggestedAdviceComponent implements OnInit {
     let implementDate = this.datePipe.transform(this.adviceForm.controls.implementDate.value, 'yyyy/MM/dd')
     if (adviceHeaderDate && implementDate) {
       if (value == 'givenOnDate') {
-        if (implementDate > adviceHeaderDate) {
+        if (implementDate >= adviceHeaderDate) {
           this.adviceForm.get('givenOnDate').setErrors(null);
         } else {
           this.adviceForm.get('givenOnDate').setErrors({ max: 'Date Issue' });
           this.adviceForm.get('givenOnDate').markAsTouched();
         }
       } else {
-        if (implementDate > adviceHeaderDate) {
+        if (implementDate >= adviceHeaderDate) {
           this.adviceForm.get('implementDate').setErrors(null);
         } else {
           this.adviceForm.get('implementDate').setErrors({ max: 'Date of repayment' });

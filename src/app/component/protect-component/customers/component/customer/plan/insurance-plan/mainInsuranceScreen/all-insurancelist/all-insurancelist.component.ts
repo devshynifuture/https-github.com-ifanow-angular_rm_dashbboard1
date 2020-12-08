@@ -157,6 +157,8 @@ export class AllInsurancelistComponent implements OnInit {
       data.forEach(singleInsuranceData => {
         if (singleInsuranceData.owners.length > 0) {
           singleInsuranceData.displayHolderName = singleInsuranceData.owners[0].holderName;
+          singleInsuranceData.displayHolderName = singleInsuranceData.owners[0].holderName;
+          singleInsuranceData.displayHolderId = singleInsuranceData.owners[0].ownerId;
           if (singleInsuranceData.owners.length > 1) {
             for (let i = 1; i < singleInsuranceData.owners.length; i++) {
               if (singleInsuranceData.owners[i].holderName) {

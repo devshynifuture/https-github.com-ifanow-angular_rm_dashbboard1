@@ -1,0 +1,8 @@
+::ng-deep .disable{
+    pointer-events: none;
+}
+::ng-deep .mat-step-header[aria-labelledby="disabled_af"] {
+    pointer-events: none !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }

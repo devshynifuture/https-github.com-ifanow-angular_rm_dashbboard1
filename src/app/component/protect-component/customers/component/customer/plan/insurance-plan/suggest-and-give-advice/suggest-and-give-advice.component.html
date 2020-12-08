@@ -13,8 +13,8 @@
         <div class="col-md-12 p-0">
             <hr id="suggest-advice-top">
             <hr id="suggest-advice-bottom">
-            <mat-horizontal-stepper #stepper id="ui-suggest-advice" [disableRipple]="true">
-                <mat-step>
+            <mat-horizontal-stepper #stepper id="ui-suggest-advice"  linear>
+                <mat-step [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="adviceForm">
                         <ng-template matStepLabel>
                             STEP 1
@@ -23,37 +23,39 @@
                         <div class="pt-40">
                             <div class="row">
                                 <div class="col-md-6 pl-0">
-                                    <p class="m-0 text-black roboto" *ngIf="!dataForEdit">Advice header</p>
-                                    <div class="form-group" *ngIf="!dataForEdit">
-                                        <!-- <mat-form-field>
-                                            <mat-select #header autocomplete="off" class="form-control br-0"
-                                                formControlName="header" matInput>
-
-                                                <mat-option value=''>Select option</mat-option>
-                                                <mat-option *ngFor="let option of adviceHeaderList ;index as i"
-                                                    [value]="option.id">
-                                                    {{option.value}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-error>This field is required
-                                            </mat-error>
-                                        </mat-form-field> -->
+                                    <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'suggestNew' && flag == 'Add'">Advice header</p>
+                                    <div class="form-group" *ngIf="childComponentFlag == 'suggestNew' && flag == 'Add'">
+                                       
                                         <mat-form-field>
                                             <input matInput formControlName="header" [value]="'Suggest new policy'" [disabled]="true"
                                                 class="form-control" readonly>
-                                            <!-- <mat-error>
-                                                This field is required
-                                            </mat-error> -->
+                                            
                                         </mat-form-field>
                                     </div>
-                                     <p class="m-0 text-black roboto" *ngIf="dataForEdit">Advice header</p>
-                                        <div class="form-group" *ngIf="dataForEdit">
+                                     <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'existingAdvice'">Advice header</p>
+                                        <div class="form-group" *ngIf="childComponentFlag == 'existingAdvice'">
                                             <mat-form-field>
                                                 <mat-select #headerEdit autocomplete="off" class="form-control br-0"
                                                     formControlName="headerEdit" matInput>
     
                                                     <mat-option value=''>Select option</mat-option>
-                                                    <mat-option (click)="changeHeader(option)" *ngFor="let option of adviceHeaderList ;index as i"
+                                                    <mat-option (click)="changeAdviceName(option)" *ngFor="let option of adviceHeaderList ;index as i"
+                                                        [value]="option.id">
+                                                        {{option.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>This field is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'suggestNew' && flag != 'Add'">Advice header</p>
+                                        <div class="form-group" *ngIf="childComponentFlag == 'suggestNew' && flag != 'Add'">
+                                            <mat-form-field>
+                                                <mat-select #headerEdit autocomplete="off" class="form-control br-0"
+                                                    formControlName="headerEdit" matInput>
+    
+                                                    <mat-option value=''>Select option</mat-option>
+                                                    <mat-option (click)="changeAdviceName(option)" *ngFor="let option of adviceHeaderList ;index as i"
                                                         [value]="option.id">
                                                         {{option.value}}
                                                     </mat-option>
@@ -67,9 +69,7 @@
                                         <mat-form-field>
                                             <textarea matInput formControlName="rationale" class="form-control"
                                                 rows="7"></textarea>
-                                            <!-- <mat-error>
-                                                This field is required
-                                            </mat-error> -->
+                                          
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6 p-0">
@@ -124,19 +124,6 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <p class="m-0 text-black roboto pt-60" *ngIf="hideAmount">Amount</p>
-                                    <div class="form-group" >
-                                        <mat-form-field class="ba-date" *ngIf="hideAmount">
-                                            <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"
-                                                [maxLength]="10" appInputValueValidation formControlName="withdrawalAmt"
-                                                class="form-control b-0">
-                                            <mat-hint align="end" class="f-12">{{withdrawalAmt.value.length}}/10
-                                            </mat-hint>
-                                            <mat-error>
-                                                This field is required
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row pt-44">
@@ -162,23 +149,25 @@
                                             directly start further work on this advice without taking any
                                             explicit
                                             consent from your client.</p>
-                                        <!-- <mat-error class=" f-10 f-500 mt-4">
-                                            This field is required
-                                        </mat-error> -->
+                                   
                                     </mat-radio-group>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </mat-step>
-                <mat-step class="remove-bl">
+                
+                <mat-step class="remove-bl"  [stepControl]="componentRefComponentVal[form]" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null" [editable]="true">
                     <ng-template matStepLabel>
-                        STEP 2
+                        STEP 2{{componentRefComponentVal[form]}}
                         <p class="m-0 text-black roboto">Asset details</p>
                     </ng-template>
                     <ng-template #dynamic></ng-template>
                 </mat-step>
             </mat-horizontal-stepper>
+
+              
+       
         </div>
     </div>
 </div>

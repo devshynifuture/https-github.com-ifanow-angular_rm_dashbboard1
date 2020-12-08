@@ -1,16 +1,16 @@
-import {HttpParams, HttpHeaders} from '@angular/common/http';
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
-import {interval} from 'rxjs';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
     this.createForm();
     // }
     const hostName = window.location.hostname;
-    if (hostName.split('.').includes('beta')) {
+    if (hostName.split('.').includes('beta') || hostName.split('.').includes('myplanner')) {
       this.isBetaDomain = true;
     } else {
       this.isBetaDomain = false;
@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({hostName: window.location.hostname})
+    this.peopleService.getClientLogo({ hostName: window.location.hostname })
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');
@@ -173,14 +173,14 @@ export class LoginComponent implements OnInit {
           } else {
             this.getOtpBtnOption.active = false;
             // this.eventService.openSnackBar('error found', 'Dismiss');
-            this.userName.setErrors({incorrect: true});
+            this.userName.setErrors({ incorrect: true });
           }
         },
         err => {
           this.getOtpBtnOption.active = false;
           // this.eventService.openSnackBar(err, 'Dismiss')
           if (err == 'Username not found.') {
-            this.userName.setErrors({incorrect: true});
+            this.userName.setErrors({ incorrect: true });
           } else {
             this.eventService.openSnackBar(err, 'Dismiss');
           }
@@ -252,7 +252,7 @@ export class LoginComponent implements OnInit {
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'Email';
-      const obj = {email: data.email};
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     }
   }
@@ -393,7 +393,7 @@ export class LoginComponent implements OnInit {
           if (data.forceResetPassword) {
             data.buttonFlag = 'reset';
             this.router.navigate(['/login/setpassword'],
-              {state: {userData: data}});
+              { state: { userData: data } });
           } else {
             this.loginService.handleUserData(this.authService, this.router, data);
           }

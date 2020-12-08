@@ -29,8 +29,15 @@ export const appConfig = {
   AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
+  RM_MAPPED_UNMAPPED_SCHEME_COUNT_NJ_PRUDENT: 'rmdashboard/count/mapped/unmapped/schemes',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
   CLIENT_WITHOUT_MF: 'backoffice/clientWithoutMf/get',
+  GET_SCHEME_LIST_MIS_AUM: 'backoffice/scheme/list/get',
+  RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/unmap/njprudent/schemes',
+  RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/map/njprudent/schemes',
+
+  GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
+  GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
@@ -630,8 +637,7 @@ export const appConfig = {
 
   BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
   BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'rmdashboard/get/unmapped/njprudent/schemes',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'rmdashboard/get/unmapped/njprudent/schemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT: 'rmdashboard/get/unmapped/njprudent/schemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
   BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',

@@ -111,7 +111,7 @@
             <th mat-header-cell *matHeaderCellDef  class="br">
                 <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
                     [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -225,7 +225,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="editAdvice('Health Insurance',element)">Give advice</button>
+                        <button mat-menu-item (click)="editAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Health Insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Health Insurance',element)">Delete</button>
                     </mat-menu>
@@ -235,7 +235,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf=" healthInsuranceDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf=" healthInsuranceDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -302,14 +302,14 @@
         [dataSource]="personalAccidentDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="personalCount==personalAccidentDataSource.data.length"
+                    [indeterminate]="personalCount>0 && personalCount<personalAccidentDataSource.data.length"
+                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag" (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,personalAccidentDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -418,7 +418,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Personal accident',element)">Give advice</button>
+                            <button mat-menu-item (click)="editAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Personal accident',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Personal accident',element)">Delete</button>
                     </mat-menu>
@@ -428,7 +428,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="personalAccidentDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="personalAccidentDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -495,14 +495,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="criticalCount==criticalInsDataSource.data.length"
+                    [indeterminate]="criticalCount>0 && criticalCount<criticalInsDataSource.data.length"
+                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag" (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,criticalInsDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -611,7 +611,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Critical illness',element)">Give advice</button>
+                            <button mat-menu-item (click)="editAdvice('Critical illness',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Critical illness',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Critical illness',element)">Delete</button>
                     </mat-menu>
@@ -621,7 +621,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && criticalInsDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && criticalInsDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -678,14 +678,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="motorCount==motorDataSource.data.length"
+                    [indeterminate]="motorCount>0 && motorCount<motorDataSource.data.length"
+                    *ngIf="isLoading == false && motorDataSource.tableFlag" (change)="checkAll($event,motorDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,motorDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -794,7 +794,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Motor insurance',element)">Give advice</button>
+                            <button mat-menu-item (click)="editAdvice('Motor insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Motor insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Motor insurance',element)">Delete</button>
                     </mat-menu>
@@ -804,7 +804,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && motorDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && motorDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -861,14 +861,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="travelCount==travelDataSource.data.length"
+                    [indeterminate]="travelCount>0 && travelCount<travelDataSource.data.length"
+                    *ngIf="isLoading == false && travelDataSource.tableFlag" (change)="checkAll($event,travelDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,travelDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -977,7 +977,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Travel insurance',element)">Give advice</button>
+                            <button mat-menu-item (click)="editAdvice('Travel insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Travel insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Travel insurance',element)">Delete</button>
                     </mat-menu>
@@ -1044,14 +1044,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="homeCount==homeInsDataSource.data.length"
+                    [indeterminate]="homeCount>0 && homeCount<homeInsDataSource.data.length"
+                    *ngIf="isLoading == false && homeInsDataSource.tableFlag" (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,homeInsDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -1160,7 +1160,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Home insurance',element)">Give advice</button>
+                            <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="editAdvice('Home insurance',element)" >Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Home insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Home insurance',element)">Delete</button>
                     </mat-menu>
@@ -1170,7 +1170,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && homeInsDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && homeInsDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -1237,14 +1237,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="fireCount==FireDataSource.data.length"
+                    [indeterminate]="fireCount>0 && fireCount<FireDataSource.data.length"
+                    *ngIf="isLoading == false && FireDataSource.tableFlag" (change)="checkAll($event,FireDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,FireDataSource,'Health Insurance')"
                     [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
             </td>
         </ng-container>
@@ -1353,7 +1353,7 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Fire & special perils insurance',element)">Give advice</button>
+                            <button mat-menu-item (click)="editAdvice('Fire & special perils insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="editAdvice('Fire & special perils insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
@@ -1365,7 +1365,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && FireDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && FireDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>

@@ -137,15 +137,22 @@ export class TransactionSummaryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
         return;
-      }else{
+      } else {
         this.defaultBank = result;
-        this.transactionSummary.acceptedMandate.forEach(element => {
-          if(result.ifscCode == element.ifscCode){
-            this.bankDetailsSend.emit(result);
-            this.transactionSummary.selectedMandate = element
-            this.transactionSummary.bankDetails = this.bankDetails
+        if (this.transactionSummary.paymentMode == 2) {
+          if (this.transactionSummary.acceptedMandate) {
+            this.transactionSummary.acceptedMandate.forEach(element => {
+              if (result.ifscCode == element.ifscCode) {
+                this.bankDetailsSend.emit(result);
+                this.transactionSummary.selectedMandate = element;
+                this.transactionSummary.bankDetails = this.bankDetails;
+              }
+            });
           }
-        });
+        } else {
+          this.bankDetailsSend.emit(result);
+          this.transactionSummary.bankDetails = this.bankDetails;
+        }
       }
     });
   }
@@ -193,20 +200,20 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    this.getMandateDetails()
+    this.getMandateDetails();
     this.bankDetails = data;
-    console.log('bank == ',this.bankDetails)
+    console.log('bank == ', this.bankDetails);
     this.bankDetails.forEach(element => {
-      if(element.defaultBankFlag == 'Y'){
-        this.defaultBank = element
-        element.selected = true
+      if (element.defaultBankFlag == 'Y') {
+        this.defaultBank = element;
+        element.selected = true;
       }
     });
-   
+
     this.bankDetails.forEach(element => {
-      element.selected = false
+      element.selected = false;
     });
-    //this.bankDetails[0].selected = true
+    // this.bankDetails[0].selected = true
     this.bankDetailsSend.emit(this.defaultBank);
     if (this.bankDetails.length > 1) {
       this.showBankEdit = true;

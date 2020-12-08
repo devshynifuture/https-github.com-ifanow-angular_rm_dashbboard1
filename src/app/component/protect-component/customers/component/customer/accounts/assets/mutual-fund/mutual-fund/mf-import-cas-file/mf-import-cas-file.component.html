@@ -239,8 +239,8 @@
   </div>
 
   <div id="mf-import-tabs" *ngIf="showMappingTables">
-    <mat-tab-group [selectedIndex]="matTabIndex">
-      <mat-tab (click)="matTabIndex=0">
+    <mat-tab-group [selectedIndex]="matTabIndex" (selectedTabChange)="onTabChange($event)">
+      <mat-tab>
         <ng-template mat-tab-label>
           <span>
             Unmapped investors
@@ -341,7 +341,7 @@
         </div>
       </mat-tab>
 
-      <mat-tab (click)="matTabIndex=1">
+      <mat-tab>
         <ng-template mat-tab-label>
           <span>
             Unmapped transactions
@@ -425,7 +425,7 @@
         </div>
       </mat-tab>
 
-      <mat-tab (click)="matTabIndex=2">
+      <mat-tab>
         <ng-template mat-tab-label>
           <span>
             Unmapped schemes
