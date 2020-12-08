@@ -111,7 +111,7 @@
             <th mat-header-cell *matHeaderCellDef  class="br">
                 <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
                     [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -301,14 +301,14 @@
         [dataSource]="personalAccidentDataSource" class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="personalCount==personalAccidentDataSource.data.length"
+                    [indeterminate]="personalCount>0 && personalCount<personalAccidentDataSource.data.length"
+                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag"  (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,personalAccidentDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -493,14 +493,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="criticalCount==criticalInsDataSource.data.length"
+                    [indeterminate]="criticalCount>0 && criticalCount<criticalInsDataSource.data.length"
+                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag"  (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,criticalInsDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -675,14 +675,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="motorCount==motorDataSource.data.length"
+                    [indeterminate]="motorCount>0 && motorCount<motorDataSource.data.length"
+                    *ngIf="isLoading == false && motorDataSource.tableFlag"  (change)="checkAll($event,motorDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,motorDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -857,14 +857,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="travelCount==travelDataSource.data.length"
+                    [indeterminate]="travelCount>0 && travelCount<travelDataSource.data.length"
+                    *ngIf="isLoading == false && travelDataSource.tableFlag"  (change)="checkAll($event,travelDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,travelDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -1039,14 +1039,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="homeCount==homeInsDataSource.data.length"
+                    [indeterminate]="homeCount>0 && homeCount<homeInsDataSource.data.length"
+                    *ngIf="isLoading == false && homeInsDataSource.tableFlag"  (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,homeInsDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
@@ -1231,14 +1231,14 @@
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef  class="br">
-                <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
-                    [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading==false" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                <mat-checkbox [checked]="fireCount==FireDataSource.data.length"
+                    [indeterminate]="fireCount>0 && fireCount<FireDataSource.data.length"
+                    *ngIf="isLoading == false && FireDataSource.tableFlag"  (change)="checkAll($event,FireDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
-                    (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
+                    (change)="checkSingle($event,element,FireDataSource,'Health Insurance')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>

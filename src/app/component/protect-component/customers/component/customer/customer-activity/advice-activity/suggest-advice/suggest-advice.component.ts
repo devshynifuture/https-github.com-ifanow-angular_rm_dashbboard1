@@ -44,6 +44,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   count = 0;
   adviceToCategoryTypeMasterId: any;
   adviceToCategoryId: any;
+  hideAmount: boolean;
+  adviceName: any;
+  adviceNameObj: any;
   [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
@@ -60,7 +63,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     "status": [, Validators.required],
     "givenOnDate": [, Validators.required],
     "implementDate": [, Validators.required],
-    // "withdrawalAmt": [, Validators.required],
+    "withdrawalAmt": [null, Validators.required],
     "consentOption": ['1', Validators.required],
   })
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -109,6 +112,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         this.adviceToCategoryId = data.childData.adviceToCategoryId;
         this.adviceToCategoryTypeMasterId = data.data ? (data.data.adviceDetails ? data.data.adviceDetails.adviceToCategoryTypeMasterId : '') : ''
         this.adviceHeaderList = data.data ? data.data.adviceHeaderList : '';
+        this.adviceNameObj = data.adviceNameObj;
+        this.adviceName = this.adviceNameObj.adviceName;
         this.getFormData(data);
       }
     });
@@ -164,12 +169,13 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
-      // withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
+      withdrawalAmt: [(this.dataForEdit ? (this.dataForEdit.adviceAllotment ? this.dataForEdit.adviceAllotment : null) : null),[Validators.required]],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
     });
-    // ==============owner-nominee Data ========================\\
-    /***owner***/
-
+    this.hideAmount = (this.childComponentFlag == 'Advice Insurance' && this.adviceForm.get('header').value == '2') ? true : false;
+  }
+  changeHeader(data){
+    this.hideAmount = data.value == 'Surrender' ? true : false;
   }
   addOrNextStep() {
     this.count++
@@ -931,7 +937,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
                 adviceId: this.adviceForm.get('headerEdit').value,
-                // adviceAllotment: this.adviceForm.get('withdrawalAmt').value,
+                adviceAllotment: this.adviceForm.get('withdrawalAmt').value ? this.adviceForm.get('withdrawalAmt').value : null,
                 clientId: AuthService.getClientId(),
                 advisorId: AuthService.getAdvisorId(),
                 // adviseCategoryTypeMasterId: 2,
@@ -1289,7 +1295,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             adviceDescription: this.adviceForm.controls.rationale.value,
             status: this.adviceForm.controls.status.value,
             consentOption: this.adviceForm.controls.consentOption.value,
-            // withdrawAmount: this.adviceForm.controls.withdrawalAmt.value,
+            withdrawAmount: this.adviceForm.controls.withdrawalAmt.value ? this.adviceForm.controls.withdrawalAmt.value : null,
           }
       }
 

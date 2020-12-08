@@ -152,7 +152,7 @@ export class PersonalInsuranceComponent implements OnInit {
 		this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
         this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
         this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
-        this.showHeader = data.flag;
+        this.showHeader = data.flag
 		this.recommendOrNot = data.recommendOrNot;
 		this.getdataForm(data)
 		// this.setInsuranceDataFormField(data);
