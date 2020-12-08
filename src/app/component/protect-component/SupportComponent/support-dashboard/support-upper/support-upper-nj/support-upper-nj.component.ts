@@ -254,8 +254,9 @@ export class SupportUpperNjComponent implements OnInit {
     console.log('dropdown,changed', event);
   }
 
-  onPaginationChange(event): void {
+  onPaginationChange(event) {
     console.log(event);
+    return event;
   }
 }
 

@@ -23,11 +23,10 @@
         <h5> Search Prudent scheme</h5>
     </div>
 
-    <div class="col-md-6 pt-11">
+    <div class="col-md-6">
         <mat-form-field appearance="standard" floatLabel="never">
-            <input #inputSearch class="form-control" matInput placeholder="Search"
-                (focus)="searchSchemeName(inputSearch.value)" aria-label="State" [matAutocomplete]="auto1"
-                [formControl]="searchSchemeControl">
+            <input #inputSearch class="form-control" matInput placeholder="Search" aria-label="State"
+                [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
             <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                 <!-- <ng-container *ngIf="!isLoadingForDropDown">
@@ -41,15 +40,15 @@
     </div>
 
     <div class="col-md-3 pt-11">
-        <mat-select>
+        <mat-select (selectionChange)="setmapUnmap($event)" [formControl]="mapUnmapFC">
             <mat-option *ngFor="let item of prudentSelectOptionList" [value]="item.id">
                 {{ item.title }}
             </mat-option>
         </mat-select>
     </div>
 
-    <div class="col-md-3 pt-11">
-        <mat-paginator [length]="totalNjCount" [hidePageSize]="true" [pageSize]="50"
+    <div class="col-md-3">
+        <mat-paginator [length]="totalPrudentCount" [hidePageSize]="true" [pageSize]="50"
             [ngClass]="{'cursor-not-allowed': isLoading}"
             (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
         </mat-paginator>
@@ -90,7 +89,7 @@
                             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                             <ng-container *ngIf="!isLoadingForDropDown">
                                 <mat-option *ngFor="let scheme of filteredSchemes"
-                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName"
+                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme"
                                     [matTooltip]="scheme.schemeName" matTooltipPosition="after">
                                     <span><b>{{scheme.schemeName}}</b> </span>
                                 </mat-option>
@@ -140,7 +139,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.navDate | date: 'dd/MM/yyyy'}}
+                        {{element.navDate == ''?'':(element.navDate | date: 'dd/MM/yyyy')}}
                     </div>
                 </td>
             </ng-container>
@@ -157,8 +156,9 @@
             <ng-container matColumnDef="map">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <button class="btn-primary btn-Map" mat-stroked-button>
-                        Map
+                    <button class="btn-primary btn-Map" mat-stroked-button
+                        (click)="isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)">
+                        {{isMapped ? 'Unmap':'Map'}}
                     </button>
                 </td>
             </ng-container>
