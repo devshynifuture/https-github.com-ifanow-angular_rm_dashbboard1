@@ -3,7 +3,7 @@ import { EventService } from './../../../../../../Data-service/event.service';
 import { SupportUpperService } from './../support-upper.service';
 import { SubscriptionInject } from './../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, PageEvent } from '@angular/material';
 import { switchMap, finalize, debounceTime, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AnyCnameRecord } from 'dns';
@@ -38,6 +38,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   searchSchemeControlSubs: Subscription;
   selectedSchemeRes: any = null;
   totalPrudentCount = null;
+  pageEvent: PageEvent;
 
   constructor(
     public supportUpperService: SupportUpperService,
@@ -174,6 +175,10 @@ export class SupportUpperPrudentComponent implements OnInit {
         console.log(res);
       })
 
+  }
+
+  onPaginationChange(event) {
+    console.log(event);
   }
 
 
