@@ -130,6 +130,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   setmapUnmap(event) {
     console.log(event);
     this.isMapped = event.value == 1 ? false : true;
+    this.isLoading = true;
     this.getMappedUnmappedPrudentList();
   }
 
@@ -179,6 +180,7 @@ export class SupportUpperPrudentComponent implements OnInit {
 
   onPaginationChange(event) {
     console.log(event);
+    return event;
   }
 
 
