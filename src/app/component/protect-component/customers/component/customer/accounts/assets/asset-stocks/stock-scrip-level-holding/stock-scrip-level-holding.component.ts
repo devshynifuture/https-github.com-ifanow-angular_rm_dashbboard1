@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
@@ -65,6 +65,12 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.getFormData(data);
   }
 
+  isTHolding: boolean = false;
+  @Input() set tHolding(data) {
+
+    this.getFormData(data);
+    this.isTHolding = true;
+  }
 
   getPortfolioData(data) {
     console.log("getPortfolioData", data)

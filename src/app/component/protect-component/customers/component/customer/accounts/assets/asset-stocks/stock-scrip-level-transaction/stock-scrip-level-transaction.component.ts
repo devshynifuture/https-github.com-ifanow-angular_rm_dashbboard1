@@ -54,11 +54,18 @@ export class StockScripLevelTransactionComponent implements OnInit {
   transactionTypeList = [];
   callMethod: { methodName: string; ParamValue: any; };
   nomineesList: any[] = [];
-
+  Holdings: any;
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
+    console.log(data, ' edit data');
+    data.stockListForEditView.forEach(h => {
+      if (h.stockType) {
+        h['stockListForEditView'] = [h];
+        this.Holdings = h;
+      }
+    });
     this.getFormData(data);
   }
   ngOnInit() {

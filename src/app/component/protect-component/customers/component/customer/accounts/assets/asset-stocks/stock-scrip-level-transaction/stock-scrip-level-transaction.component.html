@@ -78,6 +78,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="Holdings">
+        <app-stock-scrip-level-holding [tHolding]="Holdings"></app-stock-scrip-level-holding>
+    </div>
     <div class="row pl-28">
         <div class="col-md-12 pl-0 mt-65">
             <h4 class="mb-20 text-black">TRANSACTIONS</h4>
