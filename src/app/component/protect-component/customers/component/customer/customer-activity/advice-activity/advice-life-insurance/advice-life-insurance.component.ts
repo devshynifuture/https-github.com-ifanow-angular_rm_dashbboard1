@@ -321,7 +321,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     return data;
   }
   openAddEditAdvice(value, data) {
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.id) :this.adviceName ) :this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : ''
     this.adviceNameObj = {adviceName:this.adviceName};
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}

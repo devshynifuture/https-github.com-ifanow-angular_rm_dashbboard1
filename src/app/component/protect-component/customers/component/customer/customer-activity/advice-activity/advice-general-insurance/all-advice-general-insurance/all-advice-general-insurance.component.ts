@@ -32,19 +32,12 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   clientId: any;
   isLoading: boolean;
   selectedAssetId: any = [];
-  healthInsuranceDataSource = new MatTableDataSource([{}, {}, {}]);
-  personalAccidentDataSource = new MatTableDataSource([{}, {}, {}]);
   healthCount: any;
   personalCount: any;
-  criticalInsDataSource = new MatTableDataSource([{}, {}, {}]);
   criticalCount: any;
-  motorDataSource = new MatTableDataSource([{}, {}, {}]);
   motorCount: any;
-  travelDataSource = new MatTableDataSource([{}, {}, {}]);
   travelCount: any;
-  homeInsDataSource = new MatTableDataSource([{}, {}, {}]);
   homeCount: any;
-  FireDataSource = new MatTableDataSource([{}, {}, {}]);
   fireCount: any;
   allAdvice = true
   displayList: any;
@@ -58,6 +51,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   homeCpy: any;
   fireCpy: any;
   GIData: any;
+  healthInsuranceDataSource: any;
+  personalAccidentDataSource:any;
+  criticalInsDataSource: any;
+  motorDataSource: any;
+  travelDataSource: any;
+  homeInsDataSource: any;
+  FireDataSource: any;
   constructor(private adviceUtilService: AdviceUtilsService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -125,6 +125,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   }
   getAdviceByAsset() {
     this.isLoading = true;
+    this.healthInsuranceDataSource = [{}, {}, {}];
+    this.personalAccidentDataSource = [{}, {}, {}];
+    this.criticalInsDataSource = [{}, {}, {}];
+    this.motorDataSource = [{}, {}, {}];
+    this.travelDataSource = [{}, {}, {}];
+    this.homeInsDataSource = [{}, {}, {}];
+    this.FireDataSource = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -162,13 +169,20 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     }, (error) => {
       this.eventService.openSnackBar('error', 'Dismiss');
       this.isLoading = false;
-      this.healthInsuranceDataSource.data = [];
-      this.personalAccidentDataSource.data = [];
-      this.criticalInsDataSource.data = [];
-      this.motorDataSource.data = [];
-      this.travelDataSource.data = [];
-      this.homeInsDataSource.data = [];
-      this.FireDataSource.data = [];
+      this.healthInsuranceDataSource = [];
+      this.personalAccidentDataSource = [];
+      this.criticalInsDataSource = [];
+      this.motorDataSource = [];
+      this.travelDataSource = [];
+      this.homeInsDataSource = [];
+      this.FireDataSource = [];
+      this.healthInsuranceDataSource['tableFlag'] = (this.healthInsuranceDataSource.length == 0) ? false : true;
+      this.personalAccidentDataSource['tableFlag'] = (this.personalAccidentDataSource.length == 0) ? false : true;
+      this.criticalInsDataSource['tableFlag'] = (this.criticalInsDataSource.length == 0) ? false : true;
+      this.motorDataSource['tableFlag'] = (this.motorDataSource.length == 0) ? false : true;
+      this.travelDataSource['tableFlag'] = (this.travelDataSource.length == 0) ? false : true;
+      this.homeInsDataSource['tableFlag'] = (this.homeInsDataSource.length == 0) ? false : true;
+      this.FireDataSource['tableFlag'] = (this.FireDataSource.length == 0) ? false : true;
     });
   }
   filterForAsset(data) {//filter data to for showing in the table
