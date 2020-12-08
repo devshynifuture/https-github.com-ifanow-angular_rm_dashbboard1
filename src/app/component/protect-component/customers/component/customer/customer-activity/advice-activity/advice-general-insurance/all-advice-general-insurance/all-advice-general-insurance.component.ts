@@ -191,37 +191,49 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     return filterdData;
   }
   getAllSchemeResponse(data) {
-    this.isLoading = false;
-    // let healthData = this.filterForAsset(data.HEALTH)
-    let healthData = this.filterData(data.HEALTH);
-    this.healthCpy = healthData;
-    this.healthInsuranceDataSource = new MatTableDataSource(healthData);
-    let personalData = this.filterData(data.PERSONAL_ACCIDENT);
-    this.presonalCpy = healthData;
-    this.personalAccidentDataSource = new MatTableDataSource(personalData);
-    let critical = this.filterData(data.CRITICAL_ILLNESS);
-    this.criticalCpy = healthData;
-    this.criticalInsDataSource = new MatTableDataSource(critical);
-    let motorData = this.filterData(data.MOTOR);
-    this.motorCpy = healthData;
-    this.motorDataSource = new MatTableDataSource(motorData);
-    let travelData = this.filterData(data.TRAVEL);
-    this.travelCpy = healthData;
-    this.travelDataSource = new MatTableDataSource(travelData);
-    let homeData = this.filterData(data.HOME);
-    this.homeCpy = healthData;
-    this.homeInsDataSource = new MatTableDataSource(homeData);
-    let fireData = this.filterData(data.FIRE);
-    this.fireCpy = healthData;
-    this.FireDataSource = new MatTableDataSource(fireData);
-    this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
-    this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
-    this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
-    this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
-    this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
-    this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
-    this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
-    console.log("::::::::::::::::", data)
+    if(data.HEALTH || data.PERSONAL_ACCIDENT || data.CRITICAL_ILLNESS){
+      this.isLoading = false;
+      // let healthData = this.filterForAsset(data.HEALTH)
+      let healthData = this.filterData(data.HEALTH,5);
+      this.healthCpy = healthData;
+      this.healthInsuranceDataSource = new MatTableDataSource(healthData);
+      let personalData = this.filterData(data.PERSONAL_ACCIDENT,7);
+      this.presonalCpy = healthData;
+      this.personalAccidentDataSource = new MatTableDataSource(personalData);
+      let critical = this.filterData(data.CRITICAL_ILLNESS,6);
+      this.criticalCpy = healthData;
+      this.criticalInsDataSource = new MatTableDataSource(critical);
+      let motorData = this.filterData(data.MOTOR,4);
+      this.motorCpy = healthData;
+      this.motorDataSource = new MatTableDataSource(motorData);
+      let travelData = this.filterData(data.TRAVEL,8);
+      this.travelCpy = healthData;
+      this.travelDataSource = new MatTableDataSource(travelData);
+      let homeData = this.filterData(data.HOME,9);
+      this.homeCpy = healthData;
+      this.homeInsDataSource = new MatTableDataSource(homeData);
+      let fireData = this.filterData(data.FIRE,10);
+      this.fireCpy = healthData;
+      this.FireDataSource = new MatTableDataSource(fireData);
+      this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
+      this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
+      this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
+      this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
+      this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
+      this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
+      this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
+      console.log("::::::::::::::::", data)
+    }else{
+      this.isLoading = false;
+      this.healthInsuranceDataSource.data = [];
+      this.personalAccidentDataSource.data = [];
+      this.criticalInsDataSource.data = [];
+      this.motorDataSource.data = [];
+      this.travelDataSource.data = [];
+      this.homeInsDataSource.data = [];
+      this.FireDataSource.data = [];
+    }
+    
   }
   filterData(data,id) {
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
