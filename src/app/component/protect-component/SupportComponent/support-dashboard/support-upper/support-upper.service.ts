@@ -20,7 +20,7 @@ export class SupportUpperService {
   }
 
   getUnmappedSchemesNj(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT, data)
   }
 
   // get apis for prudent
@@ -30,7 +30,7 @@ export class SupportUpperService {
 
 
   getUnmappedSchemesPrudent(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT, data)
   }
 
   getFilteredSchemes(data) {

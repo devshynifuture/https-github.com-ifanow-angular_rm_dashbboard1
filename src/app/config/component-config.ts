@@ -637,8 +637,7 @@ export const appConfig = {
 
   BACKOFFICE_GET_ALL_SCHEMES_NJ: 'backoffice/get/allshemes/nj',
   BACKOFFICE_GET_ALL_SCHEMES_PRUDENT: 'backoffice/get/allshemes/prudent',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'rmdashboard/get/unmapped/njprudent/schemes',
-  BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'rmdashboard/get/unmapped/njprudent/schemes',
+  BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ_PRUDENT: 'rmdashboard/get/unmapped/njprudent/schemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
   BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
