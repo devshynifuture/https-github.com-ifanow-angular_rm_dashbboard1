@@ -263,8 +263,12 @@ export class PortfolioFieldComponent implements OnInit {
         } else {
           this.cusService.addAssetStocks(obj).subscribe(
             data => {
-
-              this.eventService.openSnackBar("portfolio is added", "Dismiss");
+              if (data.reasonOfError) {
+                this.eventService.openSnackBar(data.reasonOfError);
+              }
+              else {
+                this.eventService.openSnackBar("portfolio is added", "Dismiss");
+              }
               this.getPortfolioList();
             },
             error => this.eventService.showErrorMessage(error)

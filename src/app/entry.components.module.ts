@@ -132,6 +132,7 @@ import { MfImportCasFileComponent } from './component/protect-component/customer
 import { IinCreationLoaderComponent } from './component/protect-component/AdviserComponent/transactions/overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 import { StatusFileUploadComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/status-file-upload/status-file-upload.component';
 import { PreviewFinPlanComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/preview-fin-plan/preview-fin-plan.component';
+import { AddOthersAssetComponent } from './component/protect-component/customers/component/customer/accounts/assets/others-assets/add-others-asset/add-others-asset.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -213,6 +214,7 @@ export const componentList = [
   AddLiabilitiesComponent,
   AddInsuranceComponent,
   AddRealEstateComponent,
+  AddOthersAssetComponent,
   AddNPSComponent,
   RecuringDepositComponent,
   OthersComponent,

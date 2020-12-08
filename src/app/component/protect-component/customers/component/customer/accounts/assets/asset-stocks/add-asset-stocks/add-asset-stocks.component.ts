@@ -10,6 +10,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { MatDialog } from '@angular/material';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
+import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -406,12 +407,30 @@ export class AddAssetStocksComponent implements OnInit {
       data => {
         this.barButtonOptions.active = false;
         this.submitStockDataRes(data);
+        if (data.reasonOfError) {
+          // this.eventService.openSnackBar(data.reasonOfError);
+          this.presentDialog("\"" + data.portfolioName + "\"" + ' ' + data.reasonOfError)
+        }
       },
       error => {
         this.barButtonOptions.active = false;
         this.eventService.showErrorMessage(error);
       }
     )
+  }
+
+  presentDialog(data): void {
+    let dataObj;
+    dataObj = { head: 'Portfolio already present', data: [data] };
+
+    const dialogRef = this.dialog.open(MsgDailogComponent, {
+      data: dataObj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
   submitStockDataRes(data) {
     console.log(data)

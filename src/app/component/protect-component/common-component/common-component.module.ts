@@ -23,10 +23,11 @@ import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-vi
 import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-button/delete-progress-button.component';
 import { MultipleEmailAddressComponent } from './multiple-email-address/multiple-email-address.component';
 import { ResetClientPasswordComponent } from '../PeopleComponent/people/Component/people-clients/add-client/reset-client-password/reset-client-password.component';
+import { MsgDailogComponent } from './msg-dailog/msg-dailog.component';
 
 @NgModule({
   declarations: [DeleteProgressButtonComponent, ResetClientPasswordComponent,
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, MsgDailogComponent],
   exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent],
   imports: [
     MaterialModule,
@@ -43,7 +44,7 @@ import { ResetClientPasswordComponent } from '../PeopleComponent/people/Componen
 
     // AppModule
   ],
-  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent]
+  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent, MsgDailogComponent]
 })
 export class CommonComponentModule {
 }

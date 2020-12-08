@@ -475,6 +475,11 @@ export class StockScripLevelTransactionComponent implements OnInit {
       if (this.editApiData && this.portfolioData.id == 0) {
         obj.ownerList[0].id = null;
       }
+      if (this.portfolioData.id != 0) {
+        obj.ownerList[0].id = this.portfolioData.ownerList[0].id;
+        obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
+
+      }
       console.log(obj)
       if (this.editApiData) {
         this.cusService.editStockData(obj).subscribe(

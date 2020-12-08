@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
+import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -393,6 +394,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
         let objStock = {
           'id': null,
           "scripNameId": element.value.scripNameId,
+          "scripName": element.value.scripName,
           "currentMarketValue": 0,
           "stockType": 2,
           "amountInvested": 0,
@@ -483,6 +485,9 @@ export class StockScripLevelHoldingComponent implements OnInit {
       }
 
       if (this.portfolioData.id != 0) {
+        // obj.ownerList[0].id = this.portfolioData.ownerList[0].id;
+        // obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
+
         obj.stockList.forEach(s => {
           s.portfolioId = this.portfolioData.id
         });
@@ -493,6 +498,11 @@ export class StockScripLevelHoldingComponent implements OnInit {
       else {
         obj.id = 0
         obj.ownerList[0].id = 0;
+      }
+
+      if (this.portfolioData.id != 0 && !this.editApiData) {
+        obj.ownerList[0].id = this.portfolioData.ownerList[0].id;
+        obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
       }
 
       if (this.editApiData) {
@@ -514,6 +524,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
           data => {
             console.log(data);
             this.Close();
+            // if (data.stockList[0].transactionOrHoldingSummaryList[0].reasonOfError) {
+            //   this.eventService.openSnackBar(data.stockList[0].transactionOrHoldingSummaryList[0].reasonOfError + '!', "Dismiss");
+            // }
+            this.showPresentMsg(data)
             this.barButtonOptions.active = false;
           },
           error => {
@@ -525,6 +539,38 @@ export class StockScripLevelHoldingComponent implements OnInit {
       // }
     }
   }
+  errPresent: any = [];
+  showPresentMsg(data) {
+    data.stockList.forEach(s => {
+      if (s.transactionOrHoldingSummaryList[0].reasonOfError) {
+        this.errPresent.push(s.transactionOrHoldingSummaryList[0].reasonOfError);
+      }
+
+    });
+    if (this.errPresent.length > 0) {
+      this.presentDialog();
+    }
+  }
+
+  presentDialog(): void {
+    let dataObj;
+    if (this.errPresent.length > 1) {
+      dataObj = { head: 'Holdings already present', data: this.errPresent };
+    }
+    else {
+      dataObj = { head: 'Holding already present', data: this.errPresent };
+    }
+    const dialogRef = this.dialog.open(MsgDailogComponent, {
+      data: dataObj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+
 
   scripDataList: any = [];
   getScriptList(data) {
@@ -534,6 +580,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   scripData: any;
   getScript(data, i) {
     this.scripData = data;
+    this.HoldingArray.controls[i].get('scripName').setValue(this.scripData.name);
     this.HoldingArray.controls[i].get('scripNameId').setValue(this.scripData.id);
   }
   Close() {
