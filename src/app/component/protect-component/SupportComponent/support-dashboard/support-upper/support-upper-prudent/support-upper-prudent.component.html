@@ -48,7 +48,7 @@
     </div>
 
     <div class="col-md-3">
-        <mat-paginator [length]="totalNjCount" [hidePageSize]="true" [pageSize]="50"
+        <mat-paginator [length]="totalPrudentCount" [hidePageSize]="true" [pageSize]="50"
             [ngClass]="{'cursor-not-allowed': isLoading}"
             (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
         </mat-paginator>

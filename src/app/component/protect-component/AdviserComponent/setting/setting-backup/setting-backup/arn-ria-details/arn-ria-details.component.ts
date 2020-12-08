@@ -100,7 +100,11 @@ export class ArnRiaDetailsComponent implements OnInit {
   }
 
   getArnMasterType(id) {
-    if (this.globalData.arn_type_master_list)
-      return this.globalData.arn_type_master_list.find((data) => data.id == id).type
+    if (id !== 0) {
+      if (this.globalData.arn_type_master_list)
+        return this.globalData.arn_type_master_list.find((data) => data.id == id).type
+    } else {
+      return '';
+    }
   }
 }

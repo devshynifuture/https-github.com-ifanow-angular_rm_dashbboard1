@@ -37,6 +37,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   schemeControlSubs: Subscription;
   searchSchemeControlSubs: Subscription;
   selectedSchemeRes: any = null;
+  totalPrudentCount = null;
 
   constructor(
     public supportUpperService: SupportUpperService,
@@ -135,7 +136,7 @@ export class SupportUpperPrudentComponent implements OnInit {
     let obj = {
       id: this.selectedSchemeRes.id,
       mutualFundSchemeMasterId: element.id,
-      schemeCode: this.filteredSchemes[0].schemeCode
+      schemeCode: element.schemeCode
     }
     console.log(obj);
     // this.supportUpperService.postMapUnmappedNjPrudentScheme(obj)
@@ -151,7 +152,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       id: this.selectedSchemeRes.id,
       mutualFundSchemeMasterId: element.id,
       rt_id: 4,
-      schemeCode: this.filteredSchemes[0].schemeCode
+      schemeCode: element.schemeCode
     }
     console.log(obj);
 
