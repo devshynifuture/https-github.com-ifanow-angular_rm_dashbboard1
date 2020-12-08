@@ -1327,7 +1327,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
-      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 1,
+      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : null,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
@@ -1340,8 +1340,6 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
     if (this.flag == 'Add') {
       if (this.childComponentFlag == 'suggestNew') {
-        this.planService.addAdviseOnGeneralInsurance(ObjHealth).subscribe(
-          data => {
             this.planService.addGenralInsurancePlan(obj).subscribe(
               data => {
                 const addPlan = {
@@ -1349,7 +1347,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
                   "insuranceIds": JSON.stringify([data])
                 }
                 const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
-                const giveAdvice = this.planService.addAdviseOnGeneralInsurance(ObjHealth);
+                const giveAdvice = this.activityService.suggestNewGeneralInsurance(ObjHealth);
                 forkJoin(UpadtePolicy, giveAdvice).subscribe(result => {
                   this.barButtonOptions.active = false;
                   this.getAdviceRes(result);
@@ -1358,9 +1356,6 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
                 });
               },
             );
-          },
-          err => this.event.openSnackBar(err, "Dismiss")
-        );
       } else {
         this.planService.addAdviseOnGeneralInsurance(ObjHealth).subscribe(
           data => this.getAdviceRes(data),

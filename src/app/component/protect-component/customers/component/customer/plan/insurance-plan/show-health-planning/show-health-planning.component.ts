@@ -417,7 +417,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {
       flag:flag,
-      adviceHeaderList:flag!='suggestNew' ? this.adviceHeaderList : '',
+      adviceHeaderList:this.adviceHeaderList,
       adviceNameObj:this.adviceNameObj,
       recommendOrNot :flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
       data,
@@ -675,6 +675,9 @@ export class ShowHealthPlanningComponent implements OnInit {
       data.showExisting = true
     } else {
       data.showExisting = true
+      data.insuranceIds = this.insuranceIds
+      data.name = 'Add more';
+      data.currentData = this.dataSource
     }
     data.flag = "suggestExistingPolicy";
     const fragmentData = {

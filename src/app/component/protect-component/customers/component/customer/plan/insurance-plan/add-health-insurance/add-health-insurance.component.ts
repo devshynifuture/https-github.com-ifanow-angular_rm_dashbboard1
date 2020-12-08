@@ -240,6 +240,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
       this.familyMemberList = result[1];
       if(result[0]){
+        // this.inputData.currentData.forEach(item => item.isSelected = true);
+        // let arry= [...this.inputData.currentData,...result[0]]
         let data = this.getHolderNameAndSumAssured(result[0]);
         this.dataSource2 = data;
         this.isLoading = false;
@@ -307,6 +309,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getSumAssured(data);
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
+        // this.addPolicy(singleInsuranceData.isSelected ? singleInsuranceData.isSelected : false, singleInsuranceData) 
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
         singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured ? singleInsuranceData.insurance.insuredMembers[0].sumInsured : singleInsuranceData.insurance.sumInsuredIdv);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
@@ -389,8 +392,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getReviewExistingPolicy();
   }
   addPolicy(event, element) {
-    element.selected = event.checked;
-
+    // element.selected = event.checked ? event.checked : event;
+    element.selected = event.checked
     // this.dataSource2.forEach(item => item.selected = false);
 
     // this.dataSource2.forEach(ele => {
