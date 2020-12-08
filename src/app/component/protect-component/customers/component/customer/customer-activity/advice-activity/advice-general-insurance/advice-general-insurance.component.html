@@ -234,7 +234,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf=" healthInsuranceDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf=" healthInsuranceDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -426,7 +426,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="personalAccidentDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="personalAccidentDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -618,7 +618,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && criticalInsDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && criticalInsDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -800,7 +800,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && motorDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && motorDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -982,7 +982,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && travelDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && travelDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -1164,7 +1164,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && homeInsDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && homeInsDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -1358,7 +1358,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && FireDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && FireDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
 </div>
