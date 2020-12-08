@@ -498,21 +498,21 @@ export class LifeInsuranceComponent implements OnInit {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);
     let suggestPolicy = singleData[0][2];
     if (this.inputData.insuranceType == 1) {
-      suggestPolicy = this.ipService.pushId(suggestPolicy)
-      suggestPolicy = suggestPolicy.filter(d => d.id != id);
+      suggestPolicy =[];
       suggestPolicy.push(array);
       suggestPolicy = suggestPolicy.flat();
       suggestPolicy = this.ipService.pushId(suggestPolicy)
       suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
       singleData[0][2] = suggestPolicy
     } else {
-      suggestPolicy = this.ipService.pushId(suggestPolicy)
-      suggestPolicy = suggestPolicy.filter(d => d.id != id);
+      suggestPolicy =[];
       suggestPolicy.push(array);
       suggestPolicy = suggestPolicy.flat();
       suggestPolicy = this.ipService.pushId(suggestPolicy)
       suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
       singleData[0][2] = suggestPolicy
+      this.ipService.setIpData(this.storedData);
+      this.ipService.setNeedAnlysisData('');
     }
     this.ipService.setIpData(this.storedData);
     this.getForkJoinResponse(singleData[0])
@@ -613,7 +613,7 @@ export class LifeInsuranceComponent implements OnInit {
             data => {
               // this.isRefresh = true;
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-              this.getRecommendationCall(data.insurance ? data.insurance.id : null);
+              this.getRecommendationCall(data ? (data.insurance ? data.insurance.id : null) : null);
               // this.getForkJoinResponse(singleData[0])
               // this.deleteWithoutHitingApi(deletedAdviceId);
               dialogRef.close();
@@ -1216,8 +1216,10 @@ export class LifeInsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getRecommendationCall(data.insurance ? data.insurance.id : null);
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if (sideBarData.refreshRequired) {
+            this.getRecommendationCall(data.insurance ? data.insurance.id : null);
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          }
           rightSideDataSub.unsubscribe();
         }
       }

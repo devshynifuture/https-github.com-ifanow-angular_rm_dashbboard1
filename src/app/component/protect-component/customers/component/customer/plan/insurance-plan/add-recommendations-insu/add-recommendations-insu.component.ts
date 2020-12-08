@@ -35,6 +35,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   inputData: any;
   isLoading: any;
   adviceData: any;
+  isAdviceGiven: boolean;
   constructor(private activityService:ActiityService,private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
@@ -181,13 +182,18 @@ export class AddRecommendationsInsuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.isRefreshedRequired) {
+        this.isAdviceGiven = true;
         this.getRecommendations()
       }
       console.log('The dialog was closed', result);
     });
   }
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    if(this.isAdviceGiven){
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    }else{
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    }
   }
 
 }

@@ -417,16 +417,16 @@ export class ShowHealthPlanningComponent implements OnInit {
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {
       flag:flag,
-      adviceHeaderList:flag!='suggestNew' ? this.adviceHeaderList : '',
+      adviceHeaderList:this.adviceHeaderList,
       adviceNameObj:this.adviceNameObj,
-      recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+      recommendOrNot :flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
       childData: {
-        recommendOrNot : data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        recommendOrNot : flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
         data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -675,6 +675,9 @@ export class ShowHealthPlanningComponent implements OnInit {
       data.showExisting = true
     } else {
       data.showExisting = true
+      data.insuranceIds = this.insuranceIds
+      data.name = 'Add more';
+      data.currentData = this.dataSource
     }
     data.flag = "suggestExistingPolicy";
     const fragmentData = {
