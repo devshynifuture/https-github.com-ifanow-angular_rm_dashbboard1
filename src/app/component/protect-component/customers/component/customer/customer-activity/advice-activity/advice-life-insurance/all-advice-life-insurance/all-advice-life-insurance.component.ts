@@ -46,6 +46,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   allTrad: any;
   allUlip: any;
   allTerm: any;
+  adviceName: string;
+  adviceNameObj: { adviceName: string; };
   constructor(private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -240,7 +242,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     let array = [];
     if (data.length > 0) {
       data.forEach(element => {
-        element.adviceDetails.adviceToCategoryTypeMasterId = 3
+        // element.adviceDetails.adviceToCategoryTypeMasterId = 3
         array.push(element);
       });
     }
@@ -253,7 +255,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     if (data.length > 0) {
       data = data.filter(item => item.insuranceSubTypeId === id);
       data.forEach(element => {
-        element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: 0 };
+        // element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: 0 };
         element.InsuranceDetails = element
       });
     } else {
@@ -347,6 +349,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     return data;
   }
   openAddEditAdvice(value, data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    this.adviceNameObj = {adviceName:this.adviceName};
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 }
     switch (value) {
       case "Term Insurance":
@@ -369,7 +374,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
         break;
     }
-    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
+    // data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     let Component = AddInsuranceComponent;
 
     const fragmentData = {
@@ -379,7 +384,12 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      childData: { data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
+      adviceNameObj:this.adviceNameObj,
+      adviceHeaderList:this.adviceHeaderList,
+      adviceToCategoryId :this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId:3,
+      showHeaderEdit:data?true:false,
+      childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -403,11 +413,13 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         this.object.insuranceSubTypeId = 1;
         this.object.adviceToCategoryId = 42;
         this.object.showInsurance = 'TERM';
+        this.object.adviceToCategoryTypeMasterId=3;
         data ? data.InsuranceDetails.insuranceSubTypeId = 1 : '';
         break;
       case "Traditional Insurance":
         this.object.insuranceSubTypeId = 2;
         this.object.showInsurance = 'TRADITIONAL'
+        this.object.adviceToCategoryTypeMasterId = 3;
         this.object.adviceToCategoryId = 43;
         data ? data.InsuranceDetails.insuranceSubTypeId = 2 : '';
         break;
@@ -415,6 +427,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         this.object.insuranceSubTypeId = 3;
         this.object.showInsurance = 'ULIP';
         this.object.adviceToCategoryId = 44;
+        this.object.adviceToCategoryTypeMasterId = 3;
         data ? data.InsuranceDetails.insuranceSubTypeId = 3 : '';
 
         break;
@@ -427,11 +440,15 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
     data['insuranceTypeId'] = 1;
     data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    data['adviceToCategoryTypeMasterId'] = this.object.adviceToCategoryTypeMasterId;
+    data['showHeader'] = true;
     const fragmentData = {
       flag: 'Advice Insurance',
       data,
       id: 1,
       state: 'open',
+      adviceToCategoryTypeMasterId:this.object.adviceToCategoryTypeMasterId,
+      adviceToCategoryId:this.object.adviceToCategoryId,
       componentName: EditSuggestedAdviceComponent,
 
     };

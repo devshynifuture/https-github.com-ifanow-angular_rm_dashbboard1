@@ -322,7 +322,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   }
   openAddEditAdvice(value, data) {
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : ''
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
     this.adviceNameObj = {adviceName:this.adviceName};
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
     switch (value) {
@@ -347,7 +347,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         break;
     }
     // this.getCategoriId(this.object.insuranceSubTypeId);
-    data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
+    // data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     let Component = AddNewLifeInsComponent;
     const fragmentData = {
       flag: 'Advice Insurance',
@@ -355,8 +355,12 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       id: 1,
       adviceNameObj:this.adviceNameObj,
       state: 'open',
+      adviceHeaderList:this.adviceHeaderList,
       componentName: SuggestAdviceComponent,
       childComponent: Component,
+      adviceToCategoryId :this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId:3,
+      showHeaderEdit:data?true:false,
       childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

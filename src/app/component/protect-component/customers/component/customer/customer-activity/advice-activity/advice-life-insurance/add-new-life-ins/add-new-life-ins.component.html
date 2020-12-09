@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="row pt-40">
+        <!-- <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Commencement date</h5>
             </div>
@@ -133,7 +133,7 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="row pt-40">
             <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end ">
@@ -221,7 +221,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40" *ngIf="lifeInsuranceForm.get('policyStatus').value == '2'">
+        <!-- <div class="row pt-40" *ngIf="lifeInsuranceForm.get('policyStatus').value == '2'">
             <div class="col-md-5 pr-0"></div>
             <div class="col-md-3">
 
@@ -229,8 +229,8 @@
             <div class="col-md-4">
                 <label class="f-14 roboto">Last unpaid premium</label>
             </div>
-        </div>
-        <div class="row " [ngClass]="{'pt-0':policyStatus.value == '2','pt-40':policyStatus.value != '2'}">
+        </div> -->
+        <!-- <div class="row " [ngClass]="{'pt-0':policyStatus.value == '2','pt-40':policyStatus.value != '2'}">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Policy status</h5>
             </div>
@@ -241,7 +241,6 @@
                         <mat-select matInput formControlName="policyStatus" #policyStatus autocomplete="off" class="form-control  br-0">
                             <mat-option value="1">In force</mat-option>
                             <mat-option value="2">Lapsed</mat-option>
-                            <!-- <mat-option value="3">Paid up</mat-option> -->
                             <mat-option value="3">Fully paid up</mat-option>
                             <mat-option value="4">Partial paid up</mat-option>
                         </mat-select>
@@ -250,39 +249,26 @@
                     </mat-form-field>
                 </div>
             </div>
-            <!-- <div class="col-md-3" *ngIf="policyStatus.value == '2'">
-                <div class="form-group mb-0 iconRupess">
-
-                    <mat-form-field>
-                        <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation formControlName="policyStatusLastUnpaid" [maxLength]="10" #lastunpaid autocomplete="off" class="form-control rupess br-0">
-                        
-                        <mat-hint>Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{lastunpaid.value.length}}/10</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div> -->
             <div class="col-md-3" *ngIf="lifeInsuranceForm.get('policyStatus').value == '2'">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input matInput formControlName="policyStatusLastUnpaid" [max]="maxDate" class="form-control br-0 b-0"  [matDatepicker]="policyStatusLastUnpaid" (focus)="policyStatusLastUnpaid.open()" (input)="preventDefault($event)">
                         <mat-datepicker-toggle matSuffix [for]="policyStatusLastUnpaid"></mat-datepicker-toggle>
                         <mat-datepicker #policyStatusLastUnpaid></mat-datepicker>
-                        <!-- <mat-error>This field is required
-                        </mat-error> -->
                         <mat-hint>Optional</mat-hint>
 
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-    <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
+    <!-- <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
         </div>
-    </div>
+    </div> -->
 
     <div *ngIf="addMoreFlag" class="row pt-40">
         <div (click)="openOptionField()" class="col-md-5 text-right">
@@ -632,7 +618,7 @@
                                             <mat-option value="6">ECS</mat-option>
 
                                         </mat-select>
-                                        <mat-error [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}" class="f-12">This field is required
+                                        <mat-error>This field is required
                                         </mat-error>
                                     </mat-form-field>
                                 </div>

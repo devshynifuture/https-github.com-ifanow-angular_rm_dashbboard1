@@ -23,8 +23,8 @@
                         <div class="pt-40">
                             <div class="row">
                                 <div class="col-md-6 pl-0">
-                                    <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'suggestNew' && flag == 'Add'">Advice header</p>
-                                    <div class="form-group" *ngIf="childComponentFlag == 'suggestNew' && flag == 'Add'">
+                                    <p class="m-0 text-black roboto" *ngIf="!showHeaderEdit">Advice header</p>
+                                    <div class="form-group" *ngIf="!showHeaderEdit">
                                        
                                         <mat-form-field>
                                             <input matInput formControlName="header" [value]="'Suggest new policy'" [disabled]="true"
@@ -32,8 +32,8 @@
                                             
                                         </mat-form-field>
                                     </div>
-                                     <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'existingAdvice'">Advice header</p>
-                                        <div class="form-group" *ngIf="childComponentFlag == 'existingAdvice'">
+                                     <p class="m-0 text-black roboto" *ngIf="showHeaderEdit">Advice header</p>
+                                        <div class="form-group" *ngIf="showHeaderEdit">
                                             <mat-form-field>
                                                 <mat-select #headerEdit autocomplete="off" class="form-control br-0"
                                                     formControlName="headerEdit" matInput>
@@ -48,8 +48,8 @@
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
-                                        <p class="m-0 text-black roboto" *ngIf="childComponentFlag == 'suggestNew' && flag != 'Add'">Advice header</p>
-                                        <div class="form-group" *ngIf="childComponentFlag == 'suggestNew' && flag != 'Add'">
+                                        <!-- <p class="m-0 text-black roboto" *ngIf="showHeaderEdit">Advice header</p>
+                                        <div class="form-group" *ngIf="showHeaderEdit">
                                             <mat-form-field>
                                                 <mat-select #headerEdit autocomplete="off" class="form-control br-0"
                                                     formControlName="headerEdit" matInput>
@@ -63,7 +63,7 @@
                                                 <mat-error>This field is required
                                                 </mat-error>
                                             </mat-form-field>
-                                        </div>
+                                        </div> -->
                                     <p class="m-0 text-black roboto pt-20">Advice rationale</p>
                                     <div class="form-group">
                                         <mat-form-field>

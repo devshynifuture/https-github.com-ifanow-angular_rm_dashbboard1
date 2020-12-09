@@ -19,6 +19,13 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { catchError } from 'rxjs/operators';
 import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-suggested-advice.component';
+import { SuggestHealthInsuranceComponent } from '../../../../plan/insurance-plan/suggest-health-insurance/suggest-health-insurance.component';
+import { PersonalInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/personal-insurance/personal-insurance.component';
+import { CriticalInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/critical-insurance/critical-insurance.component';
+import { MotorInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/motor-insurance/motor-insurance.component';
+import { TravelInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/travel-insurance/travel-insurance.component';
+import { HouseholdersInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/householders-insurance/householders-insurance.component';
+import { FireInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/fire-insurance/fire-insurance.component';
 
 @Component({
   selector: 'app-all-advice-general-insurance',
@@ -58,6 +65,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   travelDataSource: any;
   homeInsDataSource: any;
   FireDataSource: any;
+  adviceName: string;
+  adviceNameObj: { adviceName: string; };
   constructor(private adviceUtilService: AdviceUtilsService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -326,50 +335,69 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   }
   openAddEditAdvice(value, data) {
     let component;
+    if(data){
+      data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
+    }
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    this.adviceNameObj = {adviceName:this.adviceName};
       this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
       switch (value) {
         case "Health Insurance":
           this.object.insuranceSubTypeId = 5;
+          this.object.value='1';
+          this.object.insuranceType = 5;
           this.object.showInsurance = 'Health';
           this.object.adviceToCategoryId = 34;
-          component = AddHealthInsuranceAssetComponent;
+          component = SuggestHealthInsuranceComponent;
           break;
         case "Personal accident":
           this.object.insuranceSubTypeId = 7;
+          this.object.value='4',
+          this.object.insuranceType = 7;
           this.object.showInsurance = 'Personal accident';
           this.object.adviceToCategoryId = 35;
-          component = AddPersonalAccidentInAssetComponent;
+          component = PersonalInsuranceComponent;
           break;
         case "Critical illness":
           this.object.insuranceSubTypeId = 6;
+          this.object.insuranceType = 6;
+          this.object.value='2',
           this.object.showInsurance = 'Critical illness';
           this.object.adviceToCategoryId = 36;
-          component = AddCriticalIllnessInAssetComponent;
+          component = CriticalInsuranceComponent;
           break;
         case "Motor insurance":
           this.object.insuranceSubTypeId = 4;
+          this.object.insuranceType = 4;
+          this.object.value='8',
           this.object.showInsurance = 'Motor';
           this.object.adviceToCategoryId = 37;
-          component = AddMotorInsuranceInAssetComponent;
+          component = MotorInsuranceComponent;
           break;
         case "Travel insurance":
           this.object.insuranceSubTypeId = 8;
+          this.object.insuranceType = 8;
+          this.object.value='7',
           this.object.showInsurance = 'Travel';
           this.object.adviceToCategoryId = 38;
-          component = AddTravelInsuranceInAssetComponent;
+          component = TravelInsuranceComponent;
           break;
         case "Home insurance":
           this.object.insuranceSubTypeId = 9;
+          this.object.insuranceType = 9;
+          this.object.value='5',
           this.object.showInsurance = 'Home';
           this.object.adviceToCategoryId = 39;
-          component = AddHomeInsuranceInAssetComponent;
+          component = HouseholdersInsuranceComponent;
           break;
         case "Fire & special perils insurance":
           this.object.insuranceSubTypeId = 10;
+          this.object.insuranceType = 10;
+          this.object.value='6',
           this.object.adviceToCategoryId = 40;
           this.object.showInsurance = 'Fire & special perils';
-          component = AddFireAndPerilsInsuranceInAssetComponent;
-
+          component = FireInsuranceComponent;
           break;
       }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
@@ -384,8 +412,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: SuggestAdviceComponent,
+      adviceNameObj:this.adviceNameObj,
+      adviceToCategoryId :this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId:3,
       childComponent: component,
-      childData: { data: data ? data.InsuranceDetails : null,adviceToCategoryId:this.object.adviceToCategoryId, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, flag: 'Advice General Insurance' },
+      adviceHeaderList:this.adviceHeaderList,
+      showHeaderEdit:data?true:false,
+      childData: {inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
