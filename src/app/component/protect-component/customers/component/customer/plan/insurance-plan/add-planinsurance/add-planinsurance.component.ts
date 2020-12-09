@@ -398,6 +398,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         if(element[value] > 0){
           element[value] = this.PMT(element[value], element.inflationAdjustedIncome ? element.inflationAdjustedIncome : this.inflationAdjustedRate, element.dependentYears ? element.dependentYears : this.dependantYears)
         }
+        element.currentValueDupl = element[value];
         element.selected = true;
         element.percent = 100;
         this.changeValue(element, element.selected, array, name)
@@ -572,14 +573,14 @@ export class AddPlaninsuranceComponent implements OnInit {
   getNeedBasedObj() {
     let array = [];
     array = this.getFilteredObj(array, this.dataSource, '1', this.plannerObj.liabilities ? this.plannerObj.liabilities : 0, 'total_loan_outstanding', 'name')
-    array.push({ "amount": this.plannerObj.lifeInsurancePremiums ? this.plannerObj.lifeInsurancePremiums : 0, "step": "2.1", "name": "Life Insurance premiums", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.dependantNeeds })
+    array.push({ "amount": this.plannerObj.lifeInsurancePremiums ? this.plannerObj.lifeInsurancePremiums : 0, "step": "2.1", "name": "Life Insurance premiums", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.dependantNeeds,dependentYears: 0,"inflationAdjustedIncome": 0 })
     array = this.getFilteredObj(array, this.dataSource1, '2.2', this.plannerObj.dependantNeeds ? this.plannerObj.dependantNeeds : 0, 'amount', 'name')
     array = this.getFilteredObj(array, this.dataSource3, '3', this.plannerObj.goalsMeet ? this.plannerObj.goalsMeet : 0, 'goalFV', 'goalName')
-    array.push({ "amount": 0, "step": "4", "name": "Gross Life insurance Required", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.GrossLifeinsurance })
+    array.push({ "amount": 0, "step": "4", "name": "Gross Life insurance Required", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.GrossLifeinsurance,dependentYears: 0,"inflationAdjustedIncome": 0  })
     array = this.getFilteredObj(array, this.dataSource4, '5', this.plannerObj.incomeSource ? this.plannerObj.incomeSource : 0, 'amount', 'name')
-    array.push({ "amount": 0, "step": "6", "name": "Existing life insurance(sum assured)", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.existingLifeInsurance })
+    array.push({ "amount": 0, "step": "6", "name": "Existing life insurance(sum assured)", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.existingLifeInsurance,dependentYears: 0,"inflationAdjustedIncome": 0  })
     array = this.getFilteredObj(array, this.dataSource2, '7', this.plannerObj.existingAsset ? this.plannerObj.existingAsset : 0, 'currentValue', 'ownerName')
-    array.push({ "amount": 0, "step": "8", "name": "Additional life insurance required", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.additionalLifeIns })
+    array.push({ "amount": 0, "step": "8", "name": "Additional life insurance required", "percentage": "100", "isSelected": 1, "totalAmount": this.plannerObj.additionalLifeIns,dependentYears: 0,"inflationAdjustedIncome": 0  })
     return array;
   }
   getFilteredObj(mainArray, array, step, totalAmount, amount, name) {
