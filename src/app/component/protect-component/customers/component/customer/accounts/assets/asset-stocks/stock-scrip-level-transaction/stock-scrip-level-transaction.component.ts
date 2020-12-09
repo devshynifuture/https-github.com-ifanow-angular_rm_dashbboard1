@@ -60,12 +60,17 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     console.log(data, ' edit data');
-    data.stockListForEditView.forEach(h => {
-      if (h.stockType) {
-        h['stockListForEditView'] = [h];
-        this.Holdings = h;
-      }
-    });
+    if (data) {
+      data.stockListForEditView.forEach(h => {
+        if (h.stockType) {
+          h['ownerList'] = data.ownerList;
+          h['portfolioOwner'] = data.owerList;
+          h['portfolioName'] = data.portfolioName;
+          h['stockListForEditView'] = [h];
+          this.Holdings = h;
+        }
+      });
+    }
     this.getFormData(data);
   }
   ngOnInit() {
@@ -97,6 +102,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value);
   }
 
+  scriptOwner: any;
   disabledMember(value, type) {
     this.callMethod = {
       methodName: "disabledMember",
@@ -366,6 +372,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
   getPortfolioData(data) {
     console.log("", data)
     this.portfolioData = data;
+    this.portfolioData['ownerT'] = this.scipLevelTransactionForm.get('getCoOwnerName').value;
+    if (this.portfolioData) {
+      this.scriptOwner = this.portfolioData;
+    }
     this.scipLevelTransactionForm.get('portfolioName').setValue(data.portfolioName)
   }
   saveSchemeHolding() {

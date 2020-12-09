@@ -10,8 +10,8 @@
         </div>
     </div>
 </div>
-<div class="mb-48">
-    <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
+<div [ngClass]="!isTHolding?'mb-48':mb-0">
+    <div [formGroup]="scipLevelHoldingForm" [ngClass]="!isTHolding?'pt-100':pt-0" class="row pl-28">
         <div class="col-md-3 p-0" *ngIf="!isTHolding">
             <div formArrayName="getCoOwnerName">
                 <div [ngClass]="{'pt-36': pointIndex>0}"
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i (click)="addHoldings()" class="material-icons text-custom c-p">
+                <i (click)="addHoldings()" *ngIf="!editApiData" class="material-icons text-custom c-p">
                     add
                 </i>
                 <i (click)="removeHoldings(i)" *ngIf="HoldingArray.length > 1"

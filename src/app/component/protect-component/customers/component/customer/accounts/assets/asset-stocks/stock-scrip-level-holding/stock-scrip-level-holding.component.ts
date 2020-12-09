@@ -72,10 +72,19 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.isTHolding = true;
   }
 
+  @Input() set scriptOwner(scriptOwner) {
+    if (scriptOwner) {
+      delete scriptOwner.ownerT[0]['assetType'];
+      delete scriptOwner.ownerT[0]['assetId'];
+      delete scriptOwner.ownerT[0]['isActive'];
+      this.scipLevelHoldingForm.get('getCoOwnerName').setValue(scriptOwner.ownerT);
+      this.disabledMember(scriptOwner.ownerT[0].name, null)
+    }
+  }
   getPortfolioData(data) {
     console.log("getPortfolioData", data)
     this.portfolioData = data;
-    this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
+    this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName);
   }
 
   // ===================owner-nominee directive=====================//
@@ -96,8 +105,6 @@ export class StockScripLevelHoldingComponent implements OnInit {
       ParamValue: value,
       //  disControl : type
     }
-
-
     this.holdingData = this.scipLevelHoldingForm.controls;
     setTimeout(() => {
       this.portfolioFieldData = {
