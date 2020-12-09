@@ -153,6 +153,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     console.log(this.stepper.selectedIndex, "check selectedIndex");
 
   }
+  function(){
+    this.count++;
+  }
   getFormData(data) {
     if (data.data ?  (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
       data = {};
@@ -899,12 +902,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 clientId: this.clientId,
                 advisorId: this.advisorId,
                 ownerName: '',
-                commencementDate: this.datePipe.transform(componentRefFormValues.commencementDate, 'yyyy-MM-dd'),
-                policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
+                commencementDate:new Date(),
+                // policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
                 policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
                 sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
-                policyStatusId: componentRefComponentValues.lifeInsuranceForm.get('policyStatus').value,
-                lastUnpaidPremium: this.datePipe.transform(componentRefComponentValues.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+                // policyStatusId: componentRefComponentValues.lifeInsuranceForm.get('policyStatus').value,
+                // lastUnpaidPremium: this.datePipe.transform(componentRefComponentValues.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
                 premiumAmount: parseInt(componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsAmount').value),
                 frequency: componentRefComponentValues.lifeInsuranceForm.get('premiumDetailsFrequency').value,
                 policyTenure: componentRefComponentValues.lifeInsuranceForm.get('tenureDetailsPolicy').value,
@@ -937,7 +940,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 realOrFictitious: 2,
 
               }
-              insuranceObj.policyStatusId = parseInt(insuranceObj.policyStatusId);
+              // insuranceObj.policyStatusId = parseInt(insuranceObj.policyStatusId);
               if (insuranceObj.nominees.length > 0) {
                 insuranceObj.nominees.forEach((element, index) => {
                   if (element.name == '') {
@@ -955,7 +958,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
-                adviceId: this.adviceForm.get('headerEdit').value ? this.adviceForm.get('headerEdit').value : 1,
+                adviceId: this.adviceForm.get('headerEdit').value ? this.adviceForm.get('headerEdit').value : 0,
                 adviceAllotment: this.adviceForm.get('withdrawalAmt').value ? this.adviceForm.get('withdrawalAmt').value : null,
                 clientId: AuthService.getClientId(),
                 advisorId: AuthService.getAdvisorId(),
@@ -978,10 +981,14 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                   );
                 } else {
                   if (this.dataForEdit.id) {
-                    this.activityService.editAdvice(objToSend).subscribe(
-                      data => this.getAdviceRes(data),
-                      err => this.event.openSnackBar(err, "Dismiss")
-                    );
+                    const editGeneral = this.custumService.editLifeInsuranceData(insuranceObj);
+                    const editAdvice = this.activityService.editAdvice(objToSend);
+                    forkJoin(editGeneral, editAdvice).subscribe(result => {
+                      this.barButtonOptions.active = false;
+                      this.getAdviceRes(result);
+                    }, (error) => {
+                      this.eventService.openSnackBar('error', 'Dismiss');
+                    });
                   } else {
                     this.activityService.suggestNewLifeInsurance(objToSend).subscribe(
                       data => this.getAdviceRes(data),

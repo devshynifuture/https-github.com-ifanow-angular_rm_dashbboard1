@@ -363,4 +363,7 @@ export class PlanService {
     let httpParams = new HttpParams().set('id', data.id)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PREVIEW, httpParams)
   }
+  deleteInsurancePlan(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_PLAN+'?id=' + data.id,{'insuranceIds':data.insuranceIds})
+  }
 }

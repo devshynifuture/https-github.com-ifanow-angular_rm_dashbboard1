@@ -362,6 +362,7 @@ export const appConfig = {
   FREEZE_CAL: 'goal-planning/goal/freeze',
   ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
   ADVISE_ON_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/add',
+  DELETE_INSURANCE_PLAN: 'insurance/planning/unmap/general/insurance/plan',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',

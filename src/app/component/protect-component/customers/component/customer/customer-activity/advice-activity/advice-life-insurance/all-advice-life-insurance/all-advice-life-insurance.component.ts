@@ -242,7 +242,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     let array = [];
     if (data.length > 0) {
       data.forEach(element => {
-        // element.adviceDetails.adviceToCategoryTypeMasterId = 3
+        element.adviceDetails.adviceToCategoryTypeMasterId = 3
         array.push(element);
       });
     }
@@ -255,7 +255,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     if (data.length > 0) {
       data = data.filter(item => item.insuranceSubTypeId === id);
       data.forEach(element => {
-        // element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: 0 };
+        element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: null };
         element.InsuranceDetails = element
       });
     } else {
@@ -388,7 +388,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       adviceHeaderList:this.adviceHeaderList,
       adviceToCategoryId :this.object.adviceToCategoryId,
       adviceToCategoryTypeMasterId:3,
-      showHeaderEdit:data?true:false,
+      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
       childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

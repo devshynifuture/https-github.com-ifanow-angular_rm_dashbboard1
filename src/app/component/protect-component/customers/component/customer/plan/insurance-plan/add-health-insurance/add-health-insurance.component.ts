@@ -585,40 +585,40 @@ export class AddHealthInsuranceComponent implements OnInit {
       this.barButtonOptions.active = true;
       const deletedObj={
         "id":this.inputData.id,
-        "deletedInsuranceIds": JSON.stringify(arr)
+        "insuranceIds": JSON.stringify(arr)
       }
       const obj={
         "id":this.inputData.id,
         "insuranceIds": JSON.stringify(this.needAnalysis)
         }
-        this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
-          data => {
-              this.eventService.openSnackBar("Existing policy added", 'Ok');
-              this.barButtonOptions.active = false;
-              this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-          },
-          err => {
-            this.eventService.openSnackBar(err, 'Dismiss');
-          }
-        );
         // this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
         //   data => {
-        //       this.planService.deletePlan(obj).subscribe(
-        //         data => {
-        //           this.eventService.openSnackBar("Existing policy added", 'Ok');
-        //           this.barButtonOptions.active = false;
-        //           this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-        //         },
-        //         err => {
-        //           this.eventService.openSnackBar(err, 'Dismiss');
-        //         }
-        //       );
-              
+        //       this.eventService.openSnackBar("Existing policy added", 'Ok');
+        //       this.barButtonOptions.active = false;
+        //       this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
         //   },
         //   err => {
         //     this.eventService.openSnackBar(err, 'Dismiss');
         //   }
         // );
+        this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+          data => {
+              this.planService.deleteInsurancePlan(deletedObj).subscribe(
+                data => {
+                  this.eventService.openSnackBar("Existing policy added", 'Ok');
+                  this.barButtonOptions.active = false;
+                  this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+                },
+                err => {
+                  this.eventService.openSnackBar(err, 'Dismiss');
+                }
+              );
+              
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
     }else{
       // this.showError = true;
       this.eventService.openSnackBar('Please select at least one policy', 'OK');

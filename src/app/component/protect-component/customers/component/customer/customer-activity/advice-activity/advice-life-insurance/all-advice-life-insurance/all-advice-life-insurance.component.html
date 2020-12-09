@@ -181,13 +181,13 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
                         <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'Proposed policy'}}</span>
                         </span>
-                    </span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
+            
             <th mat-header-cell *matHeaderCellDef  class="br"> Advice status </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
@@ -383,8 +383,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
                         <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
-                        </span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'Proposed policy'}}</span>
                     </span>
                 </div>
             </td>
@@ -575,8 +574,7 @@
                         <span *ngIf="element?.adviceDetails?.adviceId==3">Stop paying premium</span>
                         <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
                         <span *ngIf="element?.adviceDetails?.adviceId==5">Partial withdrawl</span>
-                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'-'}}
-                        </span>
+                        <span *ngIf="element?.adviceDetails?.adviceId==0">{{'Proposed policy'}}</span>
                     </span>
                 </div>
             </td>

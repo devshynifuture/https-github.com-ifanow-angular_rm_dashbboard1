@@ -480,7 +480,7 @@ export class PersonalInsuranceComponent implements OnInit {
 
 		/***nominee***/
 		if (this.dataForEdit) {
-			if (this.dataForEdit.nominees.length > 0) {
+			if (this.dataForEdit.nominees && this.dataForEdit.nominees.length > 0) {
 				this.getNominee.removeAt(0);
 				this.dataForEdit.nominees.forEach(element => {
 					this.addNewNominee(element);
@@ -489,7 +489,7 @@ export class PersonalInsuranceComponent implements OnInit {
 		}
 		/***nominee***/
 		if (this.dataForEdit) {
-			if (this.dataForEdit.insuredMembers.length > 0) {
+			if (this.dataForEdit.insuredMembers && this.dataForEdit.insuredMembers.length > 0) {
 				this.insuredMembersForm.removeAt(0);
 				this.dataForEdit.insuredMembers.forEach(element => {
 					this.addTransaction(element);
@@ -497,7 +497,7 @@ export class PersonalInsuranceComponent implements OnInit {
 			}
 		}
 		if (this.dataForEdit) {
-			if (this.dataForEdit.policyFeatures.length > 0) {
+			if (this.dataForEdit.policyFeatures && this.dataForEdit.policyFeatures.length > 0) {
 				this.planFeatureForm.removeAt(0);
 				this.dataForEdit.policyFeatures.forEach(element => {
 					this.addNewFeature(element);

@@ -173,8 +173,11 @@
                 </mat-step>
                 <mat-step class="remove-bl" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' || adviceNameObj?.adviceName == 'Surrender' ? 'disabled_af' : null" [editable]="true">
                     <ng-template matStepLabel>
-                        STEP 2
-                        <p class="m-0 text-black roboto">Asset details</p>
+                        <div (click)="function()">
+                                STEP 2
+                                <p class="m-0 text-black roboto"  >Asset details</p>
+                        </div>
+                       
                     </ng-template>
                     <ng-template #dynamic></ng-template>
                 </mat-step>
@@ -182,18 +185,19 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-60">
+<div class="bottom-fixed wrapper-12">
     <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
+        <div class="col-md-4 pt-8">
+            <h5  (click)="dialogClose(false)" class="mb-0  text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 text-right">
-            <button *ngIf="this.stepper.selectedIndex == 1" (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+        <div class="col-md-8 right text-right full-end">
+            <button *ngIf="this.stepper.selectedIndex == 1" (click)="goBack()" (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                mat-raised-button>PREVIOUS
             </button>
-            <app-progress-button  (click)="addOrNextStep()" class="btn-bottom br-0"
-            [options]="barButtonOptions">
-        </app-progress-button>
-            <!-- <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button> -->
+            <app-progress-button (click)="addOrNextStep()" [options]="barButtonOptions">
+            </app-progress-button>
+            <!-- <button (click)="startSubscription()" [disabled]="totalSelectedPayeeShare!=100" class="btn-bottom br-0 text-inherit text-uppercase" mat-button>CREATE
+            </button> -->
         </div>
     </div>
 </div>

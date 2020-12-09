@@ -262,7 +262,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
     if(GIArry.length > 0){
       GIArry.forEach(element => {
-        element.adviceDetails={adviceToCategoryTypeMasterId: 4,adviceStatusId:0,adviceId:0};
+        element.adviceDetails={adviceToCategoryTypeMasterId: 4,adviceStatusId:0,adviceId:null};
         element.InsuranceDetails = element
       });
     }else{

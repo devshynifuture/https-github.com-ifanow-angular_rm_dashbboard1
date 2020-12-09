@@ -216,7 +216,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
     this.sumAssured = 0;
     data.forEach(element => {
       element.adviceDetails.adviceToCategoryTypeMasterId = 4
-      if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+      if (element.InsuranceDetails && element.InsuranceDetails.insuredMembers && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
         element.InsuranceDetails.insuredMembers.length > 0) {
         element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
         if (element.InsuranceDetails.insuredMembers.length > 1) {
