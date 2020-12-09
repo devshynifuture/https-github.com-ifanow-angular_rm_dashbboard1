@@ -36,6 +36,10 @@ export class SupportUpperService {
   getFilteredSchemes(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FILTERED_SCHEMES, data)
   }
+
+  getSearchSchemeList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RM_SEARCH_NJ_PRUDENT_SCHEMES, data);
+  }
   getSchemesDetails(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SCHEMES_DETAILS, data)
   }
@@ -70,11 +74,11 @@ export class SupportUpperService {
   }
 
   postUnmapUnmappedNjPrudentScheme(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_UNMAP_MAPPED_NJPRUDENT_SCHEMES + `?id=${data.id}&mutualFundSchemeMasterId=${data.mutualFundSchemeMasterId}&schemeCode=${data.schemeCode}`, null);
   }
 
   postMapUnmappedNjPrudentScheme(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES + `?id=${data.id}&mutualFundSchemeMasterId=${data.mutualFundSchemeMasterId}&rt_id=${data.rt_id}&schemeCode=${data.schemeCode}`, null);
   }
 
 }

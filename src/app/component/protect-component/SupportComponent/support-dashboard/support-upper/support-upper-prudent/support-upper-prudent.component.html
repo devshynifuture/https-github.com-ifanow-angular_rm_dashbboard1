@@ -48,7 +48,7 @@
     </div>
 
     <div class="col-md-3">
-        <mat-paginator [length]="totalPrudentCount" [hidePageSize]="true" [pageSize]="50"
+        <mat-paginator [length]="totalPrudentCount" [hidePageSize]="true" [pageSize]="5"
             [ngClass]="{'cursor-not-allowed': isLoading}"
             (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
         </mat-paginator>
@@ -154,11 +154,12 @@
             </ng-container>
 
             <ng-container matColumnDef="map">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Map / Unmap </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <button class="btn-primary btn-Map" mat-stroked-button
-                        (click)="isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)">
-                        {{isMapped ? 'Unmap':'Map'}}
+                    <button class="btn-primary btn-Map" mat-stroked-button [disabled]="!element.isSchemeSelected"
+                        [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
+                        (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)):$event.preventDefault()">
+                        {{element.isMapped ? 'Unmap':'Map'}}
                     </button>
                 </td>
             </ng-container>
@@ -166,5 +167,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div class="row" *ngIf="dataSource.data.length==0">
+            <h4 class="col-md-12 text-center p-44 b-a">
+                No Data Found
+            </h4>
+        </div>
     </div>
 </div>

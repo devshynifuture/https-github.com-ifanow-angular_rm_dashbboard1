@@ -39,6 +39,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   selectedSchemeRes: any = null;
   totalPrudentCount = null;
   pageEvent: PageEvent;
+  startLimit = 0;
 
   constructor(
     public supportUpperService: SupportUpperService,
@@ -49,7 +50,7 @@ export class SupportUpperPrudentComponent implements OnInit {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.isLoading = true;
     this.getMappedUnmappedPrudentList();
-    this.getMappedUnmappedCount();
+    // this.getMappedUnmappedCount();
 
     this.schemeControlSubs = this.schemeControl.valueChanges
       .pipe(
@@ -62,7 +63,7 @@ export class SupportUpperPrudentComponent implements OnInit {
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
             finalize(() => {
-              this.isLoadingForDropDown = false
+              this.isLoadingForDropDown = false;
             }),
           )
         )
@@ -76,8 +77,9 @@ export class SupportUpperPrudentComponent implements OnInit {
           this.errorMsg = "";
           this.filteredSchemes = [];
           this.isLoadingForDropDown = true;
+          this.schemeControl.patchValue(null, { emitEvent: false });
         }),
-        switchMap(value => this.getFilteredSchemesList(value)
+        switchMap(value => this.searchSchemeNjPrudent(value)
           .pipe(
             finalize(() => {
               this.isLoadingForDropDown = false
@@ -115,6 +117,21 @@ export class SupportUpperPrudentComponent implements OnInit {
       });
   }
 
+  searchSchemeNjPrudent(value) {
+    if (value === '') {
+      if (this.selectedElement) {
+        let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
+        if (this.apiCallingStack[1] !== threeWords) {
+          return this.supportUpperService.getSearchSchemeList({ rtMasterId: 4, schemeName: threeWords, startLimit: 0, endLimit: 50, isMapped: this.isMapped });
+        }
+      } else {
+        return this.supportUpperService.getSearchSchemeList({ rtMasterId: 4, schschemeNameeme: value, startLimit: 0, endLimit: 50, isMapped: this.isMapped });
+      }
+    } else {
+      return this.supportUpperService.getSearchSchemeList({ rtMasterId: 4, schemeName: value, startLimit: 0, endLimit: 50, isMapped: this.isMapped });
+    }
+  }
+
   onResponseHandlerAfterSearchingSchemes(data) {
     this.apiCallingStack = [];
     this.filteredSchemes = data;
@@ -131,6 +148,7 @@ export class SupportUpperPrudentComponent implements OnInit {
     console.log(event);
     this.isMapped = event.value == 1 ? false : true;
     this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     this.getMappedUnmappedPrudentList();
   }
 
@@ -141,12 +159,13 @@ export class SupportUpperPrudentComponent implements OnInit {
       schemeCode: element.schemeCode
     }
     console.log(obj);
-    // this.supportUpperService.postMapUnmappedNjPrudentScheme(obj)
-    //   .subscribe(res=>{
-    //     if(res){
-    //       console.log(res);
-    //     }
-    //   })
+    this.supportUpperService.postUnmapUnmappedNjPrudentScheme(obj)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+          element.isMapped = false;
+        }
+      })
   }
 
   mapUnmappedPrudentScheme(element) {
@@ -162,24 +181,19 @@ export class SupportUpperPrudentComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
+          element.isMapped = true;
         }
       })
   }
 
-  getMappedUnmappedCount() {
-    let obj = {
-      isMapped: this.isMapped,
-      rtId: 5
-    }
-    this.supportUpperService.getMappedUnmappedCount(obj)
-      .subscribe(res => {
-        console.log(res);
-      })
-
-  }
-
   onPaginationChange(event) {
     console.log(event);
+
+    if (event.value >= 0) {
+      this.startLimit = event.value * 50;
+    } else {
+      this.startLimit = 0;
+    }
     return event;
   }
 
@@ -194,6 +208,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       this.isLoading = true;
       this.isLoadingForDropDown = true;
       let threeWords = element;
+      this.schemeControl.patchValue(null, { emitEvent: false });
       //let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
       //this.apiCallingStack.push(threeWords);
       if (this.apiCallingStack[1] !== threeWords && element.length >= 3) {
@@ -201,7 +216,7 @@ export class SupportUpperPrudentComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               this.isLoading = false;
-              let dataTable: elementI[] = [];
+              let dataTable: any[] = [];
               this.apiCallingStack = [];
               this.isLoadingForDropDown = false;
               this.prudentList = res;
@@ -215,7 +230,10 @@ export class SupportUpperPrudentComponent implements OnInit {
                   navTwo: '',
                   navDate: '',
                   njCount: '',
-                  map: ''
+                  map: '',
+                  id: item.id,
+                  transactionDate: item.transactionDate,
+                  isSchemeSelected: false
                 });
               });
               console.log("this is some data::::::", dataTable);
@@ -260,6 +278,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       .subscribe(res => {
         console.log('scheme details', res)
         this.selectedSchemeRes = res;
+        element.isSchemeSelected = true;
         element.navDate = res.navDate
         element.nav = res.nav
         element.amfiCode = res.amfiCode
@@ -284,19 +303,35 @@ export class SupportUpperPrudentComponent implements OnInit {
     }
   }
 
+  getSearchNJSchemes(value) {
+    if (value === '') {
+      if (this.selectedElement) {
+        let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
+        if (this.apiCallingStack[1] !== threeWords) {
+          return this.supportUpperService.getSearchSchemeList({ scheme: threeWords, startLimit: 0, endLimit: 50 });
+        }
+      } else {
+        return this.supportUpperService.getSearchSchemeList({ scheme: value, startLimit: 0, endLimit: 50 });
+      }
+    } else {
+      return this.supportUpperService.getSearchSchemeList({ scheme: value, startLimit: 0, endLimit: 50 });
+    }
+  }
+
   getMappedUnmappedPrudentList() {
     let data = {
       rtMasterId: 4,
-      startLimit: 0,
-      endLimit: 50,
+      startLimit: this.startLimit,
+      endLimit: this.startLimit + 50,
       isMapped: this.isMapped
     };
     this.supportUpperService.getUnmappedSchemesPrudent(data).subscribe(res => {
       console.log("this is unmapped Prudent schemes::::::::::", res);
       this.isLoading = false;
       let dataTable: any[] = [];
-      this.prudentList = res;
-      res.forEach(item => {
+      this.prudentList = res.njSchemeMasterList;
+      this.totalPrudentCount = res.count;
+      res.njSchemeMasterList.forEach(item => {
         dataTable.push({
           name: item.schemeName,
           nav: item.nav,
@@ -309,7 +344,8 @@ export class SupportUpperPrudentComponent implements OnInit {
           map: '',
           isMapped: this.isMapped,
           id: item.id,
-          transactionDate: item.transactionDate
+          transactionDate: item.transactionDate,
+          isSchemeSelected: false
         });
       });
       console.log("this is some data::::::", dataTable);

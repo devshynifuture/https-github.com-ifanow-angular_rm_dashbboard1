@@ -73,6 +73,7 @@ export const appConfig = {
 
   ///////////////////////////// rm dashboard ///////////////////////////////////////////
   RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
+  RM_SEARCH_NJ_PRUDENT_SCHEMES: 'get/filtered/njprudent/schemes',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
