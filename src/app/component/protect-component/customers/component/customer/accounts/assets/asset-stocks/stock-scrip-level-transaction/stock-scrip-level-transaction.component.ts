@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -56,6 +56,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   nomineesList: any[] = [];
   Holdings: any;
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  @ViewChild('holding', { static: false }) holding;
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
