@@ -246,7 +246,7 @@ export class AddHealthInsuranceComponent implements OnInit {
         // let arry= [...this.inputData.currentData,...result[0]]
         this.inputData.currentData.forEach(element => {
           responseArry.forEach(ele => {
-            if(ele.insurance.id == element.insurance.id){
+            if(ele.insurance.id == (element.insurance ? element.insurance.id : element.insuranceDetails.id)){
               ele.isSelected = true;
             }
           });
