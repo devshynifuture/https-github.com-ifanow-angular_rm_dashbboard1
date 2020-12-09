@@ -70,6 +70,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   newPolicyData: any;
   familyMemberList:any;
   storedData: any;
+  unselectedData=[];
 
   @Input()
   set data(data) {
@@ -240,8 +241,16 @@ export class AddHealthInsuranceComponent implements OnInit {
     forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
       this.familyMemberList = result[1];
       if(result[0]){
+        let responseArry = result[0];
         // this.inputData.currentData.forEach(item => item.isSelected = true);
         // let arry= [...this.inputData.currentData,...result[0]]
+        this.inputData.currentData.forEach(element => {
+          responseArry.forEach(ele => {
+            if(ele.insurance.id == (element.insurance ? element.insurance.id : element.insuranceDetails.id)){
+              ele.isSelected = true;
+            }
+          });
+        });
         let data = this.getHolderNameAndSumAssured(result[0]);
         this.dataSource2 = data;
         this.isLoading = false;
@@ -309,8 +318,9 @@ export class AddHealthInsuranceComponent implements OnInit {
     this.getSumAssured(data);
     data.forEach(singleInsuranceData => {
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
-        // this.addPolicy(singleInsuranceData.isSelected ? singleInsuranceData.isSelected : false, singleInsuranceData) 
+        this.addPolicy(singleInsuranceData.isSelected ? singleInsuranceData.isSelected : false, singleInsuranceData) 
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
+        this.unselectedData.push(singleInsuranceData);
         singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured ? singleInsuranceData.insurance.insuredMembers[0].sumInsured : singleInsuranceData.insurance.sumInsuredIdv);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
           for (let i = 1; i < singleInsuranceData.insurance.insuredMembers.length; i++) {
@@ -393,7 +403,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   }
   addPolicy(event, element) {
     // element.selected = event.checked ? event.checked : event;
-    element.selected = event.checked
+    element.isSelected = event
     // this.dataSource2.forEach(item => item.selected = false);
 
     // this.dataSource2.forEach(ele => {
@@ -403,7 +413,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     //     this.isChecked = true
     //   }
     // });
-    if (element.selected) {
+    if (element.isSelected) {
       this.needAnalysis.push(element.insurance.id)
       if(element.insurance.insuredMembers.length > 0){
         element.insurance.insuredMembers.forEach(ele => {
@@ -416,7 +426,6 @@ export class AddHealthInsuranceComponent implements OnInit {
           'ownerId': element.insurance.policyHolderId
         })
       }
-
       this.ownerIds = [...new Map(this.ownerIds.map(item => [item.ownerId, item])).values()];
       this.showError = false;
     }else{
@@ -567,8 +576,17 @@ export class AddHealthInsuranceComponent implements OnInit {
     }
   }
   saveExistingPolicy(){
+    let arr=[];
+    this.unselectedData = this.unselectedData.filter(item => item.isSelected == false || !item.isSelected);
+    this.unselectedData.forEach(element => {
+        arr.push(element.insurance.id)
+    });
     if (this.isChecked){
       this.barButtonOptions.active = true;
+      const deletedObj={
+        "id":this.inputData.id,
+        "deletedInsuranceIds": JSON.stringify(arr)
+      }
       const obj={
         "id":this.inputData.id,
         "insuranceIds": JSON.stringify(this.needAnalysis)
@@ -583,6 +601,24 @@ export class AddHealthInsuranceComponent implements OnInit {
             this.eventService.openSnackBar(err, 'Dismiss');
           }
         );
+        // this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+        //   data => {
+        //       this.planService.deletePlan(obj).subscribe(
+        //         data => {
+        //           this.eventService.openSnackBar("Existing policy added", 'Ok');
+        //           this.barButtonOptions.active = false;
+        //           this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+        //         },
+        //         err => {
+        //           this.eventService.openSnackBar(err, 'Dismiss');
+        //         }
+        //       );
+              
+        //   },
+        //   err => {
+        //     this.eventService.openSnackBar(err, 'Dismiss');
+        //   }
+        // );
     }else{
       // this.showError = true;
       this.eventService.openSnackBar('Please select at least one policy', 'OK');

@@ -42,6 +42,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
   formName: any;
   componentRefComponentVal: any;
   adviceNameObj: any;
+  showHeaderEdit: any;
   [x: string]: any;
   isLinear = false;
   firstFormGroup: FormGroup;
@@ -113,6 +114,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
         this.adviceToCategoryTypeMasterId = 4
         this.adviceNameObj = data.adviceNameObj;
         this.adviceName = this.adviceNameObj.adviceName;
+        this.showHeaderEdit = data.showHeaderEdit;
         this.adviceHeaderList = data ? data.adviceHeaderList : '';
         this.getFormData(data);
       }
@@ -1340,15 +1342,30 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
     if (this.flag == 'Add') {
       if (this.childComponentFlag == 'suggestNew') {
-            this.planService.addGenralInsurancePlan(obj).subscribe(
+            // this.planService.addGenralInsurancePlan(obj).subscribe(
+            //   data => {
+            //     const addPlan = {
+            //       "id": this.componentRefComponentVal.inputData.id,
+            //       "insuranceIds": JSON.stringify([data])
+            //     }
+            //     const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
+            //     const giveAdvice = this.activityService.suggestNewGeneralInsurance(ObjHealth);
+            //     forkJoin(UpadtePolicy, giveAdvice).subscribe(result => {
+            //       this.barButtonOptions.active = false;
+            //       this.getAdviceRes(result);
+            //     }, (error) => {
+            //       this.eventService.openSnackBar('error', 'Dismiss');
+            //     });
+            //   },
+            // );
+            this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
               data => {
                 const addPlan = {
                   "id": this.componentRefComponentVal.inputData.id,
                   "insuranceIds": JSON.stringify([data])
                 }
                 const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
-                const giveAdvice = this.activityService.suggestNewGeneralInsurance(ObjHealth);
-                forkJoin(UpadtePolicy, giveAdvice).subscribe(result => {
+                forkJoin(UpadtePolicy).subscribe(result => {
                   this.barButtonOptions.active = false;
                   this.getAdviceRes(result);
                 }, (error) => {

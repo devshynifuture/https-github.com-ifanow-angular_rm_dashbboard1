@@ -225,8 +225,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="editAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Health Insurance',element)">Edit</button>
+                        <button mat-menu-item (click)="openAddEditAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Health Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -418,8 +418,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Personal accident',element)">Edit</button>
+                            <button mat-menu-item (click)="openAddEditAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Personal accident',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -611,8 +611,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Critical illness',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Critical illness',element)">Edit</button>
+                            <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Critical illness',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -794,8 +794,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Motor insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Motor insurance',element)">Edit</button>
+                            <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Motor insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -977,8 +977,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Travel insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Travel insurance',element)">Edit</button>
+                            <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Travel insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -1160,8 +1160,8 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="editAdvice('Home insurance',element)" >Give advice</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="editAdvice('Home insurance',element)">Edit</button>
+                            <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)" >Give advice</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Home insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -1353,9 +1353,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="editAdvice('Fire & special perils insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                            (click)="editAdvice('Fire & special perils insurance',element)">Edit</button>
+                            (click)="openAddEditAdvice('Fire & special perils insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Fire & special perils insurance',element)">Delete</button>
                     </mat-menu>

@@ -425,6 +425,7 @@ export class ShowHealthPlanningComponent implements OnInit {
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
+      showHeaderEdit:flag == 'existingAdvice' ? true : (data ? (data.adviceDetails ? (!data.adviceDetails.gen_insurance_advice_id ? false : true) : false) : false),
       childData: {
         recommendOrNot : flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
         data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },

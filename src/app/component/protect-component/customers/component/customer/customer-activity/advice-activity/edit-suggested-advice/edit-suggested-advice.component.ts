@@ -55,12 +55,14 @@ export class EditSuggestedAdviceComponent implements OnInit {
   id: any;
   todayDate: Date;
   inputData: any;
+  showHeader: any;
   constructor(private planService:PlanService,private subInjectService:SubscriptionInject,private datePipe: DatePipe,private activityService:ActiityService,private event:EventService,private fb: FormBuilder) { }
   @Input() set data(data) {
     this.inputData =data;
     this.adviceHeaderList = data ? data.adviceHeaderList : '';
     this.adviceToCategoryId = data.adviceToCategoryId;
-    this.adviceToCategoryTypeMasterId = data ? data.adviceDetails.adviceToCategoryTypeMasterId : ''
+    this.showHeader = data.showHeader;
+    this.adviceToCategoryTypeMasterId = data ? data.adviceToCategoryTypeMasterId : ''
     this.getFormData(data);
     // this.setInsuranceDataFormField(data);
     console.log(data);
@@ -69,7 +71,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
 
   }
   getFormData(data) {
-    if (data ? (data.adviceDetails.id == null) : data == null) {
+    if (!data.adviceDetails) {
       data = {};
       this.dataForEdit = null;
       this.flag = 'Add';
@@ -81,7 +83,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
     }
     this.adviceForm = this.fb.group({
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
-      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '1'],
+      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '',[Validators.required]],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
       status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],

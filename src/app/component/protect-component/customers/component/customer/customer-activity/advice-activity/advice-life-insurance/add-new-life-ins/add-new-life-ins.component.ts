@@ -68,7 +68,6 @@ export class AddNewLifeInsComponent implements OnInit {
     // this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
   }
-
   get cashFlowEntries() {
     return this.cashFlowForm.get('cashFlow') as FormArray;
   }
@@ -123,14 +122,14 @@ export class AddNewLifeInsComponent implements OnInit {
     proposer: [, [Validators.required]],
     policyName: [, [Validators.required]],
     policyNum: [, [Validators.required]],
-    commencementDate: [, [Validators.required]],
+    // commencementDate: [, [Validators.required]],
     sumAssured: [, [Validators.required]],
     premiumDetailsAmount: [, [Validators.required]],
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
-    policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [''],
+    // policyStatus: [, [Validators.required]],
+    // policyStatusLastUnpaid: [''],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -462,15 +461,15 @@ export class AddNewLifeInsComponent implements OnInit {
       this.lifeInsuranceForm.controls.proposer.setValue(this.editInsuranceData.familyMemberName);
       this.lifeInsuranceForm.controls.policyName.setValue(this.editInsuranceData.policyName);
       this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber);
-      this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate));
+      // this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate));
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured);
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount);
       this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency));
       this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure);
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm);
-      this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
+      // this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
       // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium);
-      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium ? new Date(this.editInsuranceData.lastUnpaidPremium) : null);
+      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium ? new Date(this.editInsuranceData.lastUnpaidPremium) : null);
       this.insuranceTypeId = this.editInsuranceData.insuranceTypeId;
       this.insuranceSubTypeId = this.editInsuranceData.insuranceSubTypeId;
       this.policyData = {};
@@ -735,13 +734,13 @@ export class AddNewLifeInsComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         // ownerName: '',
-        commencementDate: this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd'),
+        // commencementDate: this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd'),
         policyNumber: this.lifeInsuranceForm.get('policyNum').value,
         policyName: this.lifeInsuranceForm.get('policyName').value,
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
-        policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
+        // policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
         // lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
-        lastUnpaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+        // lastUnpaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
         premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
@@ -775,7 +774,7 @@ export class AddNewLifeInsComponent implements OnInit {
         ulipFundDetails: ulipFundDetails
 
       };
-      this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId);
+      // this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId);
       if (this.insuranceFormFilledData.nominees.length > 0) {
         this.insuranceFormFilledData.nominees.forEach((element, index) => {
           if (element.name == '') {
@@ -795,7 +794,7 @@ export class AddNewLifeInsComponent implements OnInit {
       };
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.editInsuranceData.id;
-        this.insuranceFormFilledData.commencementDate = this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd');
+        // this.insuranceFormFilledData.commencementDate = this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd');
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             this.barButtonOptions.active = false;
