@@ -179,7 +179,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     } else {
       const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
         width: '600px',
-        height: '1098px',
+        height: '798px',
         data: { bank: element, selectedElement: '' }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -198,7 +198,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '600px',
-      height: '1098px',
+      height: '798px',
       data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
