@@ -225,7 +225,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                <button mat-menu-item [disabled]="element.hideGiveAdvice" (click)="openAddEditAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Health Insurance',element)">Delete</button>
                     </mat-menu>
@@ -235,7 +237,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf=" healthInsuranceDataSource.tableFlag == false" class="b-a bt-0">
+    <div *ngIf="!isLoading &&  healthInsuranceDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -418,7 +420,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEditAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item [disabled]="element.hideGiveAdvice" (click)="openAddEditAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button> 
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Personal accident',element)">Delete</button>
                     </mat-menu>
@@ -428,7 +432,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="personalAccidentDataSource.tableFlag == false" class="b-a bt-0">
+    <div *ngIf="!isLoading && personalAccidentDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -611,7 +615,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>    
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Critical illness',element)">Delete</button>
                     </mat-menu>
@@ -794,7 +800,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>   
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Motor insurance',element)">Delete</button>
                     </mat-menu>
@@ -977,7 +985,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Travel insurance',element)">Delete</button>
                     </mat-menu>
@@ -987,7 +997,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && travelDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && travelDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -1160,7 +1170,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)" >Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)" [disabled]="element.hideGiveAdvice" >Give advice</button>    
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Home insurance',element)">Delete</button>
                     </mat-menu>
@@ -1353,7 +1365,9 @@
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                                    <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',element)" [disabled]="element.hideGiveAdvice"  *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            </div>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="openAddEditAdvice('Fire & special perils insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"

@@ -452,7 +452,7 @@ export class MotorInsuranceComponent implements OnInit {
 
 		/***nominee***/
 		if (this.dataForEdit) {
-			if (this.dataForEdit.nominees.length > 0) {
+			if (this.dataForEdit.nominees && this.dataForEdit.nominees.length > 0) {
 				this.getNominee.removeAt(0);
 				this.dataForEdit.nominees.forEach(element => {
 					this.addNewNominee(element);
@@ -462,7 +462,7 @@ export class MotorInsuranceComponent implements OnInit {
 		/***nominee***/
 
 		if (this.dataForEdit) {
-			if (this.dataForEdit.addOns.length > 0) {
+			if (this.dataForEdit.addOns && this.dataForEdit.addOns.length > 0) {
 				this.addOnForm.removeAt(0);
 				this.dataForEdit.addOns.forEach(element => {
 					this.addNewAddOns(element);

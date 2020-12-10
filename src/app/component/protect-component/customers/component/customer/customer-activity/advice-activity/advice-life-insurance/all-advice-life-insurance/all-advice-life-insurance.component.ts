@@ -202,9 +202,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       this.ulipDataSource = new MatTableDataSource(ulipData);
       console.log('ulipData', ulipData)
       // this.ulipDataSource.sort = this.sort
-      this.termDataSource['tableFlag'] = data.TERM_LIFE_INSURANCE.length == 0 ? false : true;
-      this.traditionalDataSource['tableFlag'] = data.TRADITIONAL_LIFE_INSURANCE.length == 0 ? false : true;
-      this.ulipDataSource['tableFlag'] = data.ULIP_LIFE_INSURANCE.length == 0 ? false : true;
+      this.termDataSource['tableFlag'] = this.termDataSource.data.length == 0 ? false : true;
+      this.traditionalDataSource['tableFlag'] = this.traditionalDataSource.data.length == 0 ? false : true;
+      this.ulipDataSource['tableFlag'] = this.ulipDataSource.data.length == 0 ? false : true;
     }else{
       this.isLoading = false;
       this.termDataSource = [];
@@ -242,8 +242,17 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     let array = [];
     if (data.length > 0) {
       data.forEach(element => {
-        // element.adviceDetails.adviceToCategoryTypeMasterId = 3
+        element.adviceDetails.adviceToCategoryTypeMasterId = 3
         array.push(element);
+      });
+    }
+    if(liArray.length > 0 && data.length > 0){
+      liArray.forEach(element => {
+        data.forEach(ele => {
+          if(ele.InsuranceDetails.id == element.InsuranceDetails.id){
+            element.hideGiveAdvice = true;
+          }
+        });
       });
     }
     if (liArray.length > 0) {
@@ -255,7 +264,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     if (data.length > 0) {
       data = data.filter(item => item.insuranceSubTypeId === id);
       data.forEach(element => {
-        // element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: 0 };
+        element.adviceDetails = { adviceToCategoryTypeMasterId: 3, adviceStatusId: 0, adviceId: null };
         element.InsuranceDetails = element
       });
     } else {
@@ -388,7 +397,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       adviceHeaderList:this.adviceHeaderList,
       adviceToCategoryId :this.object.adviceToCategoryId,
       adviceToCategoryTypeMasterId:3,
-      showHeaderEdit:data?true:false,
+      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
       childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

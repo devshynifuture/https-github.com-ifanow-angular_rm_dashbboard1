@@ -121,7 +121,7 @@ export class AddNewLifeInsComponent implements OnInit {
     lifeAssured: [],
     proposer: [, [Validators.required]],
     policyName: [, [Validators.required]],
-    policyNum: [, [Validators.required]],
+    // policyNum: [, [Validators.required]],
     // commencementDate: [, [Validators.required]],
     sumAssured: [, [Validators.required]],
     premiumDetailsAmount: [, [Validators.required]],
@@ -460,7 +460,7 @@ export class AddNewLifeInsComponent implements OnInit {
       // this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)
       this.lifeInsuranceForm.controls.proposer.setValue(this.editInsuranceData.familyMemberName);
       this.lifeInsuranceForm.controls.policyName.setValue(this.editInsuranceData.policyName);
-      this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber);
+      // this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber);
       // this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate));
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured);
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount);
@@ -735,7 +735,7 @@ export class AddNewLifeInsComponent implements OnInit {
         advisorId: this.advisorId,
         // ownerName: '',
         // commencementDate: this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd'),
-        policyNumber: this.lifeInsuranceForm.get('policyNum').value,
+        // policyNumber: this.lifeInsuranceForm.get('policyNum').value,
         policyName: this.lifeInsuranceForm.get('policyName').value,
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
         // policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,

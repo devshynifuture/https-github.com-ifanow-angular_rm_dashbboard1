@@ -92,10 +92,10 @@
                                     </p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
-                                            <input
+                                            <input [disabled]=dataForEdit
                                                 (ngModelChange)="dateChange('givenOnDate')" matInput
                                                 (focus)="picker.open()" formControlName="givenOnDate"
-                                                [matDatepicker]="picker" class="form-control b-0">
+                                                [matDatepicker]="picker" class="form-control b-0"  >
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
                                             <mat-error class="f-12"
@@ -159,8 +159,10 @@
                 
                 <mat-step class="remove-bl"  [stepControl]="componentRefComponentVal[form]" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null" [editable]="true">
                     <ng-template matStepLabel>
-                        STEP 2{{componentRefComponentVal[form]}}
-                        <p class="m-0 text-black roboto">Asset details</p>
+                            <div (click)="function()">
+                                    STEP 2
+                                    <p class="m-0 text-black roboto"  >Asset details</p>
+                            </div>
                     </ng-template>
                     <ng-template #dynamic></ng-template>
                 </mat-step>

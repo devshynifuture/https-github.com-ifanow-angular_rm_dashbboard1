@@ -94,41 +94,41 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.tableEntriesType = 2;
     }
     this.arnRiaCode = this.data.arnRiaCode;
-    if(this.router.url.includes('folio-query')){
+    if (this.router.url.includes('folio-query')) {
       let temArr = [];
-      this.data.tableData.forEach(element => { 
-        if(this.data.aumDate && element.transactionDate){
-          if(element.transactionDate <= this.data.aumDate){
+      this.data.tableData.forEach(element => {
+        if (this.data.aumDate && element.transactionDate) {
+          if (element.transactionDate <= this.data.aumDate) {
             temArr.push(element);
           }
-        }    
+        }
       });
 
       this.freezeDate = this.data.freezeDate;
       let tableArr: PeriodicElement[];
-      if(temArr.length>0){
-        if(this.data && this.data.id && this.data.id !==0){
-          if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+      if (temArr.length > 0) {
+        if (this.data && this.data.id && this.data.id !== 0) {
+          if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
             tableArr = [{
               unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
-              unitOne: temArr[temArr.length-1].balanceUnits,
-              difference: (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3),
+              unitOne: temArr[temArr.length - 1].balanceUnits,
+              difference: (this.data.unitsRta - temArr[temArr.length - 1].balanceUnits).toFixed(3),
             }];
-          } else if((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId ===0)) {
+          } else if ((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId === 0)) {
             tableArr = [{
               unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
               unitOne: '-',
               difference: '-',
             }];
           }
-        } else if((this.data && this.data.hasOwnProperty('id') && this.data.id ===0 )|| (this.data && !this.data.hasOwnProperty('id'))) {
-          if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+        } else if ((this.data && this.data.hasOwnProperty('id') && this.data.id === 0) || (this.data && !this.data.hasOwnProperty('id'))) {
+          if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
             tableArr = [{
               unitsRta: '-',
-              unitOne: temArr[temArr.length-1].balanceUnits,
+              unitOne: temArr[temArr.length - 1].balanceUnits,
               difference: '-',
             }];
-          } else if((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId ===0)) {
+          } else if ((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId === 0)) {
             tableArr = [{
               unitsRta: '-',
               unitOne: '-',
@@ -136,31 +136,31 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
             }];
           }
         }
-        this.data.difference = (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3);
+        this.data.difference = (this.data.unitsRta - temArr[temArr.length - 1].balanceUnits).toFixed(3);
       } else {
 
-        if(this.data && this.data.id && this.data.id !==0){
-          if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+        if (this.data && this.data.id && this.data.id !== 0) {
+          if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
             tableArr = [{
               unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
               unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
-              difference: (this.data.unitsRta - temArr[temArr.length-1].balanceUnits).toFixed(3),
+              difference: String(this.data.unitsIfanow - this.data.unitsRta),
             }];
-          } else if((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId ===0)) {
+          } else if ((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId === 0)) {
             tableArr = [{
               unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
               unitOne: '-',
               difference: '-',
             }];
           }
-        } else if((this.data && this.data.hasOwnProperty('id') && this.data.id ===0) ||(this.data && !this.data.hasOwnProperty('id'))) {
-          if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+        } else if ((this.data && this.data.hasOwnProperty('id') && this.data.id === 0) || (this.data && !this.data.hasOwnProperty('id'))) {
+          if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
             tableArr = [{
               unitsRta: '-',
               unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
               difference: '-',
             }];
-          } else if((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId ===0)) {
+          } else if ((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId === 0)) {
             tableArr = [{
               unitsRta: '-',
               unitOne: '-',
@@ -180,28 +180,28 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
     } else {
       let tableArr;
-      if(this.data && this.data.id && this.data.id !==0){
-        if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+      if (this.data && this.data.id && this.data.id !== 0) {
+        if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
           tableArr = [{
             unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
             unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
             difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
           }];
-        } else if((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId ===0)) {
+        } else if ((this.data && !this.data.hasOwnProperty('mutualFundId')) || (this.data.mutualFundId && this.data.mutualFundId === 0)) {
           tableArr = [{
             unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
             unitOne: '-',
             difference: '-',
           }];
         }
-      } else if((this.data && this.data.id && this.data.id ===0) || (this.data && !this.data.hasOwnProperty('id'))) {
-        if(this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !==0){
+      } else if ((this.data && this.data.id && this.data.id === 0) || (this.data && !this.data.hasOwnProperty('id'))) {
+        if (this.data && this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId && this.data.mutualFundId !== 0) {
           tableArr = [{
             unitsRta: '-',
             unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
             difference: '-',
           }];
-        } else if((!this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId ===0)) {
+        } else if ((!this.data.hasOwnProperty('mutualFundId')) || (this.data.hasOwnProperty('mutualFundId') && this.data.mutualFundId === 0)) {
           tableArr = [{
             unitsRta: '-',
             unitOne: '-',
@@ -226,7 +226,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.data && this.data.difference === "0.000") {
-      if(this.data && this.data.freezeDate === null){
+      if (this.data && this.data.freezeDate === null) {
         this.disableFreezeBtn = false;
       } else {
         this.disableFreezeBtn = true;
@@ -244,16 +244,16 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     }
 
     this.filterSubTab1 = this.filterTransactionListTab1.valueChanges
-      .subscribe(res=>{
+      .subscribe(res => {
         this.filterBasedOn = res;
         this.filterTableValues(res, 1);
       })
 
-    this.filterSub = this.filterTransactionListTab2.valueChanges 
-    .subscribe(res=>{
-      this.filterBasedOn = res;
-      this.filterTableValues(res, 2)
-    })
+    this.filterSub = this.filterTransactionListTab2.valueChanges
+      .subscribe(res => {
+        this.filterBasedOn = res;
+        this.filterTableValues(res, 2)
+      })
 
     // if (this.data && this.data.difference === '0.000') {
     //   this.disableFreezeBtn = false;
@@ -273,7 +273,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.selectedFolioUnits = this.selectedFolioUnits + (parseFloat(element.units.toFixed(3)) * element.effect);
         // this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
         this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
-        
+
         this.deleteMultipleTransactionArray.push(element.id);
         this.deletedTransactions.push(mainIndex);
       } else {
@@ -310,7 +310,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     } else {
 
       if (!(this.dataSource1.data.some(item => item.canDeleteTransaction === false))) {
-        
+
         this.shouldShowMultipleDelete = true;
         this.dataSource1.data.forEach((row, index) => {
           if (row.canDeleteTransaction) {
@@ -337,12 +337,12 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     console.log(this.deleteMultipleTransactionArray);
   }
 
-  ngOnDestroy():void{
-    if(this.filterSub){
+  ngOnDestroy(): void {
+    if (this.filterSub) {
       this.filterSub.unsubscribe();
     }
 
-    if(this.filterSubTab1){
+    if (this.filterSubTab1) {
       this.filterSubTab1.unsubscribe()
     }
   }
@@ -397,14 +397,14 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
-          
+
           this.freezeDate = res;
 
-          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+          if (this.filterBasedOn && this.filterBasedOn.length !== 0 && this.filterOnWhichTable) {
             this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
           }
 
-          if(this.dataSource1.data.length !== 0){
+          if (this.dataSource1.data.length !== 0) {
             this.dataSource1.data.map(item => {
               item.canDeleteTransaction = false
             });
@@ -427,7 +427,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
           // console.log(res);
-          
+
           this.disableDeletionForTable2 = false;
           this.disableUnfreezeBtn = true;
           if (Math.round(parseFloat(this.dataSource.data[0].difference)) === 0) {
@@ -435,11 +435,11 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           }
           this.freezeDate = null;
 
-          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+          if (this.filterBasedOn && this.filterBasedOn.length !== 0 && this.filterOnWhichTable) {
             this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
           }
           // this.canDeleteTransaction = true;
-          if(this.dataSource1.data.length!==0){
+          if (this.dataSource1.data.length !== 0) {
             this.dataSource1.data.map(item => {
               item.canDeleteTransaction = true;
             });
@@ -472,18 +472,18 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         value.shift();
         this.misAumDataStorageService.clearStorage();
         this.misAumDataStorageService.callApiData();
-        if(this.dataSource1 && this.dataSource1.data.length>0){
+        if (this.dataSource1 && this.dataSource1.data.length > 0) {
           this.dataSource1.data = this.tableData1.filter(item => {
             return (!value.includes(String(item.id))) ? item : null;
           });
           this.tableData1 = [...this.dataSource1.data];
         }
 
-        if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+        if (this.filterBasedOn && this.filterBasedOn.length !== 0 && this.filterOnWhichTable) {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
         }
 
-        if(this.dataSource && this.dataSource.data){
+        if (this.dataSource && this.dataSource.data) {
           this.dataSource.data.map(item => {
             item.unitOne = String(res.units);
             this.changesInUnitOne = String(res.units);
@@ -553,12 +553,12 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       }
     });
 
-    if(this.filterBasedOnArr.length === 0){
+    if (this.filterBasedOnArr.length === 0) {
       this.dataSource1.data = this.tableData1;
-    } else if(this.filterBasedOnArr.length > 0 && this.filterOnWhichTable) {
+    } else if (this.filterBasedOnArr.length > 0 && this.filterOnWhichTable) {
       this.filterTableValues(this.filterBasedOnArr, this.filterOnWhichTable)
     }
-    
+
     this.tableData1.forEach(item => {
       this.changedBalanceUnits.push(item.balanceUnits);
     })
@@ -589,7 +589,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     this.selectedFolioUnitsFiltered = 0;
     this.filterOnWhichTable = whichTable;
     if (whichTable === 1) {
-      if (filterBasedOn.length<=0) {
+      if (filterBasedOn.length <= 0) {
         this.dataSource1.data = this.tableData1;
         this.selectedFolioUnitsFiltered = 0;
         this.selectedBalanceUnits = 0;
@@ -597,7 +597,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter((item, index) => {
-          if(filterBasedOn.includes(item.transactionType)){
+          if (filterBasedOn.includes(item.transactionType)) {
             this.selectedFolioUnitsFiltered += (parseFloat(item.units.toFixed(3)) * item.effect);
             // if (index === 0) {
             //   this.selectedBalanceUnits = String((parseFloat(item.units) * item.effect).toFixed(3));
@@ -610,19 +610,19 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         });
 
         this.selectedFolioUnitsFiltered = parseFloat(this.selectedFolioUnitsFiltered.toFixed(3));
-        
+
         this.shouldShowSelectedFilteredUnits = true;
         this.dataSource1.data = filteredArray;
       }
     }
     if (whichTable === 2) {
-      if (filterBasedOn.length <=0) {
+      if (filterBasedOn.length <= 0) {
         this.dataSource2.data = this.tableData1;
         this.selectedFolioUnits = 0;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
-          if(filterBasedOn.includes(item.transactionType)){
+          if (filterBasedOn.includes(item.transactionType)) {
             return item;
           }
         });

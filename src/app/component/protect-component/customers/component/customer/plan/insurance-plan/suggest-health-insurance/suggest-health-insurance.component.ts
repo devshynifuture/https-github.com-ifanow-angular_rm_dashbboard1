@@ -151,7 +151,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     adviceDetails: any;
     showHeader: any;
     fakeData: any;
-    constructor(private summaryPlanService:SummaryPlanServiceService,private planService: PlanService, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
+    constructor(private summaryPlanService: SummaryPlanServiceService, private planService: PlanService, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
 
     ngOnInit() {
         console.log('heder', this.inputData)
@@ -186,32 +186,32 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         this.inputData = data.inputData;
         this.policyList = data.displayList.policyTypes;
         this.addOns = data.displayList.addOns;
-        this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
+        this.adviceDetails = data.adviceDetails ? data.adviceDetails : null;
         this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
         this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
         this.showHeader = data.flag
         this.getFamilyMemberList();
         this.recommendOrNot = data.recommendOrNot;
-        if(this.adviceName == 'Port policy'){
+        if (this.adviceName == 'Port policy') {
             this.changeAdviceName(data)
-        }else{
+        } else {
             this.getdataForm(data);
         }
         // this.setInsuranceDataFormField(data);
         console.log(data);
     }
-    changeAdviceName(data){
-        this.adviceName = data.adviceName ? data.adviceName :  this.adviceName; 
-        this.fakeData = this.insData.data ?this.insData.data : this.fakeData;
-        if(this.adviceName == 'Port policy'){
-            this.nomineesListFM=[];
-            this.insData.data = null   
-        }else{
+    changeAdviceName(data) {
+        this.adviceName = data.adviceName ? data.adviceName : this.adviceName;
+        this.fakeData = this.insData.data ? this.insData.data : this.fakeData;
+        if (this.adviceName == 'Port policy') {
+            this.nomineesListFM = [];
+            this.insData.data = null
+        } else {
             this.insData.data = this.fakeData;
         }
         this.adviceName == 'Port policy' ? this.insData.data = null : '';
         this.getdataForm(this.insData);
-      }
+    }
     /***owner***/
     get getCoOwner() {
         return this.healthInsuranceForm.get('getCoOwnerName') as FormArray;
@@ -499,7 +499,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
         } else {
             this.dataForEdit = data.data;
             this.id = this.dataForEdit.id;
-            if (this.dataForEdit.addOns.length > 0) {
+            if (this.dataForEdit.addOns && this.dataForEdit.addOns.length > 0) {
                 this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
                 this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
             }
@@ -560,7 +560,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                 relationshipId: [''],
                 clientId: [''],
                 userType: [''],
-                name:['']
+                name: ['']
             })]),
             // addBankAccount: this.fb.array([this.fb.group({
             //   newBankAccount: [''],
@@ -593,24 +593,30 @@ export class SuggestHealthInsuranceComponent implements OnInit {
 
         /***nominee***/
         if (this.dataForEdit) {
-            this.getNominee.removeAt(0);
-            this.dataForEdit.nominees.forEach(element => {
-                this.addNewNominee(element);
-            });
+            if (this.dataForEdit.nominees && this.dataForEdit.nominees.length > 0) {
+                this.getNominee.removeAt(0);
+                this.dataForEdit.nominees.forEach(element => {
+                    this.addNewNominee(element);
+                });
+            }
         }
         /***nominee***/
         if (this.dataForEdit) {
-            this.insuredMembersForm.removeAt(0);
-            this.dataForEdit.insuredMembers.forEach(element => {
-                this.addTransaction(element);
-            });
+            if (this.dataForEdit.insuredMembers && this.dataForEdit.insuredMembers.length > 0) {
+                this.insuredMembersForm.removeAt(0);
+                this.dataForEdit.insuredMembers.forEach(element => {
+                    this.addTransaction(element);
+                });
+            }
         }
         if (this.dataForEdit) {
-            this.dataForEdit.insuredMembers.forEach(element => {
-                if (element.sumInsured == 0) {
-                    this.showinsuredMemberSum = false
-                }
-            });
+            if (this.dataForEdit.insuredMembers && this.dataForEdit.insuredMembers.length > 0) {
+                this.dataForEdit.insuredMembers.forEach(element => {
+                    if (element.sumInsured == 0) {
+                        this.showinsuredMemberSum = false
+                    }
+                });
+            }
         }
 
         if (this.healthInsuranceForm.get('PlanType').value == '8') {
@@ -717,7 +723,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
             familyMemberId: [data ? data.familyMemberId : ''],
             clientId: [data ? data.clientId : ''],
             userType: [data ? data.userType : ''],
-            name:[data ? data.name : '']
+            name: [data ? data.name : '']
 
         }));
         this.resetValue(this.insuredMemberList);
@@ -790,22 +796,22 @@ export class SuggestHealthInsuranceComponent implements OnInit {
     preventDefault(e) {
         e.preventDefault();
     }
-    getPolicyHolderName(){
+    getPolicyHolderName() {
         let name;
         let id;
-        id =(this.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.healthInsuranceForm.value.getCoOwnerName[0].clientId : this.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId
-        if(this.clientId == id){
+        id = (this.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.healthInsuranceForm.value.getCoOwnerName[0].clientId : this.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId
+        if (this.clientId == id) {
             id = 0
-        } 
+        }
         this.nomineesListFM.forEach(element => {
-            if(element.id == id){
+            if (element.id == id) {
                 name = element.name
             }
         });
         return name;
     }
     saveHealthInsurance() {
-        this.cateIdObj=this.summaryPlanService.getCategoryId(this.insuranceType);
+        this.cateIdObj = this.summaryPlanService.getCategoryId(this.insuranceType);
         this.getClientId();
         let policyHolerName = this.getPolicyHolderName();
         let memberList = [];
@@ -819,7 +825,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                 relationshipId: element.get('relationshipId').value,
                 insuredOrNominee: 1,
                 id: (element.get('id').value) ? element.get('id').value : null,
-                name:element.get('name').value
+                name: element.get('name').value
             };
             memberList.push(obj);
         });
@@ -832,7 +838,7 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                 'clientId': this.clientId,
                 'advisorId': this.advisorId,
                 'policyHolderId': (this.healthInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.healthInsuranceForm.value.getCoOwnerName[0].clientId : this.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
-                'policyHolderName':this.dataForEdit ? this.dataForEdit.policyHolderName : policyHolerName,
+                'policyHolderName': this.dataForEdit ? this.dataForEdit.policyHolderName : policyHolerName,
                 // 'policyStartDate': this.datePipe.transform(this.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
                 // 'policyExpiryDate': this.datePipe.transform(this.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 'cumulativeBonus': this.healthInsuranceForm.get('cumulativeBonus').value,
@@ -920,11 +926,11 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                         this.close(insuranceData, true);
                     }
                 );
-            } 
-            else if (this.adviceName){
-                let advDetails = this.dataForEdit ?this.dataForEdit.adviceDetails : this.adviceDetails
+            }
+            else if (this.adviceName) {
+                let advDetails = this.dataForEdit ? this.dataForEdit.adviceDetails : this.adviceDetails
                 this.obj1 = {
-                    stringObject:obj,
+                    stringObject: obj,
                     adviceDescription: this.adviceData ? this.adviceData.adviceDescription : (advDetails ? advDetails.advice_description : ''),
                     insuranceCategoryTypeId: this.cateIdObj.insuranceCategoryTypeId,
                     adviseCategoryTypeMasterId: this.cateIdObj.adviseCategoryTypeMasterId,
@@ -934,9 +940,9 @@ export class SuggestHealthInsuranceComponent implements OnInit {
                     realOrFictitious: 1,
                     clientId: AuthService.getClientId(),
                     advisorId: AuthService.getAdvisorId(),
-                    applicableDate:this.adviceData ?  new Date(this.adviceData.applicableDate) : advDetails ? new Date(advDetails.applicable_date) : '',
-                  }
-                  this.close(this.obj1, true);
+                    applicableDate: this.adviceData ? new Date(this.adviceData.applicableDate) : advDetails ? new Date(advDetails.applicable_date) : '',
+                }
+                this.close(this.obj1, true);
             }
             else {
                 this.planService.addGenralInsurancePlan(obj).subscribe(

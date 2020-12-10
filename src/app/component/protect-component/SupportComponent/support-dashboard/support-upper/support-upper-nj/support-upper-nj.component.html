@@ -25,9 +25,8 @@
     </div>
     <div class="col-md-6 pr-12">
         <mat-form-field appearance="standard" floatLabel="never">
-            <input #inputSearch class="form-control" matInput placeholder="Search"
-                (focus)="searchSchemeName(inputSearch.value)" aria-label="State" [matAutocomplete]="auto1"
-                [formControl]="searchSchemeControl">
+            <input #inputSearch class="form-control" matInput placeholder="Search" aria-label="State"
+                [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
             <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                 <!-- <ng-container *ngIf="!isLoadingForDropDown">
@@ -41,8 +40,8 @@
         </mat-form-field>
     </div>
     <div class="col-md-3 pt-11">
-        <mat-select (selectionChange)="onDropdownChange($event)">
-            <mat-option *ngFor="let item of njOptionsDropdown" value="item.id">
+        <mat-select (selectionChange)="setMapUnmapOption($event)" [formControl]="mapUnmappedOptionFC">
+            <mat-option *ngFor="let item of njOptionsDropdown" [value]="item.id">
                 {{item.title}}
             </mat-option>
         </mat-select>
@@ -93,7 +92,7 @@
                             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                             <ng-container *ngIf="!isLoadingForDropDown">
                                 <mat-option *ngFor="let scheme of filteredSchemes"
-                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName"
+                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme"
                                     [matTooltip]="scheme.schemeName" matTooltipPosition="after">
                                     <span><b>{{scheme.schemeName}}</b> </span>
                                 </mat-option>
@@ -161,8 +160,10 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button class="btn-primary btn-Map" mat-stroked-button (click)="mapNjScheme(element)">
-                            Map
+                        <button class="btn-primary btn-Map" mat-stroked-button [disabled]="!element.isSchemeSelected"
+                            [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
+                            (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedNjScheme(element):mapUnmappedNJScheme(element)):$event.preventDefault()">
+                            {{element.isMapped? 'Unmap':'Map'}}
                         </button>
                     </div>
                 </td>
@@ -171,5 +172,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div class="row" *ngIf="dataSource.data.length === 0">
+            <h4 class="col-md-12 p-44 text-center b-a">
+                No data found
+            </h4>
+        </div>
     </div>
 </div>

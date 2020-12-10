@@ -71,7 +71,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
 
   }
   getFormData(data) {
-    if (!data.adviceDetails) {
+    if (data.data ?  (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
       data = {};
       this.dataForEdit = null;
       this.flag = 'Add';

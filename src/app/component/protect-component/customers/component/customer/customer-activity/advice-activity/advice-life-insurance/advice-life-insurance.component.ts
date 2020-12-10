@@ -360,7 +360,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       childComponent: Component,
       adviceToCategoryId :this.object.adviceToCategoryId,
       adviceToCategoryTypeMasterId:3,
-      showHeaderEdit:data?true:false,
+      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
       childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

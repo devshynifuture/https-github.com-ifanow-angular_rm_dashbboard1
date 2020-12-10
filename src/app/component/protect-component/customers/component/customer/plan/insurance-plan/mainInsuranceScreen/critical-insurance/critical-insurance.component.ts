@@ -362,7 +362,7 @@ export class CriticalInsuranceComponent implements OnInit {
         else {
             this.dataForEdit = data.data;
             this.id = this.dataForEdit.id;
-            if (this.dataForEdit.addOns.length > 0) {
+            if (this.dataForEdit.addOns && this.dataForEdit.addOns.length > 0) {
                 this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
                 this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
             }
@@ -449,7 +449,7 @@ export class CriticalInsuranceComponent implements OnInit {
 
         /***nominee***/
         if (this.dataForEdit) {
-            if (this.dataForEdit.nominees.length > 0) {
+            if (this.dataForEdit.nominees && this.dataForEdit.nominees.length > 0) {
                 this.getNominee.removeAt(0);
                 this.dataForEdit.nominees.forEach(element => {
                     this.addNewNominee(element);
@@ -458,7 +458,7 @@ export class CriticalInsuranceComponent implements OnInit {
         }
         /***nominee***/
         if (this.dataForEdit) {
-            if (this.dataForEdit.insuredMembers.length > 0) {
+            if (this.dataForEdit.insuredMembers && this.dataForEdit.insuredMembers.length > 0) {
                 this.insuredMembersForm.removeAt(0);
                 this.dataForEdit.insuredMembers.forEach(element => {
                     this.addTransaction(element);
@@ -467,11 +467,14 @@ export class CriticalInsuranceComponent implements OnInit {
         }
 
         if (this.dataForEdit) {
-            this.dataForEdit.insuredMembers.forEach(element => {
-                if (element.sumInsured == 0) {
-                    this.showinsuredMemberSum = false
-                }
-            });
+            if(this.dataForEdit.insuredMembers && this.dataForEdit.insuredMembers.length > 0){
+                this.dataForEdit.insuredMembers.forEach(element => {
+                    if (element.sumInsured == 0) {
+                        this.showinsuredMemberSum = false
+                    }
+                });
+            }
+
         }
         if (this.critialIllnessForm.get('PlanType').value == '8') {
             this.showSumAssured = true;

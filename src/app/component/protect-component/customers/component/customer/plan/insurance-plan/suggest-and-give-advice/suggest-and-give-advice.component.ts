@@ -126,6 +126,9 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     this.componentRef._component.adviceName = this.adviceNameObj
     this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
   }
+  function(){
+    this.count++;
+  }
   dateChange(value) {
     let adviceHeaderDate = this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy/MM/dd')
     console.log(adviceHeaderDate);
@@ -945,11 +948,11 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
                 insuranceObj.nominees = [];
               }
               const stringObj = {
-                adviceDescription: this.adviceForm.get('rationale').value,
+                id:this.dataForEdit ? this.dataForEdit.id : null,
                 insuranceCategoryTypeId: this.adviceToCategoryId,
                 suggestedFrom: 1,
                 adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-                adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
+                adviceToLifeInsurance: { adviceDescription: this.adviceForm.get('rationale').value,"insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
                 adviceId: this.adviceForm.get('headerEdit').value,
@@ -1326,14 +1329,14 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
   }
   mergeAndhitApi(obj) {
     const stringObjHealth = {
-      adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
-      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : null,
+      id:this.dataForEdit ? this.dataForEdit.id : null,
+      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 0,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-      adviceToGenInsurance: { genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
+      adviceToGenInsurance: { adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
       adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
