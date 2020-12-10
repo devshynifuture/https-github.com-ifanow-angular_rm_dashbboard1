@@ -997,7 +997,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="!isLoading && travelDataSource.data.length==0" class="b-a bt-0">
+    <div *ngIf="!isLoading && travelDataSource.tableFlag == false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">

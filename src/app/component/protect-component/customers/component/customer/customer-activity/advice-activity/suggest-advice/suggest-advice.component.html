@@ -95,8 +95,8 @@
                                             <input
                                                 (ngModelChange)="dateChange('givenOnDate')" matInput
                                                 (focus)="picker.open()" formControlName="givenOnDate"
-                                                [matDatepicker]="picker" class="form-control b-0">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                [matDatepicker]="picker" class="form-control b-0" [disabled]=dataForEdit>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"  ></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
                                             <mat-error class="f-12"
                                                 *ngIf="(adviceForm.get('givenOnDate').errors?.required)">

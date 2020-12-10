@@ -71,7 +71,7 @@
                                         <input
                                             (ngModelChange)="dateChange('givenOnDate')" matInput
                                             (focus)="picker.open()" formControlName="givenOnDate"
-                                            [matDatepicker]="picker" class="form-control b-0">
+                                            [matDatepicker]="picker" class="form-control b-0"  [readonly]="dataForEdit">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                         <mat-error class="f-12"
