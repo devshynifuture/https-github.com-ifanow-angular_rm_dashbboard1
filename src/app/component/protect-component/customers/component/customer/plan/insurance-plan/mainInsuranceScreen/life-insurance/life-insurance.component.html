@@ -1,7 +1,7 @@
 <div class="row pb-12 insuFixedHeader pt-28 bb-grey" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="col-md-4 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
         <h3 class="m-0" *ngIf="!isLoadingPlan">{{getData ? getData.heading : ''}} -
-            {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0].holderName) : ''}}
+            {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : (inputData.owners[0]? inputData.owners[0]?.holderName : null)) : ''}}
         </h3>
         <div class="relClass  m-0" [hidden]="!isLoadingPlan">
             <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
@@ -816,7 +816,7 @@
                         <td>
                             <h3 style="margin: 0px; font-size: 18px;">
                                 {{getData ? getData.heading : ''}} -
-                                {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0].holderName) : ''}}
+                                {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0]?.holderName) : ''}}
                             </h3>
                         </td>
                     </tr>

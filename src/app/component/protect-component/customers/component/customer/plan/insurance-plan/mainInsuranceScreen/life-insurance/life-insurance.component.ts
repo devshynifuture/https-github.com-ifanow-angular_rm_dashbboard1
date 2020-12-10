@@ -339,6 +339,11 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
   setDetails(data) {
+    if(this.inputData && this.inputData.insuranceType != 1){
+      this.displayedColumns1 = ['name', 'sum', 'premium', 'advice','icons'];
+    }else{
+      this.displayedColumns1 = ['name', 'sum', 'premium','returns', 'advice','icons'];
+    }
     if (data) {
       this.getData = data
       this.setLogo.forEach(element => {
@@ -821,7 +826,7 @@ export class LifeInsuranceComponent implements OnInit {
         let suggestionId;
         this.dataSouce3.forEach(ele => {
           // if (ele['insurance'].suggestion) {
-            if (ele['insurance'] ? ele['insurance'].isRecommend == 1 : ele['insuranceDetails']) {
+            if (ele['insurance'] ? ele['insurance'].isRecommend == 1 : ele['insuranceDetails'].isRecommend == 1) {
             suggestionId = ele['insurance'].id;
             countSuggest++
             this.recommendOrNot = true;
