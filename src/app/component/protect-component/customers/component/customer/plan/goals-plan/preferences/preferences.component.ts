@@ -107,10 +107,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   // ----------------- key params ----------------------------
   changeDate(yr) {
-    if (this.goalDetailsFG.controls.savingEndDateYear.value <= this.goalDetailsFG.controls.goalEndDateYear.value) {
-      this.goalDetailsFG.controls.goalEndDateYear.setValue(yr);
+    if ((this.data.goalType == 1 || this.data.singleOrMulti == 2) && this.goalDetailsFG.controls.savingEndDateYear.value <= this.goalDetailsFG.controls.goalEndDateYear.value) {
     } else {
-      this.goalDetailsFG.controls.goalEndDateYear.setValue(2);
+      this.goalDetailsFG.controls.goalEndDateYear.setValue(yr);
     }
   }
   savingsSDError: boolean = false;
@@ -181,21 +180,21 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       //   })
       // )
     }
-    // if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
-    //   this.subscription.add(
-    //     this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
-    //       this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
-    //       if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
-    //         this.goalDetailsFG.controls.savingStartDateYear.setValue('');
-    //         this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-    //       }
-    //       if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
-    //         this.goalDetailsFG.controls.savingStartDateYear.setValue('');
-    //         this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-    //       }
-    //     })
-    //   )
-    // }
+    if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
+      this.subscription.add(
+        this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
+          this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
+          if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
+        })
+      )
+    }
 
   }
   setInflamationReturns() {
