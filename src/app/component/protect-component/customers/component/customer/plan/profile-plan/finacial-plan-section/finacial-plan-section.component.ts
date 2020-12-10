@@ -171,7 +171,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   getPreview(element, value) {
     if (value == 'table') {
       let obj = {
-        id: (element.financialPlanPdfLogId) ? element.financialPlanPdfLogId : element.id
+        id: (element.financialPlanPdfLogId == undefined) ? element.id : element.financialPlanPdfLogId
       }
       this.planService.getPreview(obj).subscribe(
         data => this.getPreviewRes(data, value)
@@ -256,6 +256,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   close() {
     this.hideTable = false
+    this.moduleAdded = []
   }
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
