@@ -574,8 +574,13 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
-    this.cd.markForCheck();
-    this.loaded.emit(this.summaryPlan.nativeElement);
+    if (this.finPlanObj) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+      this.cd.markForCheck();
+      this.loaded.emit(this.summaryPlan.nativeElement);
+    }
+
   }
   deleteMilestone(milestone) {
     const dialogData = {
