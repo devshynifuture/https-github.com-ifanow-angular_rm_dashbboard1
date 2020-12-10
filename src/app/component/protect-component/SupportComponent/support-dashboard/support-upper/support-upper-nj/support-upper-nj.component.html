@@ -162,7 +162,7 @@
                     <div class="bar">
                         <button class="btn-primary btn-Map" mat-stroked-button [disabled]="!element.isSchemeSelected"
                             [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
-                            (click)="element.isSchemeSelected ? (element.isMapped ? unmapMappedNjScheme(element):mapUnmappedNjScheme(element)):$event.preventDefault()">
+                            (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedNjScheme(element):mapUnmappedNJScheme(element)):$event.preventDefault()">
                             {{element.isMapped? 'Unmap':'Map'}}
                         </button>
                     </div>
