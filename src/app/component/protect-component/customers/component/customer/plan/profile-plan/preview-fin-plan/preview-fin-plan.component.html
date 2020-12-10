@@ -17,7 +17,7 @@
         <img src="{{data.bank.imageUrl}}" viewer="google" style="width:580px;height:690px;">
     </div>
     <div id="dId"></div>
-    <div>
+    <div *ngIf="link">
         <ngx-doc-viewer [url]="link" viewer="google" style="width:580px;height:690px;">
         </ngx-doc-viewer>
     </div>
