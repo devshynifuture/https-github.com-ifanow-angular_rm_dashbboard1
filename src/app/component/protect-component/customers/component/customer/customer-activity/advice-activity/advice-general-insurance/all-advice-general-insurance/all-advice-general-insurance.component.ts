@@ -268,6 +268,15 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     }else{
       GIArry = [];
     }
+    if(GIArry.length > 0 && data.length > 0){
+      GIArry.forEach(element => {
+        data.forEach(ele => {
+          if(ele.InsuranceDetails.id == element.InsuranceDetails.id){
+            element.hideGiveAdvice = true;
+          }
+        });
+      });
+    }
     if(GIArry.length > 0){
       data = [...GIArry, ...data];
     }
@@ -309,7 +318,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         }
       });
     }
-   
+    
     return data;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {

@@ -246,6 +246,15 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         array.push(element);
       });
     }
+    if(liArray.length > 0 && data.length > 0){
+      liArray.forEach(element => {
+        data.forEach(ele => {
+          if(ele.InsuranceDetails.id == element.InsuranceDetails.id){
+            element.hideGiveAdvice = true;
+          }
+        });
+      });
+    }
     if (liArray.length > 0) {
       array = [...liArray, ...array];
     }

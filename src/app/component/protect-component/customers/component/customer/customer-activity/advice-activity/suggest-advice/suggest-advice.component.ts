@@ -903,6 +903,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 advisorId: this.advisorId,
                 ownerName: '',
                 commencementDate:new Date(),
+                id:componentRefComponentValues.editInsuranceData.id,
                 // policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
                 policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
                 sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
@@ -1348,7 +1349,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
-      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : null,
+      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 0,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
@@ -1360,15 +1361,22 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     }
     let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
     if (this.flag == 'Add') {
-      const giveAdvice = this.activityService.suggestNewGeneralInsurance(ObjHealth);
-      forkJoin(giveAdvice).subscribe(result => {
-        this.barButtonOptions.active = false;
-        this.getAdviceRes(result);
-      }, (error) => {
-        this.eventService.openSnackBar('error', 'Dismiss');
-      });
+      this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
+        data => {
+          const addPlan = {
+            "id": this.componentRefComponentVal.inputData.id,
+            "insuranceIds": JSON.stringify([data])
+          }
+          const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
+          forkJoin(UpadtePolicy).subscribe(result => {
+            this.barButtonOptions.active = false;
+            this.getAdviceRes(result);
+          }, (error) => {
+            this.eventService.openSnackBar('error', 'Dismiss');
+          });
+        },
+      );
     } else {
-      if (this.childComponentFlag == 'suggestNew') {
         const editGeneral = this.planService.editGenralInsurancePlan(obj);
         const editAdvice = this.activityService.editAdvice(ObjHealth);
         forkJoin(editGeneral, editAdvice).subscribe(result => {
@@ -1377,12 +1385,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
         }, (error) => {
           this.eventService.openSnackBar('error', 'Dismiss');
         });
-      } else {
-        this.activityService.editAdvice(ObjHealth).subscribe(
-          data => this.getAdviceRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
-        );
-      }
+      //  else {
+      //   this.activityService.editAdvice(ObjHealth).subscribe(
+      //     data => this.getAdviceRes(data),
+      //     err => this.event.openSnackBar(err, "Dismiss")
+      //   );
+      // }
     }
   }
   filterForObj(data, mergeData) {
