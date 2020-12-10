@@ -238,13 +238,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       let fireData = this.filterData(data.FIRE,10);
       this.fireCpy = healthData;
       this.FireDataSource = new MatTableDataSource(fireData);
-      this.healthInsuranceDataSource['tableFlag'] = (data.HEALTH.length == 0) ? false : true;
-      this.personalAccidentDataSource['tableFlag'] = (data.PERSONAL_ACCIDENT.length == 0) ? false : true;
-      this.criticalInsDataSource['tableFlag'] = (data.CRITICAL_ILLNESS.length == 0) ? false : true;
-      this.motorDataSource['tableFlag'] = (data.MOTOR.length == 0) ? false : true;
-      this.travelDataSource['tableFlag'] = (data.TRAVEL.length == 0) ? false : true;
-      this.homeInsDataSource['tableFlag'] = (data.HOME.length == 0) ? false : true;
-      this.FireDataSource['tableFlag'] = (data.FIRE.length == 0) ? false : true;
+      this.healthInsuranceDataSource['tableFlag'] = (this.healthInsuranceDataSource.data.length == 0) ? false : true;
+      this.personalAccidentDataSource['tableFlag'] = (this.personalAccidentDataSource.data.length == 0) ? false : true;
+      this.criticalInsDataSource['tableFlag'] = (this.criticalInsDataSource.data.length == 0) ? false : true;
+      this.motorDataSource['tableFlag'] = (this.motorDataSource.data.length == 0) ? false : true;
+      this.travelDataSource['tableFlag'] = (this.travelDataSource.data.length == 0) ? false : true;
+      this.homeInsDataSource['tableFlag'] = (this.homeInsDataSource.data.length == 0) ? false : true;
+      this.FireDataSource['tableFlag'] = (this.FireDataSource.data.length == 0) ? false : true;
       console.log("::::::::::::::::", data)
     }else{
       this.isLoading = false;

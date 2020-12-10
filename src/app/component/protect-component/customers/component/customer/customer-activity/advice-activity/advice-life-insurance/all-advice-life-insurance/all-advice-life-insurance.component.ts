@@ -202,9 +202,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       this.ulipDataSource = new MatTableDataSource(ulipData);
       console.log('ulipData', ulipData)
       // this.ulipDataSource.sort = this.sort
-      this.termDataSource['tableFlag'] = data.TERM_LIFE_INSURANCE.length == 0 ? false : true;
-      this.traditionalDataSource['tableFlag'] = data.TRADITIONAL_LIFE_INSURANCE.length == 0 ? false : true;
-      this.ulipDataSource['tableFlag'] = data.ULIP_LIFE_INSURANCE.length == 0 ? false : true;
+      this.termDataSource['tableFlag'] = this.termDataSource.data.length == 0 ? false : true;
+      this.traditionalDataSource['tableFlag'] = this.traditionalDataSource.data.length == 0 ? false : true;
+      this.ulipDataSource['tableFlag'] = this.ulipDataSource.data.length == 0 ? false : true;
     }else{
       this.isLoading = false;
       this.termDataSource = [];
