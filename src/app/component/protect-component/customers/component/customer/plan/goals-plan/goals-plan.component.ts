@@ -554,8 +554,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.singleGoalData.img = this.finPlanObj.obj.imageUrl
       this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
     }
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    // this.cd.markForCheck();
+    // this.cd.detectChanges();
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
     if (goalData.remainingData.retirementTableValue) {
