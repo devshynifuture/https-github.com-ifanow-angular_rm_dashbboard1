@@ -79,16 +79,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
     this.setForms();
     this.setFormListeners();
-    this.subscriber.add(
-      this.goalDetailsFG.controls.savingEndDateYear.valueChanges.subscribe((value: string) => {
-        if (value) {
-          this.goalDetailsFG.controls.goalEndDateYear.setValue(value);
-          this.goalDetailsFG.controls.savingEndDateYear.setValue(value)
-        } else {
-          //this.remainingAllocation = 0;
-        }
-      })
-    )
+    // this.subscriber.add(
+    //   this.goalDetailsFG.controls.savingEndDateYear.valueChanges.subscribe((value: string) => {
+    //     if (value) {
+    //       this.goalDetailsFG.controls.goalEndDateYear.setValue(value);
+    //       this.goalDetailsFG.controls.savingEndDateYear.setValue(value)
+    //     } else {
+    //       //this.remainingAllocation = 0;
+    //     }
+    //   })
+    // )
   }
 
   setForms() {
@@ -106,7 +106,13 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
 
   // ----------------- key params ----------------------------
-
+  changeDate(yr) {
+    if (this.goalDetailsFG.controls.savingEndDateYear.value <= this.goalDetailsFG.controls.goalEndDateYear.value) {
+      this.goalDetailsFG.controls.goalEndDateYear.setValue(yr);
+    } else {
+      this.goalDetailsFG.controls.goalEndDateYear.setValue(2);
+    }
+  }
   savingsSDError: boolean = false;
   savingsEDError: boolean = false;
   goalSDError: boolean = false;
@@ -175,21 +181,21 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       //   })
       // )
     }
-    if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
-      this.subscription.add(
-        this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
-          this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
-          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
-            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
-            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-          }
-          if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
-            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
-            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
-          }
-        })
-      )
-    }
+    // if (this.data.goalType == 1 || this.data.singleOrMulti == 2) {
+    //   this.subscription.add(
+    //     this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
+    //       this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+    //       if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+    //         this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+    //         this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+    //       }
+    //       if (!this.yearsEnd.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+    //         this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+    //         this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+    //       }
+    //     })
+    //   )
+    // }
 
   }
   setInflamationReturns() {

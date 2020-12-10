@@ -9,7 +9,8 @@
 </div>
 <div class="row" id="goal-preferences">
     <div class="col-md-12 p-0">
-        <mat-tab-group animationDuration="0ms" mat-align-tabs="center" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center" (selectedTabChange)="resetPageVariables()"
+            [(selectedIndex)]="selectedTab">
             <mat-tab label="Key parameters">
                 <div class="wrapper-28" [formGroup]="goalDetailsFG">
                     <div class="row pb-20">
@@ -75,25 +76,25 @@
                                             <mat-option [value]="" disabled>Select option</mat-option>
                                             <!-- <mat-option [value]="0.6">0.6</mat-option> -->
                                             <mat-option [value]="1">Every year</mat-option>
-                                                <mat-option [value]="2">Every 2 year</mat-option>
-                                                <mat-option [value]="3">Every 3 year</mat-option>
-                                                <mat-option [value]="4">Every 4 year</mat-option>
-                                                <mat-option [value]="5">Every 5 year</mat-option>
-                                                <mat-option [value]="5">Every 6 year</mat-option>
-                                                <mat-option [value]="5">Every 7 year</mat-option>
-                                                <mat-option [value]="5">Every 8 year</mat-option>
-                                                <mat-option [value]="5">Every 9 year</mat-option>
-                                                <mat-option [value]="5">Every 10 year</mat-option>
-                                                <mat-option [value]="5">Every 11 year</mat-option>
-                                                <mat-option [value]="5">Every 12 year</mat-option>
-                                                <mat-option [value]="5">Every 13 year</mat-option>
-                                                <mat-option [value]="5">Every 14 year</mat-option>
-                                                <mat-option [value]="5">Every 15 year</mat-option>
-                                                <mat-option [value]="5">Every 16 year</mat-option>
-                                                <mat-option [value]="5">Every 17 year</mat-option>
-                                                <mat-option [value]="5">Every 18 year</mat-option>
-                                                <mat-option [value]="5">Every 19 year</mat-option>
-                                                <mat-option [value]="5">Every 20 year</mat-option>
+                                            <mat-option [value]="2">Every 2 year</mat-option>
+                                            <mat-option [value]="3">Every 3 year</mat-option>
+                                            <mat-option [value]="4">Every 4 year</mat-option>
+                                            <mat-option [value]="5">Every 5 year</mat-option>
+                                            <mat-option [value]="5">Every 6 year</mat-option>
+                                            <mat-option [value]="5">Every 7 year</mat-option>
+                                            <mat-option [value]="5">Every 8 year</mat-option>
+                                            <mat-option [value]="5">Every 9 year</mat-option>
+                                            <mat-option [value]="5">Every 10 year</mat-option>
+                                            <mat-option [value]="5">Every 11 year</mat-option>
+                                            <mat-option [value]="5">Every 12 year</mat-option>
+                                            <mat-option [value]="5">Every 13 year</mat-option>
+                                            <mat-option [value]="5">Every 14 year</mat-option>
+                                            <mat-option [value]="5">Every 15 year</mat-option>
+                                            <mat-option [value]="5">Every 16 year</mat-option>
+                                            <mat-option [value]="5">Every 17 year</mat-option>
+                                            <mat-option [value]="5">Every 18 year</mat-option>
+                                            <mat-option [value]="5">Every 19 year</mat-option>
+                                            <mat-option [value]="5">Every 20 year</mat-option>
                                         </mat-select>
                                         <mat-error>This field is required</mat-error>
                                     </mat-form-field>
@@ -163,7 +164,8 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year"
                                             [disabled]="year < (goalDetailsFG.get('savingStartDateYear').value)+1"
-                                            *ngFor="let year of yearsEnd">{{year}}</mat-option>
+                                            *ngFor="let year of yearsEnd" (click)="changeDate(year)">{{year}}
+                                        </mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
@@ -244,8 +246,9 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0" formControlName="goalEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year"   [disabled]="year < (goalDetailsFG.get('savingEndDateYear').value)"
-                                        *ngFor="let year of yearsEnd">{{year}}
+                                        <mat-option [value]="year"
+                                            [disabled]="year < (goalDetailsFG.get('savingEndDateYear').value)"
+                                            *ngFor="let year of yearsEnd">{{year}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
@@ -326,7 +329,7 @@
                         </div>
                         <div class="col-md-1 p-0 mt-6">
                             <mat-checkbox id="custom-checkbox" formControlName="freezeCalculation"
-                            (change)="freezeCalculation($event)"></mat-checkbox>
+                                (change)="freezeCalculation($event)"></mat-checkbox>
                         </div>
                         <div class="col-md-7 pr-0 text-right">
                             <p class="m-0 text-primitive mt-4">Last Freeze date:
