@@ -42,6 +42,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   scripList: any;
   ownerName: any;
   familyMemberId: any;
+  oldOwner: any;
   familyWisePortfolio = [];
   editApiData: any;
   ownerInfo: any;
@@ -54,6 +55,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
   optionForm;
   checkValid: boolean = false;
   callMethod: { methodName: string; ParamValue: any; };
+  oldOwnerFM: number;
+  oldOwnerID: number;
 
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -70,21 +73,36 @@ export class StockScripLevelHoldingComponent implements OnInit {
 
     this.getFormData(data);
     this.isTHolding = true;
+    this.oldOwnerFM = data.ownerList[0].familyMemberId;
+    this.oldOwnerID = data.ownerList[0].id;
+  }
+  @Input() set newPorfolio(data) {
+    if (data) {
+      this.portfolioData = data;
+      this.saveSchemeHolding();
+    }
   }
 
+  portfolioT: any;
   @Input() set scriptOwner(scriptOwner) {
     if (scriptOwner) {
+      this.portfolioT = scriptOwner;
       delete scriptOwner.ownerT[0]['assetType'];
       delete scriptOwner.ownerT[0]['assetId'];
       delete scriptOwner.ownerT[0]['isActive'];
       this.scipLevelHoldingForm.get('getCoOwnerName').setValue(scriptOwner.ownerT);
       this.disabledMember(scriptOwner.ownerT[0].name, null)
+      this.portfolioData = scriptOwner;
+      this.editApiData.portfolioId = this.portfolioData.currentPorfolioId;
+      this.scipLevelHoldingForm.get('portfolioName').setValue(scriptOwner.portfolioName);
     }
   }
   getPortfolioData(data) {
     console.log("getPortfolioData", data)
-    this.portfolioData = data;
-    this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName);
+    if (!this.portfolioT) {
+      this.portfolioData = data;
+      this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName);
+    }
   }
 
   // ===================owner-nominee directive=====================//
@@ -254,6 +272,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
 
       this.editApiData = data;
       this.familyMemberId = data.familyMemberId;
+      this.oldOwner = data.ownerList;
       this.ownerName = data.ownerName;
 
       this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
@@ -423,7 +442,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
               "holdingOrTransactionDate": this.datePipe.transform(element.get('holdingAsOn').value, 'yyyy-MM-dd'),
               "investedOrTransactionAmount": element.get('investedAmt').value,
               // "isDeleted": element.get('isDeleted').value,
-              'id': element.get('id').value
+              'id': this.editApiData ? this.editApiData.transactionOrHoldingSummaryList[0].id : null,
             }
           ]
 
@@ -432,13 +451,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
           objStock.id = this.editApiData.stockListForEditView[i].id;
           // objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
         }
-        if (objStock.id == null) {
-          // objStock.ownerList[0].id = null;
-        }
 
-        if (this.editApiData && this.portfolioData.id == 0) {
-          // objStock.ownerList[0].id = null;
-        }
 
         finalStocks.push(objStock);
       })
@@ -519,6 +532,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
       }
 
       if (this.editApiData) {
+        if (obj.id != 0) {
+          obj.ownerList[0].id = this.oldOwnerID ? this.oldOwnerID : obj.ownerList[0].id;
+          obj.ownerList[0].familyMemberId = this.oldOwnerFM ? this.oldOwnerFM : obj.ownerList[0].familyMemberId;
+        }
         this.cusService.editStockData(obj).subscribe(
           data => {
             console.log(data);

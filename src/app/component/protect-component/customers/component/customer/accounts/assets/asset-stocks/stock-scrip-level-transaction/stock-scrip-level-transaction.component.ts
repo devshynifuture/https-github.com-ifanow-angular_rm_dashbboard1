@@ -35,10 +35,12 @@ export class StockScripLevelTransactionComponent implements OnInit {
   };
   optionForm;
   ownerData: any;
+  newPorfolio: any;
   portfolioList: any;
   familyWisePortfolio = [];
   ownerName: any;
   familyMemberId: any;
+  oldOwner: any;
   scipLevelTransactionForm: any;
   clientId: any;
   advisorId: any;
@@ -55,6 +57,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   nomineesList: any[] = [];
   Holdings: any;
+  oldOwnerFM: number;
+  oldOwnerID: number;
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @ViewChild('holding', { static: false }) holding;
   @Input() set data(data) {
@@ -63,7 +67,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     console.log(data, ' edit data');
     if (data) {
       data.stockListForEditView.forEach(h => {
-        if (h.stockType) {
+        if (h.stockType == 2) {
           h['ownerList'] = data.ownerList;
           h['portfolioOwner'] = data.owerList;
           h['portfolioName'] = data.portfolioName;
@@ -71,6 +75,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
           this.Holdings = h;
         }
       });
+      this.oldOwnerFM = data.ownerList[0].familyMemberId;
+      this.oldOwnerID = data.ownerList[0].id;
     }
     this.getFormData(data);
   }
@@ -249,7 +255,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
     else {
       this.editApiData = data;
       this.familyMemberId = data.familyMemberId;
-      this.ownerName = data.ownerName
+      this.oldOwner = data.ownerList;
+      this.ownerName = data.ownerName;
     }
     this.scipLevelTransactionForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
@@ -374,6 +381,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
     console.log("", data)
     this.portfolioData = data;
     this.portfolioData['ownerT'] = this.scipLevelTransactionForm.get('getCoOwnerName').value;
+    if (this.editApiData) {
+      this.portfolioData['currentPorfolioId'] = this.editApiData.portfolioId;
+    }
     if (this.portfolioData) {
       this.scriptOwner = this.portfolioData;
     }
@@ -500,11 +510,24 @@ export class StockScripLevelTransactionComponent implements OnInit {
       }
       console.log(obj)
       if (this.editApiData) {
+        if (obj.id != 0) {
+          obj.ownerList[0].id = this.oldOwnerID;
+          obj.ownerList[0].familyMemberId = this.oldOwnerFM;
+          this.holding.saveSchemeHolding();
+        }
         this.cusService.editStockData(obj).subscribe(
           data => {
             console.log(data);
-            this.Close();
-            this.barButtonOptions.active = false;
+            if (obj.id == 0) {
+              data.stockList[0]['stockListForEditView'] = data.stockList;
+              data.stockList[0]['portfolioId'] = data.id;
+              data.stockList[0]['ownerList'] = data.ownerList;
+              this.newPorfolio = data;
+            }
+            else {
+              this.Close();
+              this.barButtonOptions.active = false;
+            }
           },
           error => {
             this.barButtonOptions.active = false;
