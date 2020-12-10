@@ -31,6 +31,7 @@ export class PreviewFinPlanComponent implements OnInit {
     this.loadSpinner = true
     if (this.data.bank.content) {
       document.getElementById("dId").innerHTML = this.data.bank.content;
+      this.loadSpinner = false
     }
     setTimeout(() => {
       this.getLoader()
