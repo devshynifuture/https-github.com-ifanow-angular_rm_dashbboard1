@@ -171,15 +171,15 @@ export class FinacialPlanSectionComponent implements OnInit {
   getPreview(element, value) {
     if (value == 'table') {
       let obj = {
-        id: element.financialPlanPdfLogId
+        id: (element.financialPlanPdfLogId == undefined) ? element.id : element.financialPlanPdfLogId
       }
       this.planService.getPreview(obj).subscribe(
         data => this.getPreviewRes(data, value)
       );
     } else {
       const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
-        width: '500px',
-        height: '600px',
+        width: '600px',
+        height: '798px',
         data: { bank: element, selectedElement: '' }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -197,8 +197,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   getPreviewRes(data, element) {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
-      width: '500px',
-      height: '600px',
+      width: '600px',
+      height: '798px',
       data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -256,6 +256,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
   close() {
     this.hideTable = false
+    this.moduleAdded = []
   }
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
@@ -304,7 +305,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         // });
         // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
         var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
         this.uploadFile(el, list.name, element.name, false)
       }
     }
