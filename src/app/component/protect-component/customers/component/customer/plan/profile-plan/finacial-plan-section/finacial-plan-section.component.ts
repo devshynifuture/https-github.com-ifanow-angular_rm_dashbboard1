@@ -304,7 +304,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         // });
         // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
         var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"980px\" height=\"1330px\">";
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"950px\" height=\"1270px\">";
         this.uploadFile(el, list.name, element.name, false)
       }
     }
