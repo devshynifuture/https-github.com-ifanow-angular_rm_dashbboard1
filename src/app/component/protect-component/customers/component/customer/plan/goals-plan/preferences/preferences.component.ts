@@ -79,16 +79,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
     this.setForms();
     this.setFormListeners();
-    this.subscriber.add(
-      this.goalDetailsFG.controls.savingEndDateYear.valueChanges.subscribe((value: string) => {
-        if (value) {
-          this.goalDetailsFG.controls.goalEndDateYear.setValue(value);
-          this.goalDetailsFG.controls.savingEndDateYear.setValue(value)
-        } else {
-          //this.remainingAllocation = 0;
-        }
-      })
-    )
+    // this.subscriber.add(
+    //   this.goalDetailsFG.controls.savingEndDateYear.valueChanges.subscribe((value: string) => {
+    //     if (value) {
+    //       this.goalDetailsFG.controls.goalEndDateYear.setValue(value);
+    //       this.goalDetailsFG.controls.savingEndDateYear.setValue(value)
+    //     } else {
+    //       //this.remainingAllocation = 0;
+    //     }
+    //   })
+    // )
   }
 
   setForms() {
@@ -106,7 +106,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
 
   // ----------------- key params ----------------------------
-
+  changeDate(yr) {
+    if ((this.data.goalType == 1 || this.data.singleOrMulti == 2) && this.goalDetailsFG.controls.savingEndDateYear.value <= this.goalDetailsFG.controls.goalEndDateYear.value) {
+    } else {
+      this.goalDetailsFG.controls.goalEndDateYear.setValue(yr);
+    }
+  }
   savingsSDError: boolean = false;
   savingsEDError: boolean = false;
   goalSDError: boolean = false;
