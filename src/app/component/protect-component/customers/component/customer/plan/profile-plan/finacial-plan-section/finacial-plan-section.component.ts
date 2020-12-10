@@ -171,7 +171,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   getPreview(element, value) {
     if (value == 'table') {
       let obj = {
-        id: element.financialPlanPdfLogId
+        id: (element.financialPlanPdfLogId) ? element.financialPlanPdfLogId : element.id
       }
       this.planService.getPreview(obj).subscribe(
         data => this.getPreviewRes(data, value)
@@ -304,7 +304,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         // });
         // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
         var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"995px\" height=\"1342px\">";
+        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"980px\" height=\"1330px\">";
         this.uploadFile(el, list.name, element.name, false)
       }
     }
