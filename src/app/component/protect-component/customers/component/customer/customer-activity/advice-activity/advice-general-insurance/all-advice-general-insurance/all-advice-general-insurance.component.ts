@@ -67,6 +67,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   FireDataSource: any;
   adviceName: string;
   adviceNameObj: { adviceName: string; };
+  recommendOrNot: boolean;
   constructor(private adviceUtilService: AdviceUtilsService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -248,17 +249,25 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       console.log("::::::::::::::::", data)
     }else{
       this.isLoading = false;
-      this.healthInsuranceDataSource.data = [];
-      this.personalAccidentDataSource.data = [];
-      this.criticalInsDataSource.data = [];
-      this.motorDataSource.data = [];
-      this.travelDataSource.data = [];
-      this.homeInsDataSource.data = [];
-      this.FireDataSource.data = [];
+      this.healthInsuranceDataSource = [];
+      this.personalAccidentDataSource = [];
+      this.criticalInsDataSource = [];
+      this.motorDataSource = [];
+      this.travelDataSource = [];
+      this.homeInsDataSource = [];
+      this.FireDataSource = [];
+      this.healthInsuranceDataSource['tableFlag'] = (this.healthInsuranceDataSource.length == 0) ? false : true;
+      this.personalAccidentDataSource['tableFlag'] = (this.personalAccidentDataSource.length == 0) ? false : true;
+      this.criticalInsDataSource['tableFlag'] = (this.criticalInsDataSource.length == 0) ? false : true;
+      this.motorDataSource['tableFlag'] = (this.motorDataSource.length == 0) ? false : true;
+      this.travelDataSource['tableFlag'] = (this.travelDataSource.length == 0) ? false : true;
+      this.homeInsDataSource['tableFlag'] = (this.homeInsDataSource.length == 0) ? false : true;
+      this.FireDataSource['tableFlag'] = (this.FireDataSource.length == 0) ? false : true;
     }
     
   }
   filterData(data,id) {
+    let countSuggest = 0
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
     if(GIArry.length > 0){
       GIArry.forEach(element => {
@@ -284,6 +293,10 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       this.sumAssured = 0;
       data.forEach(element => {
         element.adviceDetails.adviceToCategoryTypeMasterId = 4
+        if (element['insurance'] ? element['insurance'].isRecommend == 1 : element['insuranceDetails']) {
+          countSuggest++
+          this.recommendOrNot = true;
+        }
         if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
           element.InsuranceDetails.insuredMembers.length > 0) {
           element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
@@ -425,9 +438,12 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       adviceToCategoryId :this.object.adviceToCategoryId,
       adviceToCategoryTypeMasterId:3,
       childComponent: component,
+      recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       adviceHeaderList:this.adviceHeaderList,
       showHeaderEdit:data?true:false,
-      childData: {inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+      childData: {
+        recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
