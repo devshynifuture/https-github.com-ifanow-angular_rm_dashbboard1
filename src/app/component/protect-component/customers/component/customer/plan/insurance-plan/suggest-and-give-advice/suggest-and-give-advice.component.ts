@@ -126,6 +126,9 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     this.componentRef._component.adviceName = this.adviceNameObj
     this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
   }
+  function(){
+    this.count++;
+  }
   dateChange(value) {
     let adviceHeaderDate = this.datePipe.transform(this.adviceForm.controls.givenOnDate.value, 'yyyy/MM/dd')
     console.log(adviceHeaderDate);
@@ -1329,7 +1332,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
-      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : null,
+      adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 0,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
