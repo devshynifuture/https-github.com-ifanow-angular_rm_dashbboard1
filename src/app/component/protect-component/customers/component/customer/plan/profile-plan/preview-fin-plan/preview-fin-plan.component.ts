@@ -29,6 +29,9 @@ export class PreviewFinPlanComponent implements OnInit {
     console.log('preview == ', this.selectedElement);
     console.log('link == ', this.link);
     this.loadSpinner = true
+    if (this.data.bank.content) {
+      document.getElementById("dId").innerHTML = this.data.bank.content;
+    }
     setTimeout(() => {
       this.getLoader()
     }, 4000);
