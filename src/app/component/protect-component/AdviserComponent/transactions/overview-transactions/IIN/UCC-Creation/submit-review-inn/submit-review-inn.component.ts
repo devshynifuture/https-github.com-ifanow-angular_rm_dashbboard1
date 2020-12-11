@@ -221,7 +221,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.allData.nomineeList = this.toSendObjNomineeList;
     // this.inputData.clientData = this.clientData;
 
-    const firstHolder = this.allData.holderList[0];
+    const firstHolder = this.toSendObjHolderList[0];
     // this.inputData.taxMaster
     if (this.allData.taxMaster.minorFlag) {
       firstHolder.guardianName = firstHolder.fatherName;
