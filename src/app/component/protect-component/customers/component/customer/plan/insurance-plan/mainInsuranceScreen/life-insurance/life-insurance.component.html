@@ -242,6 +242,7 @@
                                 <div class="bar">
                                     <img *ngIf="!isLoadingPlan" src="/assets/images/svg/dot-menu.svg">
                                     <mat-menu #menu4="matMenu">
+                                        <button mat-menu-item *ngIf="inputData?.insuranceType != 1">Detailed view</button>
                                         <button mat-menu-item 
                                         (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button>
                                         <button mat-menu-item
