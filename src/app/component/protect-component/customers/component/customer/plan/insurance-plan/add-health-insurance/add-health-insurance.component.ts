@@ -359,76 +359,77 @@ export class AddHealthInsuranceComponent implements OnInit {
   }
 
 
-  openAddEditAdvice(value, data,flag) {
-    if(flag!='suggestNew'){
-      let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
+  openAddEditAdvice(value, data, flag) {
+    if (flag != 'suggestNew') {
+      let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) : this.adviceName) : this.adviceName;
       this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : ''
-      this.adviceNameObj = {adviceName:this.adviceName};
-    }else{
-      this.adviceNameObj = {adviceName:null};
+      this.adviceNameObj = { adviceName: this.adviceName };
+    } else {
+      this.adviceNameObj = { adviceName: null };
     }
     let component;
-      this.object = { data: data, displayList: this.dislayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
-      switch (this.showInsurance.insuranceType) {
-        case 5:
-          this.object.insuranceSubTypeId = 5;
-          this.object.showInsurance = 'Health';
-          this.object.adviceToCategoryId = 34;
-          component = SuggestHealthInsuranceComponent;
-          break;
-        case 7:
-          this.object.insuranceSubTypeId = 7;
-          this.object.showInsurance = 'Personal accident';
-          this.object.adviceToCategoryId = 35;
-          component = PersonalInsuranceComponent;
-          break;
-        case 6:
-          this.object.insuranceSubTypeId = 6;
-          this.object.showInsurance = 'Critical illness';
-          this.object.adviceToCategoryId = 36;
-          component = CriticalInsuranceComponent;
-          break;
-        case 4:
-          this.object.insuranceSubTypeId = 4;
-          this.object.showInsurance = 'Motor';
-          this.object.adviceToCategoryId = 37;
-          component = MotorInsuranceComponent;
-          break;
-        case 8:
-          this.object.insuranceSubTypeId = 8;
-          this.object.showInsurance = 'Travel';
-          this.object.adviceToCategoryId = 38;
-          component = TravelInsuranceComponent;
-          break;
-        case 9:
-          this.object.insuranceSubTypeId = 9;
-          this.object.showInsurance = 'Home';
-          this.object.adviceToCategoryId = 39;
-          component = HouseholdersInsuranceComponent;
-          break;
-        case 10:
-          this.object.insuranceSubTypeId = 10;
-          this.object.adviceToCategoryId = 40;
-          this.object.showInsurance = 'Fire & special perils';
-          component = FireInsuranceComponent;
+    this.object = { data: data, displayList: this.dislayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
+    switch (this.showInsurance.insuranceType) {
+      case 5:
+        this.object.insuranceSubTypeId = 5;
+        this.object.showInsurance = 'Health';
+        this.object.adviceToCategoryId = 34;
+        component = SuggestHealthInsuranceComponent;
+        break;
+      case 7:
+        this.object.insuranceSubTypeId = 7;
+        this.object.showInsurance = 'Personal accident';
+        this.object.adviceToCategoryId = 35;
+        component = PersonalInsuranceComponent;
+        break;
+      case 6:
+        this.object.insuranceSubTypeId = 6;
+        this.object.showInsurance = 'Critical illness';
+        this.object.adviceToCategoryId = 36;
+        component = CriticalInsuranceComponent;
+        break;
+      case 4:
+        this.object.insuranceSubTypeId = 4;
+        this.object.showInsurance = 'Motor';
+        this.object.adviceToCategoryId = 37;
+        component = MotorInsuranceComponent;
+        break;
+      case 8:
+        this.object.insuranceSubTypeId = 8;
+        this.object.showInsurance = 'Travel';
+        this.object.adviceToCategoryId = 38;
+        component = TravelInsuranceComponent;
+        break;
+      case 9:
+        this.object.insuranceSubTypeId = 9;
+        this.object.showInsurance = 'Home';
+        this.object.adviceToCategoryId = 39;
+        component = HouseholdersInsuranceComponent;
+        break;
+      case 10:
+        this.object.insuranceSubTypeId = 10;
+        this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'Fire & special perils';
+        component = FireInsuranceComponent;
 
-          break;
-      }
+        break;
+    }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {
-      flag:flag,
-      adviceHeaderList:this.adviceHeaderList,
-      adviceNameObj:this.adviceNameObj,
+      flag: flag,
+      adviceHeaderList: this.adviceHeaderList,
+      adviceNameObj: this.adviceNameObj,
       // recommendOrNot :flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
-      showHeaderEdit:flag == 'existingAdvice' ? true : (data ? (data.adviceDetails ? (!data.adviceDetails.gen_insurance_advice_id ? false : true) : false) : false),
+      showHeaderEdit: flag == 'existingAdvice' ? true : (data ? (data.adviceDetails ? (!data.adviceDetails.gen_insurance_advice_id ? false : true) : false) : false),
       childData: {
         // recommendOrNot : flag=='suggestNew'? (data ? (data.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false)) : false,
-        data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.dislayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+        data: data ? data : null, adviceNameObj: this.adviceNameObj, inputData: this.inputData, displayList: this.dislayList, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance'
+      },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -501,24 +502,24 @@ export class AddHealthInsuranceComponent implements OnInit {
   //   }
   // }
   getOutput(value) {
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      const fragmentData = {
-        flag: 'app-customer',
-        id: 1,
-        data: this.showInsurance,
-        direction: 'top',
-        componentName: ShowHealthPlanningComponent,
-        state: 'open'
-      };
-      this.showInsurance.id = value;
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            subscription.unsubscribe();
-          }
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    const fragmentData = {
+      flag: 'app-customer',
+      id: 1,
+      data: this.showInsurance,
+      direction: 'top',
+      componentName: ShowHealthPlanningComponent,
+      state: 'open'
+    };
+    this.showInsurance.id = value;
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          subscription.unsubscribe();
         }
-      );
- 
+      }
+    );
+
   }
   openExistingPolicy() {
     this.selectPolicy = ""
@@ -704,28 +705,51 @@ export class AddHealthInsuranceComponent implements OnInit {
       arr.push(element.insurance.id)
     });
     // if (this.isChecked) {
-      this.barButtonOptions.active = true;
-      const deletedObj = {
-        "id": this.inputData.id,
-        "insuranceIds": JSON.stringify(arr)
-      }
+    this.barButtonOptions.active = true;
+    let obj2 = {
+      "planningList":
+        JSON.stringify({
+          "advisorId": this.advisorId,
+          "clientId": this.clientId,
+          "insuranceType": this.insuranceType,
+          "owners": this.ownerIds
+        }),
+      "needAnalysis": JSON.stringify(this.needAnalysis)
+    }
+    // this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
+    //   data => {
+    //       this.eventService.openSnackBar("Existing policy added", 'Ok');
+    //       this.barButtonOptions.active = false;
+    //       this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
+    //   },
+    //   err => {
+    //     this.eventService.openSnackBar(err, 'Dismiss');
+    //   }
+    // );
+    if (this.inputData && !this.inputData.id) {
+      this.planService.addGeneralInsurance(obj2).subscribe(
+        data => {
+          this.inputData.id = data;
+          this.eventService.openSnackBar("Existing policy added", 'Ok');
+          this.barButtonOptions.active = false;
+          this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true ,data : data});
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    } else {
       const obj = {
         "id": this.inputData.id,
         "insuranceIds": JSON.stringify(this.needAnalysis)
       }
-      // this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
-      //   data => {
-      //       this.eventService.openSnackBar("Existing policy added", 'Ok');
-      //       this.barButtonOptions.active = false;
-      //       this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: true});
-      //   },
-      //   err => {
-      //     this.eventService.openSnackBar(err, 'Dismiss');
-      //   }
-      // );
       this.planService.updateCurrentPolicyGeneralInsurance(obj).subscribe(
         data => {
           if (arr.length > 0) {
+            const deletedObj = {
+              "id": this.inputData.id,
+              "insuranceIds": JSON.stringify(arr)
+            }
             this.planService.deleteInsurancePlan(deletedObj).subscribe(
               data => {
                 this.eventService.openSnackBar("Existing policy updated", 'Ok');
@@ -738,17 +762,16 @@ export class AddHealthInsuranceComponent implements OnInit {
               }
             );
           } else {
-          
             this.barButtonOptions.active = false;
             this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
           }
-
-
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
         }
       );
+    }
+
     // }
     //  else {
     //   // this.showError = true;
