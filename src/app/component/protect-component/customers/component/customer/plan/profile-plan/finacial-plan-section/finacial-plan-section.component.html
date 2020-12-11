@@ -20,25 +20,29 @@
             </div>
         </div>
         <div>
-            <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index">
-                <div class="row p-4 b-a pt-8 pb-8 c-p">
-                    <div class="col-md-1 pl-8">
-                        <div class="bar">
-                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="row p-4 b-a pt-8 pb-8 c-p">
+                        <div class="col-md-1 pl-8">
+                            <div class="bar">
+                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-10 pl-0">
-                        <div class="bar">
-                            <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
+                        <div class="col-md-10 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1" (click)="removeModule(module,i)">
-                        <div class="bar">
-                            <img src="/assets/images/svg/close.svg" class="c-p">
+                        <div class="col-md-1" (click)="removeModule(module,i)">
+                            <div class="bar">
+                                <img src="/assets/images/svg/close.svg" class="c-p">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
                     <div class="mt-8 h-auto-500 relClass">
