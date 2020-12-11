@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../auth-service/authService';
 import { EventDialog } from './event-dialog';
 import { Router } from '@angular/router';
 import { EmailServiceService } from '../../Email/email-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 export interface DialogData {
@@ -46,7 +47,7 @@ export class CalendarComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   selectedZone: string = "Month";
-  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router, private emailService: EmailServiceService) {
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router, private emailService: EmailServiceService, public roleService: RoleService) {
 
   }
 

@@ -7,8 +7,9 @@ import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
 import { BottomSheetComponent } from '../../../customers/component/common-component/bottom-sheet/bottom-sheet.component';
 import { DatePipe } from '@angular/common';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 // import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 
@@ -25,10 +26,10 @@ export class EventDialog implements OnInit {
   startDate = new Date();
   startTime = "";
   endTime = "";
-  day:any;
-  month:any;
-  year:any;
-  numbersOfDays:any;
+  day: any;
+  month: any;
+  year: any;
+  numbersOfDays: any;
   eventDescription: any;
   eventForm: FormGroup;
   showTime: boolean = false;
@@ -48,12 +49,13 @@ export class EventDialog implements OnInit {
     private calenderService: calendarService,
     private _bottomSheet: MatBottomSheet,
     private datePipe: DatePipe,
-    public dialogRef: MatDialogRef<EventDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<EventDialog>, @Inject(MAT_DIALOG_DATA) public data: any,
+    public roleService: RoleService) {
     this.eventData = data;
     console.log(this.eventData, "add this.eventData");
   }
-  
-  
+
+
   ngOnInit() {
     this.getAttendyList();
     // this.dialogRef.updatePosition({ top: '50px', left: '50px' });
@@ -71,7 +73,7 @@ export class EventDialog implements OnInit {
       startTime: [this.startTime],
       endTime: [this.endTime]
     });
-    
+
     this.userInfo = AuthService.getUserInfo();
 
 
@@ -81,13 +83,13 @@ export class EventDialog implements OnInit {
       // this.year = this.formateYear(this.eventData.calDate);
       this.isEditAdd = false;
       // this.numbersOfDays = this.getDaysCount(this.eventData.calDate, "currentMonthDays");
-    }else{
+    } else {
       this.isEditAdd = false;
 
       this.isEditAdd = true;
 
     }
-    
+
     if (this.eventData.id != undefined && !this.eventData.date) {
       this.isEditAdd = false;
       this.showTime = true;
@@ -114,15 +116,15 @@ export class EventDialog implements OnInit {
     // setTimeout(() => {
     //   // eventUI.scrollTop;
     //   eventUI.scrollTop
-      
+
     // }, 1000);
     console.log(this.eventForm.value, "eventForm data");
-    
+
   }
 
-  setEventTime(){
-    for(let i = 0; i < this.timeArr.length; i++ ){
-      if(this.timeArr[i] >= this.getCurrentTime(this.eventData.start)){
+  setEventTime() {
+    for (let i = 0; i < this.timeArr.length; i++) {
+      if (this.timeArr[i] >= this.getCurrentTime(this.eventData.start)) {
         this.eventForm.get("startTime").setValue(this.timeArr[i]);
         break;
       }
@@ -130,17 +132,17 @@ export class EventDialog implements OnInit {
     this.setTime('start');
   }
 
- getCurrentTime(time){
-   let setTime = new Date(time.dateTime).getHours() +':'+ new Date(time.dateTime).getMinutes()
-   if(setTime.length == 3){
-    setTime = 0+setTime+0
-   }
-   if(parseInt(setTime) <= parseInt("00:00")){
-     return new Date().getHours() +':'+ new Date().getMinutes()
-   }else{
-     return setTime;
-   }
- }
+  getCurrentTime(time) {
+    let setTime = new Date(time.dateTime).getHours() + ':' + new Date(time.dateTime).getMinutes()
+    if (setTime.length == 3) {
+      setTime = 0 + setTime + 0
+    }
+    if (parseInt(setTime) <= parseInt("00:00")) {
+      return new Date().getHours() + ':' + new Date().getMinutes()
+    } else {
+      return setTime;
+    }
+  }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -158,20 +160,20 @@ export class EventDialog implements OnInit {
   }
 
   addAttendee(event) {
-    console.log(event.keyCode, this.myControl, this.eventForm.controls['attendee'],"event.keyCode");
+    console.log(event.keyCode, this.myControl, this.eventForm.controls['attendee'], "event.keyCode");
     if (event.keyCode === 13 && this.eventForm.get("attendee").valid) {
-    this.attendeesArr.push({ "email": this.eventForm.value.attendee });
-    if(!this.attendy.includes(this.eventForm.get("attendee").value)){
-      let obj ={
-        "email": this.eventForm.get("attendee").value,
-        "userId": AuthService.getUserInfo().advisorId
-      }
-      this.calenderService.addToAttendyList(obj).subscribe((data) => {
-        
-      },
-      err =>{
+      this.attendeesArr.push({ "email": this.eventForm.value.attendee });
+      if (!this.attendy.includes(this.eventForm.get("attendee").value)) {
+        let obj = {
+          "email": this.eventForm.get("attendee").value,
+          "userId": AuthService.getUserInfo().advisorId
+        }
+        this.calenderService.addToAttendyList(obj).subscribe((data) => {
 
-      });
+        },
+          err => {
+
+          });
       }
       this.eventForm.get("attendee").setValue("");
     }
@@ -257,8 +259,8 @@ export class EventDialog implements OnInit {
     this.isEditable = true;
   }
 
-  attendy:any=[];
-  getAttendyList(){
+  attendy: any = [];
+  getAttendyList() {
     let obj = {
       "userId": AuthService.getUserInfo().advisorId
     }
@@ -268,7 +270,7 @@ export class EventDialog implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
-      console.log(this.attendy,data, "this.attendy");
+      console.log(this.attendy, data, "this.attendy");
     });
   }
 
@@ -315,60 +317,60 @@ export class EventDialog implements OnInit {
   // }
 
 
-  sun:any = [];
- mon:any = [];
- tue:any = [];
- wed:any = [];
- thu:any = [];
- fri:any = [];
- sat:any = [];
- addDaysOfMomth(){
-   let d:any;
-   let m;
-  for(let i = 1; i < this.numbersOfDays; i++){
-    // if(this.back){
-    //   m = this.month == 0?11:this.month-1;
-    // }
-    // else{
-    //   m = this.month == 0?1:this.month;
-    // }
-    d = new Date(this.year,this.month,i);
-    switch (d.getDay()) {
-      case 0:
-        this.sun.push(d);
-        break;
-      case 1:
-        this.mon.push(d);
-        break;
-      case 2:
-        this.tue.push(d);
-        break;
-      case 3:
-        this.wed.push(d);
-        break;
-      case 4:
-        this.thu.push(d);
-        break;
-      case 5:
-        this.fri.push(d);
-        break;
-      case 6:
-        this.sat.push(d);
-        break;
+  sun: any = [];
+  mon: any = [];
+  tue: any = [];
+  wed: any = [];
+  thu: any = [];
+  fri: any = [];
+  sat: any = [];
+  addDaysOfMomth() {
+    let d: any;
+    let m;
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      // if(this.back){
+      //   m = this.month == 0?11:this.month-1;
+      // }
+      // else{
+      //   m = this.month == 0?1:this.month;
+      // }
+      d = new Date(this.year, this.month, i);
+      switch (d.getDay()) {
+        case 0:
+          this.sun.push(d);
+          break;
+        case 1:
+          this.mon.push(d);
+          break;
+        case 2:
+          this.tue.push(d);
+          break;
+        case 3:
+          this.wed.push(d);
+          break;
+        case 4:
+          this.thu.push(d);
+          break;
+        case 5:
+          this.fri.push(d);
+          break;
+        case 6:
+          this.sat.push(d);
+          break;
+      }
     }
   }
- }
 
- validateYearly(startDate,day, month){
-  let d = new Date(startDate).getDate();
-  let m = new Date(startDate).getMonth();
-  if(d == day && m == month){
-    return false;
+  validateYearly(startDate, day, month) {
+    let d = new Date(startDate).getDate();
+    let m = new Date(startDate).getMonth();
+    if (d == day && m == month) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
-  else{
-    return true;
-  }
- }
 
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
@@ -403,15 +405,15 @@ export class EventDialog implements OnInit {
     }
   }
 
-  viewEvent(event){
+  viewEvent(event) {
     let openEvent = {
-      event:event,
+      event: event,
       openEvent: true
     }
     this.dialogRef.close(openEvent);
   }
 
-  E:any=[]
+  E: any = []
   validateWeekDays(eDays, day, interval) {
     this.E = [];
     let d;
@@ -481,7 +483,7 @@ export class EventDialog implements OnInit {
     return this.datePipe.transform(d, 'EEE')
   }
 
-  
+
 
   getDaysCount(date, ch: string): any {
     switch (ch) {

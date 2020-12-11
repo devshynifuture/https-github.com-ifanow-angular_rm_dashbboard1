@@ -9,6 +9,7 @@ import { CrmTaskService } from './crm-task.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormControl } from '@angular/forms';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class CrmTasksComponent implements OnInit {
     private crmTaskService: CrmTaskService,
     private eventService: EventService,
     private dialog: MatDialog,
+    public roleService: RoleService
     // private webPushNotify: WebPushNotifyService,
   ) { }
 
@@ -250,6 +252,11 @@ export class CrmTasksComponent implements OnInit {
   }
 
   openAddTask(data) {
+    if (data) {
+      if (this.roleService.activityPermission.subModule.TaskCapabilityList[2].enabledOrDisabled == 2) {
+        return;
+      }
+    }
     // let popupHeaderText = !!data ? 'Edit Recurring deposit' : 'Add Recurring deposit';
     const fragmentData = {
       flag: 'addActivityTask',

@@ -304,7 +304,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
           realOrFictitious: 1,
           clientId: AuthService.getClientId(),
           advisorId: AuthService.getAdvisorId(),
-          applicableDate: this.healthInsurance.get('implementationDate').value
+          applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
+          adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
         }
         if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
           this.planService.addAdviseOnGeneralInsurance(this.obj1).subscribe(
@@ -333,7 +334,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
           realOrFictitious: 1,
           clientId: AuthService.getClientId(),
           advisorId: AuthService.getAdvisorId(),
-          applicableDate: this.healthInsurance.get('implementationDate').value
+          applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
+          adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
         }
         if(!this.dataForEdit){
           this.planService.addAdviseOnHealth(obj1).subscribe(
@@ -360,7 +362,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
             adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
             adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
             adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
-            applicableDate: this.healthInsurance.get('implementationDate').value
+            applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
           }
           this.activityService.editAdvice(obj1).subscribe(
             res => {

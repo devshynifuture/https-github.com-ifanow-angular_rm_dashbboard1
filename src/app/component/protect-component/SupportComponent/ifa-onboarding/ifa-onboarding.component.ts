@@ -20,6 +20,7 @@ export class IfaOnboardingComponent implements OnInit {
   getOverview: any;
   tableData = [];
   advisorId: any;
+  isMainLoading: boolean;
   constructor(
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
@@ -146,6 +147,24 @@ export class IfaOnboardingComponent implements OnInit {
           rightSideDataSub.unsubscribe();
         }
       });
+  }
+
+  mergeSchemeCode(data) {
+    this.isMainLoading = true;
+    this.supportService.putMergeSchemeCode({ parentId: data.advisorId })
+      .subscribe(res => {
+        this.isMainLoading = false;
+        if (res) {
+          console.log("merge query response::", res);
+          this.eventService.openSnackBarNoDuration("Merge scheme code done Successfully", "DISMISS");
+        } else {
+          this.eventService.openSnackBarNoDuration("Merge scheme code successful", "DISMISS");
+        }
+      }, err => {
+        this.isMainLoading = false;
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong", 'DISMISS');
+      })
   }
 
   filterTableByName(event) {
