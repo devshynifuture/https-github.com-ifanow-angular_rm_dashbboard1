@@ -273,20 +273,32 @@ export class AssetStocksComponent implements OnInit {
       this.portfolioData.forEach(p => {
 
         p.categoryWiseStockList.forEach((s, i) => {
-          for (let index = 0; index < s.stockList.length; index++) {
-            if (index == 0 && s.categoryName) {
-              this.stockListGroup.push({ group: s.categoryName });
-            }
-            if (s.stockListForEditView) {
-              s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
-            }
-            s.stockList[index].ownerList = p.ownerList
-            s.stockList[index]['nomineeList'] = p.nomineeList;
-            s.stockList[index]['linkedBankAccount'] = p.linkedBankAccount;
-            s.stockList[index]['linkedDematAccount'] = p.linkedDematAccount;
-            s.stockList[index]['description'] = p.description;
-            this.stockListGroup.push(s.stockList[index]);
+          if (s.categoryName) {
+            this.stockListGroup.push({ group: s.categoryName });
           }
+          s.stockList.forEach(cs => {
+            cs.stock.ownerList = p.ownerList
+            cs.stock['nomineeList'] = p.nomineeList;
+            cs.stock['linkedBankAccount'] = p.linkedBankAccount;
+            cs.stock['linkedDematAccount'] = p.linkedDematAccount;
+            cs.stock['description'] = p.description;
+            cs.stock['stockListForEditView'] = cs.stockListForEditView;
+            this.stockListGroup.push(cs.stock);
+          });
+          // for (let index = 0; index < s.stockList.length; index++) {
+          //   if (index == 0 && s.categoryName) {
+          //     this.stockListGroup.push({ group: s.categoryName });
+          //   }
+          //   if (s.stockListForEditView) {
+          //     s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
+          //   }
+          //   s.stockList[index].ownerList = p.ownerList
+          //   s.stockList[index]['nomineeList'] = p.nomineeList;
+          //   s.stockList[index]['linkedBankAccount'] = p.linkedBankAccount;
+          //   s.stockList[index]['linkedDematAccount'] = p.linkedDematAccount;
+          //   s.stockList[index]['description'] = p.description;
+          //   this.stockListGroup.push(s.stockList[index]);
+          // }
         });
 
         p['stockListGroup'] = this.stockListGroup;

@@ -117,9 +117,12 @@ export class FinacialPlanSectionComponent implements OnInit {
   getOrgData: any;
   userInfo: any;
   panelOpenState1: boolean = false;
-
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';
+  moduleAddedLoader: {}[];
+  downloadPdf: boolean = false;
+  emailBody: string;
+  liabilitiesList: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -148,9 +151,13 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getTemplateSection()
     this.getPlanSection()
+    this.getLibilities()
     this.isLoading = true
+    //this.emailBody = '<html><body> <img src= ' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div> </body> </html>';
+    this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;"> <b>Date: 11-12-2020</b></div><div style="position: absolute;top: 18px;right: 18px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
+    console.log('clientData', this.userInfo)
   }
 
   // checkAndLoadPdf(value, sectionName) {
@@ -258,55 +265,55 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.hideTable = false
     this.moduleAdded = []
   }
+  uploadImageSetText(element) {
+    var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
+    var clientNameReg1 = "<clientname>";
+    element.content = element.content.replace(new RegExp(clientNameReg1, 'g'), this.clientData.name)
+    var clientNameReg2 = "<clientname>";
+    element.content = element.content.replace(new RegExp(clientNameReg2, 'g'), this.clientData.name)
+    var advisorNameReg1 = "<advisorname>";
+    element.content = element.content.replace(new RegExp(advisorNameReg1, 'g'), this.userInfo.name)
+    var advisorNameReg2 = "<advisorname>";
+    element.content = element.content.replace(new RegExp(advisorNameReg2, 'g'), this.userInfo.name)
+    var emailIdReg = "<advisoremailId>";
+    element.content = element.content.replace(new RegExp(emailIdReg, 'g'), this.getOrgData.email)
+    var mobileNoReg = "<advisormobileno>";
+    element.content = element.content.replace(new RegExp(mobileNoReg, 'g'), this.userInfo.mobile)
+    var currentDateReg = "<currentdate>";
+    element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
+    element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
+    element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+    element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
+    element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
+    element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
+    const obj = {
+      clientId: this.clientId,
+      name: element.name + '.html',
+      htmlInput: String(element.content)
+    };
+    this.sectionName = element.name
+    this.planService.getFinPlanFileUploadUrl(obj).subscribe(
+      data => this.uploadFileRes(data, element.name, false)
+    );
+  }
   pdfFromImage(element, list, i) {
     if (list.name == "Miscellaneous") {
-      var content = element.content.replace(/<img[^>"']*((("[^"]*")|('[^']*'))[^"'>]*)*>/g, "");
-      var clientNameReg1 = "<clientname>";
-      element.content = element.content.replace(new RegExp(clientNameReg1, 'g'), this.clientData.name)
-      var clientNameReg2 = "<clientname>";
-      element.content = element.content.replace(new RegExp(clientNameReg2, 'g'), this.clientData.name)
-      var advisorNameReg1 = "<advisorname>";
-      element.content = element.content.replace(new RegExp(advisorNameReg1, 'g'), this.userInfo.name)
-      var advisorNameReg2 = "<advisorname>";
-      element.content = element.content.replace(new RegExp(advisorNameReg2, 'g'), this.userInfo.name)
-      var emailIdReg = "<advisoremailId>";
-      element.content = element.content.replace(new RegExp(emailIdReg, 'g'), this.getOrgData.email)
-      var mobileNoReg = "<advisormobileno>";
-      element.content = element.content.replace(new RegExp(mobileNoReg, 'g'), this.userInfo.mobile)
-      var currentDateReg = "<currentdate>";
-      element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
-      element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
-      element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
-      element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
-      element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
-      element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
-      const obj = {
-        clientId: this.clientId,
-        name: element.name + '.html',
-        htmlInput: String(element.content)
-      };
-      this.sectionName = element.name
-      this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-        data => this.uploadFileRes(data, element.name, false)
-      );
+      this.uploadImageSetText(element)
     } else {
       if (element.add == true) {
         this.moduleAdded.splice(i, 1);
         element.add = false
         this.cd.detectChanges()
       } else {
-        // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
-        //   align: 'right',
-        //   width: 180
-        // });
-        // element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
-        //   align: 'right',
-        //   width: 180
-        // });
-        // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
-        var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-        this.uploadFile(el, list.name, element.name, false)
+        if (element.name == 'Index') {
+          var el = document.getElementById("yabanner");
+          el.innerHTML = this.emailBody;
+          this.uploadFile(el, list.name, element.name, false)
+        } else {
+          var el = document.getElementById("yabanner");
+          el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
+          this.uploadFile(el, list.name, element.name, false)
+        }
       }
     }
   }
@@ -398,9 +405,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     this.moduleAdded.splice(i, 1);
+    if (this.moduleAdded.length == 0) {
+      this.hideTable = true
+    }
   }
 
   download() {
+    this.downloadPdf = true
     let obj = {
       clientId: AuthService.getClientId(),
       s3Objects: this.moduleAdded
@@ -464,6 +475,8 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
     let factory;
+    this.isLoading = true
+    this.moduleAddedLoader = [{}, {}, {}]
     if (value) {
       this.fragmentData.isSpinner = true;
       switch (sectionName) {
@@ -594,6 +607,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
+      this.isLoading = true
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -630,6 +644,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   uploadFileRes(data, displayName, flag) {
+    this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
       landscape: flag,
@@ -673,6 +688,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
               arr.push({
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
+                goalName: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
                 futureValue: goalValueObj.goalFV,
                 month,
@@ -781,7 +797,23 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+  getLibilities() {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.planService.getLibilitise(obj).subscribe(
+      data => this.getLibilitiseRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  getLibilitiseRes(data) {
+    console.log(data)
+    this.liabilitiesList = data
 
+  }
   savePlanSection() {
     var date = new Date()
     let obj = {

@@ -32,10 +32,12 @@ export class PreviewFinPlanComponent implements OnInit {
     if (this.data.bank.content) {
       document.getElementById("dId").innerHTML = this.data.bank.content;
       this.loadSpinner = false
+    } else if (this.data.bank == 'table') {
+      this.loadSpinner = true
+      setTimeout(() => {
+        this.getLoader()
+      }, 4000);
     }
-    setTimeout(() => {
-      this.getLoader()
-    }, 4000);
   }
   getLoader() {
     this.loadSpinner = false

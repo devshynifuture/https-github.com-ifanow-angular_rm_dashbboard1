@@ -48,8 +48,8 @@
                     <p class="m-0 text-black pb-4 pt-120">Advice status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput type="text" class="form-control" value="Given" [disabled]='true'
-                                formControlName="adviceStatus">
+                            <input matInput type="text" class="form-control" [disabled]='true'
+                                formControlName="adviceStatus" readonly>
                             <!-- <mat-error class="f-12">This field is required</mat-error> -->
                         </mat-form-field>
                     </div>
@@ -86,9 +86,9 @@
                     <p class="m-0 text-black pb-4">Advice date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input autocomplete="off" matInput #adviceHeaderDate 
-                                (ngModelChange)="dateChange('adviceHeaderDate')" [matDatepicker]="picker"
-                                class="form-control b-0" formControlName="adviceHeaderDate">
+                            <input (ngModelChange)="dateChange('adviceHeaderDate')" matInput (focus)="picker.open()"
+                                formControlName="adviceHeaderDate" [matDatepicker]="picker" class="form-control b-0"
+                                [disabled]=dataForEdit>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
@@ -102,9 +102,9 @@
                     <p class="m-0 text-black pb-4">Implementation date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input autocomplete="off" [min]="todayDate" matInput #implementationDate
-                                (ngModelChange)="dateChange('implementationDate')" [matDatepicker]="picker1"
-                                class="form-control b-0" formControlName="implementationDate">
+                            <input [min]="todayDate" #implementationDate
+                                (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"
+                                formControlName="implementationDate" [matDatepicker]="picker1" class="form-control b-0">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <mat-error class="f-12"
@@ -119,11 +119,10 @@
                     <p class="m-0 text-black pb-4 pt-10"
                         *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
                         Amount</p>
-                    <div class="form-group"
-                        *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
+                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
                         <mat-form-field class="ba-date">
                             <input autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                            appInputValueValidation matInput #amount class="form-control b-0"
+                                appInputValueValidation matInput #amount class="form-control b-0"
                                 formControlName="amount">
                             <mat-error class="f-12" *ngIf="(healthInsurance.get('amount').errors?.required)">This field
                                 is
@@ -137,8 +136,8 @@
                     <div class="form-group"
                         *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
                         <mat-form-field>
-                            <mat-select autocomplete="true"
-                                class="form-control br-0" #famMember formControlName="famMember" matInput>
+                            <mat-select autocomplete="true" class="form-control br-0" #famMember
+                                formControlName="famMember" matInput>
                                 <mat-option value='' disabled>Select option</mat-option>
                                 <mat-option *ngFor="let item of familyList" [value]=item.id>{{item.name}}
                                 </mat-option>
