@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="row pt-150">
+<div class="row pt-150" [ngClass]="{'cursor-not-allowed': isMainLoading}">
 
     <div class="col-md-6">
         <div class="form-group">
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" [ngClass]="{'cursor-not-allowed': isMainLoading}">
     <div class="col-md-12 overflow-hidden back-office-table">
         <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
             [appSkeletonLoading]="isLoading" matSort>
@@ -153,4 +153,8 @@
             </h5>
         </div>
     </div>
+</div>
+
+<div class="row" *ngIf="isMainLoading">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

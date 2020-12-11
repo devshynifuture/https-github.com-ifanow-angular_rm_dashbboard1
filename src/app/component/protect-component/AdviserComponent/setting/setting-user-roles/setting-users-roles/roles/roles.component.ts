@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {AddNewRoleComponent} from '../../../setting-entry/add-new-role/add-new-role.component';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SettingsService} from '../../../settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { AddNewRoleComponent } from '../../../setting-entry/add-new-role/add-new-role.component';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-roles',
@@ -23,13 +24,13 @@ export class RolesComponent implements OnInit {
   hasError = false;
   hasData = false;
   roleTypes = [
-    {id: 1, type: 'Admin'},
-    {id: 2, type: 'Back office'},
-    {id: 3, type: 'Planner'},
-    {id: 4, type: 'Mutual fund only'},
-    {id: 5, type: 'MF + Multi asset'},
-    {id: 6, type: 'MF + Multi asset + Basic Plan'},
-    {id: 7, type: 'MF + Multi asset + Advanced Plan'},
+    { id: 1, type: 'Admin' },
+    { id: 2, type: 'Back office' },
+    { id: 3, type: 'Planner' },
+    { id: 4, type: 'Mutual fund only' },
+    { id: 5, type: 'MF + Multi asset' },
+    { id: 6, type: 'MF + Multi asset + Basic Plan' },
+    { id: 7, type: 'MF + Multi asset + Advanced Plan' },
   ]
 
   constructor(
@@ -37,6 +38,7 @@ export class RolesComponent implements OnInit {
     private settingsService: SettingsService,
     public utilService: UtilService,
     private dialog: MatDialog,
+    private roleService: RoleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -53,10 +55,10 @@ export class RolesComponent implements OnInit {
     };
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
-      if(res && res.length > 0) {
+      if (res && res.length > 0) {
         this.hasData = true
-        this.advisorRoles = new MatTableDataSource(res.filter(role => [1,2,3].includes(role.advisorOrClientRole)));
-        this.clientRoles = new MatTableDataSource(res.filter(role => ![1,2,3].includes(role.advisorOrClientRole)));
+        this.advisorRoles = new MatTableDataSource(res.filter(role => [1, 2, 3].includes(role.advisorOrClientRole)));
+        this.clientRoles = new MatTableDataSource(res.filter(role => ![1, 2, 3].includes(role.advisorOrClientRole)));
       }
       this.utilService.loader(-1);
     }, err => {
@@ -89,13 +91,14 @@ export class RolesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getAllRoles();
+            this.roleService.getRoleDetails(2601);
           }
           rightSideDataSub.unsubscribe();
         }
       }
     );
   }
-  deleteRole( data) {
+  deleteRole(data) {
     const dialogData = {
       data: 'role',
       header: 'Delete',
@@ -110,10 +113,10 @@ export class RolesComponent implements OnInit {
           this.getAllRoles();
           this.utilService.loader(-1);
         },
-        error => {
-          this.eventService.showErrorMessage(error);
-          this.utilService.loader(-1);
-        });
+          error => {
+            this.eventService.showErrorMessage(error);
+            this.utilService.loader(-1);
+          });
       },
       negativeMethod: () => {
         dialogRef.close();
@@ -138,7 +141,7 @@ export class RolesComponent implements OnInit {
 
   getRoleType(roleType) {
     const role = this.roleTypes.find(role => role.id == roleType);
-    if(role) {
+    if (role) {
       return role.type;
     } else {
       return '';

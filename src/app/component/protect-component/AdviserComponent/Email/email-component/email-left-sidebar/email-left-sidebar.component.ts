@@ -7,6 +7,7 @@ import { Component, OnInit } from "@angular/core";
 import { EventService } from "../../../../../../Data-service/event.service";
 import { AuthService } from "../../../../../../auth-service/authService";
 import { Title } from '@angular/platform-browser';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: "app-email-left-sidebar",
@@ -34,7 +35,8 @@ export class EmailLeftSidebarComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private emailDataStorageService: EmailDataStorageService,
-    private titleService: Title
+    private titleService: Title,
+    public roleService: RoleService
   ) { }
 
   ngOnInit() {

@@ -6,6 +6,7 @@ import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { threadId } from 'worker_threads';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-calendar-month',
@@ -38,7 +39,8 @@ export class CalendarMonthComponent implements OnInit {
   excessAllow: any;
   private unSubcrip: Subscription;
   back: boolean = false;
-  constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe,
+    private roleService: RoleService) { }
 
   ngOnInit() {
     this.viewDate = new Date();
@@ -48,7 +50,7 @@ export class CalendarMonthComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo()
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
-    if(!this.calenderService.dayArrey){
+    if (!this.calenderService.dayArrey) {
       // this.updatecalendar();
       this.month = this.viewDate.getMonth();
       this.year = this.viewDate.getFullYear();
@@ -56,8 +58,7 @@ export class CalendarMonthComponent implements OnInit {
       this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
       this.nextMonthDays = this.getDaysCount(this.month, this.year, "nextMonthDays");
       // this.excessAllow = localStorage.getItem('successStoringToken')
-    }else
-    {
+    } else {
       this.month = this.calenderService.dayArrey[1].month;
       this.year = this.calenderService.dayArrey[1].year;
       this.viewDate = new Date(this.year, this.month, this.todayDate);
@@ -485,6 +486,9 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   addEvent(date) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[1].enabledOrDisabled == 2) {
+      return;
+    }
     let event: any;
     // if (month == 0) {
     //   month = 12;
@@ -523,6 +527,9 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   editEvent(eventData) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[2].enabledOrDisabled == 2) {
+      return;
+    }
     let event: any;
     if (eventData != null) {
       event = eventData;
@@ -562,25 +569,25 @@ export class CalendarMonthComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != 'delete' && !result.openEvent) {
         this.dialogData =
-          {
-            "calendarId": AuthService.getUserInfo().userName,
-            "userId": AuthService.getUserInfo().advisorId,
-            "eventId": result.eventId,
-            "summary": result.title,
-            "location": result.location,
-            "description": result.description,
-            "start": {
-              "dateTime": "",
-              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-            },
-            "end": {
-              "dateTime": "",
-              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-            },
-            "recurrence": [
-            ],
-            "attendees": result.attendeesList
-          }
+        {
+          "calendarId": AuthService.getUserInfo().userName,
+          "userId": AuthService.getUserInfo().advisorId,
+          "eventId": result.eventId,
+          "summary": result.title,
+          "location": result.location,
+          "description": result.description,
+          "start": {
+            "dateTime": "",
+            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+          },
+          "end": {
+            "dateTime": "",
+            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+          },
+          "recurrence": [
+          ],
+          "attendees": result.attendeesList
+        }
         // "RRULE:FREQ=DAILY;COUNT=2"
 
 

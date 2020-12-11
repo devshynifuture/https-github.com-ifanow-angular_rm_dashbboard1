@@ -1,8 +1,8 @@
-import {Router} from '@angular/router';
-import {Injectable} from '@angular/core/src/metadata/*';
-import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from '../services/util.service';
-import {AuthService} from "./authService";
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from '../services/util.service';
+import { AuthService } from "./authService";
 
 
 @Injectable({
@@ -23,6 +23,29 @@ export class RoleService {
 
   subscriptionPermission = {
     enabled: true,
+    subModule: {
+      Subscriptions: {
+        enabled: true
+      },
+      Quotations: {
+        enabled: true
+      },
+      Documents: {
+        enabled: true
+      },
+      Dashboard: {
+        enabled: true
+      },
+      Invoices: {
+        enabled: true
+      },
+      Clients: {
+        enabled: true
+      },
+      Settings: {
+        enabled: true
+      }
+    }
   };
   portfolioPermission = {
     enabled: true,
@@ -41,6 +64,20 @@ export class RoleService {
   };
   activityPermission = {
     enabled: true,
+    subModule: {
+      Tasks: {
+        enabled: true
+      },
+      Emails: {
+        enabled: true
+      },
+      Calendar: {
+        enabled: true
+      },
+      TaskCapabilityList: [],
+      CalendarCapabilityList: [],
+      EmailCapabilityList: []
+    }
   };
   overviewPermission = {
     enabled: true,
@@ -55,7 +92,7 @@ export class RoleService {
   dataModels = [];
 
   getRoleDetails(roleId) {
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
 
       if (res) {
@@ -86,6 +123,8 @@ export class RoleService {
        };
        this.dataModels.push(obj);*/
     }
+    this.setSubscriptionSubModulePermissions(adminDatasource.Subscriptions.subModule);
+    this.setActivityPermissions(adminDatasource.Activity.subModule)
   }
 
   setPermissions(moduleId, enabled) {
@@ -120,5 +159,25 @@ export class RoleService {
     // } else if (moduleName == 'Back office') {
     //   this.backofficePermission.enabled = enabled;
     // }
+  }
+
+  setSubscriptionSubModulePermissions(subscriptionPermissions) {
+    this.subscriptionPermission.subModule.Subscriptions.enabled = subscriptionPermissions.Subscriptions ? subscriptionPermissions.Subscriptions.showModule : false;
+    this.subscriptionPermission.subModule.Quotations.enabled = subscriptionPermissions.Quotations ? subscriptionPermissions.Quotations.showModule : false;
+    this.subscriptionPermission.subModule.Documents.enabled = subscriptionPermissions.Documents ? subscriptionPermissions.Documents.showModule : false;
+    this.subscriptionPermission.subModule.Dashboard.enabled = subscriptionPermissions.Dashboard ? subscriptionPermissions.Dashboard.showModule : false;
+    this.subscriptionPermission.subModule.Invoices.enabled = subscriptionPermissions.Invoices ? subscriptionPermissions.Invoices.showModule : false;
+    this.subscriptionPermission.subModule.Clients.enabled = subscriptionPermissions.Clients ? subscriptionPermissions.Clients.showModule : false;
+    this.subscriptionPermission.subModule.Settings.enabled = subscriptionPermissions.Settings ? subscriptionPermissions.Settings.showModule : false;
+
+  }
+
+  setActivityPermissions(activityPermissions) {
+    this.activityPermission.subModule.Tasks.enabled = activityPermissions.Tasks ? activityPermissions.Tasks.showModule : false;
+    this.activityPermission.subModule.Emails.enabled = activityPermissions.Emails ? activityPermissions.Emails.showModule : false;
+    this.activityPermission.subModule.Calendar.enabled = activityPermissions.Calendar ? activityPermissions.Calendar.showModule : false;
+    this.activityPermission.subModule.TaskCapabilityList = activityPermissions.Tasks.subModule.Tasks.capabilityList;
+    this.activityPermission.subModule.CalendarCapabilityList = activityPermissions.Calendar.subModule.Calendar.capabilityList;
+    this.activityPermission.subModule.EmailCapabilityList = activityPermissions.Emails.subModule.Emails.capabilityList;
   }
 }
