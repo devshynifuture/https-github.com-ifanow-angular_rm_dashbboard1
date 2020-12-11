@@ -133,6 +133,7 @@ export class ReallocateAssetComponent implements OnInit {
       goalId: this.goalData.remainingData.id,
       allocateOrEdit: 2,
       lumpsumPercent: null,
+      lumpsumOrSip: this.allocationData.lumpsumOrSip,
       sipPercent: null,
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
