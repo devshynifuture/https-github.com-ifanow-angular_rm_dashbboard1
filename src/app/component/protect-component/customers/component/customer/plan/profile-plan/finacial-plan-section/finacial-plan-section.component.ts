@@ -117,9 +117,11 @@ export class FinacialPlanSectionComponent implements OnInit {
   getOrgData: any;
   userInfo: any;
   panelOpenState1: boolean = false;
-
   customCollapsedHeight: string = '40px';
   customExpandedHeight: string = '40px';
+  moduleAddedLoader: {}[];
+  downloadPdf: boolean = false;
+  emailBody: string;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -149,8 +151,10 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getTemplateSection()
     this.getPlanSection()
     this.isLoading = true
+    this.emailBody = '<html><body> <img src= ' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div> </body> </html>';
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
+    console.log('clientData', this.userInfo)
   }
 
   // checkAndLoadPdf(value, sectionName) {
@@ -298,18 +302,15 @@ export class FinacialPlanSectionComponent implements OnInit {
         element.add = false
         this.cd.detectChanges()
       } else {
-        // element.imageUrl.writeText(10, 75, "Advisor: " + this.userInfo.name, {
-        //   align: 'right',
-        //   width: 180
-        // });
-        // element.imageUrl.writeText(10, 100, this.clientData.name + "'s Plan", {
-        //   align: 'right',
-        //   width: 180
-        // });
-        // element.imageUrl.addImage(this.getOrgData.reportLogoUrl, 'PNG', 145, 10);
-        var el = document.getElementById("yabanner");
-        el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-        this.uploadFile(el, list.name, element.name, false)
+        if (element.name == 'Index') {
+          var el = document.getElementById("yabanner");
+          el.innerHTML = this.emailBody;
+          this.uploadFile(el, list.name, element.name, false)
+        } else {
+          var el = document.getElementById("yabanner");
+          el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
+          this.uploadFile(el, list.name, element.name, false)
+        }
       }
     }
   }
@@ -407,6 +408,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   download() {
+    this.downloadPdf = true
     let obj = {
       clientId: AuthService.getClientId(),
       s3Objects: this.moduleAdded
@@ -471,6 +473,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
     let factory;
     this.isLoading = true
+    this.moduleAddedLoader = [{}, {}, {}]
     if (value) {
       this.fragmentData.isSpinner = true;
       switch (sectionName) {
