@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <div cdkDropList (cdkDropListDropped)="drop($event)">
+            <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="!isLoading">
                 <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="row p-4 b-a pt-8 pb-8 c-p">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
+            <div *ngIf="moduleAdded.length  == 0 && hideTable == true && !isLoading">
                 <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
                     <img src="assets/images/svg/documents-empty-states.svg">
                     No module added
