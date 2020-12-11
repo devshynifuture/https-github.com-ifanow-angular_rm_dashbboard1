@@ -214,7 +214,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       }
 
     } else {
-      if (this.adviceName != 'Continue' && this.adviceName != 'Discontinue' && this.adviceName != 'Surrender') {
+      if (this.adviceName != 'Stop paying premium' && this.adviceName != 'Continue' && this.adviceName != 'Discontinue' && this.adviceName != 'Surrender') {
         this.stepper.next();
       }
       console.log("this is what i need:::::::::::::::", componentRefComponentValues)
