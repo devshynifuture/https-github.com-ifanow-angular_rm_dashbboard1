@@ -19,6 +19,7 @@ export class MyIfasComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
   tableData = [];
+  isMainLoading: boolean;
   constructor(
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
@@ -91,14 +92,19 @@ export class MyIfasComponent implements OnInit {
   }
 
   mergeSchemeCode(data) {
+    this.isMainLoading = true;
     this.supportService.putMergeSchemeCode({ parentId: data.advisorId })
       .subscribe(res => {
+        this.isMainLoading = false;
         if (res) {
           console.log("merge query response::", res);
-          this.eventService.openSnackBar("Merge scheme code done Successfully", "DISMISS");
+          this.eventService.openSnackBarNoDuration("Merge scheme code done Successfully", "DISMISS");
         } else {
-          this.eventService.openSnackBar("Merge Scheme Code", "DISMISS")
+          this.eventService.openSnackBarNoDuration("Merge Scheme Code successful", "DISMISS")
         }
+      }, err => {
+        this.isMainLoading = false;
+        this.eventService.openSnackBar(err, 'DISMISS');
       })
   }
 
@@ -113,9 +119,13 @@ export class MyIfasComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
         } else {
-          this.eventService.openSnackBar("Bulk Scheme Code Merging Failed", "DISMISS");
+          console.log(res);
+          this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
         }
-      }, err => console.error(err));
+      }, err => {
+        console.error(err);
+        this.eventService.openSnackBar('Something went wrong', 'DISMISS');
+      });
   }
 
   recalculateBalanceUnit(data) {
