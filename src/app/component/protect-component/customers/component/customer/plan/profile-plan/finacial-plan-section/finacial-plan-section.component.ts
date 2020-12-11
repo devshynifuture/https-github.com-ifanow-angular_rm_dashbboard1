@@ -398,6 +398,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     this.moduleAdded.splice(i, 1);
+    if (this.moduleAdded.length == 0) {
+      this.hideTable = true
+    }
   }
 
   download() {
