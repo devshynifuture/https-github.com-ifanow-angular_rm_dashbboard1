@@ -504,17 +504,21 @@ export class LifeInsuranceComponent implements OnInit {
     let suggestPolicy = singleData[0][2];
     if (this.inputData.insuranceType == 1) {
       suggestPolicy =[];
-      suggestPolicy.push(array);
-      suggestPolicy = suggestPolicy.flat();
-      suggestPolicy = this.ipService.pushId(suggestPolicy)
-      suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
+      if(array){
+        suggestPolicy.push(array);
+        suggestPolicy = suggestPolicy.flat();
+        suggestPolicy = this.ipService.pushId(suggestPolicy)
+        suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
+      }
       singleData[0][2] = suggestPolicy
     } else {
       suggestPolicy =[];
-      suggestPolicy.push(array);
-      suggestPolicy = suggestPolicy.flat();
-      suggestPolicy = this.ipService.pushId(suggestPolicy)
-      suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
+      if(array){
+        suggestPolicy.push(array);
+        suggestPolicy = suggestPolicy.flat();
+        suggestPolicy = this.ipService.pushId(suggestPolicy)
+        suggestPolicy = [...new Map(suggestPolicy.map(item => [item.id, item])).values()];
+      }
       singleData[0][2] = suggestPolicy
       this.ipService.setIpData(this.storedData);
       this.ipService.setNeedAnlysisData('');
@@ -624,7 +628,9 @@ export class LifeInsuranceComponent implements OnInit {
               dialogRef.close();
               // this.isRefreshRequired = true;
             },
-            error => this.eventService.showErrorMessage(error)
+            error =>{
+              this.getRecommendationCall(null)
+              this.eventService.showErrorMessage(error)}
           );
       },
       negativeMethod: () => {
