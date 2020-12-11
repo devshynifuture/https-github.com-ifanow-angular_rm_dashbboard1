@@ -216,6 +216,7 @@ export class AssetStocksComponent implements OnInit {
       },
       err => {
         this.isLoading = false;
+        this.portfolioData = [];
         this.eventService.openSnackBar(err);
       }
     );

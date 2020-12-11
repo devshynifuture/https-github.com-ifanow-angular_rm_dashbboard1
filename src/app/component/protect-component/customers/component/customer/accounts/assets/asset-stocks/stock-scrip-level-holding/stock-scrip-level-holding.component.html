@@ -1,4 +1,4 @@
-<div class="popup-header-fix w-60">
+<div class="popup-header-fix w-60" *ngIf="!isTHolding">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{editApiData?'Edit':'Add'}} scrip level holdings</h4>
@@ -10,9 +10,9 @@
         </div>
     </div>
 </div>
-<div class="mb-48">
-    <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
-        <div class="col-md-3 p-0">
+<div [ngClass]="!isTHolding?'mb-48':''">
+    <div [formGroup]="scipLevelHoldingForm" [ngClass]="!isTHolding?'pt-100':''" class="row pl-28">
+        <div class="col-md-3 p-0" *ngIf="!isTHolding">
             <div formArrayName="getCoOwnerName">
                 <div [ngClass]="{'pt-36': pointIndex>0}"
                     *ngFor="let obj of scipLevelHoldingForm.controls['getCoOwnerName'].controls; let pointIndex=index"
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" *ngIf="!isTHolding">
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <app-portfolio-field (outputEvent)='getPortfolioData($event)' [checkValid]='checkValid'
                 [ownerId]="portfolioFieldData" [owner]="holdingData"></app-portfolio-field>
@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="row pl-28">
-        <div class="col-md-4 pl-0">
+        <div class="col-md-4 pl-0" *ngIf="!isTHolding">
             <label class="f-14"> Scrip name</label>
         </div>
         <div class="col-md-2 pl-0">
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i (click)="addHoldings()" class="material-icons text-custom c-p">
+                <i (click)="addHoldings()" *ngIf="!editApiData" class="material-icons text-custom c-p">
                     add
                 </i>
                 <i (click)="removeHoldings(i)" *ngIf="HoldingArray.length > 1"
@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    <div [formGroup]="optionForm">
+    <div [formGroup]="optionForm" *ngIf="!isTHolding">
         <!-- optional start -->
         <hr class="ml-16 mr-16">
         <div class="row pt-16">

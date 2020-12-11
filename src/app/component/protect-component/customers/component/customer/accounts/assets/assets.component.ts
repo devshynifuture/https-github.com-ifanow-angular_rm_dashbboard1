@@ -33,7 +33,8 @@ export class AssetsComponent implements OnInit {
     { name: 'Retirement accounts', viewmode: 'tab5', count: '0', link: './retire' },
     { name: 'Small saving scheme', viewmode: 'tab6', count: '0', link: './small' },
     { name: 'Cash & Bank', viewmode: 'tab7', count: '0', link: './cash_bank' },
-    { name: 'Commodities', viewmode: 'tab8', count: '0', link: './commodities' }
+    { name: 'Commodities', viewmode: 'tab8', count: '0', link: './commodities' },
+    // { name: 'Others', viewmode: 'tab9', count: '0', link: './others' }
   ];
   tab: any;
   Settab: any;
@@ -48,7 +49,7 @@ export class AssetsComponent implements OnInit {
     private route: ActivatedRoute,
     private assetValidation: AssetValidationService,
     private router: Router, private enumDataService: EnumDataService,
-    private mfService:MfServiceService) {
+    private mfService: MfServiceService) {
   }
 
   close() {
@@ -134,20 +135,20 @@ export class AssetsComponent implements OnInit {
     // this.stateOfPanel.mode = 'over';
     // this.stateOfPanel.mode = 'side';
     this.mfService.getViewMode()
-    .subscribe(data => {
-      if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
-        this.sidenavState = true;
-        if (this.stateOfPanel._animationState == 'void') {
-          this.stateOfPanel.close();
+      .subscribe(data => {
+        if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
+          this.sidenavState = true;
+          if (this.stateOfPanel._animationState == 'void') {
+            this.stateOfPanel.close();
+          } else {
+            this.toggleSideNav();
+          }
         } else {
-          this.toggleSideNav();
+          this.sidenavState = false;
+          this.stateOfPanel.open();
+
         }
-      } else {
-        this.sidenavState = false;
-        this.stateOfPanel.open();
-  
-      }
-    })
+      })
     this.stateOfPanel.open();
     this.route.queryParams.subscribe((params) => {
       if (params.tab) {
@@ -212,7 +213,8 @@ export class AssetsComponent implements OnInit {
       retirementAccounts,
       smallSavingSchemes,
       commodities,
-      mutual_fund
+      mutual_fund,
+      // others
     } = data;
     this.assetSideBarData[0].count = mutual_fund;
     this.assetSideBarData[1].count = STOCKS;
@@ -222,8 +224,9 @@ export class AssetsComponent implements OnInit {
     this.assetSideBarData[5].count = smallSavingSchemes;
     this.assetSideBarData[6].count = cashAndBank;
     this.assetSideBarData[7].count = commodities;
+    // this.assetSideBarData[8].count = others;
   }
-  clickable(value){
+  clickable(value) {
     this.sidenavState = false;
     this.stateOfPanel.open();
   }
@@ -306,7 +309,7 @@ export class AssetsComponent implements OnInit {
   ngOnDestroy() {
     this.unSudcripCounts.unsubscribe();
     console.log("unsubscribe");
-    
+
   }
 }
 

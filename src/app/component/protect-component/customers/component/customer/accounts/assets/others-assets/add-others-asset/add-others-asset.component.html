@@ -1,0 +1,448 @@
+<div class="popup-header-fix-60" *ngIf="adviceShowHeaderFooter">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i (click)="close(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pt-100 pb-48 mb-44" [formGroup]="othersAssetForm">
+  <div formArrayName="getCoOwnerName">
+    <div class="row" [ngClass]="{'pt-36': pointIndex>0}"
+      *ngFor="let obj of othersAssetForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+      [formGroupName]="pointIndex">
+      <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8 ">{{pointIndex != 0 ? 'Co-o' : 'O'}}wner{{pointIndex != 0 ? pointIndex : ''}}</h5>
+      </div>
+      <div class="pr-0" [ngClass]="othersAssetForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (emitBank)='getBank()'
+              (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)'
+              (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+              <mat-option value='' disabled>Select family members</mat-option>
+              <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                <span>{{f.userName}}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-2" *ngIf="othersAssetForm.value.getCoOwnerName.length > 1">
+        <div class="form-group mb-0 iconPetage">
+          <mat-form-field>
+            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+              (focusout)="onChangeJointOwnership('owner')">
+            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+              Total percent should be 100%
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-2 d-flex align-items-center">
+        <i *ngIf="othersAssetForm.value.getCoOwnerName.length < 3"
+          class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+        <i *ngIf="othersAssetForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10"
+          (click)="removeCoOwner(pointIndex)">remove</i>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row pt-44">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Asset Name</h5>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group mb-0">
+
+        <mat-form-field>
+          <input autocomplete="off" matInput type="text" class="form-control br-0 " formControlName="assets">
+          <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+          <mat-hint align="end" class="f-12">{{location.value.length}}/20</mat-hint> -->
+        </mat-form-field>
+        <mat-error class="f-12" *ngIf='getFormControl().assets.touched && getFormControl().assets.invalid'>
+          This field is required
+        </mat-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-44">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-28">Current value</h5>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 pl-0 pr-0 iconRupess">
+          <h5 class="m-0 f-14 ">Amount</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                type="text" class="form-control rupess br-0 " formControlName="currentValue">
+              <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+              <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-6 pr-0 iconRupess">
+          <h5 class="m-0 f-14">As on date</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
+                (focus)="picker.open()" [matDatepicker]="picker" formControlName="currentValueDate" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+              <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+              <!-- <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint> -->
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-44">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-28">Asset allocation</h5>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 pl-0 pr-0 iconRupess">
+          <h5 class="m-0 f-14 ">Debt</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput type="text" appInputValueValidation
+                [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                formControlName="debt">
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-6 pr-0 iconRupess">
+          <h5 class="m-0 f-14">Equity</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput type="text" appInputValueValidation
+                [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+                formControlName="equity">
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+              <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+              <!-- <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint> -->
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-36">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">This asset has maturity</h5>
+    </div>
+    <div class="col-md-3 pr-0">
+      <div class="form-group mb-0">
+        <mat-checkbox formControlName="hasmaturity" class="example-margin"></mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-36">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-28">Maturity value</h5>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 pl-0 pr-0 iconRupess">
+          <h5 class="m-0 f-14 ">Amount</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                type="text" class="form-control rupess br-0 " formControlName="maturityValue">
+              <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+              <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-6 pr-0 iconRupess">
+          <h5 class="m-0 f-14">Date</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
+                (focus)="picker2.open()" [matDatepicker]="picker2" formControlName="maturityDate" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+              <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+              <!-- <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint> -->
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-36">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">This asset has recurring contribution</h5>
+    </div>
+    <div class="col-md-3 pr-0">
+      <div class="form-group mb-0">
+        <mat-checkbox formControlName="recurringContro" class="example-margin"></mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-36">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-28">Future contributions</h5>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 pl-0 pr-0 iconRupess">
+          <h5 class="m-0 f-14 ">Frequency</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <mat-select formControlName="frequency" class="form-control br-0">
+                <mat-option value="" disabled>Select option</mat-option>
+                <mat-option value="2">Monthly</mat-option>
+                <mat-option value="3">Quarterly</mat-option>
+                <mat-option value="4">Half yearly </mat-option>
+                <mat-option value="5">Yearly</mat-option>
+              </mat-select>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4 pr-0 iconRupess">
+          <h5 class="m-0 f-14">Approx amount</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                type="text" class="form-control rupess br-0 " formControlName="approxAmt">
+              <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+              <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="col-md-4 pr-0 iconRupess">
+          <h5 class="m-0 f-14">End date</h5>
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
+                (focus)="picker3.open()" [matDatepicker]="picker3" formControlName="endDate" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+              <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+              <!-- <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint> -->
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-44">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-28">Growth rate</h5>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field>
+        <input autocomplete="off" matInput type="text" appInputValueValidation
+          [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="rate">
+        <mat-error class="f-12">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row pt-32">
+    <div class="col-md-5 text-right">
+      <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional data]
+      </h5>
+      <h5 class="pt-20 text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
+    </div>
+  </div>
+
+  <div *ngIf="showMoreData==true">
+
+    <div class="row pt-44">
+      <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-28">Purchase value</h5>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6 pl-0 pr-0 iconRupess">
+            <h5 class="m-0 f-14 ">Amount</h5>
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  type="text" class="form-control rupess br-0 " formControlName="purchaseValue">
+                <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
+                <mat-error class="f-12">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6 pr-0 iconRupess">
+            <h5 class="m-0 f-14">Date</h5>
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
+                  (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchasePeriod" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="f-12">
+                  This field is required
+                </mat-error>
+                <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                <!-- <mat-hint align="end" class="f-12">{{registration.value.length}}/10</mat-hint> -->
+              </mat-form-field>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-32">
+      <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Linked bank account</h5>
+      </div>
+      <div class="col-md-5 ">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <mat-select class="form-control" formControlName="linkedBankAccount" matInput>
+              <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                {{option.bankNameAndLast4Digit}}
+                <!-- {{option.bankName}} -->
+              </mat-option>
+            </mat-select>
+            <mat-error>This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-1 p-0 pt-8 d-flex">
+        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+      </div>
+    </div>
+
+    <div class="row pt-44">
+      <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Description</h5>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0"
+              formControlName="description">
+            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="getNomineeName">
+      <div class="row pt-36"
+        *ngFor="let obj of othersAssetForm.controls['getNomineeName'].controls; let pointIndex=index"
+        [formGroupName]="pointIndex">
+        <div class="col-md-5 pr-0 text-right">
+          <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+        </div>
+        <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)'
+                class="form-control br-0" [callMethod]='callMethod'>
+                <mat-option value='' disabled>Select family members</mat-option>
+                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                  <span>{{f.userName}}</span>
+                </mat-option>
+              </mat-select>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-2" *ngIf="getNominee.length > 1">
+          <div class="form-group mb-0 iconPetage">
+            <mat-form-field>
+              <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage"
+                (focusout)="onChangeJointOwnership('nominee')">
+              <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                Total percent should be 100%
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-2 p-0 d-flex align-items-center">
+          <i *ngIf="othersAssetForm.value.getNomineeName.length < 3"
+            class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+          <i *ngIf="othersAssetForm.value.getNomineeName.length > 1"
+            class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-fixed wrapper-12 pt-16" *ngIf="adviceShowHeaderFooter">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+      </div>
+      <div class="col-md-8 right text-right">
+        <app-progress-button (btnClick)="saveFormData()" [options]="barButtonOptions">
+        </app-progress-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { RetirementAccountComponent } from './retirementAccounts/retirement-acco
 import { SmallSavingSchemeComponent } from './smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
 import { CashAndBankComponent } from './cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './commodities/commodities/commodities.component';
+import { OthersAssetsComponent } from './others-assets/others-assets.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,9 @@ const routes: Routes = [
       {
         path: 'commodities', component: CommoditiesComponent,
 
+      },
+      {
+        path: 'others', component: OthersAssetsComponent,
       },
       {
         path: '',

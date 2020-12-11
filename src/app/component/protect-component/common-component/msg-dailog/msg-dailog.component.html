@@ -1,0 +1,11 @@
+<div class="wrapper-24 dialog-messages">
+  <h3 class="m-0 pb-16 f-500">{{headerData}}</h3>
+  <div *ngFor="let msg of msgArr; let i = index">
+    <p class="pt-6 pb-6 mb-0 text-black l-21  f-16">{{i+1}} {{msg}}</p>
+  </div>
+  <div class="row pt-36">
+    <div class="col-md-12 d-flex justify-content-end pr-0 right text-right ">
+      <button mat-button mat-dialog-close class="text-custom f-500 c-p" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>
