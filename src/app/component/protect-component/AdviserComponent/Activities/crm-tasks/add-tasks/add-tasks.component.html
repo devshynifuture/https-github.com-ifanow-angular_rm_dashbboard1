@@ -78,7 +78,7 @@
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
-                            {{ (item.categoryName ? item.categoryName  + ' - ' : '') + (item.subCategoryName ? item.subCategoryName  + ' - ' : '') + item.taskDescription }}
+                            {{ (item.categoryName ? item.categoryName  + ' - ' : '') + (item.subCategoryName ? item.subCategoryName  + ' - ' : '') + (item.subSubCategoryName ? item.subSubCategoryName + ' - ' : '')+ item.taskDescription }}
                         </mat-option>
                         <mat-option value="-1" class="d-flex align-items-center">
                             <span class="d-flex align-items-center">
