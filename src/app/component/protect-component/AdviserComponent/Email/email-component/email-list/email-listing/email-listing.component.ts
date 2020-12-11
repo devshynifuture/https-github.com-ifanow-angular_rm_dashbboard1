@@ -20,6 +20,7 @@ import {
 import { EmailUtilService } from "src/app/services/email-util.service";
 import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../Subscriptions/subscription-inject.service";
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: "app-email-listing",
@@ -63,7 +64,8 @@ export class EmailListingComponent implements OnInit {
     private emailUtilService: EmailUtilService,
     private subInjectService: SubscriptionInject,
     private emailDataStorageService: EmailDataStorageService,
-    private titleService: Title
+    private titleService: Title,
+    public roleService: RoleService
   ) { }
 
   paginatorLength;

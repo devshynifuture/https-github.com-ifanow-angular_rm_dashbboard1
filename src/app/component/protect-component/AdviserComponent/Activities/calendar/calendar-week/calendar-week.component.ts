@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { RoleService } from 'src/app/auth-service/role.service';
 @Component({
   selector: 'app-calendar-week',
   templateUrl: './calendar-week.component.html',
@@ -37,7 +38,7 @@ export class CalendarWeekComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   private unSubcrip: Subscription;
-  constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
+  constructor(public dialog: MatDialog, private roleService: RoleService, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   timeArry: any = [];
   ngOnInit() {
@@ -65,10 +66,9 @@ export class CalendarWeekComponent implements OnInit {
     // this.excessAllow = localStorage.getItem('successStoringToken')
     // this.addDaysOfMomth();
 
-    if(!this.calenderService.dayArrey){
+    if (!this.calenderService.dayArrey) {
       this.getWeek(this.viewDate);
-    }else
-    {
+    } else {
       this.day = this.calenderService.dayArrey[1].selectedDate;
       this.month = this.calenderService.dayArrey[1].month;
       this.year = this.calenderService.dayArrey[1].year;
@@ -298,6 +298,9 @@ export class CalendarWeekComponent implements OnInit {
   }
 
   addEvent(day, month, year, time) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[1].enabledOrDisabled == 2) {
+      return;
+    }
     let hr;
     if (time.charAt(time.length - 2) + time.charAt(time.length - 1) == 'PM') {
       hr = 12 + parseInt(time);
@@ -343,6 +346,9 @@ export class CalendarWeekComponent implements OnInit {
   }
 
   editEvent(eventData) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[2].enabledOrDisabled == 2) {
+      return;
+    }
     let event: any;
     if (eventData != null) {
       event = eventData;
@@ -465,7 +471,7 @@ export class CalendarWeekComponent implements OnInit {
 
   currentMonthEvents: any = [];
   createDayJson() {
-    if(!this.numbersOfDays){
+    if (!this.numbersOfDays) {
       this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     }
     this.currentMonthEvents = [];
@@ -516,12 +522,12 @@ export class CalendarWeekComponent implements OnInit {
       }
 
       for (let e = 0; e < this.formatedEvent.length; e++) {
-        let calMonth = new Date(this.year, this.month-1, this.formateDate(this.current_day));
+        let calMonth = new Date(this.year, this.month - 1, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
         dayArr.date = new Date(this.year, this.month - 1, this.lastMonthDays);
-        if (this.formatedEvent[e].day == this.lastMonthDays && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month-1, this.lastMonthDays), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, this.lastMonthDays, this.month-1)))) {
+        if (this.formatedEvent[e].day == this.lastMonthDays && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month - 1, this.lastMonthDays) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month - 1, this.lastMonthDays) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month - 1, this.lastMonthDays), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month - 1, this.lastMonthDays), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, this.lastMonthDays, this.month - 1)))) {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
@@ -552,7 +558,7 @@ export class CalendarWeekComponent implements OnInit {
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
         dayArr.date = new Date(this.year, this.month + 1, fd);
-        if (this.formatedEvent[e].day == fd && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month+1, fd) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month+1, fd) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month+1, fd), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month+1, fd), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, fd, this.month+1)))) {
+        if (this.formatedEvent[e].day == fd && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month + 1, fd) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month + 1, fd) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month + 1, fd), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month + 1, fd), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, fd, this.month + 1)))) {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
@@ -699,7 +705,7 @@ export class CalendarWeekComponent implements OnInit {
   addDaysOfMomth() {
     let d: any;
     let m;
-    if(!this.numbersOfDays){
+    if (!this.numbersOfDays) {
       this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     }
     for (let i = 1; i < this.numbersOfDays; i++) {

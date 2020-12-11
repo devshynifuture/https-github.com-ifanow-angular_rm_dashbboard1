@@ -174,6 +174,30 @@ export class EnumDataService {
       }
     );
   }
+
+  getDematDetail(data) {
+    let self = this;
+    return new Promise(function (resolve, reject) {
+      const obj = {
+        userId: data[0].clientId,
+        userType: data[0].userType
+      };
+      self.custumService.getDematList(obj).subscribe(
+        data => {
+          if (data != 0) {
+            resolve(data)
+          }
+          else {
+            resolve([])
+          }
+        }, err => {
+          reject(err);
+          // console.error(err);
+        }
+      );
+
+    })
+  }
   // getJointAccounts(obj){
   //   this.custumService.getJointBankList(obj).subscribe(
   //     (data) => {

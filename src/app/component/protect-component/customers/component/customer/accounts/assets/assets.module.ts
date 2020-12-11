@@ -37,7 +37,6 @@ import { MfCapitalDetailedComponent } from './mutual-fund/mutual-fund/mf-capital
 import { StockTransactionDetailsComponent } from './asset-stocks/stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent } from './asset-stocks/stock-holding-details/stock-holding-details.component';
 import { OthersAssetsComponent } from './others-assets/others-assets.component';
-import { DetailedViewOthersAssetComponent } from './others-assets/detailed-view-others-asset/detailed-view-others-asset.component';
 
 
 // import { StockDetailsViewComponent } from './stock-details-view/stock-details-view.component';
@@ -71,7 +70,6 @@ import { DetailedViewOthersAssetComponent } from './others-assets/detailed-view-
     PoMisSchemeComponent,
     MfCapitalDetailedComponent,
     OthersAssetsComponent,
-    DetailedViewOthersAssetComponent,
 
 
 

@@ -71,12 +71,12 @@
         </div>
     </div>
     <div class="row pl-28">
-        <div class="col-md-12 pl-0 mt-65">
+        <div class="col-md-12 pl-0" [ngClass]="!isTHolding?'mt-65':'mt-20'">
             <h4 class="mb-20 text-black">HOLDINGS</h4>
         </div>
     </div>
     <div class="row pl-28">
-        <div class="col-md-4 pl-0" *ngIf="!isTHolding">
+        <div class="col-md-4 pl-0">
             <label class="f-14"> Scrip name</label>
         </div>
         <div class="col-md-2 pl-0">

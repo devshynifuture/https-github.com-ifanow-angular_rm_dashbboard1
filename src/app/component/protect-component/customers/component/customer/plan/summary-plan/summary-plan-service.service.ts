@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { type } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,62 @@ export class SummaryPlanServiceService {
   }
   getFinPlanId() {
     return this.finplanId.asObservable();
+  }
+  getTypeIds(data){
+    let typeObj={
+      insuranceSubTypeId:0,
+      insuranceTypeId:0,
+      showInsurance:'',
+      adviceToCategoryId:0
+    }
+    if(data){
+      switch (data.insuranceType) {
+        case 5:
+          typeObj.insuranceSubTypeId = 5;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Health';
+          typeObj.adviceToCategoryId = 34;
+          break;
+        case 7:
+          typeObj.insuranceSubTypeId = 7;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Personal accident';
+          typeObj.adviceToCategoryId = 35;
+          break;
+        case 6:
+          typeObj.insuranceSubTypeId = 6;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Critical illness';
+          typeObj.adviceToCategoryId = 36;
+          break;
+        case 4:
+          typeObj.insuranceSubTypeId = 4;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Motor';
+          typeObj.adviceToCategoryId = 37;
+          break;
+        case 8:
+          typeObj.insuranceSubTypeId = 8;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Travel';
+          typeObj.adviceToCategoryId = 38;
+          break;
+        case 9:
+          typeObj.insuranceSubTypeId = 9;
+          typeObj.insuranceTypeId = 2;
+          typeObj.showInsurance = 'Home';
+          typeObj.adviceToCategoryId = 39;
+          break;
+        case 10:
+          typeObj.insuranceSubTypeId = 10;
+          typeObj.insuranceTypeId = 2;
+          typeObj.adviceToCategoryId = 40;
+          typeObj.showInsurance = 'Fire & special perils';
+          break;
+      }
+    }
+      
+      return typeObj;
   }
   getCategoryId(type) {
     let obj={

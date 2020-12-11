@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LeftsidebarComponent } from './leftsidebar.component';
 import { SubscriptionGuard } from '../../../guards/subscription.guard';
+import { RoleGuard } from 'src/app/auth-service/role.guard';
 
 
 const routes: Routes = [
@@ -25,8 +26,8 @@ const routes: Routes = [
         // outlet: 'main-left-router',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule),
-        data: { animation: 'Tab1', preload: true }
-
+        data: { animation: 'Tab1', preload: true },
+        canActivate: [RoleGuard]
       },
       {
         path: 'dashboard',
