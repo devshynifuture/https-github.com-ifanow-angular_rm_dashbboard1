@@ -464,6 +464,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
     let factory;
+    this.isLoading = true
     if (value) {
       this.fragmentData.isSpinner = true;
       switch (sectionName) {
@@ -594,6 +595,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
+      this.isLoading = true
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -630,6 +632,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   uploadFileRes(data, displayName, flag) {
+    this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
       landscape: flag,
