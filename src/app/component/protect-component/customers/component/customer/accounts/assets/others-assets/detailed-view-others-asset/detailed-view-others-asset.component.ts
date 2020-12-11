@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
@@ -14,11 +15,11 @@ export class DetailedViewOthersAssetComponent implements OnInit {
   realEstate: any;
   nominee: any;
   owners: any;
-
+  clientFamilybankList: any = [];
   doc: any;
   isLoadingUpload: boolean = false;
   noDoc: boolean = false;
-  constructor(private subInjectService: SubscriptionInject, private fileUpload: FileUploadServiceService) {
+  constructor(private subInjectService: SubscriptionInject, private enumService: EnumServiceService, private fileUpload: FileUploadServiceService) {
   }
 
   @Input()
@@ -69,6 +70,8 @@ export class DetailedViewOthersAssetComponent implements OnInit {
     return this._data;
   }
   ngOnInit() {
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
   }
 
