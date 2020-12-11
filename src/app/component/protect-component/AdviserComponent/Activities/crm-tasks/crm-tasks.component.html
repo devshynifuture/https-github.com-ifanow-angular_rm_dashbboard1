@@ -36,8 +36,10 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'" *ngIf="finalTaskList.length>0">
-                    <button (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
+                <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'"
+                    *ngIf="finalTaskList.length>0">
+                    <button *ngIf="roleService.activityPermission.subModule.TaskCapabilityList[1].enabledOrDisabled==1"
+                        (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
                         ADD NEW
                     </button>
                 </div>
@@ -104,7 +106,8 @@
                 </ng-container>
                 <ng-container matColumnDef="taskStatus">
                     <th *matHeaderCellDef mat-header-cell sticky> Status</th>
-                    <td *matCellDef="let element" (click)="isLoading ? $event.preventDefault() : openAddTask(element)" mat-cell class="c-p">
+                    <td *matCellDef="let element" (click)="isLoading ? $event.preventDefault() : openAddTask(element)"
+                        mat-cell class="c-p">
                         <div class="bar">{{element.taskStatus}}</div>
                     </td>
                 </ng-container>
@@ -112,9 +115,12 @@
                     <th mat-sort-header *matHeaderCellDef mat-header-cell sticky></th>
                     <td *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar" *ngIf="!isLoading">
-                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
+                            <img *ngIf="roleService.activityPermission.subModule.TaskCapabilityList[3].enabledOrDisabled==1"
+                                [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="deleteTask(element.id)">Delete</button>
+                                <button
+                                    *ngIf="roleService.activityPermission.subModule.TaskCapabilityList[3].enabledOrDisabled==1"
+                                    mat-menu-item (click)="deleteTask(element.id)">Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -129,7 +135,8 @@
                 <div class="col-md-8 text-center">
                     <img src="/assets/images/svg/task-empty.svg">
                     <h5 class="m-0 pt-12 f-500 roboto pb-16">No tasks added yet</h5>
-                    <button mat-stroked-button class="btn-primary" (click)="openAddTask(null)">ADD NEW</button>
+                    <button *ngIf="roleService.activityPermission.subModule.TaskCapabilityList[1].enabledOrDisabled==1"
+                        mat-stroked-button class="btn-primary" (click)="openAddTask(null)">ADD NEW</button>
                 </div>
                 <div class="col-md-4 p-20 ba-dotted">
                     <div class="">

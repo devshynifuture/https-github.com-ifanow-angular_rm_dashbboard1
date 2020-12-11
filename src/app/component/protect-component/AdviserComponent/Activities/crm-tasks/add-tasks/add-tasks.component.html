@@ -473,7 +473,9 @@
         </div>
 
 
-        <div class="bg-white pt-20" *ngIf="data !== null" [ngClass]="commentList.length ===0 ? 'pb-60':'pb-20'">
+        <div class="bg-white pt-20"
+            *ngIf="data !== null && roleService.activityPermission.subModule.TaskCapabilityList[4].enabledOrDisabled==1"
+            [ngClass]="commentList.length ===0 ? 'pb-60':'pb-20'">
             <div class="row">
                 <div class="col-md-12 pl-30">
                     <h5 class="f-500 f-16 roboto">Attachments</h5>
@@ -537,7 +539,7 @@
         </div>
 
 
-        <div class="bg-grey lter pt-20 mb-24" *ngIf="commentList.length !==0">
+        <div class="bg-grey lter pt-20 mb-24" *ngIf="commentList.length !==0 && roleService.activityPermission.subModule.TaskCapabilityList[5].enabledOrDisabled==1">
             <div class="row">
                 <div class="col-md-12 pl-30">
                     <h5 class="f-500 roboto">Comments</h5>
@@ -879,7 +881,7 @@
                     (click)="onCreateCommentTaskSubTask(commentInput.value)">Add</button>
             </div>
         </div>
-        <div class="row pt-10">
+        <div *ngIf="roleService.activityPermission.subModule.TaskCapabilityList[6].enabledOrDisabled==1" class="row pt-10">
             <div class="w-10">
             </div>
             <div class="w-90 f-14 p-0 pb-16">

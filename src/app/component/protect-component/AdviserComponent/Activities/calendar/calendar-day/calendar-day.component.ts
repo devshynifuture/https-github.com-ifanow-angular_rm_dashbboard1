@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { RoleService } from 'src/app/auth-service/role.service';
 @Component({
   selector: 'app-calendar-day',
   templateUrl: './calendar-day.component.html',
@@ -35,7 +36,7 @@ export class CalendarDayComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   private unSubcrip: Subscription;
-  constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
+  constructor(public dialog: MatDialog, private roleService: RoleService, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   timeArry: any = [];
   ngOnInit() {
@@ -54,16 +55,16 @@ export class CalendarDayComponent implements OnInit {
     }
     this.viewDate = new Date();
     this.day = this.formateDate(this.viewDate);
-    if(!this.calenderService.dayArrey){
+    if (!this.calenderService.dayArrey) {
       this.currentMonth = new Date().getMonth();
       this.currentYear = new Date().getFullYear();
-    }else{
+    } else {
       this.day = this.calenderService.dayArrey[1].selectedDate;
       this.month = this.calenderService.dayArrey[1].month;
       this.year = this.calenderService.dayArrey[1].year;
       this.currentMonth = this.calenderService.dayArrey[1].month;
       this.currentYear = this.calenderService.dayArrey[1].year;
-      this.viewDate = new Date(this.year,this.month, this.day);
+      this.viewDate = new Date(this.year, this.month, this.day);
     }
     this.userInfo = AuthService.getUserInfo()
     // this.updatecalendar();
@@ -267,6 +268,9 @@ export class CalendarDayComponent implements OnInit {
   }
 
   addEvent(day, month, year, time) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[1].enabledOrDisabled == 2) {
+      return;
+    }
     let hr;
     if (time.charAt(time.length - 2) + time.charAt(time.length - 1) == 'PM') {
       hr = 12 + parseInt(time);
@@ -312,6 +316,9 @@ export class CalendarDayComponent implements OnInit {
   }
 
   editEvent(eventData) {
+    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[2].enabledOrDisabled == 2) {
+      return;
+    }
     let event: any;
     if (eventData != null) {
       event = eventData;
@@ -434,7 +441,7 @@ export class CalendarDayComponent implements OnInit {
 
   currentMonthEvents: any = [];
   createDayJson() {
-    if(!this.numbersOfDays){
+    if (!this.numbersOfDays) {
       this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     }
     this.currentMonthEvents = [];
@@ -485,7 +492,7 @@ export class CalendarDayComponent implements OnInit {
       }
 
       for (let e = 0; e < this.formatedEvent.length; e++) {
-        let calMonth = new Date(this.year, this.month-1, this.formateDate(this.current_day));
+        let calMonth = new Date(this.year, this.month - 1, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
@@ -665,7 +672,7 @@ export class CalendarDayComponent implements OnInit {
   addDaysOfMomth() {
     let d: any;
     let m;
-    if(!this.numbersOfDays){
+    if (!this.numbersOfDays) {
       this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     }
     for (let i = 1; i < this.numbersOfDays; i++) {

@@ -21,21 +21,24 @@
                 <h5 class="mb-4 f-14 roboto text-black ">Start date</h5>
                 <div class="form-group">
                     <mat-form-field class="ba-date">
-                        <input class="form-control b-0" (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" [value]="this.eventData.start.dateTime == undefined ? this.eventData.start.date : this.eventData.start.dateTime" [min]="startDate"
-                            [matDatepicker]="picker">
+                        <input class="form-control b-0" (click)="picker.open()" (dateChange)="setEndDate()" readonly
+                            matInput formControlName="startDateTime"
+                            [value]="this.eventData.start.dateTime == undefined ? this.eventData.start.date : this.eventData.start.dateTime"
+                            [min]="startDate" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
             </div>
             <!-- *ngIf="showTime" -->
-            <div class="col-md-4" >
+            <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-6 pl-0 pr-2">
                         <h5 class="text-black mb-4 f-14 ">Start time</h5>
                         <div class="form-group">
                             <mat-form-field>
-                                <mat-select class="form-control" matNativeControl formControlName="startTime" (selectionChange)="setTime('start')">
+                                <mat-select class="form-control" matNativeControl formControlName="startTime"
+                                    (selectionChange)="setTime('start')">
                                     <mat-option *ngFor="let time of timeArr" [value]="time">{{time}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -45,8 +48,10 @@
                         <h5 class="text-black mb-4 f-14 ">End time</h5>
                         <div class="form-group">
                             <mat-form-field>
-                                <mat-select class="form-control" matNativeControl formControlName="endTime" (selectionChange)="setTime('end')">
-                                    <mat-option *ngFor="let time of timeArr" [value]="time" [hidden]="eventForm.value.startTime > time"> {{time}} </mat-option>
+                                <mat-select class="form-control" matNativeControl formControlName="endTime"
+                                    (selectionChange)="setTime('end')">
+                                    <mat-option *ngFor="let time of timeArr" [value]="time"
+                                        [hidden]="eventForm.value.startTime > time"> {{time}} </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -58,7 +63,10 @@
                 <h5 class="mb-4 text-black f-14 roboto">End date</h5>
                 <div class="form-group">
                     <mat-form-field class="ba-date">
-                        <input (click)="epicker.open()" readonly class="form-control b-0" matInput formControlName="endDateTime" [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d" [matDatepicker]="epicker">
+                        <input (click)="epicker.open()" readonly class="form-control b-0" matInput
+                            formControlName="endDateTime"
+                            [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d"
+                            [matDatepicker]="epicker">
                         <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="epicker">
                         </mat-datepicker-toggle>
                         <mat-datepicker #epicker></mat-datepicker>
@@ -77,7 +85,9 @@
                     <div class="col-md-12  ">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Add attendee" matInput formControlName="attendee" class="form-control br-0 " (keypress)="addAttendee($event)" [matAutocomplete]="auto">
+                                <input placeholder="Add attendee" matInput formControlName="attendee"
+                                    class="form-control br-0 " (keypress)="addAttendee($event)"
+                                    [matAutocomplete]="auto">
                                 <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid
                                 </mat-error>
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -149,7 +159,8 @@
 <div class="p-20" *ngIf="!isEditAdd && eventData.date">
 
     <h1 class="mb-0 f-22 text-center bb-1 pb-20">
-        <span class="actived"> {{eventData.date|date :'dd'}}</span> {{eventData.date|date :'MMM'}} {{eventData.date|date :'yyyy'}}
+        <span class="actived"> {{eventData.date|date :'dd'}}</span> {{eventData.date|date :'MMM'}}
+        {{eventData.date|date :'yyyy'}}
     </h1>
 
     <ul class="blue">
@@ -170,7 +181,8 @@
         <p class="mb-10" *ngIf="eventData.start.dateTime != null && eventData.start.dateTime != null">
             <span>{{eventData.start.dateTime | date : 'MMMM d, y'}}</span>
             <span *ngIf="eventData.start.dateTime != null">,
-                {{eventData.startTime}}</span> - <span *ngIf="showBothDate">{{eventData.end.dateTime | date : 'MMMM d, y'}},
+                {{eventData.startTime}}</span> - <span
+                *ngIf="showBothDate">{{eventData.end.dateTime | date : 'MMMM d, y'}},
             </span><span *ngIf="eventData.end.dateTime != null">{{eventData.endTime}}</span></p>
 
         <p class="mb-10" *ngIf="eventData.start.dateTime == null && eventData.start.dateTime == null">
@@ -220,7 +232,9 @@
     <div class="row pt-10">
         <div class="col-md-12 pr-0 text-right">
             <img title="Edit" (click)="editEvent()" class="c-p" src="assets/images/svg/pencil.svg">
-            <img title="Delete" (click)="deleteEvent(eventData.id)" class="b-a c-p wrapper-9 ml-8" src="assets/images/svg/delete.svg">
+            <img title="Delete"
+                *ngIf="roleService.activityPermission.subModule.CalendarCapabilityList[3].enabledOrDisabled==1"
+                (click)="deleteEvent(eventData.id)" class="b-a c-p wrapper-9 ml-8" src="assets/images/svg/delete.svg">
         </div>
     </div>
 

@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { HttpService } from 'src/app/http-service/http-service';
 import { Subscription, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-add-tasks',
@@ -101,8 +102,8 @@ export class AddTasksComponent implements OnInit {
     private http: HttpService,
     private router: Router,
     public dialog: MatDialog,
-    private util: UtilService
-
+    private util: UtilService,
+    public roleService: RoleService
   ) { }
 
   ngOnInit() {
