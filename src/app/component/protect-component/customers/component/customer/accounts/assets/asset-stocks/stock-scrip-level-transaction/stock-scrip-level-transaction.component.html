@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" *ngIf="!Holdings">
             <h5 class="m-0 pb-8">Scrip name</h5>
             <app-scrip-field (valueChange1)="getScript($event)" [data]="scipLevelTransactionForm"></app-scrip-field>
         </div>
@@ -86,6 +86,12 @@
     <div class="row pl-28">
         <div class="col-md-12 pl-0 mt-65">
             <h4 class="mb-20 text-black">TRANSACTIONS</h4>
+        </div>
+    </div>
+    <div *ngIf="Holdings" class="row pb-36 pl-28" [formGroup]="scipLevelTransactionForm">
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">Scrip name</h5>
+            <app-scrip-field (valueChange1)="getScript($event)" [data]="scipLevelTransactionForm"></app-scrip-field>
         </div>
     </div>
     <div class="row pl-28 sl-trans">

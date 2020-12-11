@@ -34,7 +34,7 @@ export class AssetsComponent implements OnInit {
     { name: 'Small saving scheme', viewmode: 'tab6', count: '0', link: './small' },
     { name: 'Cash & Bank', viewmode: 'tab7', count: '0', link: './cash_bank' },
     { name: 'Commodities', viewmode: 'tab8', count: '0', link: './commodities' },
-    // { name: 'Others', viewmode: 'tab9', count: '0', link: './others' }
+    { name: 'Others', viewmode: 'tab9', count: '0', link: './others' }
   ];
   tab: any;
   Settab: any;
@@ -214,7 +214,7 @@ export class AssetsComponent implements OnInit {
       smallSavingSchemes,
       commodities,
       mutual_fund,
-      // others
+      others
     } = data;
     this.assetSideBarData[0].count = mutual_fund;
     this.assetSideBarData[1].count = STOCKS;
@@ -224,7 +224,7 @@ export class AssetsComponent implements OnInit {
     this.assetSideBarData[5].count = smallSavingSchemes;
     this.assetSideBarData[6].count = cashAndBank;
     this.assetSideBarData[7].count = commodities;
-    // this.assetSideBarData[8].count = others;
+    this.assetSideBarData[8].count = others;
   }
   clickable(value) {
     this.sidenavState = false;
