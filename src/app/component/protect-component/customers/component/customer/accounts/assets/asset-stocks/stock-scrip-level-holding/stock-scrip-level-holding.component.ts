@@ -633,8 +633,9 @@ export class StockScripLevelHoldingComponent implements OnInit {
     }
     else {
       this.bankDematList = [];
+      this.getBank();
     }
-    console.log(this.bankList, "this.bankList2");
+    console.log(this.bankList, "this.bankList2", this.bankDematList, "this.bankDematList");
   }
 
 

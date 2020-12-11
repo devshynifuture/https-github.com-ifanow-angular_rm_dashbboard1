@@ -328,7 +328,11 @@ const ELEMENT_DATA3 = {
       date: '06/04/2004',
       rate: 5,
       description: 'ICICI FD',
-      status: ''
+      status: '',
+      nomineeList: [{
+        name: 'Rahul Jain',
+        sharePercentage: 100
+      }]
     },
     {
       ownerList: [{ name: 'Abhishek Jain' }],
@@ -338,7 +342,11 @@ const ELEMENT_DATA3 = {
       date: '06/04/2004',
       rate: 5,
       description: 'ICICI FD',
-      status: ''
+      status: '',
+      nomineeList: [{
+        name: 'Rahul Jain',
+        sharePercentage: 100
+      }]
     },
     {
       ownerList: [{ name: 'Nikhil Jain' }],
@@ -348,7 +356,11 @@ const ELEMENT_DATA3 = {
       date: '06/04/2004',
       rate: 5,
       description: 'ICICI FD',
-      status: ''
+      status: '',
+      nomineeList: [{
+        name: 'Rahul Jain',
+        sharePercentage: 100
+      }]
     }
   ],
   sumOfPurchaseValue: 120000,

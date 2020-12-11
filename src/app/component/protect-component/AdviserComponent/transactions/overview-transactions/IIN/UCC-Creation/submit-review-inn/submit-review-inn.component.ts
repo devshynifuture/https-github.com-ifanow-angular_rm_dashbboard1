@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FileUploadService } from '../../../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../../../config/main-config';
-import { appConfig } from '../../../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { MatDialog } from '@angular/material';
-import { IinCreationLoaderComponent } from './iin-creation-loader/iin-creation-loader.component';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { ConfirmUploadComponent } from '../../../../investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FileUploadService} from '../../../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../../../config/main-config';
+import {appConfig} from '../../../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {MatDialog} from '@angular/material';
+import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {ConfirmUploadComponent} from '../../../../investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -20,11 +20,9 @@ import { ConfirmUploadComponent } from '../../../../investors-transactions/inves
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
-  barWidth: any = '0%';
-  showLoader: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
+              private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
   }
 
   get data() {
@@ -37,7 +35,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData = {};
     this.inputData = data;
     console.log('submit and review component inputData : ', this.inputData);
-    this.allData = { ...data };
+    this.allData = {...data};
     this.clientData = this.clientData;
     this.doneData.nominee = true;
     this.doneData.bank = true;
@@ -54,6 +52,8 @@ export class SubmitReviewInnComponent implements OnInit {
     }
     // this.generalDetails = data
   }
+  barWidth: any = '0%';
+  showLoader: any;
 
   isFileUploading;
   isSuccessful = false;
@@ -92,6 +92,9 @@ export class SubmitReviewInnComponent implements OnInit {
   statusString: any;
 
   tempObj;
+
+  num: any = 0;
+  numlimit: any;
 
   close() {
     const fragmentData = {
@@ -203,7 +206,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.toSendObjNomineeList = [];
     this.allData.holderList.forEach(element => {
       if (element.email) {
-        this.toSendObjHolderList.push({ ...element });
+        this.toSendObjHolderList.push(Object.assign({}, element));
       }
     });
     this.allData.bankDetailList.forEach(element => {
@@ -221,13 +224,15 @@ export class SubmitReviewInnComponent implements OnInit {
     this.allData.nomineeList = this.toSendObjNomineeList;
     // this.inputData.clientData = this.clientData;
 
-    const firstHolder = this.allData.holderList[0];
+    const firstHolder = this.toSendObjHolderList[0];
     // this.inputData.taxMaster
     if (this.allData.taxMaster.minorFlag) {
-      firstHolder.guardianName = firstHolder.fatherName;
-      firstHolder.guardianPan = firstHolder.panNumber;
-      firstHolder.panNumber = '';
-      firstHolder.fatherName = '';
+      if (!firstHolder.guardianName || firstHolder.guardianName == '') {
+        firstHolder.guardianName = firstHolder.fatherName;
+        firstHolder.guardianPan = firstHolder.panNumber;
+        firstHolder.panNumber = '';
+        firstHolder.fatherName = '';
+      }
     }
     const obj1 = {
       ownerName: this.allData.ownerName,
@@ -349,7 +354,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   openIinUccClient(singleBrokerCred, requestJson) {
-    const data = { singleBrokerCred, requestJson };
+    const data = {singleBrokerCred, requestJson};
     const Fragmentdata = {
       flag: 'IIn',
       ...data
@@ -402,15 +407,12 @@ export class SubmitReviewInnComponent implements OnInit {
         this.numlimit = 30;
         if (typeId == 1) {
           this.addbarWidth(1);
-          this.isFileUploading = true
+          // this.isFileUploading = true;
         }
-        this.getFileDetails(typeId, result, singleBrokerCred)
+        this.getFileDetails(typeId, result, singleBrokerCred);
       }
     });
   }
-
-  num: any = 0;
-  numlimit: any;
 
   recall() {
     if (this.num <= this.numlimit) {
@@ -425,7 +427,7 @@ export class SubmitReviewInnComponent implements OnInit {
         this.num++;
       }
       this.barWidth = this.num + '%';
-      console.log("1");
+      console.log('1');
       this.recall();
     }, 500);
 

@@ -173,7 +173,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     this.close(true);
   }
   openDialog(value, data): void {
-    data = { smallHeading: 'life insurance' }
+    value = { smallHeading: 'life insurance',inputData : this.inputData}
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       height: '600px',

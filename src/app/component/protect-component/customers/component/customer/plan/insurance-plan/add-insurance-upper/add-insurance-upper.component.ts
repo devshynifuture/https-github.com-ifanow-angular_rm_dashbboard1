@@ -5,6 +5,7 @@ import { CustomerService } from '../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddLifeInsuranceComponent} from '../add-life-insurance/add-life-insurance.component';
 import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
+import { ShowHealthPlanningComponent } from '../show-health-planning/show-health-planning.component';
 
 @Component({
   selector: 'app-add-insurance-upper',
@@ -27,6 +28,27 @@ export class AddInsuranceUpperComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  needAnlysis(value) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    const fragmentData = {
+      flag: 'app-customer',
+      id: 1,
+      data: {value : value},
+      direction: 'top',
+      componentName: ShowHealthPlanningComponent,
+      state: 'open'
+    };
+    // this.showInsurance.id = value;
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.close(false);
+          subscription.unsubscribe();
+        }
+      }
+    );
+
+}
   openHelthInsurance(obj){
     let data ;
     let component;

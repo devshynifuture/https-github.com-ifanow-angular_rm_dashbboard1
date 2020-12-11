@@ -69,6 +69,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   object: any;
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, { id: '6', value: 'Add members' }, { id: '7', value: 'Remove members' }]
   adviceNameObj: { adviceName: any; };
+  showExisting: any;
   constructor(
     private activityService:ActiityService,
     private subInjectService: SubscriptionInject,
@@ -81,7 +82,72 @@ export class ShowHealthPlanningComponent implements OnInit {
     private ipService: InsurancePlanningServiceService
   ) { }
 
-
+  insuranceData = [{
+    value: '1',
+    header: 'Add Health Insurance',
+    smallHeading: 'health insurance',
+    insuranceType: 5,
+    logo: '/assets/images/svg/helth-insurance.svg',
+    heading: 'Health insurance',
+    subHeading: 'Select how you’d like to proceed with planning for health insurance policies.'
+  }, {
+    value: '2',
+    logo: '/assets/images/svg/Criticalillness.svg',
+    header: 'Add Critical Illness',
+    smallHeading: 'critical illness',
+    insuranceType: 6,
+    heading: 'Critical illness',
+    subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
+  }, {
+    value: '3',
+    logo: '/assets/images/svg/Cancercare.svg',
+    header: 'Add Cancer Care',
+    smallHeading: 'cancer care',
+    insuranceType: 11,
+    heading: 'Cancer care',
+    subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
+  }, {
+    value: '4',
+    logo: '/assets/images/svg/Personalaccident.svg',
+    header: 'Add Personal Accident',
+    heading: 'Personal accident',
+    smallHeading: 'personal accident',
+    insuranceType: 7,
+    subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
+  }, {
+    value: '5',
+    logo: '/assets/images/svg/Householders.svg',
+    header: 'Add Householders',
+    smallHeading: 'householders',
+    insuranceType: 9,
+    heading: 'Householders',
+    subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
+  }, {
+    value: '6',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Fire Insurance',
+    smallHeading: 'fire insurance',
+    insuranceType: 10,
+    heading: 'Fire insurance',
+    subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
+  },
+  {
+    value: '7',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Travel Insurance',
+    smallHeading: 'travel insurance',
+    insuranceType: 8,
+    heading: 'Travel insurance',
+    subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
+  }, {
+    value: '8',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Motor Insurance',
+    smallHeading: 'motor insurance',
+    insuranceType: 4,
+    heading: 'Motor insurance',
+    subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
+  }]
   @Input()
   set data(data) {
     this.ipService.getIpData()
@@ -100,7 +166,13 @@ export class ShowHealthPlanningComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
     this.inputData = data;
-    this.insuranceType = this.inputData.insuranceType;
+    this.insuranceData.forEach(element => {
+      if (element.value == this.inputData.value) {
+        this.showInsurance = element
+        this.insuranceType = element.insuranceType
+      }
+    });
+    this.insuranceType = this.inputData.insuranceType ? this.inputData.insuranceType : this.insuranceType;
   }
 
   get data() {
@@ -108,7 +180,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   }
   ngOnInit() {
     console.log('insurance data', this.inputData)
-    this.showInsurance = this.inputData
+    this.showInsurance = this.showInsurance ? this.showInsurance : this.inputData
     this.insuranceIds.push(this.inputData.id);
     if (this.chekToCallApi()) {
       this.getStepOneAndTwoData();
@@ -155,7 +227,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
     let obj = {
       id: this.insuranceIds[0] == null ? -1 : this.insuranceIds,
-      insuranceType: this.inputData.insuranceType
+      insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.insuranceType
     }
     const obj2 = {
       clientId: this.clientId
@@ -215,7 +287,7 @@ export class ShowHealthPlanningComponent implements OnInit {
       } else {
         this.dataSource = [];
       }
-      if (data.suggested) {
+      if (data && data.suggested) {
         this.dataSource1 = this.getFilterData(data.suggested);
       } else {
         this.dataSource1 = [];
@@ -687,6 +759,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     } else {
       data.showExisting = true
       data.insuranceIds = this.insuranceIds
+      data.id = this.inputData.id;
       data.name = 'Add more';
       data.currentData = this.dataSource
     }
@@ -705,6 +778,11 @@ export class ShowHealthPlanningComponent implements OnInit {
           if (sideBarData.refreshRequired) {
             this.isRefreshRequired = true;
             // this.insuranceIds.push(sideBarData.data)
+            if(sideBarData.data){
+              this.insuranceIds=[];
+              this.inputData.id = sideBarData.data;
+              this.insuranceIds.push(this.inputData.id);
+            }
             this.getStepOneAndTwoData();
           } else {
             this.isRefreshRequired = false;

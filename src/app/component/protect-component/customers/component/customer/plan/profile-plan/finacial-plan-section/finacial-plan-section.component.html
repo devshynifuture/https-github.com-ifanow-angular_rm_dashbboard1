@@ -19,27 +19,42 @@
                     NEW</button>
             </div>
         </div>
-        <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index">
-                <div class="row p-4 b-a pt-8 pb-8 c-p">
-                    <div class="col-md-1 pl-8">
-                        <div class="bar">
-                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
+        <div>
+            <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="!isLoading">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="row p-4 b-a pt-8 pb-8 c-p">
+                        <div class="col-md-1 pl-8">
+                            <div class="bar">
+                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-10 pl-0">
-                        <div class="bar">
-                            <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
+                        <div class="col-md-10 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1" (click)="removeModule(module,i)">
-                        <div class="bar">
-                            <img src="/assets/images/svg/close.svg" class="c-p">
+                        <div class="col-md-1" (click)="removeModule(module,i)">
+                            <div class="bar">
+                                <img src="/assets/images/svg/close.svg" class="c-p">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
+
+            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
+                    <div class="mt-8 h-auto-500 relClass">
+                        <div class="col-md-12 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="moduleAdded.length  == 0 && hideTable == true && !isLoading">
                 <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
                     <img src="assets/images/svg/documents-empty-states.svg">
                     No module added
@@ -50,7 +65,7 @@
                     <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
                         [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                         <ng-container matColumnDef="name">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepaid by </th>
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepared by </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
                                     {{(isLoading) ? '':element.advisorName}}
@@ -130,7 +145,8 @@
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-7 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
+                    <div class="col-md-7 p-0 text-right"
+                        *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
                     <!-- <div class="col-md-2 text-right"
@@ -797,7 +813,8 @@
 
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.liabilites != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities',true)">
@@ -808,7 +825,8 @@
                                             Portfolio / All Liabltities</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.homeLoan != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Home','','Portfolio / Liabltities / Home',true)">
@@ -819,7 +837,7 @@
                                             Portfolio / Liabltities / Home</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.vehicle != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Vehicle','','Portfolio / Liabltities / Vehicle',true)">
@@ -830,7 +848,8 @@
                                             Portfolio / Liabltities / Vehicle</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.education != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Education','','Portfolio / Liabltities / Education',true)">
@@ -841,7 +860,8 @@
                                             Portfolio / Liabltities / Education </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.personal != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Personal','','Portfolio / Liabltities / Personal',true)">
@@ -852,7 +872,8 @@
                                             Portfolio / Liabltities / Personal </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.creditCard != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Credit card','','Portfolio / Liabltities / Credit card',true)">
@@ -863,7 +884,8 @@
                                             Portfolio / Liabltities / Credit card </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.mortgage != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Mortgage','','Portfolio / Liabltities / Mortgage',true)">
@@ -874,7 +896,7 @@
                                             Portfolio / Liabltities / Mortgage </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.other != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Others','','Portfolio / Liabltities / Others',true)">
