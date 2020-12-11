@@ -20,8 +20,6 @@ import {ConfirmUploadComponent} from '../../../../investors-transactions/investo
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
-  barWidth: any = '0%';
-  showLoader: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
               private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
@@ -54,6 +52,8 @@ export class SubmitReviewInnComponent implements OnInit {
     }
     // this.generalDetails = data
   }
+  barWidth: any = '0%';
+  showLoader: any;
 
   isFileUploading;
   isSuccessful = false;
@@ -92,6 +92,9 @@ export class SubmitReviewInnComponent implements OnInit {
   statusString: any;
 
   tempObj;
+
+  num: any = 0;
+  numlimit: any;
 
   close() {
     const fragmentData = {
@@ -404,15 +407,12 @@ export class SubmitReviewInnComponent implements OnInit {
         this.numlimit = 30;
         if (typeId == 1) {
           this.addbarWidth(1);
-          this.isFileUploading = true
+          // this.isFileUploading = true;
         }
-        this.getFileDetails(typeId, result, singleBrokerCred)
+        this.getFileDetails(typeId, result, singleBrokerCred);
       }
     });
   }
-
-  num: any = 0;
-  numlimit: any;
 
   recall() {
     if (this.num <= this.numlimit) {
@@ -427,7 +427,7 @@ export class SubmitReviewInnComponent implements OnInit {
         this.num++;
       }
       this.barWidth = this.num + '%';
-      console.log("1");
+      console.log('1');
       this.recall();
     }, 500);
 
