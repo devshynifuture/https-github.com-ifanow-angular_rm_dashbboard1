@@ -156,8 +156,8 @@
                         </div>
                     </form>
                 </mat-step>
-                
-                <mat-step class="remove-bl"  [stepControl]="componentRefComponentVal[form]" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null" [editable]="true">
+                <!-- [stepControl]="componentRefComponentVal[form]" -->
+                <mat-step class="remove-bl"  [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null" [editable]="true">
                     <ng-template matStepLabel>
                             <div (click)="function()">
                                     STEP 2

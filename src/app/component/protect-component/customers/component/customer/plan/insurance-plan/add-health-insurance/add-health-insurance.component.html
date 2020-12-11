@@ -26,9 +26,11 @@
                     and suggest new</mat-radio-button>
                 <mat-radio-button
                     [ngClass]="{'bu-primary': selectPolicy=='2','borderRadio':selectPolicy!='2','text-primary':selectPolicy=='2','text-custom':selectPolicy!='2'}"
-                    value="2" (click)="openNewPolicy()">
+                    value="2" (click)="openAddEditAdvice(showInsurance,null,'suggestNew')">
                     Suggest new insurance policies
                 </mat-radio-button>
+                <!-- (click)="openNewPolicy()" -->
+                <!-- (click)="openAddEditAdvice(showInsurance,null,'suggestNew')" -->
             </mat-radio-group>
         </div>
     </div>

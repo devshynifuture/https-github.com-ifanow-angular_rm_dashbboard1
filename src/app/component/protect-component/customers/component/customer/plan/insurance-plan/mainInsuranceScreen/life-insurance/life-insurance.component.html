@@ -145,9 +145,10 @@
                                     class="suggested-policies-icons">
                                     <mat-icon class="lh-16">more_vert</mat-icon>
                                 </button>
+                                <!-- suggestPolicyGi(inputData,element.insurance) -->
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item
-                                        (click)="inputData?.insuranceType == 1 ? suggestPolicy(element) : suggestPolicyGi(inputData,element.insurance)">Edit</button>
+                                        (click)="inputData?.insuranceType == 1 ? suggestPolicy(element) : needAnalysis(null)">Edit</button>
                                     <button mat-menu-item
                                         (click)="deleteModal('INSURANCE',element.insurance)">Delete</button>
                                 </mat-menu>

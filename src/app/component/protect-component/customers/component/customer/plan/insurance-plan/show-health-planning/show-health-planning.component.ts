@@ -224,11 +224,18 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
   }
   checkAndPushSuggestedData(array) {
-    const myArray = this.storedData;
-    let list = [];
-    myArray.forEach(val => list.push(Object.assign({}, val)));
-    let arrStoreData = list;
-    let singleData = arrStoreData.filter(d => d.id == this.inputData.id);
+    let singleData;
+    // const myArray = this.storedData;
+    // let list = [];
+    // myArray.forEach(val => list.push(Object.assign({}, val)));
+    // let arrStoreData = list;
+    if(this.storedData){
+      let arrStoreData = this.storedData;
+       singleData = arrStoreData.filter(d => d.id == this.inputData.id);
+    }else{
+      singleData = [];
+    }
+
     if (singleData.length > 0) {
       let suggestPolicy = singleData[0][1];
       this.pushData(array, suggestPolicy, singleData, 'suggested');
@@ -248,8 +255,10 @@ export class ShowHealthPlanningComponent implements OnInit {
     //  singleData[0][2] = dataArray;
      if(array && singleData[0][2]){
       singleData[0][2] =[];
-       let merge =[...array.current,...array.suggested]
-      singleData[0][2]=merge
+      //  let merge =[...array.current,...array.suggested]
+      // singleData[0][2]=merge
+      // let merge =[...array.current,...array.suggested]
+      singleData[0][2]=array.current
       singleData[0][2] = singleData[0][2].flat();
      }
     if (singleData[0][2]) {
@@ -291,8 +300,9 @@ export class ShowHealthPlanningComponent implements OnInit {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
                 if (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured) {
-                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured, 0);
-                  const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
+                  let sumAss = singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured;
+                  sumAss = this.formatNumber(sumAss, 0);
+                  const firstSumInsured = (sumAss as string).split(' ')[0];
                   singleInsuranceData.displayHolderSumInsured += ', ₹' + firstSumInsured;
                 } else {
                   singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.sumInsuredIdv ? singleInsuranceData.insuranceDetails.sumInsuredIdv : 0;

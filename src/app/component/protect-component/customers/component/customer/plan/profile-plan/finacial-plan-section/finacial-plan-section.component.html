@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-10 pl-0">
                         <div class="bar">
-                            <p class="m-0 pt-4">{{module.name}}</p>
+                            <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
                         </div>
                     </div>
                     <div class="col-md-1" (click)="removeModule(module,i)">
