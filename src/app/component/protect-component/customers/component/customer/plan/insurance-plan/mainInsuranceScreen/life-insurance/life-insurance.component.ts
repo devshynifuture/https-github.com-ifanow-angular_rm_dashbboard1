@@ -453,12 +453,13 @@ export class LifeInsuranceComponent implements OnInit {
 
     });
   }
-  openDialog(value, data): void {
-    data = { smallHeading: 'life insurance' }
+  openDialog(data,value): void {
+    value = { smallHeading: 'life insurance',inputData : this.inputData}
+    data.data =this.inputData;
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       height: '600px',
-      data: { value, data }
+      data: { data,value}
     });
 
     dialogRef.afterClosed().subscribe(result => {

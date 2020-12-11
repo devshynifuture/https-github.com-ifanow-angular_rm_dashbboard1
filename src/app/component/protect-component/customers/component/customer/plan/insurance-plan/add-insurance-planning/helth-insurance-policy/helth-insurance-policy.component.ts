@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MAT_DATE_FORMATS } from '@angular/material';
 import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
@@ -10,11 +10,16 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from 'src/app/services/util.service';
 import { ActiityService } from '../../../../customer-activity/actiity.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-helth-insurance-policy',
   templateUrl: './helth-insurance-policy.component.html',
-  styleUrls: ['./helth-insurance-policy.component.scss']
+  styleUrls: ['./helth-insurance-policy.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class HelthInsurancePolicyComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -47,6 +52,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
   adviseCategoryTypeMasterId: any;
   familyList: any;
   inputData: any;
+  dataForEdit: any;
   constructor(private peopleService: PeopleService, private activityService: ActiityService, private datePipe: DatePipe, private fb: FormBuilder, public dialogRef: MatDialogRef<HelthInsurancePolicyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private planService: PlanService, private eventService: EventService) { }
   adviceData = [{ value: 1, advice: 'Continue', selected: true },
@@ -60,9 +66,9 @@ export class HelthInsurancePolicyComponent implements OnInit {
     // this.getAllCategory();
     this.inputData = this.data.value;
     this.getListFamilyMem();
-    this.getdataForm('')
-    this.showInsurance = this.data.data;
+    this.showInsurance = this.data.data ? (this.data.data.insurance ? this.data.data.insurance : this.data.data) : this.data.data;
     this.getCategoryId();
+    this.getdataForm(this.data.data)
     if (this.data.data.smallHeading == 'life insurance') {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Surrender', selected: false },
@@ -80,7 +86,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       { value: 6, advice: 'Add members', selected: false },
       { value: 7, advice: 'Remove members', selected: false }]
     }
-    this.insuranceData = this.data.value.insurance ? this.data.value.insurance : this.data.value.insuranceDetails;
+    this.insuranceData = this.data.data.insurance ? this.data.data.insurance : this.data.data.insuranceDetails;
   }
   // getAllCategory() {
   //   // this.isLoading = true;
@@ -139,13 +145,13 @@ export class HelthInsurancePolicyComponent implements OnInit {
         this.adviseCategoryTypeMasterId = 4
         break;
       default:
-        if(this.inputData.insuranceSubTypeId == 1 ){
+        if(this.showInsurance.insuranceSubTypeId == 1 ){
           this.adviseCategoryTypeMasterId = 3
           this.insuranceCategoryTypeId = 42
-        }else if(this.inputData.insuranceSubTypeId == 2){
+        }else if(this.showInsurance.insuranceSubTypeId == 2){
           this.adviseCategoryTypeMasterId = 3
           this.insuranceCategoryTypeId = 43
-        }else if(this.inputData.insuranceSubTypeId == 3){
+        }else if(this.showInsurance.insuranceSubTypeId == 3){
           this.adviseCategoryTypeMasterId = 3
           this.insuranceCategoryTypeId = 44
         }
@@ -153,18 +159,22 @@ export class HelthInsurancePolicyComponent implements OnInit {
     }
   }
   getdataForm(data) {
-
+    this.dataForEdit = data ? data.adviceDetails : null;
+    if(this.dataForEdit){
+      this.dataForEdit.advice = data.insurance_advice_id == 1 ? 'Continue' :data.insurance_advice_id == 2 ? 'Surrender' : data.insurance_advice_id == 3 ? 'Stop paying premium' : data.insurance_advice_id == 4 ? 'Take loan' : data.insurance_advice_id == 5 ? 'Partial withdrawl' : 'Continue';
+      this.dataForEdit.adviceStatus = data.advice_status_id == 1 ? 'GIVEN' : data.advice_status_id == 2 ? 'AWAITING CONSENT' :data.advice_status_id == 3 ? 'ACCEPTED' :data.advice_status_id == 4 ? 'IN PROGRESS' :data.advice_status_id == 5 ? 'IMPLEMENTED' :data.advice_status_id == 6 ? 'DECLINED' :data.advice_status_id == 7 ? 'PENDING' :data.advice_status_id == 8 ? 'SYSTEM GENERATED' :data.advice_status_id == 9 ? 'REVISED' :'GIVEN'; 
+    }
     this.healthInsurance = this.fb.group({
-      selectAdvice: [(!data) ? 'Continue' : data.selectAdvice, [Validators.required]],
-      adviceHeader: [!data ? 'Continue' : data.adviceHeader, [Validators.required]],
-      adviceStatus: [(!data) ? '' : data.adviceStatus],
-      adviceRationale: [(!data) ? '' : data.adviceRationale],
-      adviceHeaderDate: [(!data) ? new Date() : new Date(data.adviceHeaderDate), [Validators.required]],
-      implementationDate: [(!data) ? '' : new Date(data.implementationDate), [Validators.required]],
+      selectAdvice: [(!this.dataForEdit) ? 'Continue' : this.dataForEdit.advice, [Validators.required]],
+      adviceHeader: [!this.dataForEdit ? 'Continue' : data.advice, [Validators.required]],
+      adviceStatus: [(!this.dataForEdit) ? '' : this.dataForEdit.adviceStatus],
+      adviceRationale: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_description],
+      adviceHeaderDate: [(!this.dataForEdit) ? new Date() : new Date(this.dataForEdit.created_date), [Validators.required]],
+      implementationDate: [(!this.dataForEdit) ? '' : new Date(this.dataForEdit.applicable_date), [Validators.required]],
       amount: [, [Validators.required]],
-      consent: [(!data) ? '1' : data.consent, [Validators.required]],
-      nonFinAdvice: [(!data) ? '' : '',],
-      famMember: [(!data) ? '' : '', [Validators.required]]
+      consent: [(!this.dataForEdit) ? '1' : this.dataForEdit.consent],
+      nonFinAdvice: [(!this.dataForEdit) ? '' : '',],
+      famMember: [(!this.dataForEdit) ? '' : '', [Validators.required]]
     });
     this.healthInsurance.controls['adviceStatus'].disable()
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
@@ -294,7 +304,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
           realOrFictitious: 1,
           clientId: AuthService.getClientId(),
           advisorId: AuthService.getAdvisorId(),
-          applicableDate: this.healthInsurance.get('implementationDate').value
+          applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
+          adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
         }
         if(this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Discontinue'){
           this.planService.addAdviseOnGeneralInsurance(this.obj1).subscribe(
@@ -313,7 +324,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       
       }else{
         let obj1 = {
-          stringObject: { id: this.insuranceData.id },
+          stringObject: { id: this.insuranceData ? this.insuranceData.id : null },
           adviceDescription: this.healthInsurance.get('adviceRationale').value,
           insuranceCategoryTypeId: this.insuranceCategoryTypeId,
           adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
@@ -323,18 +334,48 @@ export class HelthInsurancePolicyComponent implements OnInit {
           realOrFictitious: 1,
           clientId: AuthService.getClientId(),
           advisorId: AuthService.getAdvisorId(),
-          applicableDate: this.healthInsurance.get('implementationDate').value
+          applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
+          adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
         }
-        this.planService.addAdviseOnHealth(obj1).subscribe(
-          res => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
-            this.close(this.advice, true);
-          }, err => {
-            this.barButtonOptions.active = false;
-            this.eventService.openSnackBar(err, "Dimiss");
+        if(!this.dataForEdit){
+          this.planService.addAdviseOnHealth(obj1).subscribe(
+            res => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
+              this.close(this.advice, true);
+            }, err => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dimiss");
+            }
+          )
+        }else{
+          const stringObjHealth = {
+            adviceDescription: this.healthInsurance.get('adviceRationale').value,
+            insuranceCategoryTypeId: this.insuranceCategoryTypeId,
+            suggestedFrom: 1,
+            adviceId: this.adviseId,
+            clientId: AuthService.getClientId(),
+            advisorId: AuthService.getAdvisorId(),
+            adviceToCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
+            adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? this.adviseId : null,  adviceDescription: this.healthInsurance.get('adviceRationale').value },
+            adviceToGenInsurance: {adviceDescription: this.healthInsurance.get('adviceRationale').value, genInsuranceAdviceId: this.adviseId },
+            adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
+            adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
+            adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
+            applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
           }
-        )
+          this.activityService.editAdvice(obj1).subscribe(
+            res => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
+              this.close(this.advice, true);
+            }, err => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dimiss");
+            }
+          );
+        }
+
       }
 
       // this.adviceHealthInsurance.push(obj);
