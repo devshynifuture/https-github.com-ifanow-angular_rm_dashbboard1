@@ -224,6 +224,9 @@ export class PlanService {
   getInsurancePlaningList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_LIST, data);
   }
+  getLibilitise(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIABILITIES, data);
+  }
   getBudgetGraph(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.BUDGET_GRAPH, data);
   }
@@ -364,6 +367,6 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PREVIEW, httpParams)
   }
   deleteInsurancePlan(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_PLAN+'?id=' + data.id,{'insuranceIds':data.insuranceIds})
+    return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_PLAN + '?id=' + data.id, { 'insuranceIds': data.insuranceIds })
   }
 }

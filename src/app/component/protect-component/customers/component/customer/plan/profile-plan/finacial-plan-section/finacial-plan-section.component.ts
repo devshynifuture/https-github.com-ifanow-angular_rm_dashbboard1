@@ -122,6 +122,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   moduleAddedLoader: {}[];
   downloadPdf: boolean = false;
   emailBody: string;
+  liabilitiesList: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -150,6 +151,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getTemplateSection()
     this.getPlanSection()
+    this.getLibilities()
     this.isLoading = true
     this.emailBody = '<html><body> <img src= ' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div> </body> </html>';
     //this.pdfFromImage()
@@ -685,6 +687,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
               arr.push({
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
+                goalName: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
                 futureValue: goalValueObj.goalFV,
                 month,
@@ -793,7 +796,23 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
     );
   }
+  getLibilities() {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.planService.getLibilitise(obj).subscribe(
+      data => this.getLibilitiseRes(data),
+      err => {
+        console.error(err);
+      }
+    );
+  }
+  getLibilitiseRes(data) {
+    console.log(data)
+    this.liabilitiesList = data
 
+  }
   savePlanSection() {
     var date = new Date()
     let obj = {

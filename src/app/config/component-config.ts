@@ -330,6 +330,7 @@ export const appConfig = {
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
   /////////////////////////Insurance plan/////////////////////////////
   GET_INSURANCE_LIST: 'insurance/planning/list/get',
+  GET_LIABILITIES: 'account/liability/count/list',
   ADD_INSURANCE: 'insurance/planning/insurance/add',
   GET_FAMILYMEMBER_DETAILS: 'insurance/planning/family-member/info/get',
   GET_LIFE_NEED_ANALYSIS: 'insurance/planning/life/insurance/need/analysis/get',

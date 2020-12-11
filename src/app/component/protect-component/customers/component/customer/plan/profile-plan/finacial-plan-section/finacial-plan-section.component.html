@@ -809,7 +809,8 @@
 
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.liabilites != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities',true)">
@@ -820,7 +821,8 @@
                                             Portfolio / All Liabltities</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.homeLoan != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Home','','Portfolio / Liabltities / Home',true)">
@@ -831,7 +833,7 @@
                                             Portfolio / Liabltities / Home</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.vehicle != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Vehicle','','Portfolio / Liabltities / Vehicle',true)">
@@ -842,7 +844,8 @@
                                             Portfolio / Liabltities / Vehicle</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.education != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Education','','Portfolio / Liabltities / Education',true)">
@@ -853,7 +856,8 @@
                                             Portfolio / Liabltities / Education </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.personal != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Personal','','Portfolio / Liabltities / Personal',true)">
@@ -864,7 +868,8 @@
                                             Portfolio / Liabltities / Personal </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.creditCard != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Credit card','','Portfolio / Liabltities / Credit card',true)">
@@ -875,7 +880,8 @@
                                             Portfolio / Liabltities / Credit card </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="liabilitiesList && liabilitiesList.mortgage != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Mortgage','','Portfolio / Liabltities / Mortgage',true)">
@@ -886,7 +892,7 @@
                                             Portfolio / Liabltities / Mortgage </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.other != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Others','','Portfolio / Liabltities / Others',true)">
