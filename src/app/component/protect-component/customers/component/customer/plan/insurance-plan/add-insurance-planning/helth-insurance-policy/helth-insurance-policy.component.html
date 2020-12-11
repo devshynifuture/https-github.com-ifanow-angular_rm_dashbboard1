@@ -102,9 +102,9 @@
                     <p class="m-0 text-black pb-4">Implementation date</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input autocomplete="off" (focus)="picker.open()" [min]="todayDate" matInput #implementationDate
-                                (ngModelChange)="dateChange('implementationDate')" [matDatepicker]="picker1"
-                                class="form-control b-0" formControlName="implementationDate">
+                            <input [min]="todayDate" #implementationDate
+                                (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"
+                                formControlName="implementationDate" [matDatepicker]="picker1" class="form-control b-0">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                             <mat-error class="f-12"
