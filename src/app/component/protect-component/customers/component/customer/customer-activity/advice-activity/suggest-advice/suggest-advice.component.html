@@ -171,7 +171,7 @@
                         </div>
                     </form>
                 </mat-step>
-                <mat-step class="remove-bl" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' || adviceNameObj?.adviceName == 'Surrender' ? 'disabled_af' : null" [editable]="true">
+                <mat-step class="remove-bl" [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' || adviceNameObj?.adviceName == 'Stop paying premium' || adviceNameObj?.adviceName == 'Surrender' ? 'disabled_af' : null" [editable]="true">
                     <ng-template matStepLabel>
                         <div (click)="function()">
                                 STEP 2
