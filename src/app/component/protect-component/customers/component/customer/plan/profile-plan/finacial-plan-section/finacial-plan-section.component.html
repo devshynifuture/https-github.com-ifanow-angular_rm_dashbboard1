@@ -19,7 +19,7 @@
                     NEW</button>
             </div>
         </div>
-        <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div>
             <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index">
                 <div class="row p-4 b-a pt-8 pb-8 c-p">
                     <div class="col-md-1 pl-8">
@@ -39,6 +39,17 @@
                     </div>
                 </div>
             </div>
+            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
+                    <div class="mt-8 h-auto-500 relClass">
+                        <div class="col-md-12 pl-0">
+                            <div class="bar">
+                                <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div *ngIf="moduleAdded.length  == 0 && hideTable == true">
                 <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
                     <img src="assets/images/svg/documents-empty-states.svg">
@@ -50,7 +61,7 @@
                     <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
                         [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                         <ng-container matColumnDef="name">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepaid by </th>
+                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepared by </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">
                                     {{(isLoading) ? '':element.advisorName}}
@@ -130,7 +141,8 @@
                     <div class="col-md-2">
                         <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
                     </div>
-                    <div class="col-md-7 p-0 text-right" *ngIf="moduleAdded.length > 0 && hideTable == true">
+                    <div class="col-md-7 p-0 text-right"
+                        *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
                         <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
                     </div>
                     <!-- <div class="col-md-2 text-right"
