@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">Add scrip level transaction</h4>
+            <h4 class="mb-0 wrapper-20">{{editApiData?'Edit':'Add'}} scrip level transaction</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -78,19 +78,21 @@
             </div>
         </div>
     </div>
+    <hr class="ml-16 mr-16" *ngIf="Holdings">
     <div *ngIf="Holdings">
         <app-stock-scrip-level-holding #holding [scriptOwner]="scriptOwner" [newPorfolio]="newPorfolio"
             [tHolding]="Holdings">
         </app-stock-scrip-level-holding>
     </div>
+    <hr class="ml-16 mr-16" *ngIf="Holdings">
     <div class="row pl-28">
-        <div class="col-md-12 pl-0 mt-65">
+        <div class="col-md-12 pl-0" [ngClass]="Holdings?'mt-20':'mt-65'">
             <h4 class="mb-20 text-black">TRANSACTIONS</h4>
         </div>
     </div>
-    <div *ngIf="Holdings" class="row pb-36 pl-28" [formGroup]="scipLevelTransactionForm">
-        <div class="col-md-3">
-            <h5 class="m-0 pb-8">Scrip name</h5>
+    <div *ngIf="Holdings" class="row pl-28 sl-trans " [formGroup]="scipLevelTransactionForm">
+        <div class="col-md-4 pl-0 mb-20">
+            <h5 class="m-0 pb-8 f-14">Scrip name</h5>
             <app-scrip-field (valueChange1)="getScript($event)" [data]="scipLevelTransactionForm"></app-scrip-field>
         </div>
     </div>

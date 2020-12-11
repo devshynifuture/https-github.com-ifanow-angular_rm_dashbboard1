@@ -5,7 +5,7 @@
     <div class="col-md-2 pr-24 text-right" (click)="close()">
         <span class="material-icons c-p">
             clear
-            </span>
+        </span>
     </div>
 </div>
 
@@ -25,12 +25,12 @@
         </div>
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
-                Portfolio name            </div>
+                Portfolio name </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
                 {{data.portfolioName}}
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Current market value
@@ -39,7 +39,7 @@
                 {{data.currentMarketValue? "₹" : ""}}<span appFormatNumber>{{data.currentMarketValue}}</span>
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Value as on
@@ -48,60 +48,60 @@
                 {{data.valueAsOn|date : 'dd/MM/yyyy'}}
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Amount invested
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-              {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+                {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Unrealized gain/loss
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-              {{data.unrealizedGainLoss? "₹" : ""}}<span appFormatNumber>{{data.unrealizedGainLoss}}</span>
+                {{data.unrealizedGainLoss? "₹" : ""}}<span appFormatNumber>{{data.unrealizedGainLoss}}</span>
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Absolute return
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-              {{data.absoluteReturn}}%
+                {{data.absoluteReturn}}%
             </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Linked demat account
             </div>
-            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedDematAccount" >
-              <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedDematAccount">
-                  <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
-              </div>
-          </div>
-          <div *ngIf="!data.linkedDematAccount" class="col-md-4 text-right f-14 roboto p-0">
-              {{'-'}}
-          </div>
+            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedDematAccount">
+                <div *ngFor="let bank of bankDematList" [ngSwitch]="data.linkedDematAccount">
+                    <span *ngSwitchCase="bank.dematId">{{bank.brokerName}}-{{bank.dematClientId}}</span>
+                </div>
+            </div>
+            <div *ngIf="!data.linkedDematAccount" class="col-md-4 text-right f-14 roboto p-0">
+                {{'-'}}
+            </div>
         </div>
-  
+
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Linked bank account
             </div>
-            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedBankAccount" >
-              <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedBankAccount">
-                  <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
-              </div>
-          </div>
-          <div *ngIf="!data.linkedBankAccount" class="col-md-4 text-right f-14 roboto p-0">
-              {{'-'}}
-          </div>
+            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedBankAccount">
+                <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedBankAccount">
+                    <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
+                </div>
+            </div>
+            <div *ngIf="!data.linkedBankAccount" class="col-md-4 text-right f-14 roboto p-0">
+                {{'-'}}
+            </div>
         </div>
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
@@ -111,20 +111,23 @@
                 {{data.description}}
             </div>
         </div>
-     
-  
-  
+
+
+
     </div>
     <div class="col-md-12 text-right pt-4">
-        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
+        <p class="m-0 text-custom f-12 lh-14" *ngIf='data.lastUpdated'>Updated:
+            {{data.lastUpdated| date:'dd/MM/yyyy'}}</p>
+        <p class="m-0 text-custom f-12 lh-14" *ngIf='!data.lastUpdated'>Updated:
+            {{data.createdDate| date:'dd/MM/yyyy'}}</p>
     </div>
-   
-  </div>
-  <div class="row pt-20">
+
+</div>
+<div class="row pt-20" *ngIf="data.nomineeList.length > 0">
     <div class="col-md-12">
         <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
-   
-    <!-- <div class="row bb p-8 b-l br w-100 bt-1">
+
+        <!-- <div class="row bb p-8 b-l br w-100 bt-1">
         <div class="col-md-7 text-left f-14 roboto p-0">
             Shilpa Jain
         </div>
@@ -132,33 +135,27 @@
             Wife with 50% share
         </div>
     </div> -->
-  
-    <div class="row bb p-8 b-l br w-100" *ngFor="let obj of data.nomineeList;">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-          {{obj.name}}
+
+        <div class="row bb p-8 b-l br w-100" *ngFor="let obj of data.nomineeList;">
+            <div class="col-md-7 text-left f-14 roboto p-0">
+                {{obj.name}}
+            </div>
+            <div class="col-md-5 text-right f-14 roboto p-0">
+                <!-- Daughter with 50% share -->
+                with {{obj.sharePercentage}}% share
+            </div>
         </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            <!-- Daughter with 50% share -->
-          with {{obj.sharePercentage}}% share
+        <div class="col-md-12 text-right pt-4">
+            <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
         </div>
     </div>
-    <div class="col-md-12 text-right pt-4">
-        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
-    </div>
-    </div>
-  </div>
+</div>
 <div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
         <div class="col-md-4 pt-8" (click)="close()">
             <h5 class="mb-0  text-white c-p">Close</h5>
         </div>
 
-       
+
     </div>
 </div>
-
-
-
-
-
-
