@@ -1,10 +1,7 @@
-<div [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
-
-
-    <div>
+<div [ngStyle]="{'display': finPlanObj?.hideForFinPlan ? 'none' : '' }">
         <div class="row">
             <div class="col-md-5 p-0">
-                <h4 class="m-0 text-black roboto pt-8">Sukanya samriddhi yojana (SSY)</h4>
+                <h4 class="m-0 text-black roboto pt-8">{{finPlanObj?.hideForFinPlan}}Sukanya samriddhi yojana (SSY)</h4>
             </div>
             <div class="col-md-7 p-0 d-flex align-items-center justify-content-end ">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
@@ -363,4 +360,3 @@
             </tr>
         </table>
     </div>
-</div>
