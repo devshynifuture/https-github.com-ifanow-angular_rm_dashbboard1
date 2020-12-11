@@ -1,0 +1,493 @@
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-100 pl-8 pb-60 pr-8">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <h4 class="f-16 roboto f-500">Old policy details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Name of policy holder
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{_data?.insurance?.policyHolderName ? _data?.insurance?.policyHolderName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Name of insurer
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.insurerName) ? _data?.insurance?.insurerName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyNumber) ? _data?.insurance?.policyNumber : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan name
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.planName) ? _data?.insurance?.planName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy start date
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyStartDate) ? (_data?.insurance?.policyStartDate | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy expiry date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyExpiryDate) ? (_data?.insurance?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Sum assured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                                    {{(_data?.insurance?.sumInsuredIdv) ? _data?.insurance?.sumInsuredIdv : '-'}}</span>
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium amount
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.premiumAmount) ? '₹' : ''}}<span
+                                    appFormatNumber>{{(_data?.insurance?.premiumAmount) ? _data?.insurance?.premiumAmount : '-'}}</span>
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Duration remaining
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.durationRemaining) ? _data?.insurance?.durationRemaining : '-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance?.heading !='Personal accident' && showInsurance?.heading !='Critical illness'  &&  _data?.insurance?.policyType && showInsurance?.heading !='Health insurance' "
+                            class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan type
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.insurance?.policyType ? _data?.insurance?.policyType :'-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance?.heading!='Personal accident' && showInsurance?.heading != 'Travel insurance'"
+                            class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan type
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.insurance?.policyFeatureId == 0) ? 'Standard' : ( _data?.insurance?.policyFeatureId == 1) ? 'Top up' : ( _data?.insurance?.policyFeatureId == 2) ? 'Super top up' : '-' }}
+                                ,{{( _data?.insurance?.policyType) ?  _data?.insurance?.policyType : '-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance =='Health'" class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Deductible sum insured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.insurance?.deductibleSumInsured) ? '₹' : ''}}<span
+                                    appFormatNumber>{{( _data?.insurance?.deductibleSumInsured) ?  _data?.insurance?.deductibleSumInsured : '-'}}</span>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf=" _data?.insurance?.insuredMembers &&  _data?.insurance?.policyType=='Family floater'  || (showInsurance?.heading == 'Travel insurance' &&   _data?.insurance?.policyFeatureId == 1)">
+                            <div *ngFor="let item of  _data?.insurance?.insuredMembers ; let i = index"
+                                class="row bb p-8 b-l br">
+                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                    Insured member{{i + 1}}
+                                </div>
+                                <div appFormatNumber class="col-md-4  text-right f-14 roboto p-0">
+                                    {{(item.name) ? item.name : '-'}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            *ngIf=" _data?.insurance?.insuredMembers && showInsurance?.heading == 'Personal accident' ">
+                            <div *ngFor="let item of  _data?.insurance?.insuredMembers ; let i = index">
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Name of insured{{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.name) ? item.name : '-'}}
+                                    </div>
+                                </div>
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        AD sum insured{{i + 1}}
+                                    </div>
+                                    <div class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.sumInsured) ? '₹' : ''}}<span
+                                            appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                    </div>
+                                </div>
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        TTD sum insured {{i + 1}}
+                                    </div>
+                                    <div class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.ttdSumInsured) ? '₹' : ''}}<span
+                                            appFormatNumber>{{(item.ttdSumInsured) ? item.ttdSumInsured : '-'}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div *ngFor="let data of _data?.insurance?.nominees; let i = index">
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Nominee {{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                        {{ (data.name) ? data.name : '-' }}
+                                    </div>
+                                </div>
+
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Nominee relation{{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                        {{ (data.relationName) ? data.relationName : '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 p-0 mt-24" *ngIf="_data?.adviceDetails">
+                    <h4 class="f-16 roboto f-500">Advice details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.adviceDetails?.gen_insurance_advice_id == 1 ? 'Continue' : _data?.adviceDetails?.gen_insurance_advice_id == 2 ? 'Discontinue' :_data?.adviceDetails?.gen_insurance_advice_id == 3 ? 'Port policy' :_data?.adviceDetails?.gen_insurance_advice_id == 4 ? 'Increase sum assured' :_data?.adviceDetails?.gen_insurance_advice_id == 5 ? 'Decrease sum assured' :
+                                _data?.adviceDetails?.gen_insurance_advice_id == 6 ? 'Add members' :_data?.adviceDetails?.gen_insurance_advice_id == 7 ? 'Remove members' : 'CONTINUE'  }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice given date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.created_date) ? ( _data?.adviceDetails?.created_date | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Implementation date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.applicable_date) ? ( _data?.adviceDetails?.applicable_date | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice description
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.advice_description) ? ( _data?.adviceDetails?.advice_description) : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice status
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.adviceDetails?.adviceStatusId == 1 ? 'GIVEN' : _data?.adviceDetails?.adviceStatusId == 2 ? 'AWAITING CONSENT' :_data?.adviceDetails?.adviceStatusId == 3 ? 'ACCEPTED' :_data?.adviceDetails?.adviceStatusId == 4 ? 'IN PROGRESS' :_data?.adviceDetails?.adviceStatusId == 5 ? 'IMPLEMENTED' :
+                                _data?.adviceDetails?.adviceStatusId == 6 ? 'DECLINED' :_data?.adviceDetails?.adviceStatusId == 7 ? 'PENDING' :_data?.adviceDetails?.adviceStatusId == 8 ? 'SYSTEM GENERATED' :_data?.adviceDetails?.adviceStatusId == 9 ? 'REVISED' : 'GIVEN'  }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Amount
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span
+                                    appFormatNumber>{{( _data?.adviceAllotment?.adviceAllotment) ?  _data?.adviceDetails?.adviceAllotment : '-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <h4 class="f-16 roboto f-500">Old policy details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Name of policy holder
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{_data?.insurance?.policyHolderName ? _data?.insurance?.policyHolderName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Name of insurer
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.insurerName) ? _data?.insurance?.insurerName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyNumber) ? _data?.insurance?.policyNumber : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan name
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.planName) ? _data?.insurance?.planName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy start date
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyStartDate) ? (_data?.insurance?.policyStartDate | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy expiry date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.policyExpiryDate) ? (_data?.insurance?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Sum assured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                                    {{(_data?.insurance?.sumInsuredIdv) ? _data?.insurance?.sumInsuredIdv : '-'}}</span>
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium amount
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.premiumAmount) ? '₹' : ''}}<span
+                                    appFormatNumber>{{(_data?.insurance?.premiumAmount) ? _data?.insurance?.premiumAmount : '-'}}</span>
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Duration remaining
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data?.insurance?.durationRemaining) ? _data?.insurance?.durationRemaining : '-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance?.heading !='Personal accident' && showInsurance?.heading !='Critical illness'  &&  _data?.insurance?.policyType && showInsurance?.heading !='Health insurance' "
+                            class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan type
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.insurance?.policyType ? _data?.insurance?.policyType :'-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance?.heading!='Personal accident' && showInsurance?.heading != 'Travel insurance'"
+                            class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Plan type
+                            </div>
+                            <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.insurance?.policyFeatureId == 0) ? 'Standard' : ( _data?.insurance?.policyFeatureId == 1) ? 'Top up' : ( _data?.insurance?.policyFeatureId == 2) ? 'Super top up' : '-' }}
+                                ,{{( _data?.insurance?.policyType) ?  _data?.insurance?.policyType : '-'}}
+                            </div>
+                        </div>
+                        <div *ngIf="showInsurance =='Health'" class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Deductible sum insured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.insurance?.deductibleSumInsured) ? '₹' : ''}}<span
+                                    appFormatNumber>{{( _data?.insurance?.deductibleSumInsured) ?  _data?.insurance?.deductibleSumInsured : '-'}}</span>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf=" _data?.insurance?.insuredMembers &&  _data?.insurance?.policyType=='Family floater'  || (showInsurance?.heading == 'Travel insurance' &&   _data?.insurance?.policyFeatureId == 1)">
+                            <div *ngFor="let item of  _data?.insurance?.insuredMembers ; let i = index"
+                                class="row bb p-8 b-l br">
+                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                    Insured member{{i + 1}}
+                                </div>
+                                <div appFormatNumber class="col-md-4  text-right f-14 roboto p-0">
+                                    {{(item.name) ? item.name : '-'}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            *ngIf=" _data?.insurance?.insuredMembers && showInsurance?.heading == 'Personal accident' ">
+                            <div *ngFor="let item of  _data?.insurance?.insuredMembers ; let i = index">
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Name of insured{{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.name) ? item.name : '-'}}
+                                    </div>
+                                </div>
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        AD sum insured{{i + 1}}
+                                    </div>
+                                    <div class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.sumInsured) ? '₹' : ''}}<span
+                                            appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                    </div>
+                                </div>
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        TTD sum insured {{i + 1}}
+                                    </div>
+                                    <div class="col-md-4  text-right f-14 roboto p-0">
+                                        {{(item.ttdSumInsured) ? '₹' : ''}}<span
+                                            appFormatNumber>{{(item.ttdSumInsured) ? item.ttdSumInsured : '-'}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div *ngFor="let data of _data?.insurance?.nominees; let i = index">
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Nominee {{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                        {{ (data.name) ? data.name : '-' }}
+                                    </div>
+                                </div>
+
+                                <div class="row bb p-8 b-l br">
+                                    <div class="col-md-8 text-left f-14 roboto p-0">
+                                        Nominee relation{{i + 1}}
+                                    </div>
+                                    <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                                        {{ (data.relationName) ? data.relationName : '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 p-0 mt-24" *ngIf="_data?.adviceDetails">
+                    <h4 class="f-16 roboto f-500">Advice details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.adviceDetails?.gen_insurance_advice_id == 1 ? 'Continue' : _data?.adviceDetails?.gen_insurance_advice_id == 2 ? 'Discontinue' :_data?.adviceDetails?.gen_insurance_advice_id == 3 ? 'Port policy' :_data?.adviceDetails?.gen_insurance_advice_id == 4 ? 'Increase sum assured' :_data?.adviceDetails?.gen_insurance_advice_id == 5 ? 'Decrease sum assured' :
+                                _data?.adviceDetails?.gen_insurance_advice_id == 6 ? 'Add members' :_data?.adviceDetails?.gen_insurance_advice_id == 7 ? 'Remove members' : 'CONTINUE'  }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice given date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.created_date) ? ( _data?.adviceDetails?.created_date | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Implementation date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.applicable_date) ? ( _data?.adviceDetails?.applicable_date | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice description
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.advice_description) ? ( _data?.adviceDetails?.advice_description) : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advice status
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ _data?.adviceDetails?.adviceStatusId == 1 ? 'GIVEN' : _data?.adviceDetails?.adviceStatusId == 2 ? 'AWAITING CONSENT' :_data?.adviceDetails?.adviceStatusId == 3 ? 'ACCEPTED' :_data?.adviceDetails?.adviceStatusId == 4 ? 'IN PROGRESS' :_data?.adviceDetails?.adviceStatusId == 5 ? 'IMPLEMENTED' :
+                                _data?.adviceDetails?.adviceStatusId == 6 ? 'DECLINED' :_data?.adviceDetails?.adviceStatusId == 7 ? 'PENDING' :_data?.adviceDetails?.adviceStatusId == 8 ? 'SYSTEM GENERATED' :_data?.adviceDetails?.adviceStatusId == 9 ? 'REVISED' : 'GIVEN'  }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Amount
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span
+                                    appFormatNumber>{{( _data?.adviceAllotment?.adviceAllotment) ?  _data?.adviceDetails?.adviceAllotment : '-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

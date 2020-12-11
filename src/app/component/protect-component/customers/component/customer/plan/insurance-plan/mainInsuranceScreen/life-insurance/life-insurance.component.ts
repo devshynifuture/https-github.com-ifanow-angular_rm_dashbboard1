@@ -24,6 +24,9 @@ import { FireInsuranceComponent } from '../fire-insurance/fire-insurance.compone
 import { ActiityService } from '../../../../customer-activity/actiity.service';
 import { SuggestAndGiveAdviceComponent } from '../../suggest-and-give-advice/suggest-and-give-advice.component';
 import { HelthInsurancePolicyComponent } from '../../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
+import { DetailedViewInsurancePlanningComponent } from '../../detailed-view-insurance-planning/detailed-view-insurance-planning.component';
+import { SummaryPlanComponent } from '../../../summary-plan/summary-plan.component';
+import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-service.service';
 
 @Component({
   selector: 'app-life-insurance',
@@ -48,7 +51,13 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumns3 = ['name', 'sum', 'premium', 'status', 'icons'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
-
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
+    name: 'Health',
+    id: 5
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+    name: 'Motor',
+    id: 4
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   dataSouce3 = [{}, {}, {}]
   dataSource1 = [{}, {}, {}];
   expandedElement: PeriodicElement | null;
@@ -187,6 +196,8 @@ export class LifeInsuranceComponent implements OnInit {
   adviceNameObj: { adviceName: any; };
   adviceName: any;
   object:any;
+  dislayList: any;
+  type: any;
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -198,7 +209,8 @@ export class LifeInsuranceComponent implements OnInit {
     private ipService: InsurancePlanningServiceService,
     private UtilService: UtilService,
     private ref: ChangeDetectorRef,
-    private activityService:ActiityService
+    private activityService:ActiityService,
+    private summaryPlanService : SummaryPlanServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -227,9 +239,10 @@ export class LifeInsuranceComponent implements OnInit {
       .subscribe(res => {
         this.allInsuranceData = res;
       })
+      this.getGlobalDataInsurance();
+
     this.setDetails(data)
 
-    this.getGlobalDataInsurance();
   }
 
   get data() {
@@ -242,6 +255,7 @@ export class LifeInsuranceComponent implements OnInit {
       this.dataSouce3 = [{}, {}, {}];
       this.insuranceDetails = '';
       this.loader(1);
+      this.getGlobalDataInsurance()
       this.isLoadingPlan = true;
     }
     console.log(data)
@@ -344,6 +358,7 @@ export class LifeInsuranceComponent implements OnInit {
     }else{
       this.displayedColumns1 = ['name', 'sum', 'premium','returns', 'advice','icons'];
     }
+    this.type=this.summaryPlanService.getTypeIds(this.inputData);
     if (data) {
       this.getData = data
       this.setLogo.forEach(element => {
@@ -452,6 +467,36 @@ export class LifeInsuranceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  openDetailedView(data){
+    const sendData = {
+      flag: 'detailedView',
+      data: {},
+      insuranceTypeId: this.type.insuranceTypeId,
+      insuranceSubTypeId: this.type.insuranceSubTypeId,
+      state: 'open',
+      componentName: DetailedViewInsurancePlanningComponent
+    };
+    sendData.data = {
+      data: data,
+      displayList: this.displayList,
+      allInsurance: this.allInsurance,
+      insuranceTypeId: this.type.insuranceTypeId,
+      insuranceSubTypeId: this.type.insuranceSubTypeId,
+      showInsurance: this.inputData,
+
+
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
   openDialog(data,value): void {
     value = { smallHeading: 'life insurance',inputData : this.inputData}
@@ -732,7 +777,6 @@ export class LifeInsuranceComponent implements OnInit {
   //   this.inputData = this.storedData.filter(d=>d.id != id);
   //   this.inputData = [...new Map(this.inputData.map(item => [item.id, item])).values()];
   //   this.ipService.setIpData(this.inputData);
-  //   this.getGlobalDataInsurance();
   // }
   getDetailsInsurance() {
     if (!this.isRefresh) {
