@@ -486,7 +486,7 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   addEvent(date) {
-    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[1].enabledOrDisabled == 2) {
+    if (this.roleService.activityPermission.subModule.calendarCapabilityList[1].enabledOrDisabled == 2) {
       return;
     }
     let event: any;
@@ -527,7 +527,7 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   editEvent(eventData) {
-    if (this.roleService.activityPermission.subModule.CalendarCapabilityList[2].enabledOrDisabled == 2) {
+    if (this.roleService.activityPermission.subModule.calendarCapabilityList[2].enabledOrDisabled == 2) {
       return;
     }
     let event: any;

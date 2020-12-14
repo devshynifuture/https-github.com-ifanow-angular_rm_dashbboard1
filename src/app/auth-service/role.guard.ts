@@ -11,13 +11,13 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
-    if (state.url.match('tasks') && this.roleService.activityPermission.subModule.Tasks.enabled) {
+    if (state.url.match('tasks') && this.roleService.activityPermission.subModule.tasks.enabled) {
       return true;
     }
-    else if (state.url.match('emails') && this.roleService.activityPermission.subModule.Emails.enabled) {
+    else if (state.url.match('emails') && this.roleService.activityPermission.subModule.emails.enabled) {
       return true;
     }
-    else if (state.url.match('calendar') && this.roleService.activityPermission.subModule.Calendar.enabled) {
+    else if (state.url.match('calendar') && this.roleService.activityPermission.subModule.calendar.enabled) {
       return true;
     }
     else {

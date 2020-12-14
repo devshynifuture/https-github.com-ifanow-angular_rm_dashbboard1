@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { InvoiceComponent } from '../invoice/invoice.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -41,7 +42,8 @@ export class InvoicesComponent implements OnInit {
   @Input() isAdvisor = true;
 
 
-  constructor(private cancelFlagService: CancelFlagService, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
+  constructor(private cancelFlagService: CancelFlagService, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog,
+    public roleService: RoleService) {
   }
   invoiceDesign: any;
   quotationDesignEmail: any;

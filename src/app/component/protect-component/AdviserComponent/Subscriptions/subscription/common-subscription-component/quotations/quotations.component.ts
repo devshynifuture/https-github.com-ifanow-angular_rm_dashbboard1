@@ -14,6 +14,7 @@ import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-com
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { DatePipe } from '@angular/common';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export interface PeriodicElement {
   document: string;
@@ -37,7 +38,7 @@ export class QuotationsComponent implements OnInit {
   quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService, public dialog: MatDialog,
-    private subAService: SubscriptionService, private datePipe: DatePipe) {
+    private subAService: SubscriptionService, private datePipe: DatePipe, public roleService: RoleService) {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
     // );

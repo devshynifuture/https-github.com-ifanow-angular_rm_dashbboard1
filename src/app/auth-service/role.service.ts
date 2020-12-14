@@ -24,26 +24,53 @@ export class RoleService {
   subscriptionPermission = {
     enabled: true,
     subModule: {
-      Subscriptions: {
-        enabled: true
+      subscriptions: {
+        enabled: true,
+        subscriptionsCapabilityList: []
       },
-      Quotations: {
-        enabled: true
+      quotations: {
+        enabled: true,
+        quotationsCapabilityList: []
       },
-      Documents: {
-        enabled: true
+      documents: {
+        enabled: true,
+        documentsCapabilityList: []
       },
-      Dashboard: {
-        enabled: true
+      dashboard: {
+        enabled: true,
       },
-      Invoices: {
-        enabled: true
+      invoices: {
+        enabled: true,
+        invoicesCapabilityList: []
       },
-      Clients: {
-        enabled: true
+      clients: {
+        enabled: true,
+        subModule: {
+          subscriptions: {
+            enabled: true
+          },
+          quotations: {
+            enabled: true
+          },
+          documents: {
+            enabled: true
+          },
+          invoices: {
+            enabled: true
+          },
+          settings: {
+            enabled: true
+          },
+          subscriptionsCapabilityList: [],
+          quotationsCapabilityList: [],
+          documentsCapabilityList: [],
+          invoicesCapabilityList: [],
+          settingsCapabilityList: []
+        }
       },
-      Settings: {
-        enabled: true
+      settings: {
+        enabled: true,
+        settingsCapabilityList: []
       }
     }
   };
@@ -65,18 +92,18 @@ export class RoleService {
   activityPermission = {
     enabled: true,
     subModule: {
-      Tasks: {
+      tasks: {
         enabled: true
       },
-      Emails: {
+      emails: {
         enabled: true
       },
-      Calendar: {
+      calendar: {
         enabled: true
       },
-      TaskCapabilityList: [],
-      CalendarCapabilityList: [],
-      EmailCapabilityList: []
+      taskCapabilityList: [],
+      calendarCapabilityList: [],
+      emailCapabilityList: []
     }
   };
   overviewPermission = {
@@ -123,8 +150,8 @@ export class RoleService {
        };
        this.dataModels.push(obj);*/
     }
-    this.setSubscriptionSubModulePermissions(adminDatasource.Subscriptions.subModule);
-    this.setActivityPermissions(adminDatasource.Activity.subModule)
+    this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
+    this.setActivityPermissions(adminDatasource.activity.subModule)
   }
 
   setPermissions(moduleId, enabled) {
@@ -162,22 +189,35 @@ export class RoleService {
   }
 
   setSubscriptionSubModulePermissions(subscriptionPermissions) {
-    this.subscriptionPermission.subModule.Subscriptions.enabled = subscriptionPermissions.Subscriptions ? subscriptionPermissions.Subscriptions.showModule : false;
-    this.subscriptionPermission.subModule.Quotations.enabled = subscriptionPermissions.Quotations ? subscriptionPermissions.Quotations.showModule : false;
-    this.subscriptionPermission.subModule.Documents.enabled = subscriptionPermissions.Documents ? subscriptionPermissions.Documents.showModule : false;
-    this.subscriptionPermission.subModule.Dashboard.enabled = subscriptionPermissions.Dashboard ? subscriptionPermissions.Dashboard.showModule : false;
-    this.subscriptionPermission.subModule.Invoices.enabled = subscriptionPermissions.Invoices ? subscriptionPermissions.Invoices.showModule : false;
-    this.subscriptionPermission.subModule.Clients.enabled = subscriptionPermissions.Clients ? subscriptionPermissions.Clients.showModule : false;
-    this.subscriptionPermission.subModule.Settings.enabled = subscriptionPermissions.Settings ? subscriptionPermissions.Settings.showModule : false;
-
+    this.subscriptionPermission.subModule.subscriptions.enabled = subscriptionPermissions.subscriptions ? subscriptionPermissions.subscriptions.showModule : false;
+    this.subscriptionPermission.subModule.quotations.enabled = subscriptionPermissions.quotations ? subscriptionPermissions.quotations.showModule : false;
+    this.subscriptionPermission.subModule.documents.enabled = subscriptionPermissions.documents ? subscriptionPermissions.documents.showModule : false;
+    this.subscriptionPermission.subModule.dashboard.enabled = subscriptionPermissions.dashboard ? subscriptionPermissions.dashboard.showModule : false;
+    this.subscriptionPermission.subModule.invoices.enabled = subscriptionPermissions.invoices ? subscriptionPermissions.invoices.showModule : false;
+    this.subscriptionPermission.subModule.clients.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.showModule : false;
+    this.subscriptionPermission.subModule.settings.enabled = subscriptionPermissions.settings ? subscriptionPermissions.settings.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.subscriptions.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.subscriptions.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.quotations.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.quotations.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.invoices.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.invoices.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.documents.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.documents.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.settings.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.settings.showModule : false;
+    this.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList = subscriptionPermissions.clients.subModule.documents.subModule.documents.capabilityList
+    this.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList = subscriptionPermissions.clients.subModule.invoices.subModule.invoices.capabilityList
+    this.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList = subscriptionPermissions.clients.subModule.subscriptions.subModule.subscriptions.capabilityList
+    this.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList = subscriptionPermissions.clients.subModule.quotations.subModule.quotations.capabilityList
+    this.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList = subscriptionPermissions.clients.subModule.settings.subModule.settings.capabilityList
+    this.subscriptionPermission.subModule.subscriptions.subscriptionsCapabilityList = subscriptionPermissions.subscriptions.subModule.subscriptions.capabilityList;
+    this.subscriptionPermission.subModule.quotations.quotationsCapabilityList = subscriptionPermissions.quotations.subModule.quotations.capabilityList
+    this.subscriptionPermission.subModule.invoices.invoicesCapabilityList = subscriptionPermissions.invoices.subModule.invoices.capabilityList
+    this.subscriptionPermission.subModule.documents.documentsCapabilityList = subscriptionPermissions.documents.subModule.documents.capabilityList
   }
 
   setActivityPermissions(activityPermissions) {
-    this.activityPermission.subModule.Tasks.enabled = activityPermissions.Tasks ? activityPermissions.Tasks.showModule : false;
-    this.activityPermission.subModule.Emails.enabled = activityPermissions.Emails ? activityPermissions.Emails.showModule : false;
-    this.activityPermission.subModule.Calendar.enabled = activityPermissions.Calendar ? activityPermissions.Calendar.showModule : false;
-    this.activityPermission.subModule.TaskCapabilityList = activityPermissions.Tasks.subModule.Tasks.capabilityList;
-    this.activityPermission.subModule.CalendarCapabilityList = activityPermissions.Calendar.subModule.Calendar.capabilityList;
-    this.activityPermission.subModule.EmailCapabilityList = activityPermissions.Emails.subModule.Emails.capabilityList;
+    this.activityPermission.subModule.tasks.enabled = activityPermissions.tasks ? activityPermissions.tasks.showModule : false;
+    this.activityPermission.subModule.emails.enabled = activityPermissions.emails ? activityPermissions.emails.showModule : false;
+    this.activityPermission.subModule.calendar.enabled = activityPermissions.calendar ? activityPermissions.calendar.showModule : false;
+    this.activityPermission.subModule.taskCapabilityList = activityPermissions.tasks.subModule.tasks.capabilityList;
+    this.activityPermission.subModule.calendarCapabilityList = activityPermissions.calendar.subModule.calendar.capabilityList;
+    this.activityPermission.subModule.emailCapabilityList = activityPermissions.emails.subModule.emails.capabilityList;
   }
 }

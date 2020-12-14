@@ -9,6 +9,7 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { Location } from '@angular/common';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -41,7 +42,8 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   constructor(private router: Router, public authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private location: Location,
-    private enumDataService: EnumDataService
+    private enumDataService: EnumDataService,
+    public roleService: RoleService
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
     // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
