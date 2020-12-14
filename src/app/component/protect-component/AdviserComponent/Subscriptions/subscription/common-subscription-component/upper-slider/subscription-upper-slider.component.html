@@ -124,7 +124,8 @@
             <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab"
                 animationDuration="0ms" mat-align-tabs="center">
 
-                <mat-tab label="SUBSCRIPTIONS">
+                <mat-tab *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.subscriptions.enabled"
+                    label="SUBSCRIPTIONS">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
@@ -133,7 +134,8 @@
                         </app-client-upper-subscription>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="QUOTATIONS">
+                <mat-tab *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.quotations.enabled"
+                    label="QUOTATIONS">
                     <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
                     <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
                     <!--                  </div>-->
@@ -147,7 +149,8 @@
                         </app-quotations>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="INVOICES">
+                <mat-tab *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.invoices.enabled"
+                    label="INVOICES">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
@@ -156,7 +159,8 @@
                         </app-invoices>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="DOCUMENTS">
+                <mat-tab *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.documents.enabled"
+                    label="DOCUMENTS">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
@@ -166,7 +170,8 @@
                         </app-document>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="SETTINGS">
+                <mat-tab *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.settings.enabled"
+                    label="SETTINGS">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>

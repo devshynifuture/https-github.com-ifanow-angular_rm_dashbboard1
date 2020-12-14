@@ -17,7 +17,9 @@
                                 <!-- <a *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
                                     only
                                 </a> -->
-                                <a (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                                <a (click)="deleteModal(null)"
+                                    *ngIf="dataCount != 0 && roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[3].enabledOrDisabled==1"
+                                    class="b-t" mat-menu-item>Delete
                                     quotations
                                 </a>
                             </mat-menu>
@@ -41,7 +43,9 @@
                     <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button> -->
-                    <button class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation')"> ADD NEW
+                    <button
+                        *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[1].enabledOrDisabled==1"
+                        class="btn-primary addon" mat-stroked-button (click)="addQuotation('addQuotation')"> ADD NEW
                     </button>
                 </div>
             </div>
@@ -121,8 +125,10 @@
                         <th *matHeaderCellDef mat-header-cell></th>
                         <td *matCellDef="let element" mat-cell>
                             <div *ngIf="isLoading==false" class="bar">
-                                <button *ngIf="element.status==1" (click)="openSendEmail(element)"
-                                    class="btn-header btn-xs br-0 " mat-stroked-button>SEND
+                                <button
+                                    *ngIf="element.status==1 && roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[4].enabledOrDisabled==1"
+                                    (click)="openSendEmail(element)" class="btn-header btn-xs br-0 "
+                                    mat-stroked-button>SEND
                                 </button>
                             </div>
                         </td>
@@ -136,9 +142,11 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu="matMenu">
-                                    <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
+                                    <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[2].enabledOrDisabled==1"
+                                        (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
                                         quotation</a>
-                                    <a (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
+                                    <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[3].enabledOrDisabled==1"
+                                        (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
                                 </mat-menu>
                             </div>
                         </td>
@@ -157,7 +165,9 @@
             <img [ngClass]="{' width300 ': !isAdvisor}" class="width200  " src="assets/images/svg/noDataFound.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
             <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
-                (click)="addQuotation('addQuotation')" *ngIf="isAdvisor"> ADD
+                (click)="addQuotation('addQuotation')"
+                *ngIf="isAdvisor && roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[1].enabledOrDisabled==1">
+                ADD
                 QUOTATION
             </button>
         </div>

@@ -437,9 +437,12 @@
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td *ngFor="let owner of element.ownerList; let i = index"
+            <td 
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <span *ngIf="i == 0">{{owner.name}}</span></td>
+                <div *ngFor="let owner of element?.ownerList; let i = index">
+                    <span *ngIf="i == 0">{{owner.name}}</span>
+                </div>
+            </td>
 
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

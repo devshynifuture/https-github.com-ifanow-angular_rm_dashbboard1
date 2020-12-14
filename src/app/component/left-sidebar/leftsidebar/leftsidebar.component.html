@@ -83,12 +83,12 @@
                   routerLink="/admin/activies/notes">
                   <span *ngIf="showTabs" class="title" mat-line>Notes</span>
               </a> -->
-              <a *ngIf="roleService.activityPermission.subModule.Tasks.enabled" class="sidenav-link"
+              <a *ngIf="roleService.activityPermission.subModule.tasks.enabled" class="sidenav-link"
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
               </a>
 
-              <a *ngIf="roleService.activityPermission.subModule.Emails.enabled" class="sidenav-link"
+              <a *ngIf="roleService.activityPermission.subModule.emails.enabled" class="sidenav-link"
                 [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
                 routerLink="./emails/inbox/google-connect">
                 <!-- <img src="assets/images/svg/mail.svg"> -->
@@ -98,7 +98,7 @@
   routerLink="/admin/activies/opportunities">
   <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
   </a> -->
-              <a *ngIf="roleService.activityPermission.subModule.Calendar.enabled" class="sidenav-link"
+              <a *ngIf="roleService.activityPermission.subModule.calendar.enabled" class="sidenav-link"
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar/month">
                 <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
               </a>

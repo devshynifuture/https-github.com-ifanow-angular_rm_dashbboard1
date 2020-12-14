@@ -33,10 +33,9 @@ import { InsurancePlanModule } from '../insurance-plan/insurance-plan.module';
 import { PreviewFinPlanComponent } from './preview-fin-plan/preview-fin-plan.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
-
 @NgModule({
   declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent,
-    FinacialPlanSectionComponent],
+    FinacialPlanSectionComponent,],
   imports: [
     CommonModule,
     ProfilePlanRoutingModule,

@@ -8,19 +8,26 @@
                 <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar class="d-none-992">
                     <!--          <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" multiple-->
                     <!--                 type="file">-->
-                    <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'"
-                        mat-tab-link routerLinkActive="active">DASHBOARD</a>
-                    <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
+                    <a *ngIf="roleService.subscriptionPermission.subModule.dashboard.enabled" (click)="value=1"
+                        [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'" mat-tab-link
+                        routerLinkActive="active">DASHBOARD</a>
+                    <a *ngIf="roleService.subscriptionPermission.subModule.clients.enabled" (click)="value=2"
+                        [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
                         routerLinkActive="active">CLIENTS</a>
-                    <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'"
-                        mat-tab-link routerLinkActive="active">SUBSCRIPTIONS</a>
-                    <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'"
-                        mat-tab-link routerLinkActive="active">QUOTATIONS</a>
-                    <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
+                    <a *ngIf="roleService.subscriptionPermission.subModule.subscriptions.enabled" (click)="value=3"
+                        [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'" mat-tab-link
+                        routerLinkActive="active">SUBSCRIPTIONS</a>
+                    <a *ngIf="roleService.subscriptionPermission.subModule.quotations.enabled" (click)="value=4"
+                        [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'" mat-tab-link
+                        routerLinkActive="active">QUOTATIONS</a>
+                    <a *ngIf="roleService.subscriptionPermission.subModule.invoices.enabled" (click)="value=5"
+                        [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
                         routerLinkActive="active">INVOICES</a>
-                    <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'"
-                        mat-tab-link routerLinkActive="active">DOCUMENTS</a>
-                    <a [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]"
+                    <a *ngIf="roleService.subscriptionPermission.subModule.documents.enabled" (click)="value=6"
+                        [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
+                        routerLinkActive="active">DOCUMENTS</a>
+                    <a *ngIf="roleService.subscriptionPermission.subModule.settings.enabled"
+                        [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]"
                         [state]="{ example: 0 }" mat-tab-link>SETTINGS</a>
                 </nav>
                 <div class="d-lg-none pt-10-992 pr-15-992">

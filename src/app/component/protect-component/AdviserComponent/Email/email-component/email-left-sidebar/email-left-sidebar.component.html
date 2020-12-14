@@ -2,7 +2,7 @@
 <!-- [ngClass]="isCustomerEmail ? 'w16-8':'w13-8'" -->
 <div id="email-left-sidebar">
     <div class="p-16 pb-4">
-        <button *ngIf="roleService.activityPermission.subModule.EmailCapabilityList[1].enabledOrDisabled==1"
+        <button *ngIf="roleService.activityPermission.subModule.emailCapabilityList[1].enabledOrDisabled==1"
             mat-stroked-button class="btn-primary br-0 w-100" (click)="openCompose()">Compose</button>
     </div>
     <mat-action-list class="pt-0 img-size-icons">

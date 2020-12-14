@@ -11,6 +11,7 @@ import { apiConfig } from '../../../../../config/main-config';
 import { appConfig } from '../../../../../config/component-config';
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-subscription',
@@ -26,7 +27,7 @@ export class SubscriptionComponent implements OnInit {
 
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
 
-  constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService, private route: ActivatedRoute) {
+  constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService, private route: ActivatedRoute, public roleService: RoleService) {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
     );

@@ -68,8 +68,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.getListFamilyMem();
     this.showInsurance = this.data.data ? (this.data.data.insurance ? this.data.data.insurance : this.data.data) : this.data.data;
     this.getCategoryId();
-    this.getdataForm(this.data.data)
-    if (this.data.data.smallHeading == 'life insurance') {
+    if (this.data.value.smallHeading == 'life insurance') {
       this.adviceData = [{ value: 1, advice: 'Continue', selected: true },
       { value: 2, advice: 'Surrender', selected: false },
       { value: 3, advice: 'Stop paying premium', selected: false },
@@ -86,6 +85,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
       { value: 6, advice: 'Add members', selected: false },
       { value: 7, advice: 'Remove members', selected: false }]
     }
+    this.getdataForm(this.data.data)
+
     this.insuranceData = this.data.data.insurance ? this.data.data.insurance : this.data.data.insuranceDetails;
   }
   // getAllCategory() {
@@ -161,8 +162,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
   getdataForm(data) {
     this.dataForEdit = data ? data.adviceDetails : null;
     if(this.dataForEdit){
-      this.dataForEdit.advice = data.insurance_advice_id == 1 ? 'Continue' :data.insurance_advice_id == 2 ? 'Surrender' : data.insurance_advice_id == 3 ? 'Stop paying premium' : data.insurance_advice_id == 4 ? 'Take loan' : data.insurance_advice_id == 5 ? 'Partial withdrawl' : 'Continue';
-      this.dataForEdit.adviceStatus = data.advice_status_id == 1 ? 'GIVEN' : data.advice_status_id == 2 ? 'AWAITING CONSENT' :data.advice_status_id == 3 ? 'ACCEPTED' :data.advice_status_id == 4 ? 'IN PROGRESS' :data.advice_status_id == 5 ? 'IMPLEMENTED' :data.advice_status_id == 6 ? 'DECLINED' :data.advice_status_id == 7 ? 'PENDING' :data.advice_status_id == 8 ? 'SYSTEM GENERATED' :data.advice_status_id == 9 ? 'REVISED' :'GIVEN'; 
+      this.dataForEdit.advice = this.dataForEdit.insurance_advice_id == 1 ? 'Continue' :this.dataForEdit.insurance_advice_id == 2 ? 'Surrender' : this.dataForEdit.insurance_advice_id == 3 ? 'Stop paying premium' : this.dataForEdit.insurance_advice_id == 4 ? 'Take loan' : this.dataForEdit.insurance_advice_id == 5 ? 'Partial withdrawl' : 'Continue';
+      this.dataForEdit.adviceStatus = this.dataForEdit.advice_status_id == 1 ? 'GIVEN' : this.dataForEdit.advice_status_id == 2 ? 'AWAITING CONSENT' :this.dataForEdit.advice_status_id == 3 ? 'ACCEPTED' :this.dataForEdit.advice_status_id == 4 ? 'IN PROGRESS' :this.dataForEdit.advice_status_id == 5 ? 'IMPLEMENTED' :this.dataForEdit.advice_status_id == 6 ? 'DECLINED' :this.dataForEdit.advice_status_id == 7 ? 'PENDING' :this.dataForEdit.advice_status_id == 8 ? 'SYSTEM GENERATED' :this.dataForEdit.advice_status_id == 9 ? 'REVISED' :'GIVEN'; 
     }
     this.healthInsurance = this.fb.group({
       selectAdvice: [(!this.dataForEdit) ? 'Continue' : this.dataForEdit.advice, [Validators.required]],
@@ -171,7 +172,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       adviceRationale: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_description],
       adviceHeaderDate: [(!this.dataForEdit) ? new Date() : new Date(this.dataForEdit.created_date), [Validators.required]],
       implementationDate: [(!this.dataForEdit) ? '' : new Date(this.dataForEdit.applicable_date), [Validators.required]],
-      amount: [, [Validators.required]],
+      amount: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_allotment, [Validators.required]],
       consent: [(!this.dataForEdit) ? '1' : this.dataForEdit.consent],
       nonFinAdvice: [(!this.dataForEdit) ? '' : '',],
       famMember: [(!this.dataForEdit) ? '' : '', [Validators.required]]
@@ -326,9 +327,13 @@ export class HelthInsurancePolicyComponent implements OnInit {
         let obj1 = {
           stringObject: { id: this.insuranceData ? this.insuranceData.id : null },
           adviceDescription: this.healthInsurance.get('adviceRationale').value,
+          adviceToCategoryPropsId:this.dataForEdit ? this.dataForEdit.atip_id : null,
           insuranceCategoryTypeId: this.insuranceCategoryTypeId,
-          adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
+          adviceToCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
           suggestedFrom: 1,
+          id:this.dataForEdit ? this.dataForEdit.id : null,
+          adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? this.adviseId : null,  adviceDescription: this.healthInsurance.get('adviceRationale').value },
+          adviceToCategoryId: this.dataForEdit ? this.dataForEdit.ati_id : null,
           adviceId: this.adviseId,
           adviceAllotment: parseInt(this.healthInsurance.get('amount').value),
           realOrFictitious: 1,
@@ -336,6 +341,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
           advisorId: AuthService.getAdvisorId(),
           applicableDate: this.datePipe.transform(this.healthInsurance.get('implementationDate').value, 'yyyy-MM-dd'),
           adviceGivenDate: this.datePipe.transform(this.healthInsurance.get('adviceHeaderDate').value, 'yyyy-MM-dd'),
+          "adviceToInsuranceProperties":{"adviceAllotment": parseInt(this.healthInsurance.get('amount').value) ?  parseInt(this.healthInsurance.get('amount').value) : null,"realOrFictitious":1, "insuranceId":this.insuranceData ? this.insuranceData.id : null}
         }
         if(!this.dataForEdit){
           this.planService.addAdviseOnHealth(obj1).subscribe(
