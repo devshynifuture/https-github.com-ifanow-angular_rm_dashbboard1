@@ -125,6 +125,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   emailBody: string;
   liabilitiesList: any;
   commonList: any[];
+  portfolioInsurance: any;
+  selectedObj: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -152,6 +154,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
@@ -296,7 +299,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = element.name
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, element.name, false,'')
+      data => this.uploadFileRes(data, element.name, false, '')
     );
   }
   pdfFromImage(element, list, i) {
@@ -311,11 +314,11 @@ export class FinacialPlanSectionComponent implements OnInit {
         if (element.name == 'Index') {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
-          this.uploadFile(el, list.name, element.name, false,'')
+          this.uploadFile(el, list.name, element.name, false, '')
         } else {
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-          this.uploadFile(el, list.name, element.name, false,'')
+          this.uploadFile(el, list.name, element.name, false, '')
         }
       }
     }
@@ -476,6 +479,24 @@ export class FinacialPlanSectionComponent implements OnInit {
         }
 
       });
+  }
+  getCountPortfolioInsurance() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getInsuranceCount(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('insurance', data)
+          this.portfolioInsurance = data
+        }
+
+
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
   }
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any,array) {
@@ -788,7 +809,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           this.dataSource.data = arr;
           this.dataSource.data.forEach(element => {
             element.isSelected = false;
-            element.isSelectedCheckbox =  false;
+            element.isSelectedCheckbox = false;
           });
           //this.isLoadingGoals = false;
           // this.dataSource.paginator = this.paginator;

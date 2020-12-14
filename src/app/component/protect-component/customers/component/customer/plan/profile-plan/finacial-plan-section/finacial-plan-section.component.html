@@ -658,7 +658,7 @@
 
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.LifeInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'All life insurances','','Portfolio / Life Insurance / All life insurances',false)">
@@ -669,7 +669,7 @@
                                             Portfolio / Life Insurance / All life insurances</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Term != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Term insurance','','Portfolio / Life Insurance / Term insurance',false)">
@@ -680,7 +680,7 @@
                                             Portfolio / Life Insurance / Term insurance</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Traditional != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Traditional insurance','','Portfolio / Life Insurance / Traditional insurance',false)">
@@ -691,7 +691,7 @@
                                             Portfolio / Life Insurance / Traditional insurance </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.ULIP != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Ulip insurance','','Portfolio / Life Insurance / Ulip insurance',false)">
@@ -714,7 +714,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.GeneralInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances',false)">
@@ -725,7 +725,7 @@
                                             Portfolio / General Insurance / All general insurances</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HealthInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Health insurance','','Portfolio / General Insurance / Health insurance',false)">
@@ -736,7 +736,7 @@
                                             Portfolio / General Insurance / Health insurance</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.PersonalAccident != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Personal accident','','Portfolio / General Insurance / Personal accident',false)">
@@ -747,7 +747,7 @@
                                             Portfolio / General Insurance / Personal accident </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.CriticalIllness != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Critical illness','','Portfolio / General Insurance / Critical illness',false)">
@@ -758,7 +758,7 @@
                                             Portfolio / General Insurance / Critical illness </p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.MotorInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Motor insurance','','Portfolio / General Insurance / Motor insurance',false)">
@@ -769,7 +769,7 @@
                                             Portfolio / General Insurance / Motor insurance</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.TravelInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Travel insurance','','Portfolio / General Insurance / Travel insurance',false)">
@@ -780,7 +780,7 @@
                                             Portfolio / General Insurance / Travel insurance</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HomeInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Home insurance','','Portfolio / General Insurance / Home insurance',false)">
@@ -791,7 +791,8 @@
                                             Portfolio / General Insurance / Home insurance</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8"
+                                    *ngIf="portfolioInsurance.FireAndSpecialPerilsInsurance != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils',false)">
