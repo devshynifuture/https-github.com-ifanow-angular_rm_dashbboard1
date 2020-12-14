@@ -127,6 +127,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   commonList: any[];
   portfolioInsurance: any;
   selectedObj: any;
+  expenseCount: any;
+  bugetCount: any;
+  incomeCount: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -155,6 +158,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getInsuranceList();
     this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
+    this.getIncome()
+    //this.getExpense()
+    this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
@@ -165,7 +171,54 @@ export class FinacialPlanSectionComponent implements OnInit {
     console.log('clientData', this.clientData)
     console.log('clientData', this.userInfo)
   }
-
+  getIncome() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getIncome(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('incomeCount', data)
+          this.incomeCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getBuget() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getBudget(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('bugetCount', data)
+          this.bugetCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getExpense() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getExpense(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('expenseCount', data)
+          this.expenseCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
   // checkAndLoadPdf(value, sectionName) {
   //   if (value) {
   //     this.loadedSection = sectionName
