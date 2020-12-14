@@ -1301,7 +1301,7 @@
                                     </mat-card>
                                 </div>
                                 <div class="col-md-6 pr-0 pl-8"
-                                    *ngFor="let q of quotes.templates | slice:11:31; let i=index">
+                                    *ngFor="let q of quotes?.templates | slice:11:31; let i=index">
                                     <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
                                         <img mat-card-image src="{{q.imageUrl}}" class="w-100">
                                         <mat-card-content>
