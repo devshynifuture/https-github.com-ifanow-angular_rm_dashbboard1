@@ -124,6 +124,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   downloadPdf: boolean = false;
   emailBody: string;
   liabilitiesList: any;
+  commonList: any[];
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -144,6 +145,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.commonList = []
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
