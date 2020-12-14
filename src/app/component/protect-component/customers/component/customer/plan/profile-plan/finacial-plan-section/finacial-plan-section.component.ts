@@ -314,11 +314,11 @@ export class FinacialPlanSectionComponent implements OnInit {
         if (element.name == 'Index') {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
-          this.uploadFile(el, list.name, element.name, false, '')
+          this.uploadFile(el, list.name, element.name, false, element)
         } else {
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-          this.uploadFile(el, list.name, element.name, false, '')
+          this.uploadFile(el, list.name, element.name, false, element)
         }
       }
     }
@@ -357,11 +357,11 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
     this.fincialPlan = data[0];
     this.fincialPlan.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
     this.miscellaneous = data[2]
     this.miscellaneous.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
   }
 
@@ -411,7 +411,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
-    module.array.isSelectedCheckbox = false;
+    if (module.array.add) {
+      module.array.add = false
+    } else if (module.array.checked) {
+      module.array.checked = false
+    } else {
+      module.array.isSelectedCheckbox = false;
+    }
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -499,7 +505,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any,array) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     console.log('value', value)
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
@@ -641,7 +647,11 @@ export class FinacialPlanSectionComponent implements OnInit {
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
       this.isLoading = true;
-      array.isSelectedCheckbox = true;
+      if (array.isSelectedCheckbox) {
+        array.isSelectedCheckbox = value;
+      } else {
+        array.checked = value;
+      }
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -656,7 +666,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag,array);
+          this.uploadFile(data, sectionName, displayName, flag, array);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -665,7 +675,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  uploadFile(innerHtmlData, sectionName, displayName, flag,array) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag, array) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
@@ -673,15 +683,15 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName, flag,array)
+      data => this.uploadFileRes(data, displayName, flag, array)
     );
   }
 
-  uploadFileRes(data, displayName, flag,array) {
+  uploadFileRes(data, displayName, flag, array) {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag, isSelected: true,array:array
+      landscape: flag, isSelected: true, array: array
 
     });
     console.log(data);
