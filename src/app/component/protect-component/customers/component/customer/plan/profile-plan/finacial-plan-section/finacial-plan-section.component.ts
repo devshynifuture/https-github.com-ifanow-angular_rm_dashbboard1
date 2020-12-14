@@ -404,6 +404,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   removeModule(module, i) {
     module.checked = false
+    module.isSelected = false
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -474,9 +475,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
+    console.log('value', value)
+    if (value == true) {
+      this.moduleAddedLoader = [{}, {}, {}]
+      this.isLoading = false
+    }
     let factory;
     this.isLoading = true
-    this.moduleAddedLoader = [{}, {}, {}]
     if (value) {
       this.fragmentData.isSpinner = true;
       switch (sectionName) {
@@ -647,7 +652,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag,
+      landscape: flag, isSelected: true
+
     });
     console.log(data);
   }
@@ -772,6 +778,9 @@ export class FinacialPlanSectionComponent implements OnInit {
             }
           });
           this.dataSource.data = arr;
+          this.dataSource.data.forEach(element => {
+            element.isSelected = false
+          });
           //this.isLoadingGoals = false;
           // this.dataSource.paginator = this.paginator;
         }
