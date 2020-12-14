@@ -39,7 +39,9 @@
                     <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button>
-                    <button (click)="addQuotation('addQuotation')" class="btn-primary addon" mat-stroked-button>ADD
+                    <button
+                        *ngIf="roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[1].enabledOrDisabled==1"
+                        (click)="addQuotation('addQuotation')" class="btn-primary addon" mat-stroked-button>ADD
                         NEW
                     </button>
                 </div>

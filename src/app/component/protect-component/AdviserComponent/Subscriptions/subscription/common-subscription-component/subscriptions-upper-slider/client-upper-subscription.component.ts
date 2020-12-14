@@ -15,6 +15,7 @@ import { ChangePayeeComponent } from '../change-payee/change-payee.component';
 import { CreateSubscriptionComponent } from '../create-subscription/create-subscription.component';
 import { PlanRightsliderComponent } from '../plan-rightslider/plan-rightslider.component';
 import { SubscriptionDetailsComponent } from '../biller-profile-advisor/subscription-details/subscription-details.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 // import { element } from 'protractor';
 export interface PeriodicElement {
@@ -50,7 +51,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
-    public dialog: MatDialog, public subscription: SubscriptionService) {
+    public dialog: MatDialog, public subscription: SubscriptionService, public roleService: RoleService) {
   }
 
   ELEMENT_DATA;

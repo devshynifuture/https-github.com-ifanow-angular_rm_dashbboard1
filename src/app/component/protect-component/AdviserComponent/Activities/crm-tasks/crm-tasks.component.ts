@@ -253,7 +253,7 @@ export class CrmTasksComponent implements OnInit {
 
   openAddTask(data) {
     if (data) {
-      if (this.roleService.activityPermission.subModule.TaskCapabilityList[2].enabledOrDisabled == 2) {
+      if (this.roleService.activityPermission.subModule.taskCapabilityList[2].enabledOrDisabled == 2) {
         return;
       }
     }

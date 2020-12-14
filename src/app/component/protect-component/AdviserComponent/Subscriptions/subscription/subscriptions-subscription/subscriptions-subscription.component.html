@@ -28,8 +28,7 @@
                         details
                     </th>
                     <!-- (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" -->
-                    <td
-                        *matCellDef="let element; let i = index;" class="c-p t-19" mat-cell>
+                    <td *matCellDef="let element; let i = index;" class="c-p t-19" mat-cell>
                         <div class="bar">
                             {{element.clientName}} <br>
                             <small class="text-custom roboto">{{element.planName}}</small>
@@ -80,8 +79,7 @@
                     <th *matHeaderCellDef class="f-18 t-14" mat-header-cell mat-sort-header="subscriptionNumber">
                         Subs #
                     </th>
-                    <td *matCellDef="let element"
-                        class="t-14 c-p" mat-cell>
+                    <td *matCellDef="let element" class="t-14 c-p" mat-cell>
                         <div class="bar"> {{element.subscriptionNumber}} </div>
                     </td>
                     <!-- (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"  -->
@@ -158,7 +156,8 @@
                     </th>
                     <td *matCellDef="let element" class="t-2" mat-cell [ngStyle]="{'display':isLoading?'none':''}">
                         <div *ngIf="!isLoading">
-                            <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                            <i *ngIf="subscriptionPermission.subModule.subscriptions.subscriptionsCapabilityList[1].enabledOrDisabled==1"
+                                [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
