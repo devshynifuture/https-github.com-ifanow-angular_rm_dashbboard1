@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
+import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 
 
 @Component({
@@ -442,6 +443,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "amountInvested": 0,
         // "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
         "scripNameId": this.scripData ? this.scripData.id : this.editApiData.scripNameId,
+        "scripName": this.scripData.name,
         // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
         "stockType": 3,
         "id": this.editApiData ? this.editApiData.id : null,
@@ -539,6 +541,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
           data => {
             console.log(data);
             this.barButtonOptions.active = false;
+            this.showPresentMsg(data)
             this.Close();
           },
           error => {
@@ -551,6 +554,38 @@ export class StockScripLevelTransactionComponent implements OnInit {
       // }
     }
   }
+
+  errPresent: any = [];
+  showPresentMsg(data) {
+    data.stockList.forEach(s => {
+      if (s.transactionOrHoldingSummaryList[0].reasonOfError) {
+        this.errPresent.push(s.transactionOrHoldingSummaryList[0].reasonOfError);
+      }
+
+    });
+    if (this.errPresent.length > 0) {
+      this.presentDialog();
+    }
+  }
+
+  presentDialog(): void {
+    let dataObj;
+    if (this.errPresent.length > 1) {
+      dataObj = { head: 'Holdings already present', data: this.errPresent };
+    }
+    else {
+      dataObj = { head: 'Holding already present', data: this.errPresent };
+    }
+    const dialogRef = this.dialog.open(MsgDailogComponent, {
+      data: dataObj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
   scripData: any;
   getScript(data) {
     this.scripData = data;

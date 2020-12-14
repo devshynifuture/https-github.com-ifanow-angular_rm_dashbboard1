@@ -172,7 +172,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
       adviceRationale: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_description],
       adviceHeaderDate: [(!this.dataForEdit) ? new Date() : new Date(this.dataForEdit.created_date), [Validators.required]],
       implementationDate: [(!this.dataForEdit) ? '' : new Date(this.dataForEdit.applicable_date), [Validators.required]],
-      amount: [, [Validators.required]],
+      amount: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_allotment, [Validators.required]],
       consent: [(!this.dataForEdit) ? '1' : this.dataForEdit.consent],
       nonFinAdvice: [(!this.dataForEdit) ? '' : '',],
       famMember: [(!this.dataForEdit) ? '' : '', [Validators.required]]
