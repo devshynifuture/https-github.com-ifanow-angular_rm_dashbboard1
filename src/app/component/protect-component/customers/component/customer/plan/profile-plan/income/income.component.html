@@ -229,149 +229,185 @@
 </div>
 
 <!-- -------------------- pdf ---------------------------- -->
+<!-- <div #incomeTemp id="template" class="hide"> -->
+
 <div #incomeTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                </div>
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                </div>
-                <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                </div>
-            </td>
-            <td style=" text-align: right;" colspan="12">
-                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
+                                    Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
+                                </strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
-                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Income</td>
         </tr>
+
         <tr>
-            <td colspan="11">
+            <td>
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
                     *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Owner</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Type </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Monthly amount
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Income style </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Continues till </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Growth rate </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Status </td>
 
-        </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.ownerName}}</td>
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            No. </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Owner</th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Type </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Monthly amount
+                        </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Income style </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Continues till </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Growth rate </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Status </th>
 
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.monthlyIncomeToShow? "₹" : ""}}<span appFormatNumber>
-                    {{item.monthlyIncomeToShow ? item.monthlyIncomeToShow : 0}}</span></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}
-            </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.growthRate) ? item.growthRate : '-'}}%</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span style="color: #007bff" *ngIf="item.status == 'LIVE'">
-                    {{'LIVE'}} </span>
-                <span style="color: #00ff6a" *ngIf="item.status == 'CLOSED'">
-                    {{'CLOSED'}} </span>
-            </td>
+                    </tr>
 
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of dataSource.data ;index as i">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{item.ownerName}}</td>
+
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.monthlyIncomeToShow? "₹" : ""}}<span appFormatNumber>
+                                {{item.monthlyIncomeToShow ? item.monthlyIncomeToShow : 0}}</span></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{(item.growthRate) ? item.growthRate : '-'}}%</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <span style="color: #007bff" *ngIf="item.status == 'LIVE'">
+                                {{'LIVE'}} </span>
+                            <span style="color: #00ff6a" *ngIf="item.status == 'CLOSED'">
+                                {{'CLOSED'}} </span>
+                        </td>
+
+                    </tr>
+
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>Total</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalMonthlyIncome">
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
-        <tr
-            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber>Total</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber [value]="totalMonthlyIncome">
-                </span>
-            </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+
+
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr *ngIf="dataSource.data.length == 0 ">
+                        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                            colspan="9">
+                            No data found
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
-        <tr *ngIf="dataSource.data.length == 0 ">
-            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-                colspan="9">
-                No data found
-            </td>
-        </tr>
+
+
+
+
     </table>
 </div>

@@ -126,6 +126,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   liabilitiesList: any;
   commonList: any[];
   portfolioInsurance: any;
+  selectedObj: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -298,7 +299,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = element.name
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, element.name, false)
+      data => this.uploadFileRes(data, element.name, false, '')
     );
   }
   pdfFromImage(element, list, i) {
@@ -313,11 +314,11 @@ export class FinacialPlanSectionComponent implements OnInit {
         if (element.name == 'Index') {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
-          this.uploadFile(el, list.name, element.name, false)
+          this.uploadFile(el, list.name, element.name, false, '')
         } else {
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-          this.uploadFile(el, list.name, element.name, false)
+          this.uploadFile(el, list.name, element.name, false, '')
         }
       }
     }
@@ -410,6 +411,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
+    module.obj.isSelectedCheckbox = false;
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -497,7 +499,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, object) {
     console.log('value', value)
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
@@ -639,6 +641,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
       this.isLoading = true
+      this.selectedObj = object;
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -653,7 +656,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag);
+          this.uploadFile(data, sectionName, displayName, flag, obj);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -662,7 +665,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  uploadFile(innerHtmlData, sectionName, displayName, flag) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag, object) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
@@ -670,15 +673,15 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName, flag)
+      data => this.uploadFileRes(data, displayName, flag, object)
     );
   }
 
-  uploadFileRes(data, displayName, flag) {
+  uploadFileRes(data, displayName, flag, object) {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag, isSelected: true
+      landscape: flag, isSelected: true, obj: object
 
     });
     console.log(data);
@@ -805,7 +808,8 @@ export class FinacialPlanSectionComponent implements OnInit {
           });
           this.dataSource.data = arr;
           this.dataSource.data.forEach(element => {
-            element.isSelected = false
+            element.isSelected = false;
+            element.isSelectedCheckbox = false;
           });
           //this.isLoadingGoals = false;
           // this.dataSource.paginator = this.paginator;
@@ -953,6 +957,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       });
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
+      this.dataSource.forEach(element => element.isSelectedCheckbox = false);
       this.insurancePlanningList = this.dataSource;
     }
   }
