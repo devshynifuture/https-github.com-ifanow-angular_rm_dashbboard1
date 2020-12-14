@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-people-leads',
@@ -25,7 +26,11 @@ export class PeopleLeadsComponent implements OnInit {
   advisorId: any;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
-  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private cancelFlagService: CancelFlagService) { }
+  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService,
+    public dialog: MatDialog, public eventService: EventService,
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private cancelFlagService: CancelFlagService,
+    public roleService: RoleService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

@@ -82,6 +82,16 @@ export class RoleService {
   };
   peoplePermission = {
     enabled: true,
+    subModule: {
+      clients: {
+        enabled: true,
+      },
+      leads: {
+        enabled: true,
+      },
+      clientsCapability: [],
+      leadsCapability: []
+    }
   };
   backofficePermission = {
     enabled: true,
@@ -151,6 +161,7 @@ export class RoleService {
        this.dataModels.push(obj);*/
     }
     this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
+    this.setPeoplePermissions(adminDatasource.people.subModule)
     this.setActivityPermissions(adminDatasource.activity.subModule)
   }
 
@@ -219,5 +230,12 @@ export class RoleService {
     this.activityPermission.subModule.taskCapabilityList = activityPermissions.tasks.subModule.tasks.capabilityList;
     this.activityPermission.subModule.calendarCapabilityList = activityPermissions.calendar.subModule.calendar.capabilityList;
     this.activityPermission.subModule.emailCapabilityList = activityPermissions.emails.subModule.emails.capabilityList;
+  }
+
+  setPeoplePermissions(peoplePermission) {
+    this.peoplePermission.subModule.clients.enabled = peoplePermission.clients.showModule;
+    this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
+    this.peoplePermission.subModule.clientsCapability = peoplePermission.clients.subModule.clients.capabilityList;
+    this.peoplePermission.subModule.leadsCapability = peoplePermission.leads.subModule.leads.capabilityList;
   }
 }
