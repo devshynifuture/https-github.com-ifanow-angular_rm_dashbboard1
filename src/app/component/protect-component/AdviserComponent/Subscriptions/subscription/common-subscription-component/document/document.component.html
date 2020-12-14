@@ -244,20 +244,25 @@
                                         <a mat-menu-item *ngIf="dataCount == 0">Select document to see more
                                             actions
                                         </a>
-                                        <a mat-menu-item *ngIf="dataCount == 1 && sendESign"
+                                        <a mat-menu-item
+                                            *ngIf="dataCount == 1 && sendESign && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[7].enabledOrDisabled==1"
                                             (click)="openEsignDocument(null)">Email
                                             with esign
                                             request
                                         </a>
-                                        <a (click)="openSendEmail(null)" *ngIf="dataCount == 1" mat-menu-item>Email
+                                        <a (click)="openSendEmail(null)"
+                                            *ngIf="dataCount == 1 && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[3].enabledOrDisabled==1"
+                                            mat-menu-item>Email
                                             only
                                         </a>
-                                        <a (click)="deleteModal(null)" *ngIf="dataCount==1" class="b-t"
-                                            mat-menu-item>Delete
+                                        <a (click)="deleteModal(null)"
+                                            *ngIf="dataCount==1 && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[2].enabledOrDisabled==1"
+                                            class="b-t" mat-menu-item>Delete
                                             document
                                         </a>
-                                        <a (click)="deleteModal(null)" *ngIf="dataCount >1" class="b-t"
-                                            mat-menu-item>Delete
+                                        <a (click)="deleteModal(null)"
+                                            *ngIf="dataCount >1 && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[2].enabledOrDisabled==1"
+                                            class="b-t" mat-menu-item>Delete
                                             documents
                                         </a>
                                     </mat-menu>
@@ -387,18 +392,24 @@
                                         <mat-menu #menu="matMenu">
                                             <!-- <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
                     document</a> -->
-                                            <a mat-menu-item (click)="open('viewDocuments',element)">View & modify
+                                            <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[1].enabledOrDisabled==1"
+                                                mat-menu-item (click)="open('viewDocuments',element)">View & modify
                                                 document</a>
-                                            <a mat-menu-item class="bt-1" (click)="deleteModal(element)">Delete
+                                            <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[2].enabledOrDisabled==1"
+                                                mat-menu-item class="bt-1" (click)="deleteModal(element)">Delete
                                                 document</a>
-                                            <a mat-menu-item *ngIf="element.signed" class="bt-1"
-                                                (click)="downloadEsign(element)">Download esigned
+                                            <a mat-menu-item
+                                                *ngIf="element.signed && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[4].enabledOrDisabled==1"
+                                                class="bt-1" (click)="downloadEsign(element)">Download esigned
                                                 document</a>
-                                            <a mat-menu-item *ngIf="!element.signed" class="bt-1"
-                                                (click)="openEsignDocument(element)">Email
+                                            <a mat-menu-item
+                                                *ngIf="!element.signed && roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[7].enabledOrDisabled==1"
+                                                class="bt-1" (click)="openEsignDocument(element)">Email
                                                 with esign
                                                 request</a>
-                                            <a mat-menu-item (click)="openSendEmail(element)">Email only</a>
+                                            <a mat-menu-item
+                                                *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[3].enabledOrDisabled==1"
+                                                (click)="openSendEmail(element)">Email only</a>
                                         </mat-menu>
                                     </div>
                                 </td>

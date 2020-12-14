@@ -21,11 +21,13 @@
                                 <!-- <button mat-menu-item (click)="openInvoicesESign('eSignInvoices','open')" *ngIf="dataCount == 1">Email with eSign request</button> -->
                                 <a mat-menu-item class="b-t" (click)="openSendEmail()" *ngIf="dataCount == 1">Email
                                     only</a>
-                                <a (click)="deleteModal('INVOICES')" *ngIf="dataCount != 0 && dataCount > 1"
+                                <a (click)="deleteModal('INVOICES')"
+                                    *ngIf="dataCount != 0 && dataCount > 1 && roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[3].enabledOrDisabled==1"
                                     mat-menu-item>Delete
                                     invoices
                                 </a>
-                                <a (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1"
+                                <a (click)="deleteModal('INVOICE')"
+                                    *ngIf="dataCount != 0 && dataCount <= 1 && roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[3].enabledOrDisabled==1"
                                     mat-menu-item>Delete
                                     invoice
                                 </a>
@@ -42,7 +44,9 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
-                    <button mat-stroked-button class="btn-primary br-0 right text-right addon"
+                    <button
+                        *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[1].enabledOrDisabled==1"
+                        mat-stroked-button class="btn-primary br-0 right text-right addon"
                         (click)="openEdit('edit')">ADD INVOICE</button>
                 </div>
             </div>
@@ -177,7 +181,8 @@
     <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
         <img [ngClass]="{' width300 ': !isAdvisor}" class="width200" src="assets/images/svg/no-data-found.svg">
         <p class="f-22 f-600 pt-28"> No Data Found </p>
-        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" *ngIf="isAdvisor"
+        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
+            *ngIf="isAdvisor && roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[1].enabledOrDisabled==1"
             (click)="openEdit('edit')"> ADD
             INVOICE
         </button>

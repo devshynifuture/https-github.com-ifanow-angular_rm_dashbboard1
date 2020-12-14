@@ -14,6 +14,7 @@ import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { Router } from '@angular/router';
 import { Location, DatePipe } from '@angular/common';
 import { ExcelService } from 'src/app/component/protect-component/customers/component/customer/excel.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 // import { window } from 'rxjs/operators';
 
@@ -92,7 +93,7 @@ export class DocumentComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
     public subscription: SubscriptionService, private router: Router, private location: Location,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe, public roleService: RoleService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -422,12 +423,14 @@ export class DocumentComponent implements OnInit {
   //   );
   // }
   open(value, data) {
-    data['sendEsignFlag'] = true;
+    data['sendEsignFlag'] = this.roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[7].enabledOrDisabled == 1 ? true : false;;
     data['isAdvisor'] = this.isAdvisor;
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     // if (this.isLoading || !this.isAdvisor) {
     //   return;
     // }
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[3].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[4].enabledOrDisabled == 1 ? true : false;
     const fragmentData = {
       flag: value,
       data,

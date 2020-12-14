@@ -456,6 +456,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
     data['isAdvisor'] = true;
     data['sendEsignFlag'] = false;
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[4].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[5].enabledOrDisabled == 1 ? true : false;
     const fragmentData = {
       flag: value,
       data,
