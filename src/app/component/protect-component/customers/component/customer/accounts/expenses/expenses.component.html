@@ -923,10 +923,10 @@
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
 
                         <td
-                            style="width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left; ">
+                            style="width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left; border-left: 1px solid #DADCE0;  ">
                             No. </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left; ">
                             Category</td>
                         <td
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: right;">
@@ -943,19 +943,19 @@
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
                         *ngFor="let item of dataSource4.data ;index as i">
                         <td
-                            style="width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                             {{i + 1}}</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             {{item.expenseType}}</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && item.totalAmount? "₹" : ""}}<span
                                 appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
 
                             <div *ngIf="item.progressPercent > 100">
                                 <div
@@ -976,7 +976,7 @@
                             </div>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && item.spent ? "₹" : ""}}<span
                                 appFormatNumber>{{item.spent ? item.spent : '-'}}</span>
                         </td>
