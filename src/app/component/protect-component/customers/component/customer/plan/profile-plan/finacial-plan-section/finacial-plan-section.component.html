@@ -246,7 +246,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="incomeCount != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'income','','Profile / Income',false)">
@@ -345,7 +345,7 @@
                                             Profile / Expense / Last financial year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget This month','','Profile / Budget / This month',false)">
@@ -356,7 +356,7 @@
                                             Profile / Budget / This month</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget Last month','','Profile / Budget / Last month',false)">
@@ -367,7 +367,7 @@
                                             Profile / Budget / Last month</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget This quarter','','Profile / Budget / This quarter',false)">
@@ -378,7 +378,7 @@
                                             Profile / Budget / This quarter</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget Last quarter','','Profile / Budget / Last quarter',false)">
@@ -389,7 +389,7 @@
                                             Profile / Budget / Last quarter</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget This calender year','','Profile / Budget / This calender year',false)">
@@ -400,7 +400,7 @@
                                             Profile / Budget / This calender year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget Last calender year','','Profile / Budget / Last calender year',false)">
@@ -411,7 +411,7 @@
                                             Profile / Budget / Last calender year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget This financial year','','Profile / Budget / This financial year',false)">
@@ -422,7 +422,7 @@
                                             Profile / Budget / This financial year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount !=0">
                                     <div class="col-md-1">
                                         <mat-checkbox #check
                                             (change)="checkAndLoadPdf($event.checked,'Budget Last financial year','','Profile / Budget / Last financial year',false)">
