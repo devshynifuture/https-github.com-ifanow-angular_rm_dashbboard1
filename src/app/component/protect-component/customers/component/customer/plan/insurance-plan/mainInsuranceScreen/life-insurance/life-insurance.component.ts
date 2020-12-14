@@ -61,6 +61,7 @@ export class LifeInsuranceComponent implements OnInit {
   dataSouce3 = [{}, {}, {}]
   dataSource1 = [{}, {}, {}];
   expandedElement: PeriodicElement | null;
+  expandedElement2: PeriodicElement2 | null;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   inputData: any;
@@ -897,6 +898,9 @@ export class LifeInsuranceComponent implements OnInit {
     this.getNeedAnalysisData(result[3]);
     this.getDetailsInsuranceRes(result[0])
     if (result[2]) {
+      result[2].forEach(element => {
+        element.expanded = false;
+      });
       this.dataSource1 = result[2];
     } else {
       this.dataSource1 = [];
@@ -1071,6 +1075,21 @@ export class LifeInsuranceComponent implements OnInit {
     return '';
   }
   changeValue(array, ele) {
+    this.clicked = true;
+    // ele.expanded = true;
+    array.filter(element => {
+      element.insurance.suggestion = element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
+      if (element.insurance.id == ele.insurance.id && ele.expanded == true) {
+        element.expanded = false;
+      } else if (element.insurance.id != ele.insurance.id) {
+        element.expanded = false;
+      } else {
+        element.expanded = this.isClick ? false : true;
+
+      }
+    });
+  }
+  changeValue2(array, ele) {
     this.clicked = true;
     // ele.expanded = true;
     array.filter(element => {
@@ -1293,10 +1312,15 @@ export interface PeriodicElement {
   symbol: string;
 }
 
+export interface PeriodicElement2 {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+}
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
 ];
-
 export interface PeriodicElement1 {
   name: string;
   sum: string;
@@ -1308,7 +1332,9 @@ export interface PeriodicElement1 {
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
 ];
-
+const ELEMENT_DATA2: PeriodicElement1[] = [
+  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
+];
 export interface PeriodicElement2 {
 
   name: string;
@@ -1317,17 +1343,6 @@ export interface PeriodicElement2 {
 
 }
 
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-  { name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00' },
-
-];
 export interface PeriodicElement4 {
   name: string;
   position: number;
