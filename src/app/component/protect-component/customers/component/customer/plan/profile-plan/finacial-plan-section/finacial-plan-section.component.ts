@@ -464,7 +464,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
-    module.obj.isSelectedCheckbox = false;
+    module.array.isSelectedCheckbox = false;
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -552,7 +552,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, object) {
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any,array) {
     console.log('value', value)
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
@@ -693,8 +693,8 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      this.isLoading = true
-      this.selectedObj = object;
+      this.isLoading = true;
+      array.isSelectedCheckbox = true;
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -709,7 +709,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag, obj);
+          this.uploadFile(data, sectionName, displayName, flag,array);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -718,7 +718,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  uploadFile(innerHtmlData, sectionName, displayName, flag, object) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag,array) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
@@ -726,15 +726,15 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName, flag, object)
+      data => this.uploadFileRes(data, displayName, flag,array)
     );
   }
 
-  uploadFileRes(data, displayName, flag, object) {
+  uploadFileRes(data, displayName, flag,array) {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag, isSelected: true, obj: object
+      landscape: flag, isSelected: true,array:array
 
     });
     console.log(data);
