@@ -43,6 +43,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { SaveFinPlanSectionComponent } from '../save-fin-plan-section/save-fin-plan-section.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -479,6 +480,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
       this.isLoading = false
+    } else {
+      this.isLoading = false
+      return
     }
     let factory;
     this.isLoading = true
@@ -835,12 +839,28 @@ export class FinacialPlanSectionComponent implements OnInit {
       modules: this.moduleAdded,
       financialPlanPdfLogId: this.id.id
     }
-    this.planService.savePlanSection(obj).subscribe(
-      data => this.savePlanSectionRes(data),
-      err => {
-        console.error(err);
+    console.log('preview', obj)
+    const dialogRef = this.dialog.open(SaveFinPlanSectionComponent, {
+      width: '500px',
+      height: '200px',
+      data: { bank: '', selectedElement: obj }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
       }
-    );
+      console.log('The dialog was closed');
+      this.element = result;
+      obj.reportName = this.element
+      this.planService.savePlanSection(obj).subscribe(
+        data => this.savePlanSectionRes(data),
+        err => {
+          console.error(err);
+        }
+      );
+      console.log('result -==', this.element)
+    });
+
   }
 
   savePlanSectionRes(data) {

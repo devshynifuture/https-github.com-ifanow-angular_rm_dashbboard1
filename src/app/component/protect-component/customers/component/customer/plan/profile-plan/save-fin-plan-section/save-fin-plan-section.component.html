@@ -1,0 +1,33 @@
+<div class="popup-header-fix-30">
+    <div class="row bb-1">
+        <div class="col-8 d-flex align-items-center p-0">
+            <h4 class="mb-0 text-uppercase ml-16">
+                Save plan section
+            </h4>
+        </div>
+        <div class="col-4 text-right">
+            <div class="wrapper-12 pr-0">
+                <i (click)="onNoClick('clear')" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-20" [formGroup]="savePlan">
+    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+        <h3 class="f-16  m-0">Report name</h3>
+    </div>
+    <div class="col-md-5 form-group">
+        <mat-form-field appearance="standard" floatLabel="never">
+            <input #motherName appInputValueValidation class="form-control" formControlName="reportName" matInput
+                placeholder="Enter report name" type="text">
+            <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mt-16 text-right">
+        <button class="br-0 text-inherit f-14" mat-button (click)="savePlanSection()">
+            SAVE
+        </button>
+    </div>
+</div>
