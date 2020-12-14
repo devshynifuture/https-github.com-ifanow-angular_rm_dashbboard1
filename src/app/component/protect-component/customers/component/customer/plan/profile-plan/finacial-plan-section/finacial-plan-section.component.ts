@@ -463,11 +463,11 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
-    if (module.array.add) {
+    if (module.array && module.array.add) {
       module.array.add = false
-    } else if (module.array.checked) {
+    } else if (module.array && module.array.checked) {
       module.array.checked = false
-    } else {
+    } else if(module.array && module.array.isSelectedCheckbox){
       module.array.isSelectedCheckbox = false;
     }
     this.moduleAdded.splice(i, 1);
