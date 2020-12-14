@@ -143,9 +143,9 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="amt">
-                                                <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
-                                                    class="br"> Amount </th>
-                                                <td mat-cell *matCellDef="let element" class="br">
+                                                <th mat-sort-header="amount" class="text-right br right-hcb hide-arrow "
+                                                    mat-header-cell *matHeaderCellDef> Amount </th>
+                                                <td mat-cell *matCellDef="let element" class="br text-right">
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{!isLoading && element.totalAmount? "₹" : ""}}<span
                                                             appFormatNumber>{{isLoading ? '' : element.totalAmount }}</span>
@@ -255,7 +255,8 @@
                                                 </ng-container>
                                                 <ng-container matColumnDef="amt">
                                                     <th mat-sort-header="monthlyContribution" mat-header-cell
-                                                        *matHeaderCellDef class="br text-right"> Amount
+                                                        *matHeaderCellDef class="br right-hcb hide-arrow text-right">
+                                                        Amount
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                                         <div [ngClass]="{'bar': isLoading}">
@@ -448,7 +449,7 @@
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
-                                                class="br text-right"> Spent </th>
+                                                class="br text-right right-hcb hide-arrow"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
@@ -551,7 +552,7 @@
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
-                                                class="br text-right"> Spent </th>
+                                                class="br text-right right-hcb hide-arrow"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
@@ -611,186 +612,236 @@
 <!--------------------------------------------------------PDF------------------------------------------------------>
 
 <!-----------------------------------TRANSACTION AN OTHER Commitmments----------------------------------------------->
+
+
+<!-- <div #transactionExpens id="templateExpense" class="hide" *ngIf="viewMode == 'Transactions'"> -->
+
 <div #transactionExpens id="templateExpense" class="hide" *ngIf="viewMode == 'Transactions'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                </div>
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                </div>
-                <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                </div>
-            </td>
-            <td style=" text-align: right;" colspan="12">
-                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
+                                    Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
+                                </strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
-                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
+
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
-            <td colspan="11"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Transactions & Recurring commitments</td>
+                Transactions & Recurring commitments({{selectedPeriod == 1 ? 'This month' : selectedPeriod == 2 ? 'Last month' : selectedPeriod == 3 ? 'This quarter' : selectedPeriod == 4 ? 'Last quarter' : selectedPeriod == 5 ? 'This calender year' : selectedPeriod == 6 ? 'Last calender year' : selectedPeriod == 7 ? 'This financial year' : selectedPeriod == 8 ? 'Last financial year' :''}})</td>
         </tr>
 
         <tr>
-            <td colspan="11">
+            <td>
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
                     *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
+
         <tr>
-            <td colspan="11"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Transactions</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
-            *ngIf="dataSource.data.length > 0">
-            <!-- <tr>
-                <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                    Transactions </td>
-            </tr> -->
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Category</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Date </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Description </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Mode </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Amount </td>
 
-        </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.expenseType}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{isLoading ? '' : (item.continueTill && item.continueTill ? (item.startsFrom | date:'dd/MM/yyyy') : (item.expenseDoneOn | date:'dd/MM/yyyy'))}}
+        <tr *ngIf="dataSource.data.length > 0">
+            <td>
+                <table style="width: 100%;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <!-- <tr>
+                        <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                            Transactions </td>
+                    </tr> -->
+                        <th
+                            style="width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0; text-align: left;">
+                            No. </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Category</th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Date </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Description </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Mode </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Amount </th>
+
+                    </tr>
+
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of dataSource.data ;index as i">
+                        <td
+                            style=" width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{item.expenseType}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : (item.continueTill && item.continueTill ? (item.startsFrom | date:'dd/MM/yyyy') : (item.expenseDoneOn | date:'dd/MM/yyyy'))}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{(item.description)?item.description:'-'}}</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.totalAmount? "₹" : ""}}<span
+                                appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
+                        </td>
+                    </tr>
+                </table>
             </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.description)?item.description:'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.totalAmount? "₹" : ""}}<span
-                    appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
-            </td>
-
-
         </tr>
+
+
+
         <tr *ngIf="dataSource.data.length == 0">
-            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-                colspan="9">
-                No data found
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                            colspan="9">
+                            No data found
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
+
+
+
+
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Recurring commitments</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
-            *ngIf="dataSource1.data.length > 0 && dataSource.data.length > 0">
-            <!-- <tr>
-                <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                    Other commitments </td>
-            </tr> -->
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Category</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Date </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Description </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Mode </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Amount </td>
 
-        </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource1.data ;index as i"
-            [ngStyle]="{'display': dataSource.data.length == 0 ? 'none' : ''}">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.name ? item.name : '-'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.expenseDoneOn ? (item.expenseDoneOn | date:'dd/MM/yyyy') : '-'}}
+        <tr *ngIf="dataSource1.data.length > 0 && dataSource.data.length > 0">
+            <td>
+                <table style="width: 100%;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <!-- <tr>
+                            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                                Other commitments </td>
+                        </tr> -->
+                        <td
+                            style=" width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-left: 1px solid #DADCE0; ">
+                            No. </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-top: 1px solid #DADCE0;">
+                            Category</td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-top: 1px solid #DADCE0;">
+                            Date </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-top: 1px solid #DADCE0;">
+                            Description </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-top: 1px solid #DADCE0;">
+                            Mode </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Amount </td>
+
+                    </tr>
+
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of dataSource1.data ;index as i"
+                        [ngStyle]="{'display': dataSource.data.length == 0 ? 'none' : ''}">
+                        <td
+                            style=" width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left; border-left: 1px solid #DADCE0; ">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            {{item.name ? item.name : '-'}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            {{item.expenseDoneOn ? (item.expenseDoneOn | date:'dd/MM/yyyy') : '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            {{(item.description)?item.description:'-'}}</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;"
+                            appFormatNumber>
+                            {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.total? "₹" : ""}}<span
+                                appFormatNumber>{{item.total ? item.total : '-'}}</span>
+                        </td>
+
+
+                    </tr>
+                </table>
             </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.description)?item.description:'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.total? "₹" : ""}}<span appFormatNumber>{{item.total ? item.total : '-'}}</span>
-            </td>
-
-
         </tr>
+
+
         <tr *ngIf="dataSource.data.length == 0">
-            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-                colspan="9">
-                No data found
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                            colspan="9">
+                            No data found
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
-        <!-- <tr>
-            <td style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
-                <div>showPieChart</div>
-            </td>
-        </tr> -->
+
     </table>
 
 
@@ -801,46 +852,59 @@
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                </div>
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                </div>
-                <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                </div>
-            </td>
-            <td style=" text-align: right;" colspan="12">
-                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
+                                    Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
+                                </strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
-                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
+
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Budget & Other commitments</td>
+                Budget & Other commitments ({{selectedPeriod == 1 ? 'This month' : selectedPeriod == 2 ? 'Last month' : selectedPeriod == 3 ? 'This quarter' : selectedPeriod == 4 ? 'Last quarter' : selectedPeriod == 5 ? 'This calender year' : selectedPeriod == 6 ? 'Last calender year' : selectedPeriod == 7 ? 'This financial year' : selectedPeriod == 8 ? 'Last financial year' :''}})</td>
         </tr>
 
         <tr>
-            <td colspan="11">
+            <td>
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
                     *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
@@ -848,77 +912,86 @@
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Budget</td>
         </tr>
 
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
-            *ngIf="dataSource.data.length > 0">
-            <!-- <tr>
-                <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                    Transactions </td>
-            </tr> -->
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Category</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Budget </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Progress </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Spent </td>
+
+        <tr *ngIf="dataSource.data.length > 0">
+            <td>
+                <table style="width: 100%;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+
+                        <td
+                            style="width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left; border-left: 1px solid #DADCE0;  ">
+                            No. </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left; ">
+                            Category</td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: right;">
+                            Budget </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: left;">
+                            Progress </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: right;">
+                            Spent </td>
+
+                    </tr>
+
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of dataSource4.data ;index as i">
+                        <td
+                            style="width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{item.expenseType}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.totalAmount? "₹" : ""}}<span
+                                appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
+
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+
+                            <div *ngIf="item.progressPercent > 100">
+                                <div
+                                    style="background:#007bff ;height:5px;width: 70%; display: inline-block;float: left;">
+                                </div>
+                                <div
+                                    style="background:#fd7e14 ;height:5px;width: 30%; display: inline-block;float: left;">
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.progressPercent <= 100">
+                                <div style="background:rgb(192, 192, 192);width: 100%">
+                                    <div style="background:#007bff ;height:5px;"
+                                        [ngStyle]="{'width':item.spentPer+'%' }">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.spent ? "₹" : ""}}<span
+                                appFormatNumber>{{item.spent ? item.spent : '-'}}</span>
+                        </td>
 
 
+                    </tr>
+
+                </table>
+            </td>
         </tr>
 
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource4.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.expenseType}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{!isLoading && item.totalAmount? "₹" : ""}}<span
-                    appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
-
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-
-                <div *ngIf="item.progressPercent > 100">
-                    <div style="background:#007bff ;height:5px;width: 70%; display: inline-block;float: left;">
-
-                    </div>
-                    <div style="background:#fd7e14 ;height:5px;width: 30%; display: inline-block;float: left;">
-
-                    </div>
-                </div>
-
-                <div *ngIf="item.progressPercent <= 100">
-                    <div style="background:rgb(192, 192, 192);width: 100%">
-                        <div style="background:#007bff ;height:5px;" [ngStyle]="{'width':item.spentPer+'%' }">
-                        </div>
-                    </div>
-
-                </div>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.spent ? "₹" : ""}}<span appFormatNumber>{{item.spent ? item.spent : '-'}}</span>
-            </td>
 
 
-        </tr>
+
 
         <tr *ngIf="dataSource4.data.length == 0">
             <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
@@ -928,75 +1001,88 @@
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Other commitments</td>
         </tr>
 
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
-            *ngIf="dataSource5.data.length > 0 && dataSource5.data.length > 0">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Category</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Budget </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Progress </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Spent </td>
+
+        <tr *ngIf="dataSource5.data.length > 0 && dataSource5.data.length > 0">
+            <td>
+                <table style="width: 100%;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <td
+                            style="width: 5%; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            No. </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Category</td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: right;">
+                            Budget </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;  border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            Progress </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: right; border-left: 1px solid #DADCE0;">
+                            Spent </td>
+
+                    </tr>
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of dataSource5.data ;index as i"
+                        [ngStyle]="{'display': dataSource4.data.length == 0 ? 'none' : ''}">
+                        <td
+                            style="width: 5%; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: left;">
+                            {{item.name ? item.name : '-'}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: right;">
+
+                            {{!isLoading && item.total ? "₹" : ""}}<span
+                                appFormatNumber>{{item.total ? item.total : '-'}}</span>
+                        </td>
+                        <td
+                            style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left; border-bottom: 1px solid #DADCE0; ">
+
+                            <div *ngIf="item.budgetPerOther > 100 ">
+                                <div
+                                    style="background:#007bff ;height:5px;width: 70%;display: inline-block;float: left;">
+
+                                </div>
+                                <div
+                                    style="background:#fd7e14 ;height:5px;width: 30%;display: inline-block;float: left;">
+
+                                </div>
+                            </div>
+                            <div *ngIf="item.progressPercentOther <= 100">
+                                <div style="background:rgb(192, 192, 192);width: 100%">
+                                    <div style="background:#007bff ;height:5px;"
+                                        [ngStyle]="{'width':item.spentPerOther+'%' }">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                            {{!isLoading && item.total ? "₹" : ""}}<span
+                                appFormatNumber>{{item.total ? item.total : '-'}}</span>
+                        </td>
 
 
+                    </tr>
+                </table>
+            </td>
         </tr>
 
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource5.data ;index as i"
-            [ngStyle]="{'display': dataSource4.data.length == 0 ? 'none' : ''}">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.name ? item.name : '-'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-
-                {{!isLoading && item.total ? "₹" : ""}}<span appFormatNumber>{{item.total ? item.total : '-'}}</span>
-            </td>
-            <td
-                style="display:flex;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-
-                <div *ngIf="item.budgetPerOther > 100 ">
-                    <div style="background:#007bff ;height:5px;width: 70%;display: inline-block;float: left;">
-
-                    </div>
-                    <div style="background:#fd7e14 ;height:5px;width: 30%;display: inline-block;float: left;">
-
-                    </div>
-                </div>
-                <div *ngIf="item.progressPercentOther <= 100">
-                    <div style="background:rgb(192, 192, 192);width: 100%">
-                        <div style="background:#007bff ;height:5px;" [ngStyle]="{'width':item.spentPerOther+'%' }">
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.total ? "₹" : ""}}<span appFormatNumber>{{item.total ? item.total : '-'}}</span>
-            </td>
 
 
-        </tr>
+
 
         <tr *ngIf="dataSource4.data.length == 0 ">
-            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-                colspan="9">
+            <td
+                style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 No data found
             </td>
         </tr>

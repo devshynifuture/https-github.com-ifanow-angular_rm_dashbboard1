@@ -356,98 +356,102 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-8" [appSkeletonLoading]="isLoadingCashFlow"
-                        appSkeletonLoading>
-                        <div class="bg-white p-20">
-                            <div class="row d-flex align-items-center justify-content-between b-b">
-                                <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
-                                <p class="f-14 text-primitive mb-10">{{ yearToShow }}</p>
-                            </div>
+                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-8"
+                            [appSkeletonLoading]="isLoadingCashFlow" appSkeletonLoading>
+                            <div class="bg-white p-20">
+                                <div class="row d-flex align-items-center justify-content-between b-b">
+                                    <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
+                                    <p class="f-14 text-primitive mb-10">{{ yearToShow }}</p>
+                                </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Incomes</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
-                                    {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                        [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 m-0 roboto f-400">Incomes</p>
+                                    <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                            [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Expenses</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 m-0 roboto f-400">Expenses</p>
+                                    <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
+                                            [shouldRoundOff]="true"
+                                            [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Assets</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 m-0 roboto f-400">Assets</p>
+                                    <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                            [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Insurance</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 m-0 roboto f-400">Insurance</p>
+                                    <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
+                                            [shouldRoundOff]="true"
+                                            [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                    </p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Liabilities</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 m-0 roboto f-400">Liabilities</p>
+                                    <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                            [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 f-600 m-0">Surplus</p>
-                                <p class="f-14 f-600 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
+                                <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
+                                    <p class="f-14 f-600 m-0">Surplus</p>
+                                    <p class="f-14 f-600 m-0" *ngIf="!isLoadingCashFlow">
+                                        {{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
+                                            [shouldRoundOff]="true"
+                                            [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
+                                    <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                            <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                {{''}}</p>
+                                        </div>
                                     </div>
                                 </div>
+
+
+
+
+
                             </div>
-
-
-
-
-
                         </div>
-                    </div>
                     </div>
                     <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingSummary"
                         appSkeletonLoading>
@@ -806,7 +810,8 @@
                 <table style="border: 0px; margin-top: 20px; width: 100%;">
                     <tr>
                         <td style="width: 265px;">
-                            <img style="width: 265px; height: 265px;" [src]="singleGoalData ? singleGoalData.imageUrl:''">
+                            <img style="width: 265px; height: 265px;"
+                                [src]="singleGoalData ? singleGoalData.imageUrl:''">
                         </td>
 
                         <td style="vertical-align: top; padding-left: 15px;">
@@ -938,7 +943,8 @@
                                     </td>
                                 </tr>
                                 <td colspan="4" style="padding: 8px;   text-align: center; font-size: 14px;"
-                                    *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets allocated to
+                                    *ngIf="singleGoalData && singleGoalData.goalAssetAllocation.length == 0"> No assets
+                                    allocated to
                                     this goal </td>
                             </table>
                         </td>
@@ -955,7 +961,8 @@
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
                     <tr>
                         <td>
-                            <p style=" font-size: 15px; font-weight: 600;" *ngIf="singleGoalData && singleGoalData.retirementTableValue">
+                            <p style=" font-size: 15px; font-weight: 600;"
+                                *ngIf="singleGoalData && singleGoalData.retirementTableValue">
                                 Goal year wise details</p>
 
                             <table cellpadding="0" cellspacing="0"

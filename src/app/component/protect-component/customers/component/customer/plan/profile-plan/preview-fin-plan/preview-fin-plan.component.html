@@ -16,7 +16,7 @@
     <div *ngIf="selectedElement=='' && !data.bank.content">
         <img src="{{data.bank.imageUrl}}" viewer="google" style="width:100%;">
     </div>
-    <div *ngIf="this.data.bank.content" id="dId"></div>
+    <div id="dId"></div>
     <div *ngIf="link">
         <ngx-doc-viewer [url]="link" viewer="google" style="width:580px;height:690px;">
         </ngx-doc-viewer>
