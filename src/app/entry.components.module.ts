@@ -135,6 +135,7 @@ import { PreviewFinPlanComponent } from './component/protect-component/customers
 import { AddOthersAssetComponent } from './component/protect-component/customers/component/customer/accounts/assets/others-assets/add-others-asset/add-others-asset.component';
 import { DetailedViewInsurancePlanningComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 import { DetailedViewOthersAssetComponent } from './component/protect-component/customers/component/customer/accounts/assets/others-assets/detailed-view-others-asset/detailed-view-others-asset.component';
+import { SaveFinPlanSectionComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/save-fin-plan-section/save-fin-plan-section.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -302,7 +303,8 @@ export const componentList = [
   StatusFileUploadComponent,
   PreviewFinPlanComponent,
   DetailedViewInsurancePlanningComponent,
-  DetailedViewOthersAssetComponent
+  DetailedViewOthersAssetComponent,
+  SaveFinPlanSectionComponent
   // ComposeEmailComponent
 ];
 
