@@ -125,7 +125,11 @@ export class FinacialPlanSectionComponent implements OnInit {
   emailBody: string;
   liabilitiesList: any;
   commonList: any[];
+  portfolioInsurance: any;
   selectedObj: any;
+  expenseCount: any;
+  bugetCount: any;
+  incomeCount: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -153,17 +157,67 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
+    this.getIncome()
+    //this.getExpense()
+    this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
     this.isLoading = true
-    //this.emailBody = '<html><body> <img src= ' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div> </body> </html>';
     this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;"> <b>Date: 11-12-2020</b></div><div style="position: absolute;top: 18px;right: 18px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.userInfo)
   }
-
+  getIncome() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getIncome(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('incomeCount', data)
+          this.incomeCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getBuget() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getBudget(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('bugetCount', data)
+          this.bugetCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getExpense() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getExpense(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('expenseCount', data)
+          this.expenseCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
   // checkAndLoadPdf(value, sectionName) {
   //   if (value) {
   //     this.loadedSection = sectionName
@@ -297,7 +351,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = element.name
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, element.name, false,'')
+      data => this.uploadFileRes(data, element.name, false, '')
     );
   }
   pdfFromImage(element, list, i) {
@@ -312,11 +366,11 @@ export class FinacialPlanSectionComponent implements OnInit {
         if (element.name == 'Index') {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
-          this.uploadFile(el, list.name, element.name, false,'')
+          this.uploadFile(el, list.name, element.name, false, element)
         } else {
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-          this.uploadFile(el, list.name, element.name, false,'')
+          this.uploadFile(el, list.name, element.name, false, element)
         }
       }
     }
@@ -355,11 +409,11 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
     this.fincialPlan = data[0];
     this.fincialPlan.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
     this.miscellaneous = data[2]
     this.miscellaneous.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
   }
 
@@ -409,7 +463,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
-    module.obj.isSelectedCheckbox = false;
+    if (module.array.add) {
+      module.array.add = false
+    } else if (module.array.checked) {
+      module.array.checked = false
+    } else {
+      module.array.isSelectedCheckbox = false;
+    }
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -478,8 +538,26 @@ export class FinacialPlanSectionComponent implements OnInit {
 
       });
   }
+  getCountPortfolioInsurance() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getInsuranceCount(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('insurance', data)
+          this.portfolioInsurance = data
+        }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any,object) {
+
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     console.log('value', value)
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
@@ -620,8 +698,12 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      this.isLoading = true
-      this.selectedObj = object;
+      this.isLoading = true;
+      if (array.isSelectedCheckbox) {
+        array.isSelectedCheckbox = value;
+      } else {
+        array.checked = value;
+      }
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -636,7 +718,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag,obj);
+          this.uploadFile(data, sectionName, displayName, flag, array);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -645,7 +727,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  uploadFile(innerHtmlData, sectionName, displayName, flag,object) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag, array) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
@@ -653,15 +735,15 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName, flag,object)
+      data => this.uploadFileRes(data, displayName, flag, array)
     );
   }
 
-  uploadFileRes(data, displayName, flag,object) {
+  uploadFileRes(data, displayName, flag, array) {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag, isSelected: true,obj:object
+      landscape: flag, isSelected: true, array: array
 
     });
     console.log(data);
@@ -789,7 +871,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           this.dataSource.data = arr;
           this.dataSource.data.forEach(element => {
             element.isSelected = false;
-            element.isSelectedCheckbox =  false;
+            element.isSelectedCheckbox = false;
           });
           //this.isLoadingGoals = false;
           // this.dataSource.paginator = this.paginator;
