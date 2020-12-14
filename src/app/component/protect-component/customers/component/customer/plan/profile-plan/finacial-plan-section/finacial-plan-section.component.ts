@@ -125,6 +125,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   emailBody: string;
   liabilitiesList: any;
   commonList: any[];
+  portfolioInsurance: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -152,6 +153,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
@@ -475,6 +477,24 @@ export class FinacialPlanSectionComponent implements OnInit {
         }
 
       });
+  }
+  getCountPortfolioInsurance() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getInsuranceCount(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('insurance', data)
+          this.portfolioInsurance = data
+        }
+
+
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
   }
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
