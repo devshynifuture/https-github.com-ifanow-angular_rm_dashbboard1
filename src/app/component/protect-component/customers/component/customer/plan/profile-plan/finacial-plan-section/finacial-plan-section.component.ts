@@ -477,6 +477,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   download() {
+    let moduleAdded = this.moduleAdded
+    moduleAdded.forEach(element => {
+      delete element.array
+    });
     this.downloadPdf = true
     let obj = {
       clientId: AuthService.getClientId(),
