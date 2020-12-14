@@ -225,7 +225,7 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
                                     <div class="col-md-1">
-                                        <mat-checkbox [(ngModel)]="insurance.selectedCheckBox"
+                                        <mat-checkbox [(ngModel)]="insurance.isSelectedCheckbox"
                                             (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Plan / Insurance / '+insurance.heading,false,insurance)">
                                         </mat-checkbox>
                                     </div>
@@ -448,8 +448,8 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8" *ngFor="let goal of dataSource.data">
                                     <div class="col-md-1">
-                                        <mat-checkbox [checked]="goal.isSelected" [(ngModel)]="goal.selectedCheckbox"
-                                            (change)="checkAndLoadPdf($event.checked,'Goal',goal,'Plan / Goal / '+goal.details,false)">
+                                        <mat-checkbox [checked]="goal.isSelected" [(ngModel)]="goal.isSelectedCheckbox"
+                                            (change)="checkAndLoadPdf($event.checked,'Goal',goal,'Plan / Goal / '+goal.details,false,goal)">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
