@@ -13,7 +13,9 @@
                 </h5>
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let's get started!</h5>
-                <button mat-storked-button (click)="openPlanSlider('planRightSlider','open',null)"
+                <button
+                    *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList[1].enabledOrDisabled==1"
+                    mat-storked-button (click)="openPlanSlider('planRightSlider','open',null)"
                     class="btn-primary br-0 mt-44" mat-stroked-button>Add
                     Plan
                 </button>
@@ -48,7 +50,9 @@
             </div>
             <div class="col-md-4 pr-0">
                 <div *ngIf="isAdvisor && subscriptionData.length > 0">
-                    <button *ngIf="i==0" (click)="openPlanSlider('planRightSlider','open',null)"
+                    <button
+                        *ngIf="i==0 && roleService.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList[1].enabledOrDisabled==1"
+                        (click)="openPlanSlider('planRightSlider','open',null)"
                         class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
                     </button>
                 </div>
@@ -193,7 +197,8 @@
                                     <a (click)="delete('cancelSubscription',element)"
                                         *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
                                         subscription</a>
-                                    <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)"
+                                    <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList[3].enabledOrDisabled==1"
+                                        (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)"
                                         mat-menu-item>Delete
                                         subscription</a>
                                 </div>

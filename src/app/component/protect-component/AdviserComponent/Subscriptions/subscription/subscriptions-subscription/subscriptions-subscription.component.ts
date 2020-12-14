@@ -18,6 +18,7 @@ import { ChangePayeeComponent } from '../common-subscription-component/change-pa
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -143,7 +144,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
-    public enumService: EnumServiceService, private datePipe: DatePipe, private utilservice: UtilService, private datePipie: DatePipe) {
+    public enumService: EnumServiceService, private datePipe: DatePipe,
+    private utilservice: UtilService, private datePipie: DatePipe,
+    public roleService: RoleService) {
   }
 
 

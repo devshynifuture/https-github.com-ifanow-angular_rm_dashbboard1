@@ -16,6 +16,7 @@ import { ErrPageOpenComponent } from 'src/app/component/protect-component/custom
 import { SubscriptionDataService } from '../../subscription-data.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { SearchClientAddQuotationComponent } from './search-client-add-quotation/search-client-add-quotation.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export interface PeriodicElement {
   name: string;
@@ -101,7 +102,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe, private utilservice: UtilService) {
+    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe, private utilservice: UtilService,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
