@@ -329,6 +329,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
           insuranceCategoryTypeId: this.insuranceCategoryTypeId,
           adviseCategoryTypeMasterId: this.adviseCategoryTypeMasterId,
           suggestedFrom: 1,
+          adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? this.adviseId : null,  adviceDescription: this.healthInsurance.get('adviceRationale').value },
+          adviceToCategoryId: this.dataForEdit ? this.dataForEdit.ati_id : null,
           adviceId: this.adviseId,
           adviceAllotment: parseInt(this.healthInsurance.get('amount').value),
           realOrFictitious: 1,
