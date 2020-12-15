@@ -257,7 +257,7 @@
                                             Profile / Income</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.thisMonth != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseThisMonth
                                             (change)="checkAndLoadPdf($event.checked,'Expense This month','','Profile / Expense / This month',false,expenseThisMonth)">
@@ -268,7 +268,7 @@
                                             Profile / Expense / This month</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.lastMonth != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseLastMonth
                                             (change)="checkAndLoadPdf($event.checked,'Expense Last month','','Profile / Expense / Last month',false,expenseLastMonth)">
@@ -279,7 +279,7 @@
                                             Profile / Expense / Last month</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.thisQuarter != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseThisQuarter
                                             (change)="checkAndLoadPdf($event.checked,'Expense This quarter','','Profile / Expense / This quarter',false,expenseThisQuarter)">
@@ -290,7 +290,7 @@
                                             Profile / Expense / This quarter</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.lastQuarter != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseLastQuarter
                                             (change)="checkAndLoadPdf($event.checked,'Expense Last quarter','','Profile / Expense / Last quarter',false,expenseLastQuarter)">
@@ -301,7 +301,7 @@
                                             Profile / Expense / Last quarter</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.thisCalendarYear != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expensethisCalYear
                                             (change)="checkAndLoadPdf($event.checked,'Expense This calender year','','Profile / Expense / This calender year',false,expensethisCalYear)">
@@ -312,7 +312,7 @@
                                             Profile / Expense / This calender year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.lastCalendarYear != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseLastCalYear
                                             (change)="checkAndLoadPdf($event.checked,'Expense Last calender year','','Profile / Expense / Last calender year',false,expenseLastCalYear)">
@@ -323,7 +323,7 @@
                                             Profile / Expense / Last calender year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.thisFinancialYear != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseThisFinYear
                                             (change)="checkAndLoadPdf($event.checked,'Expense This financial year','','Profile / Expense / This financial year',false,expenseThisFinYear)">
@@ -334,7 +334,7 @@
                                             Profile / Expense / This financial year</p>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8">
+                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount.thisMonth != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #expenseLastFinYear
                                             (change)="checkAndLoadPdf($event.checked,'Expense Last financial year','','Profile / Expense / Last financial year',false,expenseLastFinYear)">
