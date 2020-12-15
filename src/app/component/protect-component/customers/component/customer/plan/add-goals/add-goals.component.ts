@@ -15,6 +15,7 @@ import { AppConstants } from 'src/app/services/app-constants';
   providers: [LoaderFunction]
 })
 export class AddGoalsComponent implements OnInit {
+  organizationLogo;
   goalTypeData: any;
   showGoalType: any;
   goalTypeFirstRowListData: any;

@@ -22,7 +22,7 @@ export class BackofficeFileUploadAumComponent implements OnInit {
   advisorId: any;
   isLoading = false;
   listData: any = [];
-  dataSource = new MatTableDataSource([{}, {}, {}]);
+  dataSource = new MatTableDataSource<any>([{}, {}, {}]);
   rtList = [];
   filter: any = {
     rt: 0,
