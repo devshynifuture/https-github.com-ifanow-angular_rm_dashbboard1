@@ -1160,7 +1160,7 @@ export class LifeInsuranceComponent implements OnInit {
       const fragmentData = {
         flag: 'app-customer',
         id: 1,
-        data: this.needAnalysisData,
+        data: this.inputData ? this.inputData: this.needAnalysisData,
         direction: 'top',
         componentName: ShowHealthPlanningComponent,
         state: 'open'
