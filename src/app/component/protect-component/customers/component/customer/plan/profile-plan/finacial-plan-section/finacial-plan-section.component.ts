@@ -142,7 +142,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
-    private peopleService:PeopleService,
+    private peopleService: PeopleService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
@@ -164,7 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
     this.getIncome()
-    //this.getExpense()
+    this.getExpense()
     this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
@@ -511,7 +511,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       module.array.add = false
     } else if (module.array && module.array.checked) {
       module.array.checked = false
-    } else if(module.array && module.array.isSelectedCheckbox){
+    } else if (module.array && module.array.isSelectedCheckbox) {
       module.array.isSelectedCheckbox = false;
     }
     this.moduleAdded.splice(i, 1);
@@ -611,6 +611,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.moduleAddedLoader = [{}, {}, {}]
       this.isLoading = false
     } else {
+      this.moduleAdded = this.moduleAdded.filter(function (value) {
+        return value.name != displayName;
+      });
       this.isLoading = false
       return
     }
@@ -794,7 +797,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       landscape: flag, isSelected: true, array: array
 
     });
-    console.log(data);
+    console.log('moduleAdded', this.moduleAdded);
   }
 
   getGoalSummaryValues() {
