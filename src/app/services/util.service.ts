@@ -294,12 +294,9 @@ export class UtilService {
 
   static getViewPermission(capabilityList, defaultValue) {
     let returnValue = defaultValue;
-
     if (capabilityList) {
-      capabilityList.forEach(singleElement => {
-        if (singleElement.id == 1) {
-          returnValue = singleElement.enabledOrDisabled == 1;
-        }
+      returnValue = capabilityList.some((singleElement) => {
+        return singleElement.id == 1 && singleElement.enabledOrDisabled == 1;
       });
     }
     return returnValue;
