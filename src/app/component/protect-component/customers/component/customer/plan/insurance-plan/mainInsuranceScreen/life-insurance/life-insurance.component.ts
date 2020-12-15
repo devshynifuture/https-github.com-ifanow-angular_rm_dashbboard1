@@ -1036,15 +1036,12 @@ export class LifeInsuranceComponent implements OnInit {
       this.plannerObj.existingLifeInsurance = data[6] ? data[6][0].total_amount : 0;
       this.dataSourceAsset = this.getFilterData(data[7], 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = data[8] ? data[8][0].total_amount : 0;
-      this.setAdviceAmountToAllIns();
 
     } else {
       this.plannerObj = this.setAll(this.plannerObj, 0);
       this.needAnalysisLoaded = '';
     }
-
-
-
+    this.setAdviceAmountToAllIns();
   }
   setAdviceAmountToAllIns() {
     let singleData = this.allInsuranceData.filter(d => d.id == this.inputData.id);
