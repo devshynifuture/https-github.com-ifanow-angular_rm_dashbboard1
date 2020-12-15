@@ -199,7 +199,7 @@ export class RoleService {
     this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
     this.setPeoplePermissions(adminDatasource.people.subModule)
     this.setActivityPermissions(adminDatasource.activity.subModule);
-    this.setBackofficePermissions(adminDatasource.backoffice.subModule)
+    adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : ''
     this.setDashboardPermission(adminDatasource.dashboard.subModule)
   }
 
