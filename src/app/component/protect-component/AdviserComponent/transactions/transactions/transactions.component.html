@@ -7,10 +7,13 @@
       <div class="subnav-fixed">
         <nav (selectedTabChange)="tabClick($event)" mat-align-tabs="end" mat-tab-nav-bar>
           <a mat-tab-link routerLink="/admin/transactions/overview" routerLinkActive="active">OVERVIEW</a>
-          <a class="transactionsWidth" mat-tab-link routerLink="/admin/transactions/transactions"
+          <a class="transactionsWidth" *ngIf="transactionRoleService.transactionsModule.showModule" mat-tab-link
+             routerLink="/admin/transactions/transactions"
              routerLinkActive="active">TRANSACTIONS</a>
-          <a mat-tab-link routerLink="/admin/transactions/investors" routerLinkActive="active">INVESTORS</a>
-          <a mat-tab-link routerLink="/admin/transactions/mandates" routerLinkActive="active">MANDATES</a>
+          <a mat-tab-link routerLink="/admin/transactions/investors"
+             *ngIf="transactionRoleService.investorsModule.showModule" routerLinkActive="active">INVESTORS</a>
+          <a mat-tab-link routerLink="/admin/transactions/mandates"
+             *ngIf="transactionRoleService.mandateModule.showModule" routerLinkActive="active">MANDATES</a>
           <!-- <a mat-tab-link routerLink="'expenses'">EXPENSES</a> -->
           <!--                    <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link routerLinkActive="active">KYC</a>-->
           <a *ngIf="transactionRoleService.settingsVisibility.showModule" [state]="{ example: 0 }" mat-tab-link
