@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('REDEMPTION');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('REDEMPTION');saveAndNext()" *ngIf="transactionRoleService.doRedemptionTransaction.showModule" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'REDEMPTION' }"
                     [ngStyle]="{'pointer-events': (selectedDiv == 'REDEMPTION') ? 'all': 'none'}" checked="false"
                     class="checked">
