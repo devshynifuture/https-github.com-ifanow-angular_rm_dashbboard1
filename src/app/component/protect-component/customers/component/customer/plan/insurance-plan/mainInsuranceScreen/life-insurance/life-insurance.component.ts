@@ -199,6 +199,7 @@ export class LifeInsuranceComponent implements OnInit {
   object:any;
   dislayList: any;
   type: any;
+  clickedRecommend = false;
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -898,6 +899,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.getNeedAnalysisData(result[3]);
     this.getDetailsInsuranceRes(result[0])
     if (result[2]) {
+      result[2] = result[2].filter(d => d.insurance.realOrFictitious == 1 || d.insurance.realOrFictitious == 0 );
       result[2].forEach(element => {
         element.expanded = false;
       });
@@ -1091,19 +1093,22 @@ export class LifeInsuranceComponent implements OnInit {
     });
   }
   changeValue2(array, ele) {
-    this.clicked = true;
     // ele.expanded = true;
-    array.filter(element => {
-      element.insurance.suggestion = element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
-      if (element.insurance.id == ele.insurance.id && ele.expanded == true) {
-        element.expanded = false;
-      } else if (element.insurance.id != ele.insurance.id) {
-        element.expanded = false;
-      } else {
-        element.expanded = this.isClick ? false : true;
-
-      }
-    });
+    if(ele.advice != 'Continue' && ele.advice != 'Discontinue' && ele.advice != null){
+      this.clickedRecommend = true;
+      array.filter(element => {
+        if (element.insurance.id == ele.insurance.id && ele.expanded == true) {
+          element.expanded = false;
+        } else if (element.insurance.id != ele.insurance.id) {
+          element.expanded = false;
+        } else {
+          element.expanded = this.isClick ? false : true;
+  
+        }
+      });
+    }else{
+      this.clickedRecommend = false;
+    }
   }
   loader(increamenter) {
     this.counter += increamenter;

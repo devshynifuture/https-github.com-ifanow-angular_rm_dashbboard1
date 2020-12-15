@@ -328,11 +328,11 @@
                     <h5 class="roboto f-500">Recommendations on current policies</h5>
 
                     <table mat-table *ngIf="dataSource1?.length > 0" multiTemplateDataRows [dataSource]="dataSource1"
-                        appSkeletonLoading [appSkeletonLoading]="isLoadingPlan" class="mt-8 skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoadingPlan" class="mt-8 skeletonAnimation c-p"
                         id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null"
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
                                 class="w-25">
                                 <div class="bar">
                                     {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
@@ -344,7 +344,7 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null"
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
                                 class="text-right w-20 amt">
                                 <div class="bar">
                                     {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
@@ -356,7 +356,7 @@
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null"
+                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement2=null"
                                 *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span
                                         appFormatNumber>
@@ -367,7 +367,7 @@
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="returns">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null"
+                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement2=null"
                                 *matCellDef="let element">
                                 <div class="bar">
                                     {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
@@ -377,13 +377,13 @@
 
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null">
                                 <div class="bar d-flex align-items-center justify-content-between">
                                     {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
-                                    <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
+                                    <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
                                         keyboard_arrow_up
                                     </span>
-                                    <span class="material-icons" *ngIf="!isLoadingPlan && !element.expanded">
+                                    <span class="material-icons" *ngIf="!isLoadingPlan && !element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
                                         keyboard_arrow_down
                                     </span>
                                 </div>
@@ -409,14 +409,14 @@
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu4"
-                                    (click)="isClick = true;expandedElement=null" *ngIf="!isLoadingPlan"
+                                    (click)="isClick = true;expandedElement2=null" *ngIf="!isLoadingPlan"
                                     class="suggested-policies-icons">
                                     <mat-icon class="lh-16">more_vert</mat-icon>
                                 </button>
                                 <!-- suggestPolicyGi(inputData,element.insurance) -->
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="openDetailedView(element)"
-                                        *ngIf="inputData?.insuranceType != 1">Detailed view</button>
+                                        *ngIf="inputData?.insuranceType != 1 && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">Detailed view</button>
                                     <button mat-menu-item
                                         (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button>
                                     <button mat-menu-item
@@ -427,7 +427,7 @@
                         <ng-container matColumnDef="expandedDetail">
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns1.length"
                                 [hidden]="!element.expanded">
-                                <div class="example-element-detail" *ngIf="clicked"
+                                <div class="example-element-detail" *ngIf="clickedRecommend"
                                     [@detailExpand]="element == expandedElement2 ? 'expanded' : 'collapsed'">
                                     <div class="example-element-description">
 
@@ -458,7 +458,7 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns1" class="example-element-row"
                             [class.example-expanded-row]="expandedElement2 === element"
-                            (click)="expandedElement2 = expandedElement2 === element  ? null : element;changeValue(dataSource1,element)">
+                            (click)="expandedElement2 = expandedElement2 === element  ? null : element;changeValue2(dataSource1,element)">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>

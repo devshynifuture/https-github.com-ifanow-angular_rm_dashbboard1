@@ -65,7 +65,20 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
           this._data.insurance.policyType = ele.policy_type
         }
       }
-
+    });
+    this.displayList.policyTypes.forEach(ele => {
+      if (this._data.parentAsset.policyTypeId) {
+        if (ele.id == this._data.parentAsset.policyTypeId) {
+          this._data.parentAsset.policyType = ele.policy_type
+        }
+      }
+    });
+    this.displayList.policyTypes.forEach(ele => {
+      if (this._data.childAsset.policyTypeId) {
+        if (ele.id == this._data.childAsset.policyTypeId) {
+          this._data.childAsset.policyType = ele.policy_type
+        }
+      }
     });
   }
 
