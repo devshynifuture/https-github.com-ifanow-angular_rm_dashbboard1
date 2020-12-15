@@ -122,6 +122,15 @@ export class TransactionRoleService {
         this.setDoSipTransactionPermission(transactModule.subModule.doSipTransaction);
         this.setDoSwitchTransactionPermission(transactModule.subModule.doSwitchTransaction);
         this.setDoSwpTransactionPermission(transactModule.subModule.doSwpTransaction);
+
+        this.setEmpanelledAmcListPermission(transactModule.subModule.empanelledAmcList);
+        this.setFolioMappingPermission(transactModule.subModule.folioMapping);
+        this.setInvestorsModulePermission(transactModule.subModule.investorsModule);
+        this.setKycModulePermission(transactModule.subModule.kycModule);
+        this.setMandateModulePermission(transactModule.subModule.mandateModule);
+        this.setModuleVisibilityPermission(transactModule.subModule.moduleVisibility);
+        this.setSettingsVisibilityPermission(transactModule.subModule.settingsVisibility);
+        this.setTransactionsModulePermission(transactModule.subModule.transactionsModule);
         console.log('TransactionRoleService allPermissionData transaction : ', transactModule.subModule);
       }
     });
@@ -208,5 +217,75 @@ export class TransactionRoleService {
     }
   }
 
+  setEmpanelledAmcListPermission(empanelledAmcList) {
+    if (empanelledAmcList) {
+      this.empanelledAmcList.showModule = empanelledAmcList.showModule;
+      this.empanelledAmcList.capabilityList = empanelledAmcList.subModule.empanelledAmcList.capabilityList;
+      this.empanelledAmcList.capabilityMap = UtilService.getCapabilityMap(this.empanelledAmcList.capabilityList);
+      console.log('TransactionRoleService doSwpTransaction : ', this.empanelledAmcList);
+    }
+  }
 
+  setFolioMappingPermission(folioMapping) {
+    if (folioMapping) {
+      this.folioMapping.showModule = folioMapping.showModule;
+      this.folioMapping.capabilityList = folioMapping.subModule.folioMapping.capabilityList;
+      this.folioMapping.capabilityMap = UtilService.getCapabilityMap(this.folioMapping.capabilityList);
+      console.log('TransactionRoleService folioMapping : ', this.folioMapping);
+    }
+  }
+
+  setInvestorsModulePermission(investorsModule) {
+    if (investorsModule) {
+      this.investorsModule.showModule = investorsModule.showModule;
+      this.investorsModule.capabilityList = investorsModule.subModule.investorsModule.capabilityList;
+      this.investorsModule.capabilityMap = UtilService.getCapabilityMap(this.investorsModule.capabilityList);
+      console.log('TransactionRoleService investorsModule : ', this.investorsModule);
+    }
+  }
+
+  setKycModulePermission(kycModule) {
+    if (kycModule) {
+      this.kycModule.showModule = kycModule.showModule;
+      this.kycModule.capabilityList = kycModule.subModule.kycModule.capabilityList;
+      this.kycModule.capabilityMap = UtilService.getCapabilityMap(this.kycModule.capabilityList);
+      console.log('TransactionRoleService kycModule : ', this.kycModule);
+    }
+  }
+
+  setMandateModulePermission(mandateModule) {
+    if (mandateModule) {
+      this.mandateModule.showModule = mandateModule.showModule;
+      this.mandateModule.capabilityList = mandateModule.subModule.mandateModule.capabilityList;
+      this.mandateModule.capabilityMap = UtilService.getCapabilityMap(this.mandateModule.capabilityList);
+      console.log('TransactionRoleService mandateModule : ', this.mandateModule);
+    }
+  }
+
+  setModuleVisibilityPermission(moduleVisibility) {
+    if (moduleVisibility) {
+      this.moduleVisibility.showModule = moduleVisibility.showModule;
+      this.moduleVisibility.capabilityList = moduleVisibility.subModule.moduleVisibility.capabilityList;
+      this.moduleVisibility.capabilityMap = UtilService.getCapabilityMap(this.moduleVisibility.capabilityList);
+      console.log('TransactionRoleService moduleVisibility : ', this.moduleVisibility);
+    }
+  }
+
+  setSettingsVisibilityPermission(settingsVisibility) {
+    if (settingsVisibility) {
+      this.settingsVisibility.showModule = settingsVisibility.showModule;
+      this.settingsVisibility.capabilityList = settingsVisibility.subModule.settingsVisibility.capabilityList;
+      this.settingsVisibility.capabilityMap = UtilService.getCapabilityMap(this.settingsVisibility.capabilityList);
+      console.log('TransactionRoleService settingsVisibility : ', this.settingsVisibility);
+    }
+  }
+
+  setTransactionsModulePermission(transactionsModule) {
+    if (transactionsModule) {
+      this.transactionsModule.showModule = transactionsModule.showModule;
+      this.transactionsModule.capabilityList = transactionsModule.subModule.transactionsModule.capabilityList;
+      this.transactionsModule.capabilityMap = UtilService.getCapabilityMap(this.transactionsModule.capabilityList);
+      console.log('TransactionRoleService transactionsModule : ', this.transactionsModule);
+    }
+  }
 }

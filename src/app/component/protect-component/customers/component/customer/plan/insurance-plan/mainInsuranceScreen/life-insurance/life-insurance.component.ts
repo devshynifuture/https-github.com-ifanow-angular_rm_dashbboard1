@@ -47,7 +47,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumnsNeedAnalysis: string[] = ['details', 'outstanding', 'consider', 'edit'];
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice','icons'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice', 'icons'];
   displayedColumns3 = ['name', 'sum', 'premium', 'status', 'icons'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
@@ -196,7 +196,7 @@ export class LifeInsuranceComponent implements OnInit {
   noOpened: boolean = false
   adviceNameObj: { adviceName: any; };
   adviceName: any;
-  object:any;
+  object: any;
   dislayList: any;
   type: any;
 
@@ -210,8 +210,8 @@ export class LifeInsuranceComponent implements OnInit {
     private ipService: InsurancePlanningServiceService,
     private UtilService: UtilService,
     private ref: ChangeDetectorRef,
-    private activityService:ActiityService,
-    private summaryPlanService : SummaryPlanServiceService
+    private activityService: ActiityService,
+    private summaryPlanService: SummaryPlanServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -240,7 +240,7 @@ export class LifeInsuranceComponent implements OnInit {
       .subscribe(res => {
         this.allInsuranceData = res;
       })
-      this.getGlobalDataInsurance();
+    this.getGlobalDataInsurance();
 
     this.setDetails(data)
 
@@ -354,12 +354,12 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
   setDetails(data) {
-    if(this.inputData && this.inputData.insuranceType != 1){
-      this.displayedColumns1 = ['name', 'sum', 'premium', 'advice','icons'];
-    }else{
-      this.displayedColumns1 = ['name', 'sum', 'premium','returns', 'advice','icons'];
+    if (this.inputData && this.inputData.insuranceType != 1) {
+      this.displayedColumns1 = ['name', 'sum', 'premium', 'advice', 'icons'];
+    } else {
+      this.displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice', 'icons'];
     }
-    this.type=this.summaryPlanService.getTypeIds(this.inputData);
+    this.type = this.summaryPlanService.getTypeIds(this.inputData);
     if (data) {
       this.getData = data
       this.setLogo.forEach(element => {
@@ -469,7 +469,7 @@ export class LifeInsuranceComponent implements OnInit {
 
     });
   }
-  openDetailedView(data){
+  openDetailedView(data) {
     const sendData = {
       flag: 'detailedView',
       data: {},
@@ -499,13 +499,13 @@ export class LifeInsuranceComponent implements OnInit {
       }
     );
   }
-  openDialog(data,value): void {
-    value = { smallHeading: 'life insurance',inputData : this.inputData}
-    data.data =this.inputData;
+  openDialog(data, value): void {
+    value = { smallHeading: 'life insurance', inputData: this.inputData }
+    data.data = this.inputData;
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
-      height: '600px',
-      data: { data,value}
+      // height: '600px',
+      data: { data, value }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -516,7 +516,7 @@ export class LifeInsuranceComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
-  getRecommendationCall(id){
+  getRecommendationCall(id) {
     let obj2 = {
       clientId: this.clientId,
       familyMemberId: [],
@@ -529,29 +529,29 @@ export class LifeInsuranceComponent implements OnInit {
     } else {
       obj2.familyMemberId.push(0);
     }
-  
+
     if (this.inputData.insuranceType == 1) {
       this.planService.getInsuranceAdvice(obj2).subscribe(
         data => {
           console.log(data),
-          this.checkAndPushRecommendationData(data, id);
+            this.checkAndPushRecommendationData(data, id);
         }
       );
     } else {
       this.planService.getGeneralInsuranceAdvice(this.inputData.id).subscribe(
         data => {
           console.log(data),
-          this.checkAndPushRecommendationData(data, id);
+            this.checkAndPushRecommendationData(data, id);
         }
       );
     }
   }
-  checkAndPushRecommendationData(array, id){
+  checkAndPushRecommendationData(array, id) {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);
     let suggestPolicy = singleData[0][2];
     if (this.inputData.insuranceType == 1) {
-      suggestPolicy =[];
-      if(array){
+      suggestPolicy = [];
+      if (array) {
         suggestPolicy.push(array);
         suggestPolicy = suggestPolicy.flat();
         suggestPolicy = this.ipService.pushId(suggestPolicy)
@@ -559,8 +559,8 @@ export class LifeInsuranceComponent implements OnInit {
       }
       singleData[0][2] = suggestPolicy
     } else {
-      suggestPolicy =[];
-      if(array){
+      suggestPolicy = [];
+      if (array) {
         suggestPolicy.push(array);
         suggestPolicy = suggestPolicy.flat();
         suggestPolicy = this.ipService.pushId(suggestPolicy)
@@ -573,66 +573,66 @@ export class LifeInsuranceComponent implements OnInit {
     this.ipService.setIpData(this.storedData);
     this.getForkJoinResponse(singleData[0])
   }
-  openAddEditAdvice(value, data,flag) {
-    this.adviceNameObj = {adviceName:this.adviceName};
+  openAddEditAdvice(value, data, flag) {
+    this.adviceNameObj = { adviceName: this.adviceName };
     let component;
-      this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
-      switch (this.inputData.insuranceType) {
-        case 5:
-          this.object.insuranceSubTypeId = 5;
-          this.object.showInsurance = 'Health';
-          this.object.adviceToCategoryId = 34;
-          component = SuggestHealthInsuranceComponent;
-          break;
-        case 7:
-          this.object.insuranceSubTypeId = 7;
-          this.object.showInsurance = 'Personal accident';
-          this.object.adviceToCategoryId = 35;
-          component = PersonalInsuranceComponent;
-          break;
-        case 6:
-          this.object.insuranceSubTypeId = 6;
-          this.object.showInsurance = 'Critical illness';
-          this.object.adviceToCategoryId = 36;
-          component = CriticalInsuranceComponent;
-          break;
-        case 4:
-          this.object.insuranceSubTypeId = 4;
-          this.object.showInsurance = 'Motor';
-          this.object.adviceToCategoryId = 37;
-          component = MotorInsuranceComponent;
-          break;
-        case 8:
-          this.object.insuranceSubTypeId = 8;
-          this.object.showInsurance = 'Travel';
-          this.object.adviceToCategoryId = 38;
-          component = TravelInsuranceComponent;
-          break;
-        case 9:
-          this.object.insuranceSubTypeId = 9;
-          this.object.showInsurance = 'Home';
-          this.object.adviceToCategoryId = 39;
-          component = HouseholdersInsuranceComponent;
-          break;
-        case 10:
-          this.object.insuranceSubTypeId = 10;
-          this.object.adviceToCategoryId = 40;
-          this.object.showInsurance = 'Fire & special perils';
-          component = FireInsuranceComponent;
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
+    switch (this.inputData.insuranceType) {
+      case 5:
+        this.object.insuranceSubTypeId = 5;
+        this.object.showInsurance = 'Health';
+        this.object.adviceToCategoryId = 34;
+        component = SuggestHealthInsuranceComponent;
+        break;
+      case 7:
+        this.object.insuranceSubTypeId = 7;
+        this.object.showInsurance = 'Personal accident';
+        this.object.adviceToCategoryId = 35;
+        component = PersonalInsuranceComponent;
+        break;
+      case 6:
+        this.object.insuranceSubTypeId = 6;
+        this.object.showInsurance = 'Critical illness';
+        this.object.adviceToCategoryId = 36;
+        component = CriticalInsuranceComponent;
+        break;
+      case 4:
+        this.object.insuranceSubTypeId = 4;
+        this.object.showInsurance = 'Motor';
+        this.object.adviceToCategoryId = 37;
+        component = MotorInsuranceComponent;
+        break;
+      case 8:
+        this.object.insuranceSubTypeId = 8;
+        this.object.showInsurance = 'Travel';
+        this.object.adviceToCategoryId = 38;
+        component = TravelInsuranceComponent;
+        break;
+      case 9:
+        this.object.insuranceSubTypeId = 9;
+        this.object.showInsurance = 'Home';
+        this.object.adviceToCategoryId = 39;
+        component = HouseholdersInsuranceComponent;
+        break;
+      case 10:
+        this.object.insuranceSubTypeId = 10;
+        this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'Fire & special perils';
+        component = FireInsuranceComponent;
 
-          break;
-      }
+        break;
+    }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {
-      flag:flag,
-      adviceHeaderList:flag!='suggestNew' ? this.adviceHeaderList : '',
-      adviceNameObj:this.adviceNameObj,
+      flag: flag,
+      adviceHeaderList: flag != 'suggestNew' ? this.adviceHeaderList : '',
+      adviceNameObj: this.adviceNameObj,
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAndGiveAdviceComponent,
       childComponent: component,
-      childData: { data: data ? data : null,adviceNameObj:this.adviceNameObj,inputData : this.inputData, displayList: this.displayList,insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2,adviceToCategoryId:this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+      childData: { data: data ? data : null, adviceNameObj: this.adviceNameObj, inputData: this.inputData, displayList: this.displayList, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -665,20 +665,21 @@ export class LifeInsuranceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-          this.activityService.deleteAdvice(deletedAdviceId).subscribe(
-            data => {
-              // this.isRefresh = true;
-              this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-              this.getRecommendationCall(data ? (data.insurance ? data.insurance.id : null) : null);
-              // this.getForkJoinResponse(singleData[0])
-              // this.deleteWithoutHitingApi(deletedAdviceId);
-              dialogRef.close();
-              // this.isRefreshRequired = true;
-            },
-            error =>{
-              this.getRecommendationCall(null)
-              this.eventService.showErrorMessage(error)}
-          );
+        this.activityService.deleteAdvice(deletedAdviceId).subscribe(
+          data => {
+            // this.isRefresh = true;
+            this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+            this.getRecommendationCall(data ? (data.insurance ? data.insurance.id : null) : null);
+            // this.getForkJoinResponse(singleData[0])
+            // this.deleteWithoutHitingApi(deletedAdviceId);
+            dialogRef.close();
+            // this.isRefreshRequired = true;
+          },
+          error => {
+            this.getRecommendationCall(null)
+            this.eventService.showErrorMessage(error)
+          }
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -712,7 +713,7 @@ export class LifeInsuranceComponent implements OnInit {
         element.id = element.insurance.id
       });
       suggestPolicy = suggestPolicy.filter(d => d.id != deletedId);
-      if(suggestPolicy.length == 0){
+      if (suggestPolicy.length == 0) {
         this.recommendOrNot = false;
       }
       singleData[0][1] = suggestPolicy
@@ -878,7 +879,7 @@ export class LifeInsuranceComponent implements OnInit {
         let suggestionId;
         this.dataSouce3.forEach(ele => {
           // if (ele['insurance'].suggestion) {
-            if (ele['insurance'] ? ele['insurance'].isRecommend == 1 : ele['insuranceDetails'].isRecommend == 1) {
+          if (ele['insurance'] ? ele['insurance'].isRecommend == 1 : ele['insuranceDetails'].isRecommend == 1) {
             suggestionId = ele['insurance'].id;
             countSuggest++
             this.recommendOrNot = true;
@@ -1046,8 +1047,8 @@ export class LifeInsuranceComponent implements OnInit {
   setAdviceAmountToAllIns() {
     let singleData = this.allInsuranceData.filter(d => d.id == this.inputData.id);
     singleData[0].adviceAmount = this.insuranceDetails ? (this.insuranceDetails.advice ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns) : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
-    if(singleData[0].insuranceDetails && singleData[0].insuranceDetails.needAnalysis){
-      singleData[0].insuranceDetails.advice= singleData[0].adviceAmount
+    if (singleData[0].insuranceDetails && singleData[0].insuranceDetails.needAnalysis) {
+      singleData[0].insuranceDetails.advice = singleData[0].adviceAmount
       singleData[0].insuranceDetails.needAnalysis.adviceAmount = singleData[0].adviceAmount
     }
     this.ipService.setAllInsuranceData(this.allInsuranceData);
