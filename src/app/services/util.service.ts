@@ -345,6 +345,23 @@ export class UtilService {
     return capabilityMap;
   }
 
+
+  static getDetailedCapabilityMap(capabilityList) {
+    const capabilityMap: any = this.getCapabilityMap(capabilityList);
+    capabilityMap.download = this.getDownloadPermission(capabilityList, true);
+
+    return capabilityMap;
+  }
+  static getDownloadPermission(capabilityList, defaultValue) {
+    if (capabilityList) {
+      capabilityList.forEach(singleElement => {
+        if (singleElement.id == 14) {
+          return singleElement.enabledOrDisabled == 1;
+        }
+      });
+    }
+    return defaultValue;
+  }
   /**
    * Compares and returns int value based on date comparision
    * @param date1 date object or date string

@@ -114,7 +114,9 @@ export class RoleService {
       },
       aumreconciliation: {
         enabled: true,
-      }
+      },
+      misCapability: {},
+      fileuploadsCapability: {}
     }
   };
   dashboardPermission = {
@@ -190,7 +192,8 @@ export class RoleService {
     }
     this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
     this.setPeoplePermissions(adminDatasource.people.subModule)
-    this.setActivityPermissions(adminDatasource.activity.subModule)
+    this.setActivityPermissions(adminDatasource.activity.subModule);
+    this.setBackofficePermissions(adminDatasource.backoffice.subModule)
   }
 
   setPermissions(moduleId, enabled) {
@@ -274,5 +277,7 @@ export class RoleService {
     this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule
     this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule
     this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
+    this.backofficePermission.subModule.misCapability = UtilService.getCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
+    this.backofficePermission.subModule.fileuploadsCapability = UtilService.getCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
   }
 }
