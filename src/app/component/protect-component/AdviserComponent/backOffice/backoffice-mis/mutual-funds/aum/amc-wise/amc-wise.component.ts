@@ -1,10 +1,11 @@
-import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
-import {AumComponent} from '../aum.component';
-import {BackOfficeService} from '../../../../back-office.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ExcelMisService} from '../excel-mis.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { AumComponent } from '../aum.component';
+import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-amc-wise',
@@ -53,23 +54,23 @@ export class AmcWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: any[][] = [
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 40, key: 'AMC Name'},
-      {width: 20, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 40, key: 'AMC Name' },
+      { width: 20, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 40, key: 'Scheme Name'},
-      {width: 20, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 40, key: 'Scheme Name' },
+      { width: 20, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 50, key: 'Applicant Name'},
-      {width: 40, key: 'Balance Unit'},
-      {width: 20, key: 'Folio'},
-      {width: 30, key: 'Current Amount'},
-      {width: 10, key: '% Weight'}
+      { width: 50, key: 'Applicant Name' },
+      { width: 40, key: 'Balance Unit' },
+      { width: 20, key: 'Folio' },
+      { width: 30, key: 'Current Amount' },
+      { width: 10, key: '% Weight' }
     ]
   ];
   selectedAmc: any;
@@ -91,7 +92,8 @@ export class AmcWiseComponent implements OnInit {
   selectedAmcName: any;
   selectedSchemeName: any;
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService) {
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
@@ -235,7 +237,7 @@ export class AmcWiseComponent implements OnInit {
     });
 
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'MIS Report - AMC wise AUM', this.applicantWiseTotal,
-    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]);
+      [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]);
   }
 
   schemeWiseExcelReport(index) {
@@ -259,7 +261,7 @@ export class AmcWiseComponent implements OnInit {
       schemeList: false,
       applicantList: false
     }, this.schemeWiseTotal,
-    [["Selected AMC Name", this.selectedAmcName]]
+      [["Selected AMC Name", this.selectedAmcName]]
     );
   }
 

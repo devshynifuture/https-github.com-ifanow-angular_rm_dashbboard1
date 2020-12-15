@@ -90,8 +90,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: [],
-      leadsCapability: []
+      clientsCapability: { add: true, edit: true, delete: true, download: true },
+      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
     }
   };
   backofficePermission = {
@@ -115,12 +115,18 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: {},
-      fileuploadsCapability: {}
+      misCapability: { add: true },
+      fileuploadsCapability: { download: true }
     }
   };
   dashboardPermission = {
     enabled: true,
+    dashboardCapability: {
+      "Key_metrics": true,
+      "Activity_overview": true,
+      "Subscription_overview": true,
+      "To_do": true
+    }
   };
   activityPermission = {
     enabled: true,
@@ -193,7 +199,8 @@ export class RoleService {
     this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
     this.setPeoplePermissions(adminDatasource.people.subModule)
     this.setActivityPermissions(adminDatasource.activity.subModule);
-    this.setBackofficePermissions(adminDatasource.backoffice.subModule)
+    adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : ''
+    this.setDashboardPermission(adminDatasource.dashboard.subModule)
   }
 
   setPermissions(moduleId, enabled) {
@@ -266,8 +273,9 @@ export class RoleService {
   setPeoplePermissions(peoplePermission) {
     this.peoplePermission.subModule.clients.enabled = peoplePermission.clients.showModule;
     this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
-    this.peoplePermission.subModule.clientsCapability = peoplePermission.clients.subModule.clients.capabilityList;
-    this.peoplePermission.subModule.leadsCapability = peoplePermission.leads.subModule.leads.capabilityList;
+    this.peoplePermission.subModule.clientsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.clients.subModule.clients.capabilityList);
+    this.peoplePermission.subModule.leadsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.leads.subModule.leads.capabilityList);
+    this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.capabilityList[7].enabledOrDisabled == 1 ? true : false
   }
 
   setBackofficePermissions(backOfficePermission) {
@@ -279,5 +287,13 @@ export class RoleService {
     this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
     this.backofficePermission.subModule.misCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
     this.backofficePermission.subModule.fileuploadsCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
+  }
+
+  setDashboardPermission(dashboardPermission) {
+    this.dashboardPermission.enabled = dashboardPermission.advisorDashboard.showModule;
+    for (const obj of dashboardPermission.advisorDashboard.subModule.advisorDashboard.capabilityList) {
+      obj.capabilityName = obj.capabilityName.replace(' ', '_')
+      this.dashboardPermission.dashboardCapability[obj.capabilityName] = obj.enabledOrDisabled == 1 ? true : false
+    }
   }
 }

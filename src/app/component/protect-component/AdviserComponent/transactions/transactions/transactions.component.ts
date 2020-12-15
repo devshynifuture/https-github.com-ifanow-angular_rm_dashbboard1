@@ -14,7 +14,7 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private subInjectService: SubscriptionInject, private router: Router,
-              private transactionRoleService: TransactionRoleService) {
+              public transactionRoleService: TransactionRoleService) {
   }
 
   _value: number;

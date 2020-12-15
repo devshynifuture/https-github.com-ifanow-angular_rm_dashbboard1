@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog } from '@angular/material';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-sip-client-wise',
@@ -99,7 +100,8 @@ export class SipClientWiseComponent implements OnInit {
     public sip: SipComponent,
     private fb: FormBuilder,
     private mfService: MfServiceService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public roleService: RoleService) {
   }
 
 

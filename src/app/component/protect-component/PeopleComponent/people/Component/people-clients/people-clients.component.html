@@ -10,7 +10,7 @@
     </div>
     <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
         class="col-md-2 pl-0 d-flex align-items-center justify-content-end pb-10">
-        <a *ngIf="!downloadLoader && roleService.peoplePermission.subModule.clientsCapability[4].enabledOrDisabled==1"
+        <a *ngIf="!downloadLoader && roleService.peoplePermission.subModule.clientsCapability.download==1"
             [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
         </a>
@@ -26,8 +26,8 @@
         <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
         <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle">
         <i class="material-icons">filter_list</i>FILTERS</button> -->
-        <button *ngIf="roleService.peoplePermission.subModule.clientsCapability[1].enabledOrDisabled==1"
-            (click)="addClient(null)" class="btn-primary ml-10" mat-stroked-button>
+        <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.add" (click)="addClient(null)"
+            class="btn-primary ml-10" mat-stroked-button>
             ADD NEW
         </button>
     </div>
@@ -108,16 +108,14 @@
                     <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                         <img *ngIf="isLoading==false" class="c-p" src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menu="matMenu">
-                            <button
-                                *ngIf="roleService.peoplePermission.subModule.clientsCapability[2].enabledOrDisabled==1"
+                            <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.edit"
                                 (click)="addClient(element)" mat-menu-item>
                                 <span>Edit</span>
                             </button>
                             <button (click)="resetPassword('',element)" mat-menu-item>
                                 <span>Reset password</span>
                             </button>
-                            <button
-                                *ngIf="roleService.peoplePermission.subModule.clientsCapability[3].enabledOrDisabled==1"
+                            <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.delete"
                                 (click)="deleteModal('CLIENT',element)" mat-menu-item>
                                 <span>Delete</span>
                             </button>
@@ -136,7 +134,7 @@
                 <div class="boxEmpty mt-32">
                     <img src="assets/images/svg/clients-empty-states.svg">
                     <h4 class="mt-24 mb-12">No clients added yet</h4>
-                    <button *ngIf="roleService.peoplePermission.subModule.clientsCapability[1].enabledOrDisabled==1"
+                    <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.add"
                         (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
                         ADD NEW
                     </button>
