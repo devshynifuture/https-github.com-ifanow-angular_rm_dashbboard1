@@ -1,4 +1,4 @@
-<div class="popup-header-fix-60">
+<!-- <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
@@ -490,41 +490,91 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 
 <!-- Health insurance - Detailed view figma -->
-<!-- <div class="pt-90 pb-90">
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pb-90">
     <div class="row">
         <div class="col-md-12">
-            <h5 class="m-0 roboto f-500">Policy details</h5>
+            <h5 class="m-0 roboto f-500 pb-12">Policy details</h5>
             <div class="policy-details-details-view">
-                <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+                <div class="row bg-grey lter pt-6 pb-6 b-a">
+                    <div class="col-md-4 f-500 roboto f-14">Current </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 f-500 roboto f-14 text-right">Proposed
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4">Rahul Jain </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Name of policy holder </div>
+                    <div class="col-md-4 text-right">Rahul Jain
 
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef class="f-500"> Current </th>
-                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                    </ng-container>
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 text-right">Standard, Floater
+                    </div>
 
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="f-500 text-center"> {{element.name}} </td>
-                    </ng-container>
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
-                    <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef class="f-500 text-right"> Proposed </th>
-                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.weight}} </td>
-                    </ng-container>
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
+                </div>
+                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                    <div class="col-md-4 f-400 f-14">Standard, Floater </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"> Plan type </div>
+                    <div class="col-md-4 f-400 f-14 text-right">Standard, Floater
+                    </div>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+                </div>
                 <p class="roboto f-400 text-custom f-12 text-right">Implemented on: 04/09/2019</p>
             </div>
         </div>
@@ -569,4 +619,4 @@
         </div>
 
     </div>
-</div> -->
+</div>

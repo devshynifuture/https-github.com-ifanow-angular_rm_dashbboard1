@@ -116,7 +116,7 @@ export class RoleService {
         enabled: true,
       },
       misCapability: {},
-      fileuploadsCapability: {}
+      fileuploadsCapability: {download:true}
     }
   };
   dashboardPermission = {

@@ -58,6 +58,46 @@ export class TransactionRoleService {
     capabilityList: [],
     capabilityMap: {view: true, add: true, edit: true, delete: true}
   };
+  empanelledAmcList = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  folioMapping = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  investorsModule = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  kycModule = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  mandateModule = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  moduleVisibility = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  settingsVisibility = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
+  transactionsModule = {
+    showModule: true,
+    capabilityList: [],
+    capabilityMap: {view: true, add: true, edit: true, delete: true}
+  };
 
   constructor(
     private router: Router,
