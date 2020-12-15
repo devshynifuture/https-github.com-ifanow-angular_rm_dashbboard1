@@ -19,6 +19,7 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight'];
   dataSource1 = ELEMENT_DATA1;
+  dataSourceHealth: any;
   constructor(private enumService: EnumServiceService, private subInjectService: SubscriptionInject) {
   }
 
@@ -26,6 +27,7 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   set data(inputData) {
     this._data = inputData.data;
     this.insuranceSubTypeId = inputData.data.insuranceSubTypeId;
+    this.dataSourceHealth = this.filterArray(this._data);
     this.showInsurance = inputData.showInsurance
     this.displayList = inputData.displayList;
     // this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
@@ -35,7 +37,20 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   get data() {
     return this._data;
   }
+  filterArray(data) {
+    let array = [{ parentAsset: data.parentAsset, name: 'Policy number', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Name of insurer', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Plan name', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Premium', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Policy start date', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Policy expiry date', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Copay', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Cumulative bonus', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Policy inception date', childAsset: data.childAsset },
+    { parentAsset: data.parentAsset, name: 'Duration remaining', childAsset: data.childAsset }];
 
+    return array;
+  }
   ngOnInit() {
     this.bankList = this.enumService.getBank();
     this.bankList.forEach(element => {
