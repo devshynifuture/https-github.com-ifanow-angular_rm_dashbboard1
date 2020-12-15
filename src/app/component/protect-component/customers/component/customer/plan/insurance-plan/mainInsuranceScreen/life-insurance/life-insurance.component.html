@@ -139,7 +139,7 @@
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td class="text-right" mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu"
                                     (click)="isClick = true;expandedElement=null" *ngIf="!isLoadingPlan"
                                     class="suggested-policies-icons">
@@ -263,7 +263,7 @@
 
 
                             <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td class="text-right" mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu4" *ngIf="!isLoadingPlan"
                                     class="suggested-policies-icons">
                                     <mat-icon class="lh-16">more_vert</mat-icon>
@@ -439,14 +439,15 @@
                                                 <th>Advice</th>
                                             </tr>
                                             <tr>
-                                                <td>{{element?.parentAsset?.policyName ? element?.parentAsset?.policyName : element?.parentAsset?.insurerName}}</td>
+                                                <td>{{element?.parentAsset?.policyName ? element?.parentAsset?.policyName : element?.parentAsset?.insurerName}}
+                                                </td>
                                                 <td>{{!isLoadingPlan || element?.parentAsset?.sumAssured || element?.parentAsset?.sumInsuredIdv? "₹" : ""}}<span
-                                                    appFormatNumber>
-                                                    {{element?.parentAsset?.sumAssured ? element?.parentAsset?.sumAssured : element?.parentAsset?.sumInsuredIdv }}
-                                                </span></td>
+                                                        appFormatNumber>
+                                                        {{element?.parentAsset?.sumAssured ? element?.parentAsset?.sumAssured : element?.parentAsset?.sumInsuredIdv }}
+                                                    </span></td>
                                                 <td>{{!isLoadingPlan || element?.parentAsset?.premiumAmount ? "₹" : ""}}<span
-                                                    appFormatNumber>
-                                                    {{element?.parentAsset?.premiumAmount}} </span></td>
+                                                        appFormatNumber>
+                                                        {{element?.parentAsset?.premiumAmount}} </span></td>
                                                 <td> {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
                                                 </td>
                                             </tr>
