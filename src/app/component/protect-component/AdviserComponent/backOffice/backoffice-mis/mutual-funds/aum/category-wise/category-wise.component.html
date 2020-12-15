@@ -31,8 +31,9 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button *ngIf="!isLoading && category.length != 0" class="btn-default addon"
-                            (click)="exportToExcelReport('category', null, null, null)"><i
+                        <button mat-stroked-button
+                            *ngIf="!isLoading && category.length != 0 && roleService.backofficePermission.subModule.misCapability.download"
+                            class="btn-default addon" (click)="exportToExcelReport('category', null, null, null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -110,7 +111,8 @@
                                 <td>
                                     <div class="d-block text-right"
                                         *ngIf="category.showCategory==false && category.subCategoryList!=0">
-                                        <img class="c-p"
+                                        <img *ngIf="roleService.backofficePermission.subModule.misCapability.download"
+                                            class="c-p"
                                             (click)="exportToExcelReport('sub-category', categoryIndex, null, null)"
                                             src="assets/images/svg/download-bordered.svg">
                                     </div>
@@ -193,7 +195,8 @@
                                                     <div class="bar">
                                                         <div class="d-block text-right"
                                                             *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
-                                                            <img (click)="exportToExcelReport('schemes', categoryIndex, subCatIndex, null)"
+                                                            <img *ngIf="roleService.backofficePermission.subModule.misCapability.download"
+                                                                (click)="exportToExcelReport('schemes', categoryIndex, subCatIndex, null)"
                                                                 class="c-p"
                                                                 src="assets/images/svg/download-bordered.svg">
                                                         </div>
@@ -273,7 +276,8 @@
                                                                     <div class="d-block text-right"
                                                                         *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
                                                                         <div class="bar">
-                                                                            <img (click)="exportToExcelReport('applicant', categoryIndex, subCatIndex, schemeIndex)"
+                                                                            <img *ngIf="roleService.backofficePermission.subModule.misCapability.download"
+                                                                                (click)="exportToExcelReport('applicant', categoryIndex, subCatIndex, schemeIndex)"
                                                                                 class="c-p"
                                                                                 src="assets/images/svg/download-bordered.svg">
                                                                         </div>

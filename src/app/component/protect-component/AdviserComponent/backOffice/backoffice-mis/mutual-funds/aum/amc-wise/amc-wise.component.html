@@ -26,7 +26,8 @@
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
                         <button mat-stroked-button (click)="exportToExcelSheet('amc-wise', null, null)"
-                            class="btn-default addon" *ngIf="!isLoading && amcList.length != 0"><i
+                            class="btn-default addon"
+                            *ngIf="!isLoading && amcList.length != 0 && roleService.backofficePermission.subModule.misCapability.download"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -96,8 +97,8 @@
                                     <div class="d-block text-right"
                                         *ngIf="!amc.showAmc && !isLoading && amc.schemes?.length > 0">
                                         <img (click)="exportToExcelSheet('scheme-wise', amcIndex, null)"
-                                            *ngIf="!isLoading" class="c-p"
-                                            src="assets/images/svg/download-bordered.svg">
+                                            *ngIf="!isLoading && roleService.backofficePermission.subModule.misCapability.download"
+                                            class="c-p" src="assets/images/svg/download-bordered.svg">
 
                                     </div>
                                 </td>
@@ -161,8 +162,8 @@
                                                 <td>
                                                     <div class="d-block text-right" *ngIf="!scheme.showScheme">
                                                         <img (click)="exportToExcelSheet('applicant-wise', amcIndex, schemeIndex)"
-                                                            *ngIf="!isLoading" class="c-p"
-                                                            src="assets/images/svg/download-bordered.svg">
+                                                            *ngIf="!isLoading && roleService.backofficePermission.subModule.misCapability.download"
+                                                            class="c-p" src="assets/images/svg/download-bordered.svg">
                                                     </div>
                                                 </td>
                                             </tr>
