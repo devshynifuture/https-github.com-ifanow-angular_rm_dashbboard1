@@ -137,7 +137,7 @@
   <img src="assets/images/svg/secure.svg">
   <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
   </a> -->
-          <mat-accordion class="menuAccordion">
+          <mat-accordion *ngIf="roleService.backofficePermission.enabled" class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
                 <mat-panel-title>

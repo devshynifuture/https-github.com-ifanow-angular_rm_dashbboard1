@@ -95,6 +95,26 @@ export class RoleService {
   };
   backofficePermission = {
     enabled: true,
+    subModule: {
+      mis: {
+        enabled: true,
+      },
+      fileuploads: {
+        enabled: true,
+      },
+      duplicateData: {
+        enabled: true,
+      },
+      foliomapping: {
+        enabled: true,
+      },
+      folioquery: {
+        enabled: true,
+      },
+      aumreconciliation: {
+        enabled: true,
+      }
+    }
   };
   dashboardPermission = {
     enabled: true,
@@ -237,5 +257,9 @@ export class RoleService {
     this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
     this.peoplePermission.subModule.clientsCapability = peoplePermission.clients.subModule.clients.capabilityList;
     this.peoplePermission.subModule.leadsCapability = peoplePermission.leads.subModule.leads.capabilityList;
+  }
+
+  setBackofficePermissions(backOfficePermission) {
+
   }
 }
