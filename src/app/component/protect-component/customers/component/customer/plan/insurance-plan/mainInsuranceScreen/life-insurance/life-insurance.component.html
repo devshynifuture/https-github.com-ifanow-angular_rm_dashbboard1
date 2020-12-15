@@ -1116,12 +1116,12 @@
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
-                                        <span appFormatNumber>
+                                        ₹ <span appFormatNumber>
                                             {{element.displayHolderSumInsured}} </span>
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                        <span appFormatNumber>
+                                        ₹ <span appFormatNumber>
                                             {{element?.insurance?.premiumAmount}} </span>
                                     </td>
                                     <td style="padding: 8px; text-align: left; border-top: 1px solid #dee5e7;">
@@ -1153,7 +1153,8 @@
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
                                         Policy name</td>
-                                    <td style="padding: 8px;background: #f5f7f7;border-top: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7;border-top: 1px solid #dee5e7; text-align: right;">
                                         Sum assured</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right;border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;width: 20%;">
@@ -1172,14 +1173,14 @@
                                         {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
                                     </td>
                                     <td
-                                        style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
-                                        <span appFormatNumber>
+                                        style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; text-align: right;">
+                                        ₹ <span appFormatNumber>
                                             {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }}
                                         </span>
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                                        <span appFormatNumber>
+                                        ₹ <span appFormatNumber>
                                             {{element?.insurance?.premiumAmount}} </span>
                                     </td>
                                     <!-- <td
