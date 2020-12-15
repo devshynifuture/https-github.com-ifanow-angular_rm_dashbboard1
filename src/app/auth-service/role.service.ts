@@ -1,9 +1,9 @@
-import {Router} from '@angular/router';
-import {Injectable} from '@angular/core/src/metadata/*';
-import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from '../services/util.service';
-import {AuthService} from "./authService";
-import {BehaviorSubject} from "rxjs";
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from '../services/util.service';
+import { AuthService } from "./authService";
+import { BehaviorSubject } from "rxjs";
 
 
 @Injectable({
@@ -96,6 +96,28 @@ export class RoleService {
   };
   backofficePermission = {
     enabled: true,
+    subModule: {
+      mis: {
+        enabled: true,
+      },
+      fileuploads: {
+        enabled: true,
+      },
+      duplicateData: {
+        enabled: true,
+      },
+      foliomapping: {
+        enabled: true,
+      },
+      folioquery: {
+        enabled: true,
+      },
+      aumreconciliation: {
+        enabled: true,
+      },
+      misCapability: {},
+      fileuploadsCapability: {}
+    }
   };
   dashboardPermission = {
     enabled: true,
@@ -136,7 +158,7 @@ export class RoleService {
   }
 
   getRoleDetails(roleId) {
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
 
       if (res) {
@@ -170,7 +192,8 @@ export class RoleService {
     }
     this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule);
     this.setPeoplePermissions(adminDatasource.people.subModule)
-    this.setActivityPermissions(adminDatasource.activity.subModule)
+    this.setActivityPermissions(adminDatasource.activity.subModule);
+    this.setBackofficePermissions(adminDatasource.backoffice.subModule)
   }
 
   setPermissions(moduleId, enabled) {
@@ -245,5 +268,16 @@ export class RoleService {
     this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
     this.peoplePermission.subModule.clientsCapability = peoplePermission.clients.subModule.clients.capabilityList;
     this.peoplePermission.subModule.leadsCapability = peoplePermission.leads.subModule.leads.capabilityList;
+  }
+
+  setBackofficePermissions(backOfficePermission) {
+    this.backofficePermission.subModule.mis.enabled = backOfficePermission.mis.showModule
+    this.backofficePermission.subModule.fileuploads.enabled = backOfficePermission.fileuploads.showModule
+    this.backofficePermission.subModule.duplicateData.enabled = backOfficePermission.duplicateData.showModule
+    this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule
+    this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule
+    this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
+    this.backofficePermission.subModule.misCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
+    this.backofficePermission.subModule.fileuploadsCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
   }
 }

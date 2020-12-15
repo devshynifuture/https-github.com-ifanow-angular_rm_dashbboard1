@@ -113,7 +113,7 @@
                     class="btn-primary addon v-middle  " mat-stroked-button>
                     ADD NEW
                 </button>
-                <button *ngIf="noData=='No credentials found'&&isAdvisorSection"
+                <button *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add&&noData=='No credentials found'&&isAdvisorSection"
                     [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
                     class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW

@@ -31,7 +31,9 @@ export class AddGoalsComponent implements OnInit {
     private planService: PlanService,
     private utilService: UtilService,
     private peopleService: PeopleService,
-    public loaderFn: LoaderFunction
+    public loaderFn: LoaderFunction,
+    public authService: AuthService,
+
   ) {
     let clientData = AuthService.getClientData();
     this.clientName = clientData.name;

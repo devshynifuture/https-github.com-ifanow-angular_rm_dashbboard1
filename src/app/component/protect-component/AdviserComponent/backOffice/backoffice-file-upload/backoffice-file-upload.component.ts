@@ -15,6 +15,7 @@ import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { MatDialog } from '@angular/material';
 import { StatusFileUploadComponent } from './status-file-upload/status-file-upload.component';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 const Buffer = require('buffer/').Buffer;
 @Component({
@@ -59,7 +60,8 @@ export class BackofficeFileUploadComponent implements OnInit {
     private settingService: SettingsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private misAumDataStorageService: MisAumDataStorageService
+    private misAumDataStorageService: MisAumDataStorageService,
+    public roleService: RoleService
   ) {
   }
 

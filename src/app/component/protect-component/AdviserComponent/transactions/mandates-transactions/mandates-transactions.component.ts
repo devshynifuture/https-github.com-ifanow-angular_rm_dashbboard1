@@ -9,6 +9,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
 import {AddMandateComponent} from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
 import {Router} from '@angular/router';
+import {TransactionRoleService} from "../transaction-role.service";
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -31,7 +32,9 @@ export class MandatesTransactionsComponent implements OnInit {
   isAdvisorSection = true;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private subInjectService: SubscriptionInject, private router: Router) {
+              private subInjectService: SubscriptionInject,
+              public transactionRoleService: TransactionRoleService,
+              private router: Router) {
   }
 
 
