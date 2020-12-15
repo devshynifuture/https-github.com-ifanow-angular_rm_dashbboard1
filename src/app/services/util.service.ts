@@ -293,47 +293,55 @@ export class UtilService {
   }
 
   static getViewPermission(capabilityList, defaultValue) {
+    let returnValue = defaultValue;
+
     if (capabilityList) {
       capabilityList.forEach(singleElement => {
         if (singleElement.id == 1) {
-          return singleElement.enabledOrDisabled == 1;
+          returnValue = singleElement.enabledOrDisabled == 1;
         }
       });
     }
-    return defaultValue;
+    return returnValue;
   }
 
   static getAddPermission(capabilityList, defaultValue) {
+    let returnValue = defaultValue;
+
     if (capabilityList) {
       capabilityList.forEach(singleElement => {
         if (singleElement.id == 2) {
-          return singleElement.enabledOrDisabled == 1;
+          returnValue = singleElement.enabledOrDisabled == 1;
         }
       });
     }
-    return defaultValue;
+    return returnValue;
   }
 
   static getEditermission(capabilityList, defaultValue) {
+    let returnValue = defaultValue;
+
     if (capabilityList) {
       capabilityList.forEach(singleElement => {
         if (singleElement.id == 3) {
-          return singleElement.enabledOrDisabled == 1;
+          returnValue = singleElement.enabledOrDisabled == 1;
         }
       });
     }
-    return defaultValue;
+    return returnValue;
   }
 
   static getDeletePermission(capabilityList, defaultValue) {
+    let returnValue = defaultValue;
+
     if (capabilityList) {
       capabilityList.forEach(singleElement => {
         if (singleElement.id == 4) {
-          return singleElement.enabledOrDisabled == 1;
+          returnValue = singleElement.enabledOrDisabled == 1;
         }
       });
     }
-    return defaultValue;
+    return returnValue;
   }
 
   static getCapabilityMap(capabilityList) {
@@ -352,16 +360,20 @@ export class UtilService {
 
     return capabilityMap;
   }
+
   static getDownloadPermission(capabilityList, defaultValue) {
+    let returnValue = defaultValue;
     if (capabilityList) {
       capabilityList.forEach(singleElement => {
         if (singleElement.id == 14) {
-          return singleElement.enabledOrDisabled == 1;
+          returnValue = singleElement.enabledOrDisabled == 1;
+          // break;
         }
       });
     }
-    return defaultValue;
+    return returnValue;
   }
+
   /**
    * Compares and returns int value based on date comparision
    * @param date1 date object or date string

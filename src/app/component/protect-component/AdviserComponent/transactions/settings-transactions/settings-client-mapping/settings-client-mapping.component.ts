@@ -9,7 +9,7 @@ import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {TransactionEnumService} from '../../transaction-enum.service';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {TransactionRoleService} from "../../transaction-role.service";
+import {TransactionRoleService} from '../../transaction-role.service';
 
 @Component({
     selector: 'app-settings-client-mapping',
@@ -62,7 +62,7 @@ export class SettingsClientMappingComponent implements OnInit {
             data => this.getFilterOptionDataRes(data), error => {
                 this.isLoading = false;
                 this.dataSource.data = [];
-                this.noData = "No credentials found";
+                this.noData = 'sNo credentials found';
                 this.eventService.openSnackBar(error, 'Dismiss');
             }
         );
@@ -80,7 +80,7 @@ export class SettingsClientMappingComponent implements OnInit {
         } else {
             this.isLoading = false;
             this.dataSource.data = [];
-            this.noData = "No credentials found";
+            this.noData = 'No credentials found';
         }
 
     }
@@ -97,18 +97,18 @@ export class SettingsClientMappingComponent implements OnInit {
             data => {
                 if (data) {
                     this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-                    this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
+                    this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
                     this.dataSource.sort = this.sort;
                 } else {
                     this.isLoading = false;
-                    this.noData = "No clients found";
+                    this.noData = 'No clients found';
                     this.dataSource.data = [];
                 }
                 this.isLoading = false;
             },
             err => {
                 this.isLoading = false;
-                this.noData = "No clients found";
+                this.noData = 'No clients found';
                 this.dataSource.data = [];
                 this.eventService.openSnackBar(err, 'Dismiss');
             }
@@ -146,17 +146,17 @@ export class SettingsClientMappingComponent implements OnInit {
             data => {
                 if (data) {
                     this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-                    this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
+                    this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
                     this.dataSource.sort = this.sort;
                 } else {
                     this.dataSource.data = [];
-                    this.noData = "No clients found";
+                    this.noData = 'No clients found';
                 }
                 this.isLoading = false;
             },
             err => {
                 this.dataSource.data = [];
-                this.noData = "No clients found";
+                this.noData = 'No clients found';
                 this.isLoading = false;
                 this.eventService.openSnackBar(err, 'Dismiss');
             }
