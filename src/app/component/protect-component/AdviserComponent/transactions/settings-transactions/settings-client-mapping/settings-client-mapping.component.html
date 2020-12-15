@@ -115,7 +115,7 @@
       class="d-flex flex-column align-items-center pt-44">
       <img class="width300" src="assets/images/svg/noDataFound.svg">
       <h4 class="pt-12">{{noData}}</h4>
-      <button *ngIf="noData=='No credentials found'"
+      <button *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add&&noData=='No credentials found'"
         [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
         class="btn-primary addon v-middle" mat-stroked-button>
         ADD NEW

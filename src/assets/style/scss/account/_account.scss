@@ -1067,7 +1067,11 @@ ul.mf-import-second-point{
     }
   }
 }
-
+.policy-details-details-view{
+  tr.mat-header-row,tr.mat-row{
+    height: 36px;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .advisorHomeBtn .tabDisplay {
     display: none !important;
