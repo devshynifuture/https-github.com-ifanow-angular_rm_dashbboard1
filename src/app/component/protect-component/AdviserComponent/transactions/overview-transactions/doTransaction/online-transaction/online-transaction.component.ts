@@ -273,7 +273,7 @@ export class OnlineTransactionComponent implements OnInit {
     this.router.navigate(['/admin/transactions/investors']);
   }
 
-  noBroakerFun() {
+  noBrokerFun() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds']);
 
