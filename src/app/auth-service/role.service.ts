@@ -277,7 +277,7 @@ export class RoleService {
     this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule
     this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule
     this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
-    this.backofficePermission.subModule.misCapability = UtilService.getCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
-    this.backofficePermission.subModule.fileuploadsCapability = UtilService.getCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
+    this.backofficePermission.subModule.misCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
+    this.backofficePermission.subModule.fileuploadsCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
   }
 }
