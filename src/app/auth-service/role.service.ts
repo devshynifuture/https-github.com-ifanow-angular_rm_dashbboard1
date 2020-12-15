@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core/src/metadata/*';
 import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
 import {UtilService} from '../services/util.service';
 import {AuthService} from "./authService";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 
 @Injectable({
@@ -23,7 +23,7 @@ export class RoleService {
         this.allPermissionData.next(advisorRoleData);
         this.constructAdminDataSource(advisorRoleData);
       }
-      this.getRoleDetails(AuthService.getUserInfo().roleId);
+      this.getRoleDetails(AuthService.getUserInfo().roleId, undefined);
     }
   }
 
@@ -167,18 +167,25 @@ export class RoleService {
     return this.allPermissionData.asObservable();
   }
 
-  getRoleDetails(roleId) {
+  getRoleDetails(roleId, callbackMethod: (args: any) => void) {
+    // const observable = new Observable();
     this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
-
+      if (callbackMethod) {
+        callbackMethod(res);
+      }
       if (res) {
         AuthService.setAdvisorRolesSettings(res);
         this.allPermissionData.next(res);
         this.constructAdminDataSource(res);
       }
     }, err => {
+      if (callbackMethod) {
+        callbackMethod(err);
+      }
       console.log('roleService getRoleDetails err : ', err);
     });
+    return;
   }
 
   constructAdminDataSource(adminDatasource) {
