@@ -20,6 +20,12 @@ export class RoleGuard implements CanActivate {
     else if (state.url.match('calendar') && this.roleService.activityPermission.subModule.calendar.enabled) {
       return true;
     }
+    else if (state.url.match('clients') && this.roleService.peoplePermission.subModule.clients.enabled) {
+      return true;
+    }
+    else if (state.url.match('leads') && this.roleService.peoplePermission.subModule.leads.enabled) {
+      return true;
+    }
     else {
       this.router.navigate(['unauthorized']);
       return false

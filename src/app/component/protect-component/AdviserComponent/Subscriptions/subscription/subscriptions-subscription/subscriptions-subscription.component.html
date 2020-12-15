@@ -156,7 +156,7 @@
                     </th>
                     <td *matCellDef="let element" class="t-2" mat-cell [ngStyle]="{'display':isLoading?'none':''}">
                         <div *ngIf="!isLoading">
-                            <i *ngIf="subscriptionPermission.subModule.subscriptions.subscriptionsCapabilityList[1].enabledOrDisabled==1"
+                            <i *ngIf="roleService.subscriptionPermission.subModule.subscriptions.subscriptionsCapabilityList[1].enabledOrDisabled==1"
                                 [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                                 more_vert
                             </i>

@@ -81,10 +81,10 @@
                     <div class="col-md-6 text-custom">
                         <img (click)="editInvoice()" *ngIf="storeData.status != 1" class="c-p" matTooltip="Edit"
                             src="assets/images/svg/pencil.svg">
-                        <img (click)="openSendEmail(null)" class="b-a c-p" matTooltip="Email"
+                        <img (click)="openSendEmail(null)" *ngIf="storeData.isEmail" class="b-a c-p" matTooltip="Email"
                             src="assets/images/svg/mail-light.svg">
-                        <img (click)="generatePdf()" class="b-a c-p" matTooltip="Download PDF"
-                            src="assets/images/svg/pdf-icons.svg">
+                        <img (click)="generatePdf()" class="b-a c-p" *ngIf="storeData.isDownload"
+                            matTooltip="Download PDF" src="assets/images/svg/pdf-icons.svg">
                         <!-- <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
                 src="assets/images/svg/printer.svg"> -->
                         <!-- <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)"
@@ -968,8 +968,8 @@
     </div>
     <!--fee calc in client invoice-->
     <div *ngIf="feeCalc==true">
-        <app-fee-calculations [feeAmount]="storeData" [feeCalculationData]="invoiceFeeCalculations"
-            [padding]="true"></app-fee-calculations>
+        <app-fee-calculations [feeAmount]="storeData" [feeCalculationData]="invoiceFeeCalculations" [padding]="true">
+        </app-fee-calculations>
     </div>
     <!-- <div class="bottom-fixed wrapper-12">
       <div class="row">

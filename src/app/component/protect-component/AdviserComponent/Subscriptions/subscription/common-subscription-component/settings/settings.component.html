@@ -7,7 +7,8 @@
         <div class="row pt-180" *ngIf="isAdvisor && SettingProfileData.length > 0">
             <div class="col-md-12 mt-36">
                 <button (click)="openPayeeSettings({},'Add')" class="btn-primary br-0 right text-right addon"
-                    *ngIf="isAdvisor" mat-stroked-button>
+                    *ngIf="isAdvisor && roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[1].enabledOrDisabled==1"
+                    mat-stroked-button>
                     ADD MORE
                 </button>
                 <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
@@ -35,10 +36,13 @@
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
-                                        <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                                        <a (click)="openPayeeSettings(profileData,'Edit')" mat-menu-item>Edit
+                                        <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[4].enabledOrDisabled==1"
+                                            (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
+                                        <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[2].enabledOrDisabled==1"
+                                            (click)="openPayeeSettings(profileData,'Edit')" mat-menu-item>Edit
                                             client profile</a>
-                                        <a (click)="deleteModal('PROFILE',profileData)" class="bt-1"
+                                        <a *ngIf="roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[3].enabledOrDisabled==1"
+                                            (click)="deleteModal('PROFILE',profileData)" class="bt-1"
                                             mat-menu-item>Delete
                                             client
                                             profile</a>
@@ -164,7 +168,8 @@
             <img [ngClass]="{'width300': !isAdvisor}" class="width200" src="assets/images/svg/no-data-found.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
             <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon"
-                *ngIf="isAdvisor" mat-stroked-button>
+                *ngIf="isAdvisor && roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[1].enabledOrDisabled==1"
+                mat-stroked-button>
                 ADD MORE
             </button>
         </div>

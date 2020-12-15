@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-people',
@@ -11,7 +12,8 @@ export class PeopleComponent implements OnInit {
 
   roleObj: any;
 
-  constructor(private enumDataService: EnumDataService) {
+  constructor(private enumDataService: EnumDataService,
+    public roleService: RoleService) {
     this.roleObj = AuthService.getUserRoleType();
   }
 

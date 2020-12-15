@@ -104,17 +104,22 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isRefreshRequired(sideBarData)) {
           this.getQuotationsList();
         }
-        rightSideDataSub.unsubscribe();
+        rightSideDataSub ? rightSideDataSub.unsubscribe() : '';
       }
     );
   }
   Open(value, state, data) {
-    data['sendEsignFlag'] = false;
-    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
-    data['isAdvisor'] = (this.isAdvisor) ? true : false;
     if (this.isLoading) {
       return
     }
+    if (this.roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[2].enabledOrDisabled == 2) {
+      return;
+    }
+    data['sendEsignFlag'] = false;
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    data['isAdvisor'] = (this.isAdvisor) ? true : false;
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[4].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList[5].enabledOrDisabled == 1 ? true : false;
     const fragmentData = {
       flag: value,
       data: data,

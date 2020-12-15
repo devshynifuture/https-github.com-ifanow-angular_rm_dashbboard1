@@ -14,6 +14,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export interface PeriodicElement {
   name: string;
@@ -81,7 +82,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
-    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService, private utilservice: UtilService) {
+    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService, private utilservice: UtilService,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
@@ -212,9 +214,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   openViewDocument(value, data) {
-    data['sendEsignFlag'] = true;
+
+    if (this.roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[1].enabledOrDisabled == 2) {
+      return
+    }
+    data['sendEsignFlag'] = this.roleService.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList[7].enabledOrDisabled == 1 ? true : false;;
     data['feeStructureFlag'] = data.documentText.includes('<service_fee>');
     data['isAdvisor'] = true;
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[3].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[4].enabledOrDisabled == 1 ? true : false;
     const fragmentData = {
       flag: value,
       data,

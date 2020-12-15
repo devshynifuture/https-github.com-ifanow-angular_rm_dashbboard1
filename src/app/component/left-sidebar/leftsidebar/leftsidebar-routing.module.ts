@@ -17,7 +17,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
         data: { animation: 'Tab1', preload: true },
-        canLoad: [SubscriptionGuard]
+        canActivate: [SubscriptionGuard]
         // data: {preload: true}
 
       },
