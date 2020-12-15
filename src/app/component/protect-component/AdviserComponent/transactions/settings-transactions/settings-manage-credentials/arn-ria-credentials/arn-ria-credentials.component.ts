@@ -5,9 +5,9 @@ import {AddArnRiaCredentialsComponent} from './add-arn-ria-credentials/add-arn-r
 import {OnlineTransactionService} from '../../../online-transaction.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {TransactionRoleService} from '../../../transaction-role.service';
 
 @Component({
   selector: 'app-arn-ria-credentials',
@@ -25,7 +25,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
 
   constructor(private eventService: EventService, private onlineTransact: OnlineTransactionService,
               private utilService: UtilService, private subInjectService: SubscriptionInject,
-              private customerService: CustomerService, public dialog: MatDialog) {
+              public transactionRoleService: TransactionRoleService, public dialog: MatDialog) {
   }
 
   isLoading = false;
@@ -131,9 +131,9 @@ export class ArnRiaCredentialsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        let obj = {
-          tpUserCredentialId : data.tpUserCredentialId
-        }
+        const obj = {
+          tpUserCredentialId: data.tpUserCredentialId
+        };
         this.onlineTransact.deleteBroker(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Credential is deleted', 'Dismiss');

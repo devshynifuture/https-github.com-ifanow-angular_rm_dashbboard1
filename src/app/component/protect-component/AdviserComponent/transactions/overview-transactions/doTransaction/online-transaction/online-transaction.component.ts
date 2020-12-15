@@ -12,6 +12,7 @@ import {EnumDataService} from 'src/app/services/enum-data.service';
 import {debounceTime, map, startWith} from 'rxjs/operators';
 import {PeopleService} from '../../../../../PeopleComponent/people.service';
 import {Observable, of, Subscription} from 'rxjs';
+import {TransactionRoleService} from "../../../transaction-role.service";
 
 @Component({
   selector: 'app-online-trasaction',
@@ -30,7 +31,8 @@ export class OnlineTransactionComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
               public processTransaction: ProcessTransactionService, private router: Router,
-              private enumDataService: EnumDataService, private peopleService: PeopleService) {
+              private enumDataService: EnumDataService, private peopleService: PeopleService,
+              public transactionRoleService: TransactionRoleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -135,7 +137,7 @@ export class OnlineTransactionComponent implements OnInit {
           this.familyMemberList = data;
           this.filteredStates = of(this.familyMemberList);
           this.familyMemberList.forEach(element => {
-            if(this.mutualFundData){
+            if (this.mutualFundData) {
               if (this.mutualFundData.familyMemberId == element.familyMemberId) {
                 this.stateCtrl.setValue(element)
                 this.valid = true
@@ -271,7 +273,7 @@ export class OnlineTransactionComponent implements OnInit {
     this.router.navigate(['/admin/transactions/investors']);
   }
 
-  noBroakerFun() {
+  noBrokerFun() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds']);
 

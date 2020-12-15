@@ -15,6 +15,7 @@ import {appConfig} from '../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {Router} from '@angular/router';
 import {OpenPdfViewComponent} from '../open-pdf-view/open-pdf-view.component';
+import {TransactionRoleService} from "../transaction-role.service";
 
 @Component({
   selector: 'app-investors-transactions',
@@ -45,6 +46,7 @@ export class InvestorsTransactionsComponent implements OnInit {
               public dialog: MatDialog,
               private enumServiceService: EnumServiceService,
               private subInjectService: SubscriptionInject,
+              public transactionRoleService: TransactionRoleService,
               private router: Router) {
   }
 

@@ -15,7 +15,10 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   showInsurance: any;
   bankList: any;
   displayList: any;
-
+  displayedColumns: string[] = ['position', 'name', 'weight'];
+  dataSource = ELEMENT_DATA;
+  displayedColumns1: string[] = ['position', 'name', 'weight'];
+  dataSource1 = ELEMENT_DATA1;
   constructor(private enumService: EnumServiceService, private subInjectService: SubscriptionInject) {
   }
 
@@ -52,7 +55,45 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }
+export interface PeriodicElement {
+  name: string;
+  position: string;
+  weight: string;
+
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: '65656644564555', name: 'Policy number', weight: '65656644564555' },
+  { position: '65656644564555', name: 'Name of insurer', weight: 'National insurance' },
+  { position: '65656644564555', name: 'Plan name', weight: 'floater' },
+  { position: '65656644564555', name: 'Premium', weight: '65656644564555' },
+  { position: '65656644564555', name: 'Policy start date', weight: '04/05/2019' },
+  { position: '65656644564555', name: 'Policy expiry date', weight: '04/05/2019' },
+  { position: '65656644564555', name: 'Copay', weight: '₹ 54,654' },
+  { position: '65656644564555', name: 'Cumulative bonus', weight: '₹ 54,654' },
+  { position: '65656644564555', name: 'Policy inception date', weight: '23/09/2012' },
+  { position: '65656644564555', name: 'Duration remaining', weight: '65656644564555' },
+
+];
+export interface PeriodicElement1 {
+  name: string;
+  position: string;
+  weight: string;
+
+}
+
+const ELEMENT_DATA1: PeriodicElement1[] = [
+  { position: 'Rahul Jain', name: 'Name of policy holder', weight: 'Rahul Jain' },
+  { position: 'Standard, Floater', name: 'Plan type', weight: 'Standard, Floater' },
+  { position: '₹ 22,354', name: 'Rahul Jain', weight: 'floater' },
+  { position: '₹ 22,354', name: 'Rahul Jain', weight: '65656644564555' },
+  { position: '₹ 22,354', name: 'Rahul Jain', weight: '04/05/2019' },
+  { position: '₹ 22,354', name: 'Rahul Jain', weight: '04/05/2019' },
+  { position: '₹ 22,354', name: 'Rahul Jain', weight: '₹ 54,654' },
+
+
+];
