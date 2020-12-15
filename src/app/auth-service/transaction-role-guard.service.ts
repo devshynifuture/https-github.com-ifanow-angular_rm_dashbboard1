@@ -11,6 +11,7 @@ export class TransactionRoleGuard implements CanActivate {
 
   constructor(private roleService: RoleService, private transactionRoleService: TransactionRoleService,
               private router: Router) {
+
   }
 
   canActivate(

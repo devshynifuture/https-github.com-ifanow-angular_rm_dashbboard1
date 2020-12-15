@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core/src/metadata/*';
-import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from '../services/util.service';
-import { AuthService } from "./authService";
-import { BehaviorSubject } from "rxjs";
+import {Router} from '@angular/router';
+import {Injectable} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from '../services/util.service';
+import {AuthService} from "./authService";
+import {BehaviorSubject} from "rxjs";
 
 
 @Injectable({
@@ -18,6 +18,11 @@ export class RoleService {
     private authService: AuthService
   ) {
     if (authService.isLoggedIn()) {
+      const advisorRoleData = AuthService.getAdvisorRoles();
+      if (advisorRoleData && advisorRoleData != undefined) {
+        this.allPermissionData.next(advisorRoleData);
+        this.constructAdminDataSource(advisorRoleData);
+      }
       this.getRoleDetails(AuthService.getUserInfo().roleId);
     }
   }
@@ -90,8 +95,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: { add: true, edit: true, delete: true, download: true },
-      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
+      clientsCapability: {add: true, edit: true, delete: true, download: true},
+      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
     }
   };
   backofficePermission = {
@@ -115,8 +120,8 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: { add: true },
-      fileuploadsCapability: { download: true }
+      misCapability: {add: true},
+      fileuploadsCapability: {download: true}
     }
   };
   dashboardPermission = {
@@ -155,7 +160,6 @@ export class RoleService {
     enabled: true,
   };
   familyMemberId: any;
-  dataModels = [];
 
   allPermissionData = new BehaviorSubject<any>({});
 
@@ -164,13 +168,13 @@ export class RoleService {
   }
 
   getRoleDetails(roleId) {
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
 
       if (res) {
+        AuthService.setAdvisorRolesSettings(res);
         this.allPermissionData.next(res);
         this.constructAdminDataSource(res);
-        console.log('roleService getRoleDetails data : ', this.dataModels);
       }
     }, err => {
       console.log('roleService getRoleDetails err : ', err);
