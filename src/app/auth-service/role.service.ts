@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core/src/metadata/*';
-import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from '../services/util.service';
-import { AuthService } from "./authService";
+import {Router} from '@angular/router';
+import {Injectable} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from '../services/util.service';
+import {AuthService} from "./authService";
+import {BehaviorSubject} from "rxjs";
 
 
 @Injectable({
@@ -148,11 +149,18 @@ export class RoleService {
   familyMemberId: any;
   dataModels = [];
 
+  allPermissionData = new BehaviorSubject<any>({});
+
+  getAllPermissionData() {
+    return this.allPermissionData.asObservable();
+  }
+
   getRoleDetails(roleId) {
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
 
       if (res) {
+        this.allPermissionData.next(res);
         this.constructAdminDataSource(res);
         console.log('roleService getRoleDetails data : ', this.dataModels);
       }
