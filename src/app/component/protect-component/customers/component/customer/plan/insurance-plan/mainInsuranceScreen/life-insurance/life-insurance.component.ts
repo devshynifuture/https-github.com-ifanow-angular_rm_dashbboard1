@@ -10,7 +10,7 @@ import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatAccordion } from '@angular/material';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ShowHealthPlanningComponent } from '../../show-health-planning/show-health-planning.component';
 import { InsurancePlanningServiceService } from '../../insurance-planning-service.service';
@@ -27,6 +27,7 @@ import { HelthInsurancePolicyComponent } from '../../add-insurance-planning/helt
 import { DetailedViewInsurancePlanningComponent } from '../../detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 import { SummaryPlanComponent } from '../../../summary-plan/summary-plan.component';
 import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-service.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-life-insurance',
@@ -825,8 +826,14 @@ export class LifeInsuranceComponent implements OnInit {
     // const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
     const suggestPolicyGetGi = this.planService.getGeneralInsuranceNeedAnalysis(obj3);
     const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
-    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
-    const recommndationGet = this.planService.getInsuranceAdvice(obj2);
+    const recommndationGetGi =this.planService.getGeneralInsuranceAdvice(this.inputData.id).pipe(
+      catchError(error => of(null))
+    );
+    const recommndationGet = this.planService.getInsuranceAdvice(obj2).pipe(
+      catchError(error => of(null))
+    );
+    // const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id);
+    // const recommndationGet = this.planService.getInsuranceAdvice(obj2);
     const needAnalysis = this.planService.getNeedBasedDetailsLifeInsurance(this.inputData.id);
     const sendPolicy = this.inputData.insuranceType != 1 ? suggestPolicyGetGi : suggestPolicyGet;
     const sendRecommendation = this.inputData.insuranceType != 1 ? recommndationGetGi : recommndationGet;

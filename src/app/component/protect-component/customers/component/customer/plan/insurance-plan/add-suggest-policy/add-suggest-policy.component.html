@@ -89,6 +89,22 @@
             </div>
         </div>
     </div>
+    <div class="row pt-24">
+        <div class="col-md-3 p-0">
+            <h5 class="m-0">Implementation Date</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input (focus)="implementationDate.open()" (input)="preventDefault($event)"
+                        [matDatepicker]="implementationDate" [max]="maxDate" class="form-control br-0 b-0"
+                        #implementationDate formControlName="implementationDate" matInput>
+                    <mat-datepicker-toggle [for]="implementationDate" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #implementationDate></mat-datepicker>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-32">
         <div class="col-md-12 p-0">
             <mat-checkbox #check [checked]="isRecommended" [disabled]="recommendOrNot ? true : false"
