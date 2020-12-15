@@ -28,7 +28,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button *ngIf="!isLoading && clientList.length!=0"
+                        <button
+                            *ngIf="!isLoading && clientList.length!=0 && roleService.backofficePermission.subModule.misCapability.download"
                             (click)="exportToExcelSheet('client-wise', null, null ,null)" class="btn-default addon"
                             mat-stroked-button><i class="material-icons">add</i>XLS
                         </button>
@@ -105,8 +106,8 @@
                                 <td>
                                     <div *ngIf="name.show==false" class="d-block text-right">
                                         <img (click)="exportToExcelSheet('investor-wise', clientIndex, null,null)"
-                                            *ngIf="!isLoading  && name.investorList?.length > 0" class="c-p"
-                                            src="assets/images/svg/download-bordered.svg">
+                                            *ngIf="!isLoading  && name.investorList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download"
+                                            class="c-p" src="assets/images/svg/download-bordered.svg">
                                     </div>
                                 </td>
 
@@ -198,7 +199,7 @@
                                                     <div *ngIf="!investor.showInvestor" class="d-block text-right">
 
                                                         <img (click)="exportToExcelSheet('scheme1-wise',clientIndex, investorIndex, null)"
-                                                            *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0"
+                                                            *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download"
                                                             class="c-p" src="assets/images/svg/download-bordered.svg">
 
 
@@ -290,7 +291,7 @@
                                                                         *ngIf="!scheme.showScheme">
                                                                         <img src="assets/images/svg/download-bordered.svg"
                                                                             (click)="exportToExcelSheet('scheme2-wise',clientIndex, investorIndex, schemeIndex)"
-                                                                            *ngIf="!isLoadingScheme && scheme.folioList?.length > 0">
+                                                                            *ngIf="!isLoadingScheme && scheme.folioList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download">
                                                                     </div>
                                                                 </td>
 
