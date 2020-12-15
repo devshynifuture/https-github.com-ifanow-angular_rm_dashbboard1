@@ -732,7 +732,7 @@ export class AddHealthInsuranceComponent implements OnInit {
           this.inputData.id = data;
           this.eventService.openSnackBar("Existing policy added", 'Ok');
           this.barButtonOptions.active = false;
-          this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true ,data : data});
+          this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
