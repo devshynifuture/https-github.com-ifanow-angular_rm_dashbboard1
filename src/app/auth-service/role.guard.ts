@@ -26,6 +26,9 @@ export class RoleGuard implements CanActivate {
     else if (state.url.match('leads') && this.roleService.peoplePermission.subModule.leads.enabled) {
       return true;
     }
+    else if (state.url.match('dashboard') && this.roleService.dashboardPermission.enabled) {
+      return true;
+    }
     else {
       this.router.navigate(['unauthorized']);
       return false

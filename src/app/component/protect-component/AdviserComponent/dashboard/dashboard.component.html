@@ -32,8 +32,10 @@
 
   <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44 new-grid-842">
     <div class="sticky-top z-0">
-      <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-      <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
+      <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" class="m-0 roboto f-500 pb-16">Key
+        metrics</h5>
+      <div *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" appSkeletonLoading
+        [appSkeletonLoading]="keyMatrixFlag"
         class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
         <div [routerLink]="['/admin/backoffice-mis/mutual-funds']" [queryParams]="{ Tab: 0}"
           [ngClass]="{'event-none': keyMatrixFlag}"
@@ -139,8 +141,10 @@
         </div>
       </div>
 
-      <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
-      <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
+      <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Subscription_overview"
+        class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
+      <div *ngIf="roleService.dashboardPermission.dashboardCapability.Subscription_overview" appSkeletonLoading
+        [appSkeletonLoading]="subOverviewFlag"
         class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
         <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
           <p class="m-0 text-primitive roboto f-400 lh-16">Clients with <br>
@@ -408,7 +412,7 @@
             & Anniversaries</h5>
 
           <!-- <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel"> -->
-            <div class="d-flex">
+          <div class="d-flex">
             <div *ngFor="let singleMember of birthdayAnniList" class="fundBoxDashboard bg-white slide  ">
               <div class="row">
                 <div class="col-md-9 p-0">
@@ -448,13 +452,16 @@
                       {{singleMember.daysToGo}}
                     </span>
                   </h5>
-                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'">
+                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12"
+                    *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'">
                     {{singleMember.dateOfBirth | date:'dd/MM/yyyy'}}
                   </p>
-                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'">
+                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12"
+                    *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'">
                     {{ singleMember.anniversaryDate | date: 'dd/MM/yyyy' }}
                   </p>
-                  <p *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                  <p *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'"
+                    class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
                     {{singleMember.age}} years
                   </p>
                 </div>
@@ -792,12 +799,12 @@
 
 
 
-        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length >=0" class="overflow-myfeed">
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length >=0"
+          class="overflow-myfeed">
           <!-- <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_investment"
             #slickModal="slick-carousel"> -->
-            <div class="d-flex">
-            <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts"
-              >
+          <div class="d-flex">
+            <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts">
               <div class="row">
                 <div class="col-md-9   pr-0">
                   <h5 class="m-0 f-400 roboto text-black f-14 pl-10 lh-16">
@@ -976,57 +983,56 @@
 
         <!-- <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_transactions"
           #slickModal="slick-carousel"> -->
-          <div class="overflow-myfeed">
+        <div class="overflow-myfeed">
           <div class="d-flex">
-          <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  "
-            >
-            <div class="row">
-              <div class="col-md-9 p-0">
-                <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
-                  {{singleTransaction.transactionTypeString}}</p>
+            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  ">
+              <div class="row">
+                <div class="col-md-9 p-0">
+                  <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
+                    {{singleTransaction.transactionTypeString}}</p>
+                </div>
+                <div class="col-md-3 p-0">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
+                </div>
               </div>
-              <div class="col-md-3 p-0">
-                <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-6 p-0 ">
-                <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
-                  {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+              <div class="row">
+                <div class="col-md-6 p-0 ">
+                  <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
+                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+                </div>
+                <div class="col-md-6 p-0 ">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
+                  </p>
+                </div>
               </div>
-              <div class="col-md-6 p-0 ">
-                <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
-                </p>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-12">
-                <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+                </div>
               </div>
-            </div>
 
 
-            <div class="row">
-              <div class="col-md-12">
-                <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
-              </div>
-              <div class="col-md-12">
-                <button  mat-stroked-button
-                  class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
-                </button>
-                <!-- <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+                </div>
+                <div class="col-md-12">
+                  <button mat-stroked-button
+                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
+                  </button>
+                  <!-- <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
                   class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
                   AUTHORISATION
                 </button> -->
+                </div>
               </div>
+
             </div>
 
           </div>
-
         </div>
-      </div>
 
 
         <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18">
@@ -1440,7 +1446,7 @@
   <div class="col-xl-3 col-lg-8 col-md-7 mt-44 ml-33p-1200 mt-0-1200 ptb-44-1200 bl-1-1200 ml-41-991">
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
-        <mat-tab label="To-do">
+        <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">
           <div class="max-scroll " *ngIf="todoListData">
             <div class="pt-12">
               <div class="row">
