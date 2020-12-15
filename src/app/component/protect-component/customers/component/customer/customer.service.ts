@@ -55,7 +55,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_COUNT, httpParams);
   }
   getExpense(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('clientDob', data.clientId).set('fmDobList', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPENSE_COUNT, httpParams);
   }
   getBudget(data) {
