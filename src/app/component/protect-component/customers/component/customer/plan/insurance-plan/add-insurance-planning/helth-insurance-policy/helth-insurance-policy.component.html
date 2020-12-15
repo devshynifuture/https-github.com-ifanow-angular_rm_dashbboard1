@@ -32,124 +32,132 @@
             </div> -->
         </div>
         <div class="col-md-8 p-0 bl-1">
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="m-0 text-black pb-4">Advice header</p>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <input matInput readonly [value]="healthInsurance.get('selectAdvice').value"
-                                class="form-control" formControlName="adviceHeader">
-                            <mat-error class="f-12">This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <p class="m-0 text-black pb-4">Advice rationale</p>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <textarea matInput rows="6" class="form-control"
-                                formControlName="adviceRationale"></textarea>
-                            <mat-error class="f-12">This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <p class="m-0 text-black pb-4 pt-120">Advice status</p>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <input matInput type="text" class="form-control" [disabled]='true'
-                                formControlName="adviceStatus" readonly>
-                            <!-- <mat-error class="f-12">This field is required</mat-error> -->
-                        </mat-form-field>
-                    </div>
-
-                    <p class="m-0">Consent option <img src="/assets/images/svg/info.svg"></p>
-                    <mat-radio-group aria-label="Select an option" formControlName="consent">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <mat-radio-button class="p-0" value="1">Take client consent <button mat-stroked-button
-                                        class="btn-primary-outline br-4 btn-xs h-20 f-12">RECOMMENDED</button>
-                                </mat-radio-button>
-
-                                <p class="f-12 ml-32 mb-0 roboto text-custom">If this option is selected, further action
-                                    on this advice is
-                                    possible only after your client
-                                    gives explicit consent via email.</p>
-                                <!-- <mat-checkbox class="ml-44">Create a linked task</mat-checkbox> -->
-                            </div>
-
-                            <div class="col-md-12 p-0">
-                                <mat-radio-button value="2">Bypass client consent</mat-radio-button>
-                                <p class="f-12 roboto ml-32 text-custom">If this option is selected, you can directly
-                                    start further
-                                    work on this advice without taking any explicit consent from your client.</p>
-                            </div>
-
+            <div class="heightScroll">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="m-0 text-black pb-4">Advice header</p>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput readonly [value]="healthInsurance.get('selectAdvice').value"
+                                    class="form-control" formControlName="adviceHeader">
+                                <mat-error class="f-12">This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="m-0 text-black pb-4">Advice rationale</p>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <textarea matInput rows="6" class="form-control"
+                                    formControlName="adviceRationale"></textarea>
+                                <mat-error class="f-12">This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="m-0 text-black pb-4 pt-120">Advice status</p>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput type="text" class="form-control" [disabled]='true'
+                                    formControlName="adviceStatus" readonly>
+                                <!-- <mat-error class="f-12">This field is required</mat-error> -->
+                            </mat-form-field>
                         </div>
 
-                    </mat-radio-group>
+                        <p class="m-0">Consent option <img src="/assets/images/svg/info.svg"></p>
+                        <mat-radio-group aria-label="Select an option" formControlName="consent">
+                            <div class="row">
+                                <div class="col-md-12 p-0">
+                                    <mat-radio-button class="p-0" value="1">Take client consent <button
+                                            mat-stroked-button
+                                            class="btn-primary-outline br-4 btn-xs h-20 f-12">RECOMMENDED</button>
+                                    </mat-radio-button>
+
+                                    <p class="f-12 ml-32 mb-0 roboto text-custom">If this option is selected, further
+                                        action
+                                        on this advice is
+                                        possible only after your client
+                                        gives explicit consent via email.</p>
+                                    <!-- <mat-checkbox class="ml-44">Create a linked task</mat-checkbox> -->
+                                </div>
+
+                                <div class="col-md-12 p-0">
+                                    <mat-radio-button value="2">Bypass client consent</mat-radio-button>
+                                    <p class="f-12 roboto ml-32 text-custom">If this option is selected, you can
+                                        directly
+                                        start further
+                                        work on this advice without taking any explicit consent from your client.</p>
+                                </div>
+
+                            </div>
+
+                        </mat-radio-group>
 
 
-                </div>
-                <div class="col-md-4">
-                    <p class="m-0 text-black pb-4">Advice date</p>
-                    <div class="form-group">
-                        <mat-form-field class="ba-date">
-                            <input (ngModelChange)="dateChange('adviceHeaderDate')" matInput (focus)="picker.open()"
-                                formControlName="adviceHeaderDate" [matDatepicker]="picker" class="form-control b-0"
-                                [disabled]=dataForEdit>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
-                                This field is required</mat-error>
-                            <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.max)">
-                                Date should be less than <br>
-                                implementation date
-                            </mat-error>
-                        </mat-form-field>
                     </div>
-                    <p class="m-0 text-black pb-4">Implementation date</p>
-                    <div class="form-group">
-                        <mat-form-field class="ba-date">
-                            <input [min]="todayDate" #implementationDate
-                                (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"
-                                formControlName="implementationDate" [matDatepicker]="picker1" class="form-control b-0">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                            <mat-error class="f-12"
-                                *ngIf="(healthInsurance.get('implementationDate').errors?.required)">This field is
-                                required</mat-error>
-                            <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
-                                Date should be greater than
-                                <br>advice date
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <p class="m-0 text-black pb-4 pt-10"
-                        *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
-                        Amount</p>
-                    <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
-                        <mat-form-field class="ba-date">
-                            <input autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                                appInputValueValidation matInput #amount class="form-control b-0"
-                                formControlName="amount">
-                            <mat-error class="f-12" *ngIf="(healthInsurance.get('amount').errors?.required)">This field
-                                is
-                                required</mat-error>
-                            <mat-hint align="end" class="f-12">{{amount.value.length}}/15</mat-hint>
-                        </mat-form-field>
-                    </div>
-                    <p class="m-0 text-black pb-4"
-                        *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
-                        Family members</p>
-                    <div class="form-group"
-                        *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
-                        <mat-form-field>
-                            <mat-select autocomplete="true" class="form-control br-0" #famMember
-                                formControlName="famMember" matInput>
-                                <mat-option value='' disabled>Select option</mat-option>
-                                <mat-option *ngFor="let item of familyList" [value]=item.id>{{item.name}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error>This field is required
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="col-md-4">
+                        <p class="m-0 text-black pb-4">Advice date</p>
+                        <div class="form-group">
+                            <mat-form-field class="ba-date">
+                                <input (ngModelChange)="dateChange('adviceHeaderDate')" matInput (focus)="picker.open()"
+                                    formControlName="adviceHeaderDate" [matDatepicker]="picker" class="form-control b-0"
+                                    [disabled]=dataForEdit>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error class="f-12"
+                                    *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.required)">
+                                    This field is required</mat-error>
+                                <mat-error class="f-12" *ngIf="(healthInsurance.get('adviceHeaderDate').errors?.max)">
+                                    Date should be less than <br>
+                                    implementation date
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="m-0 text-black pb-4">Implementation date</p>
+                        <div class="form-group">
+                            <mat-form-field class="ba-date">
+                                <input [min]="todayDate" #implementationDate
+                                    (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"
+                                    formControlName="implementationDate" [matDatepicker]="picker1"
+                                    class="form-control b-0">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                <mat-error class="f-12"
+                                    *ngIf="(healthInsurance.get('implementationDate').errors?.required)">This field is
+                                    required</mat-error>
+                                <mat-error class="f-12" *ngIf="(healthInsurance.get('implementationDate').errors?.max)">
+                                    Date should be greater than
+                                    <br>advice date
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="m-0 text-black pb-4 pt-10"
+                            *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
+                            Amount</p>
+                        <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value == 'Surrender'">
+                            <mat-form-field class="ba-date">
+                                <input autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                    appInputValueValidation matInput #amount class="form-control b-0"
+                                    formControlName="amount">
+                                <mat-error class="f-12" *ngIf="(healthInsurance.get('amount').errors?.required)">This
+                                    field
+                                    is
+                                    required</mat-error>
+                                <mat-hint align="end" class="f-12">{{amount.value.length}}/15</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <p class="m-0 text-black pb-4"
+                            *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
+                            Family members</p>
+                        <div class="form-group"
+                            *ngIf="healthInsurance.get('selectAdvice').value == 'Add members' || healthInsurance.get('selectAdvice').value == 'Remove members'">
+                            <mat-form-field>
+                                <mat-select autocomplete="true" class="form-control br-0" #famMember
+                                    formControlName="famMember" matInput>
+                                    <mat-option value='' disabled>Select option</mat-option>
+                                    <mat-option *ngFor="let item of familyList" [value]=item.id>{{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
             </div>

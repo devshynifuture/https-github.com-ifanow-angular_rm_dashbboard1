@@ -4,6 +4,7 @@ import { BackOfficeService } from "../../../../back-office.service";
 import { AuthService } from "src/app/auth-service/authService";
 import { ExcelMisService } from "../excel-mis.service";
 import { MfServiceService } from "src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service";
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: "app-client-wise",
@@ -85,7 +86,8 @@ export class ClientWiseComponent implements OnInit {
   constructor(
     public aum: AumComponent,
     private backoffice: BackOfficeService,
-    private mfService: MfServiceService
+    private mfService: MfServiceService,
+    public roleService: RoleService
   ) { }
 
   showLoader = true;

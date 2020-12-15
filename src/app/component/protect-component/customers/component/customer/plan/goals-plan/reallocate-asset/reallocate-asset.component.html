@@ -56,7 +56,8 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 2 || allocationData?.sipPercent !=0)">
+        <div class="row pb-10 align-items-center"
+            *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 2 || allocationData?.sipPercent !=0)">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of SIP % (editable) </p>
@@ -65,7 +66,8 @@
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input type="text" formControlName="sipPercent" appInputValueValidation
-                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
+                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput
+                            class="form-control">
                         <mat-error *ngIf="reallocationFG.get('sipPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
@@ -73,7 +75,8 @@
             </div>
 
         </div>
-        <div class="row pb-10 align-items-center" *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 1 || allocationData?.lumpsumPercent !=0)">
+        <div class="row pb-10 align-items-center"
+            *ngIf="showMf == true && (allocationData?.lumpsumOrSip == 1 || allocationData?.lumpsumPercent !=0)">
 
             <div class="col-md-6 p-0">
                 <p class="text-black mb-8"> b) Allocation of lumpsum % (editable) </p>
@@ -82,7 +85,8 @@
                 <div class="editable_textBox" [formGroup]="reallocationFG">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input type="text" formControlName="lumpsumPercent" appInputValueValidation
-                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
+                            [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput
+                            class="form-control">
                         <mat-error *ngIf="reallocationFG.get('lumpsumPercent').errors?.required">This field is required
                         </mat-error>
                     </mat-form-field>
@@ -115,8 +119,8 @@
             <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
                 <!-- <app-progress-button class="btn-bottom   br-0 text-inherit">
                 </app-progress-button> -->
-                <button class="text-primitive mr-12 f-500" mat-button mat-dialog-close>Cancel</button>
-                <button mat-button class="text-primary f-500" (click)="reallocate()">Save</button>
+                <button class="text-primitive mr-12 f-500" mat-button mat-dialog-close> CANCEL </button>
+                <button mat-button class="  btn-primary f-500" (click)="reallocate()"> SAVE </button>
             </div>
         </div>
     </div>

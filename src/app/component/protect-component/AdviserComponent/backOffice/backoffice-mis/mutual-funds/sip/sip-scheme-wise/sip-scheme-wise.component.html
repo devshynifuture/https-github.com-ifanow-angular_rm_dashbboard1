@@ -26,7 +26,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button *ngIf="!isLoading && filteredArray.length > 0"
+                        <button mat-stroked-button
+                            *ngIf="!isLoading && filteredArray.length > 0 && roleService.backofficePermission.subModule.misCapability.download"
                             class="btn-default addon" (click)="exportToExcelSheet('scheme-wise', null,null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
@@ -93,8 +94,9 @@
                                 </td>
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? ' ' : '₹ '}} 
-                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">{{ data.sipAmount }}</span>
+                                        {{isLoading ? ' ' : '₹ '}}
+                                        <span *ngIf="!isLoading" appFormatNumber
+                                            [shouldRoundOff]="true">{{ data.sipAmount }}</span>
                                     </div>
                                 </td>
                                 <td style="padding-left: 30px !important;">
@@ -164,7 +166,8 @@
                                                 </th>
 
                                                 <th style="padding-left: 30px !important;"
-                                                    (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p f-500">
+                                                    (click)="sortByInvestor(data.subCatList,'sipCount')"
+                                                    class="c-p f-500">
                                                     <span class="d-flex align-items-center"> SIP Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipCount' && !reverse2">
@@ -195,8 +198,9 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                        {{isLoadingCategory ? ' ' : '₹ '}} 
-                                                        <span *ngIf="!isLoadingCategory" appFormatNumber [shouldRoundOff]="true">{{ subInvList.sipAmount }}</span>
+                                                        {{isLoadingCategory ? ' ' : '₹ '}}
+                                                        <span *ngIf="!isLoadingCategory" appFormatNumber
+                                                            [shouldRoundOff]="true">{{ subInvList.sipAmount }}</span>
                                                     </div>
                                                 </td>
                                                 <td style="padding-left: 30px !important;">
@@ -234,196 +238,206 @@
                                             <tr style="border: transparent !important">
                                                 <td colspan="7" class="innerTd two">
 
-                                                   <div *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0" class="tableScrollSip"> 
-                                                    <table class="mb-8 mt-16 skeletonAnimation" appSkeletonLoading
-                                                        [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
-                                                        >
-                                                        <thead>
-                                                            <tr class="h-40 ">
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'investorName')"
-                                                                    class="c-p f-500">
-                                                                    <span class="d-flex align-items-center">Applicant
-                                                                        Name
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='investorName' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'schemeName')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> Scheme Name
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='schemeName' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='schemeName' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'folioNumber')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> Folio
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='folioNumber' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='folioNumber' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'registeredDate')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> Registered
-                                                                        Date
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='registeredDate' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='registeredDate' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'from_date')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> From Date
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='from_date' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='from_date' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'to_date')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> To Date
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='to_date' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='to_date' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'sipTriggerDay')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> Trigger
-                                                                        Day
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='sipTriggerDay' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='sipTriggerDay' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'frequency')"
-                                                                    class="c-p f-500"> <span
-                                                                        class="d-flex align-items-center"> Frequency
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='frequency' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='frequency' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th (click)="sortByApplicant(subInvList.applicantList,'sipAmount')"
-                                                                    class="c-p w-9 f-500"> <span
-                                                                        class="d-flex align-items-center"> Amount
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='sipAmount' && !reverse3">
-                                                                            arrow_upward </i>
-                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                            *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</i>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="f-500 w-9">% Weight </th>
-                                                                <th class="f-500">Edit</th>
-                                                                <th></th>
-                                                                
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody
-                                                            *ngFor="let scheme of subInvList.applicantList;let i = index">
-                                                            <tr>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : scheme.investorName}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
+                                                    <div *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0"
+                                                        class="tableScrollSip">
+                                                        <table class="mb-8 mt-16 skeletonAnimation" appSkeletonLoading
+                                                            [appSkeletonLoading]="isLoadingSubCategory" id="table-low">
+                                                            <thead>
+                                                                <tr class="h-40 ">
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'investorName')"
+                                                                        class="c-p f-500">
+                                                                        <span
+                                                                            class="d-flex align-items-center">Applicant
+                                                                            Name
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='investorName' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'schemeName')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> Scheme
+                                                                            Name
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='schemeName' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='schemeName' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'folioNumber')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> Folio
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='folioNumber' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='folioNumber' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'registeredDate')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center">
+                                                                            Registered
+                                                                            Date
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='registeredDate' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='registeredDate' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'from_date')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> From Date
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='from_date' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='from_date' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'to_date')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> To Date
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='to_date' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='to_date' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'sipTriggerDay')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> Trigger
+                                                                            Day
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='sipTriggerDay' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='sipTriggerDay' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'frequency')"
+                                                                        class="c-p f-500"> <span
+                                                                            class="d-flex align-items-center"> Frequency
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='frequency' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='frequency' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th (click)="sortByApplicant(subInvList.applicantList,'sipAmount')"
+                                                                        class="c-p w-9 f-500"> <span
+                                                                            class="d-flex align-items-center"> Amount
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='sipAmount' && !reverse3">
+                                                                                arrow_upward </i>
+                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</i>
+                                                                        </span>
+                                                                    </th>
+                                                                    <th class="f-500 w-9">% Weight </th>
+                                                                    <th class="f-500">Edit</th>
+                                                                    <th></th>
 
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : scheme.schemeName}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : scheme.folioNumber}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : (scheme.registeredDate | date:'dd/MM/yyyy')}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : (scheme.from_date | date:'dd/MM/yyyy')}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : (scheme.to_date | date:'dd/MM/yyyy')}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : scheme.sipTriggerDay}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : scheme.frequency}}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? ' ' : '₹ '}}
-                                                                        <span *ngIf="!isLoadingSubCategory" appFormatNumber [shouldRoundOff]="true"> {{ scheme.sipAmount }}</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? '' : (scheme.weightInPercentage | number:'1.2-2')}}{{(isLoadingSubCategory?'':'%') }}
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <!-- {{(isLoadingSubCategory?'':'Add Ceased') }} -->
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        <div class="c-p" *ngIf="!isLoadingSubCategory">
-                                                                             
-                                                                                <span title="Add Cease Date" (click)="changeCeasedDateDialog(scheme, subInvList)"  *ngIf="!scheme.isEdit" class="material-icons">
-                                                                                    date_range
-                                                                                    </span>
-
-
-                                                                            <span *ngIf="scheme.isEdit">
-                                                                                {{ ceasedDate | date:'mediumDate'}}
-                                                                            </span>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody
+                                                                *ngFor="let scheme of subInvList.applicantList;let i = index">
+                                                                <tr>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : scheme.investorName}}
                                                                         </div>
-                                                                        <span *ngIf="isLoadingSubCategory">{{''}}</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                                        *ngIf="scheme.showSubCategory==false && !isLoadingSubCategory">add</i>
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                                        *ngIf="scheme.showSubCategory==true && !isLoadingSubCategory">
-                                                                        remove
-                                                                    </i>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                   </div>
+                                                                    </td>
+                                                                    <td>
+
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : scheme.schemeName}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : scheme.folioNumber}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : (scheme.registeredDate | date:'dd/MM/yyyy')}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : (scheme.from_date | date:'dd/MM/yyyy')}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : (scheme.to_date | date:'dd/MM/yyyy')}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : scheme.sipTriggerDay}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : scheme.frequency}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? ' ' : '₹ '}}
+                                                                            <span *ngIf="!isLoadingSubCategory"
+                                                                                appFormatNumber [shouldRoundOff]="true">
+                                                                                {{ scheme.sipAmount }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : (scheme.weightInPercentage | number:'1.2-2')}}{{(isLoadingSubCategory?'':'%') }}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <!-- {{(isLoadingSubCategory?'':'Add Ceased') }} -->
+                                                                        <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            <div class="c-p"
+                                                                                *ngIf="!isLoadingSubCategory">
+
+                                                                                <span title="Add Cease Date"
+                                                                                    (click)="changeCeasedDateDialog(scheme, subInvList)"
+                                                                                    *ngIf="!scheme.isEdit"
+                                                                                    class="material-icons">
+                                                                                    date_range
+                                                                                </span>
+
+
+                                                                                <span *ngIf="scheme.isEdit">
+                                                                                    {{ ceasedDate | date:'mediumDate'}}
+                                                                                </span>
+                                                                            </div>
+                                                                            <span
+                                                                                *ngIf="isLoadingSubCategory">{{''}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                            *ngIf="scheme.showSubCategory==false && !isLoadingSubCategory">add</i>
+                                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                            *ngIf="scheme.showSubCategory==true && !isLoadingSubCategory">
+                                                                            remove
+                                                                        </i>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                     <!-- <div
                                                         *ngIf="!isLoadingSubCategory && subInvList.showSubCategory==false">
                                                         <div *ngIf="subInvList.applicantList?.length == 0 && applicantListArr.length == 0"
@@ -451,9 +465,11 @@
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table text-right"><strong>Total</strong></td>
                                 <td class="p-table text-right"><strong>{{'₹ '}}
-                                    <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true"> {{ totalOfSipAmount }}</span></strong>
+                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">
+                                            {{ totalOfSipAmount }}</span></strong>
                                 </td>
-                                <td class="p-table " style="padding-left: 30px !important;"><strong>{{totalOfSipCount}}</strong></td>
+                                <td class="p-table " style="padding-left: 30px !important;">
+                                    <strong>{{totalOfSipCount}}</strong></td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>
                                 <td></td>

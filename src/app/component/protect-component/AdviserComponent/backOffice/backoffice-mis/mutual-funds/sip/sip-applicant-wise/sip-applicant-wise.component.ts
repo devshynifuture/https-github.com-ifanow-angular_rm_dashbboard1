@@ -9,6 +9,7 @@ import { MfServiceService } from 'src/app/component/protect-component/customers/
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-sip-applicant-wise',
@@ -97,7 +98,8 @@ export class SipApplicantWiseComponent implements OnInit {
     private fb: FormBuilder,
     private mfService: MfServiceService,
     private eventService: EventService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public roleService: RoleService
   ) { }
 
   ngOnInit() {

@@ -31,7 +31,8 @@
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
 
-          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/dashboard">
+          <a class="sidenav-link" *ngIf="roleService.dashboardPermission.enabled" routerLinkActive="bg-grey lter"
+            mat-list-item routerLink="/admin/dashboard">
             <img src="assets/images/svg/time-meter.svg">
             <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
           </a>
@@ -151,31 +152,28 @@
                 </mat-panel-title>
 
               </mat-expansion-panel-header>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+              <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.aumreconciliation.enabled"
+                routerLinkActive="bg-grey lter" mat-list-item
                 routerLink="/admin/backoffice-aum-reconciliation/reconciliation/cams">
-                <span *ngIf="showTabs && roleService.backofficePermission.subModule.aumreconciliation.enabled"
-                  class="title" mat-line>AUM Reconciliation</span>
+                <span *ngIf="showTabs" class="title" mat-line>AUM Reconciliation</span>
               </a>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                routerLink="/admin/backoffice-mis/mutual-funds">
-                <span *ngIf="showTabs && roleService.backofficePermission.subModule.mis.enabled" class="title"
-                  mat-line>MIS</span>
+              <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.mis.enabled"
+                routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/backoffice-mis/mutual-funds">
+                <span *ngIf="showTabs " class="title" mat-line>MIS</span>
               </a>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                routerLink="/admin/backoffice-file-upload/transaction">
-                <span *ngIf="showTabs && roleService.backofficePermission.subModule.fileuploads.enabled" class="title"
-                  mat-line>File uploads</span>
+              <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.fileuploads.enabled"
+                routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/backoffice-file-upload/transaction">
+                <span *ngIf="showTabs " class="title" mat-line>File uploads</span>
               </a>
 
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                routerLink="/admin/bulk-report-sending">
-                <span *ngIf="showTabs && roleService.backofficePermission.subModule.mis.enabled" class="title"
-                  mat-line>Bulk report sending</span>
+              <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.mis.enabled"
+                routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/bulk-report-sending">
+                <span *ngIf="showTabs " class="title" mat-line>Bulk report sending</span>
               </a>
 
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/folio-mapping">
-                <span *ngIf="showTabs && roleService.backofficePermission.subModule.foliomapping.enabled" class="title"
-                  mat-line>Folio Mapping</span>
+              <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.foliomapping.enabled"
+                routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/folio-mapping">
+                <span *ngIf="showTabs" class="title" mat-line>Folio Mapping</span>
               </a>
 
               <!--<a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">

@@ -268,90 +268,90 @@
                                 </div> -->
                             </div>
 
-                            <div class="row pt-20" *ngIf="dataSource?.data?.length>0">
+                            <div class="pt-20" *ngIf="dataSource?.data?.length>0">
 
-                                <div class="col-md-12 p-0">
-                                    <p class="f-14 left m-0 roboto f-400">Quick view</p>
-                                    <!-- <p class="f-14 right m-0">
-                                        <i class="material-icons">
-                                            keyboard_arrow_left
-                                        </i>
-                                        <i class="material-icons">
-                                            keyboard_arrow_right
-                                        </i>
-                                    </p> -->
+                                <div class="row">
+                                    <div class="col-md-6 d-flex p-0 align-items-center">
+                                        <p class="f-14 left m-0 roboto f-400">Quick view</p>
+                                    </div>
+
+                                    <div class="col-md-6 p-0">
+                                        <mat-paginator [hidePageSize]="true" [pageSize]="1"></mat-paginator>
+                                    </div>
+
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-12 planTable p-0">
 
-                                <div class="col-md-12 planTable p-0">
-                                    <mat-paginator [hidePageSize]="true" [pageSize]="1"></mat-paginator>
-                                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
-                                        [appSkeletonLoading]="isLoadingGoals">
+                                        <table mat-table [dataSource]="dataSource" id="table-low"
+                                            class="skeletonAnimation" [appSkeletonLoading]="isLoadingGoals">
 
-                                        <!--- Note that these columns can be defined in any order.
+                                            <!--- Note that these columns can be defined in any order.
                                                       The actual rendered columns are set as a property on the row definition" -->
 
-                                        <!-- Position Column -->
-                                        <ng-container matColumnDef="details">
-                                            <th mat-header-cell *matHeaderCellDef> Goal details </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <div
-                                                    class="d-flex align-items-center justify-content-around bg-primary-progress bar">
-                                                    <div>
-                                                        <img [src]="element.imageUrl" *ngIf="element.imageUrl"
-                                                            class="h-50 w-auto">
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="details">
+                                                <th mat-header-cell *matHeaderCellDef> Goal details </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div
+                                                        class="d-flex align-items-center justify-content-around bg-primary-progress bar">
+                                                        <div>
+                                                            <img [src]="element.imageUrl" *ngIf="element.imageUrl"
+                                                                class="h-50 w-auto">
+                                                        </div>
+                                                        <div class="">
+                                                            <p class="f-14 m-0"> {{ element.details }} </p>
+                                                            <mat-progress-bar mode="determinate"
+                                                                [value]="element.percentCompleted">
+                                                            </mat-progress-bar>
+                                                        </div>
                                                     </div>
-                                                    <div class="">
-                                                        <p class="f-14 m-0"> {{ element.details }} </p>
-                                                        <mat-progress-bar mode="determinate"
-                                                            [value]="element.percentCompleted">
-                                                        </mat-progress-bar>
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="value">
+                                                <th mat-header-cell *matHeaderCellDef> Goal value </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                        [value]="element.value">
+                                                        {{element.value}}
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </ng-container>
+                                                </td>
+                                            </ng-container>
 
-                                        <!-- Name Column -->
-                                        <ng-container matColumnDef="value">
-                                            <th mat-header-cell *matHeaderCellDef> Goal value </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
-                                                    [value]="element.value">
-                                                    {{element.value}}
-                                                </div>
-                                            </td>
-                                        </ng-container>
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="month">
+                                                <th mat-header-cell *matHeaderCellDef> Monthly </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                        [value]="element.month">
+                                                        {{element.month}}
+                                                    </div>
+                                                </td>
+                                            </ng-container>
 
-                                        <!-- Weight Column -->
-                                        <ng-container matColumnDef="month">
-                                            <th mat-header-cell *matHeaderCellDef> Monthly </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
-                                                    [value]="element.month">
-                                                    {{element.month}}
-                                                </div>
-                                            </td>
-                                        </ng-container>
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="lumpsum">
+                                                <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="bar" appFormatNumber [shouldRoundOff]="false"
+                                                        [value]="element.lumpsum">
+                                                        {{element.lumpsum}}
+                                                    </div>
+                                                </td>
+                                            </ng-container>
 
-                                        <!-- Symbol Column -->
-                                        <ng-container matColumnDef="lumpsum">
-                                            <th mat-header-cell *matHeaderCellDef> Lumpsum </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <div class="bar" appFormatNumber [shouldRoundOff]="false"
-                                                    [value]="element.lumpsum">
-                                                    {{element.lumpsum}}
-                                                </div>
-                                            </td>
-                                        </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
 
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                    </table>
-
-                                    <div *ngIf="dataSource?.data?.length == 0">
-                                        <h4 class="d-flex justify-content-center b-a p-44">
-                                            No Data Found
-                                        </h4>
+                                        <div *ngIf="dataSource?.data?.length == 0">
+                                            <h4 class="d-flex justify-content-center b-a p-44">
+                                                No Data Found
+                                            </h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -460,7 +460,7 @@
                             <div *ngIf="insurancePlanList?.length > 0 && !isLoadingSummary">
                                 <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
                                     <div class="col-md-2 p-0">
-                                        <img [src]="item.img">
+                                        <img class="img-max-width" [src]="item.img">
                                     </div>
                                     <div class="col-md-10 pr-0 ">
                                         <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>

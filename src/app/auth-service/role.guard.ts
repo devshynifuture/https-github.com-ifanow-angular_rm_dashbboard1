@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {RoleService} from './role.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { RoleService } from './role.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,11 @@ export class RoleGuard implements CanActivate {
       return true;
     } else if (state.url.match('leads') && this.roleService.peoplePermission.subModule.leads.enabled) {
       return true;
-    } else {
+    }
+    else if (state.url.match('dashboard') && this.roleService.dashboardPermission.enabled) {
+      return true;
+    }
+    else {
       this.router.navigate(['unauthorized']);
       return false;
     }
