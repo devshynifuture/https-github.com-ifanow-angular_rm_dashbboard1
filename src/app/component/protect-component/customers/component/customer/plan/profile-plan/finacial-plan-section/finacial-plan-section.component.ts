@@ -467,7 +467,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       module.array.add = false
     } else if (module.array && module.array.checked) {
       module.array.checked = false
-    } else if(module.array && module.array.isSelectedCheckbox){
+    } else if (module.array && module.array.isSelectedCheckbox) {
       module.array.isSelectedCheckbox = false;
     }
     this.moduleAdded.splice(i, 1);
@@ -567,6 +567,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       this.moduleAddedLoader = [{}, {}, {}]
       this.isLoading = false
     } else {
+      this.moduleAdded = this.moduleAdded.filter(function (value) {
+        return value.name != displayName;
+      });
       this.isLoading = false
       return
     }
@@ -750,7 +753,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       landscape: flag, isSelected: true, array: array
 
     });
-    console.log(data);
+    console.log('moduleAdded', this.moduleAdded);
   }
 
   getGoalSummaryValues() {
