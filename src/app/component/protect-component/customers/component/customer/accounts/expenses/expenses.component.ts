@@ -85,7 +85,7 @@ export class ExpensesComponent implements OnInit {
   fragmentData = { isSpinner: false };
   details: any;
   getOrgData: any;
-  selectedPeriod: string;
+  selectedPeriod = '1';
   selectedDateRange: {};
   filterDate = [];
   startDateDisp: string;

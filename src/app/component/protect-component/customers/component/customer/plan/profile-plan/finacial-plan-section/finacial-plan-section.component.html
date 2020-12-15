@@ -582,7 +582,7 @@
                             <div class="bl br bb">
                                 <div class="row bb-1 pt-8 pb-8">
                                     <div class="col-md-1">
-                                        <mat-checkbox #mfOverView [(ngModel)]="selectedCheckbox"
+                                        <mat-checkbox #mfOverView
                                             (change)="checkAndLoadPdf($event.checked,'Mutual fund overview','','Portfolio / Overview',false,mfOverView)">
                                         </mat-checkbox>
                                     </div>
@@ -1074,7 +1074,7 @@
                                 <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.public_provident_fund != 0">
                                     <div class="col-md-1">
                                         <mat-checkbox #ppf
-                                            (change)="checkAndLoadPdf($event.checked,'PPF','','Portfolio / Public provident fund (PPF)',ppf)">
+                                            (change)="checkAndLoadPdf($event.checked,'PPF','','Portfolio / Public provident fund (PPF)',false,ppf)">
                                         </mat-checkbox>
                                     </div>
                                     <div class="col-md-11 pl-8">
