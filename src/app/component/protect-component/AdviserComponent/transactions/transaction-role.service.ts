@@ -141,6 +141,9 @@ export class TransactionRoleService {
       this.addArnRiaCredentials.showModule = addArnRiaCredentialsData.showModule;
       this.addArnRiaCredentials.capabilityList = addArnRiaCredentialsData.subModule.addArnRiaCredentials.capabilityList;
       this.addArnRiaCredentials.capabilityMap = UtilService.getCapabilityMap(this.addArnRiaCredentials.capabilityList);
+      this.addArnRiaCredentials.showModule = false;
+      // this.addArnRiaCredentials.capabilityMap = {view: false, add: false, edit: false, delete: false};
+
       console.log('TransactionRoleService setAddArnRiaDetailPermission addArnRiaCredentials : ', this.addArnRiaCredentials);
     }
   }
