@@ -1,9 +1,9 @@
-import {Router} from '@angular/router';
-import {Injectable} from '@angular/core/src/metadata/*';
-import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from '../services/util.service';
-import {AuthService} from "./authService";
-import {BehaviorSubject} from "rxjs";
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from '../services/util.service';
+import { AuthService } from "./authService";
+import { BehaviorSubject } from "rxjs";
 
 
 @Injectable({
@@ -156,7 +156,7 @@ export class RoleService {
   }
 
   getRoleDetails(roleId) {
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
 
       if (res) {
@@ -268,6 +268,11 @@ export class RoleService {
   }
 
   setBackofficePermissions(backOfficePermission) {
-
+    this.backofficePermission.subModule.mis.enabled = backOfficePermission.mis.showModule
+    this.backofficePermission.subModule.fileuploads.enabled = backOfficePermission.fileuploads.showModule
+    this.backofficePermission.subModule.duplicateData.enabled = backOfficePermission.duplicateData.showModule
+    this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule
+    this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule
+    this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
   }
 }
