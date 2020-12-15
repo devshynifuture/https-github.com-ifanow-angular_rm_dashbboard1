@@ -192,7 +192,8 @@
                         id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null" class="w-25">
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null"
+                                class="w-25">
                                 <div class="bar">
                                     {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
                                 </div>
@@ -203,7 +204,8 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null" class="text-right w-20 amt">
+                            <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null"
+                                class="text-right w-20 amt">
                                 <div class="bar">
                                     {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
                                         appFormatNumber>
@@ -214,7 +216,8 @@
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null" *matCellDef="let element">
+                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null"
+                                *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span
                                         appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -224,7 +227,8 @@
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="returns">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
-                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null" *matCellDef="let element">
+                            <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement=null"
+                                *matCellDef="let element">
                                 <div class="bar">
                                     {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
                                 </div>
@@ -234,7 +238,8 @@
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
                             <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
-                                <div cclass="bar d-flex align-items-center justify-content-between" >{{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
+                                <div cclass="bar d-flex align-items-center justify-content-between">
+                                    {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_up
                                     </span>
