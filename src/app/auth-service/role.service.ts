@@ -115,8 +115,8 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: {},
-      fileuploadsCapability: {download:true}
+      misCapability: { add: true },
+      fileuploadsCapability: { download: true }
     }
   };
   dashboardPermission = {

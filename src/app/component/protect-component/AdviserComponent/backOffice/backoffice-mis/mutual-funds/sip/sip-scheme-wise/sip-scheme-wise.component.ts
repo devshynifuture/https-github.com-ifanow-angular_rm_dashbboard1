@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -134,7 +135,8 @@ export class SipSchemeWiseComponent implements OnInit {
   arnRiaValue;
   ceasedDate: any;
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService, private dialog: MatDialog) {
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService, private dialog: MatDialog,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
@@ -498,8 +500,8 @@ export class SipSchemeWiseComponent implements OnInit {
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         schemeId: ApplicantData.mutualFundSchemeMasterId,
-        familyMemberId:!ApplicantData.familyMemberId || ApplicantData.familyMemberId == 0 ? -1 : ApplicantData.familyMemberId,
-        clientId: ApplicantData.familyMemberId > 0 ?  -1 : ApplicantData.clientId,
+        familyMemberId: !ApplicantData.familyMemberId || ApplicantData.familyMemberId == 0 ? -1 : ApplicantData.familyMemberId,
+        clientId: ApplicantData.familyMemberId > 0 ? -1 : ApplicantData.clientId,
       };
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data => {
