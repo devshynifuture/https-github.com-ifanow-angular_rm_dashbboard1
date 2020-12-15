@@ -156,8 +156,9 @@ export class AuthService {
     return sessionStorage.getItem('clientRoles');
   }
 
-  static getAdvisorRoles(data) {
-    return localStorage.getItem('advisorRoles');
+  static getAdvisorRoles() {
+    const clientDataString = localStorage.getItem('advisorRoles');
+    return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
 
   static getTeamMemberRoles(data) {
@@ -201,6 +202,7 @@ export class AuthService {
     localStorage.removeItem('roleObj');
     localStorage.removeItem('successStoringToken');
     localStorage.removeItem('googleOAuthToken');
+    localStorage.removeItem('advisorRoles');
     window.name = undefined;
     localStorage.clear();
     sessionStorage.removeItem('clientList');

@@ -9,7 +9,9 @@ import {TransactionRoleService} from '../component/protect-component/AdviserComp
 })
 export class TransactionRoleGuard implements CanActivate {
 
-  constructor(private roleService: RoleService, private transactionRoleService: TransactionRoleService, private router: Router) {
+  constructor(private roleService: RoleService, private transactionRoleService: TransactionRoleService,
+              private router: Router) {
+
   }
 
   canActivate(
@@ -46,12 +48,30 @@ export class TransactionRoleGuard implements CanActivate {
         }
       }
       return true;
+    } else if (state.url.match('transactions/transactions')) {
+      if (this.transactionRoleService.transactionsModule.showModule) {
+        return true;
+      } else {
+        this.router.navigate(['unauthorized']);
+        return false;
+      }
+    } else if (state.url.match('mandates')) {
+      if (this.transactionRoleService.mandateModule.showModule) {
+        return true;
+      } else {
+        this.router.navigate(['unauthorized']);
+        return false;
+      }
+    } else if (state.url.match('investor')) {
+      if (this.transactionRoleService.investorsModule.showModule) {
+        return true;
+      } else {
+        this.router.navigate(['unauthorized']);
+        return false;
+      }
     } else {
       this.router.navigate(['unauthorized']);
       return false;
     }
-
-
-    return false;
   }
 }

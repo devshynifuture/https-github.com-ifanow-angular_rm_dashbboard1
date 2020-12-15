@@ -66,6 +66,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   selectedBalanceUnits: any = 0;
   selectedFolioUnitsFiltered: any = 0;
   freezeDate: any;
+  isTransactionDeleted: boolean;
 
   constructor(
     private eRef: ElementRef,
@@ -470,6 +471,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
         value.shift();
+        this.isTransactionDeleted = true;
         this.misAumDataStorageService.clearStorage();
         this.misAumDataStorageService.callApiData();
         if (this.dataSource1 && this.dataSource1.data.length > 0) {
@@ -861,7 +863,9 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   }
 
   dialogClose() {
-
+    if (!this.isTransactionDeleted) {
+      this.deletedTransactions = [];
+    }
     let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
     this.subscriptionInject
       .changeNewRightSliderState({

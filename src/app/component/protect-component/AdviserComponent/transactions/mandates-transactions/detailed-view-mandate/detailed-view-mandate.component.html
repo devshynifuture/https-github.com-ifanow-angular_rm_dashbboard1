@@ -136,7 +136,7 @@
                 <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
             </div> -->
 
-            <div class="row">
+            <div class="row" *ngIf="transactionRoleService.mandateModule.capabilityMap.edit">
                 <div class="col-md-5 mb-10 p-0">
                     <button (click)="uploadFileInput1.click()"
                         *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading"

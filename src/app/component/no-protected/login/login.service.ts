@@ -68,24 +68,27 @@ export class LoginService {
   }
 
   handleUserData(authService: AuthService, router: Router, userData) {
-    authService.setToken('authTokenInLoginComponnennt');
+    authService.setToken('authTokenInLoginComponent');
     authService.setUserInfo(userData);
 
     if (userData.userType == 1 || userData.userType == 8) {
-      this.roleService.getRoleDetails(userData.roleId);
-      router.navigate(['admin', 'dashboard']);
-      if (userData.showReferPopup) {
-        this.openDialog();
-      }
+      this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
+        router.navigate(['admin', 'dashboard']);
+        if (userData.showReferPopup) {
+          this.openDialog();
+        }
+      });
+
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
       router.navigate(['support', 'dashboard']);
     } else {
-      this.roleService.getRoleDetails(userData.roleId);
-      authService.setToken('authTokenInLoginComponent');
-      userData.id = userData.clientId;
-      authService.setClientData(userData);
-      router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+      this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
+        authService.setToken('authTokenInLoginComponent');
+        userData.id = userData.clientId;
+        authService.setClientData(userData);
+        router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+      });
     }
     // when changing routers, make changes to authservice gohome() method
   }
