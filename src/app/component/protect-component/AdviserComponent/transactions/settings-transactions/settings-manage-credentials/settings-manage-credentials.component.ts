@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TransactionRoleService} from '../../transaction-role.service';
 
 @Component({
   selector: 'app-settings-manage-credentials',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsManageCredentialsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public transactionRoleService: TransactionRoleService) { }
+
 
   ngOnInit() {
   }
