@@ -10,7 +10,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-lg-3 p-0 br upload-box">
+        <div [ngClass]="{'event-none': roleService.backofficePermission.subModule.fileuploadsCapability.download==false}"
+            class="col-md-3 col-lg-3 p-0 br upload-box">
             <div class="row ">
                 <div class="col-md-12 pr-0">
                     <h5 class="mb-4 mt-12 f-14">Please Select Type</h5>
@@ -86,7 +87,8 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row" *ngIf="selectedType ==1">
+            <div class="row"
+                *ngIf="selectedType ==1 && roleService.backofficePermission.subModule.fileuploadsCapability.download">
                 <div class="col-md-12 pr-0 pt-10">
                     <h5 class="mb-4   f-14">Please Select a File...</h5>
                 </div>

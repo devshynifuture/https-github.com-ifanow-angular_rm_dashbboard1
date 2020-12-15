@@ -103,12 +103,12 @@
             </div>
         </div>
         <div class="row pt-12 pl-32 pr-32">
-            <div (click)="selectTransactionType('PURCHASE');saveAndNext()" class="col-md-4 pl-8 pr-8 c-p">
+            <div (click)="selectTransactionType('PURCHASE');saveAndNext()" *ngIf="transactionRoleService.doPurchaseTransaction.showModule"  class="col-md-4 pl-8 pr-8 c-p">
                 <mat-checkbox [ngClass]="{'v-h': selectedDiv != 'PURCHASE' }"
                     [ngStyle]="{'pointer-events': (selectedDiv == 'PURCHASE') ? 'all': 'none'}" checked="false"
                     class="checked">
                 </mat-checkbox>
-                <div [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}"  class="row pt-20 pb-20 ba-Tr bg-grey lter">
                     <div class="col-md-4 text-right">
                         <img class="pt-4"
                             src="/assets/images/svg/shopping{{ (selectedDiv == 'PURCHASE') ? '-blue': '-icons' }}.svg">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('SWITCH');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SWITCH');saveAndNext()" *ngIf="transactionRoleService.doSwitchTransaction.showModule"  class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWITCH' }"
                     [ngStyle]=" {'pointer-events': (selectedDiv == 'SWITCH') ? 'all': 'none'}" checked="false"
                     class="checked">
@@ -162,7 +162,7 @@
             </div>
         </div>
         <div class="row pt-12 pl-32 pr-32">
-            <div (click)="selectTransactionType('SIP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SIP');saveAndNext()" *ngIf="transactionRoleService.doSipTransaction.showModule"  class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SIP' }"
                     [ngStyle]="{'pointer-events': (selectedDiv == 'SIP') ? 'all': 'none'}" checked="false"
                     class="checked">
@@ -179,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('STP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('STP');saveAndNext()"  *ngIf="transactionRoleService.doStpTransaction.showModule"  class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'STP' }"
                     [ngStyle]="{'pointer-events':(selectedDiv == 'STP') ? 'all': 'none'}" checked="false"
                     class="checked">
@@ -198,7 +198,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('SWP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SWP');saveAndNext()" *ngIf="transactionRoleService.doSwpTransaction.showModule"  class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWP' }"
                     [ngStyle]="{'pointer-events':(selectedDiv == 'SWP') ? 'all': 'none'}" checked="false"
                     class="checked">
@@ -226,7 +226,7 @@
  </div>-->
     <div *ngIf="noSubBroker" class="pt-90 pr-20 pl-20 pb-44 text-center">
         <p>No broker found</p>
-        <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+        <button *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add" (click)="noBrokerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD
         </button>
     </div>
 
