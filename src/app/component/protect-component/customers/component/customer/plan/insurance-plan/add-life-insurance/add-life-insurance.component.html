@@ -9,47 +9,50 @@
     </div>
   </div>
 </div>
-<div class="pt-100 pl-24 pr-24 pb-48 mb-48" >
+<div class="pt-100 pl-24 pr-24 pb-48 mb-48">
   <div *ngIf="!isLoadingLifeInsurance">
-     
+
     <p>
       Select family members for whom you wish to do the planning.
     </p>
-      
+
     <p>
       For your ready reference, we have provided the list of family members along with the status of their current sum
       assured.
     </p>
-  
-     <p>
-      We have also pulled in details of their current incomes (income from Rental and Pension have been ignored). Ideally,
+
+    <p>
+      We have also pulled in details of their current incomes (income from Rental and Pension have been ignored).
+      Ideally,
       you should plan for those members who are actively earning income and have dependant(s).
-     </p>
-  
-       <table mat-table [dataSource]="dataSource" *ngIf="dataSource?.data?.length > 0" class="mt-8" id="table-low">
-        <ng-container matColumnDef="client">
-          <th mat-header-cell *matHeaderCellDef class="w-30 br"> Family member name </th>
-          <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="cat">
-          <th mat-header-cell *matHeaderCellDef class="w-25 br text-right"> Current sum assured </th>
-          <td mat-cell *matCellDef="let element" class="text-right br">
-              {{element.totalSumAssured ? '₹' : ''}}<span appFormatNumber>{{element.totalSumAssured ? element.totalSumAssured : '-'}} </span>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="des">
-          <th mat-header-cell *matHeaderCellDef class="w-25 text-right br"> Current monthly income </th>
-          <td mat-cell *matCellDef="let element" class="text-right br">
-            {{element.totalIncome ? '₹' : ''}}<span appFormatNumber>{{element.totalIncome ? element.totalIncome : '-'}}</span> </td>
-        </ng-container>
-        <ng-container matColumnDef="checkbox" class="w-20">
-          <th mat-header-cell *matHeaderCellDef>Add to plan
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox (change)="addInsurance($event,element)"></mat-checkbox>
-          </td>
-        </ng-container>
-        <!-- <ng-container matColumnDef="icons">
+    </p>
+
+    <table mat-table [dataSource]="dataSource" *ngIf="dataSource?.data?.length > 0" class="mt-8" id="table-low">
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef class="w-30 br"> Family member name </th>
+        <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="cat">
+        <th mat-header-cell *matHeaderCellDef class="w-25 br text-right"> Current sum assured </th>
+        <td mat-cell *matCellDef="let element" class="text-right br">
+          {{element.totalSumAssured ? '₹' : ''}}<span
+            appFormatNumber>{{element.totalSumAssured ? element.totalSumAssured : '-'}} </span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="des">
+        <th mat-header-cell *matHeaderCellDef class="w-25 text-right br"> Current monthly income </th>
+        <td mat-cell *matCellDef="let element" class="text-right br">
+          {{element.totalIncome ? '₹' : ''}}<span
+            appFormatNumber>{{element.totalIncome ? element.totalIncome : '-'}}</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="checkbox" class="w-20">
+        <th mat-header-cell *matHeaderCellDef>Add to plan
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="addInsurance($event,element)"></mat-checkbox>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef> </th>
           <td mat-cell *matCellDef="let element">
             <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
@@ -59,19 +62,22 @@
             </mat-menu>
           </td>
         </ng-container> -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <div *ngIf="dataSource?.data?.length == 0 " class="d-flex flex-column align-items-center mt-20">
-        <img class="width400" src="assets/images/svg/clients-img.svg">
-        <h4 class="text-center pt-12">No data found</h4>
-      </div>
-        <p class="text-danger" *ngIf="addplan">Please select at least one plan</p>
-       
-     
-  </div>
-  <div *ngIf="isLoadingLifeInsurance" class="bg-white p-20">Loading data...</div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource?.data?.length == 0 " class="d-flex flex-column align-items-center mt-20">
+      <img class="width400" src="assets/images/svg/clients-img.svg">
+      <h4 class="text-center pt-12">No data found</h4>
+    </div>
+    <p class="text-danger" *ngIf="addplan">Please select at least one plan</p>
 
+
+  </div>
+  <div *ngIf="isLoadingLifeInsurance" class="bg-white p-20">
+    <div class="col-md-12 d-flex justify-content-center align-items-center h-80vh">
+      <div class="pt-90 pl-28 pr-28 text-center">Loading data...</div>
+    </div>
+  </div>
 
 </div>
 

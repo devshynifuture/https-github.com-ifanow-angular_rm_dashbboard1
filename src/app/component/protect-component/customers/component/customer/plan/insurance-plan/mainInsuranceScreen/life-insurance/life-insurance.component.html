@@ -318,7 +318,7 @@
 
                     </table>
                     <div class=" text-center" *ngIf="!isLoadingPlan && dataSource1?.length == 0">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
@@ -457,7 +457,7 @@
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
                     <div class=" text-center" *ngIf="!isLoadingPlan && dataSource1?.length == 0">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
@@ -915,7 +915,7 @@
 
                     </div>
                     <div class=" text-center" *ngIf="!isLoadingPlan &&  !needAnalysisLoaded">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
 
                 </div>
