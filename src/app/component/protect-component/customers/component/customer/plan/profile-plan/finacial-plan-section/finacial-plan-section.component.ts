@@ -44,6 +44,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { SaveFinPlanSectionComponent } from '../save-fin-plan-section/save-fin-plan-section.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -130,6 +131,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   expenseCount: any;
   bugetCount: any;
   incomeCount: any;
+  clientDob: string;
+  familyList: any[];
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -139,6 +142,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
+    private peopleService:PeopleService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
@@ -154,6 +158,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
+    this.getListFamilyMem();
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
@@ -169,6 +174,43 @@ export class FinacialPlanSectionComponent implements OnInit {
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.userInfo)
+  }
+  getListFamilyMem() {
+    this.isLoading = true;
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data) {
+          let array = [];
+          data.forEach(element => {
+            if (element.familyMemberId == 0) {
+              this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+            } else {
+              const obj = {
+                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                'id': element.familyMemberId
+              }
+              array.push(obj);
+            }
+
+          });
+          this.familyList = array.map(function (obj, ind) {
+            let val = obj.id;
+            obj[val] = obj['dob']
+            delete obj['dob'];
+            delete obj['id'];
+            return obj;
+          });
+          this.getExpense()
+
+        }
+      },
+    );
+
+    // this.isLoading = true;
+
   }
   getIncome() {
     const obj = {
@@ -205,7 +247,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   getExpense() {
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      clientDob: this.clientDob,
+      fmDobList: JSON.stringify(this.familyList)
     };
     this.cusService.getExpense(obj).subscribe(
       data => {
