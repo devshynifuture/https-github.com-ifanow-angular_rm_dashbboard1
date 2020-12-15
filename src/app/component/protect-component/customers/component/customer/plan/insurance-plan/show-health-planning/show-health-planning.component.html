@@ -13,95 +13,99 @@
         </i>
     </div>
 </div>
-<div class="row pt-130 health-insuranceplanning">
+<div class="row pt-130 health-insuranceplanning pb-48">
     <div class="col-md-12">
         <h5 class="m-0 f-500 text-black pb-12 roboto">{{showInsurance.heading}}</h5>
 
         <div class="row b-a">
             <div class="col-md-6 p-0">
-                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12">Step 1 - Select existing policy</h5>
+                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Step 1 - Select existing policy</h5>
                 <div class="pl-12 pr-12">
-                    <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
-                        class="mt-20 skeletonAnimation" id="table-low" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading">
+                    <div class="scroll-table-health">
+                        <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
+                            class="skeletonAnimation" id="table-low" appSkeletonLoading
+                            [appSkeletonLoading]="isLoading">
 
-                        <ng-container matColumnDef="position">
-                            <th mat-header-cell *matHeaderCellDef class="br w-24"> Policy name </th>
-                            <td mat-cell *matCellDef="let element" class="br w-24">
-                                <div class="bar">
-                                    {{element.insuranceDetails?.insurerName}}
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Premium </th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">
-                                    {{element.insuranceDetails?.premiumAmount  ? '₹' :''}}<span appFormatNumber>
-                                        {{element.insuranceDetails?.premiumAmount}}
-                                    </span>{{!isLoading && element.insuranceDetails?.premiumAmount? '/year' : ''}}
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="weight">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Member name </th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">
-                                    <span>{{element.displayHolderName}} </span>
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="symbol">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Sum insured </th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">
-                                    {{element.displayHolderSumInsured ? '₹' :''}}<span appFormatNumber
-                                        *ngIf="!isLoading">{{element.displayHolderSumInsured  ? element.displayHolderSumInsured :'-'}}</span>
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="advice">
-                            <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element" class="c-p">
-                                <div class="bar">
-                                    <span *ngIf="element.advice && !isLoading">
-                                        {{isLoading ? '' : (element.advice ? element.advice : '-')}}
-                                    </span>
-                                    <span
-                                        (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')"
-                                        *ngIf="!element.advice && !isLoading">
-                                        <img src="/assets/images/svg/plus-rounded.svg">
-                                        <!-- (click)="openDialog(element,showInsurance)" -->
-                                    </span>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons">
-                            <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLoading">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
-                                        <button mat-menu-item [disabled]="!element.advice"
-                                            (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
+                            <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef class="br w-24"> Policy name </th>
+                                <td mat-cell *matCellDef="let element" class="br w-24">
+                                    <div class="bar">
+                                        {{element.insuranceDetails?.insurerName}}
                                     </div>
-                                    <button mat-menu-item
-                                        (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete</button>
-                                </mat-menu>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Premium </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">
+                                        {{element.insuranceDetails?.premiumAmount  ? '₹' :''}}<span appFormatNumber>
+                                            {{element.insuranceDetails?.premiumAmount}}
+                                        </span>{{!isLoading && element.insuranceDetails?.premiumAmount? '/year' : ''}}
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="weight">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Member name </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">
+                                        <span>{{element.displayHolderName}} </span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="symbol">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Sum insured </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">
+                                        {{element.displayHolderSumInsured ? '₹' :''}}<span appFormatNumber
+                                            *ngIf="!isLoading">{{element.displayHolderSumInsured  ? element.displayHolderSumInsured :'-'}}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="advice">
+                                <th mat-header-cell *matHeaderCellDef> Advice </th>
+                                <td mat-cell *matCellDef="let element" class="c-p">
+                                    <div class="bar">
+                                        <span *ngIf="element.advice && !isLoading">
+                                            {{isLoading ? '' : (element.advice ? element.advice : '-')}}
+                                        </span>
+                                        <span
+                                            (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')"
+                                            *ngIf="!element.advice && !isLoading">
+                                            <img src="/assets/images/svg/plus-rounded.svg">
+                                            <!-- (click)="openDialog(element,showInsurance)" -->
+                                        </span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="icons">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLoading">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
+                                            <button mat-menu-item [disabled]="!element.advice"
+                                                (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
+                                        </div>
+                                        <button mat-menu-item
+                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete</button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+
                 </div>
 
-                <div *ngIf="dataSource.length == 0 " class="d-flex flex-column align-items-center pb-20">
+                <div *ngIf="dataSource.length == 0 "
+                    class="d-flex flex-column align-items-center pb-20 scroll-table-health-empty">
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
                     <h4 class="text-center pt-12">Select from existing health insurance policies.
                         Once selected, you can give advice on them</h4>
@@ -241,7 +245,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                 </table>
-                <div *ngIf="dataSource1.length == 0 " class="d-flex flex-column align-items-center">
+                <div *ngIf="dataSource1.length == 0 " class="d-flex flex-column align-items-center pt-12">
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
                     <h4 class="text-center pt-12">
                         Suggest new policy from here.</h4>
