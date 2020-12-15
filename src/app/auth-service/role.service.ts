@@ -90,8 +90,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: [],
-      leadsCapability: []
+      clientsCapability: { add: true, edit: true, delete: true, download: true },
+      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
     }
   };
   backofficePermission = {
@@ -266,8 +266,9 @@ export class RoleService {
   setPeoplePermissions(peoplePermission) {
     this.peoplePermission.subModule.clients.enabled = peoplePermission.clients.showModule;
     this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
-    this.peoplePermission.subModule.clientsCapability = peoplePermission.clients.subModule.clients.capabilityList;
-    this.peoplePermission.subModule.leadsCapability = peoplePermission.leads.subModule.leads.capabilityList;
+    this.peoplePermission.subModule.clientsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.clients.subModule.clients.capabilityList);
+    this.peoplePermission.subModule.leadsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.leads.subModule.leads.capabilityList);
+    this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.leadsCapability[7].enabledOrDisabled == 1 ? true : false
   }
 
   setBackofficePermissions(backOfficePermission) {
