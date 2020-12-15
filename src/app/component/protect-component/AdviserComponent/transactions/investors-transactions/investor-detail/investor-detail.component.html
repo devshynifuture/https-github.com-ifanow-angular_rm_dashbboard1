@@ -79,7 +79,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!statusData[1].checked&&!isLoading" class="row pt-12 pb-44 text-center">
+  <div *ngIf="transactionRoleService.investorsModule.capabilityMap.edit&&!statusData[1].checked&&!isLoading"
+       class="row pt-12 pb-44 text-center">
     <div class="col-md-6">
       <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
               mat-button>

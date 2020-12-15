@@ -91,7 +91,7 @@ export class RolesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getAllRoles();
-            this.roleService.getRoleDetails(2601);
+            // this.roleService.getRoleDetails(2601);
           }
           rightSideDataSub.unsubscribe();
         }
