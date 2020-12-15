@@ -50,7 +50,8 @@
                                             <input type="number" formControlName="age" autocomplete="off" matInput
                                                 [value]="singleYearGoalForm.value.age" class="form-control br-0"
                                                 [placeholder]="goalTypeData.placeHolder">
-                                            <span *ngIf="goalTypeData.name !='Emergency' && goalTypeData.name !='Wealth creation' && goalTypeData.name !='Big spends' && goalTypeData.name !='Others'"
+                                            <span
+                                                *ngIf="goalTypeData.name !='Emergency' && goalTypeData.name !='Wealth creation' && goalTypeData.name !='Big spends' && goalTypeData.name !='Others'"
                                                 class="static-value">Years</span>
                                             <span *ngIf="goalTypeData.name =='Emergency'"
                                                 class="static-value">Months</span>
@@ -220,7 +221,7 @@
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="col-md-1 col-1 pr-0 pt-40">
+                                        <div class="col-md-1 col-1 pr-0 pt-40 d-flex">
                                             <i *ngIf=" pointIndex+1==singleYearGoalForm.value.getMilestoneName.length && pointIndex<2"
                                                 class=" material-icons
                                             f-20 c-p" (click)="addMilestone(undefined)">add</i>

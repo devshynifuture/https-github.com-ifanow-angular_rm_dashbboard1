@@ -318,7 +318,7 @@
 
                     </table>
                     <div class=" text-center" *ngIf="!isLoadingPlan && dataSource1?.length == 0">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
@@ -439,10 +439,16 @@
                                                 <th>Advice</th>
                                             </tr>
                                             <tr>
-                                                <td>Bharti AXA General Insurance</td>
-                                                <td>₹43,53,453</td>
-                                                <td>₹43,53,453</td>
-                                                <td>Continue</td>
+                                                <td>{{element?.parentAsset?.policyName ? element?.parentAsset?.policyName : element?.parentAsset?.insurerName}}</td>
+                                                <td>{{!isLoadingPlan || element?.parentAsset?.sumAssured || element?.parentAsset?.sumInsuredIdv? "₹" : ""}}<span
+                                                    appFormatNumber>
+                                                    {{element?.parentAsset?.sumAssured ? element?.parentAsset?.sumAssured : element?.parentAsset?.sumInsuredIdv }}
+                                                </span></td>
+                                                <td>{{!isLoadingPlan || element?.parentAsset?.premiumAmount ? "₹" : ""}}<span
+                                                    appFormatNumber>
+                                                    {{element?.parentAsset?.premiumAmount}} </span></td>
+                                                <td> {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -457,7 +463,7 @@
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
                     <div class=" text-center" *ngIf="!isLoadingPlan && dataSource1?.length == 0">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
@@ -915,7 +921,7 @@
 
                     </div>
                     <div class=" text-center" *ngIf="!isLoadingPlan &&  !needAnalysisLoaded">
-                        <span class="align-items-center">No data found</span>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
 
                 </div>
