@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SettingsTransactionsComponent } from './settings-transactions.component';
 import { SettingsManageCredentialsComponent } from './settings-manage-credentials/settings-manage-credentials.component';
 import { SettingsClientMappingComponent } from './settings-client-mapping/settings-client-mapping.component';
-import { SettingsFolioMappingComponent } from './settings-folio-mapping/settings-folio-mapping.component'
+import { SettingsFolioMappingComponent } from './settings-folio-mapping/settings-folio-mapping.component';
 import { SettingsClientSettingsComponent } from './settings-client-settings/settings-client-settings.component';
 import { SettingsEmpanelledAmcComponent } from './settings-empanelled-amc/settings-empanelled-amc.component';
 import { ArnRiaCredentialsComponent } from './settings-manage-credentials/arn-ria-credentials/arn-ria-credentials.component';
@@ -56,7 +56,7 @@ const routes: Routes = [
             }
         ]
     }
-]
+];
 
 
 @NgModule({
