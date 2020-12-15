@@ -812,7 +812,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.remarks = this.basicDetailsData.remarks;
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
     obj.martialStatusId = this.basicDetailsData.martialStatusId;
-    obj.occupationId = (this.invTypeCategory == '3' || this.invTypeCategory == '4' && this.nonIndividualForm.controls.comOccupation.value != '') ? this.nonIndividualForm.controls.comOccupation.value : this.basicDetailsData.occupationId;
+    obj.occupationId = ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comOccupation.value !== "") ? parseInt(this.nonIndividualForm.controls.comOccupation.value) : this.basicDetailsData.occupationId;
     // obj.displayName = this.basicDetailsData.displayName;
     obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
     this.peopleService.editFamilyMemberDetails(obj).subscribe(

@@ -226,7 +226,7 @@
  </div>-->
     <div *ngIf="noSubBroker" class="pt-90 pr-20 pl-20 pb-44 text-center">
         <p>No broker found</p>
-        <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+        <button *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add" (click)="noBrokerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD
         </button>
     </div>
 
