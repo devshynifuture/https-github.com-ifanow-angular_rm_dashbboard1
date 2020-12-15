@@ -142,7 +142,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
-    private peopleService:PeopleService,
+    private peopleService: PeopleService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
@@ -164,7 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
     this.getIncome()
-    //this.getExpense()
+    this.getExpense()
     this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
