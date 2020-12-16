@@ -130,7 +130,7 @@
                             (click)="open(element,'lead')" mat-menu-item>
                             <span>Edit</span>
                         </button>
-                        <button *ngIf="roleService.peoplePermission.subModule.convertToclient"
+                        <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.convertToclient"
                             (click)="open(element,'convertLead')" mat-menu-item>
                             <span>Convert to client</span>
                         </button>
