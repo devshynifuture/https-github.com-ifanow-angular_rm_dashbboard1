@@ -164,7 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
     this.getIncome()
-    this.getExpense()
+    //this.getExpense()
     this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
@@ -307,7 +307,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '600px',
-      height: '798px',
+      height: '620px',
       data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
