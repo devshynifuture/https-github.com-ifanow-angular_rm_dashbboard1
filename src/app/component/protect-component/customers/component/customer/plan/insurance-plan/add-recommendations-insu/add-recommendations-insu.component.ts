@@ -36,7 +36,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   isLoading: any;
   adviceData: any;
   isAdviceGiven: boolean;
-  constructor(private activityService:ActiityService,private cusService:CustomerService,public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private activityService: ActiityService, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -102,8 +102,8 @@ export class AddRecommendationsInsuComponent implements OnInit {
     const portfolioLi = this.cusService.getInsuranceData(obj2).pipe(
       catchError(error => of(''))
     );
-    forkJoin(AdviceAsset,portfolioLi).subscribe(result => {
-      if(result[0] && result[1]){
+    forkJoin(AdviceAsset, portfolioLi).subscribe(result => {
+      if (result[0] && result[1]) {
         this.adviceData = result[0]
         let data = this.compareData(result[1]);
         if (data.length > 0) {
@@ -114,43 +114,43 @@ export class AddRecommendationsInsuComponent implements OnInit {
           this.dataSource = [];
           this.isLoading = false;
         }
-      }else{
+      } else {
         this.dataSource = [];
-          this.isLoading = false;
+        this.isLoading = false;
       }
-      
+
     }, (error) => {
       this.dataSource = [];
       this.isLoading = false;
       this.eventService.openSnackBar(error, 'Dismiss');
     });
   }
-  compareData(data){
+  compareData(data) {
     let mergeArray;
-    if(this.adviceData){
-      mergeArray = [...this.adviceData['TERM_LIFE_INSURANCE'],...this.adviceData['TRADITIONAL_LIFE_INSURANCE'],...this.adviceData['ULIP_LIFE_INSURANCE']]
+    if (this.adviceData) {
+      mergeArray = [...this.adviceData['TERM_LIFE_INSURANCE'], ...this.adviceData['TRADITIONAL_LIFE_INSURANCE'], ...this.adviceData['ULIP_LIFE_INSURANCE']]
       console.log(mergeArray);
     }
-    if(data.insuranceList.length > 0){
-      if(this.inputData.displayHolderId == 0){
+    if (data.insuranceList.length > 0) {
+      if (this.inputData.displayHolderId == 0) {
         this.inputData.displayHolderId = AuthService.getClientId()
       }
       data.insuranceList = data.insuranceList.filter(d => d.familyMemberIdLifeAssured == this.inputData.displayHolderId);
       data.insuranceList.forEach(element => {
         element.insurance = element;
-          if(mergeArray.length > 0){
-            mergeArray.forEach(ele => {
-              if(ele.InsuranceDetails.id == element.id){
-                let adviceId = ele.adviceDetails.adviceId;
-                element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
-              }
-            });
-          }
+        if (mergeArray.length > 0) {
+          mergeArray.forEach(ele => {
+            if (ele.InsuranceDetails.id == element.id) {
+              let adviceId = ele.adviceDetails.adviceId;
+              element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
+            }
+          });
+        }
       });
-    }else{
+    } else {
       data.insuranceList = [];
     }
-    
+
     return data.insuranceList;
   }
   recommend(data) {
@@ -168,15 +168,15 @@ export class AddRecommendationsInsuComponent implements OnInit {
       }
     );
   }
-  saveRecommendations(){
+  saveRecommendations() {
     this.barButtonOptions.active = false;
     this.close(true);
   }
   openDialog(value, data): void {
-    value = { smallHeading: 'life insurance',inputData : this.inputData}
+    value = { smallHeading: 'life insurance', inputData: this.inputData }
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
-      height: '600px',
+
       data: { value, data }
     });
 
@@ -189,9 +189,9 @@ export class AddRecommendationsInsuComponent implements OnInit {
     });
   }
   close(flag) {
-    if(this.isAdviceGiven){
+    if (this.isAdviceGiven) {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-    }else{
+    } else {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
     }
   }

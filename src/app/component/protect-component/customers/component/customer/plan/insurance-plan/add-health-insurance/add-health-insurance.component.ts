@@ -225,7 +225,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     let obj = {
       clientId: this.clientId,
       insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.showInsurance ? (this.showInsurance ? this.showInsurance.insuranceType : this.insuranceType) : this.insuranceType,
-      realOrFictious: 1
+      realOrFictious: 1,
+      flag : (this.inputData && this.inputData.id) ? false : true
     }
     const obj2 = {
       clientId: this.clientId
