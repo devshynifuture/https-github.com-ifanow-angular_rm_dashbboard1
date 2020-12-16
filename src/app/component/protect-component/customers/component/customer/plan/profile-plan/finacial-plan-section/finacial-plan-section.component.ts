@@ -133,6 +133,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   incomeCount: any;
   clientDob: string;
   familyList: any[];
+  svg: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -749,6 +750,15 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
+      if (sectionName == "Mutual fund overview") {
+        var svg = pdfContent.loadsvg
+          //.pipe(delay(1))
+          .subscribe(data => {
+            this.svg = data
+            console.log('svg', this.svg)
+            svg.unsubscribe();
+          });
+      }
       this.isLoading = true;
       if (array.isSelectedCheckbox) {
         array.isSelectedCheckbox = value;
@@ -782,7 +792,9 @@ export class FinacialPlanSectionComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
-      htmlInput: String(innerHtmlData.innerHTML)
+      htmlInput: String(innerHtmlData.innerHTML),
+      svg: this.svg,
+      key: 'showPieChart',
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
