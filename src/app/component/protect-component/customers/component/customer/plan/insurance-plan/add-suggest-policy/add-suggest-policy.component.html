@@ -94,8 +94,8 @@
             <h5 class="m-0">Implementation Date</h5>
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input (focus)="implementationDate.open()" (input)="preventDefault($event)"
-                        [matDatepicker]="implementationDate" [max]="maxDate" class="form-control br-0 b-0"
+                    <input (focus)="implementationDate.open()"
+                        [matDatepicker]="implementationDate" class="form-control br-0 b-0"
                         #implementationDate formControlName="implementationDate" matInput>
                     <mat-datepicker-toggle [for]="implementationDate" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #implementationDate></mat-datepicker>
