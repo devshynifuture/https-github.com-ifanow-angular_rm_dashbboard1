@@ -739,9 +739,9 @@
 
                         </div>
                     </div>
-                    <div class="col-md-4 f-500 f-14 roboto text-center" *ngIf="(_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Individual' || (showInsurance?.heading != 'Travel insurance' &&  _data?.parentAsset?.policyFeatureId == 0) || _data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Individual' || (showInsurance?.heading != 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 0))" > Insured members</div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center" *ngIf="(_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Individual' || (showInsurance?.heading == 'Travel insurance' &&  _data?.parentAsset?.policyFeatureId == 0) || _data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Individual' || (showInsurance?.heading == 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 0))" > Insured members</div>
                     <div class="col-md-4 f-400 f-14 text-right"
-                        *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Individual' || (showInsurance?.heading != 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 0)">
+                        *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Individual' || (showInsurance?.heading == 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 0)">
                         <div *ngFor="let item of _data?.childAsset?.insuredMembers ; let i = index"
                             class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
