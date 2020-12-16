@@ -321,7 +321,7 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if (UtilService.isRefreshRequired(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData) || upperSliderData['data']==true) {
             this.selectedId = '';
             if (this.detailsInsurance) {
               this.detailsInsurance.dataLoaded = false;

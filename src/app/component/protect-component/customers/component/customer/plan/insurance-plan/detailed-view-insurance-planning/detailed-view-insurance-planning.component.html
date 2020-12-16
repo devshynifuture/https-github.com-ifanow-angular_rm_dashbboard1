@@ -625,7 +625,7 @@
                             {{(_data?.childAsset?.cumulativeBonus) ? '₹' : ''}}<span
                                 appFormatNumber>{{(_data?.childAsset?.cumulativeBonus) ? _data?.childAsset?.cumulativeBonus : '-'}}</span>
                         </div>
-                        <div *ngIf="_data?.childAsset?.parentAsset?.cumulativeBonusRupeesOrPercent == 2"
+                        <div *ngIf="_data?.childAsset?.cumulativeBonusRupeesOrPercent == 2"
                             class="col-md-4 text-right f-14 roboto p-0">
                             {{(_data?.childAsset?.cumulativeBonus) ? _data?.childAsset?.cumulativeBonus : '-'}}{{(_data?.childAsset?.cumulativeBonus) ? '%' : ''}}
                         </div>
