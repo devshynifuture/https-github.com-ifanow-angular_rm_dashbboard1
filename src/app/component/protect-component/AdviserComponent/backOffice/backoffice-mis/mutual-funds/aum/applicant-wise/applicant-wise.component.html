@@ -29,7 +29,8 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button *ngIf="!isLoading && applicantName.length > 0"
+                            <button mat-stroked-button
+                                *ngIf="!isLoading && applicantName.length > 0 && roleService.backofficePermission.subModule.misCapability.download"
                                 (click)="exportToExcelSheet('applicant-wise', null, null, null, null)"
                                 class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                             <button mat-stroked-button class="btn-success ml-8 addon"
@@ -108,7 +109,7 @@
 
                                     <td>
                                         <div class="d-block text-right"
-                                            *ngIf="!name.show && name.categoryList?.length > 0">
+                                            *ngIf="!name.show && name.categoryList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download">
                                             <img class="c-p" src="assets/images/svg/download-bordered.svg"
                                                 (click)="exportToExcelSheet('category-wise', applicantIndex, null, null, null)"
                                                 *ngIf="!isLoading">
@@ -189,7 +190,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="d-block text-right"
-                                                            *ngIf="!category.showCategory && !isLoadingCategory && category.subCatList?.length > 0">
+                                                            *ngIf="!category.showCategory && !isLoadingCategory && category.subCatList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download">
                                                             <img class="c-p"
                                                                 src="assets/images/svg/download-bordered.svg"
                                                                 (click)="exportToExcelSheet('sub-category-wise', applicantIndex, catIndex, null, null)"
@@ -278,7 +279,7 @@
 
                                                                     <td>
                                                                         <div class="d-block text-right"
-                                                                            *ngIf="!sub.showSubCategory && sub.schemeList?.length > 0">
+                                                                            *ngIf="!sub.showSubCategory && sub.schemeList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download">
                                                                             <img class="c-p"
                                                                                 src="assets/images/svg/download-bordered.svg"
                                                                                 (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex, catIndex, subCatIndex, null)"
@@ -398,7 +399,7 @@
 
                                                                                     <td>
                                                                                         <div class="d-block text-right"
-                                                                                            *ngIf="!client.showFolio && !isLoadingScheme && client.schemeList?.length > 0">
+                                                                                            *ngIf="!client.showFolio && !isLoadingScheme && client.schemeList?.length > 0 && roleService.backofficePermission.subModule.misCapability.download">
                                                                                             <img class="c-p"
                                                                                                 src="assets/images/svg/download-bordered.svg"
                                                                                                 (click)="exportToExcelSheet('scheme-wise', applicantIndex, catIndex, subCatIndex, schemeIndex)">
@@ -515,7 +516,8 @@
                                                                                                                 [value]="client.totalAum"></span>
                                                                                                         </div>
                                                                                                     </td>
-                                                                                                    <td class="text-right">
+                                                                                                    <td
+                                                                                                        class="text-right">
                                                                                                         <div
                                                                                                             class="bar">
                                                                                                             <!--                                                                                                            {{'₹ '}}-->

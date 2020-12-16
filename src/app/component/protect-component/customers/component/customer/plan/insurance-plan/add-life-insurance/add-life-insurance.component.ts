@@ -51,7 +51,7 @@ export class AddLifeInsuranceComponent implements OnInit {
     this.familyMemberSend = []
   }
   close(state,flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',data:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',data:flag,refreshRequired:flag });
   }
   addInsurance(event, element) {
     console.log(element)

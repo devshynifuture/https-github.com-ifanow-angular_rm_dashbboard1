@@ -23,12 +23,17 @@ export class AddInsuranceUpperComponent implements OnInit {
       direction: 'top',
       componentName: AddInsuranceUpperComponent,
       state: 'close',
-      data:flag
+      data:flag,
+      refreshRequired:flag
+
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
   needAnlysis(value) {
+    if(value){
+      value
+    }
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
     const fragmentData = {
       flag: 'app-customer',
@@ -42,7 +47,7 @@ export class AddInsuranceUpperComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          this.close(false);
+          // this.close(false);
           subscription.unsubscribe();
         }
       }

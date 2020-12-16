@@ -1084,6 +1084,16 @@ ul.mf-import-second-point{
 .scroll-table-health-empty{
   max-height: calc(100vh - 285px);
 }
+.health-insuranceplanning{
+  tr.mat-header-row,tr.mat-row{
+    height: 40px;
+  }
+}
+.insurance-progress{
+  .mat-progress-bar-buffer{
+    background-color: #E4E8EB;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .advisorHomeBtn .tabDisplay {
     display: none !important;

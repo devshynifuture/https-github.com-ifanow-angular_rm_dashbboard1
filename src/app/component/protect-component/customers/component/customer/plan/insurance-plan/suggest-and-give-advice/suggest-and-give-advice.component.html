@@ -13,42 +13,43 @@
         <div class="col-md-12 p-0">
             <hr id="suggest-advice-top">
             <hr id="suggest-advice-bottom">
-            <mat-horizontal-stepper #stepper id="ui-suggest-advice"  linear>
+            <mat-horizontal-stepper #stepper id="ui-suggest-advice" linear>
                 <mat-step [stepControl]="firstFormGroup" [editable]="true">
                     <form [formGroup]="adviceForm">
                         <ng-template matStepLabel>
                             STEP 1
-                            <p class="m-0 text-black roboto">Advice details</p>
+                            <p class="m-0 text-black roboto f-400">Advice details</p>
                         </ng-template>
                         <div class="pt-40">
                             <div class="row">
                                 <div class="col-md-6 pl-0">
-                                    <p class="m-0 text-black roboto" *ngIf="!showHeaderEdit">Advice header</p>
+                                    <p class="m-0 text-black roboto f-400" *ngIf="!showHeaderEdit">Advice header</p>
                                     <div class="form-group" *ngIf="!showHeaderEdit">
-                                       
+
                                         <mat-form-field>
-                                            <input matInput formControlName="header" [value]="'Suggest new policy'" [disabled]="true"
-                                                class="form-control" readonly>
-                                            
+                                            <input matInput formControlName="header" [value]="'Suggest new policy'"
+                                                [disabled]="true" class="form-control" readonly>
+
                                         </mat-form-field>
                                     </div>
-                                     <p class="m-0 text-black roboto" *ngIf="showHeaderEdit">Advice header</p>
-                                        <div class="form-group" *ngIf="showHeaderEdit">
-                                            <mat-form-field>
-                                                <mat-select #headerEdit autocomplete="off" class="form-control br-0"
-                                                    formControlName="headerEdit" matInput>
-    
-                                                    <mat-option value=''>Select option</mat-option>
-                                                    <mat-option (click)="changeAdviceName(option)" *ngFor="let option of adviceHeaderList ;index as i"
-                                                        [value]="option.id">
-                                                        {{option.value}}
-                                                    </mat-option>
-                                                </mat-select>
-                                                <mat-error>This field is required
-                                                </mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                        <!-- <p class="m-0 text-black roboto" *ngIf="showHeaderEdit">Advice header</p>
+                                    <p class="m-0 text-black roboto f-400" *ngIf="showHeaderEdit">Advice header</p>
+                                    <div class="form-group" *ngIf="showHeaderEdit">
+                                        <mat-form-field>
+                                            <mat-select #headerEdit autocomplete="off" class="form-control br-0"
+                                                formControlName="headerEdit" matInput>
+
+                                                <mat-option value=''>Select option</mat-option>
+                                                <mat-option (click)="changeAdviceName(option)"
+                                                    *ngFor="let option of adviceHeaderList ;index as i"
+                                                    [value]="option.id">
+                                                    {{option.value}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <p class="m-0 text-black roboto" *ngIf="showHeaderEdit">Advice header</p>
                                         <div class="form-group" *ngIf="showHeaderEdit">
                                             <mat-form-field>
                                                 <mat-select #headerEdit autocomplete="off" class="form-control br-0"
@@ -64,16 +65,16 @@
                                                 </mat-error>
                                             </mat-form-field>
                                         </div> -->
-                                    <p class="m-0 text-black roboto pt-20">Advice rationale</p>
+                                    <p class="m-0 text-black roboto pt-20 f-400">Advice rationale</p>
                                     <div class="form-group">
                                         <mat-form-field>
                                             <textarea matInput formControlName="rationale" class="form-control"
                                                 rows="7"></textarea>
-                                          
+
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6 p-0">
-                                        <p class="m-0 text-black roboto pt-150">Advice status</p>
+                                        <p class="m-0 text-black roboto pt-150 f-400">Advice status</p>
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput formControlName="status" [disabled]="true"
@@ -87,15 +88,14 @@
 
                                 </div>
                                 <div class="col-md-3 pr-0">
-                                    <p class="m-0 text-black roboto">Advice given
+                                    <p class="m-0 text-black roboto f-400">Advice given
                                         only
                                     </p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
-                                            <input [disabled]=dataForEdit
-                                                (ngModelChange)="dateChange('givenOnDate')" matInput
-                                                (focus)="picker.open()" formControlName="givenOnDate"
-                                                [matDatepicker]="picker" class="form-control b-0"  >
+                                            <input [disabled]=dataForEdit (ngModelChange)="dateChange('givenOnDate')"
+                                                matInput (focus)="picker.open()" formControlName="givenOnDate"
+                                                [matDatepicker]="picker" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
                                             <mat-error class="f-12"
@@ -106,7 +106,7 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <p class="m-0 text-black roboto pt-24">Implementation date</p>
+                                    <p class="m-0 text-black roboto pt-24 f-400">Implementation date</p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
                                             <input [min]="todayDate" (ngModelChange)="dateChange('implementDate')"
@@ -135,7 +135,7 @@
                                         <mat-radio-button value="1">Take client consent
 
                                         </mat-radio-button>
-                                        <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                                        <p class="f-12 m-0 roboto text-custom pl-32 f-400">If this option is selected,
                                             further
                                             action on this advice is possible only after your client gives
                                             explicit
@@ -143,13 +143,13 @@
                                         <mat-radio-button value="2">Bypass client consent
 
                                         </mat-radio-button>
-                                        <p class="f-12 m-0 roboto text-custom pl-32">If this option is selected,
+                                        <p class="f-12 m-0 roboto text-custom pl-32 f-400">If this option is selected,
                                             you
                                             can
                                             directly start further work on this advice without taking any
                                             explicit
                                             consent from your client.</p>
-                                   
+
                                     </mat-radio-group>
                                 </div>
                             </div>
@@ -157,19 +157,21 @@
                     </form>
                 </mat-step>
                 <!-- [stepControl]="componentRefComponentVal[form]" -->
-                <mat-step class="remove-bl"  [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null" [editable]="true">
+                <mat-step class="remove-bl"
+                    [aria-labelledby]="adviceNameObj?.adviceName == 'Continue' || adviceNameObj?.adviceName == 'Discontinue' ? 'disabled_af' : null"
+                    [editable]="true">
                     <ng-template matStepLabel>
-                            <div (click)="function()">
-                                    STEP 2
-                                    <p class="m-0 text-black roboto"  >Asset details</p>
-                            </div>
+                        <div (click)="function()">
+                            STEP 2
+                            <p class="m-0 text-black roboto f-400">Asset details</p>
+                        </div>
                     </ng-template>
                     <ng-template #dynamic></ng-template>
                 </mat-step>
             </mat-horizontal-stepper>
 
-              
-       
+
+
         </div>
     </div>
 </div>
@@ -192,11 +194,11 @@
 <div class="bottom-fixed wrapper-12">
     <div class="row">
         <div class="col-md-4 pt-8">
-            <h5  (click)="dialogClose(false)" class="mb-0  text-white c-p">Cancel</h5>
+            <h5 (click)="dialogClose(false)" class="mb-0  text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right full-end">
-            <button *ngIf="this.stepper.selectedIndex == 1" (click)="goBack()" (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
-                mat-raised-button>PREVIOUS
+            <button *ngIf="this.stepper.selectedIndex == 1" (click)="goBack()" (click)="goBack()"
+                class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
             </button>
             <app-progress-button (click)="addOrNextStep()" [options]="barButtonOptions">
             </app-progress-button>

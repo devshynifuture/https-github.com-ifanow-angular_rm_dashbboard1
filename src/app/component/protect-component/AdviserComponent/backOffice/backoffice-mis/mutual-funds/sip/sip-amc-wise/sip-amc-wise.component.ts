@@ -1,15 +1,16 @@
-import {DateChangeDialogComponent} from './../../date-change-dialog/date-change-dialog.component';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChildren} from '@angular/core';
-import {BackOfficeService} from '../../../../back-office.service';
-import {SipComponent} from '../sip.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {FormBuilder} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {MatDialog} from '@angular/material';
+import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren } from '@angular/core';
+import { BackOfficeService } from '../../../../back-office.service';
+import { SipComponent } from '../sip.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-sip-amc-wise',
@@ -64,7 +65,8 @@ export class SipAmcWiseComponent implements OnInit {
     public sip: SipComponent,
     private fb: FormBuilder,
     private mfService: MfServiceService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public roleService: RoleService
   ) { }
 
   teamMemberId = 2929;
@@ -609,8 +611,8 @@ export class SipAmcWiseComponent implements OnInit {
       this.applicantList = [];
       applicantData.applicantList = [{}, {}, {}];
       const obj = {
-        familyMemberId:!applicantData.familyMemberId || applicantData.familyMemberId == 0 ? -1 : applicantData.familyMemberId,
-        clientId: applicantData.familyMemberId > 0 ?  -1 : applicantData.clientId,
+        familyMemberId: !applicantData.familyMemberId || applicantData.familyMemberId == 0 ? -1 : applicantData.familyMemberId,
+        clientId: applicantData.familyMemberId > 0 ? -1 : applicantData.clientId,
         schemeId: applicantData.mutualFundSchemeMasterId,
         sipAmount: applicantData.sipAmount,
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
@@ -734,7 +736,7 @@ export class SipAmcWiseComponent implements OnInit {
       investorList: false,
       applicantList: false
     }, this.schemeWiseTotal,
-    [["Selected AMC Name: ", this.selectedAmcName]]
+      [["Selected AMC Name: ", this.selectedAmcName]]
     );
   }
 
@@ -766,7 +768,7 @@ export class SipAmcWiseComponent implements OnInit {
       investorList: false,
       applicantList: false
     }, this.investorWiseTotal,
-    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]
+      [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName]]
     );
   }
 
@@ -795,7 +797,7 @@ export class SipAmcWiseComponent implements OnInit {
     });
     this.applicantWiseTotal = ['', '', '', '', '', '', '', '', 'Total', sumSipAmtTotal, sumWeightInPercTotal];
     ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS report - AMC wise SIP', this.applicantWiseTotal,
-    [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName], ["Selected Investor Name: ", this.selectedInvestorName]]);
+      [["Selected AMC Name: ", this.selectedAmcName], ["Selected Scheme Name: ", this.selectedSchemeName], ["Selected Investor Name: ", this.selectedInvestorName]]);
     // ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report', this.applicantWiseTotalArr);
   }
 }

@@ -23,10 +23,13 @@ const routes: Routes = [
           {
             path: 'arn-ria-creds',
             component: ArnRiaCredentialsComponent,
+            canActivate: [TransactionRoleGuard],
+
           },
           {
             path: 'sub-broker-team-member',
-            component: SubBrokerTeamMemberComponent
+            component: SubBrokerTeamMemberComponent,
+            canActivate: [TransactionRoleGuard],
           },
           {
             path: '',

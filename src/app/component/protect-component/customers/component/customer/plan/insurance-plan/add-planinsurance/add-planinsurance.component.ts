@@ -612,7 +612,8 @@ export class AddPlaninsuranceComponent implements OnInit {
           lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
           needTypeId: 1,
           id: this.needBase ? this.needBase.id : 0,
-          adviceAmount: this.needBase ? this.needBase.adviceAmount : (this.manualForm.get('insuranceAmount').value ? this.manualForm.get('insuranceAmount').value : 0),
+          adviceAmount: null,
+          // adviceAmount: this.needBase ? this.needBase.adviceAmount : null,
           // plannerNotes: this.needBase ? (this.needBase.plannerNotes ? this.needBase.plannerNotes : this.plannerNotesNeed) : this.plannerNotesNeed,
           plannerNotes: this.plannerNotesNeed,
           needBasedObject: needBasedAnalysis,
@@ -661,6 +662,11 @@ export class AddPlaninsuranceComponent implements OnInit {
   tabChanged(event) {
     console.log('tabChanged', event)
     this.tab = event.index
+    if (this.tab == 1 && this.manualObj.isMapped == 1) {
+      this.barButtonOptions3.disabled = true;
+    } else {
+      this.barButtonOptions3.disabled = false;
+    }
   }
   addToPlan() {
     if (this.tab == 1) {

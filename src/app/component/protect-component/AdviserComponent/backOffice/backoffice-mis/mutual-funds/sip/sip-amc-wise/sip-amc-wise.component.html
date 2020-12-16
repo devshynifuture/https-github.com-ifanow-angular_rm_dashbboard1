@@ -26,7 +26,7 @@
                 <div class="col-md-6 pr-0">
                     <div class="text-right">
                         <button mat-stroked-button class="btn-default addon"
-                            *ngIf="!isLoading && filteredArray.length > 0"
+                            *ngIf="!isLoading && filteredArray.length > 0 && roleService.backofficePermission.subModule.misCapability.download"
                             (click)="exportToExcelSheet('amc-wise', null,null, null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
@@ -98,7 +98,8 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true"> {{ category.sipAmount }}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">
+                                            {{ category.sipAmount }}</span>
                                     </div>
                                 </td>
                                 <td style="padding-left: 30px !important;">
@@ -196,7 +197,9 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                        {{isLoadingCategory ? ' ' : '₹ '}} <span *ngIf="!isLoadingCategory" appFormatNumber [shouldRoundOff]="true"> {{subcategory.sipAmount }}</span>
+                                                        {{isLoadingCategory ? ' ' : '₹ '}} <span
+                                                            *ngIf="!isLoadingCategory" appFormatNumber
+                                                            [shouldRoundOff]="true"> {{subcategory.sipAmount }}</span>
                                                     </div>
                                                 </td>
                                                 <td style="padding-left: 30px !important;">
@@ -238,9 +241,10 @@
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-10 f-500">Sr No.</th>
-                                                                <th class="w-40 f-500"  
+                                                                <th class="w-40 f-500"
                                                                     (click)="sortByInvestor(subcategory.investorList,'investorName')">
-                                                                    <span class="d-flex align-items-center"> Investor Name
+                                                                    <span class="d-flex align-items-center"> Investor
+                                                                        Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='investorName' && !reverse3">
                                                                             arrow_upward </i>
@@ -260,7 +264,8 @@
                                                                             *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th style="padding-left: 30px !important;" class="c-p f-500"
+                                                                <th style="padding-left: 30px !important;"
+                                                                    class="c-p f-500"
                                                                     (click)="sortByInvestor(subcategory.investorList,'sipCount')">
                                                                     <span class="d-flex align-items-center"> SIP Count
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -290,8 +295,9 @@
                                                                 </td>
                                                                 <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{isLoadingSubCategory ? ' ' : '₹ '}} 
-                                                                        <span *ngIf="!isLoadingSubCategory" appFormatNumber [shouldRoundOff]="true">
+                                                                        {{isLoadingSubCategory ? ' ' : '₹ '}}
+                                                                        <span *ngIf="!isLoadingSubCategory"
+                                                                            appFormatNumber [shouldRoundOff]="true">
                                                                             {{inv.sipAmount}}
                                                                         </span>
                                                                     </div>
@@ -329,211 +335,221 @@
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="7" class="innerTd three">
 
-                                                                    <div class="tableScrollSip" *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0"> 
-                                                                    <table class="skeletonAnimation mt-16 mb-8"
-                                                                        appSkeletonLoading
-                                                                        [appSkeletonLoading]="isLoadingApplicant"
-                                                                        id="table-low">
-                                                                        <thead>
-                                                                            <tr class="h-40">
-                                                                                <th class="w-12 f-500 c-p"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'investorName')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Applicant Name
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='investorName' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='investorName' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="w-15 f-500 c-p"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'schemeName')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Scheme Name
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='schemeName' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='schemeName' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'folioNumber')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Folio
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='folioNumber' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='folioNumber' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500" 
-                                                                                    (click)="sortByApplicant(inv.applicantList,'registeredDate')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Registered Date
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='registeredDate' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='registeredDate' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'from_date')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        From Date
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='from_date' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='from_date' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'to_date')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        To Date
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='to_date' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='to_date' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'sipTriggerDay')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Trigger Day
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='sipTriggerDay' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='sipTriggerDay' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'frequency')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Frequency
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='frequency' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='frequency' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="c-p f-500"
-                                                                                    (click)="sortByApplicant(inv.applicantList,'sipAmount')">
-                                                                                    <span
-                                                                                        class="d-flex align-items-center">
-                                                                                        Amount
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='sipAmount' && !reverse4">
-                                                                                            arrow_upward </i>
-                                                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                                                            *ngIf="propertyName4=='sipAmount' && reverse4">arrow_downward</i>
-                                                                                    </span>
-                                                                                </th>
-                                                                                <th class="f-500 w-9">% Weight</th>
-                                                                                <th class="f-500">Edit 
-                                                                                </th>
-                                                                            </tr>
-                                                                        </thead>
+                                                                    <div class="tableScrollSip"
+                                                                        *ngIf="inv.showInvestor==false && inv.applicantList?.length > 0">
+                                                                        <table class="skeletonAnimation mt-16 mb-8"
+                                                                            appSkeletonLoading
+                                                                            [appSkeletonLoading]="isLoadingApplicant"
+                                                                            id="table-low">
+                                                                            <thead>
+                                                                                <tr class="h-40">
+                                                                                    <th class="w-12 f-500 c-p"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'investorName')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Applicant Name
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='investorName' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='investorName' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="w-15 f-500 c-p"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'schemeName')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Scheme Name
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='schemeName' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='schemeName' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'folioNumber')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Folio
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='folioNumber' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='folioNumber' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'registeredDate')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Registered Date
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='registeredDate' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='registeredDate' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'from_date')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            From Date
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='from_date' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='from_date' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'to_date')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            To Date
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='to_date' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='to_date' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'sipTriggerDay')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Trigger Day
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='sipTriggerDay' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='sipTriggerDay' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'frequency')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Frequency
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='frequency' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='frequency' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="c-p f-500"
+                                                                                        (click)="sortByApplicant(inv.applicantList,'sipAmount')">
+                                                                                        <span
+                                                                                            class="d-flex align-items-center">
+                                                                                            Amount
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='sipAmount' && !reverse4">
+                                                                                                arrow_upward </i>
+                                                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                                                *ngIf="propertyName4=='sipAmount' && reverse4">arrow_downward</i>
+                                                                                        </span>
+                                                                                    </th>
+                                                                                    <th class="f-500 w-9">% Weight</th>
+                                                                                    <th class="f-500">Edit
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
 
-                                                                        <tbody
-                                                                            *ngFor="let applicant of inv.applicantList;let i = index">
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : applicant.investorName}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : applicant.schemeName}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : applicant.folioNumber}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : (applicant.registeredDate | date:'dd/MM/yyyy')}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : (applicant.from_date | date:'dd/MM/yyyy')}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : (applicant.to_date | date:'dd/MM/yyyy')}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : applicant.sipTriggerDay}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : applicant.frequency}}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td><span>
+                                                                            <tbody
+                                                                                *ngFor="let applicant of inv.applicantList;let i = index">
+                                                                                <tr>
+                                                                                    <td>
                                                                                         <div
                                                                                             [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                            {{isLoadingApplicant ? ' ' : '₹ '}}<span appFormatNumber [shouldRoundOff]="true">{{applicant.sipAmount}}</span>
+                                                                                            {{isLoadingApplicant ? '' : applicant.investorName}}
                                                                                         </div>
-                                                                                    </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div
-                                                                                        [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        {{isLoadingApplicant ? '' : (applicant.weightInPercentage | number : '1.2-2')}}{{(isLoadingApplicant?'':'%') }}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    <div class="c-p" [ngClass]="{'bar': isLoadingApplicant}">
-                                                                                        <div *ngIf="!isLoadingApplicant">
-                                                                                             <span title="Add Cease Date" (click)="changeCeasedDateDialog(applicant, inv)" *ngIf="!applicant.isEdit" class="material-icons">
-                                                                                                date_range
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : applicant.schemeName}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : applicant.folioNumber}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : (applicant.registeredDate | date:'dd/MM/yyyy')}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : (applicant.from_date | date:'dd/MM/yyyy')}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : (applicant.to_date | date:'dd/MM/yyyy')}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : applicant.sipTriggerDay}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : applicant.frequency}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td><span>
+                                                                                            <div
+                                                                                                [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                                {{isLoadingApplicant ? ' ' : '₹ '}}<span
+                                                                                                    appFormatNumber
+                                                                                                    [shouldRoundOff]="true">{{applicant.sipAmount}}</span>
+                                                                                            </div>
+                                                                                        </span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            {{isLoadingApplicant ? '' : (applicant.weightInPercentage | number : '1.2-2')}}{{(isLoadingApplicant?'':'%') }}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="text-center">
+                                                                                        <div class="c-p"
+                                                                                            [ngClass]="{'bar': isLoadingApplicant}">
+                                                                                            <div
+                                                                                                *ngIf="!isLoadingApplicant">
+                                                                                                <span
+                                                                                                    title="Add Cease Date"
+                                                                                                    (click)="changeCeasedDateDialog(applicant, inv)"
+                                                                                                    *ngIf="!applicant.isEdit"
+                                                                                                    class="material-icons">
+                                                                                                    date_range
                                                                                                 </span>
 
-                                                                                            <span *ngIf="applicant.isEdit">
-                                                                                                {{ceasedDate |date:'mediumDate'}}
-                                                                                            </span>
+                                                                                                <span
+                                                                                                    *ngIf="applicant.isEdit">
+                                                                                                    {{ceasedDate |date:'mediumDate'}}
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <span
+                                                                                                *ngIf="isLoadingApplicant">{{''}}</span>
                                                                                         </div>
-                                                                                        <span
-                                                                                            *ngIf="isLoadingApplicant">{{''}}</span>
-                                                                                    </div>
-                                                                                </td>
+                                                                                    </td>
 
-                                                                            </tr>
-                                                                        </tbody>
+                                                                                </tr>
+                                                                            </tbody>
 
-                                                                    </table>
+                                                                        </table>
                                                                     </div>
 
                                                                     <!-- <div *ngIf="!isLoadingApplicant && inv.showInvestor==false">
@@ -571,7 +587,8 @@
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table text-right"><strong>₹<span appFormatNumber [shouldRoundOff]="true">{{totalOfSipAmount}}</span></strong>
+                                <td class="p-table text-right"><strong>₹<span appFormatNumber
+                                            [shouldRoundOff]="true">{{totalOfSipAmount}}</span></strong>
                                 </td>
                                 <td class="p-table" style="padding-left: 30px !important;">
                                     <strong>{{totalOfSipCount}}</strong></td>
