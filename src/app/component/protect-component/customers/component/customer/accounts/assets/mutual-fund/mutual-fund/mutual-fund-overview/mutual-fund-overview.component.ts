@@ -76,6 +76,7 @@ export class MutualFundOverviewComponent implements OnInit {
   @Output() sendData = new EventEmitter();
   @Output() changeAsPerCategory = new EventEmitter();
   @Output() loaded = new EventEmitter();
+  @Output() loadsvg = new EventEmitter();
   @Input() finPlanObj: any;//finacial plan pdf input
   total_net_Gain: number;
   cashFlowXirr: any;
@@ -564,7 +565,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCashFlow = false;
       this.eventService.openSnackBar(' No Mutual Fund Found', 'Dismiss');
     }
- 
+
   }
 
   calculatePercentage(data) {// function for calculating percentage
@@ -838,8 +839,10 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showSchemeWise = false
       this.datasource1.data = [];
     }
+    this.svg = this.chart.getSVG();
     this.ref.detectChanges();
     this.loaded.emit(this.mfOverviewTemplate.nativeElement);
+    this.loadsvg.emit(this.svg)
   }
   generatePdf() {
     this.svg = this.chart.getSVG();
