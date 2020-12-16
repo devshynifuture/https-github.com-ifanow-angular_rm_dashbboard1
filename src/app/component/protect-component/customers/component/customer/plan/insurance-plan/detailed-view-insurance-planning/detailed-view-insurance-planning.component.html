@@ -760,7 +760,7 @@
                     <div class="col-md-4 f-400 f-14"
                         *ngIf="_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Family floater'  || (showInsurance?.heading != 'Travel insurance' == 'Travel' &&  _data?.parentAsset?.policyFeatureId == 1)">
                         <div *ngFor="let item of _data?.parentAsset?.insuredMembers ; let i = index"
-                            class="row bb p-8 b-l br">
+                            class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Insured member{{i + 1}}
                             </div>
@@ -773,7 +773,7 @@
                     <div class="col-md-4 f-400 f-14 text-right"
                         *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Family floater'  || (showInsurance?.heading != 'Travel insurance' == 'Travel' &&  _data?.childAsset?.policyFeatureId == 1)">
                         <div *ngFor="let item of _data?.childAsset?.insuredMembers ; let i = index"
-                            class="row bb p-8 b-l br">
+                            class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Insured member{{i + 1}}
                             </div>
@@ -788,7 +788,7 @@
                     <div class="col-md-4 f-400 f-14"
                     *ngIf="_data?.parentAsset.insuredMembers && showInsurance?.heading =='Personal accident' ">
                         <div *ngFor="let item of _data?.parentAsset.insuredMembers ; let i = index">
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     Name of insured{{i + 1}}
                                 </div>
@@ -796,7 +796,7 @@
                                     {{(item.name) ? item.name : '-'}}
                                 </div>
                             </div>
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     AD sum insured{{i + 1}}
                                 </div>
@@ -805,7 +805,7 @@
                                         appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
                                 </div>
                             </div>
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     TTD sum insured {{i + 1}}
                                 </div>
@@ -821,7 +821,7 @@
                     <div class="col-md-4 f-400 f-14 text-right"
                     *ngIf="_data?.childAsset?.insuredMembers && showInsurance?.heading =='Personal accident' ">
                         <div *ngFor="let item of _data?.childAsset?.insuredMembers ; let i = index">
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8 ">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     Name of insured{{i + 1}}
                                 </div>
@@ -829,7 +829,7 @@
                                     {{(item.name) ? item.name : '-'}}
                                 </div>
                             </div>
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     AD sum insured{{i + 1}}
                                 </div>
@@ -838,7 +838,7 @@
                                         appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
                                 </div>
                             </div>
-                            <div class="row bb p-8 b-l br">
+                            <div class="row p-8">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     TTD sum insured {{i + 1}}
                                 </div>
