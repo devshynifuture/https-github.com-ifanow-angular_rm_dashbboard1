@@ -622,18 +622,22 @@
             <div class="col-xl-3 col-lg-3 col-md-9 p-0 ml-25p-992">
               <div class="b-a pl-8 pr-8">
                 <div class="row b-b">
-                  <div class="col-md-3 p-0">
-                    <img class="t-85 pt-16 pb-16 pl-8 rounded-circle" [src]="authService.profilePic">
+                  <div class="col-md-3 p-0 d-flex align-items-center">
+                    <div class="rounded-circle-box">
+                      <img [src]="authService.profilePic">
+                    </div>
+
                   </div>
                   <div class="col-md-9 p-0 text-left">
                     <p class="text-black m-0 f-500 pt-20 bar">{{userData.name}}</p>
-                    <div class="row ">
+                    <div class="d-flex">
 
                       <p class="text-custom m-0">Contact
                         : </p>
-                      <p class="ml-5">
+                      <p class="pl-4">
                         {{userData.mobileList ? userData.mobileList.length > 0 ? userData.mobileList[0].mobileNo : '' : ''}}
                       </p>
+
                     </div>
                   </div>
                 </div>
