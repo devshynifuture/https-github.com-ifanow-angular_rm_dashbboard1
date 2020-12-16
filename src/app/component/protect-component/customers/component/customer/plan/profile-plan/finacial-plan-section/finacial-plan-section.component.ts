@@ -385,7 +385,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     var currentDateReg = "<currentdate>";
     element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
     element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
-    element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+    element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobileList[0].mobileNo + '</b>')
     element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
     element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
     element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
