@@ -359,6 +359,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     let component;
     if(data){
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
+      data['insurance'] = data.InsuranceDetails;
     }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''

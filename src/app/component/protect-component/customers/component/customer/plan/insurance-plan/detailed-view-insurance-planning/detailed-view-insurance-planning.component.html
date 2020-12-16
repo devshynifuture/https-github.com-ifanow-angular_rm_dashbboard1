@@ -758,7 +758,7 @@
                 </div>
                 <div class="row bb-1 pt-6 pb-6 br bl-1" *ngIf="(_data?.parentAsset?.insuredMembers && _data?.childAsset?.insuredMembers)">
                     <div class="col-md-4 f-400 f-14"
-                        *ngIf="_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Family floater'  || (showInsurance?.heading != 'Travel insurance' == 'Travel' &&  _data?.parentAsset?.policyFeatureId == 1)">
+                        *ngIf="_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Family floater'  || (showInsurance?.heading == 'Travel insurance' &&  _data?.parentAsset?.policyFeatureId == 1)">
                         <div *ngFor="let item of _data?.parentAsset?.insuredMembers ; let i = index"
                             class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
@@ -771,7 +771,7 @@
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center"> Insured members</div>
                     <div class="col-md-4 f-400 f-14 text-right"
-                        *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Family floater'  || (showInsurance?.heading != 'Travel insurance' == 'Travel' &&  _data?.childAsset?.policyFeatureId == 1)">
+                        *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Family floater'  || (showInsurance?.heading == 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 1)">
                         <div *ngFor="let item of _data?.childAsset?.insuredMembers ; let i = index"
                             class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
