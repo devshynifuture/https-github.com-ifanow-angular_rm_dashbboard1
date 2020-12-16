@@ -9,6 +9,9 @@ import { MatDialog, MatInput } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from '../../../../../../../../../services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-add-others-asset',
@@ -43,7 +46,7 @@ export class AddOthersAssetComponent implements OnInit {
   showLessData: boolean;
   showArea: boolean;
   showNominee: boolean;
-  purchasePeriod: any;
+  purchaseDate: any;
   family: any;
   _inputData: any;
   isTypeValid: boolean;
@@ -70,8 +73,8 @@ export class AddOthersAssetComponent implements OnInit {
   callMethod: any;
   adviceShowHeaderFooter = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-
-  constructor(public custumService: CustomerService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
+  private unSubcrip2: Subscription;
+  constructor(public custumService: CustomerService, private enumDataService: EnumDataService, private datePipe: DatePipe, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private fb: FormBuilder, public custmService: CustomerService,
     public eventService: EventService, public utils: UtilService,
     public enumService: EnumServiceService) {
@@ -80,6 +83,8 @@ export class AddOthersAssetComponent implements OnInit {
   @Input()
   set data(inputData) {
     this._data = inputData;
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getRealEstate(inputData);
   }
 
@@ -104,11 +109,14 @@ export class AddOthersAssetComponent implements OnInit {
     this.bankList = this.enumService.getBank();
     //link bank
 
+
+
+
     this.showMoreData = false;
     this.showArea = false;
     this.showNominee = false;
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    console.log(this.bankList, "this.bankList");
+
     this.getListFamilyMem();
   }
 
@@ -151,6 +159,16 @@ export class AddOthersAssetComponent implements OnInit {
     if (data != undefined) {
       this.family = data.familyMembersList;
     }
+
+    // if (this.bankList.length <= 0) {
+    //   let user
+    //   this.family.forEach(f => {
+    //     if(f.){
+
+    //     }
+    //   });
+    //   this.enumDataService.getAccountList(this.clientData);
+    // }
   }
 
   close(flag) {
@@ -415,6 +433,8 @@ export class AddOthersAssetComponent implements OnInit {
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.addOwner = false;
     this.othersAssetForm = this.fb.group({
+      advisorId: [this.advisorId, [Validators.required]],
+      clientId: [this.clientId, [Validators.required]],
       // ownerName: [(!data) ? '' : this.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['', [Validators.required]],
@@ -423,23 +443,24 @@ export class AddOthersAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      assets: [data.assets, [Validators.required]],
-      currentValueDate: [data.currentValueDate, [Validators.required]],
+      assetName: [data.assetName, [Validators.required]],
+      currentValueAsonDate: [new Date(data.currentValueAsonDate), [Validators.required]],
       currentValue: [data.currentValue, [Validators.required]],
-      debt: [data.debt, [Validators.required]],
-      equity: [data.equity, [Validators.required]],
-      hasmaturity: [data.hasmaturity],
-      maturityValue: [data.debt, [Validators.required]],
-      maturityDate: [data.equity, [Validators.required]],
-      recurringContro: [data.recurringContro],
-      frequency: [data.equity, [Validators.required]],
-      approxAmt: [data.equity, [Validators.required]],
-      endDate: [data.equity, [Validators.required]],
-      rate: [data.equity, [Validators.required]],
-      linkedBankAccount: [!data ? '' : data.linkedBankAccount],
-      purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
-      purchaseValue: [data.purchaseValue,],
+      debtAssetAllocPerc: [data.debtAssetAllocPerc, [Validators.required]],
+      equityAssetAllocPerc: [data.equityAssetAllocPerc, [Validators.required]],
+      hasMaturity: [data.hasMaturity],
+      maturityValue: [!data.maturityValue || data.maturityValue == 0 ? "" : data.maturityValue],
+      maturityDate: [data.maturityDate ? new Date(data.maturityDate) : ''],
+      hasRecurringContribution: [data.hasRecurringContribution],
+      recurringContributionFrequency: [!data.recurringContributionFrequency || data.recurringContributionFrequency == 0 ? "" : data.recurringContributionFrequency],
+      approxAmount: [!data.approxAmount || data.approxAmount == 0 ? "" : data.approxAmount],
+      endDate: [data.endDate ? new Date(data.endDate) : ''],
+      growthRate: [data.growthRate, [Validators.required]],
+      userBankMappingId: [!data ? '' : data.userBankMappingId],
+      purchaseDate: [(data.purchaseDate == undefined) ? null : new Date(data.purchaseDate)],
+      purchaseAmt: [data.purchaseAmt,],
       description: [data.description],
+      id: [data.id],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -447,17 +468,9 @@ export class AddOthersAssetComponent implements OnInit {
         id: [0]
       })]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
-      familyMemberId: [this.familyMemberId,],
-      type: [(data.typeId == undefined) ? '' : (data.typeId) + '', [Validators.required]],
-      unit: [String(data.unitId),],
-      ratePerUnit: [data.ratePerUnit,],
-      stampDuty: [data.stampDutyCharge,],
-      registration: [data.registrationCharge,],
-      gst: [data.gstCharge],
-      location: [data.location],
-
 
     });
+    this.hasShow();
     if (data == '') {
       data = {};
     } else {
@@ -544,69 +557,104 @@ export class AddOthersAssetComponent implements OnInit {
     // this.ownerData = this.othersAssetForm.controls;
   }
 
+  hasShow() {
+    setTimeout(() => {
+      console.log(this.othersAssetForm.get('hasMaturity').value, "aaa", this.othersAssetForm.get('hasRecurringContribution').value);
+      if (this.othersAssetForm.get('hasMaturity').value) {
+        this.othersAssetForm.get('maturityValue').setValidators([Validators.required]);
+        this.othersAssetForm.get('maturityValue').updateValueAndValidity();
+
+        this.othersAssetForm.get('maturityDate').setValidators([Validators.required]);
+        this.othersAssetForm.get('maturityDate').updateValueAndValidity();
+      }
+      else {
+        this.othersAssetForm.get('maturityValue').setValidators(null);
+        this.othersAssetForm.get('maturityValue').updateValueAndValidity();
+
+        this.othersAssetForm.get('maturityDate').setValidators(null);
+        this.othersAssetForm.get('maturityDate').updateValueAndValidity();
+      }
+
+
+      if (this.othersAssetForm.get('hasRecurringContribution').value) {
+        this.othersAssetForm.get('recurringContributionFrequency').setValidators([Validators.required]);
+        this.othersAssetForm.get('recurringContributionFrequency').updateValueAndValidity();
+
+        this.othersAssetForm.get('approxAmount').setValidators([Validators.required]);
+        this.othersAssetForm.get('approxAmount').updateValueAndValidity();
+
+        this.othersAssetForm.get('endDate').setValidators([Validators.required]);
+        this.othersAssetForm.get('endDate').updateValueAndValidity();
+
+      }
+      else {
+        this.othersAssetForm.get('recurringContributionFrequency').setValidators(null);
+        this.othersAssetForm.get('recurringContributionFrequency').updateValueAndValidity();
+        this.othersAssetForm.get('approxAmount').setValidators(null);
+        this.othersAssetForm.get('approxAmount').updateValueAndValidity();
+        this.othersAssetForm.get('endDate').setValidators(null);
+        this.othersAssetForm.get('endDate').updateValueAndValidity();
+
+      }
+    }, 500);
+
+  }
+
   saveFormData() {
-
-    this.othersAssetForm.controls.familyMemberId.setValue(this.familyMemberId);
-
     if (this.othersAssetForm.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
       this.othersAssetForm.markAllAsTouched();
       return;
     } else {
-      this.barButtonOptions.active = true;
-      const obj = {
-        // ownerName: this.ownerName,
-        // familyMemeberId:this.familyMemberId,
-        ownerList: this.othersAssetForm.value.getCoOwnerName,
-        // ownerPercent: this.othersAssetForm.controls.ownerPercent.value,
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        id: this._data == undefined ? 0 : this._data.id,
-        typeId: this.othersAssetForm.controls.type.value,
-        marketValue: this.othersAssetForm.controls.marketValue.value,
-        purchasePeriod: (this.othersAssetForm.controls.purchasePeriod.value) ? this.othersAssetForm.controls.purchasePeriod.value.toISOString().slice(0, 10) : null,
-        purchaseValue: this.othersAssetForm.controls.purchaseValue.value,
-        unitId: 1,
-        ratePerUnit: this.othersAssetForm.controls.ratePerUnit.value,
-        stampDutyCharge: this.othersAssetForm.controls.stampDuty.value,
-        registrationCharge: this.othersAssetForm.controls.registration.value,
-        gstCharge: this.othersAssetForm.controls.gst.value,
-        location: this.othersAssetForm.controls.location.value,
-        description: this.othersAssetForm.controls.description.value,
-        nomineeList: this.othersAssetForm.value.getNomineeName
-      };
+      if (!this.othersAssetForm.get('hasMaturity').value) {
+        this.othersAssetForm.get('maturityValue').setValue("");
+        this.othersAssetForm.get('maturityDate').setValue(null);
+      }
 
-      obj.nomineeList.forEach((element, index) => {
+      if (!this.othersAssetForm.get('hasRecurringContribution').value) {
+        this.othersAssetForm.get('recurringContributionFrequency').setValue("");
+        this.othersAssetForm.get('approxAmount').setValue(null);
+        this.othersAssetForm.get('endDate').setValue(null);
+      }
+      this.barButtonOptions.active = true;
+      let obj = this.othersAssetForm.value;
+      obj.hasMaturity = obj.hasMaturity ? 1 : 0;
+      obj.hasRecurringContribution = obj.hasRecurringContribution ? 1 : 0;
+      obj.currentValueAsonDate = obj.currentValueAsonDate ? this.datePipe.transform(obj.currentValueAsonDate, 'yyyy-MM-dd') : null;
+      obj.maturityDate = obj.maturityDate ? this.datePipe.transform(obj.maturityDate, 'yyyy-MM-dd') : null;
+      obj.endDate = obj.endDate ? this.datePipe.transform(obj.endDate, 'yyyy-MM-dd') : null;
+      obj.purchaseDate = obj.purchaseDate ? this.datePipe.transform(obj.purchaseDate, 'yyyy-MM-dd') : null;
+      obj.currentValue = parseInt(obj.currentValue);
+      obj.debtAssetAllocPerc = parseInt(obj.debtAssetAllocPerc);
+      obj.equityAssetAllocPerc = parseInt(obj.equityAssetAllocPerc);
+      obj.maturityValue = parseInt(obj.maturityValue);
+      obj.growthRate = parseInt(obj.growthRate);
+
+      obj.approxAmount = parseInt(obj.approxAmount);
+      obj.purchaseAmt = obj.purchaseAmt ? parseInt(obj.purchaseAmt) : null;
+      obj.recurringContributionFrequency = obj.recurringContributionFrequency ? parseInt(obj.recurringContributionFrequency) : null;
+      obj.getNomineeName.forEach((element, index) => {
         if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList = this.othersAssetForm.value.getNomineeName;
+      obj.getNomineeName = this.othersAssetForm.value.getNomineeName;
+      obj['ownerList'] = this.othersAssetForm.value.getCoOwnerName;
+      obj['nomineeList'] = this.othersAssetForm.value.getNomineeName;
       if (obj.id == undefined && this.flag != 'adviceRealEstate') {
+        delete obj['id'];
         console.log(obj);
-        this.custumService.addRealEstate(obj).subscribe(
-          data => this.addRealEstateRes(data), (error) => {
+        this.custumService.addOthersAssets(obj).subscribe(
+          data => this.addOthersAssetsRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
-      } else if (this.flag == 'adviceRealEstate') {
-        const adviceObj = {
-          // advice_id: this.advisorId,
-          adviceStatusId: 5,
-          stringObject: obj,
-          adviceDescription: 'manualAssetDescription'
-        };
-        this.custumService.getAdviceRealEstate(adviceObj).subscribe(
-          data => this.getAdviceRealEstateRes(data), (error) => {
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
-      } else {
+      }
+      else {
         console.log(obj);
-        this.custumService.editRealEstate(obj).subscribe(
-          data => this.editRealEstateRes(data), (error) => {
+        this.custumService.editOthersAssets(obj).subscribe(
+          data => this.editOthersAssetsRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
@@ -621,7 +669,7 @@ export class AddOthersAssetComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
-  addRealEstateRes(data) {
+  addOthersAssetsRes(data) {
     console.log(data);
     if (data) {
       console.log(data);
@@ -635,7 +683,7 @@ export class AddOthersAssetComponent implements OnInit {
 
   }
 
-  editRealEstateRes(data) {
+  editOthersAssetsRes(data) {
     console.log(data);
     if (data) {
       console.log(data);

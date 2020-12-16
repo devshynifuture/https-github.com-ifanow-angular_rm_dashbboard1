@@ -130,7 +130,7 @@ export class PdfGenService {
       pageOrientation: 'landscape',
       info: {
         title: title,
-        author: 'IFAnow',
+        author: 'IFAnow'
       },
       defaultStyle: {
         fontSize: 9
@@ -222,7 +222,7 @@ export class PdfGenService {
       ]
     };
 
-    pdfMake.createPdf(documentDefinition).open();
+    pdfMake.createPdf(documentDefinition).download(this.client.name + " " + title + " as on " + this.datePipe.transform(new Date(), 'd MMM, yyyy') + '.pdf');
   }
 
   generatePdfWithoutHtml(title, header, tableData) {

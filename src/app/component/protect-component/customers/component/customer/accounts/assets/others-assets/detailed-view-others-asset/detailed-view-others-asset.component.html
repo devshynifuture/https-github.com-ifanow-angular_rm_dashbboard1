@@ -42,7 +42,7 @@
             Asset type
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{realEstate.assets?realEstate.assets:'-'}}
+            {{realEstate.assetName?realEstate.assetName:'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -58,7 +58,7 @@
             Current value as on date
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(realEstate.date)?(realEstate.date | date:'dd/MM/yyyy'):'-'}}
+            {{(realEstate.currentValueAsonDate)?(realEstate.currentValueAsonDate | date:'dd/MM/yyyy'):'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -67,7 +67,7 @@
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
             {{realEstate.purchaseValue?'₹':''}}<span
-              appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
+              appFormatNumber>{{realEstate.purchaseAmt?realEstate.purchaseAmt:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
             Date of purchase
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(realEstate.date)?(realEstate.date | date:'dd/MM/yyyy'):'-'}}
+            {{(realEstate.purchaseDate)?(realEstate.purchaseDate | date:'dd/MM/yyyy'):'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -83,8 +83,8 @@
             Growth rate
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            <span appFormatNumber *ngIf="realEstate.rate">{{realEstate.rate}}%</span>
-            <span appFormatNumber *ngIf="!realEstate.rate">-</span>
+            <span appFormatNumber *ngIf="realEstate.growthRate">{{realEstate.growthRate}}%</span>
+            <span appFormatNumber *ngIf="!realEstate.growthRate">-</span>
           </div>
         </div>
 
@@ -93,8 +93,8 @@
             Asset allocation-Equity
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            <span appFormatNumber *ngIf="realEstate.rate">{{realEstate.rate}}%</span>
-            <span appFormatNumber *ngIf="!realEstate.rate">-</span>
+            <span appFormatNumber *ngIf="realEstate.equityAssetAllocPerc">{{realEstate.equityAssetAllocPerc}}%</span>
+            <span appFormatNumber *ngIf="!realEstate.equityAssetAllocPerc">-</span>
           </div>
         </div>
 
@@ -103,8 +103,8 @@
             Asset allocation-debt
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            <span appFormatNumber *ngIf="realEstate.rate">{{realEstate.rate}}%</span>
-            <span appFormatNumber *ngIf="!realEstate.rate">-</span>
+            <span appFormatNumber *ngIf="realEstate.debtAssetAllocPerc">{{realEstate.debtAssetAllocPerc}}%</span>
+            <span appFormatNumber *ngIf="!realEstate.debtAssetAllocPerc">-</span>
           </div>
         </div>
 
@@ -164,7 +164,7 @@
             Frequency
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (realEstate.frequency==1)? 'Monthly':(realEstate.frequency==4)?'Quarterly':(realEstate.frequency==6)?'Half yearly':(realEstate.frequency==12)?'Yearly':'-' }}
+            {{ (realEstate.recurringContributionFrequency==1)? 'Monthly':(realEstate.recurringContributionFrequency==4)?'Quarterly':(realEstate.recurringContributionFrequency==6)?'Half yearly':(realEstate.recurringContributionFrequency==12)?'Yearly':'-' }}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -172,8 +172,8 @@
             Amount
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{realEstate.purchaseValue?'₹':''}}<span
-              appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
+            {{realEstate.purchaseAmt?'₹':''}}<span
+              appFormatNumber>{{realEstate.purchaseAmt?realEstate.purchaseAmt:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -181,7 +181,7 @@
             End Date
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(realEstate.date)?(realEstate.date | date:'dd/MM/yyyy'):'-'}}
+            {{(realEstate.endDate)?(realEstate.endDate | date:'dd/MM/yyyy'):'-'}}
           </div>
         </div>
       </div>
@@ -193,8 +193,8 @@
             Amount
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{realEstate.purchaseValue?'₹':''}}<span
-              appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
+            {{realEstate.maturityValue?'₹':''}}<span
+              appFormatNumber>{{realEstate.maturityValue?realEstate.maturityValue:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -202,7 +202,7 @@
             Date
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(realEstate.date)?(realEstate.date | date:'dd/MM/yyyy'):'-'}}
+            {{(realEstate.maturityDate)?(realEstate.maturityDate | date:'dd/MM/yyyy'):'-'}}
           </div>
         </div>
       </div>

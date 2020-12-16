@@ -224,7 +224,7 @@ export class AssetsComponent implements OnInit {
     this.assetSideBarData[5].count = smallSavingSchemes;
     this.assetSideBarData[6].count = cashAndBank;
     this.assetSideBarData[7].count = commodities;
-    // this.assetSideBarData[8].count = others;
+    this.assetSideBarData[8].count = others;
   }
   clickable(value) {
     this.sidenavState = false;

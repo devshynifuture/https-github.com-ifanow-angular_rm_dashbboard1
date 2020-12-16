@@ -173,6 +173,11 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_REAL_ESTATE, httpParams);
   }
 
+  getOthersAssets(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHERS_ASSETS, httpParams);
+  }
+
   getEPF_EPS(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPF_EPS, data);
   }
@@ -272,6 +277,16 @@ export class CustomerService {
 
   editRealEstate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_REAL_ESTATE, data);
+  }
+
+  addOthersAssets(data) {
+    delete data['getCoOwnerName'];
+    delete data['getNomineeName'];
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHERS_ASSETS, data);
+  }
+
+  editOthersAssets(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHERS_ASSETS, data);
   }
 
   addPPFScheme(data) {
@@ -461,6 +476,10 @@ export class CustomerService {
 
   deleteRealEstate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_REAL_ESTATE, data);
+  }
+
+  deleteOtherAssets(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHERS_ASSETS, data);
   }
 
   deleteOtherPayables(data) {

@@ -1,11 +1,12 @@
-import {Router} from '@angular/router';
-import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {slideInAnimation} from '../../../../../../animation/router.animation';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { slideInAnimation } from '../../../../../../animation/router.animation';
+import { AuthService } from 'src/app/auth-service/authService';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { MfServiceService } from './assets/mutual-fund/mf-service.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-accounts',
@@ -28,8 +29,8 @@ export class AccountsComponent implements OnInit {
   showRouter = false;
   selected;
 
-  constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState, public authService: AuthService,private MfServiceService : MfServiceService) {
+  constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
+    public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
@@ -46,13 +47,15 @@ export class AccountsComponent implements OnInit {
       this.loading = false;
     }, 300);
   }
-
+  bankList: any = [];
   ngOnInit() {
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;
     this.loading = false;
     this.clientData = AuthService.getClientData();
+
+
     // this.enumDataService.getAccountList();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     // var roterName = this.router.url.split('/')[3];

@@ -29,8 +29,8 @@ export class OthersAssetsComponent implements OnInit {
   datasource3 = new MatTableDataSource(this.data);
   clientId: any;
   ownerName: any;
-  totalCurrentValue: any;
-  sumOfpurchasedValue: any;
+  totalCurrentValue: any = 0;
+  sumOfpurchasedValue: any = 0;
   footer = [];
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -66,7 +66,7 @@ export class OthersAssetsComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    this.getRealEstate();
+    this.getOthersAssets();
 
   }
 
@@ -133,43 +133,53 @@ export class OthersAssetsComponent implements OnInit {
   // }
   // // datasource3 = ELEMENT_DATA3;
 
-  getRealEstate() {
+  getOthersAssets() {
     this.isLoading = true;
-    // const obj = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId
-    // };
-    // this.datasource3.data = [{}, {}, {}];
-    // this.custmService.getRealEstate(obj).subscribe(
-    //   data => this.getRealEstateRes(data), (error) => {
-    //     this.eventService.showErrorMessage(error);
-    //     this.datasource3.data = [];
-    //     this.isLoading = false;
-    //   });
-    this.getRealEstateRes(ELEMENT_DATA3);
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.datasource3.data = [{}, {}, {}];
+    this.custmService.getOthersAssets(obj).subscribe(
+      data => {
+        console.log(data, "others");
+
+        this.getOthersAssetsRes(data)
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+        this.datasource3.data = [];
+        this.isLoading = false;
+      });
+    // this.getOthersAssetsRes(ELEMENT_DATA3);
   }
 
   @Output() changeCount = new EventEmitter();
 
-  getRealEstateRes(data) {
+  getOthersAssetsRes(data) {
     this.isLoading = false;
-    if (data == undefined || data.assetList.length <= 0) {
+    if (data == undefined) {
       this.noData = 'No Real estate found';
       this.datasource3.data = [];
       this.hideFilter = true;
       this.totalCurrentValue = 0;
       this.sumOfpurchasedValue = 0;
-    } else if (data.assetList.length > 0) {
+    } else if (data) {
 
       console.log('getRealEstateRes', data);
       this.dataList = data;
-      this.datasource3.data = this.dataList.assetList;
-      data.assetList.forEach(singleAsset => {
-        singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
+      this.datasource3.data = this.dataList;
+      // data.assetList.forEach(singleAsset => {
+      //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
+      // });
+      this.totalCurrentValue = 0;
+      this.sumOfpurchasedValue = 0;
+      data.forEach(o => {
+        this.totalCurrentValue += o.currentValue;
+        this.sumOfpurchasedValue += o.purchaseAmt;
       });
       this.datasource3.sort = this.sort;
-      this.totalCurrentValue = this.dataList.totalCurrentValue;
-      this.sumOfpurchasedValue = this.dataList.sumOfPurchaseValue;
+      // this.totalCurrentValue = this.dataList.totalCurrentValue;
+      // this.sumOfpurchasedValue = this.dataList.sumOfPurchaseValue;
     } else {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
@@ -188,16 +198,19 @@ export class OthersAssetsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteRealEstate(element.id).subscribe(
+        let obj = {
+          "otherAssetId": element.id
+        }
+        this.cusService.deleteOtherAssets(element.id).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
-            this.dataList.totalCurrentValue -= element.marketValue;
-            // this.dataList.sumOfPurchaseValue += element.amountInvested;
-            this.getRealEstateRes(this.dataList);
+            // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            // this.dataList.totalCurrentValue -= element.marketValue;
+            // // this.dataList.sumOfPurchaseValue += element.amountInvested;
+            // this.getOthersAssetsRes(this.dataList);
             // this.datasource3.data = this.dataList;
-            // this.getRealEstate();
+            this.getOthersAssets();
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -235,22 +248,22 @@ export class OthersAssetsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if (data) {
-              this.getRealEstate();
-            }
-            else {
-              if (!this.dataList) {
-                this.dataList = { assetList: [sideBarData.data] };
-                this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
-                this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
-              }
-              else {
-                this.dataList.assetList.push(sideBarData.data)
-                this.dataList.totalCurrentValue += sideBarData.data.marketValue;
-                this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
-              }
-              this.getRealEstateRes(this.dataList);
-            }
+            // if (data) {
+            this.getOthersAssets();
+            // }
+            // else {
+            //   if (!this.dataList) {
+            //     this.dataList = { assetList: [sideBarData.data] };
+            //     this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
+            //     this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
+            //   }
+            //   else {
+            //     this.dataList.assetList.push(sideBarData.data)
+            //     this.dataList.totalCurrentValue += sideBarData.data.marketValue;
+            //     this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
+            //   }
+            //   this.getOthersAssetsRes(this.dataList);
+            // }
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -320,47 +333,118 @@ export interface PeriodicElement3 {
 const ELEMENT_DATA3 = {
   assetList: [
     {
-
-      ownerList: [{ name: 'Rahul Jain' }],
-      assets: 'International QROPS',
-      currentValue: 60000,
-      purchaseValue: 60000,
-      date: '06/04/2004',
-      rate: 5,
-      description: 'ICICI FD',
-      status: '',
-      nomineeList: [{
-        name: 'Rahul Jain',
-        sharePercentage: 100
-      }]
+      "advisorId": 6561,
+      "clientId": 223102,
+      "ownerList": [
+        {
+          "name": "Aniket Bhatiya",
+          "share": "100",
+          "familyMemberId": 223102,
+          "id": 0,
+          "isClient": 1
+        }
+      ],
+      "assetName": "test asset",
+      "currentValueAsonDate": "2020-12-01",
+      "currentValue": 1000,
+      "debtAssetAllocPerc": 9,
+      "equityAssetAllocPerc": 9,
+      "hasMaturity": 1,
+      "maturityValue": 1000,
+      "maturityDate": "2020-12-01",
+      "hasRecurringContribution": 0,
+      "recurringContributionFrequency": 2,
+      "approxAmount": 1000,
+      "endDate": "2020-12-01",
+      "growthRate": 9,
+      "userBankMappingId": 185505,
+      "purchaseDate": "2020-12-01",
+      "purchaseAmt": 1000,
+      "description": "abc",
+      "nomineeList": [
+        {
+          "name": "Ankita",
+          "sharePercentage": "100",
+          "familyMemberId": 380082,
+          "id": 0
+        }
+      ]
     },
     {
-      ownerList: [{ name: 'Abhishek Jain' }],
-      assets: 'International QROPS',
-      currentValue: 60000,
-      purchaseValue: 60000,
-      date: '06/04/2004',
-      rate: 5,
-      description: 'ICICI FD',
-      status: '',
-      nomineeList: [{
-        name: 'Rahul Jain',
-        sharePercentage: 100
-      }]
+      "advisorId": 6561,
+      "clientId": 223102,
+      "ownerList": [
+        {
+          "name": "Aniket Bhatiya",
+          "share": "100",
+          "familyMemberId": 223102,
+          "id": 0,
+          "isClient": 1
+        }
+      ],
+      "assetName": "test asset",
+      "currentValueAsonDate": "2020-12-01",
+      "currentValue": 1000,
+      "debtAssetAllocPerc": 9,
+      "equityAssetAllocPerc": 9,
+      "hasMaturity": 1,
+      "maturityValue": 1000,
+      "maturityDate": "2020-12-01",
+      "hasRecurringContribution": 0,
+      "recurringContributionFrequency": 2,
+      "approxAmount": 1000,
+      "endDate": "2020-12-01",
+      "growthRate": 9,
+      "userBankMappingId": 185505,
+      "purchaseDate": "2020-12-01",
+      "purchaseAmt": 1000,
+      "description": "abc",
+      "nomineeList": [
+        {
+          "name": "Ankita",
+          "sharePercentage": "100",
+          "familyMemberId": 380082,
+          "id": 0
+        }
+      ]
     },
     {
-      ownerList: [{ name: 'Nikhil Jain' }],
-      assets: 'International QROPS',
-      currentValue: 60000,
-      purchaseValue: 60000,
-      date: '06/04/2004',
-      rate: 5,
-      description: 'ICICI FD',
-      status: '',
-      nomineeList: [{
-        name: 'Rahul Jain',
-        sharePercentage: 100
-      }]
+      "advisorId": 6561,
+      "clientId": 223102,
+      "ownerList": [
+        {
+          "name": "Aniket Bhatiya",
+          "share": "100",
+          "familyMemberId": 223102,
+          "id": 0,
+          "isClient": 1
+        }
+      ],
+      "assetName": "test asset",
+      "currentValueAsonDate": "2020-12-01",
+      "currentValue": 1000,
+      "debtAssetAllocPerc": 9,
+      "equityAssetAllocPerc": 9,
+      "hasMaturity": 1,
+      "maturityValue": 1000,
+      "maturityDate": "2020-12-01",
+      "hasRecurringContribution": 0,
+      "recurringContributionFrequency": 2,
+      "approxAmount": 1000,
+      "endDate": "2020-12-01",
+      "growthRate": 9,
+      "userBankMappingId": 185505,
+      "purchaseDate": "2020-12-01",
+      "purchaseAmt": 1000,
+      "description": "abc",
+      "nomineeList": [
+        {
+          "name": "Ankita",
+          "sharePercentage": "100",
+          "familyMemberId": 380082,
+          "id": 0
+        }
+      ]
     }
   ],
   sumOfPurchaseValue: 120000,
