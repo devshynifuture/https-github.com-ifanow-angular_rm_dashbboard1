@@ -1160,7 +1160,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
-            this.isLoading = false;
+            // this.isLoading = false;
             this.changeInput.emit(false);
           }
           rightSideDataSub.unsubscribe();
