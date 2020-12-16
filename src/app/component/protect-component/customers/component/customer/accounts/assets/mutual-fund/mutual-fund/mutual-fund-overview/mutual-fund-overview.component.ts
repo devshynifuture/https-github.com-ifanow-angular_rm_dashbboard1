@@ -213,7 +213,12 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.otherPercentage = {};
     this.sendaata.totalValue = {};
     this.reportDate = new Date();
+    this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res; // used to get filterd data send to openFilter function
+      });
     this.getFilterData(1);
+
     this.MfServiceService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
@@ -226,10 +231,6 @@ export class MutualFundOverviewComponent implements OnInit {
     this.MfServiceService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
-      });
-    this.mfService.getFilterValues()
-      .subscribe(res => {
-        this.setDefaultFilterData = res; // used to get filterd data send to openFilter function
       });
     this.mfService.getMfData()
       .subscribe(res => {
@@ -247,6 +248,18 @@ export class MutualFundOverviewComponent implements OnInit {
       .subscribe(res => {
         this.adminAdvisorIds = res;
       });
+    if (this.setDefaultFilterData) {
+      this.showHideTable = this.setDefaultFilterData.overviewFilter;
+      (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
+      (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true && this.dataSource2.data.length > 0) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
+      (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true && this.datasource1.data.length > 0) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
+      (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
+      (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
+      (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+      if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+        this.showSummaryBar = false;
+      }
+    }
     if (this.mfGetData && this.mfGetData != '') {
       this.getMutualFundResponse(this.mfGetData);
     } else {
@@ -564,7 +577,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCashFlow = false;
       this.eventService.openSnackBar(' No Mutual Fund Found', 'Dismiss');
     }
- 
+
   }
 
   calculatePercentage(data) {// function for calculating percentage
@@ -764,7 +777,7 @@ export class MutualFundOverviewComponent implements OnInit {
                 this.dataSource2 = new MatTableDataSource(schemeData);
                 this.sendaata.dataSource2 = this.dataSource2;
                 if (this.dataSource2.data.length > 0) {
-                  this.showSchemeWise = true;
+                  this.showSchemeWise = this.showHideTable ? (this.showHideTable[1].selected ? true : false) : true;
                 }
                 this.MfServiceService.setSendData(this.sendaata);
                 this.getAllData(mutualFundData);
@@ -807,8 +820,10 @@ export class MutualFundOverviewComponent implements OnInit {
       this.dataSource2 = new MatTableDataSource(schemeData);
       this.sendaata.dataSource2 = this.dataSource2;
       if (this.dataSource2.data.length > 0) {
-        this.showSchemeWise = true;
+        // this.showSchemeWise = true;
+        this.showSchemeWise = this.showHideTable ? (this.showHideTable[1].selected ? true : false) : true;
       }
+
       this.MfServiceService.setSendData(this.sendaata);
       this.getAllData(mutualFundData);
       this.isLoading = false;

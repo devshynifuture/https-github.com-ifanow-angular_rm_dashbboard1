@@ -31,9 +31,6 @@ export class AddInsuranceUpperComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   needAnlysis(value) {
-    if(value){
-      value
-    }
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
     const fragmentData = {
       flag: 'app-customer',
