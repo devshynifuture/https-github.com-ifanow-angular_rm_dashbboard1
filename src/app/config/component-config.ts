@@ -660,7 +660,7 @@ export const appConfig = {
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
   BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
   BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
-  BACKOFFICE_UNMAPPED_FOLIO: 'backoffice/unmap/investor/details',
+  BACKOFFICE_UNMAPPED_FOLIO: 'mutual-fund/unmap/investor/details',
   BACKOFFICE_GET_FOLIO_MASTER_DETAIL: 'backoffice/mutual-fund/folio-master/get',
   BACKOFFICE_GET_DUPLICATE_DATA_LIST: 'backoffice/duplicate-data/get',
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',

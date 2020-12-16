@@ -266,7 +266,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   unmappedFolio(data) {
     console.log('unmapped data', data)
     const obj = {
-      id: this.data.mutualFundId
+      mutualFundId: this.data.mutualFundId
     };
 
     console.log(data);
@@ -274,6 +274,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     this.reconService.unmappedFolio(obj)
       .subscribe(res => {
         console.log(res);
+        this.eventService.openSnackBarNoDuration("Unmapped folio successfully!", "DISMISS");
       }, err => {
         console.error(err);
       })
