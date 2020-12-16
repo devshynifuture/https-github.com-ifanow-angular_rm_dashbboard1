@@ -380,10 +380,12 @@
                             <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null">
                                 <div class="bar d-flex align-items-center justify-content-between">
                                     {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
-                                    <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
+                                    <span class="material-icons"
+                                        *ngIf="!isLoadingPlan && element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
                                         keyboard_arrow_up
                                     </span>
-                                    <span class="material-icons" *ngIf="!isLoadingPlan && !element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
+                                    <span class="material-icons"
+                                        *ngIf="!isLoadingPlan && !element.expanded && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">
                                         keyboard_arrow_down
                                     </span>
                                 </div>
@@ -416,7 +418,8 @@
                                 <!-- suggestPolicyGi(inputData,element.insurance) -->
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="openDetailedView(element)"
-                                        *ngIf="inputData?.insuranceType != 1 && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">Detailed view</button>
+                                        *ngIf="inputData?.insuranceType != 1 && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">Detailed
+                                        view</button>
                                     <button mat-menu-item
                                         (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button>
                                     <button mat-menu-item
@@ -1248,7 +1251,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.liabilities ? plannerObj.liabilities : '-'"></span>
                                     </td>
 
@@ -1310,7 +1313,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.dependantNeeds ? plannerObj.dependantNeeds : '-'"></span>
                                     </td>
 
@@ -1365,7 +1368,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.goalsMeet ? plannerObj.goalsMeet : '-'"></span>
                                     </td>
 
@@ -1420,7 +1423,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.GrossLifeinsurance ? plannerObj.GrossLifeinsurance : '-'"></span>
                                     </td>
 
@@ -1475,7 +1478,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.incomeSource ? plannerObj.incomeSource : '-'"></span>
                                     </td>
 
@@ -1537,7 +1540,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.existingLifeInsurance ? plannerObj.existingLifeInsurance : '-'"></span>
                                     </td>
 
@@ -1598,7 +1601,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.existingAsset ? plannerObj.existingAsset : '-'">
                                         </span>
                                     </td>
@@ -1662,7 +1665,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        <span appFormatNumber
+                                        ₹ <span appFormatNumber
                                             [value]="plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : '-'"></span>
                                     </td>
 

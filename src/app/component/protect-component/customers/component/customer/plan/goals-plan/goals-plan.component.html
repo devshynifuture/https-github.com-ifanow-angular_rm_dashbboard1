@@ -964,13 +964,15 @@
                                 <tr *ngFor="let element of dataSource">
                                     <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
-                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
-                                        <p class="mb-0 roboto" appFormatNumber
-                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'></p>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
                                     </td>
-                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
-                                        <p class="mb-0 roboto" appFormatNumber
-                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'></p>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'> </span>
                                     </td>
                                 </tr>
                             </table>

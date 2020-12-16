@@ -168,7 +168,7 @@ export class HelthInsurancePolicyComponent implements OnInit {
     this.healthInsurance = this.fb.group({
       selectAdvice: [(!this.dataForEdit) ? 'Continue' : this.dataForEdit.advice, [Validators.required]],
       adviceHeader: [!this.dataForEdit ? 'Continue' : data.advice, [Validators.required]],
-      adviceStatus: [(!this.dataForEdit) ? '' : this.dataForEdit.adviceStatus],
+      adviceStatus: [(!this.dataForEdit) ? 'GIVEN' : this.dataForEdit.adviceStatus],
       adviceRationale: [(!this.dataForEdit) ? '' : this.dataForEdit.advice_description],
       adviceHeaderDate: [(!this.dataForEdit) ? new Date() : new Date(this.dataForEdit.created_date), [Validators.required]],
       implementationDate: [(!this.dataForEdit) ? '' : new Date(this.dataForEdit.applicable_date), [Validators.required]],
