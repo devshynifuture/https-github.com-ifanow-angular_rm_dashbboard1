@@ -70,6 +70,7 @@ export class ShowHealthPlanningComponent implements OnInit {
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, { id: '6', value: 'Add members' }, { id: '7', value: 'Remove members' }]
   adviceNameObj: { adviceName: any; };
   showExisting: any;
+  recommendCurrent: any;
   constructor(
     private activityService:ActiityService,
     private subInjectService: SubscriptionInject,
@@ -213,7 +214,11 @@ export class ShowHealthPlanningComponent implements OnInit {
   chekToCallApi() {
     let data = [];
     if (this.needAnalysisData) {
-      data = this.needAnalysisData.filter(d => d.id == this.inputData.id);
+      if(this.inputData.id){
+        data = this.needAnalysisData.filter(d => d.id == this.inputData.id);
+      }else{
+        data = []
+      }
     }
     return data.length > 0 ? false : true
 
@@ -244,8 +249,11 @@ export class ShowHealthPlanningComponent implements OnInit {
       familyMemberList = empty().pipe(defaultIfEmpty(''));
 
     }
+    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.insuranceIds[0] == null ? -1 : this.insuranceIds).pipe(
+      catchError(error => of(null))
+    );
     // const suggestNewGet = this.planService.getGeneralInsuranceReview(obj3);
-    forkJoin(getCurrentPolicy, familyMemberList).subscribe(result => {
+    forkJoin(getCurrentPolicy, familyMemberList,recommndationGetGi).subscribe(result => {
       result['id'] = this.inputData.id;
       if (this.needAnalysisData) {
         this.needAnalysisData = [...new Map(this.needAnalysisData.map(item => [item.id, item])).values()];
@@ -265,6 +273,10 @@ export class ShowHealthPlanningComponent implements OnInit {
     }
     if (result) {
       let data = result[0];
+      if(result[2]){
+        result[2] = result[2].filter(d => d.insurance.realOrFictitious == 1 || d.insurance.realOrFictitious == 0 );
+        this.recommendCurrent = result[2]
+      }
       if (data) {
         this.dataSource = this.getFilterData(data.current);
         this.dataSource = data.current;
@@ -327,10 +339,8 @@ export class ShowHealthPlanningComponent implements OnInit {
     //  singleData[0][2] = dataArray;
      if(array && singleData[0][2]){
       singleData[0][2] =[];
-      //  let merge =[...array.current,...array.suggested]
-      // singleData[0][2]=merge
-      // let merge =[...array.current,...array.suggested]
-      singleData[0][2]=array.current
+      // singleData[0][2]=array.current
+      singleData[0][2]=this.recommendCurrent ? this.recommendCurrent : array.current;
       singleData[0][2] = singleData[0][2].flat();
      }
     if (singleData[0][2]) {
@@ -338,8 +348,8 @@ export class ShowHealthPlanningComponent implements OnInit {
       arr.forEach(element => {
         element.insurance = element.insuranceDetails ?  element.insuranceDetails :  element.insurance
         });
+        singleData[0][2] = [...new Map(singleData[0][2].map(item => [item['insurance'].id, item])).values()];
     }
-    singleData[0][2] = [...new Map(singleData[0][2].map(item => [item['insurance'].id, item])).values()];
     console.log('recommendation', singleData[0][2])
     this.storedData = singleData;
     this.ipService.setIpData(this.storedData);
@@ -602,13 +612,14 @@ export class ShowHealthPlanningComponent implements OnInit {
     this.forkJoinResponse(singleData[0]);
     this.checkAndPushSuggestedData(singleData[0])
   }
-  close(data) {
+  close(data,flag) {
     data.isRefreshRequired = this.isRefreshRequired
     const fragmentData = {
       direction: 'top',
       componentName: ShowHealthPlanningComponent,
       state: 'close',
-      data: data
+      data: data,
+      refreshRequired:this.isRefreshRequired ? this.isRefreshRequired : flag
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
@@ -720,13 +731,13 @@ export class ShowHealthPlanningComponent implements OnInit {
       this.planService.addAdviseOnGeneralInsurance(this.stringObject).subscribe(
         res => {
           this.eventService.openSnackBar("Advice given sucessfully", "Dimiss");
-          this.close(data)
+          this.close(data,true)
         }, err => {
           this.eventService.openSnackBar(err, "Dimiss");
         }
       )
     } else {
-      this.close(data)
+      this.close(data,true)
     }
   }
   addGeneralInsurance(id) {

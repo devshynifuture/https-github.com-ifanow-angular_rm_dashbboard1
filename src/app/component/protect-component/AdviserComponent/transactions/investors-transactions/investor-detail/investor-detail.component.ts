@@ -9,6 +9,7 @@ import { EventService } from '../../../../../../Data-service/event.service';
 import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
+import {TransactionRoleService} from "../../transaction-role.service";
 
 @Component({
   selector: 'app-investor-detail',
@@ -46,7 +47,8 @@ export class InvestorDetailComponent implements OnInit {
   loader1: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private dialog: MatDialog) {
+              public transactionRoleService: TransactionRoleService,
+              private eventService: EventService, private dialog: MatDialog) {
   }
 
   ngOnInit() {

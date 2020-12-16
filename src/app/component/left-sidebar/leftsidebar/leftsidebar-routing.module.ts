@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LeftsidebarComponent } from './leftsidebar.component';
 import { SubscriptionGuard } from '../../../guards/subscription.guard';
 import { RoleGuard } from 'src/app/auth-service/role.guard';
+import { BackOfficeGuard } from '../../protect-component/AdviserComponent/backOffice/back-office.guard';
 
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
         data: { animation: 'Tab1', preload: true },
-        canLoad: [SubscriptionGuard]
+        canActivate: [SubscriptionGuard]
         // data: {preload: true}
 
       },
@@ -31,7 +32,8 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/dashboard/dashboard.module').then(m => m.DashboardModule),
+        canActivate: [RoleGuard]
       },
       {
         path: 'people',
@@ -55,7 +57,8 @@ const routes: Routes = [
       },
       {
         path: 'backoffice-mis',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.module').then(m => m.BackofficeMisModule)
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.module').then(m => m.BackofficeMisModule),
+        canActivate: [BackOfficeGuard]
       },
       {
         path: 'backoffice-aum-reconciliation',
@@ -67,7 +70,8 @@ const routes: Routes = [
       },
       {
         path: 'backoffice-file-upload',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/backoffice-file-upload.module').then(m => m.BackofficeFileUploadModule)
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/backoffice-file-upload.module').then(m => m.BackofficeFileUploadModule),
+        canActivate: [BackOfficeGuard]
       },
       {
         path: 'folio-mapping',

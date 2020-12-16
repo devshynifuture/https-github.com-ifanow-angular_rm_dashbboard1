@@ -15,6 +15,7 @@ import { AppConstants } from 'src/app/services/app-constants';
   providers: [LoaderFunction]
 })
 export class AddGoalsComponent implements OnInit {
+  organizationLogo;
   goalTypeData: any;
   showGoalType: any;
   goalTypeFirstRowListData: any;
@@ -31,7 +32,9 @@ export class AddGoalsComponent implements OnInit {
     private planService: PlanService,
     private utilService: UtilService,
     private peopleService: PeopleService,
-    public loaderFn: LoaderFunction
+    public loaderFn: LoaderFunction,
+    public authService: AuthService,
+
   ) {
     let clientData = AuthService.getClientData();
     this.clientName = clientData.name;

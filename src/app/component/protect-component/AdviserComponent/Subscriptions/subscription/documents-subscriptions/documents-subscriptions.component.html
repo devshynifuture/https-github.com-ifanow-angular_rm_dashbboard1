@@ -17,10 +17,14 @@
                                 actions
                             </a>
 
-                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
+                            <a (click)="deleteModal(null)"
+                                *ngIf="dataCount != 0 && dataCount > 1 && roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[2].enabledOrDisabled==1"
+                                mat-menu-item>Delete
                                 documents
                             </a>
-                            <a (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                            <a (click)="deleteModal(null)"
+                                *ngIf="dataCount != 0 && dataCount <= 1 && roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[2].enabledOrDisabled==1"
+                                mat-menu-item>Delete
                                 document
                             </a>
                         </mat-menu>
@@ -146,12 +150,15 @@
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
-                            <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>Edit
+                            <a *ngIf="roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[1].enabledOrDisabled==1"
+                                (click)="openViewDocument('viewDoc',element)" mat-menu-item>Edit
                                 document</a>
-                            <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1"
-                                mat-menu-item>Download eSigned
+                            <a (click)="downloadEsign(element)"
+                                *ngIf="element.signed && roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[4].enabledOrDisabled==1"
+                                class="bt-1" mat-menu-item>Download eSigned
                                 document</a>
-                            <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
+                            <a *ngIf="roleService.subscriptionPermission.subModule.documents.documentsCapabilityList[2].enabledOrDisabled==1"
+                                (click)="deleteModal(element)" mat-menu-item>Delete document</a>
                         </mat-menu>
                     </div>
                 </td>

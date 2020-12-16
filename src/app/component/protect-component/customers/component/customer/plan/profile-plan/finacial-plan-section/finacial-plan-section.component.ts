@@ -44,6 +44,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PreviewFinPlanComponent } from '../preview-fin-plan/preview-fin-plan.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { SaveFinPlanSectionComponent } from '../save-fin-plan-section/save-fin-plan-section.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -125,6 +126,14 @@ export class FinacialPlanSectionComponent implements OnInit {
   emailBody: string;
   liabilitiesList: any;
   commonList: any[];
+  portfolioInsurance: any;
+  selectedObj: any;
+  expenseCount: any;
+  bugetCount: any;
+  incomeCount: any;
+  clientDob: string;
+  familyList: any[];
+  svg: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -134,6 +143,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private datePipe: DatePipe,
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
+    private peopleService: PeopleService,
     private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
@@ -149,20 +159,110 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
+    this.getListFamilyMem();
     this.getGoalSummaryValues();
     this.getInsuranceList();
     this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
+    this.getIncome()
+    //this.getExpense()
+    this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
     this.isLoading = true
-    //this.emailBody = '<html><body> <img src= ' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div> </body> </html>';
     this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;"> <b>Date: 11-12-2020</b></div><div style="position: absolute;top: 18px;right: 18px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.reportLogoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.userInfo)
   }
+  getListFamilyMem() {
+    this.isLoading = true;
+    const obj = {
+      clientId: this.clientId
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data) {
+          let array = [];
+          data.forEach(element => {
+            if (element.familyMemberId == 0) {
+              this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+            } else {
+              const obj = {
+                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                'id': element.familyMemberId
+              }
+              array.push(obj);
+            }
 
+          });
+          this.familyList = array.map(function (obj, ind) {
+            let val = obj.id;
+            obj[val] = obj['dob']
+            delete obj['dob'];
+            delete obj['id'];
+            return obj;
+          });
+          this.getExpense()
+
+        }
+      },
+    );
+
+    // this.isLoading = true;
+
+  }
+  getIncome() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getIncome(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('incomeCount', data)
+          this.incomeCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getBuget() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getBudget(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('bugetCount', data)
+          this.bugetCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+  getExpense() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      clientDob: this.clientDob,
+      fmDobList: JSON.stringify(this.familyList)
+    };
+    this.cusService.getExpense(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('expenseCount', data)
+          this.expenseCount = data
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
   // checkAndLoadPdf(value, sectionName) {
   //   if (value) {
   //     this.loadedSection = sectionName
@@ -208,7 +308,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     console.log('preview', data)
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '600px',
-      height: '798px',
+      height: '620px',
       data: { bank: element, selectedElement: data }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -285,7 +385,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     var currentDateReg = "<currentdate>";
     element.content = element.content.replace(new RegExp(currentDateReg, 'g'), this.datePipe.transform(new Date(), 'dd-MMM-yyyy'))
     element.content = element.content.replace("[advisorname]", '<b>' + AuthService.getUserInfo().name + '</b>')
-    element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobile + '</b>')
+    element.content = element.content.replace("[advisoremailId]", '<b>' + this.userInfo.mobileList[0].mobileNo + '</b>')
     element.content = element.content.replace("[advisormobileno]", '<b>' + this.getOrgData.email + '</b>')
     element.content = element.content.replace("[currentdate]", '<b>' + this.datePipe.transform(new Date(), 'dd-MMM-yyyy') + '</b>')
     element.content = element.content.replace("[clientname]", '<b>' + this.clientData.name + '</b>')
@@ -296,7 +396,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     };
     this.sectionName = element.name
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, element.name, false)
+      data => this.uploadFileRes(data, element.name, false, '')
     );
   }
   pdfFromImage(element, list, i) {
@@ -311,11 +411,11 @@ export class FinacialPlanSectionComponent implements OnInit {
         if (element.name == 'Index') {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
-          this.uploadFile(el, list.name, element.name, false)
+          this.uploadFile(el, list.name, element.name, false, element)
         } else {
           var el = document.getElementById("yabanner");
           el.innerHTML = "<img src=\"" + element.imageUrl + "\"" + "\" width=\"965px\" height=\"1280px\">";
-          this.uploadFile(el, list.name, element.name, false)
+          this.uploadFile(el, list.name, element.name, false, element)
         }
       }
     }
@@ -354,11 +454,11 @@ export class FinacialPlanSectionComponent implements OnInit {
     });
     this.fincialPlan = data[0];
     this.fincialPlan.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
     this.miscellaneous = data[2]
     this.miscellaneous.templates.forEach(element => {
-      element.add = false
+      element.add = false;
     });
   }
 
@@ -408,6 +508,13 @@ export class FinacialPlanSectionComponent implements OnInit {
   removeModule(module, i) {
     module.checked = false
     module.isSelected = false
+    if (module.array && module.array.add) {
+      module.array.add = false
+    } else if (module.array && module.array.checked) {
+      module.array.checked = false
+    } else if (module.array && module.array.isSelectedCheckbox) {
+      module.array.isSelectedCheckbox = false;
+    }
     this.moduleAdded.splice(i, 1);
     if (this.moduleAdded.length == 0) {
       this.hideTable = true
@@ -415,6 +522,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   download() {
+    let moduleAdded = this.moduleAdded
+    moduleAdded.forEach(element => {
+      delete element.array
+    });
     this.downloadPdf = true
     let obj = {
       clientId: AuthService.getClientId(),
@@ -476,13 +587,34 @@ export class FinacialPlanSectionComponent implements OnInit {
 
       });
   }
+  getCountPortfolioInsurance() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getInsuranceCount(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          console.log('insurance', data)
+          this.portfolioInsurance = data
+        }
 
-  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any) {
+
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
+
+  checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     console.log('value', value)
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
       this.isLoading = false
     } else {
+      this.moduleAdded = this.moduleAdded.filter(function (value) {
+        return value.name != displayName;
+      });
       this.isLoading = false
       return
     }
@@ -618,7 +750,21 @@ export class FinacialPlanSectionComponent implements OnInit {
       }
       const pdfContentRef = this.container.createComponent(factory);
       const pdfContent = pdfContentRef.instance;
-      this.isLoading = true
+      if (sectionName == "Mutual fund overview") {
+        var svg = pdfContent.loadsvg
+          //.pipe(delay(1))
+          .subscribe(data => {
+            this.svg = data
+            console.log('svg', this.svg)
+            svg.unsubscribe();
+          });
+      }
+      this.isLoading = true;
+      if (array.isSelectedCheckbox) {
+        array.isSelectedCheckbox = value;
+      } else {
+        array.checked = value;
+      }
       if (sectionName == 'Goal') {
         pdfContent.finPlanObj = { hideForFinPlan: true, obj };
       } else if (sectionName == 'Life insurance') {
@@ -633,7 +779,7 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag);
+          this.uploadFile(data, sectionName, displayName, flag, array);
           console.log(pdfContent.loaded);
           sub.unsubscribe();
         });
@@ -642,26 +788,28 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   }
 
-  uploadFile(innerHtmlData, sectionName, displayName, flag) {
+  uploadFile(innerHtmlData, sectionName, displayName, flag, array) {
     const obj = {
       clientId: this.clientId,
       name: sectionName + '.html',
-      htmlInput: String(innerHtmlData.innerHTML)
+      htmlInput: String(innerHtmlData.innerHTML),
+      svg: this.svg,
+      key: 'showPieChart',
     };
     this.sectionName = sectionName
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
-      data => this.uploadFileRes(data, displayName, flag)
+      data => this.uploadFileRes(data, displayName, flag, array)
     );
   }
 
-  uploadFileRes(data, displayName, flag) {
+  uploadFileRes(data, displayName, flag, array) {
     this.isLoading = false
     this.moduleAdded.push({
       name: displayName, s3ObjectKey: data.s3ObjectKey, id: this.count++, bucketName: data.bucketName,
-      landscape: flag, isSelected: true
+      landscape: flag, isSelected: true, array: array
 
     });
-    console.log(data);
+    console.log('moduleAdded', this.moduleAdded);
   }
 
   getGoalSummaryValues() {
@@ -785,7 +933,8 @@ export class FinacialPlanSectionComponent implements OnInit {
           });
           this.dataSource.data = arr;
           this.dataSource.data.forEach(element => {
-            element.isSelected = false
+            element.isSelected = false;
+            element.isSelectedCheckbox = false;
           });
           //this.isLoadingGoals = false;
           // this.dataSource.paginator = this.paginator;
@@ -933,6 +1082,7 @@ export class FinacialPlanSectionComponent implements OnInit {
       });
       console.log(this.dataSource)
       this.insuranceList = this.dataSource
+      this.dataSource.forEach(element => element.isSelectedCheckbox = false);
       this.insurancePlanningList = this.dataSource;
     }
   }

@@ -1,9 +1,10 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PeopleComponent} from './people.component';
-import {PeopleClientsComponent} from './Component/people-clients/people-clients.component';
-import {PeopleLeadsComponent} from './Component/people-leads/people-leads.component';
-import {PeopleTeamMembersComponent} from './Component/people-team-members/people-team-members.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PeopleComponent } from './people.component';
+import { PeopleClientsComponent } from './Component/people-clients/people-clients.component';
+import { PeopleLeadsComponent } from './Component/people-leads/people-leads.component';
+import { PeopleTeamMembersComponent } from './Component/people-team-members/people-team-members.component';
+import { RoleGuard } from 'src/app/auth-service/role.guard';
 
 
 const routes: Routes = [
@@ -14,10 +15,12 @@ const routes: Routes = [
       {
         path: 'clients',
         component: PeopleClientsComponent,
+        canActivate: [RoleGuard]
       },
       {
         path: 'leads',
-        component: PeopleLeadsComponent
+        component: PeopleLeadsComponent,
+        canActivate: [RoleGuard]
       },
       /* {
          path: 'team-members',

@@ -34,7 +34,7 @@
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openMutualFund('addMutualFund',null)">ADD
                     NEW</button> -->
-                <mat-menu #menu2="matMenu" class="add-new">
+                <mat-menu #menu2="matMenu" class="add-new-2">
                     <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -376,7 +376,7 @@
         <div class="row pt-12 pb-12 pb-md-20">
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" (click)="openSummary('category wise')"
                 *ngIf="showSchemeWise || dataSource2.data.length > 0">
-                <div class="bg-grey lter">
+                <div class="bg-grey lter" *ngIf="showSchemeWise">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0 c-p">Scheme wise allocation</h5>
                 </div>
                 <div class="scheme-wise-allocation" id="table-low">
@@ -481,7 +481,7 @@
                 </div>
                 <div class="mt-20 mb-20 pl-0" (click)="openSummary('Sub Category wise')"
                     *ngIf="showSubCategory || dataSource3.data.length > 0">
-                    <div class="bg-grey lter">
+                    <div class="bg-grey lter" *ngIf="showSubCategory">
                         <h5 class="m-0 wrapper-8 b-a f-500 roboto pb-10 pt-10 bb-0 c-p">Sub category wise allocation
                         </h5>
                     </div>
@@ -611,12 +611,13 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow">
                 <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
-                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status <img
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0" *ngIf="showCashFlow">Cashflow status <img
                             src="assets/images/svg/info.svg" class="c-p hw-17"
                             matTooltip="This section calculates the cash flow status of your entire portfolio - i.e. It includes cash flows from zero balance folios too"
                             [matTooltipPosition]="'right'"></h5>
                 </div>
-                <div id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0"
+                <!-- || datasource1.data.length > 0 -->
+                <div id="table-low" *ngIf="showCashFlow"
                     class="mb-20 cashflows-headers-hide">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
@@ -649,7 +650,7 @@
                 <div class="pr-0 mb-20 familymember-wise" (click)="openSummary('investor wise')"
                     *ngIf="showFamilyMember || dataSource.data.length > 0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p">Family member wise allocation
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showFamilyMember">Family member wise allocation
                         </h5>
                     </div>
                     <div class="family-member-wise-allocation" id="table-low">
@@ -772,7 +773,7 @@
                 <div class="p-0 mt-20 mb-20 familymember-wise" (click)="openSummary('category wise')"
                     *ngIf="showCategory || dataSource4.data.length >0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p">Category wise allocation</h5>
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showCategory">Category wise allocation</h5>
                     </div>
                     <div class="category-wise-allocation" id="table-low">
                         <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading
@@ -911,7 +912,7 @@
         <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD
             NEW
         </button>
-        <mat-menu #menu1="matMenu" class="add-new">
+        <mat-menu #menu1="matMenu" class="add-new-2">
             <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">

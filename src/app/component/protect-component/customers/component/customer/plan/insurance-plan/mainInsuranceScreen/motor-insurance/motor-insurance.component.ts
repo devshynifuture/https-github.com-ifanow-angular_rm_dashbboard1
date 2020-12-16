@@ -696,7 +696,7 @@ export class MotorInsuranceComponent implements OnInit {
 				id: (this.id) ? this.id : null,
 				realOrFictitious: 2,
 				suggestion: this.plannerNotes,
-				isRecommend: this.showRecommendation,
+                'isRecommend': this.showRecommendation ? 1 : 0,
 				addOns: addOns,
 				insuredMembers: [],
 				nominees: this.motorInsuranceForm.value.getNomineeName,

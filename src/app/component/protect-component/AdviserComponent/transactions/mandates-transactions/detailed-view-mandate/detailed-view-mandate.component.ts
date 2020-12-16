@@ -5,6 +5,7 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { EventService } from '../../../../../../Data-service/event.service';
+import {TransactionRoleService} from "../../transaction-role.service";
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -36,7 +37,8 @@ export class DetailedViewMandateComponent implements OnInit {
   showChequeStatus: boolean;
   showMandateStatus: boolean;
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
+  constructor(private subInjectService: SubscriptionInject, private eventService: EventService
+    , public transactionRoleService: TransactionRoleService) {
   }
 
   ngOnInit() {

@@ -268,6 +268,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
     let component;
     if(data){
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
+      data['insurance'] = data.InsuranceDetails;
     }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
@@ -341,7 +342,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       componentName: SuggestAdviceComponent,
       childComponent: component,
       adviceToCategoryTypeMasterId: 4,
-      showHeaderEdit: data ? true : false,
+      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
       adviceHeaderList: this.adviceHeaderList,
       recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       adviceToCategoryId: this.object.adviceToCategoryId,
@@ -411,6 +412,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
     data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
     data['insuranceTypeId'] = 1;
     data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    data['showHeader'] = true;
     const fragmentData = {
       flag: 'Advice General Insurance',
       data,

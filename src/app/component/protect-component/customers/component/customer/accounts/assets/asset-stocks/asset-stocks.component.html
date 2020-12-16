@@ -609,61 +609,67 @@
     </div>
 </div>
 
+
+
 <div #StocksTemplate id="template" style="display: none;" *ngIf="portfolioData.length > 0">
     <table cellpadding="0" cellspacing="0" border="0"
-        style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
-        align="center; page-break-before: always;">
+        style="width: 100%; font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center;  ">
 
 
         <tr>
-            <table cellpadding="0" cellspacing="0" border="0"
-                style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
-                align="center; page-break-before: always;">
-                <tr>
-                    <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
-                        <div *ngIf="getOrgData.reportLogoUrl">
-                            <img width="140px" [src]="getOrgData.reportLogoUrl">
-                        </div>
-                        <div *ngIf="!getOrgData.reportLogoUrl && getOrgData.logoUrl">
-                            <img width="200px" [src]="getOrgData.logoUrl">
-                        </div>
-                        <div *ngIf="getOrgData.companyName">
-                            <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                        </div>
-                    </td>
-                    <td style="text-align: right;">
-                        <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
-                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                        <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
-                                Number:</strong>
-                            {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
-                        </p>
-                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
-                                Email:</strong>
-                            {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0"
+                    style="width: 100%; font-family: 'Roboto', sans-serif;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                            <div *ngIf="getOrgData.reportLogoUrl">
+                                <img width="140px" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div *ngIf="!getOrgData.reportLogoUrl && getOrgData.logoUrl">
+                                <img width="200px" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div *ngIf="getOrgData.companyName">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style="text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                                    Number:</strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                                    Email:</strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
-                                {{'Stock Summary'}}</strong>
-                        </p>
-                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
-                                {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <p style="margin-bottom: 10px; font-weight: 700; font-size: 14px; padding-top: 4px;"
-                            *ngIf="clientData">
-                            Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
-                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
-                            Summary</p>
-                    </td>
-                </tr>
-            </table>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                                    {{'Stock Summary'}}</strong>
+                            </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </td>
         </tr>
+
         <tr>
-            <td colspan="5" style="padding: 10px;"></td>
+            <td style="padding-top: 10px;">
+                <p style="margin-bottom: 10px; font-weight: 700; font-size: 14px; padding-top: 4px;" *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+                <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
+                    Summary</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
@@ -684,7 +690,7 @@
                                 style="width: 100%;   background: #f8f9fa; border-top: 1px solid #dee5e7; padding: 10px;">
                                 <tr *ngIf="assetStockData">
                                     <td style="padding: 8px 0px;">
-                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;">Amount
+                                        <p style="font-size: 12px; color: #757575; margin: 0px 0px 0px 0px;"> Amount
                                             invested </p>
                                         <h5 style="margin: 0px; font-size: 16px;">
                                             ₹<span [value]="grandTotalAmountInvested" appFormatNumber></span>
@@ -730,11 +736,12 @@
                                         <div
                                             style="background:#008FFF; margin-right: 10px; width: 10px; display: inline-block; height: 10px;">
                                         </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 160px;">Banking</div>
-                                        <div style="font-size: 14px; display: inline-block; margin-right: 10px;">
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">Banking</div>
+                                        <div
+                                            style="font-size: 14px; display: inline-block; margin-right: 10px; width: 120px; text-align: right;">
                                             {{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue"
                                                 appFormatNumber>{{categories.Banks.currentValue}}</span></div>
-                                        <div style="font-size: 12px; text-align: right; display: inline-block;">
+                                        <div style="font-size: 12px; margin-left: 10px; display: inline-block;">
                                             {{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}}
                                         </div>
                                     </td>
@@ -743,16 +750,17 @@
                                 <tr *ngIf="categories.Information_Technology.perrcentage > 0">
                                     <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
                                         <div
-                                            style="background:#5DC644; width: 10px; display: inline-block; height: 10px;">
+                                            style="background:#5DC644; width: 10px; margin-right: 10px; display: inline-block; height: 10px;">
                                         </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Information
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">Information
                                             technology</div>
-                                        <div style="font-size: 14px; display: inline-block;">
+                                        <div
+                                            style="font-size: 14px; display: inline-block; width: 120px; text-align: right;">
                                             {{categories.Information_Technology?'₹':''}}<span
                                                 [value]="categories.Information_Technology.currentValue"
                                                 appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
                                         </div>
-                                        <div style="font-size: 12px; display: inline-block;">
+                                        <div style="font-size: 12px; display: inline-block; margin-left: 10px;">
                                             {{categories.Information_Technology.perrcentage | number: '1.2-2'}}{{categories.Information_Technology?'%':''}}
                                         </div>
                                     </td>
@@ -760,13 +768,14 @@
                                 <tr *ngIf="categories.fmcg.perrcentage > 0">
                                     <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
                                         <div
-                                            style="background:#FFC100; width: 10px; display: inline-block; height: 10px;">
+                                            style="background:#FFC100; width: 10px; margin-right: 10px; display: inline-block; height: 10px;">
                                         </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 150px;">FMCG</div>
-                                        <div style="font-size: 14px; display: inline-block;">
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">FMCG</div>
+                                        <div
+                                            style="font-size: 14px; display: inline-block; width: 120px; text-align: right;">
                                             {{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue"
                                                 appFormatNumber>{{categories.fmcg.currentValue}}</span></div>
-                                        <div style="font-size: 12px; display: inline-block;">
+                                        <div style="font-size: 12px; display: inline-block; margin-left: 10px;">
                                             {{categories.fmcg.perrcentage | number: '1.2-2'}}{{categories.fmcg?'%':''}}
                                         </div>
                                     </td>
@@ -775,16 +784,17 @@
                                 <tr *ngIf="categories.Auto_Ancillaries.perrcentage > 0">
                                     <td style="padding: 10px;">
                                         <div
-                                            style="background:#FF6823; width: 10px; display: inline-block; height: 10px;">
+                                            style="background:#FF6823; width: 10px; margin-right: 10px; display: inline-block; height: 10px;">
                                         </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Auto
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">Auto
                                             ancillaries</div>
-                                        <div style="font-size: 14px; display: inline-block;">
+                                        <div
+                                            style="font-size: 14px; display: inline-block; width: 120px; text-align: right;">
                                             {{categories.Auto_Ancillaries?'₹':''}}<span
                                                 [value]="categories.Auto_Ancillaries.currentValue"
                                                 appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
                                         </div>
-                                        <div style="font-size: 12px; display: inline-block;">
+                                        <div style="font-size: 12px; display: inline-block; margin-left: 10px;">
                                             {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}
                                         </div>
                                     </td>
@@ -793,13 +803,14 @@
                                 <tr *ngIf="categories.OTHERS.perrcentage > 0">
                                     <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
                                         <div
-                                            style="background:#A0AEB4; width: 10px; display: inline-block; height: 10px;">
+                                            style="background:#A0AEB4; width: 10px; margin-right: 10px; display: inline-block; height: 10px;">
                                         </div>
-                                        <div style="font-size: 14px; display: inline-block; width: 150px;">Other</div>
-                                        <div style="font-size: 14px; display: inline-block;">
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">Other</div>
+                                        <div
+                                            style="font-size: 14px; display: inline-block; width: 120px; text-align: right;">
                                             {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue"
                                                 appFormatNumber>{{categories.OTHERS.currentValue}}</span></div>
-                                        <div style="font-size: 12px; display: inline-block;">
+                                        <div style="font-size: 12px; display: inline-block; margin-left: 10px; ">
                                             {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}
                                         </div>
                                     </td>
@@ -821,31 +832,31 @@
                 <table style="width: 100%; font-size: 14px; border: 1px solid #dee5e7;" cellpadding="0" cellspacing="0">
                     <tr>
                         <td
-                            style="background: #F5F7F7; padding: 10px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7; padding: 10px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Scrip </td>
                         <td
-                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Amount invested </td>
                         <td
-                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Current value</td>
                         <td
-                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Unrealized gain/loss</td>
                         <td
-                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Balance shares</td>
                         <td
-                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7;padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Average price</td>
                         <td
-                            style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Market price</td>
                         <td
-                            style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7; padding: 10px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Absolute returns</td>
                         <td
-                            style="background: #F5F7F7; padding: 10px; text-align: right; border-bottom: 1px solid #dee5e7;">
+                            style="background: #F5F7F7; padding: 10px; text-align: right; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             Dividend</td>
                     </tr>
 

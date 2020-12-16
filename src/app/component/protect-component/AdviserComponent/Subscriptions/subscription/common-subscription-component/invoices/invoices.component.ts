@@ -206,6 +206,8 @@ export class InvoicesComponent implements OnInit {
   openInvoice(data, value, state) {
     data.isAdvisor = this.isAdvisor;
     data['showBottomBar'] = true;
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[4].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[5].enabledOrDisabled == 1 ? true : false;
     const fragmentData = {
       flag: value,
       data,

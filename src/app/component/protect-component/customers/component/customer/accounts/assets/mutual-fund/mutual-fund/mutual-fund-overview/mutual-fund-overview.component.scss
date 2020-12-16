@@ -113,3 +113,16 @@
 }
 
 
+::ng-deep .add-new-2 {
+    min-width: 300px !important;
+  
+    .mat-menu-item {
+      height: 105px;
+      line-height: 28px;
+      padding: 0 !important;
+    }
+  
+    .mat-menu-content:not(:empty) {
+      padding-bottom: 0px;
+    }
+  }

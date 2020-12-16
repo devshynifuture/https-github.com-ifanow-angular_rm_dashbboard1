@@ -655,7 +655,7 @@ export class FireInsuranceComponent implements OnInit {
 				"addOns": addOns,
 				'realOrFictitious': 2,
 				'suggestion': this.plannerNotes,
-				'isRecommend': this.showRecommendation,
+                'isRecommend': this.showRecommendation ? 1 : 0,
 				'insuredMembers': [],
 				nominees: this.fireInsuranceForm.value.getNomineeName,
 			}

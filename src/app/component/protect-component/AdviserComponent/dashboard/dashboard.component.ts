@@ -30,6 +30,7 @@ import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
 import { EnumDataService } from "../../../../services/enum-data.service";
 import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export interface PeriodicElement {
   name: string;
@@ -239,7 +240,8 @@ export class DashboardComponent implements OnInit {
     private crmTaskService: CrmTaskService,
     private customerService: CustomerService,
     public enumDataService: EnumDataService,
-    private cancelFlagService: CancelFlagService
+    private cancelFlagService: CancelFlagService,
+    public roleService: RoleService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();

@@ -12,23 +12,26 @@
         </div>
     </div>
 </div>
-<div>
+<div class="scrllo-height-505">
     <div *ngIf="selectedElement=='' && !data.bank.content">
         <img src="{{data.bank.imageUrl}}" viewer="google" style="width:100%;">
     </div>
-    <div *ngIf="this.data.bank.content" id="dId"></div>
+    <div id="dId"></div>
     <div *ngIf="link">
-        <ngx-doc-viewer [url]="link" viewer="google" style="width:580px;height:690px;">
+        <ngx-doc-viewer [url]="link" style="height: 100vh;" viewer="google">
         </ngx-doc-viewer>
     </div>
     <div *ngIf="loadSpinner == true">
         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 mt-16 text-right">
-        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
-            CANCEL
-        </button>
+
+<div class="popup-footer-fix-bottom-30">
+    <div class="row">
+        <div class="col-md-12 mt-10 mb-10 text-right">
+            <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+                CANCEL
+            </button>
+        </div>
     </div>
 </div>

@@ -321,13 +321,16 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if (upperSliderData['data']) {
+          if (UtilService.isRefreshRequired(upperSliderData) || upperSliderData['data']==true) {
             this.selectedId = '';
             if (this.detailsInsurance) {
               this.detailsInsurance.dataLoaded = false;
             }
             this.getInsuranceList();
           }
+          // if (upperSliderData['data']) {
+          
+          // }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }

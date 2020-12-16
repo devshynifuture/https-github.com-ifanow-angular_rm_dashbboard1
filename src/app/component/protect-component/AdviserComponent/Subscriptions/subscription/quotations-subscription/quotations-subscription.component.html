@@ -17,7 +17,9 @@
                                 <a *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
                                     actions
                                 </a>
-                                <a (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
+                                <a (click)="deleteModal(null)"
+                                    *ngIf="dataCount != 0 && roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[3].enabledOrDisabled==1"
+                                    mat-menu-item>Delete
                                     quotation
                                 </a>
                             </mat-menu>
@@ -140,8 +142,10 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('emailQuotation',element)" mat-menu-item>View Quotation</a>
-                                <a (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
+                                <a *ngIf="roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[2].enabledOrDisabled==1"
+                                    (click)="Open('emailQuotation',element)" mat-menu-item>View Quotation</a>
+                                <a *ngIf="roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[3].enabledOrDisabled==1"
+                                    (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
                             </mat-menu>
                         </div>
                     </td>
@@ -161,7 +165,9 @@
         <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
             <img class="width400" src="assets/images/svg/noDataFound.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
-            <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
+            <button
+                *ngIf="roleService.subscriptionPermission.subModule.quotations.quotationsCapabilityList[1].enabledOrDisabled==1"
+                mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
                 (click)="addQuotation('addQuotation')"> ADD
                 QUOTATION
             </button>

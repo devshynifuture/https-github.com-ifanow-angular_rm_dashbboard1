@@ -313,11 +313,13 @@ export class MutualFundsCapitalComponent implements OnInit {
         if (data) {
           const myArray = data
           const list = [];
+          this.capitalGainData = [];
           myArray.forEach(val => list.push(Object.assign({}, val)));
           this.capitalGainData = list;
           this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
           this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
-          this.calculateCapitalGain(this.capitalGainData)
+          // this.calculateCapitalGain(this.capitalGainData)
+          this.calculateCapitalGain(data)
         } else {
           this.dataSource.data = [];
           this.dataSource1.data = [];
@@ -346,7 +348,13 @@ export class MutualFundsCapitalComponent implements OnInit {
     let equityData = [];
     this.changeInput.emit(false);
     if (data) {
-      this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
+      const myArray = data
+      const list = [];
+      this.capitalGainData = [];
+      myArray.forEach(val => list.push(Object.assign({}, val)));
+      this.capitalGainData = list;
+      this.mutualFundList = this.MfServiceService.filter(data, 'mutualFund');
+      // this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
       this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       this.categoryData = data;
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');

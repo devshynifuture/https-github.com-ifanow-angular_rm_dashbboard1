@@ -225,7 +225,8 @@ export class AddHealthInsuranceComponent implements OnInit {
     let obj = {
       clientId: this.clientId,
       insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.showInsurance ? (this.showInsurance ? this.showInsurance.insuranceType : this.insuranceType) : this.insuranceType,
-      realOrFictious: 1
+      realOrFictious: 1,
+      flag : (this.inputData && this.inputData.id) ? false : true
     }
     const obj2 = {
       clientId: this.clientId
@@ -732,7 +733,7 @@ export class AddHealthInsuranceComponent implements OnInit {
           this.inputData.id = data;
           this.eventService.openSnackBar("Existing policy added", 'Ok');
           this.barButtonOptions.active = false;
-          this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true ,data : data});
+          this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');

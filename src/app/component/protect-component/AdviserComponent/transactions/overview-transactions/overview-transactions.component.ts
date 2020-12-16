@@ -14,6 +14,7 @@ import {OnlineTransactionService} from '../online-transaction.service';
 import {TransactionDetailComponent} from '../transactions-list/transaction-detail/transaction-detail.component';
 import {TransactionEnumService} from '../transaction-enum.service';
 import {EnumDataService} from 'src/app/services/enum-data.service';
+import {TransactionRoleService} from "../transaction-role.service";
 
 @Component({
   selector: 'app-overview-transactions',
@@ -48,8 +49,9 @@ export class OverviewTransactionsComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    public eventService: EventService, private http: HttpService,
-    private tranService: OnlineTransactionService, private enumDataService: EnumDataService) {
+              public eventService: EventService, private http: HttpService,
+              private tranService: OnlineTransactionService, private enumDataService: EnumDataService,
+              public transactionRoleServcie: TransactionRoleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -65,7 +67,7 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   openMobileErrorCopyTransactionPopup() {

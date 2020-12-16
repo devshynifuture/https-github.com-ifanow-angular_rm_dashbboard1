@@ -65,7 +65,7 @@
                 </td>
             </ng-container>
 
-<!-- 
+            <!-- 
             <ng-container matColumnDef="empty">
                 <th mat-header-cell class="" *matHeaderCellDef> </th>
                 <td mat-cell class="c-p" *matCellDef="let element" [matMenuTriggerFor]="menu4">
@@ -88,7 +88,11 @@
             <h4 class="text-center pt-12"> No data found</h4>
         </div>
     </div>
-    <div *ngIf="isLoading" class="bg-white p-20">Loading data...</div>
+    <div *ngIf="isLoading" class="bg-white p-20">
+        <div class="col-md-12 d-flex justify-content-center align-items-center text-center h-80vh">
+            <div class="pl-28 pr-28 text-center">Loading data...</div>
+        </div>
+    </div>
 
 
 </div>

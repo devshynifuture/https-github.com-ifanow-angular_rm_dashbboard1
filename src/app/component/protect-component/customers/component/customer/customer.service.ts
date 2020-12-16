@@ -50,7 +50,18 @@ export class CustomerService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.INSURANCE_COUNT_GET, httpParams);
   }
-
+  getIncome(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_COUNT, httpParams);
+  }
+  getExpense(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('clientDob', data.clientDob).set('fmDobList', data.fmDobList);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPENSE_COUNT, httpParams);
+  }
+  getBudget(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BUDGET_COUNT, httpParams);
+  }
   editLifeInsuranceData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_LIFE_INSURANCE, data);
   }

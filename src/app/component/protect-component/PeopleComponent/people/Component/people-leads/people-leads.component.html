@@ -7,7 +7,8 @@
         class="col-md-8 d-flex align-items-center justify-content-end ">
         <!-- <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p"> -->
 
-        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+        <a *ngIf="roleService.peoplePermission.subModule.leadsCapability.download" [matMenuTriggerFor]="menu5"
+            class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
         </a>
 
@@ -24,7 +25,8 @@
 
         <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button> -->
-        <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary ml-8">
+        <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.add" (click)="open(null,'lead')"
+            mat-stroked-button class="btn-primary ml-8">
             ADD NEW</button>
     </div>
 </div>
@@ -124,13 +126,16 @@
                 <td mat-cell class="text-center" [matMenuTriggerFor]="menu" *matCellDef="let element" class="c-p">
                     <img class="c-p" *ngIf="isLoading==false" src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
-                        <button (click)="open(element,'lead')" mat-menu-item>
+                        <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.edit"
+                            (click)="open(element,'lead')" mat-menu-item>
                             <span>Edit</span>
                         </button>
-                        <button (click)="open(element,'convertLead')" mat-menu-item>
+                        <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.convertToclient"
+                            (click)="open(element,'convertLead')" mat-menu-item>
                             <span>Convert to client</span>
                         </button>
-                        <button (click)="deleteModal('LEAD',element)" mat-menu-item>
+                        <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.delete"
+                            (click)="deleteModal('LEAD',element)" mat-menu-item>
                             <span>Delete</span>
                         </button>
                     </mat-menu>
@@ -145,7 +150,8 @@
                 <div class="boxEmpty mt-32">
                     <img src="assets/images/svg/leads-empty-states.svg">
                     <h4 class="mt-24 mb-12">No leads added yet</h4>
-                    <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
+                    <button *ngIf="roleService.peoplePermission.subModule.leadsCapability.add" mat-stroked-button
+                        class="btn-primary addon v-middle  " (click)="open(null,'lead')">
                         ADD NEW</button>
                 </div>
 

@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div class="pt-90 pr-28 pl-28" [formGroup]="suggestPolicyForm">
+<div class="pt-90 pr-28 pl-28 pb-28" [formGroup]="suggestPolicyForm">
     <div class="row">
         <div class="col-md-8 pl-0">
             <h5 class="m-0">Policy name</h5>
@@ -89,13 +89,28 @@
             </div>
         </div>
     </div>
+    <div class="row pt-24">
+        <div class="col-md-3 p-0">
+            <h5 class="m-0">Implementation Date</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input (focus)="implementationDate.open()" [matDatepicker]="implementationDate"
+                        class="form-control br-0 b-0" #implementationDate formControlName="implementationDate" matInput>
+                    <mat-datepicker-toggle [for]="implementationDate" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #implementationDate></mat-datepicker>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-32">
         <div class="col-md-12 p-0">
             <mat-checkbox #check [checked]="isRecommended" [disabled]="recommendOrNot ? true : false"
                 [matTooltip]="recommendOrNot ? 'Cannot recommend more than one policy' : null"
                 (change)="checkRecommendation($event.checked)">Recommended
                 option <img src="/assets/images/svg/info.svg"> </mat-checkbox>
-            <p class="pt-20 mb-0 roboto text-black">Rationale (Policy details, features etc,)</p>
+            <p class="pt-20 mb-0 roboto text-black f-400">Rationale (Policy details, features etc,)</p>
         </div>
     </div>
     <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>

@@ -5,6 +5,7 @@ import { AumComponent } from '../aum.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisService } from '../excel-mis.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -113,7 +114,8 @@ export class CategoryWiseComponent implements OnInit {
     private backoffice: BackOfficeService,
     private dataService: EventService,
     public aum: AumComponent,
-    private mfService: MfServiceService
+    private mfService: MfServiceService,
+    public roleService: RoleService
   ) { }
 
   selectedCategory;

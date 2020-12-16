@@ -77,8 +77,8 @@
                             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         </div>
                         <div class="col-md-6 text-right p-0" *ngIf="selectedGoal">
-                            <img (click)="generatePdf(null)" class="b-a c-p" matTooltip="Download PDF"
-                                src="assets/images/svg/pdf-icons.svg">
+                            <img (click)="generatePdf(null)" class=" c-p pr-16 h-24" matTooltip="Download PDF"
+                                src="assets/images/svg/download-pdf-blue.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
                         </div>
                     </div>
@@ -676,8 +676,15 @@
             </div>
 
             <div class="textEmpty">
-                <h3>What’s a life without a goal.</h3>
-                <p>Let’s add your goals and achieve them. We’re in this together.</p>
+                <!-- <h3>Insurance planning ensures protection of yourself, your family, their health against unexpected
+                    events.
+
+                </h3> -->
+                <p>Insurance planning ensures protection of yourself, your family, their health against unexpected
+                    events<br>
+                    Let's start planning for various insurance aspects and stay protected.
+
+                </p>
                 <button (click)="openAddgoals()" mat-stroked-button class="btn-primary br-0 addon">LET’S GET
                     STARTED</button>
             </div>
@@ -957,13 +964,15 @@
                                 <tr *ngFor="let element of dataSource">
                                     <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
-                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
-                                        <p class="mb-0 roboto" appFormatNumber
-                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'></p>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
                                     </td>
-                                    <td style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;">
-                                        <p class="mb-0 roboto" appFormatNumber
-                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'></p>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'> </span>
                                     </td>
                                 </tr>
                             </table>

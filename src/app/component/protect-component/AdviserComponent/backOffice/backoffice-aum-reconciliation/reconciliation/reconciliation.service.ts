@@ -160,7 +160,9 @@ export class ReconciliationService {
     putUnmapFolioTransaction(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNMAP_FOLIO, data);
     }
-
+    unmappedFolio(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, data);
+    }
     // delete functions
 
     deleteUnfreezeTransaction(data) {

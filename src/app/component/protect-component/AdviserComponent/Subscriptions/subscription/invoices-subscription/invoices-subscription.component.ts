@@ -299,6 +299,11 @@ export class InvoicesSubscriptionComponent implements OnInit, OnDestroy {
     if (this.isLoading) {
       return;
     }
+    if (this.roleService.subscriptionPermission.subModule.invoices.invoicesCapabilityList[2].enabledOrDisabled == 2) {
+      return;
+    }
+    data['isEmail'] = this.roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[4].enabledOrDisabled == 1 ? true : false;
+    data['isDownload'] = this.roleService.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList[5].enabledOrDisabled == 1 ? true : false;
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
     this.eventService.sidebarData(value);
