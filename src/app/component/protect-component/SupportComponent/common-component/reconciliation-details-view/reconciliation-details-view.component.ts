@@ -263,7 +263,23 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     // }
     this.allFolioTransactionTableDataBinding();
   }
+  unmappedFolio(data) {
+    console.log('unmapped data', data)
+    const obj = {
+      mutualFundId: this.data.mutualFundId
+    };
 
+    console.log(data);
+
+    this.reconService.unmappedFolio(obj)
+      .subscribe(res => {
+        console.log(res);
+        this.eventService.openSnackBarNoDuration("Unmapped folio successfully!", "DISMISS");
+      }, err => {
+        console.error(err);
+      })
+
+  }
   singleSelectionSelect(element, mainIndex) {
     if (element.canDeleteTransaction === true) {
       this.selection.toggle(element);
