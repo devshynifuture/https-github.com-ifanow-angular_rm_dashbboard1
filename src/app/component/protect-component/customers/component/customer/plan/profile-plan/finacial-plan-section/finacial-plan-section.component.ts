@@ -164,7 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
     this.getIncome()
-    this.getExpense()
+    //this.getExpense()
     this.getBuget()
     this.getTemplateSection()
     this.getPlanSection()
