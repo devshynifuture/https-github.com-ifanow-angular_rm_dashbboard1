@@ -227,7 +227,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
             if (absAllocation <= 99) {
               absAllocation += element.percentAllocated;
             } else {
-              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+              //this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
             }
           });
         }
@@ -241,7 +241,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
             if (absAllocation <= 99) {
               absAllocation += element.percentAllocated;
             } else {
-              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+              //this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
             }
           });
         }
