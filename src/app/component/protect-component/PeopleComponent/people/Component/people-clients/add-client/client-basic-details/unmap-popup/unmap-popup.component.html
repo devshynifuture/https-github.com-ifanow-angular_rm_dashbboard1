@@ -1,20 +1,22 @@
-<!-- <div class="row bb-1 popup-header-fix-50">
-    <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">Unmap family member</h4>
-    </div>
-    <div class="col-md-2 col-2 full-center pl-48">
+<div *ngIf="data.showField" class="boxWidthHeight">
 
-        <i (click)="cancel()" class="material-icons c-p">
-            clear
-        </i>
+    <div class="row bb-1  ">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 l-22 wrapper-20">Unmap family member</h4>
+        </div>
+        <div class="col-md-2  full-center  ">
 
+            <i (click)="cancel()" class="material-icons c-p">
+                clear
+            </i>
+
+        </div>
     </div>
-</div> -->
-<div class="mt-60">
-    <div [formGroup]="unmapForm" class="p-20" *ngIf="data.showField">
+
+    <div [formGroup]="unmapForm" class="p-12">
         <div class="row">
             <div class="col-md-12">
-                <label>
+                <label class="f-14">
                     Email
                 </label>
                 <div class="form-group ">
@@ -27,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label>
+                <label class="f-14">
                     Number
                 </label>
                 <div class="form-group">
@@ -40,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label>
+                <label class="f-14">
                     Pan
                 </label>
                 <div class="form-group">
@@ -52,12 +54,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <button (click)="cancel()">Cancel</button>
-                <button mat-button (click)="unmapFamilyMember()">Unmap</button>
+            <div class="col-md-12 d-flex justify-content-end align-items-center">
+                <button mat-button (click)="cancel()">Cancel</button>
+                <button mat-button class="btn-primary" (click)="unmapFamilyMember()">Unmap</button>
             </div>
         </div>
     </div>
+
 </div>
-<div *ngIf="data.showField==false">
-    Minors cannot be unmapped.</div>
+
+<div class="p-20" *ngIf="data.showField==false">
+    <h5 class="m-0"> Minors cannot be unmapped. </h5>
+</div>
