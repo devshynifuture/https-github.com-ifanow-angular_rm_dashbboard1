@@ -54,10 +54,14 @@ export class PoTdSchemeComponent implements OnInit {
   reportDate: Date;
   userInfo: any;
   getOrgData: any;
+  returnValue: any;
+  fragmentData = { isSpinner: false };
+
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private eventService: EventService,
+    private utils: UtilService,
     private cusService: CustomerService,
     private assetValidation: AssetValidationService,
     private _bottomSheet: MatBottomSheet,
@@ -112,9 +116,27 @@ export class PoTdSchemeComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle) {
+  // pdf(tableTitle) {
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.pdfGen.generatePdf(rows, tableTitle);
+  // }
+
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   async ExportTOExcel(value) {
