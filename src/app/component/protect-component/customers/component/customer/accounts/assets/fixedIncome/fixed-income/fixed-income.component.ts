@@ -70,7 +70,7 @@ export class FixedIncomeComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
-  fragmentData: any;
+  fragmentData = { isSpinner: false };
   returnValue: any;
 
   constructor(private ref: ChangeDetectorRef, private excelSer: ExcelService, private subInjectService: SubscriptionInject,
@@ -95,6 +95,7 @@ export class FixedIncomeComponent implements OnInit {
     this.reportDate = new Date();
     this.showRequring = '1';
     this.hidePdf = true;
+    this.fragmentData.isSpinner = false
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData()
