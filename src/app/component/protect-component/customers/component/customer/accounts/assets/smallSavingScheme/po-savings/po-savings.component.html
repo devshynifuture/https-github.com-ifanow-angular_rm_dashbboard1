@@ -6,15 +6,15 @@
         <div *ngIf="datasource.filteredData.length > 0"
             class="col-md-8 p-0  d-flex align-items-center justify-content-end">
             <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
             <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
 
             <mat-menu #menu5="matMenu">
-                <button (click)="pdf('OP Savings')" mat-menu-item>PDF</button>
-                <button (click)="Excel('OP Savings')" mat-menu-item>XLS</button>
+                <button (click)="pdf('template','PO-Savings')" mat-menu-item>PDF</button>
+                <button (click)="Excel('PO Savings')" mat-menu-item>XLS</button>
             </mat-menu>
 
 
