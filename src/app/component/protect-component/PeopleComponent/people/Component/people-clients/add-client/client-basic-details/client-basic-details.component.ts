@@ -981,16 +981,6 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
   }
 
-  moveClient() {
-    const dialogRef = this.dialog.open(MoveFamilymemberToClientComponent, {
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
   unmapFamilyMember(value) {
     const dialogData = {
       data: value,
