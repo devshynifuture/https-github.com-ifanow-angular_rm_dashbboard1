@@ -270,6 +270,7 @@ export const appConfig = {
   UPDATE_CLIENT_PROFILE_PIC: 'user/client/profile/pic/update',
   SAVE_FILTERS_GET: 'mutual-fund/report/config/get',
   SAVE_FILTERS_ADD: 'mutual-fund/report/config/add',
+  GET_CLIENT_ALL_ASSET_COUNT: 'account/asset/all/asset/count',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -371,7 +372,7 @@ export const appConfig = {
   ADVISE_ON_HEALTH: 'advice/insurance/life-insurance/add',
   ADVISE_ON_GENERAL_INSURANCE: 'advice/insurance/gen-insurance/add',
   DELETE_INSURANCE_PLAN: 'insurance/planning/unmap/general/insurance/plan',
-  LIFE_INSURANCE_PLAN_ADD:'insurance/planning/life/insurance/plan/to/insurance/add',
+  LIFE_INSURANCE_PLAN_ADD: 'insurance/planning/life/insurance/plan/to/insurance/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_OTHERS_ASSETS: 'account/asset/other-asset/list/get',
@@ -884,7 +885,8 @@ export const appConfig = {
   GET_RANDOM_STRING: 'user/advisor/marketplace-login/detail/add',
   GET_UNIQUE_STRING_FOR_LOGIN: 'user/advisor/marketplace-login/detail/add',
   GET_LOGIN_DATA_FROM_RANDOM_STRING: 'user/advisor/marketplace-login',
-
+  MOVE_FAMILY_MEMBER: 'user/family-member/move',
+  PROMOTE_TO_CLIENT: 'user/family-member/promote',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

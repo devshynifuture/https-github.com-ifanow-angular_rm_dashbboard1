@@ -118,6 +118,7 @@
                             <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.delete"
                                 (click)="deleteModal('CLIENT',element)" mat-menu-item>
                                 <span>Delete</span>
+                                <mat-spinner class=" " [diameter]="20"></mat-spinner>
                             </button>
                         </mat-menu>
                     </td>
