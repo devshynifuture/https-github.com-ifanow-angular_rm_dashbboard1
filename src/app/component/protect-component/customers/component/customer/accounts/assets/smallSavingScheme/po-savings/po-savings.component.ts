@@ -55,10 +55,13 @@ export class PoSavingsComponent implements OnInit {
   reportDate: Date;
   userInfo: any;
   getOrgData: any;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
 
 
   constructor(private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
+    private utils: UtilService,
     private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     private assetValidation: AssetValidationService,
@@ -109,9 +112,22 @@ export class PoSavingsComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle) {
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
   async ExportTOExcel(value) {
     this.excelData = [];
