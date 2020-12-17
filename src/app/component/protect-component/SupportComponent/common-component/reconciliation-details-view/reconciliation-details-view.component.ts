@@ -274,7 +274,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     this.reconService.unmappedFolio(obj)
       .subscribe(res => {
         console.log(res);
-        this.eventService.openSnackBarNoDuration("Unmapped folio successfully!", "DISMISS");
+        this.eventService.openSnackBar("Unmapped folio successfully!", "DISMISS");
         this.dialogClose()
       }, err => {
         console.error(err);

@@ -152,14 +152,14 @@ export class HttpService {
       });
   }
 
-  put(url: string, body, options?): Observable<any> {
+  put(url: string, body, params?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
-        .set('Content-Type', 'application/json')
+        .set('Content-Type', 'application/json'), params
     };
-    if (options != undefined) {
-      httpOptions = options;
-    }
+    // if (options != undefined) {
+    //   httpOptions = options;
+    // }
 
     return this._http
       .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)

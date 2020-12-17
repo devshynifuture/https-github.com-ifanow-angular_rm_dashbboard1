@@ -21,8 +21,12 @@
         <h4 class="f-14 ">{{ data.folioNumber }}
             <button mat-stroked-button class="bg-primary text-white mr-12 h-22 mb-24 btn-xs"
                 (click)="unmappedFolio(data)">
-                Unmapped
+                Unmap Folio
             </button>
+            <!-- <button mat-stroked-button class="bg-primary text-white mr-12 h-22 mb-24 btn-xs"
+                (click)="unmappedFolio(data)">
+                Unmapped
+            </button> -->
         </h4>
         <span *ngIf="tableEntriesType == 1">
             <p class="m-0 f-12 text-primitive roboto">INVESTOR</p>
