@@ -336,6 +336,7 @@ export class MfServiceService {
         });
       });
     }
+    arry = [...new Map(arry.map(item => [item.id, item])).values()];
     mutualFundList = arry
 
     // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
