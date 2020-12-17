@@ -155,7 +155,6 @@ export class FixedIncomeComponent implements OnInit {
 
   pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.fragmentData = {}
     this.fragmentData.isSpinner = true;
     const para = document.getElementById(template);
     const obj = {
