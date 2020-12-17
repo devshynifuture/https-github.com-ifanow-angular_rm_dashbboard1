@@ -145,6 +145,7 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		this.advisorId = AuthService.getAdvisorId();
 		this.clientId = AuthService.getClientId();
 		this.inputData = data.inputData;
+		this.insData = data;
 		this.policyList = data.displayList.policyTypes;
 		this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
         this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
