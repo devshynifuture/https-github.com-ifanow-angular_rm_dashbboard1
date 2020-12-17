@@ -353,7 +353,9 @@ export class MutualFundSummaryComponent implements OnInit {
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           }
-          if (this.mfGetData && this.mfGetData != "") {
+          if(this.resData){
+            this.getMutualFundResponse(this.mfGetData)
+          }else if (this.mfGetData && this.mfGetData != "") {
             this.getMutualFundResponse(this.mfGetData)
           } else if (this.mutualFund) {
             this.getMutualFundResponse(this.mutualFund)
@@ -1143,7 +1145,10 @@ export class MutualFundSummaryComponent implements OnInit {
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
     } else {
+      this.summary.data = [];
+      this.changeInput.emit(false);
       this.isLoading = false;
+      this.showDownload = true;
     }
   }
   filterForBulkEmailing(data) {

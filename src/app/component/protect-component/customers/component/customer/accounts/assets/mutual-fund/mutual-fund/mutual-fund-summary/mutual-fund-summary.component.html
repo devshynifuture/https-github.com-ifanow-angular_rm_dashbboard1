@@ -23,10 +23,11 @@
                 (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
         </div> -->
         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
-            *ngIf="!isLoading && (summary.data.length > 0)">
+            *ngIf="!isLoading ">
+            <!-- (summary.data.length > 0) -->
             <!-- <div class="pdfClass"> -->
 
-            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu1="matMenu">
@@ -42,7 +43,7 @@
             <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
                     class="material-icons">filter_list</i>FILTERS</button>
             <button mat-stroked-button class="btn-primary addon v-middle"
-                (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
+                (click)="openMutualFund('addMutualFund',null)" *ngIf="&& summary.data.length > 0">ADD NEW</button>
         </div>
 
     </div>
