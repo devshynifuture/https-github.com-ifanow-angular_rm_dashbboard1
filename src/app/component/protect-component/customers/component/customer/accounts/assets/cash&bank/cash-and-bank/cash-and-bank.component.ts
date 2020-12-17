@@ -59,6 +59,8 @@ export class CashAndBankComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: Subscription;
 
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload: FileUploadServiceService, private enumService: EnumServiceService,
@@ -140,9 +142,26 @@ export class CashAndBankComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle) {
+  // pdf(tableTitle) {
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.pdfGen.generatePdf(rows, tableTitle);
+  // }
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
   // async ExportTOExcel(value) {
   //   this.excelData = [];

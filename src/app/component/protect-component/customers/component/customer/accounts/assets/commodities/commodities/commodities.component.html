@@ -19,14 +19,14 @@
             <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
                 *ngIf="goldList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Gold')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template','Gold')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Gold')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -194,14 +194,14 @@
             <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
                 *ngIf="otherCommodityList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Others')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template1','Others')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Others')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -527,7 +527,7 @@
     </table>
 </div>
 <!----------------------------Others------------------------------------------>
-<div #othersTemp id="template" *ngIf="showRequring == '2'" class="hide">
+<div #othersTemp id="template1" *ngIf="showRequring == '2'" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
