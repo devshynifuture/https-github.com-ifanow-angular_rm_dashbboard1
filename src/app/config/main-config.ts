@@ -7,7 +7,7 @@ export const apiConfig = {
   USER: environment.UserUrl,
   MARKET_PLACE: environment.MarketPlaceUrl,
   PRODUCTION: environment.production,
-  Prod_local: environment.Prod_local
+  // Prod_local: environment.Prod_local
   // POSTAL_URL : environment.PostalUrl,
   // CALENDAR_URL: environment.CalendarAPIEndpoint
 };

@@ -148,15 +148,21 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     });
   }
   filterLiData(data) {
-    data.forEach(element => {
-      this.totalFundValues = 0;
-      if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
-        element.ulipFundDetails.forEach(ele => {
-          this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
-          element.currentValue = this.totalFundValues
-        });
-      }
-    });
+    if(data.length > 0){
+      data = data.filter(d => d.realOrFictitious === 1);
+      data.forEach(element => {
+        this.totalFundValues = 0;
+        if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
+          element.ulipFundDetails.forEach(ele => {
+            this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+            element.currentValue = this.totalFundValues
+          });
+        }
+      });
+    }else{
+      data = [];
+    }
+
     return data;
   }
   filterForAsset(data) {//filter data to for showing in the table

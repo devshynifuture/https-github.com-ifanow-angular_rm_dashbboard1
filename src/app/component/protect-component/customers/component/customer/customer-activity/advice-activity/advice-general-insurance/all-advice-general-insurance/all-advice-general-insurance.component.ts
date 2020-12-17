@@ -508,6 +508,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
     data['insuranceTypeId'] = 1;
     data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    data['showHeader'] = true;
     const fragmentData = {
       flag: 'Advice General Insurance',
       data,
