@@ -6,13 +6,13 @@
         </div>
         <div class="col-md-6 p-0 d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
             <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
             <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
-                <button (click)="pdf('Real estate')" mat-menu-item>PDF</button>
+                <button (click)="pdf('template','Real-estate')" mat-menu-item>PDF</button>
                 <button (click)="Excel('Real estate')" mat-menu-item>XLS</button>
             </mat-menu>
 
