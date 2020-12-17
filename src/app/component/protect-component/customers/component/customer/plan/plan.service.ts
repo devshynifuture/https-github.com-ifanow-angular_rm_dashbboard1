@@ -369,4 +369,7 @@ export class PlanService {
   deleteInsurancePlan(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE_PLAN + '?id=' + data.id, { 'insuranceIds': data.insuranceIds })
   }
+  lifeInsurancePlanAdd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_PLAN_ADD, data);
+  }
 }

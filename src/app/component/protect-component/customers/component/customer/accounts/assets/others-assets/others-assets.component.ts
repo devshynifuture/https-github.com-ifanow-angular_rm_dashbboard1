@@ -38,7 +38,7 @@ export class OthersAssetsComponent implements OnInit {
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
   @Input() finPlanObj: any;//finacial plan pdf input
   @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'pDate', 'rate', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
   fileUploadData: any;
@@ -49,7 +49,6 @@ export class OthersAssetsComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
-
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,

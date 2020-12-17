@@ -36,6 +36,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
   isLoading: any;
   adviceData: any;
   isAdviceGiven: boolean;
+  ids =[];
   constructor(private activityService: ActiityService, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
@@ -136,13 +137,17 @@ export class AddRecommendationsInsuComponent implements OnInit {
         this.inputData.displayHolderId = AuthService.getClientId()
       }
       data.insuranceList = data.insuranceList.filter(d => d.familyMemberIdLifeAssured == this.inputData.displayHolderId);
-      // data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
+      data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
       data.insuranceList.forEach(element => {
         element.insurance = element;
         if (mergeArray.length > 0) {
           mergeArray.forEach(ele => {
             if (ele.InsuranceDetails.id == element.id) {
               let adviceId = ele.adviceDetails.adviceId;
+              element.insurance.adviceDetails = ele.adviceDetails;
+              if(ele.adviceDetails.adviceId){
+                this.ids.push(element.id);
+              }
               element.insurance.advice = (adviceId == 1 ? 'Continue' : adviceId == 2 ? 'Surrender' : adviceId == 3 ? 'Stop paying premium' : adviceId == 5 ? 'Partial withdrawl' : null)
             }
           });
@@ -151,7 +156,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     } else {
       data.insuranceList = [];
     }
-
+    console.log('id',this.ids);
     return data.insuranceList;
   }
   recommend(data) {
@@ -170,8 +175,24 @@ export class AddRecommendationsInsuComponent implements OnInit {
     );
   }
   saveRecommendations() {
-    this.barButtonOptions.active = false;
-    this.close(true);
+    this.barButtonOptions.active = true;
+    const obj = {
+      id: this.inputData.id,
+      needAnalysis: this.ids
+    }
+    this.planService.lifeInsurancePlanAdd(obj).subscribe(
+      data => {
+        this.barButtonOptions.active = false;
+        this.isAdviceGiven = true;
+        this.close(true);
+        console.log(data)
+      },
+      err => {
+        this.isAdviceGiven = true;
+        this.close(true);
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
   openDialog(value, data): void {
     value = { smallHeading: 'life insurance', inputData: this.inputData }

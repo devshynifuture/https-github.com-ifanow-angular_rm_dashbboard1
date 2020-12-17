@@ -601,7 +601,7 @@ export class AddOthersAssetComponent implements OnInit {
   }
 
   saveFormData() {
-    if (this.othersAssetForm.invalid) {
+    if (this.othersAssetForm.invalid && !this.percentErr) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       this.othersAssetForm.markAllAsTouched();
       return;
@@ -659,6 +659,19 @@ export class AddOthersAssetComponent implements OnInit {
             this.eventService.showErrorMessage(error);
           }
         );
+      }
+    }
+  }
+  percentErr: boolean = false;
+
+  percentageErr() {
+    if (this.othersAssetForm.value.equityAssetAllocPerc && this.othersAssetForm.value.debtAssetAllocPerc) {
+      let sum = parseInt(this.othersAssetForm.value.equityAssetAllocPerc) + parseInt(this.othersAssetForm.value.debtAssetAllocPerc);
+      if (sum != 100) {
+        this.percentErr = true;
+      }
+      else {
+        this.percentErr = false;
       }
     }
   }

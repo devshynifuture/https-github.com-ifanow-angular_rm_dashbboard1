@@ -129,10 +129,10 @@
           <h5 class="m-0 f-14 ">Debt</h5>
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
-              <input autocomplete="off" matInput type="text" appInputValueValidation
+              <input autocomplete="off" (keyup)="percentageErr()" matInput type="text" appInputValueValidation
                 [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
                 formControlName="debtAssetAllocPerc">
-              <mat-error class="f-12">
+              <mat-error class="f-12" *ngIf="!percentErr">
                 This field is required
               </mat-error>
             </mat-form-field>
@@ -142,10 +142,10 @@
           <h5 class="m-0 f-14">Equity</h5>
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
-              <input autocomplete="off" matInput type="text" appInputValueValidation
+              <input autocomplete="off" (keyup)="percentageErr()" matInput type="text" appInputValueValidation
                 [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
                 formControlName="equityAssetAllocPerc">
-              <mat-error class="f-12">
+              <mat-error class="f-12" *ngIf="!percentErr">
                 This field is required
               </mat-error>
               <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
@@ -153,6 +153,9 @@
             </mat-form-field>
           </div>
 
+        </div>
+        <div class="f-12" *ngIf="percentErr" style="color:#f44336">
+          Sum of debf and equity percentage should be 100.
         </div>
       </div>
     </div>
@@ -265,8 +268,8 @@
           <h5 class="m-0 f-14">End date</h5>
           <div class="form-group mb-0">
             <mat-form-field>
-              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
-                (focus)="picker3.open()" [matDatepicker]="picker3" formControlName="endDate" readonly>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker3.open()"
+                [matDatepicker]="picker3" formControlName="endDate" readonly>
               <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
               <mat-datepicker #picker3></mat-datepicker>
               <mat-error class="f-12">
