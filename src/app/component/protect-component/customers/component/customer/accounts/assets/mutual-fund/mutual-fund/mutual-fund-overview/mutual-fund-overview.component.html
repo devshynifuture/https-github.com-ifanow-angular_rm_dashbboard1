@@ -611,14 +611,13 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow">
                 <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
-                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0" *ngIf="showCashFlow">Cashflow status <img
-                            src="assets/images/svg/info.svg" class="c-p hw-17"
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0" *ngIf="showCashFlow">Cashflow status
+                        <img src="assets/images/svg/info.svg" class="c-p hw-17"
                             matTooltip="This section calculates the cash flow status of your entire portfolio - i.e. It includes cash flows from zero balance folios too"
                             [matTooltipPosition]="'right'"></h5>
                 </div>
                 <!-- || datasource1.data.length > 0 -->
-                <div id="table-low" *ngIf="showCashFlow"
-                    class="mb-20 cashflows-headers-hide">
+                <div id="table-low" *ngIf="showCashFlow" class="mb-20 cashflows-headers-hide">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="data">
@@ -650,7 +649,8 @@
                 <div class="pr-0 mb-20 familymember-wise" (click)="openSummary('investor wise')"
                     *ngIf="showFamilyMember || dataSource.data.length > 0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showFamilyMember">Family member wise allocation
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showFamilyMember">Family
+                            member wise allocation
                         </h5>
                     </div>
                     <div class="family-member-wise-allocation" id="table-low">
@@ -773,7 +773,8 @@
                 <div class="p-0 mt-20 mb-20 familymember-wise" (click)="openSummary('category wise')"
                     *ngIf="showCategory || dataSource4.data.length >0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showCategory">Category wise allocation</h5>
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0 c-p" *ngIf="showCategory">Category
+                            wise allocation</h5>
                     </div>
                     <div class="category-wise-allocation" id="table-low">
                         <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading
