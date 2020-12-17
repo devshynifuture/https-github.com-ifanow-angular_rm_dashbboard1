@@ -53,7 +53,7 @@ export class FolioQueryComponent implements OnInit {
   isSearchDone: boolean = false;
   isLoading: boolean = false;
   dataSource = new MatTableDataSource<folioQueryI>(ELEMENT_DATA);
-  subscription:any = {};
+  subscription: any = {};
 
   ngOnInit() {
     this.dataSource.data = ELEMENT_DATA;
@@ -66,10 +66,10 @@ export class FolioQueryComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if(!!this.subscription.folioOption){
+    if (!!this.subscription.folioOption) {
       this.subscription.folioOption.unsubscribe();
     }
-    if(!!this.subscription.inputOption){
+    if (!!this.subscription.inputOption) {
       this.subscription.inputOption.unsubscribe();
     }
   }
@@ -185,10 +185,10 @@ export class FolioQueryComponent implements OnInit {
   getGroupHeadNameList(value) {
     const data = {
       // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
-      advisorId: this.parentId > 0 ? this.advisorId: -1,
+      advisorId: this.parentId > 0 ? this.advisorId : -1,
       clientName: value,
       arnRiaDetailId: this.arnRiaValue,
-      parentId: this.parentId ==0 ? this.advisorId : this.parentId
+      parentId: this.parentId == 0 ? this.advisorId : this.parentId
       // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
     }
     return this.reconService.getGroupHeadNameValues(data);
@@ -197,10 +197,10 @@ export class FolioQueryComponent implements OnInit {
   getInvestorNameList(value) {
     const data = {
       // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
-      advisorId: this.parentId > 0 ? this.advisorId: -1,
+      advisorId: this.parentId > 0 ? this.advisorId : -1,
       familyMemberName: value,
       arnRiaDetailId: this.arnRiaValue,
-      parentId: this.parentId ==0 ? this.advisorId : this.parentId
+      parentId: this.parentId == 0 ? this.advisorId : this.parentId
       // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
     }
     return this.reconService.getInvestorNameValues(data);
@@ -209,84 +209,85 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
-    if(flag === undefined){
+    if (flag === undefined) {
       flag = this.searchedObj.flag;
     }
-      this.searchedObj = {
-        flag,
-        value,
-        searchFrom
-      }
-      if(searchFrom === 'navInputSearch'){
-        this.shouldCheckValidation = true;
-      } else {
-        this.folioOption.patchValue(this.searchedObj.flag, { emitEvent: false });
-        this.inputSearchFC.patchValue(this.searchedObj.value, { emitEvent: false });
-        this.folioOption.markAsUntouched();
-        this.inputSearchFC.markAsUntouched();
-        this.shouldCheckValidation = false;
-      }
-      const data = {
-        flag_search: flag,
-        advisorId: this.parentId > 0 ? this.advisorId: -1,
-        // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
-        key: value,
-        arnRiaDetailId: this.arnRiaValue,
-        parentId: this.parentId === 0 ? this.advisorId : this.parentId
-        // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
-      };
+    this.searchedObj = {
+      flag,
+      value,
+      searchFrom
+    }
+    if (searchFrom === 'navInputSearch') {
+      this.shouldCheckValidation = true;
+    } else {
+      this.folioOption.patchValue(this.searchedObj.flag, { emitEvent: false });
+      this.inputSearchFC.patchValue(this.searchedObj.value, { emitEvent: false });
+      this.folioOption.markAsUntouched();
+      this.inputSearchFC.markAsUntouched();
+      this.shouldCheckValidation = false;
+    }
+    const data = {
+      flag_search: flag,
+      advisorId: this.parentId > 0 ? this.advisorId : -1,
+      // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      key: value,
+      arnRiaDetailId: this.arnRiaValue,
+      parentId: this.parentId === 0 ? this.advisorId : this.parentId
+      // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
+    };
 
-      if(this.shouldCheckValidation){
-        if(this.inputSearchFC.valid && this.folioOption.valid){
-          this.isMainLoading = true;
-          this.reconService.getFolioQueryDataListValues(data)
-          .subscribe(res => this.bindDataWithTable(res, searchFrom));
-        } else {
-          this.inputSearchFC.markAllAsTouched();
-          this.folioOption.markAllAsTouched();
-        }
-      } else {
+    if (this.shouldCheckValidation) {
+      if (this.inputSearchFC.valid && this.folioOption.valid) {
         this.isMainLoading = true;
         this.reconService.getFolioQueryDataListValues(data)
           .subscribe(res => this.bindDataWithTable(res, searchFrom));
+      } else {
+        this.inputSearchFC.markAllAsTouched();
+        this.folioOption.markAllAsTouched();
       }
+    } else {
+      this.isMainLoading = true;
+      this.reconService.getFolioQueryDataListValues(data)
+        .subscribe(res => this.bindDataWithTable(res, searchFrom));
+    }
 
-  
+
   }
 
-  bindDataWithTable(res,searchFrom){
-      this.isMainLoading = false;
-      console.log("response:::",res);
-      if (res && res.length !== 0) {
-        let arrValue = [];
-        res.forEach(element => {
-          arrValue.push({
-            arnRiaCode: element.arnRiaCode ? element.arnRiaCode : '-',
-            name: element.shemeName,
-            investorName: element.investorName,
-            folioNumber: element.folioNumber,
-            reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
-            mutualFundTransaction: element.mutualFundTransaction,
-            mutualFundId: element.mutualFundId,
-            unitsRta: element.aumUnits,
-            unitsIfanow: element.calculatedUnits,
-            difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
-            schemeCode: element.schemeCode,
-            aumDate: element.aumDate,
-            id: element.id,
-            freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
-          })
-        });
-        this.dataSource.data = arrValue;
-        console.log("this is what we are having",arrValue);
-      }
-      else {
-        this.dataSource.data = null;
-      }
-      // toggling view
-      if (searchFrom !== 'navInputSearch') {
-        this.isSearchDone = !this.isSearchDone;
-      }
+  bindDataWithTable(res, searchFrom) {
+    this.isMainLoading = false;
+    console.log("response:::", res);
+    if (res && res.length !== 0) {
+      let arrValue = [];
+      res.forEach(element => {
+        arrValue.push({
+          arnRiaCode: element.arnRiaCode ? element.arnRiaCode : '-',
+          name: element.shemeName,
+          investorName: element.investorName,
+          folioNumber: element.folioNumber,
+          reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
+          mutualFundTransaction: element.mutualFundTransaction,
+          mutualFundId: element.mutualFundId,
+          unitsRta: element.aumUnits,
+          unitsIfanow: element.calculatedUnits,
+          difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
+          schemeCode: element.schemeCode,
+          aumDate: element.aumDate,
+          unMapped: element.unMapped,
+          id: element.id,
+          freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
+        })
+      });
+      this.dataSource.data = arrValue;
+      console.log("this is what we are having", arrValue);
+    }
+    else {
+      this.dataSource.data = null;
+    }
+    // toggling view
+    if (searchFrom !== 'navInputSearch') {
+      this.isSearchDone = !this.isSearchDone;
+    }
   }
 
   openReconDetailView(flag, data) {

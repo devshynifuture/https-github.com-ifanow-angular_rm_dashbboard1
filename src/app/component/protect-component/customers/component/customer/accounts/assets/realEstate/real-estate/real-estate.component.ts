@@ -50,10 +50,13 @@ export class RealEstateComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
 
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private utilService: UtilService,
     private fileUpload: FileUploadServiceService,
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
@@ -103,11 +106,23 @@ export class RealEstateComponent implements OnInit {
     }, 7000);
   }
 
-  pdf(tableTitle) {
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
-
   // async ExportTOExcel(value) {
 
   //   this.excelData = [];

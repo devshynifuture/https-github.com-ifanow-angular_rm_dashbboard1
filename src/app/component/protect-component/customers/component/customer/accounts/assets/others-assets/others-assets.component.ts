@@ -49,7 +49,6 @@ export class OthersAssetsComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
-
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,

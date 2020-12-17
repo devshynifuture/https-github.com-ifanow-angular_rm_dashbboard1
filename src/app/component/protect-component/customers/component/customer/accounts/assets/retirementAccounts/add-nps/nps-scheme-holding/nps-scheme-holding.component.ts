@@ -13,7 +13,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { Observable } from 'rxjs';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { SchemeListComponent } from './scheme-list/scheme-list.component';
 @Component({
@@ -42,7 +42,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  @ViewChild('unit', {static: false}) unit;
+  @ViewChild('unit', { static: false }) unit;
 
   validatorType = ValidatorType
   inputData: any;
@@ -58,8 +58,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme1: any[];
   clientId: any;
   maxDate = new Date();
-  nomineesListFM:any = [];
-  callMethod:any;
+  nomineesListFM: any = [];
+  callMethod: any;
   dataFM = [];
   familyList: any;
   nexNomineePer = 0;
@@ -68,8 +68,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   myControl = new FormControl();
   filteredOptions: Observable<any[]>;
-  constructor(private event: EventService,  public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { 
-    
+  constructor(private event: EventService, public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+
   }
   @Input()
   set data(data) {
@@ -91,7 +91,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
-    
+
 
     //link bank
     this.bankList = this.enumService.getBank();
@@ -103,10 +103,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
 
     return this.schemeList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
-  
 
 
-  
+
+
   nomineesList() {
     this.dataFM = this.nomineesListFM
     if (this.dataFM.length > 0) {
@@ -139,7 +139,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       data => this.getGlobalRes(data)
     );
   }
-  schemeListData:any=[];
+  schemeListData: any = [];
   getGlobalRes(data) {
 
     console.log('getGlobalRes', data)
@@ -148,27 +148,27 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.startFilter();
   }
 
-  filterSchemeOptions(name){
-    if(name.length >=3){
-      let obj={
-        name:name
+  filterSchemeOptions(name) {
+    if (name.length >= 3) {
+      let obj = {
+        name: name
       }
       this.custumService.getFilterSchemeChoice(obj).subscribe(
-      data =>{
-        this.schemeList = data;
-      });
+        data => {
+          this.schemeList = data;
+        });
     }
-    else{
+    else {
       this.schemeList = this.schemeListData;
     }
   }
 
-  startFilter(){
-    
+  startFilter() {
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.schemeList.slice())
+      map(name => name ? this._filter(name) : this.schemeList.slice())
     );
   }
 
@@ -180,19 +180,19 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
     this.schemeHoldingsNPS = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: [0,[Validators.required]],
+        name: ['', [Validators.required]],
+        share: [0, [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
-      schemeChoice: [(data == undefined) ? '' : data.schemeChoice ,[Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran],
       // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
-        schemeId: ['', [Validators.required]], schemeName:[], holdingAsOn: [null, [Validators.required]],
+        schemeId: ['', [Validators.required]], schemeName: [], holdingAsOn: [null, [Validators.required]],
         totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
@@ -204,38 +204,38 @@ export class NpsSchemeHoldingComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
+        id: [0]
       })])
     });
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
-  if(this.schemeHoldingsNPS.value.getCoOwnerName.length == 1){
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  }
+    /***owner***/
+    if (this.schemeHoldingsNPS.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
 
-  if (data.ownerList && data.ownerList.length > 0) {
-    this.getCoOwner.removeAt(0);
-    data.ownerList.forEach(element => {
-      this.addNewCoOwner(element);
-    });
-  }
-  
-/***owner***/ 
+    if (data.ownerList && data.ownerList.length > 0) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
 
-/***nominee***/ 
-if(data.nomineeList){
-  if(data.nomineeList.length > 0){
-      
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
-  }
-}
-/***nominee***/ 
+    /***owner***/
 
-this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldingsNPS}
-// ==============owner-nominee Data ========================\\ 
+    /***nominee***/
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.schemeHoldingsNPS }
+    // ==============owner-nominee Data ========================\\ 
     // this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
     // this.familyMemberId = this.familyMemberId[0]
     if (data.futureContributionList != undefined || data.nominees != undefined || data.holdingList != undefined) {
@@ -278,12 +278,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
           schemeId: [element.schemeId, [Validators.required]],
           totalUnits: [element.totalUnits, Validators.required],
-          schemeName:[element.schemeName],
+          schemeName: [element.schemeName],
           totalAmountInvested: [element.totalAmountInvested, Validators.required],
           holdingAsOn: [new Date(element.holdingAsOn), Validators.required],
           id: [element.id, [Validators.required]]
         }))
-        
+
       })
       // this.schemeList
       // this.nominee.removeAt(0);
@@ -296,22 +296,22 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
     return this.schemeHoldingsNPS.get('holdingList') as FormArray;
   }
 
-  setGroupValue(scheme){
-    if(scheme != null){
+  setGroupValue(scheme) {
+    if (scheme != null) {
       this.schemeHoldingsNPS.controls.holdingList.controls[scheme.index].controls['schemeId'].setValue(scheme.scheme.id)
     }
   }
 
-  
 
-  displayScheme(scheme){
+
+  displayScheme(scheme) {
     // const controls = this.schemeHoldingsNPS.controls.holdingList;
-  // this.setGroupValue(scheme);
-  return scheme? scheme.scheme.name:undefined;
+    // this.setGroupValue(scheme);
+    return scheme ? scheme.scheme.name : undefined;
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeId: [null, [Validators.required]], schemeName: [null], holdingAsOn: [null, [Validators.required]], 
+      schemeId: [null, [Validators.required]], schemeName: [null], holdingAsOn: [null, [Validators.required]],
       totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
     }));
 
@@ -383,144 +383,148 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 
- // ===================owner-nominee directive=====================//
- display(value) {
-  console.log('value selected', value)
-  this.ownerName = value.userName;
-  this.familyMemberId = value.id
-}
-
-lisNominee(value) {
-  this.ownerData.Fmember = value;
-  this.nomineesListFM = Object.assign([], value);
-}
-
-disabledMember(value, type) {
-  this.callMethod = {
-    methodName : "disabledMember",
-    ParamValue : value,
-    disControl : type
+  // ===================owner-nominee directive=====================//
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
-}
 
-displayControler(con) {
-  console.log('value selected', con);
-  if(con.owner != null && con.owner){
-    this.schemeHoldingsNPS.controls.getCoOwnerName = con.owner;
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
-  if(con.nominee != null && con.nominee){
-    this.schemeHoldingsNPS.controls.getNomineeName = con.nominee;
-  }
-}
 
-onChangeJointOwnership(data) {
-  this.callMethod = {
-    methodName : "onChangeJointOwnership",
-    ParamValue : data
-  }
-}
-
-/***owner***/ 
-
-get getCoOwner() {
-  return this.schemeHoldingsNPS.get('getCoOwnerName') as FormArray;
-}
-
-addNewCoOwner(data) {
-  this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (data) {
+  selectOwner: any;
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
+    }
     setTimeout(() => {
-     this.disabledMember(null,null);
-    }, 1300);
+      this.selectOwner = this.nomineesListFM.filter((m) => m.id == this.schemeHoldingsNPS.value.getCoOwnerName[0].familyMemberId);
+    }, 1000);
   }
 
-  if(this.getCoOwner.value.length > 1 && !data){
-   let share = 100/this.getCoOwner.value.length;
-   for (let e in this.getCoOwner.controls) {
-    if(!Number.isInteger(share) && e == "0"){
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.schemeHoldingsNPS.controls.getCoOwnerName = con.owner;
     }
-    else{
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-    }
-   }
-  }
- 
-}
-
-removeCoOwner(item) {
-  this.getCoOwner.removeAt(item);
-  if (this.schemeHoldingsNPS.value.getCoOwnerName.length == 1) {
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  } else {
-    let share = 100/this.getCoOwner.value.length;
-    for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-    }
-  }
-  this.disabledMember(null, null);
-}
-/***owner***/ 
-
-/***nominee***/ 
-
-get getNominee() {
-  return this.schemeHoldingsNPS.get('getNomineeName') as FormArray;
-}
-
-removeNewNominee(item) {
-  this.disabledMember(null, null);
-  this.getNominee.removeAt(item);
-  if (this.schemeHoldingsNPS.value.getNomineeName.length == 1) {
-    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-  } else {
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-      }
-    }
-  }
-}
-
-
-
-addNewNominee(data) {
-  this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (!data || this.getNominee.value.length < 1) {
-    for (let e in this.getNominee.controls) {
-      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    if (con.nominee != null && con.nominee) {
+      this.schemeHoldingsNPS.controls.getNomineeName = con.nominee;
     }
   }
 
-  if(this.getNominee.value.length > 1 && !data){
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
+    }
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.schemeHoldingsNPS.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
-   }
-   
-  
-}
-/***nominee***/ 
-// ===================owner-nominee directive=====================//
+
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.schemeHoldingsNPS.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.schemeHoldingsNPS.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.schemeHoldingsNPS.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+  /***nominee***/
+  // ===================owner-nominee directive=====================//
 
   saveSchemeHolding() {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
@@ -545,7 +549,8 @@ addNewNominee(data) {
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         // nominees: this.schemeHoldingsNPS.controls.nominees.value,
         nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
-        description: this.schemeHoldingsNPS.controls.description.value == null?'':this.schemeHoldingsNPS.controls.description.value,
+        familyMemberDob: this.datePipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+        description: this.schemeHoldingsNPS.controls.description.value == null ? '' : this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value,
         userBankMappingId: this.schemeHoldingsNPS.controls.bankACNo.value,
 
@@ -555,11 +560,11 @@ addNewNominee(data) {
       }
       this.barButtonOptions.active = true;
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.schemeHoldingsNPS.value.getNomineeName;
+      obj.nomineeList = this.schemeHoldingsNPS.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -569,14 +574,14 @@ addNewNominee(data) {
       if (this.schemeHoldingsNPS.controls.id.value == undefined && this.flag != 'adviceNPSSchemeHolding') {
         this.custumService.addNPS(obj).subscribe(
           data => this.addNPSRes(data),
-          err=>{
+          err => {
             this.barButtonOptions.active = false;
           }
         );
       } else if (this.flag == 'adviceNPSSchemeHolding') {
         this.custumService.getAdviceNps(adviceObj).subscribe(
           data => this.getAdviceNscSchemeLevelRes(data),
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
           }
         );
@@ -584,8 +589,8 @@ addNewNominee(data) {
         //edit call
         this.custumService.editNPS(obj).subscribe(
           data => this.editNPSRes(data),
-          err=>{
-              this.barButtonOptions.active = false;
+          err => {
+            this.barButtonOptions.active = false;
           }
         );
       }
@@ -606,22 +611,22 @@ addNewNominee(data) {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
-  bankList:any = [];
+  bankList: any = [];
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -631,22 +636,22 @@ addNewNominee(data) {
     })
 
   }
-//link bank
+  //link bank
 
-schemeDialog(holding): void {
-  const dialogRef = this.dialog.open(SchemeListComponent, {
-    width: '700px',
-    height: '500px',
-    data: this.schemeListData
-  });
+  schemeDialog(holding): void {
+    const dialogRef = this.dialog.open(SchemeListComponent, {
+      width: '700px',
+      height: '500px',
+      data: this.schemeListData
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if(result){
-      holding.get('schemeName').setValue(result.name);
-      holding.get('schemeId').setValue(result.id);
-      this.unit.nativeElement.focus();
-    }
-  });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        holding.get('schemeName').setValue(result.name);
+        holding.get('schemeId').setValue(result.id);
+        this.unit.nativeElement.focus();
+      }
+    });
 
-}
+  }
 }
