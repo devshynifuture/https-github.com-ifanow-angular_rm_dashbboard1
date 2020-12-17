@@ -20,7 +20,8 @@ import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { MY_FORMATS2 } from "../../../../constants/date-format.constant";
 import { MinorFormComponent } from './Component/people-clients/add-client/minor-form/minor-form.component';
 import { from } from 'rxjs';
-export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent]
+import { UnmapPopupComponent } from './Component/people-clients/add-client/client-basic-details/unmap-popup/unmap-popup.component';
+export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent, UnmapPopupComponent]
 
 @NgModule({
   declarations: [componentList],
