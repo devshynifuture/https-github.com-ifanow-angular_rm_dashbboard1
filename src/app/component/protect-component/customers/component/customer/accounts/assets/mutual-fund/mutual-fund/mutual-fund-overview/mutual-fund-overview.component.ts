@@ -854,7 +854,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showSchemeWise = false
       this.datasource1.data = [];
     }
-    if(this.chart){
+    if (this.chart) {
       this.svg = this.chart.getSVG();
     }
     this.ref.detectChanges();
