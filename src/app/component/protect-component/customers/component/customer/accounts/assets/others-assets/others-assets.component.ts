@@ -186,7 +186,7 @@ export class OthersAssetsComponent implements OnInit {
     }
     this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
-    this.loaded.emit(this.realEstateTemp.nativeElement);
+    // this.loaded.emit(this.realEstateTemp.nativeElement);
   }
 
   deleteModal(value, element) {
