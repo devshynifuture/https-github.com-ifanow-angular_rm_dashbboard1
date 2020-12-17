@@ -1,10 +1,63 @@
-<div [formGroup]="unmapForm" *ngIf="data.showField">
-    Email <input formControlName="email" type="text">
-    Number <input formControlName="number" type="text">
-    Pan <input formControlName="pan" type="text">
-    <button (click)="cancel()">Cancel</button>
-    <button (click)="unmapFamilyMember()">Unmap</button>
-</div>
+<div class="row bb-1 popup-header-fix-50">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Unmap family member</h4>
+    </div>
+    <div class="col-md-2 col-2 full-center pl-48">
 
+        <i (click)="cancel()" class="material-icons c-p">
+            clear
+        </i>
+
+    </div>
+</div>
+<div class="mt-60">
+    <div [formGroup]="unmapForm" class="p-20" *ngIf="data.showField">
+        <div class="row">
+            <div class="col-md-12">
+                <label>
+                    Email
+                </label>
+                <div class="form-group ">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input formControlName="email" type="text" class="form-control">
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>
+                    Number
+                </label>
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input formControlName="number" class="form-control" type="text">
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>
+                    Pan
+                </label>
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input formControlName="pan" class="form-control" type="text">
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button (click)="cancel()">Cancel</button>
+                <button mat-button (click)="unmapFamilyMember()">Unmap</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div *ngIf="data.showField==false">
     Minors cannot be unmapped.</div>
