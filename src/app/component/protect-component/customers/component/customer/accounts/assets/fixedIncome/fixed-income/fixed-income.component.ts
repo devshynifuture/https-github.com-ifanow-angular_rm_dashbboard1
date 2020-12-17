@@ -70,10 +70,13 @@ export class FixedIncomeComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
+  fragmentData: any;
+  returnValue: any;
 
   constructor(private ref: ChangeDetectorRef, private excelSer: ExcelService, private subInjectService: SubscriptionInject,
     private customerService: CustomerService, private eventService: EventService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private utilService: UtilService,
     private fileUpload: FileUploadServiceService,
     private custumService: CustomerService,
     public util: UtilService, public dialog: MatDialog,
@@ -149,9 +152,23 @@ export class FixedIncomeComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle) {
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData = {}
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
 
 
@@ -248,7 +265,7 @@ export class FixedIncomeComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }
-    if(this.finPlanObj){
+    if (this.finPlanObj) {
       this.ref.detectChanges();
       this.loaded.emit(this.fixedDepositeTemp.nativeElement);
     }
@@ -297,12 +314,12 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
-    if(this.finPlanObj){
+    if (this.finPlanObj) {
       this.ref.detectChanges();
       this.loaded.emit(this.recurringDepositeTemp.nativeElement);
     }
 
-  
+
   }
 
   getBondsList() {
@@ -345,7 +362,7 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = true;
     }
-    if(this.finPlanObj){
+    if (this.finPlanObj) {
       this.ref.detectChanges();
       this.loaded.emit(this.bondsTemp.nativeElement);
     }
