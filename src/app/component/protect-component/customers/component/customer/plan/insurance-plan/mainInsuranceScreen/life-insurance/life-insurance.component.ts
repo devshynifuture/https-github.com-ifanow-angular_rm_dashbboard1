@@ -201,6 +201,7 @@ export class LifeInsuranceComponent implements OnInit {
   dislayList: any;
   type: any;
   clickedRecommend = false;
+  recommendationsId: any;
 
 
   constructor(private subInjectService: SubscriptionInject,

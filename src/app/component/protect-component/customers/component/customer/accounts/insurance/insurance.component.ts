@@ -394,7 +394,7 @@ export class InsuranceComponent implements OnInit {
   checkAndPush(data) {
     if (data && this.isAdded == undefined) {
       let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
-      // array = array.filter(d => d.realOrFictitious === 1);
+      array = array.filter(d => d.realOrFictitious === 1);
       array = [...new Map(array.map(item => [item.id, item])).values()];
       this.globalArray.push(array);
       this.globalArray = this.globalArray.flat();

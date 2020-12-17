@@ -1,0 +1,10 @@
+<div [formGroup]="unmapForm" *ngIf="data.showField">
+    Email <input formControlName="email" type="text">
+    Number <input formControlName="number" type="text">
+    Pan <input formControlName="pan" type="text">
+    <button (click)="cancel()">Cancel</button>
+    <button (click)="unmapFamilyMember()">Unmap</button>
+</div>
+
+<div *ngIf="data.showField==false">
+    Minors cannot be unmapped.</div>

@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatDialog } from '@angular/material';
 import { element } from 'protractor';
+import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
 
 const moment = require('moment');
 
@@ -86,6 +87,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   emailData: any;
   valueChangeFlag: boolean;
   userData;
+  unmapFmData: any;
 
   // advisorId;
 
@@ -825,8 +827,23 @@ export class ClientBasicDetailsComponent implements OnInit {
         if (flag == 'Next') {
           this.changeTabAndSendData(data);
         } else {
-          this.barButtonOptions.active = false;
-          this.close(data);
+          if (this.unmapFmData.email) {
+            let obj =
+            {
+              "ownerClientId": this.basicDetailsData.clientId,
+              "splitFamilyMemberId": this.basicDetailsData.familyMemberId
+            }
+            this.cusService.unmapFamilyMembers(obj).subscribe(
+              data => {
+                this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
+                this.close(data)
+              },
+              error => this.eventService.showErrorMessage(error)
+            );
+          } else {
+            this.barButtonOptions.active = false;
+            this.close(data);
+          }
         }
       },
       err => {
@@ -884,6 +901,42 @@ export class ClientBasicDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  openUnmapPopupORNot() {
+    let obj;
+    if (this.basicDetailsData.familyMemberType != 2) {
+      if (this.basicDetails.get('pan').value == '' || this.mobileData.controls[0].get('number').value == undefined || this.mobileData.controls[0].get('number').value == '' || this.emailData.controls[0].get('emailAddress').value == undefined || this.emailData.controls[0].get('emailAddress').value == '') {
+        obj = { showField: true }
+
+        const dialogRef = this.dialog.open(UnmapPopupComponent, {
+          data: obj
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          if (result && result.email) {
+            this.unmapFmData = result;
+            this.basicDetails.get('pan').setValue(result.pan);
+            this.mobileData.controls[0].get('number').setValue(result.number);
+            this.emailData.controls[0].get('emailAddress').setValue(result.email);
+            this.saveNextFamilyMember('close');
+          }
+        });
+      } else {
+        this.unmapFamilyMember('FAMILY MEMBER');
+      }
+    }
+    else {
+      obj = { showField: false }
+      const dialogRef = this.dialog.open(UnmapPopupComponent, {
+        data: obj
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
   }
 
   unmapFamilyMember(value) {
