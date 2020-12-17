@@ -19,14 +19,14 @@
 
         <p class="m-0 f-12 text-primitive roboto">FOLIO NUMBER</p>
         <h4 class="f-14 ">{{ data.folioNumber }}
-            <button mat-stroked-button class="bg-primary text-white mr-12 h-22 mb-24 btn-xs"
-                (click)="unmappedFolio(data)">
+            <button *ngIf="data.unMapped == false" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs" (click)="unmappedFolio(data)">
                 Unmap Folio
             </button>
-            <!-- <button mat-stroked-button class="bg-primary text-white mr-12 h-22 mb-24 btn-xs"
-                (click)="unmappedFolio(data)">
+            <button *ngIf="data.unMapped == true" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs" (click)="unmappedFolio(data)">
                 Unmapped
-            </button> -->
+            </button>
         </h4>
         <span *ngIf="tableEntriesType == 1">
             <p class="m-0 f-12 text-primitive roboto">INVESTOR</p>
