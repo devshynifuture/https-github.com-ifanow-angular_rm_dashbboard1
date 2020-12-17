@@ -161,7 +161,8 @@ export class ReconciliationService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNMAP_FOLIO, data);
     }
     unmappedFolio(data) {
-        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, data);
+        //  const httpParams = new HttpParams().set('mutualFundId', data.mutualFundId);
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, '', data);
     }
     // delete functions
 
