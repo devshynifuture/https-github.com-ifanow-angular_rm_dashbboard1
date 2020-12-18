@@ -12,11 +12,11 @@
 <div class="pb-36" [formGroup]="bankForm" style="max-height:500px; overflow:auto;">
     <div [ngClass]="{'pt-90': fieldFlag==undefined}" class="row pt-44">
         <!-- vaibhav -->
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">IFSC code</h5>
+        <div class="col-md-4 text-right mob-text-left d-flex justify-content-lg-end align-items-center mob-pl-10">
+            <h5 class="m-0">IFSC code</h5>
         </div>
         <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 remove-top">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter IFSC   " autocomplete="off"
                         (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
@@ -32,12 +32,12 @@
             <mat-spinner *ngIf="isIfsc==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
-    <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Bank name</h5>
+    <div class="row pt-32">
+        <div class="col-md-4 text-right d-flex justify-content-lg-end align-items-center mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">Bank name</h5>
         </div>
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group mb-0">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter your Bank name" autocomplete="off" [maxLength]="50" #bankName
                         appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName"
@@ -49,11 +49,11 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">MICR code</h5>
+        <div class="col-md-4 d-flex justify-content-lg-end align-items-center text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">MICR code</h5>
         </div>
         <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group mb-0">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input #micr autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         [maxLength]="9" placeholder="Enter MICR code" formControlName="micrName" matInput
@@ -65,15 +65,15 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Account number</h5>
+        <div class="col-md-4 text-right d-flex align-items-center justify-content-end mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Account number</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 p-0 mob-pl-10 remove-top mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Account number" #accNum [maxlength]="enumDataService.maxBankAccountLength"
-                        formControlName="accNumber" matInput appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Account number" #accNum
+                        [maxlength]="enumDataService.maxBankAccountLength" formControlName="accNumber" matInput
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end">{{accNum.value.length}} / {{enumDataService.maxBankAccountLength}}</mat-hint>
                     <mat-error *ngIf="bankForm.get('accNumber').errors?.minlength">Account number should contain atleast
                         9 numbers</mat-error>
@@ -83,10 +83,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-8 mob-pb-10">Account type</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0   ">Account type</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 p-0  remove-top mob-pl-10 mob-pr-10">
             <!-- <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
                 <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1','text-primary': bankForm.get('accType').value=='1','text-custom':bankForm.get('accType').value!='1'}" class="bu-primary">Savings</mat-radio-button>
                 <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2','text-primary': bankForm.get('accType').value=='2','text-custom':bankForm.get('accType').value!='2'}" class="borderRadio">Current</mat-radio-button>
@@ -110,13 +110,13 @@
         <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
-                <h5 class="m-0 pt-12">
+                <h5 class="m-0  ">
                     <span *ngIf="pointIndex==0">First</span>
                     <span *ngIf="pointIndex==1">Second</span>
                     <span *ngIf="pointIndex==2">Third</span> holder name
                 </h5>
             </div>
-            <div class="p-0 mob-pl-10 col-10 col-md-6">
+            <div class="p-0 mob-pl-10 col-10 remove-top col-md-6">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appHolderName matInput [clientIdData]="userData" formControlName="name"
@@ -146,10 +146,10 @@
     </div>
 
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch name</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch name</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 p-0 remove-top mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch name" #branchName autocomplete="off" formControlName="branchName"
@@ -162,10 +162,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Branch country</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">Branch country</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 remove-top p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter your Branch country" autocomplete="off" formControlName="branchCountry"
@@ -176,10 +176,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch pin code</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch pin code</h5>
         </div>
-        <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-2 remove-top  p-0  mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter pin code" autocomplete="off" [maxLength]="6"
@@ -196,10 +196,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch address line 1</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch address line 1</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 p-0 remove-top mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch address 1" autocomplete="off" maxlength="100" #bAdd1
@@ -211,10 +211,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch address line 2</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch address line 2</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 p-0 remove-top mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch address 1" autocomplete="off" #bAdd2 maxlength="100"
@@ -226,10 +226,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch city</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch city</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-6 remove-top p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch city" maxlength="30" appInputValueValidation
@@ -242,11 +242,11 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Branch state</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0  ">Branch state</h5>
         </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group">
+        <div class="col-md-6 remove-top p-0 mob-pl-10 mob-pr-10">
+            <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch state" maxlength="30" autocomplete="off" appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" #branchState formControlName="branchState" matInput

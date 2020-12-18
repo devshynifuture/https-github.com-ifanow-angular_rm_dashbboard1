@@ -383,4 +383,7 @@ export class BackOfficeService {
   getSchemeListMisAUM(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SCHEME_LIST_MIS_AUM, data);
   }
+  getMfTransactions(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_TRANSACTIONS, data);
+  }
 }

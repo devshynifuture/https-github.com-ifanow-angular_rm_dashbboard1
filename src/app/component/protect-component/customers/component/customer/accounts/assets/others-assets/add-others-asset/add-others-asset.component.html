@@ -61,7 +61,7 @@
 
   <div class="row pt-44">
     <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
-      <h5 class="m-0  ">Asset Name</h5>
+      <h5 class="m-0">Asset Name</h5>
     </div>
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
@@ -79,7 +79,7 @@
   </div>
 
   <div class="row pt-44">
-    <div class="col-md-5 pr-0 text-right">
+    <div class="col-md-5 pr-0  text-right">
       <h5 class="m-0 pt-28">Account balance</h5>
     </div>
     <div class="col-md-5 pr-0">
@@ -176,7 +176,7 @@
     <div class="col-md-5 pr-0 text-right">
       <h5 class="m-0 pt-28">Maturity value</h5>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5 pr-0">
       <div class="row">
         <div class="col-md-6 pl-0 pr-0 iconRupess">
           <h5 class="m-0 f-14 ">Amount</h5>
@@ -267,7 +267,7 @@
         <div class="col-md-4 pr-0 iconRupess">
           <h5 class="m-0 f-14">End date</h5>
           <div class="form-group mb-0">
-            <mat-form-field>
+            <mat-form-field class="ba-date">
               <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker3.open()"
                 [matDatepicker]="picker3" formControlName="endDate" readonly>
               <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -286,8 +286,8 @@
   </div>
 
   <div class="row pt-44">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-28">Growth rate</h5>
+    <div class="col-md-5 pr-0 text-right d-flex align-items-center justify-content-end">
+      <h5 class="m-0 ">Growth rate</h5>
     </div>
     <div class="col-md-3 iconPetage">
       <mat-form-field>
@@ -303,24 +303,24 @@
 
   <div class="row pt-32">
     <div class="col-md-5 text-right">
-      <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional data]
+      <h5 class="  text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional data]
       </h5>
-      <h5 class="pt-20 text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
+      <h5 class=" text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
     </div>
   </div>
 
   <div *ngIf="showMoreData==true">
 
-    <div class="row pt-44">
+    <div class="row pt-32">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-28">Purchase value</h5>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5 pr-0">
         <div class="row">
           <div class="col-md-6 pl-0 pr-0 iconRupess">
             <h5 class="m-0 f-14 ">Amount</h5>
             <div class="form-group mb-0">
-              <mat-form-field>
+              <mat-form-field class="">
                 <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                   type="text" class="form-control rupess br-0 " formControlName="purchaseAmt">
                 <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
@@ -334,7 +334,7 @@
           <div class="col-md-6 pr-0 iconRupess">
             <h5 class="m-0 f-14">Date</h5>
             <div class="form-group mb-0">
-              <mat-form-field>
+              <mat-form-field class="ba-date ">
                 <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
                   (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchaseDate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -352,11 +352,11 @@
       </div>
     </div>
 
-    <div class="row pt-32">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Linked bank account</h5>
+    <div class="row pt-40">
+      <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end text-right">
+        <h5 class="m-0  ">Linked bank account</h5>
       </div>
-      <div class="col-md-5 ">
+      <div class="col-md-5 pr-0 ">
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select class="form-control" formControlName="userBankMappingId" matInput>
@@ -370,16 +370,16 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="col-md-1 p-0 pt-8 d-flex">
+      <div class="col-md-1 pr-0 pt-8 d-flex">
         <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
       </div>
     </div>
 
     <div class="row pt-44">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Description</h5>
+      <div class="col-md-5 pr-0 text-right d-flex align-items-center justify-content-end">
+        <h5 class="m-0">Description</h5>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5 pr-0">
         <div class="form-group mb-0">
           <mat-form-field>
             <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0"
@@ -390,14 +390,15 @@
         </div>
       </div>
     </div>
+
     <div formArrayName="getNomineeName">
-      <div class="row pt-36"
+      <div class="row pt-44"
         *ngFor="let obj of othersAssetForm.controls['getNomineeName'].controls; let pointIndex=index"
         [formGroupName]="pointIndex">
-        <div class="col-md-5 pr-0 text-right">
-          <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+        <div class="col-md-5 pr-0 text-right d-flex align-items-center justify-content-end ">
+          <h5 class="m-0  ">Nominee {{pointIndex + 1}}</h5>
         </div>
-        <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+        <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
           <div class="form-group mb-0">
             <mat-form-field>
               <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -414,7 +415,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-md-2" *ngIf="getNominee.length > 1">
+        <div class="col-md-2 pr-0" *ngIf="getNominee.length > 1">
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
               <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage"
@@ -428,7 +429,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-md-2 p-0 d-flex align-items-center">
+        <div class="col-md-2 pr-0 d-flex align-items-center">
           <i *ngIf="othersAssetForm.value.getNomineeName.length < 3"
             class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
           <i *ngIf="othersAssetForm.value.getNomineeName.length > 1"

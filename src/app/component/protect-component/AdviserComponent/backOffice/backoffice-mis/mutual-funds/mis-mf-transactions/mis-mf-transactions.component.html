@@ -1,1 +1,109 @@
-<p>mis-mf-transactions works!</p>
+<!-- <p>mis-mf-transactions works!</p> -->
+<div class="row">
+    <div class="col-md-4 p-0 text-left">
+        <h2 class="f-18 m-0 proximaFont ">Mutual fund transactions</h2>
+    </div>
+    <div class="col-md-3 p-0 mb-20 text-left">
+        <mat-form-field floatLabel="never" appearance="standard">
+            <mat-select class="form-control">
+                <mat-option value='' disabled>Select search type</mat-option>
+                <mat-option (click)="selectOption('schemeName')" [value]="1">Scheme name</mat-option>
+                <mat-option (click)="selectOption('folio')" [value]="2">Folio Number</mat-option>
+                <mat-option (click)="selectOption('pan')" [value]="3">PAN</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-3 p-0 text-left">
+        <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+            <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+                placeholder="Type to search data">
+        </mat-form-field>
+    </div>
+    <div class="col-md-2 p-0  d-flex align-items-center justify-content-end ">
+        <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+        </div>
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
+        <mat-menu #menu5="matMenu">
+            <!-- <button (click)="pdf('template','Fixed-Deposit')" mat-menu-item>PDF</button> -->
+            <button (click)="Excel('mfTransaction')" mat-menu-item>XLS</button>
+        </mat-menu>
+
+        <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+            class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+        </button>
+
+        <mat-menu #filterFixedIncomeTable>
+
+            <button mat-menu-item [ngClass]="activeFilter == '25'?'filterActive':''" (click)="filter(0,50)">
+                50
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == '50'?'filterActive':''" (click)="filter(50,100)">
+                100
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == '100'?'filterActive':''" (click)="filter(100,150)">
+                150
+            </button>
+        </mat-menu>
+    </div>
+
+</div>
+<div class="row mt-8">
+    <div class="col-md-12">
+        <div (scroll)="onWindowScroll($event)">
+            <div class="people-table-scroll fitScreen">
+                <table #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
+                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                    <ng-container matColumnDef="name">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Group Head Name </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.investorName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="scheme">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme Name
+                        </th>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                {{(isLoading) ? '':element.schemeName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="folio">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Folio Number
+                        </th>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                {{(isLoading) ? '':element.folioNumber}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tType">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Transaction Type
+                        </th>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                {{(isLoading) ? '':element.fwTransactionType}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tDate">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef sticky>Transaction Date
+                        </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                {{(isLoading) ? '':element.transactionDate | date: 'dd/MM/yyyy' }}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
