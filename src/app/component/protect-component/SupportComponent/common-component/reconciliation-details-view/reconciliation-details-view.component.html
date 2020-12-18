@@ -23,8 +23,8 @@
                 class="bg-primary text-white mr-12 h-22 mb-24 btn-xs" (click)="unmappedFolio(data)">
                 Unmap Folio
             </button>
-            <button *ngIf="data.unMapped == true" mat-stroked-button
-                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs" (click)="unmappedFolio(data)">
+            <button [disabled]="data.unMapped" *ngIf="data.unMapped == true" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs">
                 Unmapped
             </button>
         </h4>
