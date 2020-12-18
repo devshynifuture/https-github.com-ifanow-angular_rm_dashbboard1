@@ -30,6 +30,7 @@ export class PickDateAdapter extends NativeDateAdapter {
     }
   }
 }
+
 @Component({
   selector: 'app-mis-mf-transactions',
   templateUrl: './mis-mf-transactions.component.html',
@@ -41,7 +42,8 @@ export class PickDateAdapter extends NativeDateAdapter {
   ],
 })
 export class MisMfTransactionsComponent implements OnInit {
-
+  maxDate = new Date();
+  rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
   displayedColumns: string[] = ['name', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
@@ -86,7 +88,8 @@ export class MisMfTransactionsComponent implements OnInit {
     private backoffice: BackOfficeService,
     private eventService: EventService,
     private UtilService: UtilService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.obj = { transactionTypeId: [], categoryId: [], dateObj: {} }
@@ -99,6 +102,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.mfTransaction.data = [{}, {}, {}];
     this.getMfTransactionData(0)
   }
+
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
@@ -127,6 +131,7 @@ export class MisMfTransactionsComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss");
       })
   }
+
   addFilters(addFilters) {
 
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
@@ -138,6 +143,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterJson.statusFilterJson = this.filterStatus;
     this.filterApi(this.filterStatus)
   }
+
   addTransactionType(event) {
     if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
       this.filterStatus.push(event);
@@ -148,6 +154,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterJson.statusFilterJson = this.filterStatus;
     this.filterApi(this.filterStatus)
   }
+
   addFiltersDate(dateFilter) {
     this.filterDate = [];
 
@@ -167,10 +174,12 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterJson.dateFilterArr = this.filterDate;
     this.filterApi(this.filterJson)
   }
+
   removeDate(item) {
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
   }
+
   remove(item) {
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
@@ -208,10 +217,15 @@ export class MisMfTransactionsComponent implements OnInit {
   selectOption(value) {
     this.flag = value
   }
+
   applyFilter(event) {
 
-
   }
+
+
+  onClose() {
+  }
+
   getMfTransactionData(endFlag) {
     this.isLoading = true
     const obj = {
@@ -230,11 +244,13 @@ export class MisMfTransactionsComponent implements OnInit {
       })
 
   }
+
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
   }
 }
+
 export interface PeriodicElement {
   name: string;
   scheme: string;
@@ -244,5 +260,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Rahul Jain', scheme: 'HDFC Equity fund - Regular plan - Growth option | 098098883', folio: 2345772, tType: 'STP 5,000', tDate: '05/09/2019' },
+  {
+    name: 'Rahul Jain',
+    scheme: 'HDFC Equity fund - Regular plan - Growth option | 098098883',
+    folio: 2345772,
+    tType: 'STP 5,000',
+    tDate: '05/09/2019'
+  },
 ];
