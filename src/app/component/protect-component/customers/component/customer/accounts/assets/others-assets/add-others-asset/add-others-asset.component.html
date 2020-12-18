@@ -311,7 +311,7 @@
 
   <div *ngIf="showMoreData==true">
 
-    <div class="row pt-44">
+    <div class="row pt-32">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-28">Purchase value</h5>
       </div>
@@ -352,7 +352,7 @@
       </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-40">
       <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end text-right">
         <h5 class="m-0  ">Linked bank account</h5>
       </div>
@@ -390,8 +390,9 @@
         </div>
       </div>
     </div>
+
     <div formArrayName="getNomineeName">
-      <div class="row pt-36"
+      <div class="row pt-44"
         *ngFor="let obj of othersAssetForm.controls['getNomineeName'].controls; let pointIndex=index"
         [formGroupName]="pointIndex">
         <div class="col-md-5 pr-0 text-right d-flex align-items-center justify-content-end ">
