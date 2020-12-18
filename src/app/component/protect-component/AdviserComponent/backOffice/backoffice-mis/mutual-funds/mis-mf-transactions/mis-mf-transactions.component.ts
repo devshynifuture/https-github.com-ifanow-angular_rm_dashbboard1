@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-mis-mf-transactions',
@@ -8,18 +9,24 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class MisMfTransactionsComponent implements OnInit {
 
+  @ViewChild('tableEl', { static: false }) tableEl;
   displayedColumns: string[] = ['name', 'mfOverview', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
-  constructor() { }
+  fragmentData = { isSpinner: false };
+
+  constructor(private excel: ExcelGenService, ) { }
 
   ngOnInit() {
     this.mfTransaction.data = ELEMENT_DATA;
     this.isLoading = false
     // this.mfTransaction.data = [{}, {}, {}];
   }
-
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+  }
 }
 export interface PeriodicElement {
   name: string;
