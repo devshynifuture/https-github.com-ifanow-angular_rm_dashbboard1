@@ -9,12 +9,11 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { InsuranceComponent } from './insurance.component';
-import { AddOthersInsuranceInAssetComponent } from './add-others-insurance-in-asset/add-others-insurance-in-asset.component';
 
 
 
 @NgModule({
-  declarations: [InsuranceComponent, AddOthersInsuranceInAssetComponent],
+  declarations: [InsuranceComponent],
   imports: [
     CommonModule,
     InsuranceRoutingModule,
