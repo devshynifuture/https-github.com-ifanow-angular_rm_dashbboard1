@@ -55,22 +55,16 @@ export class MisMfTransactionsComponent implements OnInit {
   flag: any;
   selectedDateRange = {};
   chips = [
-    { name: 'DEBT', value: 1 },
-    { name: 'EQUITY', value: 2 },
-    { name: 'HYBRID', value: 3 },
-    { name: 'COMMODITY', value: 4 },
-    { name: 'LIQUID', value: 5 }
+    { name: 'DEBT', value: 1, filterType: 'category' },
+    { name: 'EQUITY', value: 2, filterType: 'category' },
+    { name: 'HYBRID', value: 3, filterType: 'category' },
+    { name: 'COMMODITY', value: 4, filterType: 'category' },
+    { name: 'LIQUID', value: 5, filterType: 'category' }
   ];
   dateChips = [
     { name: 'Transaction date', value: 1 },
   ];
   transactionTypeChips = [
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
   ];
   filterStatus = [];
   filterDate = [];
@@ -120,6 +114,9 @@ export class MisMfTransactionsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.transactionTypeChips = res;
+          this.transactionTypeChips.forEach(element => {
+            element.filterType = 'transactionType'
+          });
           console.log('transsaction type', this.transactionTypeChips)
         } else {
           this.eventService.openSnackBar("No TransactionType Data Found", "Dismiss");
@@ -137,6 +134,7 @@ export class MisMfTransactionsComponent implements OnInit {
 
     }
     this.filterJson.statusFilterJson = this.filterStatus;
+    this.filterApi(this.filterStatus)
   }
   addTransactionType(event) {
     if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
@@ -146,6 +144,7 @@ export class MisMfTransactionsComponent implements OnInit {
 
     }
     this.filterJson.statusFilterJson = this.filterStatus;
+    this.filterApi(this.filterStatus)
   }
   addFiltersDate(dateFilter) {
     this.filterDate = [];
@@ -164,6 +163,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.selectedDateRange = { begin: beginDate, end: endDate };
     this.filterJson.dateFilterJson = this.selectedDateRange;
     this.filterJson.dateFilterArr = this.filterDate;
+    this.filterApi(this.filterJson)
   }
   removeDate(item) {
     this.selectedDateFilter = 'dateFilter';
@@ -177,6 +177,19 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterStatus.splice(item, 1);
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != item.value;
+    });
+  }
+  filterApi(list) {
+    console.log(list)
+    const obj = {}
+    list.forEach(element => {
+      if (element.filterType == 'transactionType') {
+        //transactionTypeId.push
+      } else if (element.filterType == 'category') {
+
+      } else {
+
+      }
     });
   }
   selectOption(value) {
