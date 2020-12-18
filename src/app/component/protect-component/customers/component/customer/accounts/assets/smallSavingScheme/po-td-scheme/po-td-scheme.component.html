@@ -4,10 +4,10 @@
             <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
         </div>
         <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
-            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
-            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
+            <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">

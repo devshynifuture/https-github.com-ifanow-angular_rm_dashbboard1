@@ -194,7 +194,7 @@ export class PeopleService {
   }
 
   moveFamilyMemberFromOnceToOther(data) {
-    return this.http.post(apiConfig.USER + appConfig.MOVE_FAMILY_MEMBER, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.MOVE_FAMILY_MEMBER, data);
   }
 
   getClientAllAssetCount(data) {
@@ -202,6 +202,6 @@ export class PeopleService {
   }
 
   promoteToClient(data) {
-    return this.http.post(apiConfig.USER + appConfig.PROMOTE_TO_CLIENT, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.PROMOTE_TO_CLIENT, data);
   }
 }
