@@ -8,10 +8,11 @@
          </h4>
       </div>
       <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
-         *ngIf="!isLoading && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
+         *ngIf="!isLoading ">
+         <!-- && (unrealisedArray.length > 0 || dataSource.data.length > 0) -->
          <div class="pdfClass">
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" (click)="isDisabledOpacity==true"
-               *ngIf="!fragmentData.isSpinner">
+               *ngIf="!fragmentData.isSpinner && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
                <img src="assets/images/svg/download-bordered.svg">
             </a>
             <div class="hide" id="loadingDone" *ngIf="loadingDone == true">

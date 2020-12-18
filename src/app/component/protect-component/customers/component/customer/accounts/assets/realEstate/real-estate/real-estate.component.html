@@ -5,14 +5,14 @@
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
         <div class="col-md-6 p-0 d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
-            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+            <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
-            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
-                <button (click)="pdf('Real estate')" mat-menu-item>PDF</button>
+                <button (click)="pdf('template','Real-estate')" mat-menu-item>PDF</button>
                 <button (click)="Excel('Real estate')" mat-menu-item>XLS</button>
             </mat-menu>
 
@@ -236,26 +236,26 @@
                 <table style="width: 100%;">
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             No. </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Owner</td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Type </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Market value
                         </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Purchase value </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Description </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Status </td>
 
                     </tr>
@@ -263,31 +263,31 @@
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
                         *ngFor="let element of datasource3.data ;index as i">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;   border-left: 1px solid #DADCE0;">
                             {{isLoading ? '' : i + 1 }}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <span *ngIf="i == 0">{{owner.name}}</span></td>
 
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.typeString}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.marketValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.marketValue }}</span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.purchaseValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.purchaseValue}}</span>
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
                             {{element.description ? element.description : '-'}}
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
                             {{isLoading ? '' : 'LIVE' }}</td>
                     </tr>
@@ -296,30 +296,30 @@
                     <tr
                         style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>Total</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumOfMarketValue ? "₹" : ""}}<span [value]="sumOfMarketValue"
                                 appFormatNumber>{{sumOfMarketValue}}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumOfpurchasedValue ? "₹" : ""}}<span [value]="sumOfpurchasedValue"
                                 appFormatNumber>{{sumOfpurchasedValue}}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                     </tr>
 

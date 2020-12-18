@@ -16,6 +16,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatDialog } from '@angular/material';
 import { element } from 'protractor';
 import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
+import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
 
 const moment = require('moment');
 
@@ -903,11 +904,52 @@ export class ClientBasicDetailsComponent implements OnInit {
     });
   }
 
+  promoteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'PROMOTE',
+      body: 'Are you sure you want to promote?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'PROMOTE',
+      positiveMethod: () => {
+        let obj =
+        {
+          "familyMemberId": this.basicDetailsData.familyMemberId,
+          "relationshipId": 0
+        }
+        this.peopleService.promoteToClient(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data)
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
   openUnmapPopupORNot() {
     let obj;
     if (this.basicDetailsData.familyMemberType != 2) {
       if (this.basicDetails.get('pan').value == '' || this.mobileData.controls[0].get('number').value == undefined || this.mobileData.controls[0].get('number').value == '' || this.emailData.controls[0].get('emailAddress').value == undefined || this.emailData.controls[0].get('emailAddress').value == '') {
-        obj = { showField: true }
+        obj = { showField: true, fieldData: { email: this.emailData.controls[0].get('emailAddress').value, number: this.mobileData.controls[0].get('number').value, pan: this.basicDetails.get('pan').value } }
 
         const dialogRef = this.dialog.open(UnmapPopupComponent, {
           data: obj
@@ -978,6 +1020,17 @@ export class ClientBasicDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  openMoveFamilymemberToClient() {
+    const fragmentData = {
+      flag: 'moveFM',
+      data: this.basicDetailsData,
+      id: 1,
+      state: 'open50',
+      componentName: MoveFamilymemberToClientComponent,
+    };
+    this.subInjectService.changeNewRightSliderState(fragmentData);
   }
 
 }

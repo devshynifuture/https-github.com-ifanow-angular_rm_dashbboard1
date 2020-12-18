@@ -18,9 +18,9 @@ export class UnmapPopupComponent implements OnInit {
 
   ngOnInit() {
     this.unmapForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
-      number: ['', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
-      pan: ['', [Validators.required, Validators.pattern(this.validatorType.PAN)]]
+      email: [this.data.fieldData.email ? this.data.fieldData.email : '', [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
+      number: [this.data.fieldData.number ? this.data.fieldData.number : '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      pan: [this.data.fieldData.pan ? this.data.fieldData.pan : '', [Validators.required, Validators.pattern(this.validatorType.PAN)]]
     })
   }
 

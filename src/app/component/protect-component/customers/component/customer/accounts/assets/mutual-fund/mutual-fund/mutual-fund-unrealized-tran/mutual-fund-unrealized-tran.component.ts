@@ -223,6 +223,7 @@ export class MutualFundUnrealizedTranComponent {
   isTableShow = true;
   isDisabledOpacity = true;
   colspanValue: Number;
+  resData: any;
   // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -507,6 +508,9 @@ export class MutualFundUnrealizedTranComponent {
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
             this.getUnrealizedData();
+          }else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
+            this.isLoading = true;
+            this.getMutualFundResponse(this.mfGetData);
           } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
             this.changeInput.emit(true);
@@ -859,6 +863,13 @@ export class MutualFundUnrealizedTranComponent {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
       // }
     } else {
+      this.isLoading = false;
+      this.dataSource.data = [];
+      // this.customDataSource.data = [];
+      // this.unrealisedData = new TableVirtualScrollDataSource([]);
+      this.customDataSource = [];
+      this.customDataHolder = [];
+      this.changeInput.emit(false);
       this.isLoading = false;
     }
   }
@@ -1439,6 +1450,7 @@ export class MutualFundUnrealizedTranComponent {
             this.isLoading = true;
             this.isTableShow = true;
             this.changeInput.emit(true);
+            this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
             // this.setTrueKey = this.rightFilterData.setTrueKey;
             this.saveFilterData = {};

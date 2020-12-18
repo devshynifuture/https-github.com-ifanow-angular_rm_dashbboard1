@@ -21,7 +21,8 @@ import { MY_FORMATS2 } from "../../../../constants/date-format.constant";
 import { MinorFormComponent } from './Component/people-clients/add-client/minor-form/minor-form.component';
 import { from } from 'rxjs';
 import { UnmapPopupComponent } from './Component/people-clients/add-client/client-basic-details/unmap-popup/unmap-popup.component';
-export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent, UnmapPopupComponent]
+import { MoveFamilymemberToClientComponent } from './Component/people-clients/add-client/client-basic-details/move-familymember-to-client/move-familymember-to-client.component';
+export const componentList = [CompanyMoreInfoComponent, MoveFamilymemberToClientComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent, UnmapPopupComponent]
 
 @NgModule({
   declarations: [componentList],

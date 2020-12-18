@@ -50,9 +50,13 @@ export class PPFSchemeComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
+    private utils: UtilService,
     public dialog: MatDialog, private cusService: CustomerService,
     private assetValidation: AssetValidationService,
     private eventService: EventService, private subInjectService: SubscriptionInject) {
@@ -104,9 +108,22 @@ export class PPFSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle) {
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   getPpfSchemeData() {

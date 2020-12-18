@@ -1,10 +1,79 @@
-<div [formGroup]="unmapForm" *ngIf="data.showField">
-    Email <input formControlName="email" type="text">
-    Number <input formControlName="number" type="text">
-    Pan <input formControlName="pan" type="text">
-    <button (click)="cancel()">Cancel</button>
-    <button (click)="unmapFamilyMember()">Unmap</button>
+<div *ngIf="data.showField" class="boxWidthHeight">
+
+    <div class="row bb-1  ">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 l-22 wrapper-20">Unmap family member</h4>
+        </div>
+        <div class="col-md-2  full-center  ">
+
+            <i (click)="cancel()" class="material-icons c-p">
+                clear
+            </i>
+
+        </div>
+    </div>
+
+    <div [formGroup]="unmapForm" class="p-12">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="f-14">
+                    Email
+                </label>
+                <div class="form-group ">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email">
+                        </app-email-domain-auto-suggest>
+                        <mat-error *ngIf="unmapForm.get('email').errors?.pattern">Email is not valid</mat-error>
+                        <mat-error *ngIf="unmapForm.get('email').errors?.required">This field is required
+                        </mat-error>
+                        <!-- <input formControlName="email" type="text" class="form-control"> -->
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="f-14">
+                    Number
+                </label>
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input matInput #num appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            autocomplete="off" maxlength="10" formControlName="number" class="form-control" type="text">
+                        <mat-error *ngIf="unmapForm.get('number').errors?.required">This field is required</mat-error>
+                        <mat-error *ngIf="unmapForm.get('number').errors?.pattern">Number must be 10 digits</mat-error>
+                        <mat-hint align="end">{{num.value.length}}/10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="f-14">
+                    Pan
+                </label>
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input matInput #pan formControlName="pan" class="form-control" type="text">
+                        <mat-error *ngIf="unmapForm.get('pan').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="unmapForm.get('pan').errors?.pattern">Pan invalid
+                        </mat-error>
+                        <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-10 pb-10">
+            <div class="col-md-12 d-flex justify-content-end align-items-center">
+                <button mat-button (click)="cancel()">Cancel</button>
+                <button mat-button class="btn-primary" (click)="unmapFamilyMember()">Unmap</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div *ngIf="data.showField==false">
-    Minors cannot be unmapped.</div>
+<div class="p-20" *ngIf="data.showField==false">
+    <h5 class="m-0"> Minors cannot be unmapped. </h5>
+</div>

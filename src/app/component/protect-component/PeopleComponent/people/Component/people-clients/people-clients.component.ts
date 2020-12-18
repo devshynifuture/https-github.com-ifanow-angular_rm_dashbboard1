@@ -216,48 +216,58 @@ export class PeopleClientsComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    const dialogData = {
-      data: value,
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'DELETE',
-      positiveMethod: () => {
-        const obj = {
-          clientId: data.clientId,
-          userType: 2
-        };
-        this.peopleService.deleteClient(obj).subscribe(
-          responseData => {
-            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
-            dialogRef.close();
-            this.enumDataService.searchClientList();
-            this.enumDataService.searchClientAndFamilyMember();
-            this.isLoading = true;
-            this.finalClientList = [];
-            this.clientDatasource.data = [{}, {}, {}];
-            this.getClientList(0);
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: data.clientId
+    }
+    this.peopleService.getClientAllAssetCount(obj).subscribe(
+      data => {
+        let msg = (data && data != 0) ? `There are ${data} assets mapped against this client. Are you sure you want to delete?` : 'Are you sure you want to delete?';
+        const dialogData = {
+          data: value,
+          header: 'DELETE',
+          body: msg,
+          body2: 'This cannot be undone.',
+          btnYes: 'CANCEL',
+          btnNo: 'DELETE',
+          positiveMethod: () => {
+            const obj = {
+              clientId: data.clientId,
+              userType: 2
+            };
+            this.peopleService.deleteClient(obj).subscribe(
+              responseData => {
+                this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+                dialogRef.close();
+                this.enumDataService.searchClientList();
+                this.enumDataService.searchClientAndFamilyMember();
+                this.isLoading = true;
+                this.finalClientList = [];
+                this.clientDatasource.data = [{}, {}, {}];
+                this.getClientList(0);
+              },
+              error => this.eventService.showErrorMessage(error)
+            );
           },
-          error => this.eventService.showErrorMessage(error)
-        );
-      },
-      negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
+          negativeMethod: () => {
+            console.log('2222222222222222222222222222222222222');
+          }
+        };
+        console.log(dialogData + '11111111111111');
+
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '400px',
+          data: dialogData,
+          autoFocus: false,
+
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
       }
-    };
-    console.log(dialogData + '11111111111111');
+    )
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
   }
 
   resetPassword(value, data) {

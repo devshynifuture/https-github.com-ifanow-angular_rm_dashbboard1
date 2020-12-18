@@ -18,15 +18,15 @@
             </div>
             <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
                 *ngIf="goldList.filteredData.length > 0">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Gold')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template','Gold')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Gold')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -193,15 +193,15 @@
             </div>
             <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
                 *ngIf="otherCommodityList.filteredData.length > 0">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Others')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template1','Others')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Others')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -374,322 +374,368 @@
 <!----------------------------Gold------------------------------------------>
 <div #goldTemp id="template" class="hide" *ngIf="showRequring == '1'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                </div>
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                </div>
-                <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                </div>
-            </td>
-            <td style=" text-align: right;" colspan="12">
-                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
+                                    Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
+                                </strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
-                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Gold</td>
         </tr>
         <tr>
-            <td colspan="11">
+            <td>
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
                     *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Owner</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Tolas/Grams </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Carats
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Carat gold price (10 gram) </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Market value </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Purchase value </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Description </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Status </td>
 
-        </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of goldList.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td *ngFor="let owner of item.ownerList; let i = index"
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <span *ngIf="i == 0">{{owner.name}}</span></td>
+        <tr>
+            <td>
+                <table style="width: 100%;">
 
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{item.purchasedGramsOrTola}} <span
-                    class="text-custom f-12">{{(item.gramsOrTola==1)?'tolas':'grams'}}</span> </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                <span appFormatNumber>{{item.carat}}</span></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.caratGoldPrice? "₹" : ""}}<span appFormatNumber>{{item.caratGoldPrice }}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.marketValue? "₹" : ""}}<span appFormatNumber>{{item.marketValue }}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && item.approximatePurchaseValue? "₹" : ""}}<span
-                    appFormatNumber>{{item.approximatePurchaseValue }}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : item.description || '-'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : 'LIVE' }}
-            </td>
 
-        </tr>
-        <tr
-            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : 'Total'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && sumOfMarketValue  ? "₹" : ""}}<span [value]="sumOfMarketValue"
-                    appFormatNumber>{{sumOfMarketValue}}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && sumOfPurchaseValue ? "₹" : ""}}<span [value]="sumOfPurchaseValue"
-                    appFormatNumber>{{sumOfPurchaseValue}}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                            No. </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Owner</td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;  text-align: right;">
+                            Tolas/Grams </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0; text-align: right;">
+                            Carats
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;  text-align: right;">
+                            Carat gold price (10 gram) </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;  text-align: right;">
+                            Market value </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;  text-align: right;">
+                            Purchase value </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Description </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Status </td>
+
+                    </tr>
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let item of goldList.data ;index as i">
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td *ngFor="let owner of item.ownerList; let i = index"
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <span *ngIf="i == 0">{{owner.name}}</span></td>
+
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{item.purchasedGramsOrTola}} <span
+                                class="text-custom f-12">{{(item.gramsOrTola==1)?'tolas':'grams'}}</span> </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            <span appFormatNumber>{{item.carat}}</span></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.caratGoldPrice? "₹" : ""}}<span
+                                appFormatNumber>{{item.caratGoldPrice }}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.marketValue? "₹" : ""}}<span
+                                appFormatNumber>{{item.marketValue }}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && item.approximatePurchaseValue? "₹" : ""}}<span
+                                appFormatNumber>{{item.approximatePurchaseValue }}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : item.description || '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : 'LIVE' }}
+                        </td>
+
+                    </tr>
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : 'Total'}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && sumOfMarketValue  ? "₹" : ""}}<span [value]="sumOfMarketValue"
+                                appFormatNumber>{{sumOfMarketValue}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && sumOfPurchaseValue ? "₹" : ""}}<span [value]="sumOfPurchaseValue"
+                                appFormatNumber>{{sumOfPurchaseValue}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                    </tr>
+
+                </table>
             </td>
         </tr>
     </table>
 </div>
 <!----------------------------Others------------------------------------------>
-<div #othersTemp id="template" *ngIf="showRequring == '2'" class="hide">
+<div #othersTemp id="template1" *ngIf="showRequring == '2'" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                </div>
-                <div style="width: 200px;"
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                </div>
-                <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                </div>
-            </td>
-            <td style=" text-align: right;" colspan="12">
-                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
+                                    Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
+                                </strong>
+                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong> Report as on:
-                        {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
+            <td style="padding: 10px;"></td>
         </tr>
 
         <tr>
-            <td colspan="9"
+            <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Others</td>
         </tr>
         <tr>
-            <td colspan="11">
+            <td>
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
                     *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Owner</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Type of commodity </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Market value
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Market value <br />as on date </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Purchase value </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Date of purchase </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Growth rate </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Description </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Status </td>
 
-        </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let element of otherCommodityList.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <span>{{element.ownerList[0].name}}</span></td>
+        <tr>
+            <td>
+                <table style="width: 100%;">
 
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading? ' ' : (element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId == 6)?'Silver':(element.commodityTypeId
+
+
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            No. </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Owner</td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Type of commodity </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: right;">
+                            Market value
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Market value <br />as on date </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;  text-align: right;">
+                            Purchase value </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Date of purchase </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;  text-align: right;">
+                            Growth rate </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Description </td>
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            Status </td>
+
+                    </tr>
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let element of otherCommodityList.data ;index as i">
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <span>{{element.ownerList[0].name}}</span></td>
+
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading? ' ' : (element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId == 6)?'Silver':(element.commodityTypeId
         == 7)?'Diamond':'Other'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && element.marketValue  ? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : element.marketValueAsOnDate | date:'dd/MM/yyyy' || '-'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && element.purchaseValue ? "₹" : ""}}<span
-                    appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && element.marketValue  ? "₹" : ""}}<span
+                                appFormatNumber>{{element.marketValue }}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;  border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : element.marketValueAsOnDate | date:'dd/MM/yyyy' || '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && element.purchaseValue ? "₹" : ""}}<span
+                                appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span>
 
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : element.dateOfPurchase | date:'dd/MM/yyyy' || '-'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{element.growthRate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? '' : element.description || '-'}}
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading ? ' ' : 'LIVE' }}
-            </td>
-        </tr>
-        <tr
-            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                Total
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{!isLoading && sumOfMarketValueOther ? "₹" : ""}}
-                <span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{isLoading && sumOfPurchaseValueOther? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther"
-                    appFormatNumber>{{sumOfPurchaseValueOther}}</span>
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : element.dateOfPurchase | date:'dd/MM/yyyy' || '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{element.growthRate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;  border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? '' : element.description || '-'}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;  border-bottom: 1px solid #DADCE0;">
+                            {{isLoading ? ' ' : 'LIVE' }}
+                        </td>
+                    </tr>
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            Total
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && sumOfMarketValueOther ? "₹" : ""}}
+                            <span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{isLoading && sumOfPurchaseValueOther? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther"
+                                appFormatNumber>{{sumOfPurchaseValueOther}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

@@ -26,14 +26,14 @@
             </div>
 
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end ">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Fixed deposit')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template','Fixed-Deposit')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Fixed deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -269,14 +269,14 @@
                 </h2>
             </div>
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end" *ngIf="!hideFilter">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template1','Recurring-Deposit')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Recurring deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
@@ -465,14 +465,14 @@
                 <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Bonds')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template2','Bonds')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
                 </mat-menu>
 
@@ -759,88 +759,88 @@
         <tr>
             <td>
                 <table style="width: 100%;">
-                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0; ">
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0; ">
                             No. </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Owner</td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             FD type </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Current value
                         </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Rate </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Amount invested </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Maturity date </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Maturity value </td>
 
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             FD number </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Description</td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Status </td>
 
                     </tr>
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
                         *ngFor="let element of dataSource.data ;index as i">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <span *ngIf="i == 0">{{owner.name}}</span></td>
 
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
                             {{ (element.fdType) ? (element.fdType == 1) ? 'Bank FD' : 'Corporate FD' : '' }}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.currentValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.currentValue?element.currentValue:!isLoading?'-':''}}</span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.interestRate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.amountInvested? "₹" : ""}}<span
                                 appFormatNumber>{{element.amountInvested ? element.amountInvested : '-'}}</span>
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
                             {{element.maturityDate | date:'dd/MM/yyyy'}}</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.maturityValue ? "₹" : ""}}<span
                                 appFormatNumber>{{ element.maturityValue ? element.maturityValue : '-'}}</span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : element.fdNumber || '-'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : element.description || '-'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.statusId}}
                         </td>
 
@@ -848,41 +848,41 @@
                     <tr
                         style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;  border-left: 1px solid #DADCE0;">
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>Total</td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber></td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumCurrentValue? "₹" : ""}}<span
                                 [value]="sumCurrentValue ? sumCurrentValue : '-'" appFormatNumber></span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumAmountInvested? "₹" : ""}}<span
                                 [value]="sumAmountInvested ? sumAmountInvested :'-'" appFormatNumber></span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumMaturityValue? "₹" : ""}}<span
                                 [value]="sumMaturityValue ? sumMaturityValue :'-'" appFormatNumber></span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                     </tr>
                 </table>
@@ -901,11 +901,12 @@
 <!-- -------------------- pdf recurring deposit---------------------------- -->
 <div #recurringDepositeTemp id="template1" *ngIf="showRequring == '2'" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+
         <tr>
             <td>
                 <table style="width: 100%;">
                     <tr>
-                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                        <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
                             <div style="width: 200px;"
                                 *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                                 <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -919,7 +920,7 @@
                                 <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
                             </div>
                         </td>
-                        <td style=" text-align: right; width: 50%;">
+                        <td style=" text-align: right;">
                             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
                                 *ngIf="userInfo">
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
@@ -964,35 +965,35 @@
                 <table style="width: 100%;">
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                             No. </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Owner</td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Current value </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Rate
                         </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Monthly contribution </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Maturity value </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Maturity date </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             RD number </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Description </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Status </td>
 
                     </tr>
@@ -1000,46 +1001,46 @@
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
                         *ngFor="let element of dataSource.data ;index as i">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <span *ngIf="i == 0">{{owner.name}}</span></td>
 
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.currentValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.currentValue?element.currentValue:isLoading?'':'-' }}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.interestRate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.monthlyContribution? "₹" : ""}}<span
                                 appFormatNumber>{{element.monthlyContribution ? element.monthlyContribution : '-' }}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.maturityValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.maturityValue ? element.maturityValue : '-' }}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.maturityDate | date:'dd/MM/yyyy'}} </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : element.rdNumber || '-'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : element.description || '-'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.statusId}}
                         </td>
 
@@ -1048,49 +1049,48 @@
                     <tr
                         style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>Total</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && totalCurrentValue? "₹" : ""}}<span
                                 [value]="totalCurrentValue ? totalCurrentValue : '-'" appFormatNumber></span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumOfMonthlyContribution? "₹" : ""}}<span
                                 [value]="sumOfMonthlyContribution ? sumOfMonthlyContribution :'-'"
                                 appFormatNumber></span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumOfMaturityValue? "₹" : ""}}<span
                                 [value]="sumOfMaturityValue ? sumOfMaturityValue :'-'" appFormatNumber></span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                     </tr>
 
                 </table>
             </td>
         </tr>
-
 
 
 
@@ -1110,7 +1110,7 @@
             <td>
                 <table style="width: 100%;">
                     <tr>
-                        <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
+                        <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
                             <div style="width: 200px;"
                                 *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                                 <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -1124,7 +1124,7 @@
                                 <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
                             </div>
                         </td>
-                        <td style=" text-align: right; width: 50%;">
+                        <td style=" text-align: right;">
                             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;"
                                 *ngIf="userInfo">
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
@@ -1169,41 +1169,41 @@
                 <table style="width: 100%;">
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             No. </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Owner</td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Current value </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Coupon amount
                         </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Amount invested </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Start date </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Coupon rate </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Maturity value </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Maturity date </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Type </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Description </td>
                         <td
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Status </td>
 
                     </tr>
@@ -1211,116 +1211,112 @@
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
                         *ngFor="let element of dataSource.data ;index as i">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <span *ngIf="i == 0">{{owner.name}}</span></td>
 
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.currentValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.currentValue?element.currentValue:!isLoading?'-':''}}</span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             <div *ngIf="element.couponPayoutFrequencyId == 1">-</div>
                             <div *ngIf="element.couponPayoutFrequencyId != 1">
                                 {{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount}}</span>
                             </div>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.amountInvested? "₹" : ""}}<span
                                 appFormatNumber>{{element.amountInvested ? element.amountInvested :'-' }}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.commencementDate | date:'dd/MM/yyyy'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.couponRate | number: '1.2-2'}} {{!isLoading? "%" : ""}}/td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && element.maturityValue? "₹" : ""}}<span
                                 appFormatNumber>{{element.maturityValue ? element.maturityValue :'-'}}</span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.maturityDate | date:'dd/MM/yyyy'}}
                         </td>
 
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : (element.type==1)?'Tax free':'Non tax free'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{isLoading ? '' : element.description || '-'}}
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{element.statusId}}
                         </td>
-
-
                     </tr>
 
                     <tr
                         style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Total</td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumCurrentValueB? "₹" : ""}}<span
                                 [value]="sumCurrentValueB ? sumCurrentValueB :'-'" appFormatNumber></span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumCouponAmount? "₹" : ""}}<span
                                 [value]="sumCouponAmount ? sumCouponAmount :'-'" appFormatNumber></span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumAmountInvestedB? "₹" : ""}}<span
                                 [value]="sumAmountInvestedB ? sumAmountInvestedB :'-'" appFormatNumber></span>
 
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && sumMaturityValue? "₹" : ""}}<span
                                 [value]="sumMaturityValue ? sumMaturityValue :'-'" appFormatNumber></span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                         </td>
                     </tr>
-
-
                 </table>
             </td>
         </tr>

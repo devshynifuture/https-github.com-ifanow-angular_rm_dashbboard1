@@ -188,8 +188,6 @@ export class AddRecommendationsInsuComponent implements OnInit {
         console.log(data)
       },
       err => {
-        this.isAdviceGiven = true;
-        this.close(true);
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
