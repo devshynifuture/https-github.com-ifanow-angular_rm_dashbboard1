@@ -912,7 +912,7 @@ export class LifeInsuranceComponent implements OnInit {
       result[2].forEach(element => {
         element.expanded = false;
       });
-      this.dataSource1 = result[2];
+      this.dataSource1 = this.getFilterSumAssured(result[2]);
     } else {
       this.dataSource1 = [];
     }
@@ -925,6 +925,18 @@ export class LifeInsuranceComponent implements OnInit {
       this.ref.detectChanges();
       this.loaded.emit(this.insuranceTemp.nativeElement);
     }
+  }
+  getFilterSumAssured(data){
+    if (this.inputData.insuranceType != 1) {
+      data.forEach(element => {
+        if(!element.insurance.sumInsuredIdv){
+          element.insurance.insuredMembers.forEach(ele => {
+            element.insurance.sumInsuredIdv += ele.sumInsured;
+          });
+        }
+      });
+    }
+    return data;
   }
   getFilterDataNeedAnalysis(array) {
     if (array) {

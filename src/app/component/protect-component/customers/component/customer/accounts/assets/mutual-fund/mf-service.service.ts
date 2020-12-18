@@ -73,6 +73,16 @@ export class MfServiceService {
     data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
     data.folioWise = this.filter(data.schemeWise, 'mutualFund');
     data.transactions = this.filter(data.mutualFundList, 'mutualFundTransactions');
+    data.mutualFundList = this.casFolioNumber(data.mutualFundList)
+    return data;
+  }
+  casFolioNumber(data){
+    data.forEach(element => {
+      if(element.rtMasterId == 6 && !element.folioNumber.includes("CAS")){
+        element.folioNumber = 'CAS-'+element.folioNumber;
+      }
+      
+    });
     return data;
   }
   filter(data, key) {// filtering data as per category
@@ -327,7 +337,7 @@ export class MfServiceService {
     //   });
     // }
     let arry =[];
-    if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
+    if (dataForFilter.reportAsOn && (dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT')) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions.forEach(ele => {
           if(this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn){
@@ -335,9 +345,10 @@ export class MfServiceService {
           }
         });
       });
+      arry = [...new Map(arry.map(item => [item.id, item])).values()];
+      mutualFundList = arry
     }
-    arry = [...new Map(arry.map(item => [item.id, item])).values()];
-    mutualFundList = arry
+   
 
     // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
     //   let array = [];
