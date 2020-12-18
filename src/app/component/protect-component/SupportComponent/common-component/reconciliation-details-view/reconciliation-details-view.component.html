@@ -20,7 +20,7 @@
         <p class="m-0 f-12 text-primitive roboto">FOLIO NUMBER</p>
         <h4 class="f-14 ">{{ data.folioNumber }}
             <button *ngIf="data.unMapped == false" mat-stroked-button
-                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs" (click)="unmappedFolio(data)">
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs c-p" (click)="unmappedFolio(data)">
                 Unmap Folio
             </button>
             <button [disabled]="data.unMapped" *ngIf="data.unMapped == true" mat-stroked-button
