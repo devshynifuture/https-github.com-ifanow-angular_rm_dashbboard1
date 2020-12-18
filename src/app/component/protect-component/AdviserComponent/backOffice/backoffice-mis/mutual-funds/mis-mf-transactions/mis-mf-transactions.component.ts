@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class MisMfTransactionsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'mfoverview', 'scheme', 'folio', 'tType', 'tDate'];
+  displayedColumns: string[] = ['name', 'mfOverview', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
