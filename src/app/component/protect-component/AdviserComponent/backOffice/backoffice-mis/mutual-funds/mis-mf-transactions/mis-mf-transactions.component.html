@@ -15,12 +15,12 @@ Mutual fund transactions
                 </ng-container>
 
                 <!-- Name Column -->
-                <ng-container matColumnDef="mfoverview">
+                <ng-container matColumnDef="mfOverview">
                     <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-
+                            {{(isLoading) ? '':element.mfOverview}}
                         </div>
                     </td>
                 </ng-container>
@@ -29,7 +29,7 @@ Mutual fund transactions
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-
+                            {{(isLoading) ? '':element.scheme}}
                         </div>
                     </td>
                 </ng-container>
@@ -38,7 +38,7 @@ Mutual fund transactions
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-
+                            {{(isLoading) ? '':element.folio}}
                         </div>
                     </td>
                 </ng-container>
@@ -47,7 +47,7 @@ Mutual fund transactions
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-
+                            {{(isLoading) ? '':element.tType}}
                         </div>
                     </td>
                 </ng-container>
@@ -56,7 +56,7 @@ Mutual fund transactions
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-
+                            {{(isLoading) ? '':element.tDate}}
                         </div>
                     </td>
                 </ng-container>

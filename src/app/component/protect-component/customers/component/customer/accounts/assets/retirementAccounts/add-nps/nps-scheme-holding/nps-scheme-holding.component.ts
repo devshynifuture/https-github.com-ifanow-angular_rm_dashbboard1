@@ -403,7 +403,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       disControl: type
     }
     setTimeout(() => {
-      this.selectOwner = this.nomineesListFM.filter((m) => m.id == this.schemeHoldingsNPS.value.getCoOwnerName[0].familyMemberId);
+      this.selectOwner = this.nomineesListFM.filter((m) => m.familyMemberId == this.schemeHoldingsNPS.value.getCoOwnerName[0].familyMemberId || (m.clientId == this.schemeHoldingsNPS.value.getCoOwnerName[0].familyMemberId && this.schemeHoldingsNPS.value.getCoOwnerName[0].isClient == 1))
     }, 1000);
   }
 

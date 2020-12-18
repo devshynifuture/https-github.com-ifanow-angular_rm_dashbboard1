@@ -112,7 +112,7 @@ export class AddGratuityComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.selectOwner = this.nomineesListFM.filter((m) => m.id == this.gratuity.value.getCoOwnerName[0].familyMemberId);
+      this.selectOwner = this.nomineesListFM.filter((m) => m.familyMemberId == this.gratuity.value.getCoOwnerName[0].familyMemberId || (m.clientId == this.gratuity.value.getCoOwnerName[0].familyMemberId && this.gratuity.value.getCoOwnerName[0].isClient == 1))
     }, 1000);
   }
 
