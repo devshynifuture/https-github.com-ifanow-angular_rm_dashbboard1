@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-6 p-0 d-flex d-flex align-items-center justify-content-end "
                 *ngIf="dataSource.filteredData.length > 0">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
@@ -252,10 +252,10 @@
             </div>
             <div class="col-md-8 p-0  justify-content-end d-flex align-items-center"
                 *ngIf="dataSource.filteredData.length > 0">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -573,10 +573,10 @@
             </div>
             <div class="col-md-8 p-0  d-flex align-items-center justify-content-end "
                 *ngIf="dataSource.filteredData.length > 0">
-                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -781,7 +781,7 @@
                 </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('','Superannuation')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('template','Superannuation')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
