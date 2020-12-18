@@ -8,16 +8,28 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class MisMfTransactionsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'mfoverview', 'scheme', 'folio', 'tType', 'tdate'];
+  displayedColumns: string[] = ['name', 'mfoverview', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
   constructor() { }
 
   ngOnInit() {
-
+    this.mfTransaction.data = ELEMENT_DATA;
     this.isLoading = false
-    this.mfTransaction.data = [{}, {}, {}];
+    // this.mfTransaction.data = [{}, {}, {}];
   }
 
 }
+export interface PeriodicElement {
+  name: string;
+  mfOverview: string;
+  scheme: string;
+  folio: number;
+  tType: string;
+  tDate: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Rahul Jain', mfOverview: 'Mutual Funds', scheme: 'HDFC Equity fund - Regular plan - Growth option | 098098883', folio: 2345772, tType: 'STP 5,000', tDate: '05/09/2019' },
+];
