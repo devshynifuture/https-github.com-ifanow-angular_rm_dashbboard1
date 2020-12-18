@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-others-insurance-in-asset.component.scss']
 })
 export class AddOthersInsuranceInAssetComponent implements OnInit {
-
+  showHeader;
   constructor() { }
 
   ngOnInit() {

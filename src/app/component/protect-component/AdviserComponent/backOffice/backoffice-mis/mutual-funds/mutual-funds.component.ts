@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {RoleService} from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-mutual-funds',
@@ -9,7 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 export class MutualFundsComponent implements OnInit {
   selected: number;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              public enumDataService: EnumDataService,
+              public roleService: RoleService) {
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {

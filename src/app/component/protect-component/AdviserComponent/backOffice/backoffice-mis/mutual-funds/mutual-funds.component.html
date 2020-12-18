@@ -12,7 +12,7 @@
                     <app-mis-mf-schemes></app-mis-mf-schemes>
                 </ng-template>
             </mat-tab> -->
-            <mat-tab label="Mutual Funds Transactions">
+            <mat-tab *ngIf="!enumDataService.PRODUCTION" label="Mutual Funds Transactions">
                 <ng-template matTabContent>
                     <app-mis-mf-transactions></app-mis-mf-transactions>
                 </ng-template>
