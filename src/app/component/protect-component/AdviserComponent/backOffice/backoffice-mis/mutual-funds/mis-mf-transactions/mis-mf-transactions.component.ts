@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-mis-mf-transactions',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MisMfTransactionsComponent implements OnInit {
 
+  displayedColumns: string[] = ['name', 'mfoverview', 'scheme', 'folio', 'tType', 'tdate'];
+  data: Array<any> = [{}, {}, {}];
+  mfTransaction = new MatTableDataSource(this.data);
+  isLoading: boolean;
   constructor() { }
 
   ngOnInit() {
+
+    this.isLoading = false
+    this.mfTransaction.data = [{}, {}, {}];
   }
 
 }
