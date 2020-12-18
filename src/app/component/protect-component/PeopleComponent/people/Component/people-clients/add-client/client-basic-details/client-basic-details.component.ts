@@ -949,7 +949,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     let obj;
     if (this.basicDetailsData.familyMemberType != 2) {
       if (this.basicDetails.get('pan').value == '' || this.mobileData.controls[0].get('number').value == undefined || this.mobileData.controls[0].get('number').value == '' || this.emailData.controls[0].get('emailAddress').value == undefined || this.emailData.controls[0].get('emailAddress').value == '') {
-        obj = { showField: true }
+        obj = { showField: true, fieldData: { email: this.emailData.controls[0].get('emailAddress').value, number: this.mobileData.controls[0].get('number').value, pan: this.basicDetails.get('pan').value } }
 
         const dialogRef = this.dialog.open(UnmapPopupComponent, {
           data: obj
