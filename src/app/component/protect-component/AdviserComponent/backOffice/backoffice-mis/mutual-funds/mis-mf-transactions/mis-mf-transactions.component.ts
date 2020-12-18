@@ -55,11 +55,11 @@ export class MisMfTransactionsComponent implements OnInit {
   flag: any;
   selectedDateRange = {};
   chips = [
-    { name: 'DEBT', value: 1, filterType: 'category' },
-    { name: 'EQUITY', value: 2, filterType: 'category' },
-    { name: 'HYBRID', value: 3, filterType: 'category' },
-    { name: 'COMMODITY', value: 4, filterType: 'category' },
-    { name: 'LIQUID', value: 5, filterType: 'category' }
+    { name: 'DEBT', id: 1, filterType: 'category' },
+    { name: 'EQUITY', id: 2, filterType: 'category' },
+    { name: 'HYBRID', id: 3, filterType: 'category' },
+    { name: 'COMMODITY', id: 4, filterType: 'category' },
+    { name: 'LIQUID', id: 5, filterType: 'category' }
   ];
   dateChips = [
     { name: 'Transaction date', value: 1 },
@@ -79,6 +79,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
 
   filterTransaction = [];
+  obj: { transactionTypeId: any[]; categoryId: any[]; dateObj: {}; };
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -88,6 +89,7 @@ export class MisMfTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.obj = { transactionTypeId: [], categoryId: [], dateObj: {} }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -181,16 +183,27 @@ export class MisMfTransactionsComponent implements OnInit {
   }
   filterApi(list) {
     console.log(list)
-    const obj = {}
-    list.forEach(element => {
-      if (element.filterType == 'transactionType') {
-        //transactionTypeId.push
-      } else if (element.filterType == 'category') {
 
-      } else {
-
-      }
-    });
+    if (list.dateFilterJson) {
+      this.obj.dateObj = list.dateFilterJson
+    } else {
+      list.forEach(element => {
+        if (element.filterType == 'transactionType') {
+          this.obj.transactionTypeId.push(element)
+        } else if (element.filterType == 'category') {
+          this.obj.categoryId.push(element)
+        }
+      });
+    }
+    console.log('json', this.obj)
+    this.backoffice.filterData(this.obj)
+      .subscribe(res => {
+        console.log(res);
+        // this.isLoading = false
+        // this.mfTransaction = res
+      }, err => {
+        console.error(err);
+      })
   }
   selectOption(value) {
     this.flag = value

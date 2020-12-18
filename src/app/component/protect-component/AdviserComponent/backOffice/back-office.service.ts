@@ -386,4 +386,7 @@ export class BackOfficeService {
   getMfTransactions(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_TRANSACTIONS, data);
   }
+  filterData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.FILTER_DATA, data);
+  }
 }
