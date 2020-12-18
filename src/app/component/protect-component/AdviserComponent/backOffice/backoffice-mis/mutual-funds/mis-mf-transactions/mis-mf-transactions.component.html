@@ -1,1 +1,68 @@
-<p>mis-mf-transactions works!</p>
+<!-- <p>mis-mf-transactions works!</p> -->
+Mutual fund transactions
+<div class="row">
+    <div class="col-md-12">
+        <div class="people-table-scroll fitScreen">
+            <table #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
+                [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                <ng-container matColumnDef="name">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky>Group Head Name </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{(isLoading) ? '':element.name}}
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="mfoverview">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Owner
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="scheme">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme Name
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="folio">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Folio Number
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tType">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Transaction Type
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tDate">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky>Transaction Date
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
