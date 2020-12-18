@@ -22,6 +22,10 @@ import { AllSipComponent } from './sip/all-sip/all-sip.component';
 import { MisMfTransactionsComponent } from './mis-mf-transactions/mis-mf-transactions.component';
 import { MisMfSchemesComponent } from './mis-mf-schemes/mis-mf-schemes.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 
 @NgModule({
@@ -39,7 +43,14 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomDirectiveModule
-  ]
+    CustomDirectiveModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 }
+  ],
 })
 export class MutualFundsModule { }
