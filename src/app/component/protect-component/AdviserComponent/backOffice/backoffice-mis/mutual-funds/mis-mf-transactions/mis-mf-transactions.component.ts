@@ -195,8 +195,8 @@ export class MisMfTransactionsComponent implements OnInit {
 
   applyFilter(event) {
 
-
   }
+
 
   onClose() {
   }
