@@ -1090,7 +1090,7 @@ export class MutualFundSummaryComponent implements OnInit {
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
-      return this.doFiltering(data);
+      return this.mfService.doFiltering(data);
     })).subscribe(
       data => {
         let cashFlow = data;
@@ -1587,7 +1587,7 @@ export class MutualFundSummaryComponent implements OnInit {
               this.displayColArray.push(obj);
             });
             if (this.rightFilterData.mfData) {
-              this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+              this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData)
             }
             this.mfData = this.reponseData;
             this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
@@ -1598,7 +1598,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.getFilterData(2)
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
-          // rightSideDataSub.unsubscribe();
+           rightSideDataSub.unsubscribe();
         }
       }
     );

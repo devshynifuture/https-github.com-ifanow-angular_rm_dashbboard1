@@ -1198,7 +1198,7 @@ export class MutualFundOverviewComponent implements OnInit {
       clientId: this.clientId,
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
-      return this.doFilteringSum(data);
+      return this.MfServiceService.doFiltering(data);
     })).subscribe(
       data => this.getMutualFundResponse(data), (error) => {
         this.eventService.showErrorMessage(error);

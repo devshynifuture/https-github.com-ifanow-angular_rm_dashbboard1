@@ -816,6 +816,7 @@ export class MutualFundUnrealizedTranComponent {
       data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
       data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
       data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+      data.mutualFundList = this.casFolioNumber(data.mutualFundList)
     }
     return data;
 
@@ -824,7 +825,15 @@ export class MutualFundUnrealizedTranComponent {
     // data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
     // return data;
   }
-
+  casFolioNumber(data){
+    data.forEach(element => {
+      if(element.rtMasterId == 6 && !element.folioNumber.includes("CAS")){
+        element.folioNumber = 'CAS-'+element.folioNumber;
+      }
+      
+    });
+    return data;
+  }
   getMutualFundResponse(data) {
     if (data) {
       this.isLoading = true;

@@ -136,6 +136,7 @@ import { AddOthersAssetComponent } from './component/protect-component/customers
 import { DetailedViewInsurancePlanningComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 import { DetailedViewOthersAssetComponent } from './component/protect-component/customers/component/customer/accounts/assets/others-assets/detailed-view-others-asset/detailed-view-others-asset.component';
 import { SaveFinPlanSectionComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/save-fin-plan-section/save-fin-plan-section.component';
+import { AddOthersInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-others-insurance-in-asset/add-others-insurance-in-asset.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -293,6 +294,7 @@ export const componentList = [
   AddTravelInsuranceInAssetComponent,
   AddHomeInsuranceInAssetComponent,
   AddFireAndPerilsInsuranceInAssetComponent,
+  AddOthersInsuranceInAssetComponent,
   DetailedViewGeneralInsuranceComponent,
   DetailedViewLifeInsuranceComponent,
   RightFilterDuplicateComponent,

@@ -516,6 +516,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       this.mfList = this.MfServiceService.sorting(this.mfList, 'schemeName');
+      this.mfList = this.MfServiceService.casFolioNumber(this.mfList);
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {
