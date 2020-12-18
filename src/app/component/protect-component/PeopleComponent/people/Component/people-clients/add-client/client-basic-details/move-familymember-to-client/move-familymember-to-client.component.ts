@@ -10,6 +10,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-move-familymember-to-client',
@@ -48,7 +49,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
     private eventService: EventService) { }
   stateCtrl = new FormControl('', [Validators.required]);
   ngOnInit() {
-    this.clientList = this.enumDataService.getEmptySearchStateData();
+    this.clientList = this.enumDataService.getEmptySearchStateData().filter(element => element.clientId != this.data.clientId);
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -56,15 +57,15 @@ export class MoveFamilymemberToClientComponent implements OnInit {
         map(state => {
           if (state) {
             const filterValue = state.toLowerCase();
-            const list = this.enumDataService.getEmptySearchStateData().filter(state => state.name.toLowerCase().includes(filterValue));
+            const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
               this.showSuggestion = true;
               this.stateCtrl.setErrors({ invalid: true });
               this.stateCtrl.markAsTouched();
             }
-            return this.enumDataService.getEmptySearchStateData().filter(state => state.name.toLowerCase().includes(filterValue));
+            return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
           } else {
-            return this.enumDataService.getEmptySearchStateData();
+            return this.clientList;
           }
         }),
       );
@@ -133,6 +134,14 @@ export class MoveFamilymemberToClientComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dimiss")
       }
     )
+  }
+
+
+  hideSuggetion(value) {
+    if (value == '') {
+      this.showSuggestion = true
+      this.selectedClientData = undefined
+    };
   }
 
   changeGender(relationData, flag, index) {

@@ -146,8 +146,8 @@
                         Employee's contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
-                                appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{
+                                element.employeesMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployeesMonthlyContribution">
@@ -161,8 +161,8 @@
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
 
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
-                                appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{
+                                element.employersMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployersMonthlyContribution">
@@ -175,8 +175,8 @@
                         Voluntary <br>Contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
-                                appFormatNumber>{{ element.voluntaryContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{
+                                element.voluntaryContribution }} </span></div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
@@ -421,7 +421,8 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
+                                {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' :
+                                (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
                             </div>
                         </td>
                         <td *matFooterCellDef mat-footer-cell></td>
@@ -780,7 +781,7 @@
                 </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('','Superannuation')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
@@ -957,7 +958,7 @@
                 </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button (click)="pdf('EPS')" mat-menu-item>PDF</button>
+                    <button (click)="pdf('',EPS')" mat-menu-item>PDF</button>
                     <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
@@ -1048,7 +1049,9 @@
                     </th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
-                            {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Half yearly' : 'Yearly'}}
+                            {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' :
+                            (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId ==
+                            '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Half yearly' : 'Yearly'}}
                         </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
@@ -1135,11 +1138,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -1214,7 +1218,8 @@
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            <span *ngIf="i == 0">{{owner.name}}</span></td>
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -1229,22 +1234,22 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && element.employeesMonthlyContribution ? "₹" : ""}}<span
-                                appFormatNumber>{{ element.employeesMonthlyContribution ? element.employeesMonthlyContribution : '-' }}
+                            {{!isLoading && element.employeesMonthlyContribution ? "₹" : ""}}<span appFormatNumber>{{
+                                element.employeesMonthlyContribution ? element.employeesMonthlyContribution : '-' }}
                             </span>
 
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && element.employersMonthlyContribution ? "₹" : ""}}<span
-                                appFormatNumber>{{ element.employersMonthlyContribution ? element.employersMonthlyContribution : '-' }}
+                            {{!isLoading && element.employersMonthlyContribution ? "₹" : ""}}<span appFormatNumber>{{
+                                element.employersMonthlyContribution ? element.employersMonthlyContribution : '-' }}
                             </span>
 
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && element.voluntaryContribution ? "₹" : ""}}<span
-                                appFormatNumber>{{ element.voluntaryContribution ? element.voluntaryContribution : '-'}}
+                            {{!isLoading && element.voluntaryContribution ? "₹" : ""}}<span appFormatNumber>{{
+                                element.voluntaryContribution ? element.voluntaryContribution : '-'}}
                             </span>
                         </td>
                         <td
@@ -1350,11 +1355,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -1423,7 +1429,8 @@
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            <span *ngIf="i == 0">{{owner.name}}</span></td>
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -1442,7 +1449,8 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
+                            {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' :
+                            (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
@@ -1535,11 +1543,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -1611,7 +1620,8 @@
                             {{i + 1}}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            <span *ngIf="i == 0">{{owner.name}}</span></td>
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
