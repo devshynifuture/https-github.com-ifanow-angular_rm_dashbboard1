@@ -6,10 +6,11 @@
     <div class="col-md-3 p-0 mb-20 text-left">
         <mat-form-field floatLabel="never" appearance="standard">
             <mat-select class="form-control">
-                <mat-option value='' disabled>Select search type</mat-option>
-                <mat-option (click)="selectOption('schemeName')" [value]="1">Scheme name</mat-option>
-                <mat-option (click)="selectOption('folio')" [value]="2">Folio Number</mat-option>
-                <mat-option (click)="selectOption('pan')" [value]="3">PAN</mat-option>
+                <mat-option [value]='0' disabled>Select search type</mat-option>
+                <mat-option (click)="selectOption('investorName')" [value]="1">Investor name</mat-option>
+                <mat-option (click)="selectOption('schemeName')" [value]="2">Scheme name</mat-option>
+                <mat-option (click)="selectOption('folio')" [value]="3">Folio Number</mat-option>
+                <mat-option (click)="selectOption('pan')" [value]="4">PAN</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
@@ -31,24 +32,71 @@
             <button (click)="Excel('mfTransaction')" mat-menu-item>XLS</button>
         </mat-menu>
 
-        <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
-            class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+        <button (click)="showFilter = true" mat-stroked-button class="btn-default addon ml-8 mr-8 v-middle"><i
+                class="material-icons">filter_list</i>FILTER
         </button>
 
-        <mat-menu #filterFixedIncomeTable>
 
-            <button mat-menu-item [ngClass]="activeFilter == '25'?'filterActive':''" (click)="filter(0,50)">
-                50
-            </button>
-            <button mat-menu-item [ngClass]="activeFilter == '50'?'filterActive':''" (click)="filter(50,100)">
-                100
-            </button>
-            <button mat-menu-item [ngClass]="activeFilter == '100'?'filterActive':''" (click)="filter(100,150)">
-                150
-            </button>
-        </mat-menu>
     </div>
 
+</div>
+<div class="row pb-10" *ngIf="showFilter == true">
+    <div class="col-md-8 p-0 custom-tags">
+        <mat-chip-list>
+            <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
+                {{status.name}}{{status.transactionType}}<i (click)="remove(ind)"
+                    class="material-icons f-16 text-custom ml-12">
+                    cancel
+                </i></mat-chip>
+            <mat-chip-list class="newDateIcon">
+                <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
+                    <p>{{dateFilter.name}}</p>
+                    <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
+                        [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
+                    <sat-datepicker #picker2 (closed)="onClose()" [closeAfterSelection]="false"
+                        [calendarFooterComponent]="rangesFooter" [selectFirstDateOnClose]="true" [rangeMode]="true">
+                    </sat-datepicker>
+                    <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
+                    <i (click)="removeDate(i)" class="material-icons f-16 text-custom c-p">
+                        cancel
+                    </i>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-chip-list>
+    </div>
+    <div class="col-md-4 right text-right p-0">
+        <div class="row">
+            <div class="col-md-4 pr-0">
+                <mat-form-field>
+                    <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
+                        class="form-control f-14 br-0" id="sel11">
+                        <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
+                        <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 pr-0">
+                <mat-form-field>
+                    <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
+                        class="form-control f-14 br-0" id="sel12">
+                        <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
+                        <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 pr-0 text-right">
+                <mat-form-field>
+                    <mat-select (selectionChange)="addTransactionType(selectedTransactionFilter)"
+                        [(ngModel)]='selectedTransactionFilter' class="form-control br-0" id="sel12">
+                        <mat-option [disabled]="true" value="tranFilter">FILTER THREE</mat-option>
+                        <mat-option *ngFor="let tran of transactionTypeChips" [value]="tran">{{tran.transactionType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row mt-8">
     <div class="col-md-12">
@@ -57,7 +105,7 @@
                 <table #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Group Head Name </th>
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Investor name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(isLoading) ? '':element.investorName}}
