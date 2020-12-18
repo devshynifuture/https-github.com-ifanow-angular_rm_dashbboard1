@@ -139,7 +139,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterJson.statusFilterJson = this.filterStatus;
   }
   addTransactionType(event) {
-    if (this.filterTransaction.find(element => element.name == event.name) == undefined) {
+    if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
       this.filterStatus.push(event);
       this.filterDataArr = [];
     } else {

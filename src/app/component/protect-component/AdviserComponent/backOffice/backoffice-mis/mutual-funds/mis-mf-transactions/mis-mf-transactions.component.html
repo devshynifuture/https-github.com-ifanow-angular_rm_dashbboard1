@@ -44,7 +44,8 @@
     <div class="col-md-8 p-0 custom-tags">
         <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
-                {{status.name}}<i (click)="remove(ind)" class="material-icons f-16 text-custom ml-12">
+                {{status.name}}{{status.transactionType}}<i (click)="remove(ind)"
+                    class="material-icons f-16 text-custom ml-12">
                     cancel
                 </i></mat-chip>
             <mat-chip-list class="newDateIcon">
