@@ -86,8 +86,8 @@
             </div>
             <div class="col-md-4 pr-0 text-right">
                 <mat-form-field>
-                    <mat-select (selectionChange)="addTransactionType($event)" [(ngModel)]='selectedTransactionFilter'
-                        class="form-control br-0" id="sel12">
+                    <mat-select (selectionChange)="addTransactionType(selectedTransactionFilter)"
+                        [(ngModel)]='selectedTransactionFilter' class="form-control br-0" id="sel12">
                         <mat-option [disabled]="true" value="tranFilter">FILTER THREE</mat-option>
                         <mat-option *ngFor="let tran of transactionTypeChips" [value]="tran">{{tran.transactionType}}
                         </mat-option>
