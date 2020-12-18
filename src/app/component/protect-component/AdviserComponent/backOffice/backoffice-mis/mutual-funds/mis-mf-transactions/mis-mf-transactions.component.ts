@@ -1,22 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { BackOfficeService } from '../../../back-office.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from 'saturn-datepicker';
-import { DatePipe, formatDate } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {BackOfficeService} from '../../../back-office.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker';
+import {DatePipe, formatDate} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 
 export const PICK_FORMATS = {
-  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
     dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'short' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' }
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'}
   }
 };
 
@@ -30,24 +30,26 @@ export class PickDateAdapter extends NativeDateAdapter {
     }
   }
 }
+
 @Component({
   selector: 'app-mis-mf-transactions',
   templateUrl: './mis-mf-transactions.component.html',
   styleUrls: ['./mis-mf-transactions.component.scss'],
   providers: [
     [DatePipe],
-    { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
   ],
 })
 export class MisMfTransactionsComponent implements OnInit {
-
-  @ViewChild('tableEl', { static: false }) tableEl;
+  maxDate = new Date();
+  rangesFooter;
+  @ViewChild('tableEl', {static: false}) tableEl;
   displayedColumns: string[] = ['name', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
-  fragmentData = { isSpinner: false };
+  fragmentData = {isSpinner: false};
   parentId: any;
   hasEndReached: boolean;
   infiniteScrollingFlag: boolean;
@@ -55,22 +57,22 @@ export class MisMfTransactionsComponent implements OnInit {
   flag: any;
   selectedDateRange = {};
   chips = [
-    { name: 'DEBT', value: 1 },
-    { name: 'EQUITY', value: 2 },
-    { name: 'HYBRID', value: 3 },
-    { name: 'COMMODITY', value: 4 },
-    { name: 'LIQUID', value: 5 }
+    {name: 'DEBT', value: 1},
+    {name: 'EQUITY', value: 2},
+    {name: 'HYBRID', value: 3},
+    {name: 'COMMODITY', value: 4},
+    {name: 'LIQUID', value: 5}
   ];
   dateChips = [
-    { name: 'Transaction date', value: 1 },
+    {name: 'Transaction date', value: 1},
   ];
   transactionTypeChips = [
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
-    { name: 'Transaction date', value: 1 },
+    {name: 'Transaction date', value: 1},
+    {name: 'Transaction date', value: 1},
+    {name: 'Transaction date', value: 1},
+    {name: 'Transaction date', value: 1},
+    {name: 'Transaction date', value: 1},
+    {name: 'Transaction date', value: 1},
   ];
   filterStatus = [];
   filterDate = [];
@@ -87,11 +89,12 @@ export class MisMfTransactionsComponent implements OnInit {
   filterTransaction = [];
 
   constructor(private excel: ExcelGenService,
-    private cusService: CustomerService,
-    private backoffice: BackOfficeService,
-    private eventService: EventService,
-    private UtilService: UtilService,
-  ) { }
+              private cusService: CustomerService,
+              private backoffice: BackOfficeService,
+              private eventService: EventService,
+              private UtilService: UtilService,
+  ) {
+  }
 
   ngOnInit() {
     this.hasEndReached = true;
@@ -103,6 +106,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.mfTransaction.data = [{}, {}, {}];
     this.getMfTransactionData(0)
   }
+
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
@@ -128,6 +132,7 @@ export class MisMfTransactionsComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss");
       })
   }
+
   addFilters(addFilters) {
 
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
@@ -138,6 +143,7 @@ export class MisMfTransactionsComponent implements OnInit {
     }
     this.filterJson.statusFilterJson = this.filterStatus;
   }
+
   addTransactionType(event) {
     if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
       this.filterStatus.push(event);
@@ -147,6 +153,7 @@ export class MisMfTransactionsComponent implements OnInit {
     }
     this.filterJson.statusFilterJson = this.filterStatus;
   }
+
   addFiltersDate(dateFilter) {
     this.filterDate = [];
 
@@ -161,14 +168,16 @@ export class MisMfTransactionsComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     this.filterJson.dateFilterJson = this.selectedDateRange;
     this.filterJson.dateFilterArr = this.filterDate;
   }
+
   removeDate(item) {
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
   }
+
   remove(item) {
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
@@ -179,13 +188,19 @@ export class MisMfTransactionsComponent implements OnInit {
       x.status != item.value;
     });
   }
+
   selectOption(value) {
     this.flag = value
   }
+
   applyFilter(event) {
 
 
   }
+
+  onClose() {
+  }
+
   getMfTransactionData(endFlag) {
     this.isLoading = true
     const obj = {
@@ -204,11 +219,13 @@ export class MisMfTransactionsComponent implements OnInit {
       })
 
   }
+
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
   }
 }
+
 export interface PeriodicElement {
   name: string;
   scheme: string;
@@ -218,5 +235,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Rahul Jain', scheme: 'HDFC Equity fund - Regular plan - Growth option | 098098883', folio: 2345772, tType: 'STP 5,000', tDate: '05/09/2019' },
+  {
+    name: 'Rahul Jain',
+    scheme: 'HDFC Equity fund - Regular plan - Growth option | 098098883',
+    folio: 2345772,
+    tType: 'STP 5,000',
+    tDate: '05/09/2019'
+  },
 ];
