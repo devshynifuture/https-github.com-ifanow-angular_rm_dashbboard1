@@ -21,8 +21,12 @@
                 </label>
                 <div class="form-group ">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input formControlName="email" type="text" class="form-control">
-                        <mat-error>This field is required</mat-error>
+                        <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email">
+                        </app-email-domain-auto-suggest>
+                        <mat-error *ngIf="unmapForm.get('email').errors?.pattern">Email is not valid</mat-error>
+                        <mat-error *ngIf="unmapForm.get('email').errors?.required">This field is required
+                        </mat-error>
+                        <!-- <input formControlName="email" type="text" class="form-control"> -->
                     </mat-form-field>
                 </div>
             </div>
@@ -34,8 +38,11 @@
                 </label>
                 <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input formControlName="number" class="form-control" type="text">
-                        <mat-error>This field is required</mat-error>
+                        <input matInput #num appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            autocomplete="off" maxlength="10" formControlName="number" class="form-control" type="text">
+                        <mat-error *ngIf="unmapForm.get('number').errors?.required">This field is required</mat-error>
+                        <mat-error *ngIf="unmapForm.get('number').errors?.pattern">Number must be 10 digits</mat-error>
+                        <mat-hint align="end">{{num.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -47,8 +54,12 @@
                 </label>
                 <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input formControlName="pan" class="form-control" type="text">
-                        <mat-error>This field is required</mat-error>
+                        <input matInput #pan formControlName="pan" class="form-control" type="text">
+                        <mat-error *ngIf="unmapForm.get('pan').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="unmapForm.get('pan').errors?.pattern">Pan invalid
+                        </mat-error>
+                        <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
