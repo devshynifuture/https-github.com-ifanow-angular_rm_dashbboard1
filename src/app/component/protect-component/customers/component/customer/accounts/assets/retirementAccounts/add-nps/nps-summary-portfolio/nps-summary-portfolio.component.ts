@@ -138,7 +138,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       disControl: type
     }
     setTimeout(() => {
-      this.selectOwner = this.nomineesListFM.filter((m) => m.id == this.summaryNPS.value.getCoOwnerName[0].familyMemberId);
+      this.selectOwner = this.nomineesListFM.filter((m) => m.familyMemberId == this.summaryNPS.value.getCoOwnerName[0].familyMemberId || (m.clientId == this.summaryNPS.value.getCoOwnerName[0].familyMemberId && this.summaryNPS.value.getCoOwnerName[0].isClient == 1))
     }, 1000);
   }
 
