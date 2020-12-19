@@ -337,7 +337,7 @@
             </div>
             <div class="col-md-8 pr-0">
                 <div class="row">
-                    <div class="col-md-7 pr-0">
+                    <div class="col-md-7 p-0">
                         <h5 class="mb-4 f-14">Add ons </h5>
                     </div>
                     <div class="col-md-3 pr-0">
@@ -349,7 +349,7 @@
                         *ngFor="let obj of otherAssetForm.controls['addOnForm'].controls; let pointIndex=index"
                         [formGroupName]="pointIndex">
 
-                        <div class="col-md-7  pr-0 form-group">
+                        <div class="col-md-7  p-0 form-group">
 
                             <mat-form-field>
                                 <mat-select matInput formControlName="addOns" autocomplete="true"
@@ -440,8 +440,7 @@
 
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select matInput formControlName="feature" autocomplete="true"
-                            class="form-control br-0">
+                        <mat-select matInput formControlName="feature" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                                     {{option.type}}</mat-option> -->
                             <mat-option value='15'>Emergency Medical Benefits</mat-option>
