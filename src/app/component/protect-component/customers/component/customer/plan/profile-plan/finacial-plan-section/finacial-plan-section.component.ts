@@ -1019,6 +1019,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.moduleAdded = []
     this.getPlanSection()
     this.hideTable = false
+    this.downloadPdf = false
   }
 
   getInsurancePlaningListRes(data) {
