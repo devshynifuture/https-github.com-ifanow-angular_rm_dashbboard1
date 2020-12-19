@@ -346,6 +346,7 @@ export class InsuranceComponent implements OnInit {
         }
         this.cusService.getOtherInsurance(obj).subscribe(
           data => {
+            this.filterOtherData(data);
             this.checkAndPush(data);
             if (!this.insuranceId) {
               this.getGeneralInsuranceDataRes(data);
@@ -422,6 +423,48 @@ export class InsuranceComponent implements OnInit {
 
     }
 
+  }
+  filterOtherData(data){
+    if(data){
+      data.forEach(element => {
+        element.premiumAmount = element.premium;
+        element.policyStartDate = element.startDate;
+        element.policyExpiryDate = element.expiryDate;
+        element.exclusion = element.specialCondition;
+        element.hypothetication = element.financierName;
+        element.bankAccount = element.linkedBankAccountId;
+        element.insuredMembers = this.filteInsuredMember(element.otherInsuranceInsuredMembers);
+        element.addOns = this.filteOtherInsuranceAddCovers(element.otherInsuranceAddCovers);
+        element.policyFeatures = this.filteOtherInsuranceFeatureList(element.otherInsuranceFeatureList);
+    });
+    }else{
+      data = [];
+    }
+
+  }
+  filteInsuredMember(data){
+    data.forEach(element => {
+      element.familyMemberId = element.insuredMemberId,
+      element.sumInsured = element.share
+      element.generalInsuranceId = element.otherInsuranceId
+    });
+    return data;
+  }
+  filteOtherInsuranceAddCovers(data){
+    data.forEach(element => {
+      element.generalInsuranceId = element.otherInsuranceId
+      element.addOnId = element.addOns,
+      element.addOnSumInsured = element.sumInsured
+    });
+    return data;
+  }
+  filteOtherInsuranceFeatureList(data){
+    data.forEach(element => {
+      element.generalInsuranceId = element.otherInsuranceId
+      element.policyFeatureId = element.addOns,
+      element.featureSumInsured = element.sumInsured
+    });
+    return data;
   }
   checkAndPush(data) {
     if (data && this.isAdded == undefined) {
