@@ -305,6 +305,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
+      maturityDate: [data.maturityDate],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
       schemeChoice: [data.schemeChoice ? parseInt(data.schemeChoice) : '', [Validators.required]],
@@ -471,6 +472,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         totalAmountInvested: this.summaryNPS.controls.totalContry.value,
         pran: this.summaryNPS.controls.pran.value,
         schemeChoice: this.summaryNPS.controls.schemeChoice.value,
+        maturityDate: this.summaryNPS.value.maturityDate ? this.datePipe.transform(this.summaryNPS.value.maturityDate, 'dd/MM/yyyy') : null,
         futureContributionList: this.summaryNPS.controls.futureContributionList.value,
         // nominees: this.summaryNPS.controls.nominees.value,
         description: this.summaryNPS.controls.description.value,
