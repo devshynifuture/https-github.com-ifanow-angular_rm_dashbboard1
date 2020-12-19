@@ -18,7 +18,7 @@ export class PreviewFinPlanComponent implements OnInit {
   selectedElement: any;
   imgPreview: any;
   constructor(public dialogRef: MatDialogRef<PreviewFinPlanComponent>, private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class PreviewFinPlanComponent implements OnInit {
       this.loadSpinner = true
       setTimeout(() => {
         this.getLoader()
-      }, 4000);
+      }, 6000);
     }
   }
   getLoader() {
