@@ -443,7 +443,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "amountInvested": 0,
         // "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
         "scripNameId": this.scripData ? this.scripData.id : this.editApiData.scripNameId,
-        "scripName": this.scripData.name,
+        "scripName": this.scripData ? this.scripData.name : this.editApiData.name,
         // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
         "stockType": 3,
         "id": this.editApiData ? this.editApiData.id : null,

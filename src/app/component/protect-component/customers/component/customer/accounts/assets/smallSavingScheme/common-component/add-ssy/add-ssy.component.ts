@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {MAT_DATE_FORMATS, MatDialog, MatInput} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MAT_DATE_FORMATS, MatDialog, MatInput } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 @Component({
   selector: 'app-add-ssy',
@@ -18,16 +18,16 @@ import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
   styleUrls: ['./add-ssy.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddSsyComponent implements OnInit {
 
   constructor(private dateFormatPipe: DatePipe,
-              public utils: UtilService, private eventService: EventService,
-              private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private cusService: CustomerService, private datePipe: DatePipe,
-              public dialog: MatDialog, private enumService: EnumServiceService) {
+    public utils: UtilService, private eventService: EventService,
+    private fb: FormBuilder, private subInjectService: SubscriptionInject,
+    private cusService: CustomerService, private datePipe: DatePipe,
+    public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -81,8 +81,8 @@ export class AddSsyComponent implements OnInit {
   familyMemberId: any;
   ssySchemeForm: any;
   ownerData: any;
-  requestDataForOwnerList = {age: 18, greaterOrLesser: 1, clientId: 0};
-  requestDataForGuardList = {age: 18, greaterOrLesser: 2, clientId: 0};
+  requestDataForOwnerList = { age: 18, greaterOrLesser: 1, clientId: 0 };
+  requestDataForGuardList = { age: 18, greaterOrLesser: 2, clientId: 0 };
 
   isOptionalField: boolean;
   advisorId: any;
@@ -102,8 +102,8 @@ export class AddSsyComponent implements OnInit {
   transactionViewData =
     {
       optionList: [
-        {name: 'Deposit', value: 1},
-        {name: 'Withdrawal', value: 2}
+        { name: 'Deposit', value: 1 },
+        { name: 'Withdrawal', value: 2 }
       ],
       transactionHeader: ['Transaction Type', 'Date', 'Amount']
     };
@@ -124,13 +124,13 @@ export class AddSsyComponent implements OnInit {
     this.commencementDate = date;
     console.log(this.age(this.selectOwner[0].dateOfBirth), 'owner age', new Date(this.selectOwner[0].dateOfBirth));
     if (new Date(this.selectOwner[0].dateOfBirth).getTime() > new Date(this.ssySchemeForm.get('commDate').value).getTime()) {
-      this.ssySchemeForm.get('commDate').setErrors({before: true});
+      this.ssySchemeForm.get('commDate').setErrors({ before: true });
     } else if (this.age(this.selectOwner[0].dateOfBirth) > 21) {
-      this.ssySchemeForm.get('commDate').setErrors({incorrect: true});
+      this.ssySchemeForm.get('commDate').setErrors({ incorrect: true });
     } else {
-      this.ssySchemeForm.get('commDate').setErrors({before: false});
+      this.ssySchemeForm.get('commDate').setErrors({ before: false });
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
-      this.ssySchemeForm.get('commDate').setErrors({incorrect: false});
+      this.ssySchemeForm.get('commDate').setErrors({ incorrect: false });
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
     }
   }
@@ -280,7 +280,7 @@ export class AddSsyComponent implements OnInit {
   }
 
   /***nominee***/
-// ===================owner-nominee directive=====================//
+  // ===================owner-nominee directive=====================//
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -300,6 +300,7 @@ export class AddSsyComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
+      maturityDate: [data.maturityDate],
       ssyNo: [data.ssyNo],
       guardian: [data.guardianName ? data.guardianName : '', [Validators.required]],
       accBalance: [data.accountBalance, []],
@@ -346,8 +347,8 @@ export class AddSsyComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.ssySchemeForm};
-// ==============owner-nominee Data ========================\\
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.ssySchemeForm };
+    // ==============owner-nominee Data ========================\\
     this.DOB = data.dateOfBirth;
     // this.ownerData = this.ssySchemeForm.controls;
     // this.familyMemberId = data.familyMemberId;
@@ -452,6 +453,7 @@ export class AddSsyComponent implements OnInit {
         commencementDate: this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
         description: this.ssySchemeForm.get('description').value,
         // "bankName": this.ssySchemeForm.get('bankName').value,
+        maturityDate: this.ssySchemeForm.value.maturityDate ? this.dateFormatPipe.transform(this.ssySchemeForm.value.maturityDate, 'dd/MM/yyyy') : null,
         linkedBankAccount: this.ssySchemeForm.get('linkedAcc').value,
         userBankMappingId: this.ssySchemeForm.get('linkedAcc').value,
         agentName: this.ssySchemeForm.get('agentName').value,
@@ -548,7 +550,7 @@ export class AddSsyComponent implements OnInit {
 
   close(data) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
   }
 
 
@@ -563,20 +565,20 @@ export class AddSsyComponent implements OnInit {
   }
 
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   // link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -587,5 +589,5 @@ export class AddSsyComponent implements OnInit {
 
   }
 
-// link bank
+  // link bank
 }

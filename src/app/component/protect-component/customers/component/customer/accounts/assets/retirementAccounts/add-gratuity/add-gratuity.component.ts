@@ -254,6 +254,8 @@ export class AddGratuityComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
+      maturityDate: [data.maturityDate],
+
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       // noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
@@ -307,11 +309,28 @@ export class AddGratuityComponent implements OnInit {
     // this.familyMemberId = this.familyMemberId[0]
     // this.gratuity.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
+
+  minMD: any;
+  invalidRD: boolean = false;
+  setCommencementDate(date) {
+    this.minMD = date;
+    if (this.gratuity.value.maturityDate) {
+      if (new Date(this.gratuity.value.maturityDate) < new Date(date)) {
+        this.invalidRD = true;
+      }
+      else {
+        this.invalidRD = false;
+      }
+    }
+  }
+
+
+
   getFormControl(): any {
     return this.gratuity.controls;
   }
   saveEPF() {
-    if (this.gratuity.invalid) {
+    if (this.gratuity.invalid || this.invalidRD) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.gratuity.markAllAsTouched();
       return;
@@ -326,6 +345,7 @@ export class AddGratuityComponent implements OnInit {
         // yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
         amountReceived: this.gratuity.controls.amountRecived.value,
         yearOfJoining: this.datePipe.transform(this.gratuity.controls.yearOfJoining.value, 'yyyy-MM-dd'),
+        maturityDate: this.gratuity.value.maturityDate ? this.datePipe.transform(this.gratuity.value.maturityDate, 'dd/MM/yyyy') : null,
         employmentType: this.gratuity.controls.employmentType.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
         yearOfReceipt: this.gratuity.controls.yearOfReceipt.value,
