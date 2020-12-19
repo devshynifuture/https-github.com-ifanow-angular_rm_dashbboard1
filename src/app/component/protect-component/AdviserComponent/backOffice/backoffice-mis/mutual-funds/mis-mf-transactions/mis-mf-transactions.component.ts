@@ -237,8 +237,13 @@ export class MisMfTransactionsComponent implements OnInit {
     this.backoffice.getMfTransactions(obj)
       .subscribe(res => {
         console.log(res);
-        this.isLoading = false
-        this.mfTransaction = res
+        if (res) {
+          this.isLoading = false
+          this.mfTransaction.data = res
+        } else {
+          this.isLoading = false
+          this.mfTransaction.data = []
+        }
       }, err => {
         console.error(err);
       })
