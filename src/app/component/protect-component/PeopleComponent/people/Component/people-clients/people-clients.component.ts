@@ -221,8 +221,8 @@ export class PeopleClientsComponent implements OnInit {
       clientId: data.clientId
     }
     this.peopleService.getClientAllAssetCount(obj).subscribe(
-      data => {
-        let msg = (data && data != 0) ? `There are ${data} assets mapped against this client. Are you sure you want to delete?` : 'Are you sure you want to delete?';
+      res => {
+        let msg = (res && res != 0) ? `There are ${res} assets mapped against this client. Are you sure you want to delete?` : 'Are you sure you want to delete?';
         const dialogData = {
           data: value,
           header: 'DELETE',

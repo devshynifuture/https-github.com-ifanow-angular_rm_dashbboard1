@@ -276,7 +276,7 @@
                             class="form-control br-0 b-0" formControlName="maturityDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="Mpicker"></mat-datepicker-toggle>
                         <mat-datepicker #Mpicker></mat-datepicker>
-                        <mat-error class="f-12" *ngIf="invalidRD">
+                        <mat-error class="f-12">
                             Retirement date should be greater then date of joining the organization
                         </mat-error>
                         <!-- <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.before">
