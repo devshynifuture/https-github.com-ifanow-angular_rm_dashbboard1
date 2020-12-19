@@ -84,7 +84,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       frequency: [(this.dataForEdit ? this.dataForEdit.frequency + '' : ''), [Validators.required]],
       insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
       tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
-      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.applicableDate)  : null), [Validators.required]],
+      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commencementDate)  : null), [Validators.required]],
     })
     if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;
@@ -176,7 +176,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
-        'applicableDate': this.suggestPolicyForm.get('implementationDate').value,
+        'commencementDate': this.suggestPolicyForm.get('implementationDate').value,
         'realOrFictitious': 2,
         'suggestion': this.storeData,
         'isRecommend': this.showRecommendation ? 1 : 0,
