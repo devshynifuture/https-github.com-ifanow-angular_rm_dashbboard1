@@ -186,6 +186,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
+      maturityDate: [data.maturityDate],
       schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran],
       // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
@@ -548,6 +549,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         holdingList: this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         // nominees: this.schemeHoldingsNPS.controls.nominees.value,
+        maturityDate: this.schemeHoldingsNPS.value.maturityDate ? this.datePipe.transform(this.schemeHoldingsNPS.value.maturityDate, 'dd/MM/yyyy') : null,
         nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
         familyMemberDob: this.datePipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
         description: this.schemeHoldingsNPS.controls.description.value == null ? '' : this.schemeHoldingsNPS.controls.description.value,
