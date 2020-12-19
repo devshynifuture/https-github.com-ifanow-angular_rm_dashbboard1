@@ -12,4 +12,9 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  addOtherInsurance() {
+
+  }
+
 }

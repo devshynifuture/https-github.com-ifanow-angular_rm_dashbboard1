@@ -110,6 +110,14 @@ export const appConfig = {
   GET_GLOBAL_INSURANCE: 'account/insurance/global-list/get',
   EDIT_LIFE_INSURANCE: 'account/insurance/life-insurance/edit',
   GET_INSURANCE_GLOBAL_API: 'account/insurance/global/get',
+  ADD_OTHER_INSURANCE: 'account/insurance/other/add',
+  EDIT_OTHER_INSURANCE: 'account/insurance/other/edit',
+  DELETE_OTHER_INSURANCE: 'account/insurance/other/delete',
+  DELETE_OTHER_ADDON: 'account/insurance/other-insurance/addon/delete',
+  DELETE_OTHER_FEATURE: 'account/insurance/other-insurance/feature/delete',
+  DELETE_OTHER_MEMBER: 'account/insurance/other-insurance/member/delete',
+
+
   ADD_GENERAL_INSURANCE: 'account/insurance/general-insurance/add',
   EDIT_GENERAL_INSURANCE: 'account/insurance/general-insurance/edit',
   GET_GENERAL_INSURANCE: 'account/insurance/general-insurance/list/get',

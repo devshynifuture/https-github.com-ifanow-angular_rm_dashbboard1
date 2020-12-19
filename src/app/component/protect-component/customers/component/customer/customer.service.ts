@@ -25,6 +25,30 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE, data);
   }
 
+  addOtherInsurance(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHER_INSURANCE, data);
+  }
+
+  editOtherInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHER_INSURANCE, data);
+  }
+
+  deleteOtherInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE, data);
+  }
+
+  deleteOtherAddonInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON, data);
+  }
+
+  deleteOtherFeatureInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_FEATURE, data);
+  }
+
+  deleteOtherMemberInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_MEMBER, data);
+  }
+
   addFixedDeposit(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_FIXEDDEPOSIT, data);
   }
