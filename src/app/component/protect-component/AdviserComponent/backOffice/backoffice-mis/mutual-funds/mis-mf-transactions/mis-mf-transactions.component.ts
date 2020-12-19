@@ -201,9 +201,17 @@ export class MisMfTransactionsComponent implements OnInit {
     } else {
       list.forEach(element => {
         if (element.filterType == 'transactionType') {
-          this.obj.transactionTypeId.push(element)
+          this.obj.transactionTypeId.forEach(ele => {
+            if (element.id != ele.id) {
+              this.obj.transactionTypeId.push(element)
+            }
+          })
         } else if (element.filterType == 'category') {
-          this.obj.categoryId.push(element)
+          this.obj.categoryId.forEach(ele => {
+            if (element.id != ele.id) {
+              this.obj.categoryId.push(element)
+            }
+          })
         }
       });
     }
