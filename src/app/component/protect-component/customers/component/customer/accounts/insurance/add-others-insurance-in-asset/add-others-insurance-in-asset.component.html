@@ -541,21 +541,6 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-lg-end">
-                <h5 class="m-0">Hypothecation/Financier name</h5>
-            </div>
-
-            <div class="col-md-5 ">
-                <div class="form-group mb-0 remove-top  ">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control rupess br-0" placeholder=" ">
-                        <mat-hint align="end" class="f-12"> </mat-hint>
-                        <mat-error>This field is required </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
 
         <div formArrayName="getNomineeName">
             <div *ngFor="let obj of otherAssetForm.controls['getNomineeName'].controls; let pointIndex=index"

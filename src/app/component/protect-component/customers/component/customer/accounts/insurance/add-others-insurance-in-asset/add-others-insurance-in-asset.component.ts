@@ -228,10 +228,10 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
       feature: [data ? data.feature + '' : ''],
-      id: [data ? data.id : ''],
-      isDeleted: [data ? data.isDeleted: ''],
-      isEdited: [data ? data.isEdited  : ''],
-      otherInsuranceId: [data ? data.otherInsuranceId : ''],
+      id: [data ? data.id : null],
+      isDeleted: [data ? data.isDeleted: null],
+      isEdited: [data ? data.isEdited  : null],
+      otherInsuranceId: [data ? data.otherInsuranceId : null],
     }));
   }
   removeNewFeature(item) {
@@ -432,8 +432,8 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
-      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
-      deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
+      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
+      deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null)],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
