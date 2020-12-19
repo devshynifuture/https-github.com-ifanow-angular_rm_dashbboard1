@@ -89,11 +89,13 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+                                    <span
+                                        appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain) }}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (debtObj.stGain)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -103,11 +105,13 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+                                    <span
+                                        appFormatNumber>{{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -117,11 +121,13 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+                                    <span
+                                        appFormatNumber>{{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -131,11 +137,13 @@
                                 Indexed gain </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+                                    <span
+                                        appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -145,11 +153,13 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+                                    <span appFormatNumber>
+                                        {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -159,11 +169,13 @@
                                 Indexed loss </th>
                             <td class="text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+                                    <span
+                                        appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -241,11 +253,15 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+                                    <span
+                                        appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain) }}</span>
+
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
+                                <span
+                                    appFormatNumber [value]="(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain)) : '0'"></span>
+
                             </td>
 
                         </ng-container>
@@ -255,11 +271,11 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+                                        <span appFormatNumber> {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
+                                    <span appFormatNumber [value]="(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -269,11 +285,11 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+                                        <span appFormatNumber> {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
+                                    <span appFormatNumber [value]="(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -283,11 +299,11 @@
                                 Indexed gain </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+                                        <span appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
+                                    <span appFormatNumber [value]="(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -297,11 +313,11 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+                                        <span appFormatNumber>{{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
+                                    <span appFormatNumber [value]="(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -311,11 +327,11 @@
                                 Indexed loss </th>
                             <td class="text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+                                        <span appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
+                                    <span appFormatNumber [value]="(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss)) : '0'"></span>
                             </td>
 
                         </ng-container>
@@ -379,12 +395,12 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.dividendPayout == 0 ) ? (element.dividendPayout) : (element.dividendPayout | number:'1.2-2')}}
+                                        <span appFormatNumber [value]="(element.dividendPayout == 0 ) ? (element.dividendPayout) : (element.dividendPayout)"></span>
                                 </div>
                             </td>
 
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
+                                    <span appFormatNumber [value]="(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout)"></span>
                             </td>
 
                         </ng-container>
@@ -396,11 +412,11 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.dividendReinvestment == 0 ) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2')}}
+                                        <span appFormatNumber [value]="(element.dividendReinvestment == 0 ) ? (element.dividendReinvestment) : (element.dividendReinvestment)"></span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
+                                    <span appFormatNumber [value]="(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment)"></span>
                             </td>
 
                         </ng-container>
@@ -410,11 +426,11 @@
                                 amount </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
+                                        <span appFormatNumber [value]="(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment)"></span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
+                                    <span appFormatNumber [value]="(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment)"></span>
                             </td>
 
                         </ng-container>
@@ -604,32 +620,32 @@
 
             <td valign="top"
                 style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+                <span appFormatNumber [value]="(element.stGain == 0) ? (element.stGain) : (element.stGain)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; text-align: right;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; text-align: right;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px;text-align: right;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;border-right: 1px solid #dee5e7;">
-                {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)"></span>
             </td>
 
         </tr>
@@ -653,32 +669,32 @@
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss)) : '0'"></span>
             </td>
 
         </tr>
@@ -753,32 +769,32 @@
 
             <td valign="top"
                 style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+                <span appFormatNumber [value]="(element.stGain == 0) ? (element.stGain) : (element.stGain)"></span>
             </td>
 
             <td valign="top"
                 style=" font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px;  text-align: right; border-left: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)"></span>
             </td>
 
         </tr>
@@ -802,32 +818,32 @@
 
             <td valign="top"
                 style="font-weight: bold; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;  text-align: right;border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right;  border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss)) : '0'"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
-                {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
+                <span appFormatNumber [value]="(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss )) : '0'"></span>
             </td>
 
         </tr>
@@ -890,12 +906,12 @@
 
             <td valign="top"
                 style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.dividendReinvestment == 0) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2' ) }}
+                <span appFormatNumber [value]="(element.dividendReinvestment == 0) ? (element.dividendReinvestment) : (element.dividendReinvestment)"></span>
             </td>
 
             <td valign="top"
                 style="font-size: 13px; border-right: 1px solid #dee5e7;text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
+                <span appFormatNumber [value]="(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment)"></span>
             </td>
 
 
@@ -915,17 +931,17 @@
 
             <td valign="top"
                 style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
-                {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
+                <span appFormatNumber [value]="(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout)"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;text-align: right;">
-                {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
+                <span appFormatNumber [value]="(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment)"></span>
             </td>
 
             <td valign="top"
                 style="font-weight: bold;font-size: 13px; border-left: 1px solid #dee5e7;border-right: 1px solid #dee5e7;text-align: right; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
+                <span appFormatNumber [value]="(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment)"></span>
             </td>
 
         </tr>
