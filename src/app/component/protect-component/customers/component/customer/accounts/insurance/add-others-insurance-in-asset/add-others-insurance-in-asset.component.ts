@@ -214,11 +214,16 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       sumAddOns: [data ? data.addOnSumInsured : '']
     }));
   }
-  removeNewAddOns(item) {
+  removeNewAddOns(item, element) {
     let finalFeatureList = this.otherAssetForm.get('addOnForm') as FormArray
     if (finalFeatureList.length > 1) {
       this.addOnForm.removeAt(item);
 
+    }
+    if (element.value.id) {
+      this.customerService.deleteOtherAddonInsurance(element.value.id).subscribe(data => {
+
+      });
     }
   }
   addNewFeature(data) {
@@ -226,11 +231,16 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       planfeatures: [data ? data.policyFeatureId + '' : ''],
     }));
   }
-  removeNewFeature(item) {
+  removeNewFeature(item, element) {
     let finalFeatureList = this.otherAssetForm.get('planFeatureForm') as FormArray
     if (finalFeatureList.length > 1) {
       this.planFeatureForm.removeAt(item);
 
+    }
+    if (element.value.id) {
+      this.customerService.deleteOtherFeatureInsurance(element.value.id).subscribe(data => {
+
+      });
     }
   }
 
@@ -664,7 +674,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.onChangeSetErrorsType(this.otherAssetForm.get('PlanType').value, 'planType')
   }
 
-  removeTransaction(item) {
+  removeTransaction(item, element) {
     let finalMemberList = this.otherAssetForm.get('InsuredMemberForm') as FormArray;
     if (finalMemberList.length > 1) {
       this.insuredMembersForm.removeAt(item);
@@ -672,7 +682,12 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     }
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
+    if (element.value.id) {
+      this.customerService.deleteOtherMemberInsurance(element.value.id).subscribe(data => {
 
+      }
+      )
+    }
   }
   resetValue(data) {
     if (data) {
