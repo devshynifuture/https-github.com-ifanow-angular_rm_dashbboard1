@@ -324,7 +324,13 @@
     </div>
 
     <div *ngIf="addMoreFlag" class="pt-40">
-
+        <div class="row">
+            <div (click)="openOptionField()" class="col-md-5 text-right">
+                <p class="m-0 text-primitive f-14 c-p"> Show less</p>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
         <div class="row  pt-40">
             <div class="col-md-4 text-right pr-0">
                 <h5 class="mb-0 mt-28"> Additional covers</h5>
@@ -346,7 +352,7 @@
                         <div class="col-md-7  pr-0 form-group">
 
                             <mat-form-field>
-                                <mat-select matInput formControlName="additionalCovers" autocomplete="true"
+                                <mat-select matInput formControlName="addOns" autocomplete="true"
                                     class="form-control br-0">
                                     <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                         {{option.add_on}}</mat-option> -->
@@ -367,7 +373,7 @@
                         <div class="col-md-3 pr-0 form-group">
 
                             <mat-form-field class="iconRupess">
-                                <input matInput type="number" formControlName="sumAddOns"
+                                <input matInput type="number" formControlName="sumInsured"
                                     [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                     #premiumdetails autocomplete="true" [maxLength]="10"
                                     class="form-control rupess br-0">
@@ -434,7 +440,7 @@
 
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select matInput formControlName="planfeatures" autocomplete="true"
+                        <mat-select matInput formControlName="feature" autocomplete="true"
                             class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                                     {{option.type}}</mat-option> -->
@@ -531,21 +537,6 @@
                         <input #financierName [maxLength]="40" autocomplete="off" class="form-control br-0"
                             formControlName="financierName" matInput type="text">
                         <mat-hint align="end" class="f-12">{{financierName.value.length}}/40</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-40">
-            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-lg-end">
-                <h5 class="m-0">Hypothecation/Financier name</h5>
-            </div>
-
-            <div class="col-md-5 ">
-                <div class="form-group mb-0 remove-top  ">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control rupess br-0" placeholder=" ">
-                        <mat-hint align="end" class="f-12"> </mat-hint>
-                        <mat-error>This field is required </mat-error>
                     </mat-form-field>
                 </div>
             </div>

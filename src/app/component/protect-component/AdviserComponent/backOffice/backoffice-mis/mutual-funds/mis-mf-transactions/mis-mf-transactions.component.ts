@@ -81,18 +81,20 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
 
   filterTransaction = [];
-  obj: { transactionTypeId: any[]; categoryId: any[]; dateObj: {}; };
+  obj: { transactionTypeId: any[]; categoryId: any[]; dateObj: {}; parentId: {}; startFlag: {}; endFlag: {} };
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
     private backoffice: BackOfficeService,
     private eventService: EventService,
     private UtilService: UtilService,
+    private datePipe: DatePipe,
+
   ) {
   }
 
   ngOnInit() {
-    this.obj = { transactionTypeId: [], categoryId: [], dateObj: {} }
+    this.obj = { transactionTypeId: [], categoryId: [], dateObj: {}, parentId: {}, startFlag: {}, endFlag: {} }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -169,7 +171,7 @@ export class MisMfTransactionsComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = { begin: this.datePipe.transform(new Date(beginDate), 'yyyy-MM-dd'), end: this.datePipe.transform(new Date(endDate), 'yyyy-MM-dd') };
     this.filterJson.dateFilterJson = this.selectedDateRange;
     this.filterJson.dateFilterArr = this.filterDate;
     this.filterApi(this.filterJson)
@@ -181,6 +183,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   remove(item) {
+
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
@@ -198,14 +201,27 @@ export class MisMfTransactionsComponent implements OnInit {
     } else {
       list.forEach(element => {
         if (element.filterType == 'transactionType') {
-          this.obj.transactionTypeId.push(element)
+          this.obj.transactionTypeId.forEach(ele => {
+            if (element.id != ele.id) {
+              this.obj.transactionTypeId.push(element)
+            }
+          })
         } else if (element.filterType == 'category') {
-          this.obj.categoryId.push(element)
+          this.obj.categoryId.forEach(ele => {
+            if (element.id != ele.id) {
+              this.obj.categoryId.push(element)
+            }
+          })
         }
       });
     }
+    this.obj.parentId = this.parentId;
+    this.obj.startFlag = 0
+    this.obj.endFlag = 50
     console.log('json', this.obj)
-    this.backoffice.filterData(this.obj)
+    let data = {}
+    data = this.obj
+    this.backoffice.filterData(data)
       .subscribe(res => {
         console.log(res);
         // this.isLoading = false
