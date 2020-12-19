@@ -116,7 +116,7 @@ export const appConfig = {
   DELETE_OTHER_ADDON: 'account/insurance/other-insurance/addon/delete',
   DELETE_OTHER_FEATURE: 'account/insurance/other-insurance/feature/delete',
   DELETE_OTHER_MEMBER: 'account/insurance/other-insurance/member/delete',
-
+  GET_OTHER_INSURANCE: 'account/insurance/other/list/get',
 
   ADD_GENERAL_INSURANCE: 'account/insurance/general-insurance/add',
   EDIT_GENERAL_INSURANCE: 'account/insurance/general-insurance/edit',

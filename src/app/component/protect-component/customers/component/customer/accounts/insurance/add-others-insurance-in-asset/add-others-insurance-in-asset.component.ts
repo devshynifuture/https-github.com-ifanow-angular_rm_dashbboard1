@@ -762,13 +762,13 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       {
         createdOn:null,
         insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
-        share: element.get('sumAssured').value,
+        share: element.get('sumAssured').value ? element.get('sumAssured').value : 0,
         relationshipId: element.get('relationshipId').value,
         insuredOrNominee: 1,
-        id: (element.get('id').value) ? element.get('id').value : null,
-        isActive: (element.get('isActive').value) ? element.get('isActive').value : null,
-        isClient: (element.get('isClient').value) ? element.get('isClient').value : null,
-        isEdited: (element.get('isEdited').value) ? element.get('isEdited').value : null,
+        id: (element.get('id').value) ? element.get('id').value : 0,
+        isActive: (element.get('isActive').value) ? element.get('isActive').value : 0,
+        isClient: (element.get('isClient').value) ? element.get('isClient').value : 0,
+        isEdited: (element.get('isEdited').value) ? element.get('isEdited').value : 0,
         otherInsuranceId: (element.get('otherInsuranceId').value) ? element.get('otherInsuranceId').value : null
       };
       memberList.push(obj);
@@ -780,11 +780,11 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         let obj =
         {
           addOns: element.get('addOns').value,
-          id: element.get('id').value,
-          isActive: element.get('isActive').value,
-          isEdited: element.get('isEdited').value,
-          otherInsuranceId: element.get('otherInsuranceId').value,
-          sumInsured: element.get('sumInsured').value,
+          id: element.get('id').value ? element.get('id').value : 0,
+          isActive: element.get('isActive').value ? element.get('isActive').value : 0,
+          isEdited: element.get('isEdited').value ?element.get('isEdited').value:0,
+          otherInsuranceId: element.get('otherInsuranceId').value ? element.get('otherInsuranceId').value:0,
+          sumInsured: element.get('sumInsured').value ? element.get('sumInsured').value :0,
         }
         addOns.push(obj)
       }
@@ -796,10 +796,10 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         let obj =
         {
           feature: element.get('feature').value,
-          id: element.get('id').value,
-          isDeleted: element.get('isDeleted').value,
-          isEdited: element.get('isEdited').value,
-          otherInsuranceId: element.get('otherInsuranceId').value,
+          id: element.get('id').value ? element.get('id').value : 0,
+          isDeleted: element.get('isDeleted').value ? element.get('isDeleted').value : 0,
+          isEdited: element.get('isEdited').value ? element.get('isEdited').value : 0,
+          otherInsuranceId: element.get('otherInsuranceId').value ? element.get('otherInsuranceId').value : 0,
         }
         featureList.push(obj)
       }

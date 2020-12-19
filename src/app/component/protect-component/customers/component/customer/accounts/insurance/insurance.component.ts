@@ -337,7 +337,35 @@ export class InsuranceComponent implements OnInit {
     if (this.finPlanObj) {
       this.dataLoaded = true
     }
-    if (insuranceId == 1) {
+    if(insuranceSubTypeId == 11){
+      delete obj.insuranceTypeId;
+      this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
+      if (this.loadApiAndData.dataLoaded) {
+        if (this.isAdded == undefined) {
+          this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
+        }
+        this.cusService.getOtherInsurance(obj).subscribe(
+          data => {
+            this.checkAndPush(data);
+            if (!this.insuranceId) {
+              this.getGeneralInsuranceDataRes(data);
+            } else {
+              this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
+              this.getGeneralInsuranceDataRes(this.loadApiAndData);
+            }
+            // this.getGeneralInsuranceDataRes(data);
+          },
+          error => {
+            this.isLoading = false;
+            this.eventService.showErrorMessage(error);
+            ;
+            this.dataSourceGeneralInsurance.data = [];
+          }
+        );
+      } else {
+        this.getGeneralInsuranceDataRes(this.loadApiAndData);
+      }
+    }else if (insuranceId == 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {
         if (this.isAdded == undefined) {
