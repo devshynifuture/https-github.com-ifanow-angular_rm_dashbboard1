@@ -70,7 +70,7 @@
                 <div class="col-md-7  p-0">
                     <h5 class="m-0">Name </h5>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4"  *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
                     <h5 class="mb-0">Sum insured </h5>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4"  *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
                         <div class="form-group iconRupess">
                             <mat-form-field>
                                 <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
@@ -121,6 +121,23 @@
 
         </div>
     </div>
+    <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-8">Sum insured</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group  iconRupess">
+                    <mat-form-field>
+                        <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                            appInputValueValidation autocomplete="true" class="form-control rupess br-0"
+                            formControlName="sumAssuredIdv" matInput type="number">
+                        <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/10</mat-hint>
+                        <mat-error>This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
     <!-- <div class="row pt-40">
         <div class="col-md-4 pr-0 text-right ">
             <h5 class="mb-0 mt-28">Insured members</h5>
