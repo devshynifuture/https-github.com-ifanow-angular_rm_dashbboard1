@@ -503,6 +503,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   filterCategoryWise(data, category) {
     if (data) {
+      let redeemArray = [];
+      let filterr;
       this.GTReinvesment = 0;
       this.GTdividendPayout = 0;
       this.GTdividendReinvestment = 0;
@@ -516,54 +518,95 @@ export class MutualFundsCapitalComponent implements OnInit {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       this.mfList = this.MfServiceService.sorting(this.mfList, 'schemeName');
+      this.mfList = this.MfServiceService.casFolioNumber(this.mfList);
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
-          element.redemptionTransactions.forEach(ele => {
-            // let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-            let trnDate = new Date(ele.transactionDate)
-            if (trnDate >= this.fromDate && trnDate <= this.toDate) {
-              if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
-                this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
-                let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
+          if (element.redemptionTransactions.length == 1) {
+            element.redemptionTransactions.forEach(ele => {
+              // let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+              let trnDate = new Date(ele.transactionDate)
+              if (trnDate >= this.fromDate && trnDate <= this.toDate) {
+                if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
+                  this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                  let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
+                  ele.stGain = totalValue.stGain;
+                  ele.ltGain = totalValue.ltGain;
+                  ele.stLoss = totalValue.stLoss;
+                  ele.ltLoss = totalValue.ltLoss;
+                  ele.indexGain = totalValue.indexGain;
+                  ele.indexLoss = totalValue.indexLoss;
+                  ele.schemeName = element.schemeName;
+                  ele.folioNumber = element.folioNumber;
+                  ele.ownerName = element.ownerName;
+                  ele.isin = element.isin;
+                  // fiterArray.push(element);
+                  fiterArray.push(ele);
 
-                // this.getFinalTotalValue(totalValue);
-                // element.stGain = totalValue.stGain;
-                // element.ltGain = totalValue.ltGain;
-                // element.stLoss = totalValue.stLoss;
-                // element.ltLoss = totalValue.ltLoss;
-                // element.indexGain = totalValue.indexGain;
-                // element.indexLoss = totalValue.indexLoss;
-                ele.stGain = totalValue.stGain;
-                ele.ltGain = totalValue.ltGain;
-                ele.stLoss = totalValue.stLoss;
-                ele.ltLoss = totalValue.ltLoss;
-                ele.indexGain = totalValue.indexGain;
-                ele.indexLoss = totalValue.indexLoss;
-                ele.schemeName = element.schemeName;
-                ele.folioNumber = element.folioNumber;
-                ele.ownerName = element.ownerName;
-                ele.isin = element.isin;
-                // fiterArray.push(element);
-                fiterArray.push(ele);
-
-                let filterr = {
-                  indexGain: totalValue.indexGain,
-                  indexLoss: totalValue.indexLoss,
-                  ltGain: totalValue.ltGain,
-                  ltLoss: totalValue.ltLoss,
-                  stGain: totalValue.stGain,
-                  stLoss: totalValue.stLoss
+                  filterr = {
+                    indexGain: totalValue.indexGain,
+                    indexLoss: totalValue.indexLoss,
+                    ltGain: totalValue.ltGain,
+                    ltLoss: totalValue.ltLoss,
+                    stGain: totalValue.stGain,
+                    stLoss: totalValue.stLoss
+                  }
+                  if (filterr) {
+                    this.finalValue = this.MfServiceService.addTwoObjectValues(filterr, this.finalValue, { totalAmt: true });
+                  }
+                } else {
+                  ele.purchaceAgainstRedemptionTransactions = []
                 }
+              }
+            });
+          } else {
+            redeemArray=[];
+            element.redemptionTransactions.forEach(ele => {
+              let trnDate = new Date(ele.transactionDate)
+              if (trnDate >= this.fromDate && trnDate <= this.toDate) {
+                if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
+                  this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                  redeemArray.push(ele.purchaceAgainstRedemptionTransactions);
+                } else {
+                  ele.purchaceAgainstRedemptionTransactions = []
+                }
+              }
+            });
+            if(redeemArray.length > 0){
+              redeemArray = redeemArray.flat();
+              let totalValue = this.getCalculatedValues(redeemArray, category);
+              let array = [{
+                stGain: totalValue.stGain, ltGain: totalValue.ltGain, stLoss: totalValue.stLoss,
+                ltLoss: totalValue.ltLoss, indexGain: totalValue.indexGain, indexLoss: totalValue.indexLoss,
+                schemeName: element.schemeName, folioNumber: element.folioNumber, ownerName: element.ownerName,
+                isin: element.isin
+              }]
+              fiterArray.push({
+                stGain: totalValue.stGain, ltGain: totalValue.ltGain, stLoss: totalValue.stLoss,
+                ltLoss: totalValue.ltLoss, indexGain: totalValue.indexGain, indexLoss: totalValue.indexLoss,
+                schemeName: element.schemeName, folioNumber: element.folioNumber, ownerName: element.ownerName,
+                isin: element.isin
+              });
+              filterr = {
+                indexGain: totalValue.indexGain,
+                indexLoss: totalValue.indexLoss,
+                ltGain: totalValue.ltGain,
+                ltLoss: totalValue.ltLoss,
+                stGain: totalValue.stGain,
+                stLoss: totalValue.stLoss
+              }
+              if (filterr) {
                 this.finalValue = this.MfServiceService.addTwoObjectValues(filterr, this.finalValue, { totalAmt: true });
-              } else {
-                ele.purchaceAgainstRedemptionTransactions = []
               }
             }
-          });
+          }
+
         } else {
           element.redemptionTransactions = [];
         }
+
       });
+
+
       if (Object.keys(this.finalValue).length != 0) {
         (category == 'DEBT') ? this.debtObj = this.finalValue : this.equityObj = this.finalValue;
         this.finalValue = {};

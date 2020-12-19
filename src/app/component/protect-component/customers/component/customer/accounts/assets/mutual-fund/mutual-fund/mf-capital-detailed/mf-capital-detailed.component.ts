@@ -432,12 +432,13 @@ export class MfCapitalDetailedComponent implements OnInit {
         mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       mfList = this.MfServiceService.sorting(mfList, 'schemeName');
+      mfList = this.MfServiceService.casFolioNumber(mfList);
       mfList.forEach(element => {
         const startObj = {
           schemeName: element.schemeName,
           folioNumber: element.folioNumber,
           ownerName: element.ownerName,
-          isin: element.isin
+          isin: element.isin,
         }
         let totalObj: any = {};
         if ((element.redemptionTransactions) ? (element.redemptionTransactions.length > 0) : element.redemptionTransactions) {

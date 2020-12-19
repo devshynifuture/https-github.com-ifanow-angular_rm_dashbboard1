@@ -23,6 +23,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { InsuranceService } from './insurance.service';
 import { arrayMax } from 'highcharts';
+import { AddOthersInsuranceInAssetComponent } from './add-others-insurance-in-asset/add-others-insurance-in-asset.component';
 
 @Component({
   selector: 'app-insurance',
@@ -90,14 +91,14 @@ export class InsuranceComponent implements OnInit {
   { name: 'Motor', id: 4, count: '' },
   { name: 'Travel', id: 8, count: '' },
   { name: 'Home', id: 9, count: '' },
-  { name: 'Fire & special perils', id: 10, count: '' }];
+  { name: 'Fire & special perils', id: 10, count: '' }, { name: 'Others', id: 11, count: '' }];
   allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
     name: 'Health',
     id: 5
   }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
     name: 'Motor',
     id: 4
-  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }, { name: 'Others', id: 11 }];
   viewMode;
   dislayList: any;
   sumAssured = 0;
@@ -213,6 +214,9 @@ export class InsuranceComponent implements OnInit {
         break;
       case 'Fire & special perils':
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 10);
+        break;
+      case 'Others':
+        this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 11);
         break;
       default:
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 0);
@@ -1051,7 +1055,7 @@ export class InsuranceComponent implements OnInit {
         name: 'Fire & special perils',
         id: 10,
         count: ''
-      }].map((i) => {
+      }, { name: 'Others', id: 11, count: '' }].map((i) => {
         this.generalLifeInsuranceList.push(i);
       });
     }
@@ -1144,6 +1148,9 @@ export class InsuranceComponent implements OnInit {
         break;
       case 10:
         fragmentData.componentName = AddFireAndPerilsInsuranceInAssetComponent;
+        break;
+      case 11:
+        fragmentData.componentName = AddOthersInsuranceInAssetComponent;
         break;
       default:
         fragmentData.componentName = AddInsuranceComponent;

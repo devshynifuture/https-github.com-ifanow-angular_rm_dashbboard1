@@ -1,6 +1,8 @@
 <div id="ui-insurance" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
+
     <div class="row">
         <div class="col-md-12 col-lg-2 p-0 tabViewLiabilities pt-8 pb-20">
+
             <div class="vertical-menu bg-grey lter">
                 <ul class="d-block ">
                     <li [ngClass]="{'bg-grey lt':lifeInsuranceFlag}" class="  pb-8 c-p">
@@ -252,7 +254,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}} </div>
+                                            {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}}
+                                        </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
@@ -281,7 +284,8 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="status">
-                                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status
+                                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status">
+                                        Status
                                     </th>
                                     <td *matCellDef="let element" class="br text-primary" mat-cell>
                                         <div class="bar">
@@ -417,7 +421,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}} </div>
+                                            {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}}
+                                        </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
@@ -512,6 +517,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <!-- -------------------- pdf life ---------------------------- -->
 

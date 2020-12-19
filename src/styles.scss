@@ -948,6 +948,8 @@ mat-tab-group[vertical] {
     height: calc(100vh - 126px);
     position: fixed;
     width: 16.7%;
+    overflow-y: scroll;
+    padding-bottom: 15px;
   }
 
   li {
