@@ -198,12 +198,12 @@ export class MisMfTransactionsComponent implements OnInit {
     });
     if (this.obj.transactionTypeId.length > 0) {
       this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
-        return item.id == ele.id
+        return item.id == ele
       });
       this.filterApi(this.obj.transactionTypeId)
     } else if (this.obj.categoryId.length > 0) {
       this.obj.categoryId = this.obj.categoryId.filter((ele) => {
-        return item.id == ele.id
+        return item.id == ele
       });
       this.filterApi(this.obj.categoryId)
     }
