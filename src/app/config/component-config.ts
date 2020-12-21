@@ -37,6 +37,7 @@ export const appConfig = {
   RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/map/njprudent/schemes',
   GET_MF_TRANSACTIONS: 'mutual-fund/mutualFundTransaction/list/get',
   FILTER_DATA: 'mutual-fund/mutualFundTransaction/filtered/list/get',
+  SEARCH_DATA: '',
   GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
   GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
   ///////////////////foliodetails///////////////////////////
