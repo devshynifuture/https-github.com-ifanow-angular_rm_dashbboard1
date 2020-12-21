@@ -263,6 +263,9 @@ export class MisMfTransactionsComponent implements OnInit {
     if (this.obj.end != {} || this.obj.begin != {}) {
       this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
       this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
+    } else if (this.obj.end = "Invalid date") {
+      this.obj.end = null
+      this.obj.begin = null
     }
     if (this.dateFilterAdded == false) {
       this.obj.end = null
