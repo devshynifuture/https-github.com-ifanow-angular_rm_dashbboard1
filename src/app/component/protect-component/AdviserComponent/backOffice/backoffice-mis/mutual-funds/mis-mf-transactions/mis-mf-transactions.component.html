@@ -3,7 +3,7 @@
     <div class="col-md-4 p-0 text-left">
         <h2 class="f-18 m-0 proximaFont ">Mutual fund transactions</h2>
     </div>
-    <div class="col-md-3 p-0 mb-20 text-left" *ngIf="mfTransaction.data.length  != 0">
+    <div class="col-md-3 p-0 mb-20 text-left">
         <mat-form-field floatLabel="never" appearance="standard">
             <mat-select class="form-control">
                 <mat-option [value]='0' disabled>Select search type</mat-option>
@@ -14,13 +14,13 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div class="col-md-3 p-0 text-left" *ngIf="mfTransaction.data.length  != 0">
+    <div class="col-md-3 p-0 text-left">
         <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
             <input (input)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0" matInput
                 placeholder="Type to search data">
         </mat-form-field>
     </div>
-    <div class="col-md-2 p-0  d-flex align-items-center justify-content-end " *ngIf="mfTransaction.data.length  != 0">
+    <div class="col-md-2 p-0  d-flex align-items-center justify-content-end ">
         <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
         </div>
@@ -40,7 +40,7 @@
     </div>
 
 </div>
-<div class="row pb-10" *ngIf="showFilter == true && mfTransaction.data.length != 0">
+<div class="row pb-10" *ngIf="showFilter == true">
     <div class="col-md-8 p-0 custom-tags">
         <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
