@@ -245,6 +245,7 @@ export class MisMfTransactionsComponent implements OnInit {
         }
       });
     }
+    this.isLoading = true
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
@@ -258,8 +259,8 @@ export class MisMfTransactionsComponent implements OnInit {
     this.backoffice.filterData(data)
       .subscribe(res => {
         console.log('filtered json', res);
-        // this.isLoading = false
-        // this.mfTransaction = res
+        this.isLoading = false
+        this.mfTransaction = res
       }, err => {
         console.error(err);
       })

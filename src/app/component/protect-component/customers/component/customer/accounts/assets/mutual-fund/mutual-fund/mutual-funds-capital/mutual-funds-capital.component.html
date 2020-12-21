@@ -16,8 +16,8 @@
                     <!-- DOne for bulk email -->
                 </div>
                 <mat-menu #menu1="matMenu">
-                    <span mat-menu-item (click)="generatePdf()">PDF</span>
-                    <span mat-menu-item (click)="Excel('Capital Gain')">XLS</span>
+                    <button mat-menu-item (click)="generatePdf()">PDF</button>
+                    <button mat-menu-item (click)="Excel('Capital Gain')">XLS</button>
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
