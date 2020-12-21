@@ -84,6 +84,7 @@ export class MisMfTransactionsComponent implements OnInit {
 
   filterTransaction = [];
   obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
+  dateFilterAdded: boolean = false;
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -96,7 +97,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {}, key: {}, flag: {} }
+    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {}, key: "", flag: 0 }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -161,7 +162,7 @@ export class MisMfTransactionsComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     this.filterDate = [];
-
+    this.dateFilterAdded = true
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
@@ -180,6 +181,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   removeDate(item) {
+    this.dateFilterAdded = true
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
   }
@@ -222,6 +224,7 @@ export class MisMfTransactionsComponent implements OnInit {
         list.forEach(element => {
           if (element.filterType == 'transactionType') {
             if (this.obj.transactionTypeId.length == 0) {
+              this.obj.transactionTypeId = []
               this.obj.transactionTypeId.push(element.id)
 
             } else {
@@ -235,6 +238,7 @@ export class MisMfTransactionsComponent implements OnInit {
 
           } else if (element.filterType == 'category') {
             if (this.obj.categoryId.length == 0) {
+              this.obj.categoryId = []
               this.obj.categoryId.push(element.id)
 
             } else {
@@ -257,6 +261,10 @@ export class MisMfTransactionsComponent implements OnInit {
       this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
       this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
     }
+    if (this.dateFilterAdded == false) {
+      this.obj.end = null
+      this.obj.begin = null
+    }
     console.log('json', this.obj)
     let data = {}
     data = this.obj
@@ -264,7 +272,7 @@ export class MisMfTransactionsComponent implements OnInit {
       .subscribe(res => {
         console.log('filtered json', res);
         this.isLoading = false
-        this.mfTransaction = res
+        this.mfTransaction.data = res
       }, err => {
         console.error(err);
       })
