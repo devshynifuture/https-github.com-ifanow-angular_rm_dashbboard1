@@ -7,10 +7,10 @@
         <mat-form-field floatLabel="never" appearance="standard">
             <mat-select class="form-control">
                 <mat-option [value]='0' disabled>Select search type</mat-option>
-                <mat-option (click)="selectOption('investorName')" [value]="1">Investor name</mat-option>
-                <mat-option (click)="selectOption('schemeName')" [value]="2">Scheme name</mat-option>
-                <mat-option (click)="selectOption('folioNumber')" [value]="3">Folio Number</mat-option>
-                <mat-option (click)="selectOption('pan')" [value]="4">PAN</mat-option>
+                <mat-option (click)="selectOption(4)" [value]="1">Investor name</mat-option>
+                <mat-option (click)="selectOption(1)" [value]="2">Scheme name</mat-option>
+                <mat-option (click)="selectOption(2)" [value]="3">Folio Number</mat-option>
+                <mat-option (click)="selectOption(3)" [value]="4">PAN</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
