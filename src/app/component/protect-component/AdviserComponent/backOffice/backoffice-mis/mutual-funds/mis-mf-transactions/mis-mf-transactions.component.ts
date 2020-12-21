@@ -186,6 +186,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterDate.splice(item, 1);
     this.obj.end = null
     this.obj.begin = null
+    this.filterApi(this.obj.categoryId)
   }
 
   remove(item) {
