@@ -111,7 +111,7 @@
                     <div class="col-md-2 pr-0 d-flex mt-8 ">
                         <i (click)="addTransaction(undefined)"
                             class="material-icons text-primitive c-p float-left">add</i>
-                        <i (click)="removeTransaction(pointIndex)"
+                        <i (click)="removeTransaction(pointIndex,obj)"
                             *ngIf="otherAssetForm.value.InsuredMemberForm?.length > 1"
                             class="material-icons text-primitive c-p float-right">remove</i>
                     </div>
