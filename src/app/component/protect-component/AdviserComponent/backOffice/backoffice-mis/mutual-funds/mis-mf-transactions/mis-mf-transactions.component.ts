@@ -83,7 +83,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
 
   filterTransaction = [];
-  obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {} };
+  obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -96,7 +96,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {} }
+    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {}, key: {}, flag: {} }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -211,42 +211,46 @@ export class MisMfTransactionsComponent implements OnInit {
   }
   filterApi(list) {
     console.log(list)
-
     if (list.dateFilterJson) {
       this.obj.end = list.dateFilterJson.end
       this.obj.begin = list.dateFilterJson.begin
     } else {
-      list.forEach(element => {
-        if (element.filterType == 'transactionType') {
-          if (this.obj.transactionTypeId.length == 0) {
-            this.obj.transactionTypeId.push(element.id)
+      if (list.searchFlag) {
+        this.obj.key = list.search
+        this.obj.flag = list.searchFlag
+      } else {
+        list.forEach(element => {
+          if (element.filterType == 'transactionType') {
+            if (this.obj.transactionTypeId.length == 0) {
+              this.obj.transactionTypeId.push(element.id)
 
-          } else {
-            this.obj.transactionTypeId.forEach(ele => {
-              if (element.id != ele.id) {
-                this.obj.transactionTypeId.push(element.id)
+            } else {
+              this.obj.transactionTypeId.forEach(ele => {
+                if (element.id != ele) {
+                  this.obj.transactionTypeId.push(element.id)
 
-              }
-            })
+                }
+              })
+            }
+
+          } else if (element.filterType == 'category') {
+            if (this.obj.categoryId.length == 0) {
+              this.obj.categoryId.push(element.id)
+
+            } else {
+              this.obj.categoryId.forEach(ele => {
+                if (element.id != ele) {
+                  this.obj.categoryId.push(element.id)
+                }
+              })
+            }
+
           }
-
-        } else if (element.filterType == 'category') {
-          if (this.obj.categoryId.length == 0) {
-            this.obj.categoryId.push(element.id)
-
-          } else {
-            this.obj.categoryId.forEach(ele => {
-              if (element.id != ele.id) {
-                this.obj.categoryId.push(element.id)
-              }
-            })
-          }
-
-        }
-      });
+        });
+      }
     }
     this.isLoading = true
-    this.obj.parentId = this.parentId;
+    this.obj.parentId = 5435;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
     if (this.obj.end != {} || this.obj.begin != {}) {
@@ -276,12 +280,7 @@ export class MisMfTransactionsComponent implements OnInit {
         searchFlag: this.flag,
         search: event
       }
-      this.backoffice.searchData(obj)
-        .subscribe(res => {
-          console.log('filtered json', res);
-        }, err => {
-          console.error(err);
-        })
+      this.filterApi(obj)
     }
   }
 
