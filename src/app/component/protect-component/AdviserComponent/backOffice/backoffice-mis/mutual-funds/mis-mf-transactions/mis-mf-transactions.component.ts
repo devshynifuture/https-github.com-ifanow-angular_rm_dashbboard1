@@ -278,8 +278,6 @@ export class MisMfTransactionsComponent implements OnInit {
       this.backoffice.searchData(obj)
         .subscribe(res => {
           console.log('filtered json', res);
-          // this.isLoading = false
-          // this.mfTransaction = res
         }, err => {
           console.error(err);
         })
