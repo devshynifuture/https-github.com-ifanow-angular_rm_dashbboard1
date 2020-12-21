@@ -34,7 +34,7 @@ export class CustomerService {
   }
 
   deleteOtherInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE+ 'otherInsuranceId=' + data, '');
   }
   getOtherInsurance(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
