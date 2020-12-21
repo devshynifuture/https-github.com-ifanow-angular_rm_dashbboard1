@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -8,6 +8,7 @@ import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from 'saturn-datepic
 import { DatePipe, formatDate } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import moment from 'moment';
 
 
 export const PICK_FORMATS = {
@@ -45,6 +46,7 @@ export class MisMfTransactionsComponent implements OnInit {
   maxDate = new Date();
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
@@ -81,7 +83,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
 
   filterTransaction = [];
-  obj: { transactionTypeId: any[]; categoryId: any[]; dateObj: {}; parentId: {}; startFlag: {}; endFlag: {} };
+  obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {} };
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -94,7 +96,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.obj = { transactionTypeId: [], categoryId: [], dateObj: {}, parentId: {}, startFlag: {}, endFlag: {} }
+    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {} }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -133,14 +135,16 @@ export class MisMfTransactionsComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss");
       })
   }
-
+  orgValueChange(selectedDateRange) {
+    this.filterJson.dateFilterJson = { begin: (moment(selectedDateRange.begin).format('YYYY-MM-DD')), end: (moment(selectedDateRange.end).format('YYYY-MM-DD')) };
+    this.filterApi(this.filterJson)
+    selectedDateRange = {};
+  }
   addFilters(addFilters) {
 
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];
-    } else {
-
     }
     this.filterJson.statusFilterJson = this.filterStatus;
     this.filterApi(this.filterStatus)
@@ -150,8 +154,6 @@ export class MisMfTransactionsComponent implements OnInit {
     if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
       this.filterStatus.push(event);
       this.filterDataArr = [];
-    } else {
-
     }
     this.filterJson.statusFilterJson = this.filterStatus;
     this.filterApi(this.filterStatus)
@@ -171,7 +173,7 @@ export class MisMfTransactionsComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = { begin: this.datePipe.transform(new Date(beginDate), 'yyyy-MM-dd'), end: this.datePipe.transform(new Date(endDate), 'yyyy-MM-dd') };
+    this.selectedDateRange = { begin: (moment(beginDate).format('YYYY-MM-DD')), end: (moment(endDate).format('YYYY-MM-DD')) };
     this.filterJson.dateFilterJson = this.selectedDateRange;
     this.filterJson.dateFilterArr = this.filterDate;
     this.filterApi(this.filterJson)
@@ -192,38 +194,70 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != item.value;
     });
+    if (this.obj.transactionTypeId.length > 0) {
+      this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
+        return item.id == ele.id
+      });
+      this.filterApi(this.obj.transactionTypeId)
+    } else if (this.obj.categoryId.length > 0) {
+      this.obj.categoryId = this.obj.categoryId.filter((ele) => {
+        return item.id == ele.id
+      });
+      this.filterApi(this.obj.categoryId)
+    }
+  }
+  onClose() {
+    this.orgValueChange(this.selectedDateRange);
   }
   filterApi(list) {
     console.log(list)
 
     if (list.dateFilterJson) {
-      this.obj.dateObj = list.dateFilterJson
+      this.obj.end = list.dateFilterJson.end
+      this.obj.begin = list.dateFilterJson.begin
     } else {
       list.forEach(element => {
         if (element.filterType == 'transactionType') {
-          this.obj.transactionTypeId.forEach(ele => {
-            if (element.id != ele.id) {
-              this.obj.transactionTypeId.push(element)
-            }
-          })
+          if (this.obj.transactionTypeId.length == 0) {
+            this.obj.transactionTypeId.push(element)
+
+          } else {
+            this.obj.transactionTypeId.forEach(ele => {
+              if (element.id != ele.id) {
+                this.obj.transactionTypeId.push(element)
+
+              }
+            })
+          }
+
         } else if (element.filterType == 'category') {
-          this.obj.categoryId.forEach(ele => {
-            if (element.id != ele.id) {
-              this.obj.categoryId.push(element)
-            }
-          })
+          if (this.obj.categoryId.length == 0) {
+            this.obj.categoryId.push(element)
+
+          } else {
+            this.obj.categoryId.forEach(ele => {
+              if (element.id != ele.id) {
+                this.obj.categoryId.push(element)
+              }
+            })
+          }
+
         }
       });
     }
     this.obj.parentId = this.parentId;
-    this.obj.startFlag = 0
-    this.obj.endFlag = 50
+    this.obj.startFlag = 1
+    this.obj.endFlag = 100
+    if (this.obj.end != {} || this.obj.begin != {}) {
+      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
+      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
+    }
     console.log('json', this.obj)
     let data = {}
     data = this.obj
     this.backoffice.filterData(data)
       .subscribe(res => {
-        console.log(res);
+        console.log('filtered json', res);
         // this.isLoading = false
         // this.mfTransaction = res
       }, err => {
@@ -234,12 +268,22 @@ export class MisMfTransactionsComponent implements OnInit {
     this.flag = value
   }
 
-  applyFilter(event) {
-
-  }
-
-
-  onClose() {
+  onSearchChange(event) {
+    console.log('key', event)
+    if (event.length > 3) {
+      let obj = {
+        searchFlag: this.flag,
+        search: event
+      }
+      this.backoffice.searchData(obj)
+        .subscribe(res => {
+          console.log('filtered json', res);
+          // this.isLoading = false
+          // this.mfTransaction = res
+        }, err => {
+          console.error(err);
+        })
+    }
   }
 
   getMfTransactionData(endFlag) {
@@ -256,6 +300,7 @@ export class MisMfTransactionsComponent implements OnInit {
         if (res) {
           this.isLoading = false
           this.mfTransaction.data = res
+          this.mfTransaction.sort = this.sort
         } else {
           this.isLoading = false
           this.mfTransaction.data = []
