@@ -366,8 +366,7 @@ export class InsuranceComponent implements OnInit {
       } else {
         this.getGeneralInsuranceDataRes(this.loadApiAndData);
       }
-    }
-     if(insuranceId === 1) {
+    }else if(insuranceId === 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {
         if (this.isAdded == undefined) {
@@ -480,13 +479,13 @@ export class InsuranceComponent implements OnInit {
       this.insService.setInsData(this.globalArray);
     } else if (this.isAdded) {
       this.storedData == '' ? this.storedData = [] : ''
-      let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
+      let array = data ? (data.otherInsuranceList ? data.otherInsuranceList : (data.insuranceList ? data.insuranceList : data.generalInsuranceList)) : data.insuranceList;
       this.storedData.push(array)
       this.storedData = this.storedData.flat();
       this.storedData = [...new Map(this.storedData.map(item => [item.id, item])).values()];
       this.insService.setInsData(this.storedData);
     } else if (this.isAdded == false) {
-      let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
+      let array = data ? (data.otherInsuranceList ? data.otherInsuranceList : (data.insuranceList ? data.insuranceList : data.generalInsuranceList)) : data.insuranceList;
       this.storedData = this.storedData.filter(d => d.id != this.insuranceId);
       this.storedData.push(array)
       this.storedData = this.storedData.flat();

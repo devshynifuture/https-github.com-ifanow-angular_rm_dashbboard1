@@ -460,7 +460,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
-      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccountId) : null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
       sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
@@ -828,8 +828,8 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'clientId': this.clientId,
         'advisorId': this.advisorId,
         'policyHolderId': this.otherAssetForm.value.getCoOwnerName[0].familyMemberId,
-        'policyStartDate': this.datePipe.transform(this.otherAssetForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        'policyExpiryDate': this.datePipe.transform(this.otherAssetForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        'startDate': this.datePipe.transform(this.otherAssetForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        'expiryDate': this.datePipe.transform(this.otherAssetForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         'cumulativeBonus': this.otherAssetForm.get('cumulativeBonus').value,
         'cumulativeBonusRupeesOrPercent': this.otherAssetForm.get('bonusType').value,
         'policyTypeId': this.otherAssetForm.get('PlanType').value,
@@ -894,7 +894,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
-              insuranceSubTypeId: this.inputData.insuranceSubTypeId,
+              insuranceSubTypeId: 11,
               id: this.dataForEdit ? this.dataForEdit.id : null,
               isAdded: false
             };
@@ -910,8 +910,8 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
-              insuranceSubTypeId: this.inputData.insuranceSubTypeId,
-              id: data,
+              insuranceSubTypeId: 11,
+              id: data.id,
               isAdded: true
             };
             this.close(insuranceData);
