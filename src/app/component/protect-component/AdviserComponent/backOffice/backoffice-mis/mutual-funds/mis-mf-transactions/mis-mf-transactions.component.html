@@ -105,7 +105,7 @@
                 <table matSort #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Investor name </th>
+                        <th class="br" mat-sort-header mat-header-cell *matHeaderCellDef sticky>Investor name </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(isLoading) ? '':element.ownerName}}
