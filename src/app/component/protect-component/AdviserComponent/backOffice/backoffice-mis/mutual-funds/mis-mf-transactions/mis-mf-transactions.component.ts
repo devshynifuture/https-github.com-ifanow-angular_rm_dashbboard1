@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -46,6 +46,7 @@ export class MisMfTransactionsComponent implements OnInit {
   maxDate = new Date();
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'scheme', 'folio', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
@@ -82,7 +83,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
 
   filterTransaction = [];
-  obj: { transactionTypeId: any[]; categoryId: any[]; dateObj: { begin: {}, end: {} }; parentId: {}; startFlag: {}; endFlag: {} };
+  obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {} };
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -95,7 +96,7 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.obj = { transactionTypeId: [], categoryId: [], dateObj: { begin: {}, end: {} }, parentId: {}, startFlag: {}, endFlag: {} }
+    this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {} }
     this.hasEndReached = true;
     this.getTransactionType()
     //this.mfTransaction.data = ELEMENT_DATA;
@@ -212,7 +213,8 @@ export class MisMfTransactionsComponent implements OnInit {
     console.log(list)
 
     if (list.dateFilterJson) {
-      this.obj.dateObj = list.dateFilterJson
+      this.obj.end = list.dateFilterJson.end
+      this.obj.begin = list.dateFilterJson.begin
     } else {
       list.forEach(element => {
         if (element.filterType == 'transactionType') {
@@ -246,9 +248,9 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (this.obj.dateObj.end != {}) {
-      this.obj.dateObj.end = moment(this.obj.dateObj.end).format('YYYY-MM-DD')
-      this.obj.dateObj.begin = moment(this.obj.dateObj.begin).format('YYYY-MM-DD')
+    if (this.obj.end != {} || this.obj.begin != {}) {
+      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
+      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
     }
     console.log('json', this.obj)
     let data = {}
@@ -266,8 +268,22 @@ export class MisMfTransactionsComponent implements OnInit {
     this.flag = value
   }
 
-  applyFilter(event) {
-
+  onSearchChange(event) {
+    console.log('key', event)
+    if (event.length > 3) {
+      let obj = {
+        searchFlag: this.flag,
+        search: event
+      }
+      this.backoffice.searchData(obj)
+        .subscribe(res => {
+          console.log('filtered json', res);
+          // this.isLoading = false
+          // this.mfTransaction = res
+        }, err => {
+          console.error(err);
+        })
+    }
   }
 
   getMfTransactionData(endFlag) {
@@ -284,6 +300,7 @@ export class MisMfTransactionsComponent implements OnInit {
         if (res) {
           this.isLoading = false
           this.mfTransaction.data = res
+          this.mfTransaction.sort = this.sort
         } else {
           this.isLoading = false
           this.mfTransaction.data = []

@@ -389,4 +389,7 @@ export class BackOfficeService {
   filterData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.FILTER_DATA, data);
   }
+  searchData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SEARCH_DATA, data);
+  }
 }

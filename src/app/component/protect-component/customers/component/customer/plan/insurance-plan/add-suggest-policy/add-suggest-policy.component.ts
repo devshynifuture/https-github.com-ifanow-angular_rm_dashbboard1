@@ -84,7 +84,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       frequency: [(this.dataForEdit ? this.dataForEdit.frequency + '' : ''), [Validators.required]],
       insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
       tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
-      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commencementDate)  : null), [Validators.required]],
+      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commenecedate)  : null), [Validators.required]],
     })
     if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;

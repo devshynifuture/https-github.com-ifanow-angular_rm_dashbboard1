@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-3 p-0 text-left" *ngIf="mfTransaction.data.length  != 0">
         <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
-            <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+            <input (input)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0" matInput
                 placeholder="Type to search data">
         </mat-form-field>
     </div>
@@ -102,7 +102,7 @@
     <div class="col-md-12">
         <div (scroll)="onWindowScroll($event)" *ngIf="mfTransaction.data.length  != 0">
             <div class="people-table-scroll fitScreen">
-                <table #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
+                <table matSort #tableEl mat-table [dataSource]="mfTransaction" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky>Investor name </th>
@@ -113,7 +113,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="scheme">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme Name
+                        <th class="br" mat-sort-header mat-header-cell *matHeaderCellDef sticky> Scheme Name
                         </th>
                         <td class="br text-left" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
@@ -122,7 +122,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="folio">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Folio Number
+                        <th class="br" mat-sort-header mat-header-cell *matHeaderCellDef sticky> Folio Number
                         </th>
                         <td class="br text-left" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
@@ -131,7 +131,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="tType">
-                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Transaction Type
+                        <th class="br" mat-sort-header mat-header-cell *matHeaderCellDef sticky> Transaction Type
                         </th>
                         <td class="br text-left" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
@@ -140,7 +140,8 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="tDate">
-                        <th class="br text-right" mat-header-cell *matHeaderCellDef sticky>Transaction Date
+                        <th class="br text-right" mat-sort-header mat-header-cell *matHeaderCellDef sticky>Transaction
+                            Date
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
