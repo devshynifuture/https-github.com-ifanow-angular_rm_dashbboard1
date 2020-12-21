@@ -184,6 +184,8 @@ export class MisMfTransactionsComponent implements OnInit {
     this.dateFilterAdded = true
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
+    this.obj.end = null
+    this.obj.begin = null
   }
 
   remove(item) {
