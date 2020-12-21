@@ -257,7 +257,7 @@ export class MisMfTransactionsComponent implements OnInit {
       }
     }
     this.isLoading = true
-    this.obj.parentId = 5435;
+    this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
     if (this.obj.end != {} || this.obj.begin != {}) {
@@ -273,11 +273,18 @@ export class MisMfTransactionsComponent implements OnInit {
     data = this.obj
     this.backoffice.filterData(data)
       .subscribe(res => {
-        console.log('filtered json', res);
-        this.isLoading = false
-        this.mfTransaction.data = res
+        if (res == 0) {
+          console.log('filtered json', res);
+        } else {
+          console.log('filtered json', res);
+          this.isLoading = false
+          this.mfTransaction.data = res
+        }
+
       }, err => {
         console.error(err);
+        this.isLoading = false
+        this.mfTransaction.data = []
       })
   }
   selectOption(value) {
