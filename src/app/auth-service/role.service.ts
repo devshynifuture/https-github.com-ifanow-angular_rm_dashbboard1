@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core/src/metadata/*';
-import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from '../services/util.service';
-import { AuthService } from "./authService";
-import { BehaviorSubject, Observable } from "rxjs";
+import {Router} from '@angular/router';
+import {Injectable} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from '../services/util.service';
+import {AuthService} from "./authService";
+import {BehaviorSubject, Observable} from "rxjs";
 
 
 @Injectable({
@@ -23,7 +23,9 @@ export class RoleService {
         this.allPermissionData.next(advisorRoleData);
         this.constructAdminDataSource(advisorRoleData);
       }
-      this.getRoleDetails(AuthService.getUserInfo().roleId, undefined);
+      if (AuthService.getUserInfo()) {
+        this.getRoleDetails(AuthService.getUserInfo().roleId, undefined);
+      }
     }
   }
 
@@ -95,8 +97,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: { add: true, edit: true, delete: true, download: true },
-      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
+      clientsCapability: {add: true, edit: true, delete: true, download: true},
+      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
     }
   };
   backofficePermission = {
@@ -120,8 +122,8 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: { add: true, download: true, edit: true, delete: true },
-      fileuploadsCapability: { download: true, add: true, edit: true, delete: true }
+      misCapability: {add: true, download: true, edit: true, delete: true},
+      fileuploadsCapability: {download: true, add: true, edit: true, delete: true}
     }
   };
   dashboardPermission = {
@@ -169,7 +171,7 @@ export class RoleService {
 
   getRoleDetails(roleId, callbackMethod: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
