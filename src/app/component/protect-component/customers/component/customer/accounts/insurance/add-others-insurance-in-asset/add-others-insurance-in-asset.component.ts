@@ -325,7 +325,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       sharePercentage: [data ? data.sumInsured : 0],
       familyMemberId: [data ? data.familyMemberId : 0],
       id: [data ? data.id : 0],
-      isClient: [data ? data.isClient : 0],
+      isClient: [data ? (data.familyMemberId == 0 ? 1 : 0) : 0],
       relationshipId: [data ? data.relationshipId : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
@@ -441,7 +441,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.PlanType : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
       deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null)],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
@@ -462,13 +462,14 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccountId) : null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
-      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
+      // sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
+        isClient:null,
         id: [0],
         relationshipId: [0]
       })]),
@@ -688,13 +689,13 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       clientId: [data ? data.clientId : ''],
       userType: [data ? data.userType : ''],
       isActive: [data ? data.isActive : ''],
-      isClient: [data ? data.isClient : ''],
+      isClient: [data ? (data.familyMemberId == 0 ? 1 : 0) : ''],
       isEdited: [data ? data.isEdited : ''],
       otherInsuranceId: [this.dataForEdit ? this.dataForEdit.id : null],
     }));
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
-    this.onChangeSetErrorsType(this.otherAssetForm.get('PlanType').value, 'planType')
+    // this.onChangeSetErrorsType(this.otherAssetForm.get('PlanType').value, 'planType')
   }
 
   removeTransaction(item, element) {
@@ -707,7 +708,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.getFamilyData(this.insuredMemberList);
     if (element.value.id) {
       this.customerService.deleteOtherMemberInsurance(element.value.id).subscribe(data => {
-
+        
       }
       )
     }
@@ -765,7 +766,9 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     });
   }
   getIndexOfSelectedElement(trn) {
-    trn.get('isEdited').setValue(1);
+    if(trn.get('id').value){
+      trn.get('isEdited').setValue(1);
+    }
   }
   preventDefault(e) {
     e.preventDefault();
@@ -847,7 +850,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'insurerName': this.otherAssetForm.get('insurerName').value,
         'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
         'premium': this.otherAssetForm.get('premium').value,
-        'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
+        // 'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : null,
         isClient:(this.otherAssetForm.value.getCoOwnerName[0].userType == 2) ? 1 : 0,
         otherInsuranceInsuredMembers: memberList,

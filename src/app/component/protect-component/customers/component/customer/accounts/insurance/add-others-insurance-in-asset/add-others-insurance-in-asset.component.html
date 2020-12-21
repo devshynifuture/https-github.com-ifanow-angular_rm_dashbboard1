@@ -70,8 +70,7 @@
                 <div class="col-md-7 p-0">
                     <h5 class="mb-4 f-14">Name </h5>
                 </div>
-                <div class="col-md-3 pr-0"
-                *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
+                <div class="col-md-3 pr-0">
                     <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
@@ -94,8 +93,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 pr-0"
-                        *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
+                    <div class="col-md-3 pr-0">
                         <div class="form-group iconRupess">
                             <mat-form-field>
                                 <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
@@ -123,7 +121,7 @@
 
         </div>
     </div>
-    <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
+    <!-- <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Sum insured</h5>
         </div>
@@ -139,7 +137,7 @@
                 </mat-form-field>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="row pt-40">
         <div class="col-md-4 pr-0 text-right ">
             <h5 class="mb-0 mt-28">Insured members</h5>
@@ -224,7 +222,7 @@
             <h5 class="m-0 pt-8">Plan type</h5>
         </div>
 
-        <div class="col-md-5">
+        <!-- <div class="col-md-5">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <mat-select autocomplete="true" (selectionChange)="onChangeSetErrorsType($event.value,'planType')"
@@ -234,6 +232,15 @@
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
+                </mat-form-field>
+            </div>
+        </div> -->
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input #PlanType [maxLength]="40" autocomplete="off" class="form-control br-0"
+                        formControlName="PlanType" matInput type="text">
+                    <mat-hint align="end" class="f-12">{{PlanType.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -354,7 +361,7 @@
                         <div class="col-md-7  p-0 form-group">
 
                             <mat-form-field>
-                                <mat-select matInput formControlName="addOns" autocomplete="true"
+                                <mat-select (selectionChange)="getIndexOfSelectedElement(obj)"  matInput formControlName="addOns" autocomplete="true"
                                     class="form-control br-0">
                                     <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                         {{option.add_on}}</mat-option> -->
@@ -442,7 +449,7 @@
 
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select matInput formControlName="feature" autocomplete="true" class="form-control br-0">
+                        <mat-select (selectionChange)="getIndexOfSelectedElement(obj)" matInput formControlName="feature" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                                     {{option.type}}</mat-option> -->
                             <mat-option value='15'>Emergency Medical Benefits</mat-option>
@@ -552,7 +559,7 @@
                 <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select (selectionChange)="disabledMember($event.value,'nominee')"
+                            <mat-select (selectionChange)="disabledMember($event.value,'nominee');getIndexOfSelectedElement(obj)"
                                 (valueChange1)='lisNominee($event)' [callMethod]='callMethod' [data]='ownerData'
                                 appOwnerNominee class="form-control br-0" formControlName="name" matInput>
                                 <mat-option disabled value=''>Select family members</mat-option>
