@@ -4,7 +4,7 @@ import { BackofficeFolioMappingService } from './bckoffice-folio-mapping.service
 import { AuthService } from './../../../../../auth-service/authService';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.component';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, switchMap } from 'rxjs/operators';
 // import { SwPush } from '@angular/service-worker';
@@ -20,7 +20,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   hasEndReached: boolean;
   infiniteScrollingFlag: boolean;
   finalUnmappedList: any = [];
-  isLoading: boolean = false;
+  isLoading = false;
   unmappedDataSource: any;
   parentId;
   limit = 300;
@@ -34,10 +34,10 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   searchForm: FormControl;
   isFromSearch = false;
   searchFormValue: any = '';
-  searchError: boolean = false;
-  searchErrorMessage: string = '';
+  searchError = false;
+  searchErrorMessage = '';
   finalUnmappedListSearch: any = [];
-  hasEndReachedSearch: boolean = false;
+  hasEndReachedSearch = false;
   advisorId;
   searchFormSubscription: any = null;
   isInfiniteScrollLoading = false;
@@ -68,7 +68,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         switchMap(value => this.getBackofficeFolioUnmapSearchQuery(value))
       ).subscribe(res => {
         if (res) {
-          this.changeDataTableAfterApi(res)
+          this.changeDataTableAfterApi(res);
         } else {
           this.isLoading = false;
           this.unmappedDataSource.data = [];
@@ -93,12 +93,12 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         offset: this.offsetList,
         limit: 300,
         searchQuery: value
-      }
+      };
       this.isFromSearch = true;
       this.isLoading = true;
       this.unmappedDataSource.data = ELEMENT_DATA;
       this.searchFormValue = value;
-      return this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data)
+      return this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data);
     } else {
       this.isFromSearch = false;
       this.finalUnmappedList = [];
@@ -109,7 +109,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         parentId: this.parentId,
         offset: 0,
         limit: 300
-      })
+      });
     }
   }
 
@@ -126,7 +126,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.searchFormSubscription) {
-      this.searchFormSubscription.unsubscribe()
+      this.searchFormSubscription.unsubscribe();
     }
   }
 
@@ -142,7 +142,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
       if (this.unmappedDataSource.data) {
         this.unmappedDataSource.data.forEach((row, index) => {
           this.selectedFolioCount++;
-          this.selection.select(row)
+          this.selection.select(row);
         });
       } else {
         this.selection.clear();
@@ -166,21 +166,21 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         if (!this.hasEndReachedSearch) {
           this.infiniteScrollingFlag = true;
           this.hasEndReachedSearch = true;
-          let data = {
+          const data = {
             parentId: this.parentId,
             searchQuery: this.searchFormValue,
             offset: this.offsetList,
             limit: 300
-          }
+          };
           this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data)
             .subscribe(res => {
               if (res) {
                 this.changeDataTableAfterApi(res);
               } else {
                 this.searchError = true;
-                this.searchErrorMessage = "No Data Found";
+                this.searchErrorMessage = 'No Data Found';
               }
-            })
+            });
           // this.getMutualFundFolioList(this.finalUnmappedListSearch.length);
         }
       } else if (!this.isFromSearch) {
@@ -198,7 +198,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
       parentId: this.parentId,
       offset,
       limit: 300
-    }
+    };
     this.isInfiniteScrollLoading = true;
     this.backOfcFolioMapService.getMutualFundUnmapFolio(data)
       .subscribe(res => this.changeDataTableAfterApi(res),
@@ -206,7 +206,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
           console.error(err);
           this.isInfiniteScrollLoading = false;
           this.unmappedDataSource.data = [];
-        })
+        });
   }
 
   changeDataTableAfterApi(res) {
