@@ -68,7 +68,7 @@
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
                         <div class="bar">{{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td *matFooterCellDef class=" " mat-footer-cell>
+                    <td *matFooterCellDef class=" " mat-footer-cell class="bl-1">
                         <div class="bar"></div>
                     </td>
                 </ng-container>
@@ -190,7 +190,7 @@
                         </mat-menu>
 
                     </td>
-                    <td *matFooterCellDef mat-footer-cell></td>
+                    <td *matFooterCellDef mat-footer-cell class="br"></td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns7; sticky: true" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns7;" mat-row></tr>
