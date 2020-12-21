@@ -1052,6 +1052,21 @@ export class InsuranceComponent implements OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
+        }else if(subTypeId == 11){
+          this.dataLoaded = true;
+          (this.showInsurance == 'General') ? this.insuranceSubTypeId = 0 : this.insuranceSubTypeId = subTypeId;
+          this.cusService.deleteOtherInsurance(data.id).subscribe(
+            data => {
+              this.dataLoaded = false;
+              let reposne = this.deleteIdOfInsurance(this.deletedId);
+              this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+              dialogRef.close();
+              // this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+              this.loadApiAndData = this.loadAndGetData(this.insuranceSubTypeId, 'generalInsurance');
+              this.getGeneralInsuranceDataRes(this.loadApiAndData);
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
         } else {
           this.dataLoaded = true;
           (this.showInsurance == 'General') ? this.insuranceSubTypeId = 0 : this.insuranceSubTypeId = subTypeId;
