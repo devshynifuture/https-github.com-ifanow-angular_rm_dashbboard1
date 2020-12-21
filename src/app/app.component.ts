@@ -15,10 +15,10 @@ import { RoutingState } from './services/routing-state.service';
 import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { ConnectionService } from 'ng-connection-service';
 import { interval } from 'rxjs';
-import { OnInit } from "@angular/core/src/metadata/*";
+import { OnInit } from '@angular/core/src/metadata/*';
 import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
 import { AuthService } from './auth-service/authService';
-import { EnumDataService } from "./services/enum-data.service";
+import { EnumDataService } from './services/enum-data.service';
 import { LoginService } from './component/no-protected/login/login.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   setNewTime: any;
 
   ngOnInit() {
-    this.getDoaminData(document.location.hostname)
+    this.getDomainData(document.location.hostname);
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'
@@ -46,20 +46,20 @@ export class AppComponent implements AfterViewInit, OnInit {
     // this.setValuesAsPerDomain(domainData);
   }
 
-  getDoaminData(data) {
+  getDomainData(data) {
     const obj = {
       hostName: data
-    }
+    };
     this.settingService.getDomainData(obj).subscribe(data => {
       if (data) {
         console.log(data);
-        AuthService.setDomainDetails(data)
-        this.setValuesAsPerDomain(data)
+        AuthService.setDomainDetails(data);
+        this.setValuesAsPerDomain(data);
       }
     },
       err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   setValuesAsPerDomain(data) {
