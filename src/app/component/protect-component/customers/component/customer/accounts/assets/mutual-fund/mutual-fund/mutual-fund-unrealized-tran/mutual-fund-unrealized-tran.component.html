@@ -19,9 +19,9 @@
                <!-- DOne for bulk email -->
             </div>
             <mat-menu #menu1="matMenu" class="disabledOpacity">
-               <span (click)="generatePdf()" mat-menu-item>PDF
-               </span>
-               <span (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</span>
+               <button (click)="generatePdf()" mat-menu-item>PDF
+               </button>
+               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>
@@ -465,18 +465,18 @@
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
                               matTooltipPosition="below">
-                              <span (click)="openMutualEditFund('editTransaction',element)"
+                              <button (click)="openMutualEditFund('editTransaction',element)"
                                  [disabled]="element.rtTypeId !== 14" mat-menu-item>Edit
                                  Transaction
-                              </span>
+                              </button>
                            </div>
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'"
                               matTooltipPosition="below">
-                              <span (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtTypeId !== 14"
+                              <button (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtTypeId !== 14"
                                  mat-menu-item>Delete
                                  Transaction
-                              </span>
+                              </button>
                            </div>
                            <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
           Transaction
