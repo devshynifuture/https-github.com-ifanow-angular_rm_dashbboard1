@@ -219,12 +219,12 @@ export class MisMfTransactionsComponent implements OnInit {
       list.forEach(element => {
         if (element.filterType == 'transactionType') {
           if (this.obj.transactionTypeId.length == 0) {
-            this.obj.transactionTypeId.push(element)
+            this.obj.transactionTypeId.push(element.id)
 
           } else {
             this.obj.transactionTypeId.forEach(ele => {
               if (element.id != ele.id) {
-                this.obj.transactionTypeId.push(element)
+                this.obj.transactionTypeId.push(element.id)
 
               }
             })
@@ -232,12 +232,12 @@ export class MisMfTransactionsComponent implements OnInit {
 
         } else if (element.filterType == 'category') {
           if (this.obj.categoryId.length == 0) {
-            this.obj.categoryId.push(element)
+            this.obj.categoryId.push(element.id)
 
           } else {
             this.obj.categoryId.forEach(ele => {
               if (element.id != ele.id) {
-                this.obj.categoryId.push(element)
+                this.obj.categoryId.push(element.id)
               }
             })
           }

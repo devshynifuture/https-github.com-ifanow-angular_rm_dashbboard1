@@ -16,7 +16,7 @@
             <div class="people-table-scroll fitScreen">
                 <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
-                    <ng-container matColumnDef="name">
+                    <ng-container matColumnDef="mfoverview">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Sr no. </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <div class="bar">
@@ -33,7 +33,7 @@
                         </td>
                     </ng-container>
                     <!-- Name Column -->
-                    <ng-container matColumnDef="mfoverview">
+                    <ng-container matColumnDef="pan">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Reason
                         </th>
                         <td class="br text-left" mat-cell *matCellDef="let element">
@@ -42,7 +42,7 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="pan">
+                    <ng-container matColumnDef="date">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> PAN no
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
@@ -69,7 +69,7 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="date">
+                    <ng-container matColumnDef="date1">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Date
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
