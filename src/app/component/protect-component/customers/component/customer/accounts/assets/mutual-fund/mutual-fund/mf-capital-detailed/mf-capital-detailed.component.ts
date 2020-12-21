@@ -198,6 +198,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.toDateYear = this.changedData.toDateYear;
       this.toDate = new Date(this.toDateYear, 2, 31);
       this.grandFatheringEffect = (this.changedData.grandfatheringEffect == 1) ? this.grandFatheringEffect = true : this.grandFatheringEffect = false;;
+      this.rightFilterData=this.changedData.filterDataForCapital
       this.getDetailedData(this.changedData.mfListData);
 
     }
