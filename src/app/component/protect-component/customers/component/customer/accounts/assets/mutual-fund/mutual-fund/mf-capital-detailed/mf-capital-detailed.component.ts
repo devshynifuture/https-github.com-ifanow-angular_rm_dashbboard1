@@ -338,7 +338,7 @@ export class MfCapitalDetailedComponent implements OnInit {
           if (element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
             || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv' || element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced') {
             equityFund.push(element);
-          } else if (element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
+          } else if (element.subCategoryName == 'Hybrid - Conservative Hybrid Fund' || element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
             debtFund.push(element);
           } else {
             equityFund.push(element);
@@ -449,6 +449,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
             // let financialyear = this.MfServiceService.getYearFromDate(obj.transactionDate)
             let trnDate = new Date(obj.transactionDate)
+            trnDate.setHours(0,0,0,0)
             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
 
               if (obj.purchaceAgainstRedemptionTransactions || (obj.purchaceAgainstRedemptionTransactions) ? obj.purchaceAgainstRedemptionTransactions.length > 0 : obj.purchaceAgainstRedemptionTransactions) {
@@ -462,6 +463,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                   ele.indexGain = totalObj.indexGain;
                   ele.indexLoss = totalObj.indexLoss;
                   let purchaseTrnDate = new Date(ele.transactionDate)
+                  purchaseTrnDate.setHours(0,0,0,0)
                   if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
                     ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
                     // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
@@ -681,6 +683,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
             let trnDate = new Date(ele.transactionDate)
+            trnDate.setHours(0,0,0,0)
             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
               if (ele.fwTransactionType == 'Dividend Payout') {
                 ele.dividendPayout = ele.amount

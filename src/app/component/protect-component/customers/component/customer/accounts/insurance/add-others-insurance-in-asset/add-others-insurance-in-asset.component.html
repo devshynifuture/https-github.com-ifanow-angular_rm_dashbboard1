@@ -82,7 +82,7 @@
                     <div class="col-md-7  p-0">
                         <div class="form-group  ">
                             <mat-form-field>
-                                <mat-select (selectionChange)="getFamilyData(insuredMemberList)" autocomplete="true"
+                                <mat-select (selectionChange)="getFamilyData(insuredMemberList);getIndexOfSelectedElement(obj)"  autocomplete="true"
                                     class="form-control br-0" formControlName="insuredMembers" matInput>
                                     <mat-option *ngFor="let option of insuredMemberList;index as i"
                                         [disabled]="option.isDisabled" [value]="option.userName">

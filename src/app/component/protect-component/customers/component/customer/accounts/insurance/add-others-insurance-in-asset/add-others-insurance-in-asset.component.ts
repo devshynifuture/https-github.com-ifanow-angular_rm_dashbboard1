@@ -215,7 +215,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       id: [data ? data.id : ''],
       isActive: [data ? data.isActive : ''],
       isEdited: [data ? data.isEdited : ''],
-      otherInsuranceId: [data ? data.otherInsuranceId : ''],
+      otherInsuranceId: [this.dataForEdit ? this.dataForEdit.id : null],
     }));
   }
   removeNewAddOns(item, element) {
@@ -236,7 +236,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       id: [data ? data.id : null],
       isDeleted: [data ? data.isDeleted: null],
       isEdited: [data ? data.isEdited  : null],
-      otherInsuranceId: [data ? data.otherInsuranceId : null],
+      otherInsuranceId: [this.dataForEdit ? this.dataForEdit.id : null],
     }));
   }
   removeNewFeature(item, element) {
@@ -690,7 +690,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       isActive: [data ? data.isActive : ''],
       isClient: [data ? data.isClient : ''],
       isEdited: [data ? data.isEdited : ''],
-      otherInsuranceId: [data ? data.otherInsuranceId : ''],
+      otherInsuranceId: [this.dataForEdit ? this.dataForEdit.id : null],
     }));
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
@@ -764,6 +764,9 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
 
     });
   }
+  getIndexOfSelectedElement(trn) {
+    trn.get('isEdited').setValue(1);
+  }
   preventDefault(e) {
     e.preventDefault();
   }
@@ -784,7 +787,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         isActive: (element.get('isActive').value) ? element.get('isActive').value : 0,
         isClient: (element.get('isClient').value) ? element.get('isClient').value : 0,
         isEdited: (element.get('isEdited').value) ? element.get('isEdited').value : 0,
-        otherInsuranceId: (element.get('otherInsuranceId').value) ? element.get('otherInsuranceId').value : null
+        otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null
       };
       memberList.push(obj);
     });
@@ -798,7 +801,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
           id: element.get('id').value ? element.get('id').value : 0,
           isActive: element.get('isActive').value ? element.get('isActive').value : 0,
           isEdited: element.get('isEdited').value ?element.get('isEdited').value:0,
-          otherInsuranceId: element.get('otherInsuranceId').value ? element.get('otherInsuranceId').value:0,
+          otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null,
           sumInsured: element.get('sumInsured').value ? element.get('sumInsured').value :0,
         }
         addOns.push(obj)
@@ -814,7 +817,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
           id: element.get('id').value ? element.get('id').value : 0,
           isDeleted: element.get('isDeleted').value ? element.get('isDeleted').value : 0,
           isEdited: element.get('isEdited').value ? element.get('isEdited').value : 0,
-          otherInsuranceId: element.get('otherInsuranceId').value ? element.get('otherInsuranceId').value : 0,
+          otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null,
         }
         featureList.push(obj)
       }
