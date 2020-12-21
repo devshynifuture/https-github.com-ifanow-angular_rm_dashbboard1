@@ -337,7 +337,7 @@ export class InsuranceComponent implements OnInit {
     if (this.finPlanObj) {
       this.dataLoaded = true
     }
-    if(insuranceSubTypeId == 11){
+    if(insuranceSubTypeId === 11){
       delete obj.insuranceTypeId;
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
       if (this.loadApiAndData.dataLoaded) {
@@ -346,7 +346,7 @@ export class InsuranceComponent implements OnInit {
         }
         this.cusService.getOtherInsurance(obj).subscribe(
           data => {
-            this.filterOtherData(data);
+            data =  this.filterOtherData(data);
             this.checkAndPush(data);
             if (!this.insuranceId) {
               this.getGeneralInsuranceDataRes(data);
@@ -366,7 +366,8 @@ export class InsuranceComponent implements OnInit {
       } else {
         this.getGeneralInsuranceDataRes(this.loadApiAndData);
       }
-    }else if (insuranceId == 1) {
+    }
+     if(insuranceId === 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
       if (this.loadApiAndData.dataLoaded) {
         if (this.isAdded == undefined) {
@@ -391,7 +392,6 @@ export class InsuranceComponent implements OnInit {
       } else {
         this.getInsuranceDataResponse(this.loadApiAndData);
       }
-
     } else {
       delete obj.insuranceTypeId;
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
@@ -426,7 +426,9 @@ export class InsuranceComponent implements OnInit {
   }
   filterOtherData(data){
     if(data){
-      data.forEach(element => {
+      let otherData = data.otherInsuranceList;
+      otherData.forEach(element => {
+        element.insuranceSubTypeId = 11;
         element.premiumAmount = element.premium;
         element.policyStartDate = element.startDate;
         element.policyExpiryDate = element.expiryDate;
@@ -440,7 +442,7 @@ export class InsuranceComponent implements OnInit {
     }else{
       data = [];
     }
-
+    return data;
   }
   filteInsuredMember(data){
     data.forEach(element => {
@@ -468,8 +470,10 @@ export class InsuranceComponent implements OnInit {
   }
   checkAndPush(data) {
     if (data && this.isAdded == undefined) {
-      let array = data ? (data.insuranceList ? data.insuranceList : data.generalInsuranceList) : data.insuranceList;
-      array = array.filter(d => d.realOrFictitious === 1);
+      let array = data ? (data.otherInsuranceList ? data.otherInsuranceList : (data.insuranceList ? data.insuranceList : data.generalInsuranceList)) : data.insuranceList;
+      if(!data.otherInsuranceList){
+        array = array.filter(d => d.realOrFictitious === 1);
+      }
       array = [...new Map(array.map(item => [item.id, item])).values()];
       this.globalArray.push(array);
       this.globalArray = this.globalArray.flat();
@@ -840,9 +844,9 @@ export class InsuranceComponent implements OnInit {
   getGeneralInsuranceDataRes(data) {
     console.log('getGeneralInsuranceDataRes data : ', data);
     if (data) {
-      this.dataSourceGeneralInsurance.data = data.generalInsuranceList;
-      if (data.generalInsuranceList) {
-        data.generalInsuranceList.forEach(singleInsuranceData => {
+      this.dataSourceGeneralInsurance.data = data.generalInsuranceList ? data.generalInsuranceList : data.otherInsuranceList;
+      if (this.dataSourceGeneralInsurance.data) {
+        this.dataSourceGeneralInsurance.data.forEach(singleInsuranceData => {
           if (singleInsuranceData.insuredMembers && singleInsuranceData.insuredMembers.length > 0) {
             singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;
             if (singleInsuranceData.insuredMembers.length > 1) {
