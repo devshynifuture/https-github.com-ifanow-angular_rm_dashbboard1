@@ -7,8 +7,7 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
-         *ngIf="!isLoading ">
+      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading ">
          <!-- && (unrealisedArray.length > 0 || dataSource.data.length > 0) -->
          <div class="pdfClass">
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" (click)="isDisabledOpacity==true"
@@ -20,9 +19,9 @@
                <!-- DOne for bulk email -->
             </div>
             <mat-menu #menu1="matMenu" class="disabledOpacity">
-               <button (click)="generatePdf()" mat-menu-item>PDF
-               </button>
-               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+               <span (click)="generatePdf()" mat-menu-item>PDF
+               </span>
+               <span (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</span>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>
@@ -466,18 +465,18 @@
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
                               matTooltipPosition="below">
-                              <button (click)="openMutualEditFund('editTransaction',element)"
+                              <span (click)="openMutualEditFund('editTransaction',element)"
                                  [disabled]="element.rtTypeId !== 14" mat-menu-item>Edit
                                  Transaction
-                              </button>
+                              </span>
                            </div>
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'"
                               matTooltipPosition="below">
-                              <button (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtTypeId !== 14"
+                              <span (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtTypeId !== 14"
                                  mat-menu-item>Delete
                                  Transaction
-                              </button>
+                              </span>
                            </div>
                            <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
           Transaction

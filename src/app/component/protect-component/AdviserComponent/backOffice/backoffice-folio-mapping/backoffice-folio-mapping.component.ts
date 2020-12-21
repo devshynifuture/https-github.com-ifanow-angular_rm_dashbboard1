@@ -1,12 +1,13 @@
-import { FormControl } from '@angular/forms';
-import { EventService } from './../../../../../Data-service/event.service';
-import { BackofficeFolioMappingService } from './bckoffice-folio-mapping.service';
-import { AuthService } from './../../../../../auth-service/authService';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.component';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
-import { SelectionModel } from '@angular/cdk/collections';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
+import {BackofficeFolioMappingService} from './bckoffice-folio-mapping.service';
+import {AuthService} from './../../../../../auth-service/authService';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {SelectFolioMapComponent} from './select-folio-map/select-folio-map.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+import {debounceTime, switchMap} from 'rxjs/operators';
+import {EnumDataService} from "../../../../../services/enum-data.service";
+
 // import { SwPush } from '@angular/service-worker';
 
 @Component({
@@ -20,33 +21,34 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   hasEndReached: boolean;
   infiniteScrollingFlag: boolean;
   finalUnmappedList: any = [];
-  isLoading: boolean = false;
+  isLoading = false;
   unmappedDataSource: any;
   parentId;
   limit = 300;
   selection = new SelectionModel<any>(true, []);
   offset = 0;
   offsetList = 0;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('unmappedTableSort', { static: false }) unmappedTableSort: MatSort;
+  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('unmappedTableSort', {static: false}) unmappedTableSort: MatSort;
   selectedFolioCount: any = 0;
   showMappingBtn = false;
   searchForm: FormControl;
   isFromSearch = false;
   searchFormValue: any = '';
-  searchError: boolean = false;
-  searchErrorMessage: string = '';
+  searchError = false;
+  searchErrorMessage = '';
   finalUnmappedListSearch: any = [];
-  hasEndReachedSearch: boolean = false;
+  hasEndReachedSearch = false;
   advisorId;
   searchFormSubscription: any = null;
   isInfiniteScrollLoading = false;
 
   constructor(
     private backOfcFolioMapService: BackofficeFolioMappingService,
-    private eventService: EventService,
+    private enumDataService: EnumDataService,
     public dialog: MatDialog,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.initPoint();
@@ -68,7 +70,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         switchMap(value => this.getBackofficeFolioUnmapSearchQuery(value))
       ).subscribe(res => {
         if (res) {
-          this.changeDataTableAfterApi(res)
+          this.changeDataTableAfterApi(res);
         } else {
           this.isLoading = false;
           this.unmappedDataSource.data = [];
@@ -93,12 +95,16 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         offset: this.offsetList,
         limit: 300,
         searchQuery: value
-      }
+      };
       this.isFromSearch = true;
       this.isLoading = true;
       this.unmappedDataSource.data = ELEMENT_DATA;
       this.searchFormValue = value;
-      return this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data)
+      if (this.enumDataService.PRODUCTION) {
+        return this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data);
+      } else {
+        return this.backOfcFolioMapService.getMutualFundAllFolioSearchQuery(data);
+      }
     } else {
       this.isFromSearch = false;
       this.finalUnmappedList = [];
@@ -109,7 +115,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         parentId: this.parentId,
         offset: 0,
         limit: 300
-      })
+      });
     }
   }
 
@@ -126,7 +132,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.searchFormSubscription) {
-      this.searchFormSubscription.unsubscribe()
+      this.searchFormSubscription.unsubscribe();
     }
   }
 
@@ -142,7 +148,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
       if (this.unmappedDataSource.data) {
         this.unmappedDataSource.data.forEach((row, index) => {
           this.selectedFolioCount++;
-          this.selection.select(row)
+          this.selection.select(row);
         });
       } else {
         this.selection.clear();
@@ -166,21 +172,26 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         if (!this.hasEndReachedSearch) {
           this.infiniteScrollingFlag = true;
           this.hasEndReachedSearch = true;
-          let data = {
+          const data = {
             parentId: this.parentId,
             searchQuery: this.searchFormValue,
             offset: this.offsetList,
             limit: 300
+          };
+          let apiObs;
+          if (this.enumDataService.PRODUCTION) {
+            apiObs = this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data);
+          } else {
+            apiObs = this.backOfcFolioMapService.getMutualFundAllFolioSearchQuery(data);
           }
-          this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data)
-            .subscribe(res => {
-              if (res) {
-                this.changeDataTableAfterApi(res);
-              } else {
-                this.searchError = true;
-                this.searchErrorMessage = "No Data Found";
-              }
-            })
+          apiObs.subscribe(res => {
+            if (res) {
+              this.changeDataTableAfterApi(res);
+            } else {
+              this.searchError = true;
+              this.searchErrorMessage = 'No Data Found';
+            }
+          });
           // this.getMutualFundFolioList(this.finalUnmappedListSearch.length);
         }
       } else if (!this.isFromSearch) {
@@ -198,7 +209,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
       parentId: this.parentId,
       offset,
       limit: 300
-    }
+    };
     this.isInfiniteScrollLoading = true;
     this.backOfcFolioMapService.getMutualFundUnmapFolio(data)
       .subscribe(res => this.changeDataTableAfterApi(res),
@@ -206,7 +217,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
           console.error(err);
           this.isInfiniteScrollLoading = false;
           this.unmappedDataSource.data = [];
-        })
+        });
   }
 
   changeDataTableAfterApi(res) {
@@ -267,7 +278,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
 
-      data: { selectedFolios: data, type: 'backoffice' }
+      data: {selectedFolios: data, type: 'backoffice'}
     });
 
 
@@ -295,16 +306,16 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
+  {position: '', schemeName: '', number: '', investName: ''},
 ];

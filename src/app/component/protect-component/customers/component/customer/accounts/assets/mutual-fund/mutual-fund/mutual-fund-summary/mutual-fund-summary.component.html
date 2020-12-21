@@ -31,8 +31,8 @@
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu1="matMenu">
-                <button (click)="generatePdf()" mat-menu-item>PDF</button>
-                <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
+                <span (click)="generatePdf()" mat-menu-item>PDF</span>
+                <span (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</span>
             </mat-menu>
             <mat-spinner class="mr-10" [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             <!-- </div> -->
@@ -334,18 +334,18 @@
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
     factsheet</button> -->
 
-                                <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
-                                <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
-                                <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
-                                    online</button>
-                                <button mat-menu-item (click)="orderSOA(element)"
+                                <span mat-menu-item (click)="openFolioMaster(element)">Folio master details</span>
+                                <span mat-menu-item (click)="openSipDetails(element)">SIP details</span>
+                                <span mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
+                                    online</span>
+                                <span mat-menu-item (click)="orderSOA(element)"
                                     *ngIf="element.rtMasterId === 1 || element.rtMasterId === 2">
                                     Order SOA
-                                </button>
+                                </span>
 
-                                <button mat-menu-item class="bt-1"
+                                <span mat-menu-item class="bt-1"
                                     (click)="openUpperFragment('addTransaction', element)">View
-                                    transactions</button>
+                                    transactions</span>
                                 <!-- <div [matTooltip]="'To Add Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openUpperFragment('addTransaction', element)">Add
     transaction</button>
@@ -357,16 +357,16 @@
                                 <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
                                     [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
-                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+                                    <span mat-menu-item [disabled]="element.rtMasterId !== 14"
                                         (click)="openMutualEditFund('editMutualFund',element)">Edit
-                                        Mutual Fund</button>
+                                        Mutual Fund</span>
                                 </div>
                                 <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
                                     [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
-                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+                                    <span mat-menu-item [disabled]="element.rtMasterId !== 14"
                                         (click)="deleteModal('mutualFund', element)">Delete Mutual
-                                        Fund</button>
+                                        Fund</span>
                                 </div>
 
                             </mat-menu>
