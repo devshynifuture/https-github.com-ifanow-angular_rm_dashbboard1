@@ -254,7 +254,7 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}
+                                            <span *ngIf="!isLoading">{{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -421,7 +421,7 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}
+                                            <span *ngIf="!isLoading">{{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}</span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
