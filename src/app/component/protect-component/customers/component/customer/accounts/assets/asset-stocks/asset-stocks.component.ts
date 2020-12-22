@@ -55,6 +55,8 @@ export class AssetStocksComponent implements OnInit {
   clientData: any;
   getOrgData: any;
   userInfo: any;
+  othersChartColor: any = '#A0AEB4'
+  chartColour: any = ['#008FFF', '#5DC644', '#FFC100', '#FF6823']
   constructor(private ref: ChangeDetectorRef, public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
     private cusService: CustomerService, private eventService: EventService, private stockPDF: StockPdfService) {
   }
@@ -107,44 +109,45 @@ export class AssetStocksComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
-        data: [
-          {
-            name: 'Banking',
-            y: data.Banks ? data.Banks.perrcentage : 0,
-            color: '#008FFF',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Information technology',
-            y: data.Information_Technology ? data.Information_Technology.perrcentage : 0,
-            color: '#5DC644',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'FMCG',
-            y: data.fmcg ? data.fmcg.perrcentage : 0,
-            color: '#FFC100',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Other',
-            y: data.OTHERS ? data.OTHERS.perrcentage : 0,
-            color: '#A0AEB4',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Auto ancillaries',
-            y: data.Auto_Ancillaries ? data.Auto_Ancillaries.perrcentage : 0,
-            color: '#FF6823',
-            dataLabels: {
-              enabled: false
-            }
-          }
-        ]
+        data: data
+        // [
+        //   {
+        //     name: 'Banking',
+        //     y: data.Banks ? data.Banks.perrcentage : 0,
+        //     color: '#008FFF',
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   }, {
+        //     name: 'Information technology',
+        //     y: data.Information_Technology ? data.Information_Technology.perrcentage : 0,
+        //     color: '#5DC644',
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   }, {
+        //     name: 'FMCG',
+        //     y: data.fmcg ? data.fmcg.perrcentage : 0,
+        //     color: '#FFC100',
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   }, {
+        //     name: 'Other',
+        //     y: data.OTHERS ? data.OTHERS.perrcentage : 0,
+        //     color: '#A0AEB4',
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   }, {
+        //     name: 'Auto ancillaries',
+        //     y: data.Auto_Ancillaries ? data.Auto_Ancillaries.perrcentage : 0,
+        //     color: '#FF6823',
+        //     dataLabels: {
+        //       enabled: false
+        //     }
+        //   }
+        // ]
       }]
     });
   }
@@ -197,6 +200,7 @@ export class AssetStocksComponent implements OnInit {
     // this.stockPDF.generatePdf(rows, cate, sum);
   }
   @Output() changeCount = new EventEmitter();
+  chartData: any = [];
   getStocksData() {
     this.isLoading = true;
     this.portfolioData = [{ stockListGroup: [{}, {}, {}] }, { stockListGroup: [{}, {}, {}] }, { stockListGroup: [{}, {}, {}] }]
@@ -208,9 +212,24 @@ export class AssetStocksComponent implements OnInit {
 
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
+        let i = 0
         this.getStocksDataRes(data);
+        this.chartData = [];
+        for (const [c, e] of Object.entries(data.newGraphData)) {
+          let obj = Object.assign({ e });
+          this.chartData.push({
+            name: c,
+            y: obj.e.perrcentage,
+            a: obj.e.currentValue,
+            color: c == "OTHERS" ? this.othersChartColor : this.chartColour[i],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          ++i;
+        }
         setTimeout(() => {
-          this.pieChart(data.categories);
+          this.pieChart(this.chartData);
         }, 1000);
         this.isLoading = false;
       },
