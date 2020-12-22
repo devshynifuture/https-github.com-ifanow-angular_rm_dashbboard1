@@ -1,0 +1,17 @@
+.notesScroll {
+    max-height: calc(100vh - 9rem);
+   overflow-y: scroll;  
+   padding-bottom: 50px;
+}
+
+.scorllable::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .scorllable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .notesScroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

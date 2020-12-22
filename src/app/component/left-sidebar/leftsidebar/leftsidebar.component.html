@@ -80,10 +80,9 @@
   routerLink="/admin/activies/plans">
   <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
   </a> -->
-              <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/notes">
-                  <span *ngIf="showTabs" class="title" mat-line>Notes</span>
-              </a> -->
+              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/notes">
+                <span *ngIf="showTabs" class="title" mat-line>Notes</span>
+              </a>
               <a *ngIf="roleService.activityPermission.subModule.tasks.enabled" class="sidenav-link"
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
