@@ -904,7 +904,7 @@ export class InsuranceComponent implements OnInit {
             element.sumAssured = this.sumAssured;
           }
           if (element.sumAssured == 0) {
-            element.sumAssured = element.sumInsuredIdv;
+            element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
           }
         } else {
           element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv :element.sumAssured ;
