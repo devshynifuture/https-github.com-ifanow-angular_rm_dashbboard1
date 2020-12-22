@@ -1,8 +1,10 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo"
-           src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <div class="logoWrap">
+        <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+        <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
+      </div>
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -33,12 +35,11 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.TEXT_ONLY" [matAutocomplete]="auto1"
-                     appInputValueValidation class="form-control" formControlName="clientName" matInput
-                     maxlength="30" placeholder="Start typing to see nominee name" type="text">
+              <input [inputValidator]="validatorType.TEXT_ONLY" [matAutocomplete]="auto1" appInputValueValidation
+                class="form-control" formControlName="clientName" matInput maxlength="30"
+                placeholder="Start typing to see nominee name" type="text">
               <mat-autocomplete #auto1="matAutocomplete">
-                <mat-option (click)="selectedFamily(fm)" *ngFor="let fm of familyClientList"
-                            [value]="fm.name">
+                <mat-option (click)="selectedFamily(fm)" *ngFor="let fm of familyClientList" [value]="fm.name">
                   {{fm.name}} </mat-option>
               </mat-autocomplete>
               <mat-error class="f-12">This field is required</mat-error>
@@ -51,10 +52,9 @@
           </div>
           <div class="col-md-3 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input #panNumber [inputValidator]="validatorType.ALPHA_NUMERIC"
-                     (input)="capitalise($event)" [upperCaseOnly]="true" appInputValueValidation
-                     class="form-control" formControlName="panNumber" matInput maxlength="10"
-                     placeholder="Enter Pan Number" type="text">
+              <input #panNumber [inputValidator]="validatorType.ALPHA_NUMERIC" (input)="capitalise($event)"
+                [upperCaseOnly]="true" appInputValueValidation class="form-control" formControlName="panNumber" matInput
+                maxlength="10" placeholder="Enter Pan Number" type="text">
               <mat-hint align="end" class=" text-custom">
                 {{panNumber.value.length}} / 10
               </mat-hint>
@@ -73,8 +73,8 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input #fatherName [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
-                     appInputValueValidation class="form-control" formControlName="fatherName" matInput
-                     placeholder="Enter Father/Spouse name" type="text">
+                appInputValueValidation class="form-control" formControlName="fatherName" matInput
+                placeholder="Enter Father/Spouse name" type="text">
               <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -86,8 +86,8 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input #motherName [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
-                     appInputValueValidation class="form-control" formControlName="motherName" matInput
-                     placeholder="Enter Mother name" type="text">
+                appInputValueValidation class="form-control" formControlName="motherName" matInput
+                placeholder="Enter Mother name" type="text">
               <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -98,8 +98,8 @@
           </div>
           <div class="col-md-3 form-group">
             <mat-form-field class="ba-date">
-              <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0"
-                     formControlName="dateOfBirth" matInput>
+              <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0" formControlName="dateOfBirth"
+                matInput>
               <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error>This field is required</mat-error>
@@ -113,7 +113,7 @@
           <div class="col-md-3 form-group">
             <mat-form-field class="ba-date">
               <input [matDatepicker]="picker2" [max]="maxDateForAdultDob" class="form-control b-0"
-                     formControlName="guardianDateOfBirth" matInput>
+                formControlName="guardianDateOfBirth" matInput>
               <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
               <mat-error>This field is required</mat-error>
@@ -125,8 +125,7 @@
             <h3 class="f-16   m-0"> Gender</h3>
           </div>
           <div class="col-md-8 disabledCursor">
-            <mat-radio-group aria-label="Select an option" class="genderRadioButton"
-                             formControlName="gender">
+            <mat-radio-group aria-label="Select an option" class="genderRadioButton" formControlName="gender">
               <mat-radio-button
                 [ngClass]="personalDetails.get('gender').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
                 class="f-14" value="1">
@@ -207,13 +206,13 @@
 
   <div class="col-md-5 center_menu">
     <a (click)="SendToForm('first',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
+      [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
       First holder </a>
     <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p"> Second
+      [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p"> Second
       holder </a>
     <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
+      [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
       {{thirdHolderButtonLabel}}</a>
   </div>
 
@@ -224,7 +223,7 @@ PREVIOUS
 </button> -->
 
     <button (click)="SendToForm(holder.type,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            mat-button>NEXT
+      mat-button>NEXT
     </button>
 
   </div>
