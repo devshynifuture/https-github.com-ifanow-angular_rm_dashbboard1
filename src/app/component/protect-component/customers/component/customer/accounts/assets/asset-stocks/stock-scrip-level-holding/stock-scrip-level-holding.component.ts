@@ -54,7 +54,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   nomineesList: any[] = [];
   optionForm;
   checkValid: boolean = false;
-  callMethod: { methodName: string; ParamValue: any; };
+  callMethod: any;
   oldOwnerFM: number;
   oldOwnerID: number;
 
@@ -119,11 +119,13 @@ export class StockScripLevelHoldingComponent implements OnInit {
   holdingData: any;
   disabledMember(value, type) {
     this.callMethod = {
-      methodName: "disabledMember",
+      methodName: 'disabledMember',
       ParamValue: value,
-      //  disControl : type
+      disControl: type
     }
     this.holdingData = this.scipLevelHoldingForm.controls;
+    // this.scipLevelHoldingForm.get('getNomineeName').setValue(this.optionForm.get('getNomineeName').value);
+
     setTimeout(() => {
       this.portfolioFieldData = {
         familyMemberId: this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId
@@ -137,14 +139,15 @@ export class StockScripLevelHoldingComponent implements OnInit {
       this.scipLevelHoldingForm.controls.getCoOwnerName = con.owner;
     }
     if (con.nominee != null && con.nominee) {
-      this.optionForm.controls.getNomineeName = con.nominee;
+      this.scipLevelHoldingForm.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
       methodName: "onChangeJointOwnership",
-      ParamValue: data
+      ParamValue: data,
+
     }
   }
 
@@ -175,6 +178,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
         }
       }
     }
+    // this.scipLevelHoldingForm.get('getNomineeName').setValue(this.optionForm.get('getNomineeName').value);
 
   }
 
@@ -200,13 +204,13 @@ export class StockScripLevelHoldingComponent implements OnInit {
   /***nominee***/
 
   get getNominee() {
-    return this.optionForm.get('getNomineeName') as FormArray;
+    return this.scipLevelHoldingForm.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
     this.disabledMember(null, null);
     this.getNominee.removeAt(item);
-    if (this.optionForm.value.getNomineeName.length == 1) {
+    if (this.scipLevelHoldingForm.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
       let share = 100 / this.getNominee.value.length;
@@ -219,6 +223,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
         }
       }
     }
+    // this.scipLevelHoldingForm.get('getNomineeName').setValue(this.optionForm.get('getNomineeName').value);
+
   }
 
 
@@ -227,6 +233,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.getNominee.push(this.fb.group({
       name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
+    // this.scipLevelHoldingForm.get('getNomineeName').push(this.fb.group({
+    //   name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    // }));
+
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
         this.getNominee.controls[e].get('sharePercentage').setValue(0);
@@ -260,7 +270,16 @@ export class StockScripLevelHoldingComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      portfolioName: ['', [Validators.required]]
+      portfolioName: ['', [Validators.required]],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
+      linkedBankAccount: [''],
+      linkedDematAccount: [''],
+      description: ['']
     })
 
     if (data == null) {
@@ -328,15 +347,19 @@ export class StockScripLevelHoldingComponent implements OnInit {
 
     /***nominee***/
     if (data.nomineeList) {
-      this.getNominee.removeAt(0);
-      data.nomineeList.forEach(element => {
-        this.addNewNominee(element);
-      });
+      if (data.nomineeList.length > 0) {
+        this.getNominee.removeAt(0);
+        // this.scipLevelHoldingForm.get('getNomineeName').removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
+
     /***nominee***/
-    this.optionForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
-    this.optionForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
-    this.optionForm.get('description').setValue(data.description);
+    this.scipLevelHoldingForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.scipLevelHoldingForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.scipLevelHoldingForm.get('description').setValue(data.description);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelHoldingForm }
     // ==============owner-nominee Data ========================\\
     // this.ownerData = this.scipLevelHoldingForm.controls;
@@ -504,10 +527,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
         "ownerList": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.ownerList : this.scipLevelHoldingForm.value.getCoOwnerName,
         "portfolioName": this.editApiData ? this.editApiData.portfolioName : this.scipLevelHoldingForm.get('portfolioName').value,
         "stockList": finalStocks,
-        "nomineeList": this.optionForm.value.getNomineeName,
-        "linkedBankAccount": this.optionForm.value.linkedBankAccount,
-        "linkedDematAccount": this.optionForm.value.linkedDematAccount,
-        "description": this.optionForm.value.description,
+        "nomineeList": this.scipLevelHoldingForm.value.getNomineeName,
+        "linkedBankAccount": this.scipLevelHoldingForm.value.linkedBankAccount,
+        "linkedDematAccount": this.scipLevelHoldingForm.value.linkedDematAccount,
+        "description": this.scipLevelHoldingForm.value.description,
       }
 
       if (this.portfolioData.id != 0) {
