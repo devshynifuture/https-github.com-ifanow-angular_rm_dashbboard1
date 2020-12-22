@@ -36,16 +36,7 @@
                         </div>
                     </div>
                 </li>
-                <!-- <li routerLinkActive="activeColor" class="c-p">
-                    <div class="row">
-                        <div class="col-md-10 p-0">
-                            <p class="m-0 roboto f-500">Stock</p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-primitive">8</p>
-                        </div>
-                    </div>
-                </li> -->
+
                 <li (click)="selectedTab=singleAsset.name" *ngFor="let singleAsset of leftSidebarList"
                     routerLink={{singleAsset.urlPath}} routerLinkActive="activeColor" class="c-p">
                     <div class="row">
@@ -55,42 +46,7 @@
                     </div>
 
                 </li>
-                <!-- <li [routerLink]="['/customer/detail/activity/advice/fixedIncome']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Fixed Income
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/realAsset']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Real estate
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/retirement']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Retirement accounts
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/smallSavingScheme']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Small saving schemes
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/cashHand']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Cash & Bank
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/commodities']" routerLinkActive="activeColor"
-                    class="c-p">
-                    Commodities
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/libilities']" routerLinkActive="activeColor"
-                    class="c-p f-500">
-                    LIABILITIES
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/lifeInsurance']" routerLinkActive="activeColor"
-                    class="c-p f-500">
-                    LIFE INSURANCE
-                </li>
-                <li [routerLink]="['/customer/detail/activity/advice/generalInsurance']" routerLinkActive="activeColor"
-                    class="c-p f-500">
-                    GENERAL INSURANCE
-                </li> -->
+
             </ul>
 
         </div>
@@ -121,45 +77,7 @@
                 </div>
             </div>
             <router-outlet></router-outlet>
-            <!-- <div *ngSwitchCase="'tab1'">
-                <app-advice-all-portfolio></app-advice-all-portfolio>
-            </div>
-            <div *ngSwitchCase="'tab2'">
-                <app-advice-assets></app-advice-assets>
-            </div>
-            <div *ngSwitchCase="'tab3'">
-                <app-advice-mutual-fund></app-advice-mutual-fund>
-            </div>
-            <div *ngSwitchCase="'tab4'">
-          <app-advice-stocks></app-advice-stocks>
-            </div>
-            <div *ngSwitchCase="'tab5'">
-                    <app-advice-fixed-income></app-advice-fixed-income>
-            </div>
-            <div *ngSwitchCase="'tab6'">
-                <app-advice-real-asset></app-advice-real-asset>
-            </div>
-            <div *ngSwitchCase="'tab7'">
-                <app-advice-retirement-account></app-advice-retirement-account>
-            </div>
-            <div *ngSwitchCase="'tab8'">
-                <app-advice-small-saving-scheme></app-advice-small-saving-scheme>
-            </div>
-            <div *ngSwitchCase="'tab9'">
-                <app-advice-cash-and-hand></app-advice-cash-and-hand>
-            </div>
-            <div *ngSwitchCase="'tab10'">
-                <app-advice-commodities></app-advice-commodities>
-            </div>
-            <div *ngSwitchCase="'tab11'">
-                <app-advice-libilities></app-advice-libilities>
-            </div>
-            <div *ngSwitchCase="'tab12'">
-                <app-advice-life-insurance></app-advice-life-insurance>
-            </div>
-            <div *ngSwitchCase="'tab13'">
-                <app-advice-general-insurance></app-advice-general-insurance>
-            </div> -->
+
         </div>
     </div>
 

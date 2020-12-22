@@ -117,6 +117,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
       ParamValue: value,
       //  disControl : type
     }
+    // this.scipLevelTransactionForm.get('getNomineeName').setValue(this.optionForm.get('getNomineeName').value);
 
     setTimeout(() => {
       this.portfolioFieldData = {
@@ -195,7 +196,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   /***nominee***/
 
   get getNominee() {
-    return this.optionForm.get('getNomineeName') as FormArray;
+    return this.scipLevelTransactionForm.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
@@ -275,6 +276,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
         familyMemberId: [0],
         id: [0]
       })]),
+      linkedBankAccount: [''],
+      linkedDematAccount: [''],
+      description: ['']
     })
 
     this.optionForm = this.fb.group({
@@ -329,9 +333,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
       });
     }
     /***nominee***/
-    this.optionForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
-    this.optionForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
-    this.optionForm.get('description').setValue(data.description);
+    this.scipLevelTransactionForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.scipLevelTransactionForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.scipLevelTransactionForm.get('description').setValue(data.description);
+    // this.scipLevelTransactionForm.get('getNomineeName').setValue(this.optionForm.get('getNomineeName').value);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelTransactionForm }
     // ==============owner-nominee Data ========================\\
   }
@@ -496,10 +501,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
         "ownerList": this.editApiData && this.portfolioData.id != 0 ? this.editApiData.portfolioOwner : this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.editApiData ? this.editApiData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
-        "nomineeList": this.optionForm.value.getNomineeName,
-        "linkedBankAccount": this.optionForm.value.linkedBankAccount,
-        "linkedDematAccount": this.optionForm.value.linkedDematAccount,
-        "description": this.optionForm.value.description,
+        "nomineeList": this.scipLevelTransactionForm.value.getNomineeName,
+        "linkedBankAccount": this.scipLevelTransactionForm.value.linkedBankAccount,
+        "linkedDematAccount": this.scipLevelTransactionForm.value.linkedDematAccount,
+        "description": this.scipLevelTransactionForm.value.description,
         "stockList": finalStocks
       }
       if (this.editApiData && this.portfolioData.id == 0) {
@@ -515,7 +520,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
         if (obj.id != 0) {
           obj.ownerList[0].id = this.oldOwnerID;
           obj.ownerList[0].familyMemberId = this.oldOwnerFM;
-          this.holding.saveSchemeHolding();
+          if (this.holding) {
+            this.holding.saveSchemeHolding();
+          }
         }
         this.cusService.editStockData(obj).subscribe(
           data => {
