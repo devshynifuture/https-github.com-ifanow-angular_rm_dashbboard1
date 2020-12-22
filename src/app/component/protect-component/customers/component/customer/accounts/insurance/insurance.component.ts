@@ -433,6 +433,7 @@ export class InsuranceComponent implements OnInit {
         element.policyExpiryDate = element.expiryDate;
         element.exclusion = element.specialCondition;
         element.hypothetication = element.financierName;
+        element.linkedBankAccount = element.linkedBankAccountId;
         element.bankAccount = element.linkedBankAccountId;
         element.insuredMembers = this.filteInsuredMember(element.otherInsuranceInsuredMembers);
         element.addOns = this.filteOtherInsuranceAddCovers(element.otherInsuranceAddCovers);
@@ -462,7 +463,7 @@ export class InsuranceComponent implements OnInit {
   filteOtherInsuranceFeatureList(data){
     data.forEach(element => {
       element.generalInsuranceId = element.otherInsuranceId
-      element.policyFeatureId = element.addOns,
+      element.policyFeatureId = element.feature,
       element.featureSumInsured = element.sumInsured
     });
     return data;

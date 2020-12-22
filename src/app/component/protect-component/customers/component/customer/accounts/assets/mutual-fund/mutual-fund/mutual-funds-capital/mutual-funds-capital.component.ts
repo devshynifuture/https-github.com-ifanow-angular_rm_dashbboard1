@@ -417,7 +417,7 @@ export class MutualFundsCapitalComponent implements OnInit {
           if (element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
             || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv' || element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced') {
             equityFund.push(element);
-          } else if (element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
+          } else if (element.subCategoryName == 'Hybrid - Conservative Hybrid Fund' || element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
             debtFund.push(element);
           } else {
             equityFund.push(element);
@@ -460,6 +460,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
             let trnDate = new Date(ele.transactionDate)
+            trnDate.setHours(0,0,0,0);
             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
               if (ele.fwTransactionType == 'Dividend Payout') {
                 ele.dividendPayout = ele.amount
@@ -524,7 +525,8 @@ export class MutualFundsCapitalComponent implements OnInit {
           if (element.redemptionTransactions.length == 1) {
             element.redemptionTransactions.forEach(ele => {
               // let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-              let trnDate = new Date(ele.transactionDate)
+              let trnDate = new Date(ele.transactionDate);
+              trnDate.setHours(0,0,0,0);
               if (trnDate >= this.fromDate && trnDate <= this.toDate) {
                 if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
                   this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
@@ -562,6 +564,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             redeemArray=[];
             element.redemptionTransactions.forEach(ele => {
               let trnDate = new Date(ele.transactionDate)
+              trnDate.setHours(0,0,0,0);
               if (trnDate >= this.fromDate && trnDate <= this.toDate) {
                 if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
                   this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
