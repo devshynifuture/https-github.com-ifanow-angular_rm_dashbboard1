@@ -664,7 +664,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         for (let e in this.insuredMembersForm.controls) {
           let name = this.insuredMembersForm.controls[e].get('insuredMembers');
           if (element.userName == name.value) {
-            this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+            this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.name);
             this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
             this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
             this.insuredMembersForm.controls[e].get('clientId').setValue(element.clientId);
@@ -815,6 +815,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     finalMemberList.controls.forEach(element => {
       let obj =
       {
+        name: element.get('insuredMembers').value ? element.get('insuredMembers').value : 0,
         createdOn:null,
         insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
         share: element.get('sumAssured').value ? element.get('sumAssured').value : 0,
@@ -886,6 +887,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'premium': this.otherAssetForm.get('premium').value,
         // 'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : 0,
+        'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
         isClient:this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? 1 : 0,
         otherInsuranceInsuredMembers: memberList,
         otherInsuranceFeatureList:featureList,

@@ -59,6 +59,7 @@ export class InsuranceComponent implements OnInit {
   getOrgData: any;
   reportDate: Date;
   showDownload: boolean;
+  countOthers = 0;
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -340,13 +341,11 @@ export class InsuranceComponent implements OnInit {
     }
     if (insuranceSubTypeId === 11) {
       delete obj.insuranceTypeId;
-      this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
-      if (this.loadApiAndData.dataLoaded) {
-        if (this.isAdded == undefined) {
-          this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
-        }
+      if(this.countOthers == 0){
+        this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
         this.cusService.getOtherInsurance(obj).subscribe(
           data => {
+            this.countOthers++;
             data = this.filterOtherData(data);
             this.checkAndPush(data);
             if (!this.insuranceId) {
@@ -364,8 +363,35 @@ export class InsuranceComponent implements OnInit {
             this.dataSourceGeneralInsurance.data = [];
           }
         );
-      } else {
-        this.getGeneralInsuranceDataRes(this.loadApiAndData);
+      }else{
+        this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
+        if (this.loadApiAndData.dataLoaded) {
+          if (this.isAdded == undefined) {
+            this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
+          }
+          this.cusService.getOtherInsurance(obj).subscribe(
+            data => {
+              this.countOthers++;
+              data = this.filterOtherData(data);
+              this.checkAndPush(data);
+              if (!this.insuranceId) {
+                this.getGeneralInsuranceDataRes(data);
+              } else {
+                this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
+                this.getGeneralInsuranceDataRes(this.loadApiAndData);
+              }
+              // this.getGeneralInsuranceDataRes(data);
+            },
+            error => {
+              this.isLoading = false;
+              this.eventService.showErrorMessage(error);
+              ;
+              this.dataSourceGeneralInsurance.data = [];
+            }
+          );
+        } else {
+          this.getGeneralInsuranceDataRes(this.loadApiAndData);
+        }
       }
     } else if (insuranceId === 1) {
       this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'lifeInsurance');
