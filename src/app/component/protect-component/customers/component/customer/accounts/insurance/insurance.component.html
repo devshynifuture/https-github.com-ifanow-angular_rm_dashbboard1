@@ -254,7 +254,7 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}}
+                                            {{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -421,7 +421,7 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}}
+                                            {{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -675,7 +675,7 @@
                             {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'MATURED' ? '-' : item.durationRemaining}} </td>
+                            {{item.statusId == 'MATURED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}} </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
                             {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
@@ -899,7 +899,7 @@
                             {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'EXPIRED' ? '-' : item.durationRemaining}} </td>
+                            {{item.statusId == 'EXPIRED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}} </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
                             {{(item.insuranceSubTypeId == 5) ? ((item.policyFeatureId == 0) ? 'Standard, ' : (item.policyFeatureId == 1) ? 'Top up, ' : (item.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(item.policyType) ? (item.policyType) : item.planName}}{{(insuranceSubTypeId == 8 && item.geographyId) ? ((item.geographyId == 1) ? ' - Worldwide' : (item.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (item.geographyId

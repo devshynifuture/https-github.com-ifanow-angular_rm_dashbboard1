@@ -9,18 +9,19 @@ import {
   ViewChildren,
   ViewContainerRef
 } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatInput} from '@angular/material';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -35,10 +36,11 @@ export class ContactDetailsInnComponent implements OnInit {
   countryList;
   filterCountryName: Observable<any[]>;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, public processTransaction: ProcessTransactionService,
-              private peopleService: PeopleService, private ngZone: NgZone) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+    public authService: AuthService, private postalService: PostalService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService, public processTransaction: ProcessTransactionService,
+    private peopleService: PeopleService, private ngZone: NgZone) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -51,6 +53,7 @@ export class ContactDetailsInnComponent implements OnInit {
   firstHolderContact: any;
   secondHolderContact: any;
   thirdHolderContact: any;
+  logoText = 'Your Logo here';
 
   get data() {
     return this.inputData;
@@ -96,7 +99,7 @@ export class ContactDetailsInnComponent implements OnInit {
     static: true
   }) viewContainerRef: ViewContainerRef;
 
-  @ViewChild('placeSearch', {static: true}) placeSearch: ElementRef;
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
 
 
   ngOnInit() {
@@ -114,7 +117,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.getAddressList(this.clientData);
       }*/
     }
-    this.sendObj = {...this.inputData};
+    this.sendObj = { ...this.inputData };
 
   }
 
@@ -193,7 +196,7 @@ export class ContactDetailsInnComponent implements OnInit {
       // aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
-        !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
+      !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
       pinCode: [address.pinCode, [Validators.required]],
@@ -209,7 +212,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
     const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
       types: [],
-      componentRestrictions: {country: 'IN'}
+      componentRestrictions: { country: 'IN' }
     });
 
     autoCompelete.addListener('place_changed', () => {

@@ -301,6 +301,7 @@ export class InsuranceComponent implements OnInit {
           this.generalLifeInsuranceList[4].count = data.TravelInsurance;
           this.generalLifeInsuranceList[5].count = data.HomeInsurance;
           this.generalLifeInsuranceList[6].count = data.FireAndSpecialPerilsInsurance;
+          this.generalLifeInsuranceList[7].count = data.Others;
         }
 
 
@@ -428,6 +429,7 @@ export class InsuranceComponent implements OnInit {
       let otherData = data.otherInsuranceList;
       otherData.forEach(element => {
         element.insuranceSubTypeId = 11;
+        element.sumAssured = 0;
         element.premiumAmount = element.premium;
         element.policyStartDate = element.startDate;
         element.policyExpiryDate = element.expiryDate;
@@ -438,6 +440,9 @@ export class InsuranceComponent implements OnInit {
         element.insuredMembers = this.filteInsuredMember(element.otherInsuranceInsuredMembers);
         element.addOns = this.filteOtherInsuranceAddCovers(element.otherInsuranceAddCovers);
         element.policyFeatures = this.filteOtherInsuranceFeatureList(element.otherInsuranceFeatureList);
+        element.insuredMembers.forEach(ele => {
+          element.sumAssured += ele.sumInsured ? ele.sumInsured : 0
+        });
     });
     }else{
       data = [];
@@ -893,14 +898,16 @@ export class InsuranceComponent implements OnInit {
         this.sumAssured = 0;
         if (element.policyFeatures.length > 0) {
           element.policyFeatures.forEach(ele => {
-            this.sumAssured += ele.featureSumInsured;
+            this.sumAssured += ele.featureSumInsured ? ele.featureSumInsured : 0;
           });
-          element.sumAssured = this.sumAssured;
+          if(this.sumAssured != 0){
+            element.sumAssured = this.sumAssured;
+          }
           if (element.sumAssured == 0) {
-            element.sumAssured = element.sumInsuredIdv;
+            element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
           }
         } else {
-          element.sumAssured = element.sumInsuredIdv;
+          element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv :element.sumAssured ;
         }
         if (element.addOns && !element.sumAssured && element.addOns.length > 0) {
           element.addOns.forEach(ele => {

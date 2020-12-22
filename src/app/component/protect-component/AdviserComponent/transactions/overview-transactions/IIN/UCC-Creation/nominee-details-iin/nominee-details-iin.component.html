@@ -1,8 +1,10 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo"
-           src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <div class="logoWrap">
+        <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+        <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
+      </div>
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -32,13 +34,11 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
-                     [matAutocomplete]="auto1" appInputValueValidation class="form-control"
-                     formControlName="name" matInput maxlength="30"
-                     placeholder="Start typing to see nominee name" type="text">
+              <input [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)" [matAutocomplete]="auto1"
+                appInputValueValidation class="form-control" formControlName="name" matInput maxlength="30"
+                placeholder="Start typing to see nominee name" type="text">
               <mat-autocomplete #auto1="matAutocomplete">
-                <mat-option (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"
-                            [value]="fm.name">
+                <mat-option (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList" [value]="fm.name">
                   {{fm.name}} </mat-option>
               </mat-autocomplete>
               <mat-error class="f-12">This field is required</mat-error>
@@ -52,7 +52,7 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <mat-select #relationShip (selectionChange)="selectRelation($event)" class="form-control"
-                          formControlName="relationShip">
+                formControlName="relationShip">
                 <mat-option disabled value=''>Select nominee relation</mat-option>
                 <mat-option value="Self"> Self</mat-option>
                 <mat-option value="Wife"> Wife</mat-option>
@@ -103,8 +103,8 @@
           <div class="col-md-3 form-group">
             <mat-form-field class="ba-date">
               <!--                          [max]="maxDateForAdultDob"-->
-              <input [matDatepicker]="picker" (click)="picker.open()"
-                     class="form-control b-0" formControlName="dob" matInput>
+              <input [matDatepicker]="picker" (click)="picker.open()" class="form-control b-0" formControlName="dob"
+                matInput>
               <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error class="f-12">This field is required</mat-error>
@@ -120,8 +120,8 @@
           <div class="col-md-3 form-group iconPetage">
             <mat-form-field appearance="standard" floatLabel="never">
               <input [disabled]="true" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                     appInputValueValidation class="form-control percentage" formControlName="percent"
-                     matInput maxlength="3" placeholder="Enter Nominee percentage" type="number">
+                appInputValueValidation class="form-control percentage" formControlName="percent" matInput maxlength="3"
+                placeholder="Enter Nominee percentage" type="number">
               <mat-error *ngIf="(nomineeDetails.get('percent').errors)" class="f-12 ml-8">
                 Should be between than 0.0 to 100
               </mat-error>
@@ -164,8 +164,8 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address1" matInput
-                     placeholder="Flat/building/street" type="text">
+              <input class="form-control" formControlName="address1" matInput placeholder="Flat/building/street"
+                type="text">
               <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -177,8 +177,7 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address2" matInput placeholder="Block/locality"
-                     type="text">
+              <input class="form-control" formControlName="address2" matInput placeholder="Block/locality" type="text">
               <mat-error class="f-12">This field is required</mat-error>
 
             </mat-form-field>
@@ -192,9 +191,8 @@
           <div class="col-md-3 pr-0 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input #pincode (focusout)="getPostalPin($event.target.value)"
-                     [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
-                     class="form-control" formControlName="pinCode" matInput placeholder="Enter Pin code"
-                     type="text">
+                [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
+                class="form-control" formControlName="pinCode" matInput placeholder="Enter Pin code" type="text">
               <mat-error class="f-12">This field is required</mat-error>
               <mat-hint align="end" class="f-12 text-custom">
                 {{pincode.value.length}} / 6
@@ -212,8 +210,7 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="city" matInput placeholder="Enter City"
-                     type="text">
+              <input class="form-control" formControlName="city" matInput placeholder="Enter City" type="text">
               <mat-error class="f-12">This field is required</mat-error>
 
             </mat-form-field>
@@ -227,8 +224,7 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="state" matInput placeholder="Enter Placeholder"
-                     type="text">
+              <input class="form-control" formControlName="state" matInput placeholder="Enter Placeholder" type="text">
               <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -239,9 +235,8 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number"
-                     class="form-control" formControlName="country" matInput
-                     placeholder="Start typing to see country names" type="text">
+              <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
+                formControlName="country" matInput placeholder="Start typing to see country names" type="text">
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
                   {{scheme.name}}
@@ -338,7 +333,7 @@
     </button>
 
     <button (click)="SendToForm(holder.type,true);" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            mat-button>NEXT
+      mat-button>NEXT
     </button>
 
   </div>
