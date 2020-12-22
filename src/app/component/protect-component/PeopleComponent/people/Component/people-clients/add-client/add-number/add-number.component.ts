@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {ReplaySubject, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-number',
@@ -53,7 +53,7 @@ export class AddNumberComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService,
-              private peopleService: PeopleService, private enumService: EnumServiceService) {
+    private peopleService: PeopleService, private enumService: EnumServiceService) {
   }
 
   // if this input not used anywhere then remove it
@@ -78,9 +78,11 @@ export class AddNumberComponent implements OnInit {
             // this.selectedISD = this.isdCodes[0].id
             this.getMobileNumList.controls.forEach(element => {
               element.get('code').setValue(73);
+              element.get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
+              element.updateValueAndValidity();
             });
           } else {
-            data.sort(function(a, b) {
+            data.sort(function (a, b) {
               return a.countryCode.localeCompare(b.countryCode);
             });
             this.isdCodes = data;
@@ -89,6 +91,14 @@ export class AddNumberComponent implements OnInit {
         }
       }
     );
+  }
+
+  selectedISDMethod(value, index) {
+    if (value == 73) {
+      this.getMobileNumList.controls[index].get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
+    } else {
+      this.getMobileNumList.controls[index].get('number').setValidators([Validators.required])
+    }
   }
 
   @Input() set numberList(data) {
@@ -142,6 +152,12 @@ export class AddNumberComponent implements OnInit {
           number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
         }));
       }
+
+      if (data.isdCodeId && data.isdCodeId == 73) {
+        this.getMobileNumList.controls[this.getMobileNumList.length - 1].get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
+      } else {
+        this.getMobileNumList.controls[this.getMobileNumList.length - 1].get('number').setValidators([Validators.required])
+      }
       this.numberArray.emit(this.getMobileNumList);
     }
   }
@@ -149,7 +165,7 @@ export class AddNumberComponent implements OnInit {
   checkUniqueNumber() {
     if (this.getMobileNumList.length == 2) {
       if (this.getMobileNumList.controls[0].value.number == this.getMobileNumList.controls[1].value.number) {
-        this.getMobileNumList.controls[0].get('number').setErrors({notUnique: true});
+        this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true });
       } else {
         this.getMobileNumList.controls[0].get('number').setErrors(null);
       }
