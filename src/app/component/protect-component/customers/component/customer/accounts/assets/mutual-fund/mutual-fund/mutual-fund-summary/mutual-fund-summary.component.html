@@ -30,7 +30,7 @@
                 *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <mat-menu #menu1="matMenu" [hasBackdrop]="false">
+            <mat-menu #menu1="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
