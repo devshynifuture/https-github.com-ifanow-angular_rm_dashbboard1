@@ -123,7 +123,7 @@
     </div>
     <!-- <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Sum insured</h5>
+            <h5 class="m-0 pt-8">Sum insured</h5getFamilyData>
         </div>
         <div class="col-md-3">
             <div class="form-group  iconRupess">
@@ -241,6 +241,8 @@
                     <input #PlanType [maxLength]="40" autocomplete="off" class="form-control br-0"
                         formControlName="PlanType" matInput type="text">
                     <mat-hint align="end" class="f-12">{{PlanType.value.length}}/40</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -591,7 +593,7 @@
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <i (click)="addNewNominee(undefined)" *ngIf="otherAssetForm.value.getNomineeName.length < 3"
                         class="material-icons text-primitive f-20 c-p float-left">add</i>
-                    <i (click)="removeNewNominee(pointIndex)" *ngIf="otherAssetForm.value.getNomineeName.length > 1"
+                    <i (click)="removeNewNominee(pointIndex,obj)" *ngIf="otherAssetForm.value.getNomineeName.length > 1"
                         class="material-icons text-primitive f-20 c-p pl-10">remove</i>
                 </div>
 

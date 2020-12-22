@@ -45,7 +45,7 @@
                 Plan type
               </div>
               <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                {{ _data.PlanType}}
+                {{ _data.planType}}
               </div>
             </div>
             <div *ngIf="_data.policyNumber" class="row bb p-8 b-l br">
@@ -324,6 +324,18 @@
                 </div>
               </div>
             </div>
+          <div *ngIf="_data.insuredMembers && (showInsurance == 'Others')">
+          <div *ngFor="let item of _data.insuredMembers ; let i = index" class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              {{(item.name) ? item.name : '-'}}
+            </div>
+            <div class="col-md-4 text-right f-14 roboto p-0">
+              {{(item.sumInsured) ? '₹' : ''}}<span
+                appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+            </div>
+
+          </div>
+        </div>
 
             <div *ngIf="_data.insuredMembers && showInsurance == 'Personal accident' ">
               <div *ngFor="let item of _data.insuredMembers ; let i = index">
