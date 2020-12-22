@@ -53,6 +53,7 @@ export class ContactDetailsInnComponent implements OnInit {
   firstHolderContact: any;
   secondHolderContact: any;
   thirdHolderContact: any;
+  logoText = 'Your Logo here';
 
   get data() {
     return this.inputData;

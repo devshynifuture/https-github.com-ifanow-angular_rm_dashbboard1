@@ -21,6 +21,7 @@ const moment = require('moment');
 export class PersonalDetailsInnComponent implements OnInit {
   activeDetailsClass = 'first';
   maxDateForAdultDob = moment().subtract(18, 'years');
+  logoText = 'Your Logo here';
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,

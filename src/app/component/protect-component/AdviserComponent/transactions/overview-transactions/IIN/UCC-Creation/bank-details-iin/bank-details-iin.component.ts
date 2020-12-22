@@ -70,7 +70,7 @@ export class BankDetailsIINComponent implements OnInit {
 
   validatorType = ValidatorType;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-
+  logoText = 'Your Logo here';
   bankDetailsForm: any;
   inputData: any;
   holdingList: any;

@@ -38,7 +38,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-
+  logoText = 'Your Logo here';
   validatorType = ValidatorType;
   nomineeDetails: any;
   inputData: any;

@@ -70,7 +70,7 @@ export class SubmitReviewInnComponent implements OnInit {
   changedValue: string;
   advisorId: any;
   brokerCredentials: any;
-
+  logoText = 'Your Logo here';
   reviewSubmit: any;
   inputData: any;
   nse: any;
