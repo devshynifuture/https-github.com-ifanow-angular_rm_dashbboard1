@@ -61,27 +61,27 @@
         </div>
     </div>
 
-    <div class="row  pt-40">
-        <div class="col-md-4 pr-0 text-right">
+    <div class="row  pt-32">
+        <div class="col-md-4 text-right pr-0">
             <h5 class="mb-0 mt-28">Insured members</h5>
         </div>
         <div class="col-md-8 pr-0">
             <div class="row">
-                <div class="col-md-7  p-0">
-                    <h5 class="m-0">Name </h5>
+                <div class="col-md-7 p-0">
+                    <h5 class="mb-4 f-14">Name </h5>
                 </div>
-                <div class="col-md-4" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
-                    <h5 class="mb-0">Sum insured </h5>
+                <div class="col-md-3 pr-0">
+                    <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
 
             <div formArrayName="InsuredMemberForm">
-                <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex"
-                    [ngClass]="{'pt-20': pointIndex > 0}" class="row">
+                <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index"
+                    [formGroupName]="pointIndex" [ngClass]="{'pt-20': pointIndex > 0}" class="row">
                     <div class="col-md-7  p-0">
                         <div class="form-group  ">
                             <mat-form-field>
-                                <mat-select (selectionChange)="getFamilyData(insuredMemberList)" autocomplete="true"
+                                <mat-select (selectionChange)="getFamilyData(insuredMemberList);getIndexOfSelectedElement(obj)"  autocomplete="true"
                                     class="form-control br-0" formControlName="insuredMembers" matInput>
                                     <mat-option *ngFor="let option of insuredMemberList;index as i"
                                         [disabled]="option.isDisabled" [value]="option.userName">
@@ -93,7 +93,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
+                    <div class="col-md-3 pr-0">
                         <div class="form-group iconRupess">
                             <mat-form-field>
                                 <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
@@ -106,10 +106,10 @@
                         </div>
                     </div>
 
-                    <div class="col-md-1 d-flex align-items-center p-0 ">
+                    <div class="col-md-2 pr-0 d-flex mt-8 ">
                         <i (click)="addTransaction(undefined)"
                             class="material-icons text-primitive c-p float-left">add</i>
-                        <i (click)="removeTransaction(pointIndex, obj)"
+                        <i (click)="removeTransaction(pointIndex,obj)"
                             *ngIf="otherAssetForm.value.InsuredMemberForm?.length > 1"
                             class="material-icons text-primitive c-p float-right">remove</i>
                     </div>
@@ -121,9 +121,9 @@
 
         </div>
     </div>
-    <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
+    <!-- <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Sum insured</h5>
+            <h5 class="m-0 pt-8">Sum insured</h5getFamilyData>
         </div>
         <div class="col-md-3">
             <div class="form-group  iconRupess">
@@ -137,7 +137,7 @@
                 </mat-form-field>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="row pt-40">
         <div class="col-md-4 pr-0 text-right ">
             <h5 class="mb-0 mt-28">Insured members</h5>
@@ -222,7 +222,7 @@
             <h5 class="m-0 pt-8">Plan type</h5>
         </div>
 
-        <div class="col-md-5">
+        <!-- <div class="col-md-5">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <mat-select autocomplete="true" (selectionChange)="onChangeSetErrorsType($event.value,'planType')"
@@ -230,6 +230,17 @@
                         <mat-option value='7'>Individual health</mat-option>
                         <mat-option value='8'>Family floater</mat-option>
                     </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div> -->
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input #PlanType [maxLength]="40" autocomplete="off" class="form-control br-0"
+                        formControlName="PlanType" matInput type="text">
+                    <mat-hint align="end" class="f-12">{{PlanType.value.length}}/40</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -337,7 +348,7 @@
             </div>
             <div class="col-md-8 pr-0">
                 <div class="row">
-                    <div class="col-md-7 pr-0">
+                    <div class="col-md-7 p-0">
                         <h5 class="mb-4 f-14">Add ons </h5>
                     </div>
                     <div class="col-md-3 pr-0">
@@ -349,10 +360,10 @@
                         *ngFor="let obj of otherAssetForm.controls['addOnForm'].controls; let pointIndex=index"
                         [formGroupName]="pointIndex">
 
-                        <div class="col-md-7  pr-0 form-group">
+                        <div class="col-md-7  p-0 form-group">
 
                             <mat-form-field>
-                                <mat-select matInput formControlName="addOns" autocomplete="true"
+                                <mat-select (selectionChange)="getIndexOfSelectedElement(obj)"  matInput formControlName="addOns" autocomplete="true"
                                     class="form-control br-0">
                                     <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                         {{option.add_on}}</mat-option> -->
@@ -440,8 +451,7 @@
 
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select matInput formControlName="feature" autocomplete="true"
-                            class="form-control br-0">
+                        <mat-select (selectionChange)="getIndexOfSelectedElement(obj)" matInput formControlName="feature" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                                     {{option.type}}</mat-option> -->
                             <mat-option value='15'>Emergency Medical Benefits</mat-option>
@@ -551,7 +561,7 @@
                 <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select (selectionChange)="disabledMember($event.value,'nominee')"
+                            <mat-select (selectionChange)="disabledMember($event.value,'nominee');getIndexOfSelectedElement(obj)"
                                 (valueChange1)='lisNominee($event)' [callMethod]='callMethod' [data]='ownerData'
                                 appOwnerNominee class="form-control br-0" formControlName="name" matInput>
                                 <mat-option disabled value=''>Select family members</mat-option>
@@ -583,7 +593,7 @@
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <i (click)="addNewNominee(undefined)" *ngIf="otherAssetForm.value.getNomineeName.length < 3"
                         class="material-icons text-primitive f-20 c-p float-left">add</i>
-                    <i (click)="removeNewNominee(pointIndex)" *ngIf="otherAssetForm.value.getNomineeName.length > 1"
+                    <i (click)="removeNewNominee(pointIndex,obj)" *ngIf="otherAssetForm.value.getNomineeName.length > 1"
                         class="material-icons text-primitive f-20 c-p pl-10">remove</i>
                 </div>
 

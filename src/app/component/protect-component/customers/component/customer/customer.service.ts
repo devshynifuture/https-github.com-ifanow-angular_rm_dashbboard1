@@ -34,19 +34,25 @@ export class CustomerService {
   }
 
   deleteOtherInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE+ 'otherInsuranceId=' + data, '');
   }
-
+  getOtherInsurance(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHER_INSURANCE, httpParams);
+  }
   deleteOtherAddonInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON+ 'otherInsuranceAddOnId=' + data, '');
+  }
+  deleteNomineeonInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_NOMINEE+ 'otherInsuranceNomineeId=' + data, '');
   }
 
   deleteOtherFeatureInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_FEATURE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_FEATURE+ 'otherInsuranceFeatureId=' + data, '');
   }
 
   deleteOtherMemberInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_MEMBER, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_MEMBER+ 'otherInsuranceMemberId=' + data, '');
   }
 
   addFixedDeposit(data) {

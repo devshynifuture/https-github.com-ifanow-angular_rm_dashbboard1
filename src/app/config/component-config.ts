@@ -37,6 +37,7 @@ export const appConfig = {
   RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES: 'rmdashboard/map/njprudent/schemes',
   GET_MF_TRANSACTIONS: 'mutual-fund/mutualFundTransaction/list/get',
   FILTER_DATA: 'mutual-fund/mutualFundTransaction/filtered/list/get',
+  SEARCH_DATA: '',
   GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
   GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
   ///////////////////foliodetails///////////////////////////
@@ -96,6 +97,8 @@ export const appConfig = {
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   SAVE_SETTING_ALL: 'mutual-fund/report/all-client/reportwise/customize',
   GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/unmap/folio/scheme-name/list/get',
+  GET_MUTUAL_FUND_ALL_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/folio/search/list/get',
+
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
@@ -112,11 +115,12 @@ export const appConfig = {
   GET_INSURANCE_GLOBAL_API: 'account/insurance/global/get',
   ADD_OTHER_INSURANCE: 'account/insurance/other/add',
   EDIT_OTHER_INSURANCE: 'account/insurance/other/edit',
-  DELETE_OTHER_INSURANCE: 'account/insurance/other/delete',
-  DELETE_OTHER_ADDON: 'account/insurance/other-insurance/addon/delete',
-  DELETE_OTHER_FEATURE: 'account/insurance/other-insurance/feature/delete',
-  DELETE_OTHER_MEMBER: 'account/insurance/other-insurance/member/delete',
-
+  DELETE_OTHER_INSURANCE: 'account/insurance/other/delete?',
+  DELETE_OTHER_ADDON: 'account/insurance/other-insurance/addon/delete?',
+  DELETE_OTHER_FEATURE: 'account/insurance/other-insurance/feature/delete?',
+  DELETE_OTHER_MEMBER: 'account/insurance/other-insurance/member/delete?',
+  DELETE_OTHER_NOMINEE: 'account/insurance/delete/nominee?',
+  GET_OTHER_INSURANCE: 'account/insurance/other/list/get',
 
   ADD_GENERAL_INSURANCE: 'account/insurance/general-insurance/add',
   EDIT_GENERAL_INSURANCE: 'account/insurance/general-insurance/edit',

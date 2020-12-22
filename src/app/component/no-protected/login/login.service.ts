@@ -68,11 +68,15 @@ export class LoginService {
   }
 
   handleUserData(authService: AuthService, router: Router, userData) {
-    authService.setToken('authTokenInLoginComponent');
-    authService.setUserInfo(userData);
+    if (!userData) {
+      return;
+    }
+
 
     if (userData.userType == 1 || userData.userType == 8) {
       this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
+        authService.setToken('authTokenInLoginComponent');
+        authService.setUserInfo(userData);
         router.navigate(['admin', 'dashboard']);
         if (userData.showReferPopup) {
           this.openDialog();
@@ -81,10 +85,12 @@ export class LoginService {
 
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
+      authService.setUserInfo(userData);
       router.navigate(['support', 'dashboard']);
     } else {
       this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
         authService.setToken('authTokenInLoginComponent');
+        authService.setUserInfo(userData);
         userData.id = userData.clientId;
         authService.setClientData(userData);
         router.navigate(['customer', 'detail', 'overview', 'myfeed']);

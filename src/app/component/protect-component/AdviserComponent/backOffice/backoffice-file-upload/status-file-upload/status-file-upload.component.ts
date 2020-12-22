@@ -26,7 +26,7 @@ export class StatusFileUploadComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
-  displayedColumns: string[] = ['mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'amount', 'transactionType'];
+  displayedColumns: string[] = ['mfoverview', 'scripUniqueIdentifier', 'pan', 'date', 'portfolioName', 'quantity', 'date1', 'amount', 'transactionType'];
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   advisorId: any;

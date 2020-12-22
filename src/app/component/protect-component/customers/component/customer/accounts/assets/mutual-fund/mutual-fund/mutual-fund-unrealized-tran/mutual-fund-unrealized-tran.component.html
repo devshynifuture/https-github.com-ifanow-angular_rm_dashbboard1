@@ -7,8 +7,7 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
-         *ngIf="!isLoading ">
+      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading ">
          <!-- && (unrealisedArray.length > 0 || dataSource.data.length > 0) -->
          <div class="pdfClass">
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" (click)="isDisabledOpacity==true"

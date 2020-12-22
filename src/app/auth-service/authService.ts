@@ -127,7 +127,7 @@ export class AuthService {
   }
 
   static setDomainDetails(data) {
-    localStorage.setItem('doaminDetalis', JSON.stringify(data));
+    localStorage.setItem('domainDetails', JSON.stringify(data));
   }
 
   static getAdvisorDetails() {
@@ -167,8 +167,7 @@ export class AuthService {
   }
 
   static getDomainDetails(data) {
-    return localStorage.getItem('doaminDetalis');
-
+    return localStorage.getItem('domainDetails');
   }
 
   setToken(token: string) {
