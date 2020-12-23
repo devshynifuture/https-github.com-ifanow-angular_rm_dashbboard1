@@ -1,47 +1,53 @@
 <!-- <p>mis-mf-transactions works!</p> -->
-<div class="row">
-    <div class="col-md-4 p-0 text-left">
+<div class="row pt-10">
+    <div class="col-md-4 d-flex align-items-center text-left">
         <h2 class="f-18 m-0 proximaFont ">Mutual fund transactions</h2>
     </div>
-    <div class="col-md-3 p-0 mb-20 text-left">
-        <mat-form-field floatLabel="never" appearance="standard">
-            <mat-select class="form-control">
-                <mat-option [value]='0' disabled>Select search type</mat-option>
-                <mat-option (click)="selectOption(4)" [value]="1">Investor name</mat-option>
-                <mat-option (click)="selectOption(1)" [value]="2">Scheme name</mat-option>
-                <mat-option (click)="selectOption(2)" [value]="3">Folio Number</mat-option>
-                <mat-option (click)="selectOption(3)" [value]="4">PAN</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="col-md-3 p-0 text-left">
-        <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
-            <input (input)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0" matInput
-                placeholder="Type to search data">
-        </mat-form-field>
-    </div>
-    <div class="col-md-2 p-0  d-flex align-items-center justify-content-end ">
-        <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
-            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+
+    <div class="col-md-8 d-flex align-items-center justify-content-end">
+        <div class="w-30 mr-20 remove-top">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <mat-select class="form-control">
+                    <mat-option [value]='0' disabled>Select search type</mat-option>
+                    <mat-option (click)="selectOption(4)" [value]="1">Investor name</mat-option>
+                    <mat-option (click)="selectOption(1)" [value]="2">Scheme name</mat-option>
+                    <mat-option (click)="selectOption(2)" [value]="3">Folio Number</mat-option>
+                    <mat-option (click)="selectOption(3)" [value]="4">PAN</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
-            <img src="assets/images/svg/download-bordered.svg">
-        </a>
-        <mat-menu #menu5="matMenu">
-            <!-- <button (click)="pdf('template','Fixed-Deposit')" mat-menu-item>PDF</button> -->
-            <button (click)="Excel('mfTransaction')" mat-menu-item>XLS</button>
-        </mat-menu>
 
-        <button (click)="showFilter = true" mat-stroked-button class="btn-default addon ml-8 mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTER
-        </button>
+        <div class="w-30 mr-20 remove-top">
+            <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+                <input (input)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0"
+                    matInput placeholder="Type to search data">
+            </mat-form-field>
+        </div>
+
+
+        <div class="d-flex align-items-center justify-content-end">
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-menu #menu5="matMenu">
+                <button (click)="Excel('mfTransaction')" mat-menu-item>XLS</button>
+            </mat-menu>
+            <button (click)="showFilter = true" mat-stroked-button class="btn-default addon ml-8 v-middle"><i
+                    class="material-icons">filter_list</i>FILTER
+            </button>
+        </div>
+
 
 
     </div>
+
+
+
 
 </div>
-<div class="row pb-10" *ngIf="showFilter == true">
-    <div class="col-md-8 p-0 custom-tags">
+<div class="row pt-20 pb-10" *ngIf="showFilter == true">
+    <div class="col-md-7 pr-0 custom-tags">
         <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
                 {{status.name}}{{status.transactionType}}<i (click)="remove(ind)"
@@ -64,7 +70,7 @@
             </mat-chip-list>
         </mat-chip-list>
     </div>
-    <div class="col-md-4 right text-right p-0">
+    <div class="col-md-5 right text-right pl-0">
         <div class="row">
             <div class="col-md-4 pr-0">
                 <mat-form-field>
@@ -98,7 +104,7 @@
         </div>
     </div>
 </div>
-<div class="row mt-8">
+<div class="row pt-20">
     <div class="col-md-12">
         <div (scroll)="onWindowScroll($event)" *ngIf="mfTransaction.data.length  != 0">
             <div class="people-table-scroll fitScreen">
@@ -140,10 +146,10 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="tDate">
-                        <th class="br text-right" mat-sort-header mat-header-cell *matHeaderCellDef sticky>Transaction
+                        <th class="br  " mat-sort-header mat-header-cell *matHeaderCellDef>Transaction
                             Date
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element">
+                        <td class="br " mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 {{(isLoading) ? '':element.transactionDate | date: 'dd/MM/yyyy' }}
                             </div>
