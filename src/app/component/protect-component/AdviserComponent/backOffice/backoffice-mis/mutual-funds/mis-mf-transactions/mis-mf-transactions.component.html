@@ -6,13 +6,14 @@
 
     <div class="col-md-8 d-flex align-items-center justify-content-end">
         <div class="w-30 mr-20 remove-top">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <mat-select class="form-control">
-                    <mat-option value='' disabled>Select search type</mat-option>
-                    <mat-option (click)="selectOption(4)" [value]="1">Investor name</mat-option>
-                    <mat-option (click)="selectOption(1)" [value]="2">Scheme name</mat-option>
-                    <mat-option (click)="selectOption(2)" [value]="3">Folio Number</mat-option>
-                    <mat-option (click)="selectOption(3)" [value]="4">PAN</mat-option>
+            <mat-form-field>
+                <mat-select (selectionChange)="selectOption(selectedSearch)" [(ngModel)]='selectedSearch'
+                    class="form-control f-14 br-0" id="sel11">
+                    <mat-option [disabled]="true" value="search">Select search type</mat-option>
+                    <mat-option [value]="1">Investor name</mat-option>
+                    <mat-option [value]="2">Scheme name</mat-option>
+                    <mat-option [value]="3">Folio Number</mat-option>
+                    <mat-option [value]="4">PAN</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

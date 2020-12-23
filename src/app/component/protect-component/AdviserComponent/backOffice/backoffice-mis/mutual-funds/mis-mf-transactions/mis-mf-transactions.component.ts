@@ -81,7 +81,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedStatusFilter: any = 'statusFilter';
   selectedTransactionFilter: any = 'tranFilter';
   selectedDateFilter: any = 'dateFilter';
-
+  selectedSearch: any = 'search';
   filterTransaction = [];
   obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
   dateFilterAdded: boolean = false;
@@ -260,12 +260,12 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (this.obj.end != {} || this.obj.begin != {}) {
-      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
-      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
-    } else if (this.obj.end = "Invalid date") {
+    if (this.obj.end = "Invalid date") {
       this.obj.end = null
       this.obj.begin = null
+    } else if (this.obj.end != {} || this.obj.begin != {}) {
+      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
+      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
     }
     if (this.dateFilterAdded == false) {
       this.obj.end = null
