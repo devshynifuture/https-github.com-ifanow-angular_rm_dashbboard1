@@ -81,7 +81,7 @@ export class MisMfTransactionsComponent implements OnInit {
   selectedStatusFilter: any = 'statusFilter';
   selectedTransactionFilter: any = 'tranFilter';
   selectedDateFilter: any = 'dateFilter';
-
+  selectedSearch: any = 'search';
   filterTransaction = [];
   obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
   dateFilterAdded: boolean = false;
@@ -220,7 +220,7 @@ export class MisMfTransactionsComponent implements OnInit {
       this.obj.end = list.dateFilterJson.end
       this.obj.begin = list.dateFilterJson.begin
     } else {
-      if (list.searchFlag) {
+      if (list.searchFlag >= 0) {
         this.obj.key = list.search
         this.obj.flag = list.searchFlag
       } else {
@@ -260,12 +260,12 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (this.obj.end != {} || this.obj.begin != {}) {
-      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
-      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
-    } else if (this.obj.end = "Invalid date") {
+    if (this.obj.end = "Invalid date") {
       this.obj.end = null
       this.obj.begin = null
+    } else if (this.obj.end != {} || this.obj.begin != {}) {
+      this.obj.end = moment(this.obj.end).format('YYYY-MM-DD')
+      this.obj.begin = moment(this.obj.begin).format('YYYY-MM-DD')
     }
     if (this.dateFilterAdded == false) {
       this.obj.end = null
@@ -296,13 +296,17 @@ export class MisMfTransactionsComponent implements OnInit {
 
   onSearchChange(event) {
     console.log('key', event)
-    if (event.length > 3) {
-      let obj = {
-        searchFlag: this.flag,
-        search: event
-      }
+    let obj = {
+      searchFlag: this.flag,
+      search: event
+    }
+    if (obj.search == "") {
+      obj.searchFlag = 0
+      this.filterApi(obj)
+    } else if (obj.search.length > 3) {
       this.filterApi(obj)
     }
+
   }
 
   getMfTransactionData(endFlag) {
