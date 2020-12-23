@@ -37,7 +37,6 @@ export class EmailAdviceComponent implements OnInit {
   @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
   @ViewChild('subBody', { static: true }) subBodyRef: ElementRef;
   selectedAssetId = [];
-  emailIdList = [{ emailAddress: 'gayatri@futurewise.co.in' }];
   flag: any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   subjectFormCOntrol = new FormControl();
@@ -67,15 +66,27 @@ export class EmailAdviceComponent implements OnInit {
 
   validatorType = ValidatorType;
   getData: any;
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { }
+  clientData: any;
+  userInfo: any;
+  emailIdList = [];
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { 
+    this.getOrgData = AuthService.getOrgDetails();
+    this.clientData = AuthService.getClientData();
+
+  }
   @Input() set data(data) {
     this.getData = data.selectedAssetData;
+    console.log('clientData......................',this.clientData);
+    if(this.clientData.emailList){
+      this._inputData.toEmail = this.clientData.emailList[0].email
+    }
     this.getIds(data);
+    this.emailIdList = [{ emailAddress: this._inputData.toEmail }];
     this.flag = data.flagData;
-    this._inputData.fromEmail = 'sarvesh@futurewise.co.in';
+    this._inputData.fromEmail = this.getOrgData.email;
     this._inputData.subjectEditable = false;
     this._inputData.subject = 'Email advice request for consent ';
-    this._inputData.toEmail = 'gayatri@futurewise.co.in';
+    // this._inputData.toEmail = 'gayatri@futurewise.co.in';
 
     console.log(this.selectedAssetId, "selected id")
   }
@@ -137,7 +148,12 @@ export class EmailAdviceComponent implements OnInit {
         }
       );
     } else {
-      this.cusService.generateGroupId(obj).subscribe(
+      const consentObj = {
+        "fromEmail":this.getOrgData.email,
+        "toEmail":this.emailIdList,
+        "adviceIdList":obj
+        }
+      this.cusService.generateGroupId(consentObj).subscribe(
         data => this.getResponse(data)
       )
     }
@@ -152,7 +168,7 @@ export class EmailAdviceComponent implements OnInit {
       "messageBody": "Test",
       "toEmail": [
         {
-          "emailAddress": 'gayatri@futurewise.co.in'
+          "emailAddress": this._inputData.toEmail
         }
       ],
       "targetObject": {
@@ -160,7 +176,7 @@ export class EmailAdviceComponent implements OnInit {
         // "adviceUuid": 'abe26153-d112-410e-8ee1-5268a8911b4a',
         "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
       },
-      "fromEmail": "sarvesh@futurewise.co.in",
+      "fromEmail": this.getOrgData.email,
       "emailSubject": this.emailBody,
       "placeholder": [
         {

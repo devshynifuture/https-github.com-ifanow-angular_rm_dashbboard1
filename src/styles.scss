@@ -1843,7 +1843,15 @@ textarea {
 
   .mat-error {
     white-space: nowrap !important;
+    padding-left: 10px;
+    font-size: 12px;
   }
+}
+
+.mat-error {
+  color: #f44336;
+  padding-left: 10px;
+    font-size: 12px;
 }
 
 #overview-secondhead {
