@@ -8,12 +8,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
 import { AddInsuranceComponent } from '../../../../common-component/add-insurance/add-insurance.component';
-import { forkJoin } from 'rxjs';
+import { forkJoin, empty } from 'rxjs';
 import { CustomerService } from '../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EditSuggestedAdviceComponent } from '../edit-suggested-advice/edit-suggested-advice.component';
 import { AddNewLifeInsComponent } from './add-new-life-ins/add-new-life-ins.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { defaultIfEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -65,7 +67,8 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   clientIdToClearStorage: string;
   adviceName: string;
   adviceNameObj: { adviceName: string; };
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
+  familyMemberList: unknown;
+  constructor(private peopleService:PeopleService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -73,6 +76,10 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     this.adviceUtilService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
+    this.adviceUtilService.getFamilyMemberList()
+    .subscribe(res => {
+      this.familyMemberList = res;
+    })
     if (this.clientIdToClearStorage) {
       if (this.clientIdToClearStorage != this.clientId) {
         this.adviceUtilService.clearStorage();
@@ -115,6 +122,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     );
   }
   getAdviceByAsset() {
+    let familyMemberList;
     this.isLoading = true;
     this.termDataSource = [{}, {}, {}];
     this.traditionalDataSource = [{}, {}, {}];
@@ -130,13 +138,23 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
-    forkJoin(displayList, allAsset).subscribe(result => {
+    if (!this.familyMemberList && this.familyMemberList == '') {
+      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({clientId: this.clientId})
+    } else {
+      familyMemberList = empty().pipe(defaultIfEmpty(''));
+
+    }
+    forkJoin(displayList, allAsset , familyMemberList).subscribe(result => {
       this.globalObj={
         displayList:result[0],
         adviceLifeInsurance:result[1]
       }
       this.adviceUtilService.setStoredAdviceData(this.globalObj);
       this.displayList = result[0];
+      if (result[2]) {
+        this.familyMemberList = result[2]
+        this.adviceUtilService.setFamilyMemberList(this.familyMemberList);
+      }
       this.getAllSchemeResponse(result[1]);
 
     }, (error) => {
@@ -236,6 +254,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     return array;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
+    selectedData.adviceDetails.familyMemberList = this.familyMemberList;
     if (flag.checked) {
       selectedData.selected = true;
       this.selectedAssetId.push(selectedData.adviceDetails)
@@ -251,7 +270,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } =   AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,this.familyMemberList);
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);

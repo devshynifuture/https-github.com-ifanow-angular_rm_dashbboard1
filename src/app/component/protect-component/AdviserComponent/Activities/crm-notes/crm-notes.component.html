@@ -28,8 +28,37 @@
                         </div>
 
                         <div class="col-md-4 form-group pl-0">
-                            <mat-form-field>
-                                <input class="form-control br-0" matInput>
+                            <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
+                                <input #searchClient (input)="checkOwnerList(searchClient.value)"
+                                    [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
+                                    aria-label="client" class="form-control pl-8" matInput
+                                    placeholder="Start typing to see investor names">
+                                <mat-autocomplete #auto1="matAutocomplete"
+                                    (optionSelected)="ownerDetails($event.option.value)"
+                                    [displayWith]="processTransaction.displayName" autoFocus>
+                                    <mat-option *ngFor="let f of filteredStates " [value]="f">
+                                        <div class="row">
+                                            <div class="col-md-1 p-0 d-flex align-items-center">
+                                                <i class="material-icons"> person </i>
+                                            </div>
+                                            <div class="col-md-7 pl-0 d-flex align-items-center">
+                                                <p class="t-left m-0">{{f.name}}</p>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <button *ngIf="f.userType==3" class="small-primitive"
+                                                    mat-stroked-button>
+                                                    FAMILY MEMBER
+                                                </button>
+                                                <button *ngIf="f.userType==2" class="small-primitive"
+                                                    mat-stroked-button>CLIENT
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                                    This family member does not exist
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
