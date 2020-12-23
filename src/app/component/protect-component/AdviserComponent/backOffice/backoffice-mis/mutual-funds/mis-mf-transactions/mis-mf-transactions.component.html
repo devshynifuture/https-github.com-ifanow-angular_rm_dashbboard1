@@ -70,7 +70,7 @@
                 <mat-form-field>
                     <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
                         class="form-control f-14 br-0" id="sel11">
-                        <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
+                        <mat-option [disabled]="true" value="statusFilter">Category</mat-option>
                         <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -79,7 +79,7 @@
                 <mat-form-field>
                     <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
                         class="form-control f-14 br-0" id="sel12">
-                        <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
+                        <mat-option [disabled]="true" value="dateFilter">Transaction date</mat-option>
                         <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
                         </mat-option>
                     </mat-select>
@@ -89,7 +89,7 @@
                 <mat-form-field>
                     <mat-select (selectionChange)="addTransactionType(selectedTransactionFilter)"
                         [(ngModel)]='selectedTransactionFilter' class="form-control br-0" id="sel12">
-                        <mat-option [disabled]="true" value="tranFilter">FILTER THREE</mat-option>
+                        <mat-option [disabled]="true" value="tranFilter">Transaction Type</mat-option>
                         <mat-option *ngFor="let tran of transactionTypeChips" [value]="tran">{{tran.transactionType}}
                         </mat-option>
                     </mat-select>
