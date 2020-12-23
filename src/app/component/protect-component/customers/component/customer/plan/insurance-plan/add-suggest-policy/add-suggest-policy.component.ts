@@ -8,6 +8,7 @@ import { MatInput } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-suggest-policy',
@@ -40,7 +41,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   policyDetails: any;
   isRecommended = false;
   recommendOrNot: any;
-  constructor(private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
+  constructor(private datePipe: DatePipe,private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -84,7 +85,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       frequency: [(this.dataForEdit ? this.dataForEdit.frequency + '' : ''), [Validators.required]],
       insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
       tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
-      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commenecedate)  : null), [Validators.required]],
+      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commencementDate)  : null), [Validators.required]],
     })
     if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;
@@ -176,7 +177,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
-        'commencementDate': this.suggestPolicyForm.get('implementationDate').value,
+        'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy/MM/dd') ,
         'realOrFictitious': 2,
         'suggestion': this.storeData,
         'isRecommend': this.showRecommendation ? 1 : 0,
