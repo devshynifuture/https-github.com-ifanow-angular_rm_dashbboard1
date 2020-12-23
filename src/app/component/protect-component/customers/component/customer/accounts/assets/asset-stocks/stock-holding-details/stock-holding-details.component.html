@@ -114,28 +114,30 @@
     </div>
 
 </div>
-<div class="row pt-20" *ngIf="data.nomineeList.length > 0">
+<div class="row pt-20">
     <div class="col-md-12">
         <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
-
-        <!-- <div class="row bb p-8 b-l br w-100 bt-1">
-      <div class="col-md-7 text-left f-14 roboto p-0">
-          Shilpa Jain
-      </div>
-      <div class="col-md-5 text-right f-14 roboto p-0">
-          Wife with 50% share
-      </div>
-  </div> -->
-
-        <div class="row bb p-8 b-l br w-100" *ngFor="let obj of data.nomineeList;">
-            <div class="col-md-7 text-left f-14 roboto p-0">
-                {{obj.name}}
+        <div class="row bb p-8 b-l br w-100 bt-1">
+            <div class="row w-100" [hidden]="data.nomineeList.length > 0">
+                <div class="col-md-7 text-left f-14 roboto p-0">
+                    -
+                </div>
+                <div class="col-md-5 text-right f-14 roboto p-0">
+                    <!-- Daughter with 50% share -->
+                    -
+                </div>
             </div>
-            <div class="col-md-5 text-right f-14 roboto p-0">
-                <!-- Daughter with 50% share -->
-                with {{obj.sharePercentage}}% share
+            <div class="row w-100" *ngFor="let obj of data.nomineeList;" [hidden]="data.nomineeList.length <= 0 ">
+                <div class="col-md-7 text-left f-14 roboto p-0">
+                    {{obj.name==''?'-':obj.name}}
+                </div>
+                <div class="col-md-5 text-right f-14 roboto p-0">
+                    <!-- Daughter with 50% share -->
+                    with {{obj.name==''?'-':obj.sharePercentage}}% share
+                </div>
             </div>
         </div>
+
     </div>
     <div class="col-md-12 text-right pt-4">
         <p class="m-0 text-custom f-12 lh-14" *ngIf='data.lastUpdated'>Updated:

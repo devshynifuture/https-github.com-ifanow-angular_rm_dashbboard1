@@ -608,7 +608,7 @@ export class SummaryPlanComponent implements OnInit {
             endDate: this.endDate,
             clientDob: this.clientDob,
             fmDobList: JSON.stringify(this.familyList),
-            id: 0
+            idList: 0
         };
         this.planService.getCashFlow(obj).subscribe(
             data => {

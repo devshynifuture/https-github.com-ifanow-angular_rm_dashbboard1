@@ -100,7 +100,7 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <p class="m-0 text-black roboto pt-24" *ngIf="adviceForm.get('headerEdit').value != '1' && adviceForm.get('headerEdit').value != '3'">Amount</p>
+                                <p class="m-0 text-black roboto pt-24" *ngIf="adviceForm.get('headerEdit').value != '1' && adviceForm.get('headerEdit').value != '3'">{{(adviceForm.get('headerEdit').value == '2') ? 'Surrender value' : 'Amount'}}</p>
                                 <div class="form-group" >
                                     <mat-form-field class="ba-date" *ngIf="adviceForm.get('headerEdit').value != '1' && adviceForm.get('headerEdit').value != '3'">
                                         <input matInput #withdrawalAmt [inputValidator]="validatorType.NUMBER_ONLY"

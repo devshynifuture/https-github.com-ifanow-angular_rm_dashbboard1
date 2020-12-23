@@ -14,7 +14,7 @@ export class PlanService {
   public assetSubject = new Subject();
 
   getIncomeData(data) {
-    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('id', data.id).set('clientId', data.clientId).set('addMonthlyDistribution', data.addMonthlyDistribution);
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('idList', data.idList).set('clientId', data.clientId).set('addMonthlyDistribution', data.addMonthlyDistribution);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_LIST, httpParams)
   }
 
