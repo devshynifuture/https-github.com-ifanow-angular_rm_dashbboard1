@@ -19,7 +19,7 @@
       <h5 class="m-0">IFSC code</h5>
     </div>
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter ifsc code" autocomplete="off" (input)="toUpperCase(bankForm.get('ifscCode'),$event)"
             appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
@@ -40,7 +40,7 @@
       <h5 class="m-0">Bank name</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter your bank name" autocomplete="off" [maxLength]="50" #bankName
             appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput
@@ -57,7 +57,7 @@
       <h5 class="m-0">Account number</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input autocomplete="off" placeholder="Enter account number" #accNum
             [maxlength]="enumDataService.maxBankAccountLength" formControlName="accNumber" matInput
@@ -74,7 +74,7 @@
       <h5 class="m-0">Account type</h5>
     </div>
     <div class="col-md-4 p-0  mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <mat-select formControlName="accType" class="form-control">
             <mat-option value='' disabled>Select account type</mat-option>
@@ -92,16 +92,16 @@
   </app-add-holder-names> -->
 
   <div formArrayName="getNomineeName">
-    <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
+    <div class="row pt-40" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
-        <h5 class="m-0 pt-12">
+        <h5 class="m-0 ">
           <span *ngIf="pointIndex==0">First</span>
           <span *ngIf="pointIndex==1">Second</span>
           <span *ngIf="pointIndex==2">Third</span> holder name
         </h5>
       </div>
       <div class="p-0 mob-pl-10 col-10 col-md-6">
-        <div class="form-group mb-0">
+        <div class="form-group remove-top mb-0">
           <mat-form-field>
             <mat-select appHolderName matInput [clientIdData]="userData" formControlName="name" [data]='ownerData'
               (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)'
@@ -134,7 +134,7 @@
       <h5 class="m-0">MICR code</h5>
     </div>
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input #micr autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
             [maxLength]="9" placeholder="Enter micr code" formControlName="micrName" matInput class="form-control">
@@ -150,7 +150,7 @@
       <h5 class="m-0">Branch name</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter branch name" #branchName autocomplete="off" formControlName="branchName"
             appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput
@@ -167,7 +167,7 @@
       <h5 class="m-0">Branch country</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter your branch country" autocomplete="off" formControlName="branchCountry" matInput
             class="form-control">
@@ -183,7 +183,7 @@
       <h5 class="m-0">Branch pin code</h5>
     </div>
     <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter pin code" autocomplete="off" [maxLength]="6"
             (focusout)="getPostalPin($event.target.value)" formControlName="branchPinCode" #branchCode matInput
@@ -204,7 +204,7 @@
       <h5 class="m-0">Branch address line 1</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter branch address 1" autocomplete="off" maxlength="100" #bAdd1
             formControlName="branchAddressLine1" matInput class="form-control">
@@ -221,7 +221,7 @@
       <h5 class="m-0">Branch address line 2</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter branch address 2" autocomplete="off" #bAdd2 maxlength="100"
             formControlName="branchAddressLine2" matInput class="form-control">
@@ -238,7 +238,7 @@
       <h5 class="m-0">Branch city</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter branch city" maxlength="30" appInputValueValidation
             [inputValidator]="validatorType.TEXT_ONLY" autocomplete="off" #branchCity formControlName="branchCity"
@@ -256,7 +256,7 @@
       <h5 class="m-0">Branch state</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group mb-0">
+      <div class="form-group remove-top mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter branch state" maxlength="30" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.TEXT_ONLY" #branchState formControlName="branchState" matInput

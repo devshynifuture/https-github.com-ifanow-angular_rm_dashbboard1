@@ -78,12 +78,14 @@ export class OwnerNomineeDirective {
   }
 
   @Input() set data(data) {
-    this.ownerData = data.controleData;
-    this.emitedNOminee = data.Fmember;
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    if ((this.clientId || this.requestData) && data.Fmember.length <= 0) {
-      this.getListFamilyMem();
+    if (data) {
+      this.ownerData = data.controleData;
+      this.emitedNOminee = data.Fmember;
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId();
+      if ((this.clientId || this.requestData) && data.Fmember.length <= 0) {
+        this.getListFamilyMem();
+      }
     }
   }
 
@@ -201,6 +203,8 @@ export class OwnerNomineeDirective {
         this.getNominee.controls['0'].get('sharePercentage').setValue('100');
         this.setOwnerNominee();
         this.valueChange3.emit(this.ownerNomineeJson);
+        // this.valueChange1.emit(this.sendData);
+
       }
     }
 

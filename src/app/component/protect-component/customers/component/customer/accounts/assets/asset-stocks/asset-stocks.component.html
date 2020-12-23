@@ -195,37 +195,35 @@
                             </div>
                         </div>
 
-
-
-                        <div #categoriesL *ngIf="!isLoading"
+                        <div #categoriesL [hidden]="isLoading"
                             class=" b-a p-0 height227 d-flex justify-content-center flex-column"
-                            [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
-                            [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
-                            <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
+                            [ngClass]="chartData.length > 0?'col-md-8':'col-md-12'"
+                            [ngStyle]="{'border-left':chartData.length > 0? 'none':''}">
+
+                            <div class="row bb pt-10 pb-10" *ngFor="let c of chartData" [hidden]="c.a <= 0">
                                 <div class="col-md-1">
-                                    <div class="hw-16 mt-2 bg-Banking"></div>
+                                    <div class="hw-16 mt-2 " [ngStyle]="{'background-color': c.color}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="f-500 text-black mb-0">Banking</p>
+                                    <p class="f-500 text-black mb-0">{{c.name}}</p>
                                 </div>
-                                <div class="col-md-3 pl-0 text-right" *ngIf="categories.Banks != undefined">
+                                <div class="col-md-3 pl-0 text-right">
                                     <!-- <p class="text-black mb-0">23.43%</p> -->
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <div *ngIf="!isLoading">
-                                                {{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue"
-                                                    appFormatNumber>{{categories.Banks.currentValue}}</span>
+                                                {{c.a?'₹':''}}<span [value]="c.a" appFormatNumber>{{c.a}}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2 pl-0" *ngIf="categories.Banks != undefined">
+                                <div class="col-md-2 pl-0">
                                     <!-- <p class="text-black mb-0">23.43%</p> -->
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': isLoading}">
                                             <div *ngIf="!isLoading">
                                                 <p class="text-black mb-0">
-                                                    {{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}}
+                                                    {{c.y | number: '1.2-2'}}%
                                                 </p>
                                             </div>
                                         </div>
@@ -233,130 +231,11 @@
                                 </div>
                             </div>
 
-                            <div class="row b-t pt-10 pb-10" *ngIf="categories.Information_Technology.perrcentage > 0">
-                                <div class="col-md-1">
-                                    <div class="hw-16 mt-2 bg-technology"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="f-500 text-black mb-0">Information technology</p>
-                                </div>
 
-                                <div class="col-md-3 pl-0 text-right"
-                                    *ngIf="categories.Information_Technology != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <div *ngIf="!isLoading">
-                                                {{categories.Information_Technology?'₹':''}}<span
-                                                    [value]="categories.Information_Technology.currentValue"
-                                                    appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 pl-0" *ngIf="categories.Information_Technology != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <p class="text-black mb-0" *ngIf="!isLoading">
-                                                {{categories.Information_Technology.perrcentage | number: '1.2-2'}}{{categories.Information_Technology?'%':''}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row b-t pt-10 pb-10" *ngIf="categories.fmcg.perrcentage > 0">
-                                <div class="col-md-1">
-                                    <div class="hw-16 mt-2 bg-FMCG"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="f-500 text-black mb-0">FMCG</p>
-                                </div>
-                                <div class="col-md-3 pl-0 text-right" *ngIf="categories.fmcg != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <div *ngIf="!isLoading">
-                                                {{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue"
-                                                    appFormatNumber>{{categories.fmcg.currentValue}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 pl-0" *ngIf="categories.fmcg != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <p class="text-black mb-0" *ngIf="!isLoading">
-                                                {{categories.fmcg.perrcentage | number: '1.2-2'}}{{categories.fmcg?'%':''}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row b-t pt-10 pb-10" *ngIf="categories.Auto_Ancillaries.perrcentage > 0">
-                                <div class="col-md-1">
-                                    <div class="hw-16 mt-2 bg-danger"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="f-500 text-black mb-0">Auto ancillaries</p>
-                                </div>
-                                <div class="col-md-3 pl-0 text-right" *ngIf="categories.Auto_Ancillaries != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <div *ngIf="!isLoading">
-                                                {{categories.Auto_Ancillaries?'₹':''}}<span
-                                                    [value]="categories.Auto_Ancillaries.currentValue"
-                                                    appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <p class="text-black mb-0" *ngIf="!isLoading">
-                                                {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row b-t pt-10 pb-10" *ngIf="categories.OTHERS.perrcentage > 0">
-                                <div class="col-md-1">
-                                    <div class="hw-16 mt-2 bg-grey dker"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="f-500 text-black mb-0">Others</p>
-                                </div>
-                                <div class="col-md-3 pl-0 text-right" *ngIf="categories.OTHERS">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <div *ngIf="!isLoading">
-                                                {{categories.OTHERS?'₹':''}}<span
-                                                    [value]="categories.OTHERS.currentValue"
-                                                    appFormatNumber>{{categories.OTHERS.currentValue}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 pl-0" *ngIf="categories.OTHERS">
-                                    <!-- <p class="text-black mb-0">23.43%</p> -->
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}">
-                                            <p class="text-black mb-0" *ngIf="!isLoading">
-                                                {{categories.OTHERS.perrcentage | number: '1.2-2'}}{{categories.OTHERS?'%':''}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -729,9 +608,26 @@
                             <div *ngIf="chart">showPieChart</div>
                         </td>
 
-                        <td style="border: 1px solid #dee5e7; ">
+                        <td style="border: 1px solid #dee5e7; " *ngIf="chartData.length>0">
                             <table style="width: 100%;">
-                                <tr *ngIf="categories.Banks.perrcentage > 0">
+                                <tr *ngFor="let c of chartData" [hidden]="c.a <= 0">
+                                    <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
+                                        <div [ngStyle]="{'background-color': c.color}"
+                                            style=" margin-right: 10px; width: 10px; display: inline-block; height: 10px;">
+                                        </div>
+                                        <div style="font-size: 14px; display: inline-block; width: 85px;">{{c.name}}
+                                        </div>
+                                        <div
+                                            style="font-size: 14px; display: inline-block; margin-right: 10px; width: 120px; text-align: right;">
+                                            {{c.a?'₹':''}}<span [value]="c.a" appFormatNumber>{{c.a}}</span></div>
+                                        <div style="font-size: 12px; margin-left: 10px; display: inline-block;">
+
+                                            {{c.y | number: '1.2-2'}}%
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr *ngIf="categories.Banks.perrcentage > 0">
                                     <td style="padding: 8px; border-bottom: 1px solid #dee5e7;">
                                         <div
                                             style="background:#008FFF; margin-right: 10px; width: 10px; display: inline-block; height: 10px;">
@@ -814,7 +710,7 @@
                                             {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </td>
 

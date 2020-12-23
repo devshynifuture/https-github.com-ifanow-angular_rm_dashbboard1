@@ -820,6 +820,40 @@ mat-tab-group[vertical] {
   //font-family: "Proxima Nova ", sans-serif;
 }
 
+#ui-notes {
+  margin-top: 140px !important;
+  
+}
+
+.fixedClass {
+  position: fixed;
+  background-color: #fff;
+  z-index: 2;
+}
+.notesScroll {
+  max-height: calc(100vh - 9rem);
+ overflow-y: scroll;  
+ padding-bottom: 50px;
+ h5{
+   cursor: pointer;
+ }
+ p{
+   cursor: pointer;
+ }
+}
+
+.scorllable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scorllable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.notesScroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 #ui-account-summary {
   .mat-checkbox-checked .mat-checkbox-background,
   .mat-checkbox-indeterminate .mat-checkbox-background {

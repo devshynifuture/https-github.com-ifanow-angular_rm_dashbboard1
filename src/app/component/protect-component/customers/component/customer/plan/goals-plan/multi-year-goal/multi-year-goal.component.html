@@ -1,6 +1,6 @@
 <div class="row bg-white bb-1 popup-header-fix w-100">
-    <div class="col-md-5 p-0">
-        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
+    <div class="col-md-2 p-0 imgClient">
+        <img [src]="authService.orgData.logoUrl || organizationLogo">
     </div>
     <div class="col-md-5">
         <h5 class="m-0 p-20 pl-50" *ngIf="goalTypeData">{{goalTypeData.name}} goal</h5>
@@ -17,7 +17,6 @@
         <div class="wrapper-40 pt-100">
             <div class="row">
                 <div class="col-md-8 p-0">
-
                     <!-- FAMILY SELECTION -->
                     <div class="row" [hidden]="!planForFamily">
                         <div class="col-md-8 p-0">
@@ -100,8 +99,8 @@
                                 <div class="row pt-8">
                                     <div class="col-md-4 p-0">
                                         <div class="form-group mb-0">
-                                            <span
-                                                *ngIf="detailedPlanning">{{multiYearGoalForm.get('field2').value[0] + i}}</span>
+                                            <span *ngIf="detailedPlanning">{{multiYearGoalForm.get('field2').value[0] +
+                                                i}}</span>
                                             <mat-form-field class="iconRupess">
                                                 <input type="number" [value]="spending.value" [formControl]="spending"
                                                     autocomplete="off" matInput class="form-control br-0 rupess">
