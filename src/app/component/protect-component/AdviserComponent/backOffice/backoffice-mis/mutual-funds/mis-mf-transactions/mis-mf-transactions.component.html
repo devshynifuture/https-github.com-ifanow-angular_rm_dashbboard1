@@ -8,7 +8,7 @@
         <div class="w-30 mr-20 remove-top">
             <mat-form-field floatLabel="never" appearance="standard">
                 <mat-select class="form-control">
-                    <mat-option [value]='0' disabled>Select search type</mat-option>
+                    <mat-option value='' disabled>Select search type</mat-option>
                     <mat-option (click)="selectOption(4)" [value]="1">Investor name</mat-option>
                     <mat-option (click)="selectOption(1)" [value]="2">Scheme name</mat-option>
                     <mat-option (click)="selectOption(2)" [value]="3">Folio Number</mat-option>
@@ -19,7 +19,7 @@
 
         <div class="w-30 mr-20 remove-top">
             <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
-                <input (input)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0"
+                <input (keyup)="onSearchChange($event.target.value)" autocomplete="off" class="form-control br-0"
                     matInput placeholder="Type to search data">
             </mat-form-field>
         </div>

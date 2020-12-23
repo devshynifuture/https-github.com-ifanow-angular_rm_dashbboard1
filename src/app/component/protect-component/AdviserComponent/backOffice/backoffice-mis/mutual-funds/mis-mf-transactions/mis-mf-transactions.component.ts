@@ -220,7 +220,7 @@ export class MisMfTransactionsComponent implements OnInit {
       this.obj.end = list.dateFilterJson.end
       this.obj.begin = list.dateFilterJson.begin
     } else {
-      if (list.searchFlag) {
+      if (list.searchFlag >= 0) {
         this.obj.key = list.search
         this.obj.flag = list.searchFlag
       } else {
@@ -296,13 +296,14 @@ export class MisMfTransactionsComponent implements OnInit {
 
   onSearchChange(event) {
     console.log('key', event)
-    if (event.length > 3) {
-      let obj = {
-        searchFlag: this.flag,
-        search: event
-      }
-      this.filterApi(obj)
+    let obj = {
+      searchFlag: this.flag,
+      search: event
     }
+    if (obj.search == "") {
+      obj.searchFlag = 0
+    }
+    this.filterApi(obj)
   }
 
   getMfTransactionData(endFlag) {
