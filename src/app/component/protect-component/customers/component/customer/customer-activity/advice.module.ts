@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     CustomDirectiveModule,
     CommonModule,
     MaterialModule,
+    CommonComponentModule,
     ReactiveFormsModule,
     FormsModule,
     CustomDirectiveModule,
