@@ -302,8 +302,11 @@ export class MisMfTransactionsComponent implements OnInit {
     }
     if (obj.search == "") {
       obj.searchFlag = 0
+      this.filterApi(obj)
+    } else if (obj.search.length > 3) {
+      this.filterApi(obj)
     }
-    this.filterApi(obj)
+
   }
 
   getMfTransactionData(endFlag) {
