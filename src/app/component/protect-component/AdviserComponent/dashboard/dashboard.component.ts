@@ -269,6 +269,7 @@ export class DashboardComponent implements OnInit {
   transactionFlag: boolean;
   showSummaryBar;
   taskStatusList: any;
+  last7DaysLoading = true;
 
   advisorId: any;
   dashBoardSummary: {}[];
@@ -860,6 +861,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLastSevenDaysTransactions() {
+    this.last7DaysLoading = true
 
     const obj = {
       advisorId: this.advisorId,
@@ -874,6 +876,28 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
+    const obj2 = {
+      advisorId: this.advisorId,
+      parentId: this.parentId,
+      days: 7
+    };
+    this.dashboardService.getLastSevenDaysTransactionsNew(obj2).subscribe(
+      (data) => {
+        if(data){
+          this.last7DaysLoading = false
+          this.dataSource5 = data;
+          console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
+        }else{
+          this.last7DaysLoading = false
+          this.dataSource5 = [];
+          console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
+        }
+
+      },err=>{
+        this.last7DaysLoading = false
+        this.dataSource5 = [];
+      });
+
     this.transactionFlag = true;
     console.log(new Date(obj.startDate), new Date(obj.endDate), 'date 123');
     this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
@@ -888,7 +912,6 @@ export class DashboardComponent implements OnInit {
         } else {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
-          this.dataSource5 = [];
         }
       });
   }

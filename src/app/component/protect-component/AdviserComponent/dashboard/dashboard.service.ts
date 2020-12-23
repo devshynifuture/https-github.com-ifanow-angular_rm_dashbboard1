@@ -32,7 +32,9 @@ export class DashboardService {
   getLastSevenDaysTransactions(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION, data, 1);
   }
-
+  getLastSevenDaysTransactionsNew(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LAST_7_DAYS_TRANSACTION_NEW, data);
+  }
   getLastSevenDaysInvestmentAccounts(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_INVESTMENT_ACCOUNTS, data, 1);
   }
