@@ -215,19 +215,33 @@ export class AssetStocksComponent implements OnInit {
         let i = 0
         this.getStocksDataRes(data);
         this.chartData = [];
+        let others: any;
         for (const [c, e] of Object.entries(data.newGraphData)) {
           let obj = Object.assign({ e });
-          this.chartData.push({
-            name: c,
-            y: obj.e.perrcentage,
-            a: obj.e.currentValue,
-            color: c == "OTHERS" ? this.othersChartColor : this.chartColour[i],
-            dataLabels: {
-              enabled: false
+          if (c == "Others") {
+            others = {
+              name: c,
+              y: obj.e.perrcentage,
+              a: obj.e.currentValue,
+              color: this.othersChartColor,
+              dataLabels: {
+                enabled: false
+              }
             }
-          })
-          ++i;
+          } else {
+            this.chartData.push({
+              name: c,
+              y: obj.e.perrcentage,
+              a: obj.e.currentValue,
+              color: this.chartColour[i],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            ++i;
+          }
         }
+        this.chartData.push(others);
         setTimeout(() => {
           this.pieChart(this.chartData);
         }, 1000);
@@ -255,15 +269,15 @@ export class AssetStocksComponent implements OnInit {
   gain: boolean = true;
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
-    if (data) {
-      this.categories.Banks = data.categories.Banks ? data.categories.Banks : { currentValue: 0, perrcentage: 0 };
-      this.categories.fmcg = data.categories.fmcg ? data.categories.fmcg : { currentValue: 0, perrcentage: 0 };
-      this.categories.Auto_Ancillaries = data.categories.Auto_Ancillaries ? data.categories.Auto_Ancillaries : { currentValue: 0, perrcentage: 0 };
-      this.categories.OTHERS = data.categories.OTHERS ? data.categories.OTHERS : { currentValue: 0, perrcentage: 0 };
-      this.categories.Information_Technology = data.categories.Information_Technology ? data.categories.Information_Technology : { currentValue: 0, perrcentage: 0 };
-      this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0 ? 0 : data.categories.OTHERS.perrcentage;
+    // if (data) {
+    //   this.categories.Banks = data.categories.Banks ? data.categories.Banks : { currentValue: 0, perrcentage: 0 };
+    //   this.categories.fmcg = data.categories.fmcg ? data.categories.fmcg : { currentValue: 0, perrcentage: 0 };
+    //   this.categories.Auto_Ancillaries = data.categories.Auto_Ancillaries ? data.categories.Auto_Ancillaries : { currentValue: 0, perrcentage: 0 };
+    //   this.categories.OTHERS = data.categories.OTHERS ? data.categories.OTHERS : { currentValue: 0, perrcentage: 0 };
+    //   this.categories.Information_Technology = data.categories.Information_Technology ? data.categories.Information_Technology : { currentValue: 0, perrcentage: 0 };
+    //   this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0 ? 0 : data.categories.OTHERS.perrcentage;
 
-    }
+    // }
     if (data.emptyPortfolioList.length > 0) {
       let deleteArr = []
       data.emptyPortfolioList.forEach(ep => {
@@ -292,17 +306,22 @@ export class AssetStocksComponent implements OnInit {
       this.portfolioData.forEach(p => {
 
         p.categoryWiseStockList.forEach((s, i) => {
-          if (s.categoryName) {
-            this.stockListGroup.push({ group: s.categoryName });
-          }
+          let ok = true;
           s.stockList.forEach(cs => {
-            cs.stock.ownerList = p.ownerList
-            cs.stock['nomineeList'] = p.nomineeList;
-            cs.stock['linkedBankAccount'] = p.linkedBankAccount;
-            cs.stock['linkedDematAccount'] = p.linkedDematAccount;
-            cs.stock['description'] = p.description;
-            cs.stock['stockListForEditView'] = cs.stockListForEditView;
-            this.stockListGroup.push(cs.stock);
+            if (cs.stock.balanceShares) {
+              cs.stock.ownerList = p.ownerList
+              cs.stock['nomineeList'] = p.nomineeList;
+              cs.stock['linkedBankAccount'] = p.linkedBankAccount;
+              cs.stock['linkedDematAccount'] = p.linkedDematAccount;
+              cs.stock['description'] = p.description;
+              cs.stock['stockListForEditView'] = cs.stockListForEditView;
+              if (s.categoryName && ok) {
+                ok = false;
+                this.stockListGroup.push({ group: s.categoryName });
+              }
+              this.stockListGroup.push(cs.stock);
+            }
+
           });
           // for (let index = 0; index < s.stockList.length; index++) {
           //   if (index == 0 && s.categoryName) {
