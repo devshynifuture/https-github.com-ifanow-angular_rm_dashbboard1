@@ -4,7 +4,9 @@
     <div class="col-md-6 p-0">
       <h4 class="m-0 text-black roboto">Others assets</h4>
     </div>
-    <div class="col-md-6 p-0 d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
+
+    <div *ngIf="datasource3.filteredData.length > 0"
+      class="col-md-6 p-0 d-flex align-items-center justify-content-end ">
       <div class="p-0 d-flex align-items-center justify-content-center mt-8">
         <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
       </div>
