@@ -286,6 +286,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           }
         });
       });
+      GIArry = GIArry.filter(d => !d.hideGiveAdvice);
     }
     if(GIArry.length > 0){
       data = [...GIArry, ...data];

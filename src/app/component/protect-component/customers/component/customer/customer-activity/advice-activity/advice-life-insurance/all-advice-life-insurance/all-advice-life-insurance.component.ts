@@ -277,6 +277,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
           }
         });
       });
+      liArray = liArray.filter(d => !d.hideGiveAdvice);
+
     }
     if (liArray.length > 0) {
       array = [...liArray, ...array];

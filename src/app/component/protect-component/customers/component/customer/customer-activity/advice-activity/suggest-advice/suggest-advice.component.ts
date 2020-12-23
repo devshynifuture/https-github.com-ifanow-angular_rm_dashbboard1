@@ -153,11 +153,11 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     console.log(this.stepper.selectedIndex, "check selectedIndex");
 
   }
-  function(){
+  function() {
     this.count++;
   }
   getFormData(data) {
-    if (data.data ?  (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
+    if (data.data ? (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
       data = {};
       this.dataForEdit = null;
       this.flag = 'Add';
@@ -902,8 +902,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 clientId: this.clientId,
                 advisorId: this.advisorId,
                 ownerName: '',
-                commencementDate:new Date(),
-                id:componentRefComponentValues.editInsuranceData ? componentRefComponentValues.editInsuranceData.id : null,
+                commencementDate: new Date(),
+                id: componentRefComponentValues.editInsuranceData ? componentRefComponentValues.editInsuranceData.id : null,
                 // policyNumber: componentRefComponentValues.lifeInsuranceForm.get('policyNum').value,
                 policyName: componentRefComponentValues.lifeInsuranceForm.get('policyName').value,
                 sumAssured: parseInt(componentRefComponentValues.lifeInsuranceForm.get('sumAssured').value),
@@ -952,12 +952,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 insuranceObj.nominees = [];
               }
               const stringObj = {
-                id : this.dataForEdit ? this.dataForEdit.id : null,
+                id: this.dataForEdit ? this.dataForEdit.id : null,
                 insuranceCategoryTypeId: this.adviceToCategoryId,
                 suggestedFrom: 1,
-                
+
                 adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId ? this.adviceToCategoryTypeMasterId : 3,
-                adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null,  adviceDescription: this.adviceForm.get('rationale').value },
+                adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null, adviceDescription: this.adviceForm.get('rationale').value },
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
                 adviceId: this.adviceForm.get('headerEdit').value ? this.adviceForm.get('headerEdit').value : 0,
@@ -1362,32 +1362,43 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     }
     let ObjHealth = Object.assign(stringObjHealth, { stringObject: obj });
     if (this.flag == 'Add') {
-      this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
-        data => {
-          // const addPlan = {
-          //   "id": this.componentRefComponentVal.inputData.id,
-          //   "insuranceIds": JSON.stringify([data])
-          // }
-          // const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
-          // forkJoin(UpadtePolicy).subscribe(result => {
-          //   this.barButtonOptions.active = false;
-          //   this.getAdviceRes(result);
-          // }, (error) => {
-          //   this.eventService.openSnackBar('error', 'Dismiss');
-          // });
-          this.barButtonOptions.active = false;
-          this.getAdviceRes(data);
-        },
-      );
+      if (this.showHeaderEdit) {
+        this.planService.addAdviseOnGeneralInsurance(ObjHealth).subscribe(
+          res => {
+            this.barButtonOptions.active = false;
+            this.getAdviceRes(res);
+          }, err => {
+            this.eventService.openSnackBar('error', 'Dismiss');
+          }
+        )
+      } else {
+        this.activityService.suggestNewGeneralInsurance(ObjHealth).subscribe(
+          data => {
+            // const addPlan = {
+            //   "id": this.componentRefComponentVal.inputData.id,
+            //   "insuranceIds": JSON.stringify([data])
+            // }
+            // const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
+            // forkJoin(UpadtePolicy).subscribe(result => {
+            //   this.barButtonOptions.active = false;
+            //   this.getAdviceRes(result);
+            // }, (error) => {
+            //   this.eventService.openSnackBar('error', 'Dismiss');
+            // });
+            this.barButtonOptions.active = false;
+            this.getAdviceRes(data);
+          },
+        );
+      }
     } else {
-        const editGeneral = this.planService.editGenralInsurancePlan(obj);
-        const editAdvice = this.activityService.editAdvice(ObjHealth);
-        forkJoin(editGeneral, editAdvice).subscribe(result => {
-          this.barButtonOptions.active = false;
-          this.getAdviceRes(result);
-        }, (error) => {
-          this.eventService.openSnackBar('error', 'Dismiss');
-        });
+      const editGeneral = this.planService.editGenralInsurancePlan(obj);
+      const editAdvice = this.activityService.editAdvice(ObjHealth);
+      forkJoin(editGeneral, editAdvice).subscribe(result => {
+        this.barButtonOptions.active = false;
+        this.getAdviceRes(result);
+      }, (error) => {
+        this.eventService.openSnackBar('error', 'Dismiss');
+      });
       //  else {
       //   this.activityService.editAdvice(ObjHealth).subscribe(
       //     data => this.getAdviceRes(data),
