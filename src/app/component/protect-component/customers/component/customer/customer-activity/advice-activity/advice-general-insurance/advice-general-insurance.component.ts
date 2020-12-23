@@ -259,7 +259,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
   }
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,'');
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);

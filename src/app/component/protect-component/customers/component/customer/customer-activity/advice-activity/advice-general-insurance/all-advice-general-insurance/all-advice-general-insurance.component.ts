@@ -351,7 +351,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,'');
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
@@ -442,7 +442,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       childComponent: component,
       recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       adviceHeaderList:this.adviceHeaderList,
-      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
+      showHeaderEdit:(data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : false) : false) : false),
       childData: {
         recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
         inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },

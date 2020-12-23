@@ -13,6 +13,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class AdviceActionComponent implements OnInit {
   selectedAssetData: any;
+  familyMemberList: any;
 
   constructor(private eventService: EventService, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -32,7 +33,8 @@ export class AdviceActionComponent implements OnInit {
     };
     fragmentData.data = {
       selectedAssetData: this.selectedAssetData,
-      flagData: data
+      flagData: data,
+      familyList:this.familyMemberList
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

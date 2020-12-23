@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AdviceUtilsService {
   private allAdviceData = new BehaviorSubject('');
   private clientId = new BehaviorSubject('')
+  private familyList = new BehaviorSubject('');
 
   constructor() { }
 
@@ -47,10 +48,16 @@ export class AdviceUtilsService {
   getClientId() {
     return this.clientId.asObservable();
   }
+  setFamilyMemberList(value) {
+    this.familyList.next(value);
+  }
+  getFamilyMemberList() {
+    return this.familyList.asObservable();
+  }
   clearStorage() {
     this.setStoredAdviceData({});
   }
-  static selectAllIns(flag, dataList, selectedIdList) {
+  static selectAllIns(flag, dataList, selectedIdList,famList) {
     console.log(dataList)
     let count = 0;
     dataList.forEach(element => {
@@ -61,6 +68,7 @@ export class AdviceUtilsService {
       element.selected = element.adviceDetails.id ? flag.checked : false;
       if (flag.checked) {
         count++;
+        element.adviceDetails.familyMemberList = famList;
         selectedIdList.push(element.adviceDetails);
       }
       else {
