@@ -1,7 +1,10 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <div class="logoWrap">
+        <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+        <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
+      </div>
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -60,7 +63,7 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input class="form-control" formControlName="placeOfBirth" matInput maxlength="10"
-                     placeholder="Enter City of birth" type="text">
+                placeholder="Enter City of birth" type="text">
               <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -74,8 +77,7 @@
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
-                     formControlName="countryOfBirth" matInput placeholder="Start typing to see country names"
-                     type="text">
+                formControlName="countryOfBirth" matInput placeholder="Start typing to see country names" type="text">
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
                   {{scheme.name}}
@@ -94,8 +96,8 @@
           <div class="col-md-3 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" appInputValueValidation
-                     class="form-control" formControlName="annualIncome" matInput placeholder="Enter Gross income"
-                     type="text">
+                class="form-control" formControlName="annualIncome" matInput placeholder="Enter Gross income"
+                type="text">
               <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -115,9 +117,9 @@
                 <mat-option value='02'>
                   Business Income
                 </mat-option>
-<!--                <mat-option value='05'>-->
-<!--                  Rental Income-->
-<!--                </mat-option>-->
+                <!--                <mat-option value='05'>-->
+                <!--                  Rental Income-->
+                <!--                </mat-option>-->
                 <mat-option value='08'>
                   Others
                 </mat-option>
