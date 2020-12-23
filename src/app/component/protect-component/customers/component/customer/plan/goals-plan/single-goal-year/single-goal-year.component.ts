@@ -1,13 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PlanService } from '../../plan.service';
-import { AppConstants } from 'src/app/services/app-constants';
-import { AppComponent } from 'src/app/app.component';
-import { DatePipe } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators, FormGroup, FormControl, FormArray} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PlanService} from '../../plan.service';
+import {AppConstants} from 'src/app/services/app-constants';
+import {AppComponent} from 'src/app/app.component';
+import {DatePipe} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {OrgSettingServiceService} from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -47,8 +47,10 @@ export class SingleGoalYearComponent implements OnInit {
   getLifeExpentancy: any;
   dateF: number;
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
+  organizationLogo;
 
   constructor(
+    public authService: AuthService,
     private eventService: EventService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
@@ -69,6 +71,7 @@ export class SingleGoalYearComponent implements OnInit {
     }
     this.setDefaultOwner();
   }
+
   getKeyParameter() {
     let obj = {
       advisorId: this.advisorId
@@ -82,6 +85,7 @@ export class SingleGoalYearComponent implements OnInit {
       }
     );
   }
+
   getKeyAndParametersRes(data) {
     if (data) {
       this.idWiseData = data.key_Params;
@@ -89,6 +93,7 @@ export class SingleGoalYearComponent implements OnInit {
       this.getLifeExpentancy = this.getLifeExpentancy[0]
     }
   }
+
   selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.singleYearGoalForm.get('age').setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
@@ -254,7 +259,11 @@ export class SingleGoalYearComponent implements OnInit {
             console.error("Unidentified goal id found", this.goalTypeData.goalTypeId)
             break;
         }
-        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, data: { resetSelectedCursor: true } });
+        this.eventService.changeUpperSliderState({
+          state: 'close',
+          refreshRequired: true,
+          data: {resetSelectedCursor: true}
+        });
       },
       error => {
         this.eventService.showErrorMessage(error)
@@ -272,7 +281,7 @@ export class SingleGoalYearComponent implements OnInit {
     }
   }
 
-  // set the validation age for the age form field 
+  // set the validation age for the age form field
   setMinMaxAgeOrYear(value) {
 
     if (this.goalTypeData.validations.showAge && value) {
@@ -315,7 +324,6 @@ export class SingleGoalYearComponent implements OnInit {
           milestoneTypeId: [0],
           amount: [0],
         })]),
-
       )
     }
     if (this.goalTypeData.goalTypeId === 5) {
@@ -326,10 +334,12 @@ export class SingleGoalYearComponent implements OnInit {
   get getMilestone() {
     return this.singleYearGoalForm.get('getMilestoneName') as FormArray;
   }
+
   removeMilestone(item) {
     this.disabledMember(null, null);
     this.getMilestone.removeAt(item);
   }
+
   disabledMember(value, type) {
     this.callMethod = {
       methodName: 'disabledMember',
@@ -337,6 +347,7 @@ export class SingleGoalYearComponent implements OnInit {
       disControl: type
     };
   }
+
   addMilestone(data) {
     this.getMilestone.push(this.fb.group({
       onRetirementOrDemise: [0],
@@ -344,6 +355,7 @@ export class SingleGoalYearComponent implements OnInit {
       amount: [0],
     }));
   }
+
   previewGoalImage(event) {
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;

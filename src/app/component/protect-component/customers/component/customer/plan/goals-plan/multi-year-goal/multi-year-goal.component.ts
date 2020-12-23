@@ -49,7 +49,9 @@ export class MultiYearGoalComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  organizationLogo;
   constructor(
+    public authService: AuthService,
     private eventService: EventService,
     private fb: FormBuilder,
     private planService: PlanService,
@@ -200,7 +202,7 @@ export class MultiYearGoalComponent implements OnInit {
     }
   }
 
-  // set the validation age for the age form field 
+  // set the validation age for the age form field
   setMinMaxAgeOrYear(value) {
     if (this.goalTypeData.validations.showAge) {
       this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));

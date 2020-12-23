@@ -260,6 +260,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // })])
   });
   @Output() previousStep = new EventEmitter();
+  ids =[];
 
   constructor(private custumService: CustomerService, private dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) {
   }
@@ -1231,6 +1232,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
 
   submitIncomeFormRes(data) {
+    if(!this.editApiData){
+      this.ids.push(data);
+    }
     this.incomePosition++;
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition];
@@ -1241,10 +1245,12 @@ export class IndividualIncomeInfoComponent implements OnInit {
     } else {
       (this.editApiData) ? this.eventService.openSnackBar('Income is edited') : this.eventService.openSnackBar('Income is added');
       const obj={
+        // this.ids
         id: this.editApiData ? this.editApiData.id : data,
         isAdded : this.editApiData ? false : true
       }
       this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true ,data:obj});
+      this.ids =[];
     }
     this.barButtonOptions.active = false;
   }
