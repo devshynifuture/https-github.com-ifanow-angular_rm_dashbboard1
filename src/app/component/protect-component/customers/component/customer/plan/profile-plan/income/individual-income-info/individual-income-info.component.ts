@@ -1246,7 +1246,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       (this.editApiData) ? this.eventService.openSnackBar('Income is edited') : this.eventService.openSnackBar('Income is added');
       const obj={
         // this.ids
-        id: this.editApiData ? this.editApiData.id : data,
+        id: this.editApiData ? this.editApiData.id : this.ids,
         isAdded : this.editApiData ? false : true
       }
       this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true ,data:obj});
