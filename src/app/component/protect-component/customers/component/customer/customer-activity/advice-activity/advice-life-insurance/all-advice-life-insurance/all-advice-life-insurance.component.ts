@@ -6,13 +6,14 @@ import { AdviceUtilsService } from '../../advice-utils.service';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, empty } from 'rxjs';
 import { AddInsuranceComponent } from '../../../../../common-component/add-insurance/add-insurance.component';
 import { SuggestAdviceComponent } from '../../suggest-advice/suggest-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-suggested-advice.component';
-import { catchError } from 'rxjs/operators';
+import { catchError, defaultIfEmpty } from 'rxjs/operators';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-all-advice-life-insurance',
@@ -48,12 +49,17 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   allTerm: any;
   adviceName: string;
   adviceNameObj: { adviceName: string; };
-  constructor(private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  familyMemberList: any;
+  constructor(private peopleService:PeopleService,private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.adviceUtilService.getFamilyMemberList()
+    .subscribe(res => {
+      this.familyMemberList = res;
+    })
     this.adviceUtilService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
@@ -99,6 +105,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
   getAdviceByAsset() {
     this.isLoading = true;
+    let familyMemberList;
     this.termDataSource = [{}, {}, {}];
     this.traditionalDataSource = [{}, {}, {}];
     this.ulipDataSource = [{}, {}, {}];
@@ -129,12 +136,22 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     const portfolioLi = this.cusService.getInsuranceData(obj2).pipe(
       catchError(error => of(error))
     );
-    forkJoin(displayList, allAsset, portfolioLi).subscribe(result => {
+    if (!this.familyMemberList && this.familyMemberList == '') {
+      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({clientId: this.clientId})
+    } else {
+      familyMemberList = empty().pipe(defaultIfEmpty(''));
+
+    }
+    forkJoin(displayList, allAsset, portfolioLi,familyMemberList).subscribe(result => {
       this.globalObj['allAdviceLifeInsurance'] = result[1];
       this.globalObj['LIData'] = result[2].insuranceList
       this.adviceUtilService.setStoredAdviceData(this.globalObj);
       this.displayList = result[0];
       this.LIData = this.filterLiData(result[2].insuranceList);
+      if (result[2]) {
+        this.familyMemberList = result[2]
+        this.adviceUtilService.setFamilyMemberList(this.familyMemberList);
+      }
       this.getAllSchemeResponse(result[1]);
     }, (error) => {
       this.isLoading = false;
@@ -294,7 +311,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId);
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,this.familyMemberList);
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);

@@ -53,12 +53,14 @@
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
                      <div class="bar">
+                        {{!isLoading && element.totalTransactionAmt? "₹" : ""}}
                         <span
                            appFormatNumber>{{isLoading ? '' : ((element.totalTransactionAmt) ? (element.totalTransactionAmt) : 0)}}</span>
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                     <span>{{mfData ? mfData.total_amount_invested : 0}}</span>
+
+                     ₹ <span>{{mfData ? mfData.total_amount_invested : 0}}</span>
                      <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                   </td>
                </ng-container>
@@ -68,12 +70,13 @@
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
                      <div class="bar">
+                        {{!isLoading && element.currentValue? "₹" : ""}}
                         <span
                            appFormatNumber>{{isLoading ? '' : ((element.currentValue) ? (element.currentValue) : 0)}}</span>
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                     <span>{{mfData ? mfData.total_current_value : '0'}}</span>
+                     ₹ <span>{{mfData ? mfData.total_current_value : '0'}}</span>
                      <!-- <div>{{ grandTotal.currentValue }}</div>-->
                   </td>
                </ng-container>
@@ -235,18 +238,18 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="transactionAmount">
-                  <th *matHeaderCellDef class="br text-left" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Transaction amount
                   </th>
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                     <div class="bar"><span>{{element.amount}}</span>
+                     <div class="bar">₹<span> {{element.amount}}</span>
                      </div>
                   </td>
                </ng-container>
                <ng-container matColumnDef="transactionAmountTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span *ngIf="element.totalTransactionAmt" class="f-700">{{element.totalTransactionAmt}}</span>
+                        ₹ <span *ngIf="element.totalTransactionAmt" class="f-700">{{element.totalTransactionAmt}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -710,11 +713,11 @@
             </td>
             <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
                appFormatNumber>
-               {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}
+               ₹ {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
-               {{(item.currentValue) ? (item.currentValue) : 0}}
+               ₹ {{(item.currentValue) ? (item.currentValue) : 0}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
@@ -749,11 +752,11 @@
             </td>
             <td
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-               {{mfData ? mfData.total_amount_invested : 0}}
+               ₹ {{mfData ? mfData.total_amount_invested : 0}}
             </td>
             <td
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-               {{mfData ? mfData.total_current_value : '0'}}
+               ₹ {{mfData ? mfData.total_current_value : '0'}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
