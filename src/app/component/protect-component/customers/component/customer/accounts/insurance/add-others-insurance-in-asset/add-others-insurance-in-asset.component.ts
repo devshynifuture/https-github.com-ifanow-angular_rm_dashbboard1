@@ -475,7 +475,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      floaterOrIndividual: [(this.dataForEdit) ? this.addOns.isFloater : null],
+      floaterOrIndividual: [(this.dataForEdit) ? (this.dataForEdit.isFloater == 1 ? true : false) : null],
       policyHolderName: [this.dataForEdit ? this.dataForEdit.policyHolderName : null],
       PlanType: [(this.dataForEdit ? this.dataForEdit.planType : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
@@ -931,7 +931,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'planName': this.otherAssetForm.get('planeName').value,
         'policyNumber': this.otherAssetForm.get('policyNum').value,
         'advisorName': this.otherAssetForm.get('advisorName').value,
-        'isFloater': this.otherAssetForm.get('floaterOrIndividual').value,
+        'isFloater': (this.otherAssetForm.get('floaterOrIndividual').value) ? 1 : 0,
         'serviceBranch': this.otherAssetForm.get('serviceBranch').value,
         'linkedBankAccountId': this.otherAssetForm.get('bankAccount').value,
         'insurerName': this.otherAssetForm.get('insurerName').value,
