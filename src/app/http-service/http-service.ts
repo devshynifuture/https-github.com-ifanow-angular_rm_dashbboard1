@@ -157,8 +157,32 @@ export class HttpService {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
         .set('Content-Type', 'application/json'), params
     };
-    // if (options != undefined) {
-    //   httpOptions = options;
+    if (params != undefined) {
+      httpOptions = params;
+    }
+
+    return this._http
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
+      .map((res: any) => {
+        if (res == null) {
+          return res;
+        } else if (res.status === 200) {
+          const resData = this.changeBase64ToString(res);
+          return resData;
+        } else {
+          const err = new Error(res.message);
+          throwError(err);
+          // this._router.navigate(['login']);
+        }
+      });
+  }
+  putParam(url: string, body, params?): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json'), params
+    };
+    // if (params != undefined) {
+    //   httpOptions = params;
     // }
 
     return this._http

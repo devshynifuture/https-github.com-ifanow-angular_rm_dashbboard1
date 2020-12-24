@@ -165,7 +165,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.eventService.openSnackBar('File copied successfully', 'Dismiss');
     this.getAllFileList(1, 'copy')
   }
-  copyFoldersrRes(){
+  copyFoldersrRes() {
     this.eventService.openSnackBar('Folder copied successfully', 'Dismiss');
     this.getAllFileList(1, 'copy')
   }
@@ -190,12 +190,12 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       console.log('The dialog was closed', element);
       this.getInnerDoc = result;
       if (result.value == 'Copy') {
-        if(element.folderName){
+        if (element.folderName) {
           delete result.value;
           this.custumService.copyFolders(result).subscribe(
             data => this.copyFoldersrRes()
           );
-        }else{
+        } else {
           delete result.value;
           this.custumService.copyFiles(result).subscribe(
             data => this.copyFilesRes()
@@ -231,7 +231,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
-     this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
+    this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -249,7 +249,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
-     this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
+    this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -299,7 +299,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (tabValue == undefined) {
       tabValue = 1
     }
-    if(tabValue =='Documents' || tabValue == 1){
+    if (tabValue == 'Documents' || tabValue == 1) {
       this.openFolderName = []
     }
     if (flag == 'refresh') {
@@ -546,9 +546,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because' + this.getUserInfo.name+' shared link with you.  ' + '' + this.element.link
+        messageBody: 'You have received this email because' + this.getUserInfo.name + ' shared link with you.  ' + '' + this.element.link
       }
-      if(this.element != ""){
+      if (this.element != "") {
         this.custumService.sendSharebleLink(obj).subscribe(
           data => this.sendSharebleLinkRes(data),
           err => this.eventService.openSnackBar(err, "Dismiss")
@@ -678,16 +678,16 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data,flag)
+      data => this.starFileRes(data, flag)
     );
   }
 
-  starFileRes(data,flag) {
+  starFileRes(data, flag) {
     console.log(data);
     if (data) {
-      if(flag == 0){
+      if (flag == 0) {
         this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
-      }else{
+      } else {
         this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       }
       this.getCount()
