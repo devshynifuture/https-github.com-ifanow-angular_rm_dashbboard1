@@ -353,9 +353,9 @@ export class MutualFundSummaryComponent implements OnInit {
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           }
-          if(this.resData){
+          if (this.resData) {
             this.getMutualFundResponse(this.mfGetData)
-          }else if (this.mfGetData && this.mfGetData != "") {
+          } else if (this.mfGetData && this.mfGetData != "") {
             this.getMutualFundResponse(this.mfGetData)
           } else if (this.mutualFund) {
             this.getMutualFundResponse(this.mutualFund)
@@ -1301,7 +1301,7 @@ export class MutualFundSummaryComponent implements OnInit {
           this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
           this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         }
-        if(!isNaN(this.mfData.total_dividend_payout)){
+        if (!isNaN(this.mfData.total_dividend_payout)) {
           this.mfData.total_dividend_payout = this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
         }
         this.mfData.withdrawals = this.grandTotal.withdrawals
@@ -1598,7 +1598,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.getFilterData(2)
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
-           rightSideDataSub.unsubscribe();
+          rightSideDataSub.unsubscribe();
         }
       }
     );

@@ -39,12 +39,12 @@
             </button>
         </div>
     </div>
-    <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate">
+    <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate new-border-table">
         <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
             class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
-                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
-                <td mat-cell *matCellDef="let element;index as i" class="br">
+                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br bl"> No </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br bl">
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
                 <td mat-footer-cell class=" f-500 pl-4 text-left t-2 bl-1" *matFooterCellDef>
@@ -137,16 +137,16 @@
                 <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br "> Status </th>
                 <td mat-cell *matCellDef="let element" class="br text-primary">
                     <div class="bar"> {{element.statusId}} </div>
                 </td>
                 <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="icons">
-                <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                <th mat-header-cell *matHeaderCellDef class="t-2 br"> </th>
                 <td id="hide" [matMenuTriggerFor]="menubank" mat-cell *matCellDef="let element"
-                    class="t-2 c-p text-center">
+                    class="t-2 c-p br text-center">
 
                     <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">

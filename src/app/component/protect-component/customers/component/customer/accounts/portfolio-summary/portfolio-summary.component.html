@@ -397,7 +397,7 @@
                         <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
                         </div>
                         <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
-                        <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
+                        <ul *ngIf="nightyDayData && oneDay" class="pl-20">
                           <li class="pr-4 text-black">90-days</li>
                           <li *ngIf="letsideBarLoader==false"
                             [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"

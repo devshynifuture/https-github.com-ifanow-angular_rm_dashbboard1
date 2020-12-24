@@ -43,7 +43,7 @@
    .table-scroll-veiw {
 
     //  height: 400px;
-        overflow: auto !important;
+        overflow-y: scroll !important;
         max-height: 450px;
 
    }
@@ -58,3 +58,5 @@
         padding-bottom: 0px;
     }
 }
+ 
+ 

@@ -2116,3 +2116,11 @@ ngx-slick-carousel > .slick-disabled {
 a.docFileName:hover{
   color: #000;
 }
+
+
+.new-border-table {
+  .mat-table {
+    border-collapse : separate;
+    border-top: 1px solid #DADCE0;
+  }
+}

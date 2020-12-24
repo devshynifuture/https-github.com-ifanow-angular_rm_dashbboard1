@@ -177,7 +177,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
-        'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy/MM/dd') ,
+        'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy-MM-dd') ,
         'realOrFictitious': 2,
         'suggestion': this.storeData,
         'isRecommend': this.showRecommendation ? 1 : 0,
