@@ -113,7 +113,7 @@ export class IncomeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       addMonthlyDistribution: false,
-      id: this.incomeId ? this.incomeId : 0
+      idList : this.incomeId ? this.incomeId : 0
     };
     this.planService.getIncomeData(obj).subscribe(
       data => {

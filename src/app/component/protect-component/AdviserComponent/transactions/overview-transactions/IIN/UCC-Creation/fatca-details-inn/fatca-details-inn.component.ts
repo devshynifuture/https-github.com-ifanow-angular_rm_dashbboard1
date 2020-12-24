@@ -1,16 +1,17 @@
-import {AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {DatePipe} from '@angular/common';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {SubmitReviewInnComponent} from '../submit-review-inn/submit-review-inn.component';
-import {MatInput} from '@angular/material';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
+import { MatInput } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -71,11 +72,13 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
   firstHolderContact: any;
   secondHolderContact: any;
   thirdHolderContact: any;
+  logoText = 'Your Logo here';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-              public eventService: EventService) {
+    public authService: AuthService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
+    public eventService: EventService) {
   }
 
   get data() {
