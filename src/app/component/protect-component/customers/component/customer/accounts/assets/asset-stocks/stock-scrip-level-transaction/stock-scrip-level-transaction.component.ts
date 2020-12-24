@@ -72,6 +72,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
           h['ownerList'] = data.ownerList;
           h['portfolioOwner'] = data.owerList;
           h['portfolioName'] = data.portfolioName;
+          h['nomineeList'] = data.nomineeList;
+          h['linkedBankAccount'] = data.linkedBankAccount;
+          h['linkedDematAccount'] = data.linkedDematAccount;
+          h['description'] = data.description;
           h['stockListForEditView'] = [h];
           this.Holdings = h;
         }
@@ -518,6 +522,14 @@ export class StockScripLevelTransactionComponent implements OnInit {
         obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
 
       }
+
+      obj.nomineeList.forEach((element, index) => {
+        if (element.name == '') {
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList = this.scipLevelTransactionForm.value.getNomineeName;
+
       console.log(obj)
       if (this.editApiData) {
         if (obj.id != 0) {
@@ -534,6 +546,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
               data.stockList[0]['stockListForEditView'] = data.stockList;
               data.stockList[0]['portfolioId'] = data.id;
               data.stockList[0]['ownerList'] = data.ownerList;
+              data.stockList[0]['linkedBankAccount'] = data.linkedBankAccount;
+              data.stockList[0]['linkedDematAccount'] = data.linkedDematAccount;
+              data.stockList[0]['description'] = data.description;
               this.newPorfolio = data;
             }
             else {
