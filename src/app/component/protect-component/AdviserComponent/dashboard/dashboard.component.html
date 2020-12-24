@@ -1161,8 +1161,11 @@
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
         </div>
         <div class="col-md-3 p-0 text-right">
-          <button mat-stroked-button class="advisor-view-all">View All</button>
+            <button mat-stroked-button [routerLink]="['/admin/backoffice-mis/mutual-funds']"
+            routerLinkActive="router-link-active" class="advisor-view-all">View All
+          </button>
         </div>
+        
 
 
         <div *ngIf="dataSource5.length == 0" class="ba-primitive br-4 mt-10 p-18">
