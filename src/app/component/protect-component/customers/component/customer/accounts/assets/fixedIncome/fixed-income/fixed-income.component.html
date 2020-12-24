@@ -66,14 +66,14 @@
 
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }"
-            class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass fixed-deposit">
+            class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass new-border-table fixed-deposit">
             <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
                 [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no" sticky>
+                <ng-container matColumnDef="no">
 
-                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
-                    <td *matCellDef="let element let i = index;" class="br " mat-cell>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br bl" sticky> No</th>
+                    <td *matCellDef="let element let i = index;" class="br bl" mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-right bl-1">
@@ -188,8 +188,8 @@
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
                 <ng-container matColumnDef="icons" sticky>
-                    <th mat-header-cell *matHeaderCellDef class=""></th>
-                    <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p">
+                    <th mat-header-cell *matHeaderCellDef class="br"></th>
+                    <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p br">
 
                         <!-- <i [matMenuTriggerFor]="menu4" class="material-icons c-p f-20 text-black">
                                 more_vert
@@ -279,14 +279,15 @@
                 </button>
             </div>
         </div>
-        <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 fixed-DEPOSIT ">
+        <div [ngClass]="{'table-scroll':isLoading==false }"
+            class=" col-md-12 overflow-hidden p-0 mt-8 new-border-table fixed-DEPOSIT ">
 
             <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #recurringDepositTable="matSort"
                 mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
-                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
-                    <td mat-cell *matCellDef="let element let i = index;" class="br">
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br bl"> No</th>
+                    <td mat-cell *matCellDef="let element let i = index;" class="br bl">
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left bl-1"></td>
@@ -387,8 +388,8 @@
                     <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="icons" sticky>
-                    <th mat-header-cell *matHeaderCellDef class=""></th>
-                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="text-center c-p">
+                    <th mat-header-cell *matHeaderCellDef class="br"></th>
+                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="text-center br c-p">
 
                         <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
 
@@ -439,21 +440,6 @@
                     <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
                 </mat-menu>
 
-                <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
-                    <img src="assets/images/svg/up-down.svg">
-                </a>
-                <mat-menu #menu7="matMenu"> -->
-                <!-- <button mat-menu-item>Upload file
-                        <input (change)="fetchData('Bonds',$event)" class="uploadInput" id="file-4" multiple
-                            type="file">
-                    </button> -->
-                <!-- </mat-menu>
-                <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
-                <mat-menu #menu6="matMenu">
-                    <button mat-menu-item>Email Report</button>
-                    <button mat-menu-item>Option 2</button>
-                    <button mat-menu-item>Option 3</button>
-                </mat-menu> -->
 
                 <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
                     class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
@@ -477,13 +463,14 @@
             </div>
         </div>
         <div class=" p-0 col-md-12  mt-8  fixed-DEPOSIT">
-            <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden tableHeightClass">
+            <div [ngClass]="{'table-scroll':isLoading==false }"
+                class="overflow-hidden new-border-table tableHeightClass">
                 <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
                     [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>
-                        <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
-                        <td mat-cell *matCellDef="let element let i = index;" class="br">
+                        <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br bl"> No</th>
+                        <td mat-cell *matCellDef="let element let i = index;" class="br bl">
                             <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left bl-1"> </td>
@@ -615,8 +602,8 @@
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
                     <ng-container matColumnDef="icons" sticky>
-                        <th mat-header-cell *matHeaderCellDef class=" "></th>
-                        <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="text-center c-p">
+                        <th mat-header-cell *matHeaderCellDef class="br"></th>
+                        <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="text-center c-p br">
 
                             <!-- <i class="material-icons f-20 c-p text-black" >
                                     more_vert

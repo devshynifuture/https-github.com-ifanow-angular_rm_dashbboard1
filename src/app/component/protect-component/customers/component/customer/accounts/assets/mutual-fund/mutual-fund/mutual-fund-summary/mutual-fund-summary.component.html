@@ -329,47 +329,47 @@
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="icons">
-                    <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menuVa"
-                        [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="c-p" mat-cell>
-
-                        <img class="c-p" src="/assets/images/svg/dot-menu.svg"
-                            *ngIf="!isLoading && element.schemeName!='Total' ">
-                        <mat-menu #menuVa="matMenu" class="disabledOpacity">
-                            <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
-                            <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
-                            <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
-                                online</button>
-                            <button mat-menu-item (click)="orderSOA(element)"
-                                *ngIf="element.rtMasterId === 1 || element.rtMasterId === 2">
-                                Order SOA
-                            </button>
-
-                            <button mat-menu-item class="bt-1"
-                                (click)="openUpperFragment('addTransaction', element)">View
-                                transactions</button>
-
-                            <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
-                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
-
-                                <button mat-menu-item [disabled]="element.rtMasterId !== 14"
-                                    (click)="openMutualEditFund('editMutualFund',element)">Edit
-                                    Mutual Fund</button>
-                            </div>
-                            <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
-                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
-
-                                <button mat-menu-item [disabled]="element.rtMasterId !== 14"
-                                    (click)="deleteModal('mutualFund', element)">Delete Mutual
-                                    Fund</button>
-                            </div>
-
-                        </mat-menu>
-
-                    </td>
-
-                    <td *matFooterCellDef class="text-right" mat-footer-cell></td>
-                </ng-container> -->
+    <th *matHeaderCellDef class="" mat-header-cell></th>
+    <td *matCellDef="let element" [matMenuTriggerFor]="menuVa"
+    [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="c-p" mat-cell>
+   
+    <img class="c-p" src="/assets/images/svg/dot-menu.svg"
+    *ngIf="!isLoading && element.schemeName!='Total' ">
+    <mat-menu #menuVa="matMenu" class="disabledOpacity">
+    <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
+    <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
+    <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
+    online</button>
+    <button mat-menu-item (click)="orderSOA(element)"
+    *ngIf="element.rtMasterId === 1 || element.rtMasterId === 2">
+    Order SOA
+    </button>
+   
+    <button mat-menu-item class="bt-1"
+    (click)="openUpperFragment('addTransaction', element)">View
+    transactions</button>
+   
+    <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
+    [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+   
+    <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+    (click)="openMutualEditFund('editMutualFund',element)">Edit
+    Mutual Fund</button>
+    </div>
+    <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
+    [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+   
+    <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+    (click)="deleteModal('mutualFund', element)">Delete Mutual
+    Fund</button>
+    </div>
+   
+    </mat-menu>
+   
+    </td>
+   
+    <td *matFooterCellDef class="text-right" mat-footer-cell></td>
+    </ng-container> -->
 
 
                 <ng-container matColumnDef="icons">
@@ -515,7 +515,7 @@
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                    {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
                         {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise'))}}</strong>
                 </p>
