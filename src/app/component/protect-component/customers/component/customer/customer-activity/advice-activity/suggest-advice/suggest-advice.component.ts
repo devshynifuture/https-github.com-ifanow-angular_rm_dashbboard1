@@ -1347,14 +1347,14 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   }
   mergeAndhitApi(obj) {
     const stringObjHealth = {
-      adviceDescription: this.adviceForm.get('rationale').value,
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
+      id: this.dataForEdit ? this.dataForEdit.id : null,
       adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 0,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-      adviceToGenInsurance: { genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
+      adviceToGenInsurance: { adviceDescription: this.adviceForm.get('rationale').value,genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
       adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
