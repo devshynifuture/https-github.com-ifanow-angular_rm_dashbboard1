@@ -86,15 +86,15 @@
                 </div>
             </div>
 
-            <div class="plan-icome">
+            <div class="plan-icome new-border-table">
                 <table #tableEl *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table
                     matSort appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no">
-                        <th *matHeaderCellDef class="br t-right t-1" mat-header-cell mat-sort-header> No.</th>
-                        <td *matCellDef="let element;index as i" class="br t-1" mat-cell>
+                        <th *matHeaderCellDef class="br bl t-right t-1" mat-header-cell mat-sort-header> No.</th>
+                        <td *matCellDef="let element;index as i" class="br bl t-1" mat-cell>
                             <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                         </td>
-                        <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
+                        <td *matFooterCellDef class="br text-right  bl" mat-footer-cell></td>
                     </ng-container>
                     <ng-container matColumnDef="owner">
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner
