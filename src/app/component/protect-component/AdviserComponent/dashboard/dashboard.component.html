@@ -1203,7 +1203,7 @@
                   <div [ngSwitch]="element.status">
                     <div *ngSwitchCase="1">FAILURE</div>
                     <div *ngSwitchCase="7">Transaction rejected</div>
-                    <div *ngSwitchCase='null'>{{'-'}}</div>
+                    <div *ngSwitchCase='null'>{{transactionNature ? transactionNature : '-'}}</div>
                   </div>
                 </div>
 
