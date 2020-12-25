@@ -1011,7 +1011,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
             const addOnList = componentRefComponentValues[form].get('addOnForm') as FormArray;
             if (addOnList && addOnList.controls.length > 0) {
               addOnList.controls.forEach(element => {
-                if (element.get('additionalCovers').value && element.get('sumAddOns').value) {
+                if (componentRefComponentValues.insuranceType !=4  && element.get('additionalCovers').value && (element.get('sumAddOns').value)) {
                   let obj =
                   {
                     addOnId: element.get('additionalCovers').value,

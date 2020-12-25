@@ -554,6 +554,12 @@ export class StockScripLevelHoldingComponent implements OnInit {
         obj.ownerList[0].familyMemberId = this.portfolioData.ownerList[0].familyMemberId;
       }
 
+      obj.nomineeList.forEach((element, index) => {
+        if (element.name == '') {
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList = this.scipLevelHoldingForm.value.getNomineeName;
       if (this.editApiData) {
         if (obj.id != 0) {
           obj.ownerList[0].id = this.oldOwnerID ? this.oldOwnerID : obj.ownerList[0].id;

@@ -95,7 +95,7 @@
                 <div class="col-md-7 p-0">
                     <h5 class="mb-4 f-14">Name </h5>
                 </div>
-                <div class="col-md-3 pr-0" *ngIf="!floaterOrIndividual && showinsuredMemberSum">
+                <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                     <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 pr-0" *ngIf="!floaterOrIndividual && showinsuredMemberSum">
+                    <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                         <div class="form-group iconRupess">
                             <mat-form-field>
                                 <input #sumAssured (keyup)="getIndexOfSelectedElement(obj)"
@@ -159,7 +159,7 @@
 
         </div>
     </div>
-    <div class="row pt-40" *ngIf="floaterOrIndividual || showSumAssured">
+    <div class="row pt-40" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 1) || showSumAssured">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Sum insured</h5>
         </div>

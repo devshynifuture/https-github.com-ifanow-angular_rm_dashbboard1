@@ -138,14 +138,14 @@
                     </div>
 
                     <div [ngClass]="{'table-scroll':isLoading==false }"
-                        class="col-md-12 p-0 liabilities overflow-hidden">
+                        class="col-md-12 new-border-table p-0 liabilities overflow-hidden">
                         <div>
                             <table #tableEl *ngIf="insuranceTypeId == 1 && dataSource && dataSource.data.length > 0"
                                 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                                 class="skeletonAnimation" id="tbs" mat-table matSort>
                                 <ng-container matColumnDef="no" sticky>
-                                    <th *matHeaderCellDef class="br" mat-header-cell> No.</th>
-                                    <td *matCellDef="let element; let i = index" class="br" mat-cell>
+                                    <th *matHeaderCellDef class="br bl" mat-header-cell> No.</th>
+                                    <td *matCellDef="let element; let i = index" class="br bl" mat-cell>
                                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                                     </td>
                                     <td *matFooterCellDef class="bl-1 p-8 text-left" mat-footer-cell></td>
@@ -254,7 +254,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            <span *ngIf="!isLoading">{{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
+                                            <span
+                                                *ngIf="!isLoading">{{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -298,9 +299,9 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
-                                    <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+                                    <th *matHeaderCellDef class="t-2 br" mat-header-cell></th>
                                     <td *matCellDef="let element" [matMenuTriggerFor]="menu4"
-                                        class="t-2 mat-menu-trigger text-center c-p" mat-cell>
+                                        class="t-2 br mat-menu-trigger text-center c-p" mat-cell>
                                         <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                         <mat-menu #menu4="matMenu">
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
@@ -421,7 +422,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            <span *ngIf="!isLoading">{{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}</span>
+                                            <span
+                                                *ngIf="!isLoading">{{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}</span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -675,7 +677,8 @@
                             {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'MATURED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}} </td>
+                            {{item.statusId == 'MATURED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}}
+                        </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
                             {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
@@ -899,7 +902,8 @@
                             {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'EXPIRED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}} </td>
+                            {{item.statusId == 'EXPIRED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}}
+                        </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
                             {{(item.insuranceSubTypeId == 5) ? ((item.policyFeatureId == 0) ? 'Standard, ' : (item.policyFeatureId == 1) ? 'Top up, ' : (item.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(item.policyType) ? (item.policyType) : item.planName}}{{(insuranceSubTypeId == 8 && item.geographyId) ? ((item.geographyId == 1) ? ' - Worldwide' : (item.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (item.geographyId

@@ -498,7 +498,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccountId) : null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
-      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumAssuredIdv : null, [Validators.required]],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -937,7 +937,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'insurerName': this.otherAssetForm.get('insurerName').value,
         'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
         'premium': this.otherAssetForm.get('premium').value,
-        'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
+        'sumAssuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : 0,
         // 'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
         'policyHolderName':this.otherAssetForm.get('policyHolderName').value,
