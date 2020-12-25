@@ -462,7 +462,7 @@ export class InsuranceComponent implements OnInit {
         element.policyStartDate = element.startDate;
         element.policyExpiryDate = element.expiryDate;
         element.sumInsuredIdv = element.sumAssuredIdv
-        element.durationRemaining = this.calDiffe(element.policyExpiryDate,new Date())
+        element.durationRemaining = this.calDiffe(element.policyExpiryDate, new Date())
         element.exclusion = element.specialCondition;
         element.hypothetication = element.financierName;
         element.linkedBankAccount = element.linkedBankAccountId;
@@ -484,9 +484,16 @@ export class InsuranceComponent implements OnInit {
     }
     return data;
   }
-  calDiffe(date1,date2){
-    const diff = new Date(date1 - date2);
-    let duration = (new Date(diff).getFullYear() - 1970) + "Y " + (diff.getMonth() + 1) + "M " + diff.getDate() + "D"
+  calDiffe(date1, date2) {
+    const diff = new Date(date1 - date2)
+    let duration = this.year(diff)
+    return duration;
+  }
+  year(diff){
+    var num_years = Math.floor(diff /31536000000);
+    var num_months = Math.floor((diff % 31536000000)/2628000000);
+    var num_days = Math.floor(((diff % 31536000000) % 2628000000)/86400000);
+    let duration = (num_years!=0 ? ((num_years) + "Y ") : '') + (num_months!=0 ? ((num_months) + "M ") : '') + (num_days!=0 ? (Math.floor(num_days) + "D") : '')
     return duration;
   }
   filterOtherInsuranceSingleData(element) {
@@ -496,7 +503,7 @@ export class InsuranceComponent implements OnInit {
       element.premiumAmount = element.premium;
       element.policyStartDate = element.startDate;
       element.policyExpiryDate = element.expiryDate;
-      element.durationRemaining = this.calDiffe(element.policyExpiryDate,new Date())
+      element.durationRemaining = this.calDiffe(element.policyExpiryDate, new Date())
       element.exclusion = element.specialCondition;
       element.hypothetication = element.financierName;
       element.linkedBankAccount = element.linkedBankAccountId;
