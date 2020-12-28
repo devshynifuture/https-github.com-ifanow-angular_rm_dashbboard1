@@ -3,8 +3,11 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { Subscription, Observable } from 'rxjs';
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { startWith, debounceTime } from 'rxjs/operators';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProcessTransactionService } from '../../transactions/overview-transactions/doTransaction/process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-crm-notes',
@@ -20,10 +23,34 @@ export class CrmNotesComponent implements OnInit {
   stateCtrl = new FormControl('', [Validators.required]);
   familyMemberData: any;
   selectedName: any;
+  listOfNotes: any;
+  emailBody: string = "";
+  selectedNote: any;
+  noteData: any;
+  notes: any;
 
-  constructor(private peopleService: PeopleService, public processTransaction: ProcessTransactionService, ) { }
+
+  constructor(private peopleService: PeopleService,
+    public dialog: MatDialog,
+    public eventService: EventService,
+    private fb: FormBuilder,
+    public processTransaction: ProcessTransactionService,) { }
 
   ngOnInit() {
+    this.getNotes();
+    this.getdataForm("")
+  }
+  getdataForm(data) {
+    this.notes = this.fb.group({
+      subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
+      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
+    });
+
+
+  }
+
+  getFormControl(): any {
+    return this.notes.controls;
   }
   checkOwnerList(value) {
     if (!this.isAdvisorSection) {
@@ -61,7 +88,108 @@ export class CrmNotesComponent implements OnInit {
         }
       );
   }
+  clearNote() {
+    this.emailBody = ""
+  }
+  getNotes() {
+    let obj = {
+      advisorId: 5441,
+      limit: -1,
+      offset: 0
+    }
+    this.peopleService.getNotes(obj)
+      .subscribe(res => {
+        console.log(res);
+        this.listOfNotes = res
+      }, err => {
+        console.error(err);
+      })
+  }
+  selectNote(note) {
+    console.log('selectedNote', note)
+    this.stateCtrl.setValue('');
+    this.selectedNote = note
+    this.notes.controls.subject.setValue(note.subject)
+    this.stateCtrl.setValue(note.clientName)
+    this.emailBody = note.content
+  }
+  addNotes(note) {
+    let obj = {
+      id: null,
+      advisorId: 5441,
+      clientId: 96138,
+      clientName: this.stateCtrl.value.name,
+      subject: this.notes.controls.subject.value,
+      content: this.emailBody,
+      updatedTime: new Date()
+    }
+    if (!this.selectedNote) {
+      this.peopleService.addNotes(obj)
+        .subscribe(res => {
+          console.log(res);
+          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+          this.getNotes()
+        }, err => {
+          console.error(err);
+        })
+    } else {
+      obj.id = this.selectedNote.id
+      this.peopleService.editNotes(obj)
+        .subscribe(res => {
+          console.log(res);
+          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+          this.getNotes()
+        }, err => {
+          console.error(err);
+        })
+    }
 
+  }
+  editNotes() {
+    let obj = {}
+
+  }
+  saveData(data) {
+    this.emailBody = data;
+  }
+
+  deleteNotes(note, value) {
+    this.noteData = note;
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        // const obj = {
+        //   advisorId: this.advisorId,
+        //   id: this.singlePlanData.id
+        // };
+        this.peopleService.deleteNotes(this.noteData.id).subscribe(
+          data => {
+            //  this.deletedData(data);
+            dialogRef.close();
+          }
+        );
+
+      },
+      negativeMethod: () => {
+      }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getNotes()
+    });
+  }
   ownerDetails(value) {
     this.selectedName = value.name;
     this.familyMemberData = value;

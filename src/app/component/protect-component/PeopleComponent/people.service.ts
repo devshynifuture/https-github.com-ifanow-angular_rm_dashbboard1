@@ -204,4 +204,16 @@ export class PeopleService {
   promoteToClient(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.PROMOTE_TO_CLIENT, data);
   }
+  addNotes(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_NOTES_ACTIVITY, data);
+  }
+  editNotes(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_NOTES_ACTIVITY, data);
+  }
+  getNotes(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NOTES_ACTIVITY, data);
+  }
+  deleteNotes(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_NOTES_ACTIVITY, data);
+  }
 }
