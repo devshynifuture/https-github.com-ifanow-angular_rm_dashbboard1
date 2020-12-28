@@ -56,9 +56,9 @@ export class EditSuggestedAdviceComponent implements OnInit {
   todayDate: Date;
   inputData: any;
   showHeader: any;
-  constructor(private planService:PlanService,private subInjectService:SubscriptionInject,private datePipe: DatePipe,private activityService:ActiityService,private event:EventService,private fb: FormBuilder) { }
+  constructor(private planService: PlanService, private subInjectService: SubscriptionInject, private datePipe: DatePipe, private activityService: ActiityService, private event: EventService, private fb: FormBuilder) { }
   @Input() set data(data) {
-    this.inputData =data;
+    this.inputData = data;
     this.adviceHeaderList = data ? data.adviceHeaderList : '';
     this.adviceToCategoryId = data.adviceToCategoryId;
     this.showHeader = data.showHeader;
@@ -71,7 +71,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
 
   }
   getFormData(data) {
-    if (data.data ?  (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
+    if (data.data ? (data.data.adviceDetails == null || !data.data.adviceDetails.id) : data.data == null) {
       data = {};
       this.dataForEdit = null;
       this.flag = 'Add';
@@ -83,24 +83,30 @@ export class EditSuggestedAdviceComponent implements OnInit {
     }
     this.adviceForm = this.fb.group({
       header: [this.dataForEdit ? this.dataForEdit.adviceId + '' : ''],
-      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '',[Validators.required]],
+      headerEdit: [this.dataForEdit ? this.dataForEdit.adviceId + '' : '', [Validators.required]],
       rationale: [(this.dataForEdit ? this.dataForEdit.adviceDescription : '')],
       status: [(this.dataForEdit ? (this.dataForEdit.adviceStatus ? this.dataForEdit.adviceStatus : 'GIVEN') : 'GIVEN'), [Validators.required]],
       givenOnDate: [this.dataForEdit ? new Date(this.dataForEdit.adviceGivenDate) : new Date(), [Validators.required]],
       implementDate: [this.dataForEdit ? new Date(this.dataForEdit.applicableDate) : null, [Validators.required]],
-      withdrawalAmt: [(this.dataForEdit ? (this.dataForEdit.adviceAllotment ? this.dataForEdit.adviceAllotment : '') : null),[Validators.required]],
+      withdrawalAmt: [(this.dataForEdit ? (this.dataForEdit.adviceAllotment ? this.dataForEdit.adviceAllotment : '') : null), [Validators.required]],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
     });
     // ==============owner-nominee Data ========================\\
     /***owner***/
     this.todayDate = new Date();
     this.dateChange('givenOnDate')
+    if (this.adviceForm.get('headerEdit').value == '1') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
   }
-  editAdvice(){
-    if(this.adviceForm.get('headerEdit').value == '1' || this.adviceForm.get('headerEdit').value == '3'){
+  editAdvice() {
+    if (this.adviceForm.get('headerEdit').value == '1') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
+    if (this.adviceForm.get('headerEdit').value == '1' || this.adviceForm.get('headerEdit').value == '3') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
     }
-    if(this.adviceForm.get('givenOnDate').value && this.adviceForm.get('implementDate').value){
+    if (this.adviceForm.get('givenOnDate').value && this.adviceForm.get('implementDate').value) {
       this.adviceForm.get('givenOnDate').setErrors(null);
       this.adviceForm.get('implementDate').setErrors(null);
     }
@@ -108,47 +114,47 @@ export class EditSuggestedAdviceComponent implements OnInit {
       this.adviceForm.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
-    const stringObj = {
-      adviceDescription: this.adviceForm.get('rationale').value,
-      insuranceCategoryTypeId: this.adviceToCategoryId,
-      suggestedFrom: 1,
-      adviceAllotment:parseInt(this.adviceForm.get('withdrawalAmt').value),
-      adviceToCategoryTypeMasterId:this.adviceToCategoryTypeMasterId,
-      adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
-      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
-      adviceId: this.adviceForm.get('headerEdit').value,
-      clientId: AuthService.getClientId(),
-      advisorId: AuthService.getAdvisorId(),
-      adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
-      applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
-    }
-    if(this.dataForEdit){
-      this.activityService.editAdvice(stringObj).subscribe(
-        data => this.getAdviceRes(data),
-        err => this.event.openSnackBar(err, "Dismiss")
-      );
-    }else{
-      let obj1 = {
-        stringObject: { id: this.inputData.InsuranceDetails.id },
+      const stringObj = {
         adviceDescription: this.adviceForm.get('rationale').value,
         insuranceCategoryTypeId: this.adviceToCategoryId,
         suggestedFrom: 1,
-        adviceId:this.adviceForm.get('headerEdit').value,
         adviceAllotment: parseInt(this.adviceForm.get('withdrawalAmt').value),
-        realOrFictitious: 1,
+        adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
+        adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
+        adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
+        adviceId: this.adviceForm.get('headerEdit').value,
         clientId: AuthService.getClientId(),
         advisorId: AuthService.getAdvisorId(),
-        adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
         adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
         applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
       }
-      this.planService.addAdviseOnHealth(obj1).subscribe(
-        res => {
-          this.barButtonOptions.active = false;
-          this.getAdviceRes(res);
-        },
-      )
-    }
+      if (this.dataForEdit) {
+        this.activityService.editAdvice(stringObj).subscribe(
+          data => this.getAdviceRes(data),
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      } else {
+        let obj1 = {
+          stringObject: { id: this.inputData.InsuranceDetails.id },
+          adviceDescription: this.adviceForm.get('rationale').value,
+          insuranceCategoryTypeId: this.adviceToCategoryId,
+          suggestedFrom: 1,
+          adviceId: this.adviceForm.get('headerEdit').value,
+          adviceAllotment: parseInt(this.adviceForm.get('withdrawalAmt').value),
+          realOrFictitious: 1,
+          clientId: AuthService.getClientId(),
+          advisorId: AuthService.getAdvisorId(),
+          adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
+          adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
+          applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
+        }
+        this.planService.addAdviseOnHealth(obj1).subscribe(
+          res => {
+            this.barButtonOptions.active = false;
+            this.getAdviceRes(res);
+          },
+        )
+      }
 
     }
 
@@ -182,13 +188,13 @@ export class EditSuggestedAdviceComponent implements OnInit {
     this.barButtonOptions.active = false;
     console.log(data)
     this.close(true)
-    if(this.dataForEdit){
+    if (this.dataForEdit) {
       this.event.openSnackBar('Edited successfully', "Ok")
-    }else{
+    } else {
       this.event.openSnackBar('Added successfully', "Ok")
     }
   }
   close(flag) {
-      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

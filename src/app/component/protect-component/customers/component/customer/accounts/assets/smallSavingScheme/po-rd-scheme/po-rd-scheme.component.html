@@ -37,14 +37,14 @@
                 ADD NEW</button>
         </div>
     </div>
-    <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 overflow-hidden real-estate">
+    <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 new-border-table overflow-hidden real-estate">
         <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
         <table #tableEl class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table
             [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="no" sticky>
-                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
-                <td mat-cell *matCellDef="let element;index as i" class="br">
+                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br bl w-4"> No </th>
+                <td mat-cell *matCellDef="let element;index as i" class="br bl">
                     <div class="bar"><span *ngIf="isLoading==false">{{i+1}}</span> </div>
                 </td>
                 <td mat-footer-cell class="br text-left bl-1" *matFooterCellDef> </td>
@@ -144,8 +144,8 @@
                 <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="icons" sticky>
-                <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center">
+                <th mat-header-cell *matHeaderCellDef class="t-2 br"> </th>
+                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center br">
 
                     <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">

@@ -13,7 +13,7 @@
 
 <div class=" mt-100 pl-24 pr-24 pb-24 mb-48 insuranceRowBox" [formGroup]="otherAssetForm">
 
-    <div formArrayName="getCoOwnerName">
+    <!-- <div formArrayName="getCoOwnerName">
         <div *ngFor="let obj of otherAssetForm.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex" class="row">
             <div class="col-md-4 pr-0 text-right">
@@ -53,14 +53,39 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
                 <i (click)="removeCoOwner(pointIndex)" *ngIf="pointIndex!=0"
                     class="material-icons text-primitive f-20 c-p pl-10 pt-8">remove</i>
             </div>
 
         </div>
-    </div>
+    </div> -->
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Name of policy holder</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input #policyHolderName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                        appInputValueValidation autocomplete="off" class="form-control br-0"
+                        formControlName="policyHolderName" matInput type="text">
+                    <mat-hint align="end" class="f-12">{{policyHolderName.value.length}}/40</mat-hint>
 
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-4 text-right pr-0">
+            This is a floater policy
+        </div>
+        <div class="col-md-8 pr-0">
+            <mat-checkbox class="" formControlName="floaterOrIndividual" (change)="changeType($event.checked)">
+            </mat-checkbox>
+        </div>
+    </div>
     <div class="row  pt-32">
         <div class="col-md-4 text-right pr-0">
             <h5 class="mb-0 mt-28">Insured members</h5>
@@ -70,7 +95,7 @@
                 <div class="col-md-7 p-0">
                     <h5 class="mb-4 f-14">Name </h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                     <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
@@ -80,7 +105,7 @@
                     [ngClass]="{'pt-20': pointIndex > 0}" class="row">
                     <div class="col-md-7  p-0">
                         <div class="form-group  ">
-                            <mat-form-field>
+                            <!-- <mat-form-field>
                                 <mat-select
                                     (selectionChange)="getFamilyData(insuredMemberList);getIndexOfSelectedElement(obj)"
                                     autocomplete="true" class="form-control br-0" formControlName="insuredMembers"
@@ -91,14 +116,25 @@
                                 </mat-select>
                                 <mat-error class="f-12">This field is required
                                 </mat-error>
+                            </mat-form-field> -->
+                            <mat-form-field>
+                                <input #insuredMembers (keyup)="getIndexOfSelectedElement(obj)"
+                                    [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                                    appInputValueValidation autocomplete="off" class="form-control br-0"
+                                    formControlName="insuredMembers" matInput type="text">
+                                <mat-hint align="end" class="f-12">{{insuredMembers.value.length}}/40</mat-hint>
+
+                                <mat-error>This field is required
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
 
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                         <div class="form-group iconRupess">
                             <mat-form-field>
-                                <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                <input #sumAssured (keyup)="getIndexOfSelectedElement(obj)"
+                                    [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
                                     appInputValueValidation autocomplete="true" class="form-control rupess br-0"
                                     formControlName="sumAssured" matInput type="number">
                                 <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
@@ -109,7 +145,7 @@
                     </div>
 
                     <div class="col-md-2 pr-0 d-flex mt-8 ">
-                        <i (click)="addTransaction(undefined)"
+                        <i (click)="addTransaction(undefined);changeType(this.otherAssetForm.get('floaterOrIndividual').value)"
                             class="material-icons text-primitive c-p float-left">add</i>
                         <i (click)="removeTransaction(pointIndex,obj)"
                             *ngIf="otherAssetForm.value.InsuredMemberForm?.length > 1"
@@ -123,9 +159,9 @@
 
         </div>
     </div>
-    <!-- <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
+    <div class="row pt-40" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 1) || showSumAssured">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Sum insured</h5getFamilyData>
+            <h5 class="m-0 pt-8">Sum insured</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group  iconRupess">
@@ -139,7 +175,7 @@
                 </mat-form-field>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- <div class="row pt-40">
         <div class="col-md-4 pr-0 text-right ">
             <h5 class="mb-0 mt-28">Insured members</h5>
@@ -177,7 +213,7 @@
 
         </div>
     </div> -->
-    <div class="row pt-40">
+    <!-- <div class="row pt-40">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">Name of insurer</h5>
             <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
@@ -198,6 +234,25 @@
                     </mat-error>
                     <mat-error class="f-12" *ngIf="(otherAssetForm.get('insurerName').errors?.erroInPolicy)">
                         Enter valid policy name
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div> -->
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Name of insurer</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input #insurerName 
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                        appInputValueValidation autocomplete="off" class="form-control br-0"
+                        formControlName="insurerName" matInput type="text">
+                    <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
+
+                    <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -364,11 +419,9 @@
 
                         <div class="col-md-7  p-0 form-group">
 
-                            <mat-form-field>
+                            <!-- <mat-form-field>
                                 <mat-select (selectionChange)="getIndexOfSelectedElement(obj)" matInput
                                     formControlName="addOns" autocomplete="true" class="form-control br-0">
-                                    <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                        {{option.add_on}}</mat-option> -->
                                     <mat-option value='15'>Earthquake</mat-option>
                                     <mat-option value='16'>Terrorism</mat-option>
                                     <mat-option value='23'>Impact damage cover</mat-option>
@@ -380,13 +433,22 @@
                                 </mat-select>
                                 <mat-error>This field is required
                                 </mat-error>
-                            </mat-form-field>
-
+                            </mat-form-field> -->
+                            <mat-form-field>
+                                    <input #addOns (keyup)="getIndexOfSelectedElement(obj)"
+                                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                                        appInputValueValidation autocomplete="off" class="form-control br-0"
+                                        formControlName="addOns" matInput type="text">
+                                    <mat-hint align="end" class="f-12">{{addOns.value.length}}/40</mat-hint>
+    
+                                    <mat-error>This field is required
+                                    </mat-error>
+                                </mat-form-field>
                         </div>
-                        <div class="col-md-3 pr-0 form-group">
+                        <div class="col-md-3 pr-0 form-group" >
 
                             <mat-form-field class="iconRupess">
-                                <input matInput type="number" formControlName="sumInsured"
+                                <input matInput type="number" (keyup)="getIndexOfSelectedElement(obj)" formControlName="sumInsured"
                                     [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                     #premiumdetails autocomplete="true" [maxLength]="10"
                                     class="form-control rupess br-0">
@@ -452,11 +514,9 @@
                 </div>
 
                 <div class="col-md-5 form-group">
-                    <mat-form-field floatLabel="never" appearance="standard">
+                    <!-- <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="getIndexOfSelectedElement(obj)" matInput
                             formControlName="feature" autocomplete="true" class="form-control br-0">
-                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                                    {{option.type}}</mat-option> -->
                             <mat-option value='15'>Emergency Medical Benefits</mat-option>
                             <mat-option value='16'>Accidental Death & Permanent Disablement </mat-option>
                             <mat-option value='17'>Emergency Dental Treatment</mat-option>
@@ -477,7 +537,17 @@
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <mat-form-field>
+                            <input #feature (keyup)="getIndexOfSelectedElement(obj)"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                                appInputValueValidation autocomplete="off" class="form-control br-0"
+                                formControlName="feature" matInput type="text">
+                            <mat-hint align="end" class="f-12">{{feature.value.length}}/40</mat-hint>
+
+                            <mat-error>This field is required
+                            </mat-error>
+                        </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
@@ -563,7 +633,7 @@
                 </div>
                 <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
-                        <mat-form-field>
+                        <!-- <mat-form-field>
                             <mat-select
                                 (selectionChange)="disabledMember($event.value,'nominee');getIndexOfSelectedElement(obj)"
                                 (valueChange1)='lisNominee($event)' [callMethod]='callMethod' [data]='ownerData'
@@ -577,13 +647,23 @@
                             <mat-error class="f-12">
                                 This field is required
                             </mat-error>
+                        </mat-form-field> -->
+                        <mat-form-field>
+                            <input #name (keyup)="getIndexOfSelectedElement(obj)"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                                appInputValueValidation autocomplete="off" class="form-control br-0"
+                                formControlName="name" matInput type="text">
+                            <mat-hint align="end" class="f-12">{{name.value.length}}/40</mat-hint>
+
+                            <mat-error>This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div *ngIf="getNominee.length > 1" class="col-md-2">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input (focusout)="onChangeJointOwnership('nominee')" class="form-control br-0 percentage"
+                            <input (focusout)="onChangeJointOwnership('nominee')" (keyup)="getIndexOfSelectedElement(obj)" class="form-control br-0 percentage"
                                 formControlName="sharePercentage" matInput type="number">
                             <mat-error *ngIf="obj.controls['sharePercentage'].hasError('required')" class="f-12">
                                 This field is required

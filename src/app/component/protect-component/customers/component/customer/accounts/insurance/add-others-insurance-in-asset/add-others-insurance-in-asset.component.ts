@@ -59,6 +59,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   bankList: any;
   bankAccountDetails: any;
   id: any;
+  floaterOrIndividual = false;
   validatorType = ValidatorType;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   showSumAssured = false;
@@ -67,8 +68,9 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
   showHeader: any;
+  clientData: any;
 
-  constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
+  constructor(private cusService:CustomerService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
   }
 
   get data() {
@@ -78,12 +80,14 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
     this.inputData = data;
     this.policyList = data.displayList.policyTypes;
     this.addOns = data.displayList.addOns;
     this.showHeader = data.flag;
     this.getFamilyMemberList();
     this.getdataForm(data);
+    this.getBank();
     // this.setInsuranceDataFormField(data);
     console.log(data);
   }
@@ -188,7 +192,32 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     }
     console.log(this.bankList, "this.bankList2");
   }
-
+  changeType(value){
+    if (this.otherAssetForm.get('floaterOrIndividual').value == true) {
+      this.showSumAssured = true
+      this.showinsuredMemberSum = false
+      let list = this.otherAssetForm.get('InsuredMemberForm') as FormArray;
+      list.controls.forEach(element => {
+          element.get('sumAssured').setValue(null);
+          if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
+              element.get('sumAssured').setErrors(null);
+              element.get('sumAssured').setValidators(null);
+          }
+      });
+      if (!this.otherAssetForm.controls['sumAssuredIdv'].value) {
+          this.otherAssetForm.controls['sumAssuredIdv'].setValue(null);
+          this.otherAssetForm.get('sumAssuredIdv').setValidators([Validators.required]);
+          this.otherAssetForm.get('sumAssuredIdv').updateValueAndValidity();
+          this.otherAssetForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+      }
+  } else {
+      this.showSumAssured = false
+      this.showinsuredMemberSum = true
+      this.otherAssetForm.controls['sumAssuredIdv'].setValue(null);
+      this.otherAssetForm.controls['sumAssuredIdv'].setErrors(null);
+      this.otherAssetForm.controls['sumAssuredIdv'].setValidators(null);
+  }
+  }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
@@ -437,7 +466,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.otherAssetForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['', [Validators.required]],
+        name: ['',],
         share: [0,],
         familyMemberId: null,
         id: 0,
@@ -446,6 +475,8 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
+      floaterOrIndividual: [(this.dataForEdit) ? (this.dataForEdit.isFloater == 1 ? true : false) : null],
+      policyHolderName: [this.dataForEdit ? this.dataForEdit.policyHolderName : null],
       PlanType: [(this.dataForEdit ? this.dataForEdit.planType : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
       deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null)],
@@ -467,7 +498,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccountId) : null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
-      // sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumAssuredIdv : null, [Validators.required]],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -605,7 +636,27 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
 
   ngOnInit() {
     this.bankList = this.enumService.getBank();
+    this.getBankList(this.clientData);
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  getBankList(data) {
+    const obj = [{
+      userId: data.clientId,
+      userType: data.userType
+    }];
+    this.cusService.getBankList(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length > 0) {
+          this.bankList = data;
+
+        }
+      },
+      err => {
+        this.bankList = [];
+        console.error(err);
+      }
+    );
   }
   dateChange(value, form, formValue) {
     if (form == 'policyExpiryDate' && formValue) {
@@ -817,13 +868,13 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       {
         name: element.get('insuredMembers').value ? element.get('insuredMembers').value : 0,
         createdOn:null,
-        insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
+        // insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
         share: element.get('sumAssured').value ? element.get('sumAssured').value : 0,
-        relationshipId: element.get('relationshipId').value,
-        insuredOrNominee: 1,
+        // relationshipId: element.get('relationshipId').value,
+        // insuredOrNominee: 1,
         id: (element.get('id').value) ? element.get('id').value : 0,
-        isActive: (element.get('isActive').value) ? element.get('isActive').value : 0,
-        isClient: (element.get('isClient').value) ? element.get('isClient').value : 0,
+        // isActive: (element.get('isActive').value) ? element.get('isActive').value : 0,
+        // isClient: (element.get('isClient').value) ? element.get('isClient').value : 0,
         isEdited: (element.get('isEdited').value) ? element.get('isEdited').value : 0,
         otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null
       };
@@ -868,7 +919,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       const obj = {
         'clientId': this.clientId,
         'advisorId': this.advisorId,
-        'policyHolderId': this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? this.clientId : this.otherAssetForm.value.getCoOwnerName[0].familyMemberId,
+        // 'policyHolderId': this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? this.clientId : this.otherAssetForm.value.getCoOwnerName[0].familyMemberId,
         'startDate': this.datePipe.transform(this.otherAssetForm.get('policyStartDate').value, 'yyyy-MM-dd'),
         'expiryDate': this.datePipe.transform(this.otherAssetForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         'cumulativeBonus': this.otherAssetForm.get('cumulativeBonus').value,
@@ -880,15 +931,17 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'planName': this.otherAssetForm.get('planeName').value,
         'policyNumber': this.otherAssetForm.get('policyNum').value,
         'advisorName': this.otherAssetForm.get('advisorName').value,
+        'isFloater': (this.otherAssetForm.get('floaterOrIndividual').value) ? 1 : 0,
         'serviceBranch': this.otherAssetForm.get('serviceBranch').value,
         'linkedBankAccountId': this.otherAssetForm.get('bankAccount').value,
         'insurerName': this.otherAssetForm.get('insurerName').value,
         'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
         'premium': this.otherAssetForm.get('premium').value,
-        // 'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
+        'sumAssuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : 0,
-        'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
-        isClient:this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? 1 : 0,
+        // 'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
+        'policyHolderName':this.otherAssetForm.get('policyHolderName').value,
+        // isClient:this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? 1 : 0,
         otherInsuranceInsuredMembers: memberList,
         otherInsuranceFeatureList:featureList,
         otherInsuranceAddCovers:addOns,

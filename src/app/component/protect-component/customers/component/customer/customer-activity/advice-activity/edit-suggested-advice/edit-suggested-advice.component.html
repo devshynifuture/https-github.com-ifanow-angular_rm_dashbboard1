@@ -82,8 +82,8 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <p class="m-0 text-black roboto pt-24">Implementation date</p>
-                                <div class="form-group">
+                                <p class="m-0 text-black roboto pt-24" *ngIf="adviceForm.get('headerEdit').value != '1'">Implementation date</p>
+                                <div class="form-group" *ngIf="adviceForm.get('headerEdit').value != '1'">
                                     <mat-form-field class="ba-date">
                                         <input [min]="todayDate" (ngModelChange)="dateChange('implementDate')"
                                             matInput (focus)="picker1.open()" formControlName="implementDate"

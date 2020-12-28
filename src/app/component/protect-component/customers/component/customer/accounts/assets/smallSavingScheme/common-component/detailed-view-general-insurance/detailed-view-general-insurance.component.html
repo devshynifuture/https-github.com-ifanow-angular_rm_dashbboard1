@@ -38,9 +38,7 @@
                 {{ _data.policyType}}
               </div>
             </div>
-            <div
-              *ngIf="showInsurance == 'Others'"
-              class="row bb p-8 b-l br">
+            <div *ngIf="showInsurance == 'Others'" class="row bb p-8 b-l br">
               <div class="col-md-8 text-left f-14 roboto p-0">
                 Plan type
               </div>
@@ -125,6 +123,16 @@
               </div>
             </div>
             <div *ngIf="_data.sumInsuredIdv && showInsurance == 'Travel' && _data.policyFeatureId == 0"
+              class="row bb p-8 b-l br">
+              <div class="col-md-8 text-left f-14 roboto p-0">
+                Sum insured
+              </div>
+              <div class="col-md-4 text-right f-14 roboto p-0">
+                {{(_data.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                  {{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span>
+              </div>
+            </div>
+            <div *ngIf="_data.insuredMembers && _data.isFloater && (showInsurance == 'Others')"
               class="row bb p-8 b-l br">
               <div class="col-md-8 text-left f-14 roboto p-0">
                 Sum insured
@@ -324,18 +332,28 @@
                 </div>
               </div>
             </div>
-          <div *ngIf="_data.insuredMembers && (showInsurance == 'Others')">
-          <div *ngFor="let item of _data.insuredMembers ; let i = index" class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-              {{(item.name) ? item.name : '-'}}
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-              {{(item.sumInsured) ? '₹' : ''}}<span
-                appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
-            </div>
+            <div *ngIf="_data.insuredMembers && !_data.isFloater && (showInsurance == 'Others')">
+              <div *ngFor="let item of _data.insuredMembers ; let i = index" class="row bb p-8 b-l br">
+                <div class="col-md-8 text-left f-14 roboto p-0">
+                  {{(item.name) ? item.name : '-'}}
+                </div>
+                <div class="col-md-4 text-right f-14 roboto p-0">
+                  {{(item.sumInsured) ? '₹' : ''}}<span
+                    appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                </div>
 
-          </div>
-        </div>
+              </div>
+            </div>
+            <div *ngIf="_data.insuredMembers && _data.isFloater && (showInsurance == 'Others')">
+              <div *ngFor="let item of _data.insuredMembers ; let i = index" class="row bb p-8 b-l br">
+                <div class="col-md-8 text-left f-14 roboto p-0">
+                  Insured member{{i + 1}}
+                </div>
+                <div appFormatNumber class="col-md-4  text-right f-14 roboto p-0">
+                  {{(item.name) ? item.name : '-'}}
+                </div>
+              </div>
+            </div>
 
             <div *ngIf="_data.insuredMembers && showInsurance == 'Personal accident' ">
               <div *ngFor="let item of _data.insuredMembers ; let i = index">
