@@ -99,6 +99,7 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.subject.setValue('')
   }
   getNotes() {
+    this.isLoading = true
     let obj = {
       advisorId: 5441,
       limit: -1,
@@ -107,6 +108,7 @@ export class CrmNotesComponent implements OnInit {
     this.peopleService.getNotes(obj)
       .subscribe(res => {
         console.log(res);
+        this.isLoading = false
         this.listOfNotes = res
         this.listOfNotes.forEach(element => {
           element.content = element.content.replace(/<\/?p[^>]*>/g, "");
@@ -115,6 +117,7 @@ export class CrmNotesComponent implements OnInit {
 
       }, err => {
         console.error(err);
+        this.isLoading = false
         this.listOfNotes = []
       })
   }
