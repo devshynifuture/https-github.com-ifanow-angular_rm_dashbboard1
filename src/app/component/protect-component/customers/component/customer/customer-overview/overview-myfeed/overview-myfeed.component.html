@@ -809,17 +809,17 @@
                                 <h5 class="roboto  mb-0">In-flows & Out-flows</h5>
                             </div>
                         </div>
-                        <div class="boxTable">
+                        <div class="boxTable new-border-table">
                             <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
                                 <ng-container *ngFor="let flowData of cashflowData.cashflowData">
                                     {{flowData.familyMemberFullName}}
                                     <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne"
                                         id="table-low">
                                         <ng-container matColumnDef="bankName">
-                                            <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive">
+                                            <th mat-header-cell *matHeaderCellDef class="br bl w-40 topborderPrimitive">
                                                 Bank A/c
                                             </th>
-                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br bl w-40">
                                                 <div class="bar"> {{element.bankName}} </div>
                                             </td>
                                         </ng-container>
@@ -861,10 +861,10 @@
                                 <ng-container>
                                     <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
                                         <ng-container matColumnDef="bankName">
-                                            <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40">
+                                            <th mat-header-cell *matHeaderCellDef class="br bl topborderPrimitive w-40">
                                                 Bank A/c
                                             </th>
-                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br bl w-40">
                                                 <div class="bar">{{element.bankName}} </div>
                                             </td>
                                         </ng-container>
@@ -907,10 +907,11 @@
                                 *ngIf="!tabsLoaded.cashflowData.hasData || !tabsLoaded.cashflowData.dataLoaded">
                                 <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
                                     <ng-container matColumnDef="bankName">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank
+                                        <th mat-header-cell *matHeaderCellDef class="br bl topborderPrimitive w-40">
+                                            Bank
                                             A/c
                                         </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br bl w-40">
                                             <div class="bar"> {{element.bankName}} </div>
                                         </td>
                                     </ng-container>

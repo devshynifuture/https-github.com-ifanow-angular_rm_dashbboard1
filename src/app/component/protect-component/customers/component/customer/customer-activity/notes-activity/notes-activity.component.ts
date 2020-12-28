@@ -65,6 +65,9 @@ export class NotesActivityComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.listOfNotes = res
+        this.listOfNotes.forEach(element => {
+          element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+        });
       }, err => {
         console.error(err);
       })

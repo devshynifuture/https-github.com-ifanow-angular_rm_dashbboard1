@@ -250,27 +250,27 @@
                     </div>
                 </div>
 
-                <div class="stock-overview w-100">
+                <div class="stock-overview new-border-table  w-100">
                     <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
 
                         <ng-container matColumnDef="groupHeader" sticky>
                             <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length"
-                                class="text-center text-primary f-500">
+                                class="text-center text-primary f-500 br bl bb">
                                 {{group.group}}</td>
                         </ng-container>
                         <ng-container matColumnDef="scrip">
-                            <th *matHeaderCellDef="let element let i = index" class="br w-20" mat-header-cell>
+                            <th *matHeaderCellDef="let element let i = index" class="br bl w-20" mat-header-cell>
                                 Scrip
                             </th>
                             <!-- prod fix -->
                             <!-- <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th> -->
                             <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>Category name</th>
-                            <td *matCellDef="let element" class="br" mat-cell>
+                            <td *matCellDef="let element" class="br bl" mat-cell>
                                 <div class="bar"><span
                                         *ngIf="element.stockType != 1">{{isLoading?'':element.scripName}}</span>
                                     <span *ngIf="element.stockType == 1">{{isLoading?'':'Portfolio'}}</span></div>
                             </td>
-                            <th *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-header-cell
+                            <th *matFooterCellDef class="br bl proximaFont amt text-right f-600 p-8" mat-header-cell
                                 style="background-color: #fff !important;"> Total
                             </th>
                         </ng-container>
@@ -403,9 +403,9 @@
 
 
                         <ng-container matColumnDef="icons">
-                            <th *matHeaderCellDef class="" mat-header-cell></th>
+                            <th *matHeaderCellDef class="br" mat-header-cell></th>
                             <th class="br" mat-header-cell></th>
-                            <td *matCellDef="let element" class="mat-menu-trigger c-p " [matMenuTriggerFor]="menu25"
+                            <td *matCellDef="let element" class="mat-menu-trigger br c-p " [matMenuTriggerFor]="menu25"
                                 mat-cell>
 
                                 <img class="c-p " src="/assets/images/svg/dot-menu.svg">

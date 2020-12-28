@@ -1,7 +1,7 @@
 <div id="ui-notes">
     <div class="w-100 fixedClass" [formGroup]="notes">
-        <div class="row">
-            <div class="col-md-3 p-0">
+        <div class="row pt-16">
+            <div class="col-md-3 pr-0">
                 <div class="row b-b pb-10 d-flex align-items-center">
                     <div class="col-md-10 p-0">
                         <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
@@ -19,22 +19,27 @@
                             <input class="form-control br-0" matInput formControlName="subject">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-1 text-right p-0" *ngIf="selectedNote">
-                        <img (click)="deleteNotes(selectedNoteF)" src="/assets/images/svg/insurance-delect-icon.svg">
-                    </div>
-                    <div class="col-md-5 text-right p-0">
-                        <p class="m-0 text-primitive"> Last edited </p>
-                        <p class="m-0 text-primitive">
-                            {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date |
+
+                    <div class="col-md-6 d-flex justify-content-end align-items-center p-0">
+                        <div class="text-right">
+                            <p class="m-0 text-primitive"> Last edited </p>
+                            <p class="m-0 text-primitive">
+                                {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date |
                             date:'dd/LL/yyyy hh:mm aaa' }}
-                        </p>
+                            </p>
+                        </div>
+
+                        <i *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)" class="material-icons ml-10 c-p">
+                            delete </i>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row pt-52">
+    <div class="row pt-64">
         <div class="col-md-3 pr-0">
 
             <div class="notesScroll">
@@ -52,8 +57,8 @@
         </div>
 
         <div class="col-md-9 ">
-            <div class="row">
-                <div class="col-md-12 p-0 ">
+            <div class="row pb-20 ">
+                <div class="col-md-12 mt-10 p-0 froala-edit-class">
                     <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                 </div>
                 <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"

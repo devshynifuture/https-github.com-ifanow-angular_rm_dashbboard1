@@ -103,6 +103,11 @@ export class CrmNotesComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.listOfNotes = res
+        this.listOfNotes.forEach(element => {
+          element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+        });
+        console.log(this.listOfNotes);
+
       }, err => {
         console.error(err);
       })
