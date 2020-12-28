@@ -122,6 +122,7 @@ export class NotesActivityComponent implements OnInit {
 
   deleteNotes(note, value) {
     this.noteData = note;
+    let obj = { id: note.id }
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -134,7 +135,7 @@ export class NotesActivityComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(this.noteData).subscribe(
+        this.peopleService.deleteNotes(obj).subscribe(
           data => {
             //  this.deletedData(data);
             dialogRef.close();
