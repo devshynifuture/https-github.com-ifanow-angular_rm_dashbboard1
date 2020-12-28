@@ -60,6 +60,7 @@ export class NotesActivityComponent implements OnInit {
     this.notes.controls.subject.setValue('')
   }
   getNotes() {
+    this.isLoading = true
     let obj = {
       advisorId: 5441,
       limit: -1,
