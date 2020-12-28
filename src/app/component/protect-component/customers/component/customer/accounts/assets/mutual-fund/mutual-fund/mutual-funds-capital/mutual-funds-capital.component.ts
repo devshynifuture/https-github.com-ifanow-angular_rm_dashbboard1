@@ -429,15 +429,18 @@ export class MutualFundsCapitalComponent implements OnInit {
             if (data['DEBT']) {
                 data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
             } else {
-                data.DEBT[0].mutualFund = debtFund
+                if (data.DEBT) {
+                    data.DEBT[0].mutualFund = debtFund
+                }
             }
         }
         if (equityFund.length > 0) {
             if (data['EQUITY']) {
                 data['EQUITY'][0].mutualFund = [...data['EQUITY'][0].mutualFund, ...equityFund]
             } else {
-                data.EQUITY[0].mutualFund = equityFund
-
+                if (data.EQUITY) {
+                    data.EQUITY[0].mutualFund = equityFund
+                }
             }
         }
         delete data['HYBRID'];

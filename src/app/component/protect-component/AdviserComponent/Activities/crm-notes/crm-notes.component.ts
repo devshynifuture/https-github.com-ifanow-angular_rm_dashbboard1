@@ -29,6 +29,7 @@ export class CrmNotesComponent implements OnInit {
   noteData: any;
   notes: any;
   date: Date;
+  isMainLoading: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -92,6 +93,7 @@ export class CrmNotesComponent implements OnInit {
   }
   clearNote() {
     this.emailBody = ""
+    this.notes.controls.subject.setValue('')
   }
   getNotes() {
     let obj = {
@@ -162,6 +164,7 @@ export class CrmNotesComponent implements OnInit {
 
   deleteNotes(note, value) {
     this.noteData = note;
+    let obj = { id: note.id }
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -174,7 +177,7 @@ export class CrmNotesComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(this.noteData.id).subscribe(
+        this.peopleService.deleteNotes(obj).subscribe(
           data => {
             //  this.deletedData(data);
             dialogRef.close();
@@ -195,6 +198,7 @@ export class CrmNotesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getNotes()
+      this.clearNote()
     });
   }
   ownerDetails(value) {

@@ -26,6 +26,7 @@ export class NotesActivityComponent implements OnInit {
   notes: any;
   date: Date;
   clientData: any;
+  isMainLoading: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -54,6 +55,7 @@ export class NotesActivityComponent implements OnInit {
   }
   clearNote() {
     this.emailBody = ""
+    this.notes.controls.subject.setValue('')
   }
   getNotes() {
     let obj = {
@@ -120,6 +122,7 @@ export class NotesActivityComponent implements OnInit {
 
   deleteNotes(note, value) {
     this.noteData = note;
+    let obj = { id: note.id }
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -132,7 +135,7 @@ export class NotesActivityComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(this.noteData.id).subscribe(
+        this.peopleService.deleteNotes(obj).subscribe(
           data => {
             //  this.deletedData(data);
             dialogRef.close();
@@ -153,6 +156,7 @@ export class NotesActivityComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getNotes()
+      this.clearNote()
     });
   }
 }
