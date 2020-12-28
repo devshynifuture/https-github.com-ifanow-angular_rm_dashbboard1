@@ -110,7 +110,7 @@
                         <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                     </div>
                     <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
-                        (click)="addNotes()" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                        (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
                         Save
                     </button>
                 </div>
