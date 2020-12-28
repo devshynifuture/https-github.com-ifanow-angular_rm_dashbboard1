@@ -122,6 +122,9 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     });
   }
   changeAdviceName(data) {
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
     this.adviceNameObj.adviceName = data.value;
     this.adviceName = this.adviceNameObj.adviceName;
     this.componentRef._component.adviceName = this.adviceNameObj
@@ -184,6 +187,9 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       // withdrawalAmt: [(this.dataForEdit ? this.dataForEdit.adviceAllotment : null)],
       consentOption: [this.dataForEdit ? (this.dataForEdit.consentOption ? this.dataForEdit.consentOption + '' : '1') : '1'],
     });
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
     // ==============owner-nominee Data ========================\\
     /***owner***/
 
@@ -192,6 +198,9 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     this.stepper.previous();
   }
   addOrNextStep() {
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
     this.count++
     let form;
     let componentRefFormValues;
