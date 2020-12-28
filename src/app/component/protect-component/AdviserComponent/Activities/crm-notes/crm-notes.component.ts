@@ -198,6 +198,7 @@ export class CrmNotesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getNotes()
+      this.clearNote()
     });
   }
   ownerDetails(value) {
