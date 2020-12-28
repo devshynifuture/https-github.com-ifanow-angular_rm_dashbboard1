@@ -199,6 +199,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       let list = this.otherAssetForm.get('InsuredMemberForm') as FormArray;
       list.controls.forEach(element => {
           element.get('sumAssured').setValue(null);
+          element.get('isEdited').setValue(1);
           if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
               element.get('sumAssured').setErrors(null);
               element.get('sumAssured').setValidators(null);
@@ -475,7 +476,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      floaterOrIndividual: [(this.dataForEdit) ? (this.dataForEdit.isFloater == 1 ? true : false) : null],
+      floaterOrIndividual: [(this.dataForEdit) ? (this.dataForEdit.isFloater == 1 ? 1 : 0) : false],
       policyHolderName: [this.dataForEdit ? this.dataForEdit.policyHolderName : null],
       PlanType: [(this.dataForEdit ? this.dataForEdit.planType : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
