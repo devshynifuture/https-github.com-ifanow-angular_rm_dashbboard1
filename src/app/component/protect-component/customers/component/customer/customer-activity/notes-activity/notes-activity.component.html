@@ -43,6 +43,65 @@
     <div class="row pt-64">
         <div class="col-md-3 pr-0">
 
+            <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
             <div class="notesScroll">
                 <div *ngFor="let note of listOfNotes">
                     <div class="row b-b pt-10 pb-10" (click)="selectNote(note)">
@@ -55,11 +114,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="text-center mt-10">
+
+                <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
+                <p>No data</p>
+            </div>
         </div>
 
         <div class="col-md-9 ">
             <div class="row pb-20 ">
-                <div class="col-md-12 mt-10 p-0 froala-edit-class">
+                <div class="col-md-12 mt-12 p-0 froala-edit-class">
                     <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                 </div>
                 <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"

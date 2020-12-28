@@ -27,6 +27,7 @@ export class NotesActivityComponent implements OnInit {
   date: Date;
   clientData: any;
   isMainLoading: any;
+  isLoading: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -40,6 +41,7 @@ export class NotesActivityComponent implements OnInit {
     this.getNotes();
     this.getdataForm("")
     this.clientData = AuthService.getClientData();
+    this.isLoading = true;
   }
   getdataForm(data) {
     this.notes = this.fb.group({
