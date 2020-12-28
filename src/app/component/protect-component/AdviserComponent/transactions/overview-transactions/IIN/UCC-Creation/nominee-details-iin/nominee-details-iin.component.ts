@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -29,7 +29,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,
     private peopleService: PeopleService,
-    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, private ngZone: NgZone) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -64,6 +64,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   countryList;
   filterCountryName: Observable<any[]>;
   activeDetailsClass = 'first';
+  @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
 
   @Input()
   set data(data) {
@@ -123,6 +124,8 @@ export class NomineeDetailsIinComponent implements OnInit {
         this.inputData.holderList[0].address1 : this.inputData.holderList[0].address.address1);
       this.nomineeDetails.controls.address2.setValue((this.inputData.holderList[0].address2)
         ? this.inputData.holderList[0].address2 : this.inputData.holderList[0].address.address2);
+      this.nomineeDetails.controls.address3.setValue((this.inputData.holderList[0].address3)
+        ? this.inputData.holderList[0].address3 : this.inputData.holderList[0].address.address3);
       this.nomineeDetails.controls.pinCode.setValue((this.inputData.holderList[0].pinCode) ?
         this.inputData.holderList[0].pinCode : this.inputData.holderList[0].address.pinCode);
       this.nomineeDetails.controls.city.setValue((this.inputData.holderList[0].city) ?
@@ -223,11 +226,33 @@ export class NomineeDetailsIinComponent implements OnInit {
       addressType: [(data.address.addressType) ? data.address.addressType : 'Residential', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
+      address3: [!data.address ? '' : data.address.address3],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
     });
+
+    const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
+      types: [],
+      componentRestrictions: { country: 'IN' }
+    });
+
+    autoCompelete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place: google.maps.places.PlaceResult = autoCompelete.getPlace();
+        console.log('place: ', place);
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+        this.nomineeDetails.get('address2').setValue(place.formatted_address.substring(0, 39))
+        this.nomineeDetails.get('address3').setValue(place.formatted_address.substring(39, 79))
+        this.getPincode(place.formatted_address);
+        // console.log(place);
+      });
+      // })
+    });
+
 
     this.nomineeDetails.controls.country.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
@@ -237,6 +262,18 @@ export class NomineeDetailsIinComponent implements OnInit {
     // if (data.nomineeType == undefined) {
     //   this.nomineeDetails.controls.nomineeType.setValue('1')
     // }
+  }
+
+  getPincode(data) {
+    let pincode, addressData;
+    addressData = data.trim();
+    pincode = addressData.match(/\d/g);
+    pincode = pincode.join('');
+    pincode = pincode.substring(pincode.length - 6, pincode.length);
+    this.nomineeDetails.get('pinCode').setValue(pincode);
+    let addressLine3Value = this.nomineeDetails.get('address3').value
+    this.nomineeDetails.get('address3').setValue(addressLine3Value.replace(pincode, ''))
+    this.getPostalPin(pincode);
   }
 
   getFormControl(): any {
@@ -418,6 +455,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       addressType: holder.addressType,
       address1: holder.address1,
       address2: holder.address2,
+      address3: holder.address3,
       pinCode: holder.pinCode,
       city: holder.city,
       state: holder.state,
