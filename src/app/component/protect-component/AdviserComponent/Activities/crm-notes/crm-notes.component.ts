@@ -29,7 +29,9 @@ export class CrmNotesComponent implements OnInit {
   noteData: any;
   notes: any;
   date: Date;
+  isLoading: any;
   isMainLoading: any;
+
 
 
   constructor(private peopleService: PeopleService,
@@ -42,6 +44,7 @@ export class CrmNotesComponent implements OnInit {
     this.date = new Date()
     this.getNotes();
     this.getdataForm("")
+    this.isLoading = true;
   }
   getdataForm(data) {
     this.notes = this.fb.group({
