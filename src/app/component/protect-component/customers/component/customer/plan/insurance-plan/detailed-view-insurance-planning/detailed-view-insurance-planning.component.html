@@ -712,13 +712,13 @@
                     </div>
 
                 </div>
-                <div class="row bb-1 pt-6 pb-6 br bl-1">
-                    <div class="col-md-4 f-400 f-14">
+                <div class="row bb-1 pt-6 pb-6 br bl-1" *ngIf="(_data?.parentAsset?.policyType=='Family floater' || _data?.childAsset?.policyType=='Family floater')">
+                    <div class="col-md-4 f-400 f-14" *ngIf="_data?.parentAsset?.policyType=='Family floater'">
                         {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
                             appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
                     </div>
-                    <div class="col-md-4 f-500 f-14 roboto text-center"> Sum insured </div>
-                    <div class="col-md-4 f-400 f-14 text-right">
+                    <div class="col-md-4 f-500 f-14 roboto text-center"  *ngIf="(_data?.parentAsset?.policyType=='Family floater' || _data?.childAsset?.policyType=='Family floater')"> Sum insured </div>
+                    <div class="col-md-4 f-400 f-14 text-right" *ngIf="_data?.childAsset?.policyType=='Family floater'">
                         {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
                             appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
                     </div>
@@ -729,7 +729,7 @@
                     <div class="col-md-4 f-400 f-14"
                         *ngIf="_data?.parentAsset?.insuredMembers && _data?.parentAsset?.policyType=='Individual' || (showInsurance?.heading != 'Travel insurance' &&  _data?.parentAsset?.policyFeatureId == 0)">
                         <div *ngFor="let item of _data?.parentAsset?.insuredMembers ; let i = index"
-                            class="row bb p-8 b-l br">
+                            class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 {{(item.name) ? item.name : '-'}}
                             </div>
@@ -746,7 +746,7 @@
                     <div class="col-md-4 f-400 f-14 text-right"
                         *ngIf="_data?.childAsset?.insuredMembers && _data?.childAsset?.policyType=='Individual' || (showInsurance?.heading == 'Travel insurance' &&  _data?.childAsset?.policyFeatureId == 0)">
                         <div *ngFor="let item of _data?.childAsset?.insuredMembers ; let i = index"
-                            class="row bb p-8 b-l br">
+                            class="row p-8">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 {{(item.name) ? item.name : '-'}}
                             </div>
