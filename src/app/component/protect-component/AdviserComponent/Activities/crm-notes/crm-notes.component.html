@@ -6,7 +6,7 @@
     </div>
     <div class="wrapper-20 pt-64" [formGroup]="notes">
 
-        <div class="fixedClass pt-20 w-80 ">
+        <div class="fixedClass pt-20 w-81 ">
             <div class="row">
                 <div class="col-md-3 p-0">
                     <div class="row b-b pb-10 d-flex align-items-center">
@@ -62,8 +62,8 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-4 text-right p-0">
-                            <div>
+                        <div class="col-md-4 d-flex justify-content-end align-items-center p-0">
+                            <div class="text-right">
                                 <p class="m-0 text-primitive"> Last edited </p>
                                 <p class="m-0 text-primitive">
                                     {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date |
@@ -71,8 +71,12 @@
                                 </p>
                             </div>
 
-                            <img *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
-                                src="/assets/images/svg/insurance-delect-icon.svg">
+
+                            <i *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
+                                class="material-icons ml-10 c-p"> delete </i>
+
+                            <!-- <img class="ml-10 c-p" *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
+                                src="/assets/images/svg/insurance-delect-icon.svg"> -->
 
 
                         </div>
@@ -101,7 +105,7 @@
 
             <div class="col-md-9 pr-0">
                 <div class="row">
-                    <div class="col-md-12 p-0 ">
+                    <div class="col-md-12 p-0 mt-10 froala-edit-class">
                         <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                     </div>
                     <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
