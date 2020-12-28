@@ -66,13 +66,14 @@
                             <div class="text-right">
                                 <p class="m-0 text-primitive"> Last edited </p>
                                 <p class="m-0 text-primitive">
-                                    {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date |
-                                date:'dd/LL/yyyy hh:mm aaa' }}
+                                    {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date
+                                    |
+                                    date:'dd/LL/yyyy hh:mm aaa' }}
                                 </p>
                             </div>
 
 
-                            <i *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
+                            <i *ngIf="selectedNote" (click)="deleteNotes(selectedNote)"
                                 class="material-icons ml-10 c-p"> delete </i>
 
                             <!-- <img class="ml-10 c-p" *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"

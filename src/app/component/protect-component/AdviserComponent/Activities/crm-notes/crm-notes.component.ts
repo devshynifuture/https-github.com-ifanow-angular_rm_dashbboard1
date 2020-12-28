@@ -92,6 +92,7 @@ export class CrmNotesComponent implements OnInit {
   }
   clearNote() {
     this.emailBody = ""
+    this.notes.controls.subject.setValue('')
   }
   getNotes() {
     let obj = {
