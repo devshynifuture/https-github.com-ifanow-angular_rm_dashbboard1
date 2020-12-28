@@ -88,6 +88,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       currentValue: 0,
       percentage: 0
     };
+  Others: any =
+    {
+      currentValue: 0,
+      percentage: 0
+    };
   cashFlowFG: FormGroup;
   subscription = new Subscription();
   noCashflowData = false;
@@ -305,6 +310,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           this.cashAndFLow = this.cashAndFLow[0];
           this.Commodities = data.filter(element => element.assetType == 12);
           this.Commodities = this.Commodities[0];
+          this.Others = data.filter(element => element.assetType == 11);
+          this.Others = this.Others[0];
           const tempSummaryTotalValue: any = {};
 
           this.letsideBarLoader = false;
