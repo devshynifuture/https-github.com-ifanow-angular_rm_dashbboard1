@@ -398,6 +398,16 @@
                   appFormatNumber>{{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span>
               </div>
             </div>
+            <div *ngIf="_data.insuredMembers && _data.isFloater && (showInsurance == 'Others')"
+              class="row bb p-8 b-l br">
+              <div class="col-md-8 text-left f-14 roboto p-0">
+                Sum insured
+              </div>
+              <div class="col-md-4 text-right f-14 roboto p-0">
+                {{(_data.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                  {{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span>
+              </div>
+            </div>
             <!-- <div class="row bb p-8 b-l br" *ngIf="showInsurance == 'Travel' && _data.policyFeatureId == 1">
                 <div class="col-md-8 text-left f-14 roboto p-0">
                     Sum insured
