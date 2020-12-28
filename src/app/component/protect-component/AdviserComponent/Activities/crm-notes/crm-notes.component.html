@@ -36,7 +36,7 @@
                                 <mat-autocomplete #auto1="matAutocomplete"
                                     (optionSelected)="ownerDetails($event.option.value)"
                                     [displayWith]="processTransaction.displayName" autoFocus>
-                                    <mat-option *ngFor="let f of filteredStates " [value]="f">
+                                    <mat-option *ngFor="let f of filteredStates " [value]="f.name">
                                         <div class="row">
                                             <div class="col-md-1 p-0 d-flex align-items-center">
                                                 <i class="material-icons"> person </i>
@@ -92,8 +92,7 @@
             <div class="col-md-3 p-0">
 
 
-                <div *ngIf="listOfNotes.length > 0" class="skeletonAnimation" [appSkeletonLoading]="isLoading"
-                    appSkeletonLoading>
+                <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                     <div class="b-b overflow-hidden pt-10 pb-10">
                         <div class="row">
                             <div class="col-md-12 mb-4 p-0 relClass">
@@ -165,7 +164,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-10" *ngIf="listOfNotes.length == 0 ">
+                <div class="text-center mt-10">
                     <p> No notes exist ! </p>
                     <p> This is the perfect place to add
                         some quick notes like minutes of the meeting,

@@ -41,6 +41,7 @@ export class CrmNotesComponent implements OnInit {
     public processTransaction: ProcessTransactionService,) { }
 
   ngOnInit() {
+    this.listOfNotes = []
     this.date = new Date()
     this.getNotes();
     this.getdataForm("")
