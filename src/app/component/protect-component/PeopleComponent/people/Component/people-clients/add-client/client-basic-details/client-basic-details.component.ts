@@ -258,10 +258,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      pan: [{
-        value: data.pan,
-        disabled: this.basicDetailsData.userId ? true : false
-      }, [Validators.pattern(this.validatorType.PAN)]],
+      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '', [Validators.required]],
@@ -392,10 +389,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       //   value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '',
       //   disabled: this.basicDetailsData.userId ? true : false
       // }, [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [{
-        value: data.pan,
-        disabled: this.basicDetailsData.userId ? true : false
-      }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       gstinNum: [data.gstin, [Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]],
       // taxStatus: [data.taxStatusId ? String(data.taxStatusId) : '', [Validators.required]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
