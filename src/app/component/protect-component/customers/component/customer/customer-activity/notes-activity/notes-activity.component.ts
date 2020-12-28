@@ -156,6 +156,7 @@ export class NotesActivityComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getNotes()
+      this.clearNote()
     });
   }
 }
