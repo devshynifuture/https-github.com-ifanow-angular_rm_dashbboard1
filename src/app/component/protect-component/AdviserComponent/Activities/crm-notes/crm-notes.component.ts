@@ -176,7 +176,7 @@ export class CrmNotesComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(this.noteData.id).subscribe(
+        this.peopleService.deleteNotes(this.noteData).subscribe(
           data => {
             //  this.deletedData(data);
             dialogRef.close();
