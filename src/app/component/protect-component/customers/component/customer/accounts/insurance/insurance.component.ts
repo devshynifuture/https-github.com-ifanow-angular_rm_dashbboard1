@@ -695,6 +695,9 @@ export class InsuranceComponent implements OnInit {
     console.log('getInsuranceDataResponse data : ', data);
 
     if (data) {
+      if (data.insuranceList.length > 0) {
+        data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
+      }
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
@@ -894,6 +897,9 @@ export class InsuranceComponent implements OnInit {
     console.log('getInsuranceDataRes data : ', data);
 
     if (data) {
+      if (data.insuranceList.length > 0) {
+        data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
+      }
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
@@ -933,6 +939,9 @@ export class InsuranceComponent implements OnInit {
     if (data) {
       this.dataSourceGeneralInsurance.data = data.generalInsuranceList ? data.generalInsuranceList : data.otherInsuranceList;
       if (this.dataSourceGeneralInsurance.data) {
+        if (this.dataSourceGeneralInsurance.data && !data.otherInsuranceList) {
+          this.dataSourceGeneralInsurance.data = this.dataSourceGeneralInsurance.data.filter(d => (d.realOrFictitious === 1 || !d.realOrFictitious));
+        }
         this.dataSourceGeneralInsurance.data.forEach(singleInsuranceData => {
           if (singleInsuranceData.insuredMembers && singleInsuranceData.insuredMembers.length > 0) {
             singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;

@@ -414,7 +414,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         Object.keys(data).map(key => {
             if (data[key][0].category == 'HYBRID') {
                 data[key][0].mutualFund.forEach(element => {
-                    if (element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
+                    if (element.subCategoryName == 'Hybrid - Balanced Advantage' || element.subCategoryName == 'Hybrid - Aggressive' || element.subCategoryName == 'Hybrid - Aggressive (CE)' || element.subCategoryName == 'Hybrid - Equity Savings'
                         || element.subCategoryName == 'Hybrid - Dyn Asset Allo or Bal Adv' || element.subCategoryName == 'Hybrid - Arbitrage' || element.subCategoryName == 'Hybrid - Balanced') {
                         equityFund.push(element);
                     } else if (element.subCategoryName == 'Hybrid - Conservative Hybrid Fund' || element.subCategoryName == 'Hybrid - Conservative' || element.subCategoryName == 'Hybrid - Conservative (CE)' || element.subCategoryName == 'Hybrid - Multi Asset Allocation') {
@@ -429,8 +429,10 @@ export class MutualFundsCapitalComponent implements OnInit {
             if (data['DEBT']) {
                 data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
             } else {
-                if (data.DEBT) {
-                    data.DEBT[0].mutualFund = debtFund
+                if (!data['DEBT']) {
+                    data.DEBT = [];
+                    data.DEBT = data['HYBRID'];
+                    // data.DEBT[0].mutualFund = debtFund
                 }
             }
         }
@@ -438,8 +440,10 @@ export class MutualFundsCapitalComponent implements OnInit {
             if (data['EQUITY']) {
                 data['EQUITY'][0].mutualFund = [...data['EQUITY'][0].mutualFund, ...equityFund]
             } else {
-                if (data.EQUITY) {
-                    data.EQUITY[0].mutualFund = equityFund
+                // data.EQUITY[0].mutualFund = equityFund
+                if (!data.EQUITY) {
+                    data.EQUITY = [];
+                    data.EQUITY = data['HYBRID'];
                 }
             }
         }

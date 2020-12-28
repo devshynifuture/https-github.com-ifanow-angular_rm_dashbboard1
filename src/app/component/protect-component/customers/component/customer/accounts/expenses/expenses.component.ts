@@ -21,8 +21,9 @@ import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bot
 import { element } from 'protractor';
 import { CustomerService } from '../../customer.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { SummaryPlanServiceService } from '../../plan/summary-plan/summary-plan-service.service';
+import { catchError } from 'rxjs/operators';
 
 export const MY_FORMATS = {
   parse: {
@@ -843,9 +844,19 @@ export class ExpensesComponent implements OnInit {
       startDate: this.startDate,
       endDate: this.endDate
     };
-    const budgetList = this.planService.getBudget(obj1);
-    const BudgetRecurring = this.planService.otherCommitmentsGet(obj2);
-    const BudgetGraph = this.planService.getBudgetGraph(obj3);
+    // const budgetList = this.planService.getBudget(obj1);
+    // const BudgetRecurring = this.planService.otherCommitmentsGet(obj2);
+    // const BudgetGraph = this.planService.getBudgetGraph(obj3);
+    const budgetList =this.planService.getBudget(obj1).pipe(
+      catchError(error => of(null))
+    );
+    const BudgetRecurring = this.planService.otherCommitmentsGet(obj2).pipe(
+      catchError(error => of(null))
+    );  
+    
+    const BudgetGraph =this.planService.getBudgetGraph(obj3).pipe(
+      catchError(error => of(null))
+    );
     forkJoin(budgetList, BudgetRecurring, BudgetGraph).subscribe(result => {
       this.pushArrayBudget(result);
       this.getBudgetApisResponse(result);

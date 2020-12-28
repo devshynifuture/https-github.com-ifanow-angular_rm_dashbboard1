@@ -119,7 +119,7 @@
                                                     class="br"> Date </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}">
-                                                        {{isLoading ? '' : (element.continueTill && element.continueTill ? (element.startsFrom | date:'dd/MM/yyyy') : (element.expenseDoneOn | date:'dd/MM/yyyy'))}}
+                                                        {{isLoading ? '' : (element.continueTill ? (element.startsFrom | date:'dd/MM/yyyy') : (element.expenseDoneOn | date:'dd/MM/yyyy'))}}
                                                     </div>
                                                 </td>
                                             </ng-container>

@@ -172,9 +172,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     forkJoin(displayList, allAsset, portfoliGi).subscribe(result => {
       this.globalObj['AllAdviceGeneralInsurance'] = result[1];
       this.globalObj['displayList'] = result[0];
-      this.globalObj['GIData'] = result[2].generalInsuranceList;
+      if(result[2]){
+        this.globalObj['GIData'] = result[2].generalInsuranceList;
+      }else{
+        this.globalObj['GIData'] = [];
+      }
       this.displayList = result[0];
-      this.GIData = result[2].generalInsuranceList;
+      this.GIData = result[2] ? result[2].generalInsuranceList : [];
       this.getAllSchemeResponse(result[1]);
     }, (error) => {
       this.eventService.openSnackBar('error', 'Dismiss');
@@ -269,7 +273,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   filterData(data, id) {
     let countSuggest = 0
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
-    GIArry = GIArry.filter(item => item.realOrFictitious === 1);
+    // GIArry = GIArry.filter(item => item.realOrFictitious === 1);
     if (GIArry.length > 0) {
       GIArry.forEach(element => {
         element.adviceDetails = { adviceToCategoryTypeMasterId: 4, adviceStatusId: 0, adviceId: null };
