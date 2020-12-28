@@ -48,7 +48,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   fireCount: any;
   allAdvice = true
   displayList: any;
-  object:any;
+  object: any;
   sumAssured: any;
   healthCpy: any;
   presonalCpy: any;
@@ -59,7 +59,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   fireCpy: any;
   GIData: any;
   healthInsuranceDataSource: any;
-  personalAccidentDataSource:any;
+  personalAccidentDataSource: any;
   criticalInsDataSource: any;
   motorDataSource: any;
   travelDataSource: any;
@@ -68,7 +68,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   adviceName: string;
   adviceNameObj: { adviceName: string; };
   recommendOrNot: boolean;
-  constructor(private adviceUtilService: AdviceUtilsService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  constructor(private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
   ngOnInit() {
@@ -87,14 +87,14 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     this.adviceUtilService.getStoredAdviceData()
       .subscribe(res => {
         this.globalObj = {};
-      if(res == ""){
-        this.globalObj ={}
-      }else{
-        this.globalObj = res;
-      }
+        if (res == "") {
+          this.globalObj = {}
+        } else {
+          this.globalObj = res;
+        }
       });
     // if (this.chekToCallApi()) {
-      this.getAdviceByAsset();
+    this.getAdviceByAsset();
     // } else {
     //   this.GIData = this.globalObj['GIData'];
     //   this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);
@@ -121,7 +121,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       insuranceTypeId: 1,
-      insuranceSubTypeId:0  
+      insuranceSubTypeId: 0
     };
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allCat = this.activityService.getAllCategory({});
@@ -169,7 +169,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     const portfoliGi = this.cusService.getGeneralInsuranceData(obj2).pipe(
       catchError(error => of(error))
     );
-    forkJoin(displayList, allAsset , portfoliGi).subscribe(result => {
+    forkJoin(displayList, allAsset, portfoliGi).subscribe(result => {
       this.globalObj['AllAdviceGeneralInsurance'] = result[1];
       this.globalObj['displayList'] = result[0];
       this.globalObj['GIData'] = result[2].generalInsuranceList;
@@ -215,28 +215,28 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     return filterdData;
   }
   getAllSchemeResponse(data) {
-    if(data.HEALTH || data.PERSONAL_ACCIDENT || data.CRITICAL_ILLNESS){
+    if (data.HEALTH || data.PERSONAL_ACCIDENT || data.CRITICAL_ILLNESS) {
       this.isLoading = false;
       // let healthData = this.filterForAsset(data.HEALTH)
-      let healthData = this.filterData(data.HEALTH,5);
+      let healthData = this.filterData(data.HEALTH, 5);
       this.healthCpy = healthData;
       this.healthInsuranceDataSource = new MatTableDataSource(healthData);
-      let personalData = this.filterData(data.PERSONAL_ACCIDENT,7);
+      let personalData = this.filterData(data.PERSONAL_ACCIDENT, 7);
       this.presonalCpy = healthData;
       this.personalAccidentDataSource = new MatTableDataSource(personalData);
-      let critical = this.filterData(data.CRITICAL_ILLNESS,6);
+      let critical = this.filterData(data.CRITICAL_ILLNESS, 6);
       this.criticalCpy = healthData;
       this.criticalInsDataSource = new MatTableDataSource(critical);
-      let motorData = this.filterData(data.MOTOR,4);
+      let motorData = this.filterData(data.MOTOR, 4);
       this.motorCpy = healthData;
       this.motorDataSource = new MatTableDataSource(motorData);
-      let travelData = this.filterData(data.TRAVEL,8);
+      let travelData = this.filterData(data.TRAVEL, 8);
       this.travelCpy = healthData;
       this.travelDataSource = new MatTableDataSource(travelData);
-      let homeData = this.filterData(data.HOME,9);
+      let homeData = this.filterData(data.HOME, 9);
       this.homeCpy = healthData;
       this.homeInsDataSource = new MatTableDataSource(homeData);
-      let fireData = this.filterData(data.FIRE,10);
+      let fireData = this.filterData(data.FIRE, 10);
       this.fireCpy = healthData;
       this.FireDataSource = new MatTableDataSource(fireData);
       this.healthInsuranceDataSource['tableFlag'] = (this.healthInsuranceDataSource.data.length == 0) ? false : true;
@@ -247,7 +247,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       this.homeInsDataSource['tableFlag'] = (this.homeInsDataSource.data.length == 0) ? false : true;
       this.FireDataSource['tableFlag'] = (this.FireDataSource.data.length == 0) ? false : true;
       console.log("::::::::::::::::", data)
-    }else{
+    } else {
       this.isLoading = false;
       this.healthInsuranceDataSource = [];
       this.personalAccidentDataSource = [];
@@ -264,34 +264,34 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       this.homeInsDataSource['tableFlag'] = (this.homeInsDataSource.length == 0) ? false : true;
       this.FireDataSource['tableFlag'] = (this.FireDataSource.length == 0) ? false : true;
     }
-    
+
   }
-  filterData(data,id) {
+  filterData(data, id) {
     let countSuggest = 0
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);
     GIArry = GIArry.filter(item => item.realOrFictitious === 1);
-    if(GIArry.length > 0){
+    if (GIArry.length > 0) {
       GIArry.forEach(element => {
-        element.adviceDetails={adviceToCategoryTypeMasterId: 4,adviceStatusId:0,adviceId:null};
+        element.adviceDetails = { adviceToCategoryTypeMasterId: 4, adviceStatusId: 0, adviceId: null };
         element.InsuranceDetails = element
       });
-    }else{
+    } else {
       GIArry = [];
     }
-    if(GIArry.length > 0 && data.length > 0){
+    if (GIArry.length > 0 && data.length > 0) {
       GIArry.forEach(element => {
         data.forEach(ele => {
-          if(ele.InsuranceDetails.id == element.InsuranceDetails.id){
+          if (ele.InsuranceDetails.id == element.InsuranceDetails.id) {
             element.hideGiveAdvice = true;
           }
         });
       });
       GIArry = GIArry.filter(d => !d.hideGiveAdvice);
     }
-    if(GIArry.length > 0){
+    if (GIArry.length > 0) {
       data = [...GIArry, ...data];
     }
-    if(data.length > 0){
+    if (data.length > 0) {
       this.sumAssured = 0;
       data.forEach(element => {
         element.adviceDetails.adviceToCategoryTypeMasterId = 4
@@ -313,12 +313,12 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         } else {
           element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
         }
-        if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
-          element.InsuranceDetails.policyFeatures.length > 0) {
-          element.InsuranceDetails.policyFeatures.forEach(ele => {
-            this.sumAssured += ele.featureSumInsured;
+        if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+          element.InsuranceDetails.insuredMembers.length > 0) {
+          element.InsuranceDetails.sumAssured = 0;
+          element.InsuranceDetails.insuredMembers.forEach(ele => {
+            element.InsuranceDetails.sumAssured += ele.sumInsured;
           });
-          element.InsuranceDetails.sumAssured = this.sumAssured;
           if (element.InsuranceDetails.sumAssured == 0) {
             element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
           }
@@ -333,7 +333,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         }
       });
     }
-    
+
     return data;
   }
   checkSingle(flag, selectedData, tableData, tableFlag) {
@@ -352,101 +352,103 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,'');
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, '');
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
   openAddEditAdvice(value, data) {
     let component;
-    if(data){
+    if (data) {
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
       data['insurance'] = data.InsuranceDetails;
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
-    this.adviceNameObj = {adviceName:this.adviceName};
-      this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
-      switch (value) {
-        case "Health Insurance":
-          this.object.insuranceSubTypeId = 5;
-          this.object.value='1';
-          this.object.insuranceType = 5;
-          this.object.showInsurance = 'Health';
-          this.object.adviceToCategoryId = 34;
-          component = SuggestHealthInsuranceComponent;
-          break;
-        case "Personal accident":
-          this.object.insuranceSubTypeId = 7;
-          this.object.value='4',
+    this.adviceNameObj = { adviceName: this.adviceName };
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
+    switch (value) {
+      case "Health Insurance":
+        this.object.insuranceSubTypeId = 5;
+        this.object.value = '1';
+        this.object.insuranceType = 5;
+        this.object.showInsurance = 'Health';
+        this.object.adviceToCategoryId = 34;
+        component = SuggestHealthInsuranceComponent;
+        break;
+      case "Personal accident":
+        this.object.insuranceSubTypeId = 7;
+        this.object.value = '4',
           this.object.insuranceType = 7;
-          this.object.showInsurance = 'Personal accident';
-          this.object.adviceToCategoryId = 35;
-          component = PersonalInsuranceComponent;
-          break;
-        case "Critical illness":
-          this.object.insuranceSubTypeId = 6;
-          this.object.insuranceType = 6;
-          this.object.value='2',
+        this.object.showInsurance = 'Personal accident';
+        this.object.adviceToCategoryId = 35;
+        component = PersonalInsuranceComponent;
+        break;
+      case "Critical illness":
+        this.object.insuranceSubTypeId = 6;
+        this.object.insuranceType = 6;
+        this.object.value = '2',
           this.object.showInsurance = 'Critical illness';
-          this.object.adviceToCategoryId = 36;
-          component = CriticalInsuranceComponent;
-          break;
-        case "Motor insurance":
-          this.object.insuranceSubTypeId = 4;
-          this.object.insuranceType = 4;
-          this.object.value='8',
+        this.object.adviceToCategoryId = 36;
+        component = CriticalInsuranceComponent;
+        break;
+      case "Motor insurance":
+        this.object.insuranceSubTypeId = 4;
+        this.object.insuranceType = 4;
+        this.object.value = '8',
           this.object.showInsurance = 'Motor';
-          this.object.adviceToCategoryId = 37;
-          component = MotorInsuranceComponent;
-          break;
-        case "Travel insurance":
-          this.object.insuranceSubTypeId = 8;
-          this.object.insuranceType = 8;
-          this.object.value='7',
+        this.object.adviceToCategoryId = 37;
+        component = MotorInsuranceComponent;
+        break;
+      case "Travel insurance":
+        this.object.insuranceSubTypeId = 8;
+        this.object.insuranceType = 8;
+        this.object.value = '7',
           this.object.showInsurance = 'Travel';
-          this.object.adviceToCategoryId = 38;
-          component = TravelInsuranceComponent;
-          break;
-        case "Home insurance":
-          this.object.insuranceSubTypeId = 9;
-          this.object.insuranceType = 9;
-          this.object.value='5',
+        this.object.adviceToCategoryId = 38;
+        component = TravelInsuranceComponent;
+        break;
+      case "Home insurance":
+        this.object.insuranceSubTypeId = 9;
+        this.object.insuranceType = 9;
+        this.object.value = '5',
           this.object.showInsurance = 'Home';
-          this.object.adviceToCategoryId = 39;
-          component = HouseholdersInsuranceComponent;
-          break;
-        case "Fire & special perils insurance":
-          this.object.insuranceSubTypeId = 10;
-          this.object.insuranceType = 10;
-          this.object.value='6',
+        this.object.adviceToCategoryId = 39;
+        component = HouseholdersInsuranceComponent;
+        break;
+      case "Fire & special perils insurance":
+        this.object.insuranceSubTypeId = 10;
+        this.object.insuranceType = 10;
+        this.object.value = '6',
           this.object.adviceToCategoryId = 40;
-          this.object.showInsurance = 'Fire & special perils';
-          component = FireInsuranceComponent;
-          break;
-      }
+        this.object.showInsurance = 'Fire & special perils';
+        component = FireInsuranceComponent;
+        break;
+    }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
-    data['displayList'] = this.displayList;
-    data['showInsurance'] = this.object.showInsurance;
-    data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
-    data['insuranceTypeId'] = 1;
-    data['adviceToCategoryId'] = this.object.adviceToCategoryId;
+    data ? data['displayList'] = this.displayList : null;
+    data ? data['showInsurance'] = this.object.showInsurance: null;
+    data ? data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId: null;
+    data ? data['insuranceTypeId'] = 1 : null;
+    data ? data['adviceToCategoryId'] = this.object.adviceToCategoryId : null;
     const fragmentData = {
       flag: 'Advice General Insurance',
       data,
       id: 1,
       state: 'open',
       componentName: SuggestAdviceComponent,
-      adviceNameObj:this.adviceNameObj,
-      adviceToCategoryId :this.object.adviceToCategoryId,
-      adviceToCategoryTypeMasterId:3,
+      adviceNameObj: this.adviceNameObj,
+      adviceToCategoryId: this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId: 3,
       childComponent: component,
-      recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
-      adviceHeaderList:this.adviceHeaderList,
-      showHeaderEdit:(data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : false) : false) : false),
+      recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+      adviceHeaderList: this.adviceHeaderList,
+      // showHeaderEdit:(data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : false) : false) : false),
+      showHeaderEdit: (data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : !data.adviceDetails.adviceId  ? false : true) : false) : false),
       childData: {
-        recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
-        inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+        recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        inputData: { insuranceType: this.object.insuranceType, value: this.object.value }, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance'
+      },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -464,7 +466,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     );
   }
   editAdvice(value, data) {
-    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1, adviceToCategoryId: 1 }
     switch (value) {
       case "Health Insurance":
         this.object.insuranceSubTypeId = 5;
@@ -517,7 +519,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: EditSuggestedAdviceComponent,
-    
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -536,8 +538,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   }
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
-    array = (name == 'Health Insurance') ? this.healthCpy : (name == 'Personal accident') ? this.presonalCpy :(name == 'Critical illness') ? this.criticalCpy : (name == 'Motor insurance') ? this.motorCpy : (name == 'Travel insurance') ? this.travelCpy : (name == 'Home insurance') ? this.homeCpy :(name == 'Fire & special perils insurance') ? this.fireCpy : this.fireCpy;
-    if(value != 0){
+    array = (name == 'Health Insurance') ? this.healthCpy : (name == 'Personal accident') ? this.presonalCpy : (name == 'Critical illness') ? this.criticalCpy : (name == 'Motor insurance') ? this.motorCpy : (name == 'Travel insurance') ? this.travelCpy : (name == 'Home insurance') ? this.homeCpy : (name == 'Fire & special perils insurance') ? this.fireCpy : this.fireCpy;
+    if (value != 0) {
       dataFiltered = array.filter(function (item) {
         return item.adviceDetails[key] === parseInt(value);
       });
@@ -547,7 +549,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       } else {
         this.eventService.openSnackBar("No data found", "Dismiss")
       }
-    }else{
+    } else {
       dataSource.data = array;
     }
 
@@ -566,25 +568,25 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
         this.activityService.deleteAdvice(deletedId).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully", "Dismiss")
-            if(this.globalObj && this.globalObj['AllAdviceGeneralInsurance'] && Object.keys(this.globalObj['AllAdviceGeneralInsurance']).length > 0){
-              if(value == 'Health Insurance'){
-                this.globalObj['AllAdviceGeneralInsurance']['HEALTH'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HEALTH'],deletedId)
-              }else if(value == 'Personal accident'){
-                this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'],deletedId)
-              }else if(value == 'Critical illness'){
-                this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'],deletedId)
-              }else if(value == 'Motor insurance'){
-                this.globalObj['AllAdviceGeneralInsurance']['MOTOR'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['MOTOR'],deletedId)
-              }else if(value == 'Travel insurance'){
-                this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'],deletedId)
-              }else if(value == 'Home insurance'){
-                this.globalObj['AllAdviceGeneralInsurance']['HOME'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HOME'],deletedId)
-              }else{
-                this.globalObj['AllAdviceGeneralInsurance']['FIRE'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['FIRE'],deletedId)
+            if (this.globalObj && this.globalObj['AllAdviceGeneralInsurance'] && Object.keys(this.globalObj['AllAdviceGeneralInsurance']).length > 0) {
+              if (value == 'Health Insurance') {
+                this.globalObj['AllAdviceGeneralInsurance']['HEALTH'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HEALTH'], deletedId)
+              } else if (value == 'Personal accident') {
+                this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['PERSONAL_ACCIDENT'], deletedId)
+              } else if (value == 'Critical illness') {
+                this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['CRITICAL_ILLNESS'], deletedId)
+              } else if (value == 'Motor insurance') {
+                this.globalObj['AllAdviceGeneralInsurance']['MOTOR'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['MOTOR'], deletedId)
+              } else if (value == 'Travel insurance') {
+                this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['TRAVEL'], deletedId)
+              } else if (value == 'Home insurance') {
+                this.globalObj['AllAdviceGeneralInsurance']['HOME'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['HOME'], deletedId)
+              } else {
+                this.globalObj['AllAdviceGeneralInsurance']['FIRE'] = this.deleteValue(this.globalObj['AllAdviceGeneralInsurance']['FIRE'], deletedId)
               }
-           }
-         
-           this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);                dialogRef.close();
+            }
+
+            this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']); dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
         )
@@ -606,7 +608,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
     });
   }
-  deleteValue(data,id){
+  deleteValue(data, id) {
     data = data.filter(d => d.adviceDetails.id != id);
     return data;
   }

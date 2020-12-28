@@ -248,6 +248,18 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       } else {
         element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
       }
+      if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+        element.InsuranceDetails.insuredMembers.length > 0) {
+        element.InsuranceDetails.sumAssured = 0;
+        element.InsuranceDetails.insuredMembers.forEach(ele => {
+          element.InsuranceDetails.sumAssured += ele.sumInsured;
+        });
+        if (element.InsuranceDetails.sumAssured == 0) {
+          element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+        }
+      } else {
+        element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+      }
       if (element.InsuranceDetails.hasOwnProperty("addOns") &&
         element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
         element.InsuranceDetails.addOns.forEach(ele => {
@@ -259,14 +271,14 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
   }
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,'');
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, '');
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
   openAddEditAdvice(value, data) {
     let component;
-    if(data){
+    if (data) {
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
       data['insurance'] = data.InsuranceDetails;
     }
@@ -277,7 +289,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
     switch (value) {
       case "Health Insurance":
         this.object.insuranceSubTypeId = 5;
-        this.object.value='1';
+        this.object.value = '1';
         this.object.insuranceType = 5;
         this.object.showInsurance = 'Health';
         this.object.adviceToCategoryId = 34;
@@ -285,8 +297,8 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
         break;
       case "Personal accident":
         this.object.insuranceSubTypeId = 7;
-        this.object.value='4',
-        this.object.insuranceType = 7;
+        this.object.value = '4',
+          this.object.insuranceType = 7;
         this.object.showInsurance = 'Personal accident';
         this.object.adviceToCategoryId = 35;
         component = PersonalInsuranceComponent;
@@ -294,40 +306,40 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       case "Critical illness":
         this.object.insuranceSubTypeId = 6;
         this.object.insuranceType = 6;
-        this.object.value='2',
-        this.object.showInsurance = 'Critical illness';
+        this.object.value = '2',
+          this.object.showInsurance = 'Critical illness';
         this.object.adviceToCategoryId = 36;
         component = CriticalInsuranceComponent;
         break;
       case "Motor insurance":
         this.object.insuranceSubTypeId = 4;
         this.object.insuranceType = 4;
-        this.object.value='8',
-        this.object.showInsurance = 'Motor';
+        this.object.value = '8',
+          this.object.showInsurance = 'Motor';
         this.object.adviceToCategoryId = 37;
         component = MotorInsuranceComponent;
         break;
       case "Travel insurance":
         this.object.insuranceSubTypeId = 8;
         this.object.insuranceType = 8;
-        this.object.value='7',
-        this.object.showInsurance = 'Travel';
+        this.object.value = '7',
+          this.object.showInsurance = 'Travel';
         this.object.adviceToCategoryId = 38;
         component = TravelInsuranceComponent;
         break;
       case "Home insurance":
         this.object.insuranceSubTypeId = 9;
         this.object.insuranceType = 9;
-        this.object.value='5',
-        this.object.showInsurance = 'Home';
+        this.object.value = '5',
+          this.object.showInsurance = 'Home';
         this.object.adviceToCategoryId = 39;
         component = HouseholdersInsuranceComponent;
         break;
       case "Fire & special perils insurance":
         this.object.insuranceSubTypeId = 10;
         this.object.insuranceType = 10;
-        this.object.value='6',
-        this.object.adviceToCategoryId = 40;
+        this.object.value = '6',
+          this.object.adviceToCategoryId = 40;
         this.object.showInsurance = 'Fire & special perils';
         component = FireInsuranceComponent;
         break;
@@ -342,13 +354,14 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       componentName: SuggestAdviceComponent,
       childComponent: component,
       adviceToCategoryTypeMasterId: 4,
-      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
+      showHeaderEdit: (data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
       adviceHeaderList: this.adviceHeaderList,
-      recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+      recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       adviceToCategoryId: this.object.adviceToCategoryId,
       childData: {
-        recommendOrNot : data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
-        inputData : {insuranceType:this.object.insuranceType,value:this.object.value}, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance' },
+        recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
+        inputData: { insuranceType: this.object.insuranceType, value: this.object.value }, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance'
+      },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
