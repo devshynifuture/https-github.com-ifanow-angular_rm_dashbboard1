@@ -5,7 +5,6 @@
         </div>
     </div>
     <div class="wrapper-20 pt-64" [formGroup]="notes">
-
         <div class="fixedClass pt-20 w-81 ">
             <div class="row">
                 <div class="col-md-3 p-0">
@@ -21,7 +20,7 @@
                 </div>
                 <div class="col-md-9 pr-0">
                     <div class="row">
-                        <div class="col-md-4 form-group pl-0">
+                        <div class="col-md-4 remove-top form-group pl-0">
                             <mat-form-field appearance="standard">
                                 <input class="form-control br-0" placeholder="Enter subject" matInput
                                     formControlName="subject">
@@ -91,6 +90,67 @@
 
         <div class="row pt-70">
             <div class="col-md-3 p-0">
+
+
+                <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
                 <div class="notesScroll">
                     <div *ngFor="let note of listOfNotes">
                         <div class="row b-b pt-10 pb-10" (click)="selectNote(note)">
@@ -102,6 +162,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <p> No notes exist ! </p>
+                    <p> This is the perfect place to add
+                        some quick notes like minutes of the meeting,
+                        thoughts, notes etc. </p>
+                    <p> Go ahead, add something. </p>
+                    <img class="mt-20" src="assets/images/svg/to-do-emptyimg.svg">
                 </div>
             </div>
 
