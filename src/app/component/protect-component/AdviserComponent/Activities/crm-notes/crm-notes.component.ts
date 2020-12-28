@@ -38,7 +38,7 @@ export class CrmNotesComponent implements OnInit {
     public dialog: MatDialog,
     public eventService: EventService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService,) { }
+    public processTransaction: ProcessTransactionService, ) { }
 
   ngOnInit() {
     this.listOfNotes = []
@@ -108,13 +108,19 @@ export class CrmNotesComponent implements OnInit {
     }
     this.peopleService.getNotes(obj)
       .subscribe(res => {
-        console.log(res);
-        this.isLoading = false
-        this.listOfNotes = res
-        this.listOfNotes.forEach(element => {
-          element.content = element.content.replace(/<\/?p[^>]*>/g, "");
-        });
-        console.log(this.listOfNotes);
+        if (res) {
+          console.log(res);
+          this.isLoading = false
+          this.listOfNotes = res
+          this.listOfNotes.forEach(element => {
+            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+          });
+          console.log(this.listOfNotes);
+        } else {
+          this.isLoading = false
+          this.listOfNotes = []
+        }
+
 
       }, err => {
         console.error(err);
