@@ -92,8 +92,8 @@
             <div class="col-md-3 p-0">
 
 
-                <div *ngIf="listOfNotes.length == 0" class="skeletonAnimation" [appSkeletonLoading]="isLoading"
-                    appSkeletonLoading>
+                <div *ngIf="listOfNotes.length == 0 && isLoading" class="skeletonAnimation"
+                    [appSkeletonLoading]="isLoading" appSkeletonLoading>
                     <div class="b-b overflow-hidden pt-10 pb-10">
                         <div class="row">
                             <div class="col-md-12 mb-4 p-0 relClass">
