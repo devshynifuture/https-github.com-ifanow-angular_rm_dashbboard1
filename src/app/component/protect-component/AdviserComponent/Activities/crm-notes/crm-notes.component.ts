@@ -149,7 +149,7 @@ export class CrmNotesComponent implements OnInit {
     let obj = {
       id: null,
       advisorId: AuthService.getAdvisorId(),
-      clientId: AuthService.getClientId(),
+      clientId: this.clientId,
       clientName: this.stateCtrl.value.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
