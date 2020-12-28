@@ -140,8 +140,8 @@ export class CrmNotesComponent implements OnInit {
   addNotes(note) {
     let obj = {
       id: null,
-      advisorId: 5441,
-      clientId: 96138,
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
       clientName: this.stateCtrl.value.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
