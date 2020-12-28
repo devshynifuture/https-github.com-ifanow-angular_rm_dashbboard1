@@ -61,14 +61,15 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-1 text-right p-0">
+                        <div class="col-md-1 text-right p-0" *ngIf="selectedNote">
                             <img (click)="deleteNotes(selectedNoteF)"
                                 src="/assets/images/svg/insurance-delect-icon.svg">
                         </div>
                         <div class="col-md-3 text-right p-0">
                             <p class="m-0 text-primitive"> Last edited </p>
                             <p class="m-0 text-primitive">
-                                {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : '-' }}
+                                {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date |
+                                date:'dd/LL/yyyy hh:mm aaa' }}
                             </p>
                         </div>
                     </div>

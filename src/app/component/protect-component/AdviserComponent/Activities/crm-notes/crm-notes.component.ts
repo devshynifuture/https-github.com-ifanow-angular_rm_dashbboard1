@@ -28,6 +28,7 @@ export class CrmNotesComponent implements OnInit {
   selectedNote: any;
   noteData: any;
   notes: any;
+  date: Date;
 
 
   constructor(private peopleService: PeopleService,
@@ -37,6 +38,7 @@ export class CrmNotesComponent implements OnInit {
     public processTransaction: ProcessTransactionService,) { }
 
   ngOnInit() {
+    this.date = new Date()
     this.getNotes();
     this.getdataForm("")
   }
