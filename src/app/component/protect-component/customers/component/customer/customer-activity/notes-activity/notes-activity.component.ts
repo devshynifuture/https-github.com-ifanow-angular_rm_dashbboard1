@@ -57,6 +57,7 @@ export class NotesActivityComponent implements OnInit {
   }
   clearNote() {
     this.emailBody = ""
+    this.selectedNote = undefined
     this.notes.controls.subject.setValue('')
   }
   getNotes() {
