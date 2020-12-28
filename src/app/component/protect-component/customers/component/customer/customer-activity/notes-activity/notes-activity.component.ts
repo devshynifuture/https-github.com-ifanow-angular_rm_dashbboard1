@@ -27,6 +27,7 @@ export class NotesActivityComponent implements OnInit {
   date: Date;
   clientData: any;
   isMainLoading: any;
+  isLoading: boolean;
 
 
   constructor(private peopleService: PeopleService,
