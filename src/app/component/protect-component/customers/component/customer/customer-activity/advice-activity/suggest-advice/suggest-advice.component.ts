@@ -181,11 +181,17 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     if (this.adviceName != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
     }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
   }
   changeHeader(data) {
     this.hideAmount = data.value == 'Surrender' ? true : false;
     if (data.value != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
+    }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
     }
     this.adviceNameObj.adviceName = data.value;
     this.adviceName = this.adviceNameObj.adviceName;
@@ -197,6 +203,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   addOrNextStep() {
     if (this.adviceName != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
+    }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
     }
     this.count++
 
@@ -1355,7 +1364,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       advisorId: AuthService.getAdvisorId(),
       adviceDescription: this.adviceForm.get('rationale').value,
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-      adviceToGenInsurance: { adviceDescription: this.adviceForm.get('rationale').value,genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
+      adviceToGenInsurance: { adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
       adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
