@@ -31,6 +31,7 @@ export class CrmNotesComponent implements OnInit {
   date: Date;
   isLoading: any;
   isMainLoading: any;
+  clientId: any;
 
 
 
@@ -79,6 +80,7 @@ export class CrmNotesComponent implements OnInit {
         data => {
           this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
             if (responseArray) {
+              this.clientId = responseArray[0].clientId
               if (value.length >= 0) {
                 this.filteredStates = responseArray;
               } else {
@@ -100,6 +102,11 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
   }
+  selectClient(value) {
+    console.log(value)
+    this.clientId = value.clientId
+  }
+
   getNotes() {
     this.isLoading = true
     let obj = {

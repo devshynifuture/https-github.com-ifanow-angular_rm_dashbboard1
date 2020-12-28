@@ -37,7 +37,7 @@
                                     aria-label="client" class="form-control pl-8" matInput
                                     placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto1="matAutocomplete" autoFocus>
-                                    <mat-option (ownerDetails)="selectClient(f)" *ngFor="let f of filteredStates "
+                                    <mat-option (onSelectionChange)="selectClient(f)" *ngFor="let f of filteredStates "
                                         [value]="f.name">
                                         <div class="row">
                                             <div class="col-md-1 p-0 d-flex align-items-center">
