@@ -112,6 +112,7 @@ export class CrmNotesComponent implements OnInit {
 
       }, err => {
         console.error(err);
+        this.listOfNotes = []
       })
   }
   selectNote(note) {
@@ -119,6 +120,7 @@ export class CrmNotesComponent implements OnInit {
     this.stateCtrl.setValue('');
     this.selectedNote = note
     this.notes.controls.subject.setValue(note.subject)
+    this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
   }
