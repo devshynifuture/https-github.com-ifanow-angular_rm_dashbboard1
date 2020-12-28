@@ -31,8 +31,8 @@
                         <div class="col-md-4 form-group remove-top pl-0">
                             <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
                                 <input #searchClient (input)="checkOwnerList(searchClient.value)"
-                                    formControlName="clientName" [formControl]="stateCtrl" [matAutocomplete]="auto1"
-                                    appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
+                                    [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
+                                    aria-label="client" class="form-control pl-8" matInput
                                     placeholder="Start typing to see investor names">
                                 <mat-autocomplete #auto1="matAutocomplete"
                                     (optionSelected)="ownerDetails($event.option.value)"
