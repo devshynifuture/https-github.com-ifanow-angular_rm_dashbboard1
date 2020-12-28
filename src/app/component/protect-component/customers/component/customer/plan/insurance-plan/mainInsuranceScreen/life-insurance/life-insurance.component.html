@@ -1039,7 +1039,7 @@
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
                                             ACTUAL </p>
                                         <h5 style="font-size: 18px; margin: 0px;">
-                                            Rs. <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                                            Rs. <span appFormatNumber [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actual : '0'"></span>
                                         </h5>
                                     </td>
 
