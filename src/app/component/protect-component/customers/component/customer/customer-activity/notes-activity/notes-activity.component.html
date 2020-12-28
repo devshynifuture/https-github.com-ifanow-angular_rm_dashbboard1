@@ -14,10 +14,13 @@
             </div>
             <div class="col-md-9  ">
                 <div class="row">
-                    <div class="col-md-6 form-group pl-0">
+                    <div class="col-md-6 remove-top form-group pl-0">
                         <mat-form-field appearance="standard">
                             <input class="form-control br-0" placeholder="Enter subject" matInput
                                 formControlName="subject">
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
 
@@ -43,7 +46,68 @@
     <div class="row pt-64">
         <div class="col-md-3 pr-0">
 
-            <div class="notesScroll">
+            <div *ngIf="listOfNotes.length == 0 && isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading"
+                appSkeletonLoading>
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="b-b overflow-hidden pt-10 pb-10">
+                    <div class="row">
+                        <div class="col-md-12 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 mb-4 p-0 relClass">
+                            <div class="bar height24"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="notesScroll" *ngIf="listOfNotes.length > 0">
                 <div *ngFor="let note of listOfNotes">
                     <div class="row b-b pt-10 pb-10" (click)="selectNote(note)">
                         <div class="col-md-12 p-0">
@@ -55,17 +119,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="text-center mt-10" *ngIf="listOfNotes.length==0 &&  !isLoading">
+
+                <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
+                <p class="mt-10">No data</p>
+            </div>
         </div>
 
-        <div class="col-md-9 ">
-            <div class="row pb-20 ">
-                <div class="col-md-12 mt-10 p-0 froala-edit-class">
+        <div class="col-md-9  ">
+            <div class="row ">
+                <div class="col-md-12 mt-12 p-0 froala-edit-class">
                     <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                 </div>
-                <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
-                    (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
-                    Save
-                </button>
+
+            </div>
+
+            <div class="row pb-20">
+                <div class="col-md-12 p-0 text-right">
+                    <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
+                        (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
 

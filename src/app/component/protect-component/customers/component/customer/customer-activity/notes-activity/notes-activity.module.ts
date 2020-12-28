@@ -6,6 +6,7 @@ import { NotesActivityComponent } from './notes-activity.component';
 import { MaterialModule } from 'src/app/material/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { CommonComponentModule } from 'src/app/component/protect-component/commo
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    CustomDirectiveModule,
     CommonComponentModule
   ]
 })

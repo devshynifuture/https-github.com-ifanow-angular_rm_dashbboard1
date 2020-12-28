@@ -27,15 +27,17 @@ export class NotesActivityComponent implements OnInit {
   date: Date;
   clientData: any;
   isMainLoading: any;
+  isLoading: boolean;
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService,) { }
+    public processTransaction: ProcessTransactionService, ) { }
 
   ngOnInit() {
+    this.listOfNotes = []
     this.date = new Date()
     this.getNotes();
     this.getdataForm("")
@@ -55,9 +57,11 @@ export class NotesActivityComponent implements OnInit {
   }
   clearNote() {
     this.emailBody = ""
+    this.selectedNote = undefined
     this.notes.controls.subject.setValue('')
   }
   getNotes() {
+    this.isLoading = true
     let obj = {
       advisorId: 5441,
       limit: -1,
@@ -65,11 +69,18 @@ export class NotesActivityComponent implements OnInit {
     }
     this.peopleService.getNotes(obj)
       .subscribe(res => {
-        console.log(res);
-        this.listOfNotes = res
-        this.listOfNotes.forEach(element => {
-          element.content = element.content.replace(/<\/?p[^>]*>/g, "");
-        });
+        if (res) {
+          console.log(res);
+          this.isLoading = false
+          this.listOfNotes = res
+          this.listOfNotes.forEach(element => {
+            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+          });
+          console.log(this.listOfNotes);
+        } else {
+          this.isLoading = false
+          this.listOfNotes = []
+        }
       }, err => {
         console.error(err);
       })

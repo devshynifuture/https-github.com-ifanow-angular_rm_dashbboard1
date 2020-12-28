@@ -29,19 +29,24 @@ export class CrmNotesComponent implements OnInit {
   noteData: any;
   notes: any;
   date: Date;
+  isLoading: any;
   isMainLoading: any;
+  clientId: any;
+
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService,) { }
+    public processTransaction: ProcessTransactionService, ) { }
 
   ngOnInit() {
+    this.listOfNotes = []
     this.date = new Date()
     this.getNotes();
     this.getdataForm("")
+    this.isLoading = true;
   }
   getdataForm(data) {
     this.notes = this.fb.group({
@@ -75,6 +80,7 @@ export class CrmNotesComponent implements OnInit {
         data => {
           this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
             if (responseArray) {
+              this.clientId = responseArray[0].clientId
               if (value.length >= 0) {
                 this.filteredStates = responseArray;
               } else {
@@ -92,10 +98,18 @@ export class CrmNotesComponent implements OnInit {
       );
   }
   clearNote() {
+    this.selectedNote = undefined
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
+    this, this.stateCtrl.setValue('')
   }
+  selectClient(value) {
+    console.log(value)
+    this.clientId = value.clientId
+  }
+
   getNotes() {
+    this.isLoading = true
     let obj = {
       advisorId: 5441,
       limit: -1,
@@ -103,15 +117,24 @@ export class CrmNotesComponent implements OnInit {
     }
     this.peopleService.getNotes(obj)
       .subscribe(res => {
-        console.log(res);
-        this.listOfNotes = res
-        this.listOfNotes.forEach(element => {
-          element.content = element.content.replace(/<\/?p[^>]*>/g, "");
-        });
-        console.log(this.listOfNotes);
+        if (res && res.length > 0) {
+          console.log(res);
+          this.isLoading = false
+          this.listOfNotes = res
+          this.listOfNotes.forEach(element => {
+            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+          });
+          console.log(this.listOfNotes);
+        } else {
+          this.isLoading = false
+          this.listOfNotes = []
+        }
+
 
       }, err => {
         console.error(err);
+        this.isLoading = false
+        this.listOfNotes = []
       })
   }
   selectNote(note) {
@@ -119,14 +142,15 @@ export class CrmNotesComponent implements OnInit {
     this.stateCtrl.setValue('');
     this.selectedNote = note
     this.notes.controls.subject.setValue(note.subject)
+    this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
   }
   addNotes(note) {
     let obj = {
       id: null,
-      advisorId: 5441,
-      clientId: 96138,
+      advisorId: AuthService.getAdvisorId(),
+      clientId: this.clientId,
       clientName: this.stateCtrl.value.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
@@ -202,6 +226,7 @@ export class CrmNotesComponent implements OnInit {
     });
   }
   ownerDetails(value) {
+    this.notes.controls.clientName.setValue(value.name)
     this.selectedName = value.name;
     this.familyMemberData = value;
   }
