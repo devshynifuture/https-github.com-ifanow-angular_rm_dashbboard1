@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-9  ">
                 <div class="row">
-                    <div class="col-md-6 form-group pl-0">
+                    <div class="col-md-6 remove-top form-group pl-0">
                         <mat-form-field appearance="standard">
                             <input class="form-control br-0" placeholder="Enter subject" matInput
                                 formControlName="subject">
@@ -61,20 +61,20 @@
             <div class="text-center mt-10">
 
                 <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
-                <p>No data</p>
+                <p class="mt-10">No data</p>
             </div>
         </div>
 
-        <div class="col-md-9 ">
-            <div class="row pb-20 ">
+        <div class="col-md-9  ">
+            <div class="row ">
                 <div class="col-md-12 mt-12 p-0 froala-edit-class">
                     <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                 </div>
 
             </div>
 
-            <div class="row">
-                <div class="col-md-12 text-right">
+            <div class="row pb-20">
+                <div class="col-md-12 p-0 text-right">
                     <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
                         (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
                         Save
