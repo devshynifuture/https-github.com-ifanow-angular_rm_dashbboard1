@@ -98,6 +98,7 @@ export class CrmNotesComponent implements OnInit {
   clearNote() {
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
+    this, this.stateCtrl.setValue('')
   }
   getNotes() {
     this.isLoading = true
