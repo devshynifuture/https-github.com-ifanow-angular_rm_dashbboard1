@@ -108,7 +108,7 @@ export class CrmNotesComponent implements OnInit {
     }
     this.peopleService.getNotes(obj)
       .subscribe(res => {
-        if (res) {
+        if (res && res.length > 0) {
           console.log(res);
           this.isLoading = false
           this.listOfNotes = res
@@ -217,6 +217,7 @@ export class CrmNotesComponent implements OnInit {
     });
   }
   ownerDetails(value) {
+    this.notes.controls.clientName.setValue(value.name)
     this.selectedName = value.name;
     this.familyMemberData = value;
   }

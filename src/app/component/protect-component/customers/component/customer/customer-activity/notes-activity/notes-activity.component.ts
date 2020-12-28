@@ -78,7 +78,6 @@ export class NotesActivityComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = []
         }
-
       }, err => {
         console.error(err);
       })
