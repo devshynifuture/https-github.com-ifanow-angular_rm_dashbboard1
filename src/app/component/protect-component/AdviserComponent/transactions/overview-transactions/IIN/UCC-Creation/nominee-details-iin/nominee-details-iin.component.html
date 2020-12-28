@@ -164,9 +164,12 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address1" matInput placeholder="Flat/building/street"
-                type="text">
+              <input #address1 class="form-control" [maxLength]="40" appInputValueValidation formControlName="address1"
+                matInput placeholder="Flat/building/street" type="text">
               <mat-error class="f-12">This field is required</mat-error>
+              <mat-hint align="end" class=" text-custom">
+                {{address1.value.length}} / 40
+              </mat-hint>
             </mat-form-field>
           </div>
         </div>
@@ -177,9 +180,28 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address2" matInput placeholder="Block/locality" type="text">
+              <input #placeSearch class="form-control" [maxLength]="40" appInputValueValidation
+                formControlName="address2" matInput placeholder="Block/locality" type="text">
               <mat-error class="f-12">This field is required</mat-error>
+              <mat-hint align="end" class=" text-custom">
+                {{placeSearch.value.length}} / 40
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
 
+        <div class="row pt-24">
+          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+            <h3 class="f-16   m-0">Address line 3</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #address3 class="form-control" [maxLength]="40" appInputValueValidation formControlName="address3"
+                matInput placeholder="Block/locality" type="text">
+              <mat-hint align="end" class=" text-custom">
+                {{address3.value.length}} / 40
+              </mat-hint>
+              <mat-hint align="start">Optional</mat-hint>
             </mat-form-field>
           </div>
         </div>

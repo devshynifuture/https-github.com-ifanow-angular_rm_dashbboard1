@@ -1365,7 +1365,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       adviceDescription: this.adviceForm.get('rationale').value,
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceToGenInsurance: {genInsuranceId:obj.id ? obj.id : null, adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
-      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
+      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
       applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
