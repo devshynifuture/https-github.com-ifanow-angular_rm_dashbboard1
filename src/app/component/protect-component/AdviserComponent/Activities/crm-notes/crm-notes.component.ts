@@ -29,6 +29,7 @@ export class CrmNotesComponent implements OnInit {
   noteData: any;
   notes: any;
   date: Date;
+  isMainLoading: any;
 
 
   constructor(private peopleService: PeopleService,
