@@ -128,6 +128,8 @@ export class ContactDetailsInnComponent implements OnInit {
     pincode = pincode.join('');
     pincode = pincode.substring(pincode.length - 6, pincode.length);
     this.contactDetails.get('pinCode').setValue(pincode);
+    let addressLine3Value = this.contactDetails.get('address3').value
+    this.contactDetails.get('address3').setValue(addressLine3Value.replace(pincode, ''))
     this.getPostalPin(pincode);
   }
 
@@ -199,6 +201,7 @@ export class ContactDetailsInnComponent implements OnInit {
       !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
+      address3: [(address.address3)],
       pinCode: [address.pinCode, [Validators.required]],
       city: [address.city, [Validators.required]],
       state: [address.state, [Validators.required]],
@@ -222,7 +225,8 @@ export class ContactDetailsInnComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.contactDetails.get('address2').setValue(place.formatted_address.substring(0, 39))
+        this.contactDetails.get('address3').setValue(place.formatted_address.substring(39, 79))
         this.getPincode(place.formatted_address);
         // console.log(place);
       });
@@ -378,6 +382,7 @@ export class ContactDetailsInnComponent implements OnInit {
       holder.foreignAddress = {
         address1: formValue.address1,
         address2: formValue.address2,
+        address3: formValue.address3,
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,
@@ -389,6 +394,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
         address1: formValue.address1,
         address2: formValue.address2,
+        address3: formValue.address3,
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,
