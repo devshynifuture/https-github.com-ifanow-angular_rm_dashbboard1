@@ -9,19 +9,19 @@ import {
   ViewChildren,
   ViewContainerRef
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatInput } from '@angular/material';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatInput} from '@angular/material';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -37,10 +37,10 @@ export class ContactDetailsInnComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    public authService: AuthService, private postalService: PostalService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService, public processTransaction: ProcessTransactionService,
-    private peopleService: PeopleService, private ngZone: NgZone) {
+              public authService: AuthService, private postalService: PostalService,
+              private customerService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              public eventService: EventService, public processTransaction: ProcessTransactionService,
+              private peopleService: PeopleService, private ngZone: NgZone) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -128,8 +128,8 @@ export class ContactDetailsInnComponent implements OnInit {
     pincode = pincode.join('');
     pincode = pincode.substring(pincode.length - 6, pincode.length);
     this.contactDetails.get('pinCode').setValue(pincode);
-    let addressLine3Value = this.contactDetails.get('address3').value
-    this.contactDetails.get('address3').setValue(addressLine3Value.replace(pincode, ''))
+    const addressLine3Value = this.contactDetails.get('address3').value;
+    this.contactDetails.get('address3').setValue(addressLine3Value.replace(pincode, ''));
     this.getPostalPin(pincode);
   }
 
@@ -165,7 +165,7 @@ export class ContactDetailsInnComponent implements OnInit {
         userId: data.userType == 2 ? data.clientId : data.familyMemberId,
         userType: data.userType
       };
-      this.custumService.getAddressList(obj).subscribe(
+      this.customerService.getAddressList(obj).subscribe(
         responseData => {
           data.address = responseData[0];
           this.setDataForm(this.formId, data);
@@ -225,8 +225,8 @@ export class ContactDetailsInnComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        this.contactDetails.get('address2').setValue(place.formatted_address.substring(0, 39))
-        this.contactDetails.get('address3').setValue(place.formatted_address.substring(39, 79))
+        this.contactDetails.get('address2').setValue(place.formatted_address.substring(0, 39));
+        this.contactDetails.get('address3').setValue(place.formatted_address.substring(39, 79));
         this.getPincode(place.formatted_address);
         // console.log(place);
       });
