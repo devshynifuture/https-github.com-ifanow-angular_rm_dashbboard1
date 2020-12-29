@@ -308,7 +308,7 @@ export class AssetStocksComponent implements OnInit {
         p.categoryWiseStockList.forEach((s, i) => {
           let ok = true;
           s.stockList.forEach(cs => {
-            if (cs.stock.balanceShares) {
+            if (cs.stock.balanceShares || cs.stock.stockType == 1) {
               cs.stock.ownerList = p.ownerList
               cs.stock['nomineeList'] = p.nomineeList;
               cs.stock['linkedBankAccount'] = p.linkedBankAccount;
