@@ -843,14 +843,12 @@ mat-tab-group[vertical] {
     border-bottom: 1px solid #dee5e7;
     cursor: pointer;
     position: relative;
-
+    display: flex;
    &:hover{
      background: rgba(0,0,0,.04);
     .deleteIconNote {
-      position: absolute;
-      top: 12px;
-      right: 10px;
-      font-size: 15px;
+       
+      font-size: 18px;
       display: block;
     }
    } 

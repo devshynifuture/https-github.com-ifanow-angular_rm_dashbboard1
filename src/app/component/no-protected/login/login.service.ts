@@ -46,7 +46,9 @@ export class LoginService {
   }
 
   loginWithPassword(data) {
-    return this.http.postEncoded('http://localhost:8080/userserver/api/v1/web/' + appConfig.LOGIN_WITH_PASSWORD, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
+
+    // return this.http.postEncoded('http://localhost:8080/userserver/api/v1/web/' + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
   sendWelcomeEmail(data) {
