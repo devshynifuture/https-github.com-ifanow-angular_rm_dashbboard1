@@ -38,6 +38,7 @@ export class OwnerNomineeDirective {
           break;
 
         case 'disabledMember':
+          this.callGetBank = true;
           this.disabledMember(callMethod.type);
           break;
 
@@ -135,6 +136,7 @@ export class OwnerNomineeDirective {
   }
 
   userForBank: any;
+  callGetBank: boolean = true;
   disabledMember(value) {
 
     this.userForBank = [];
@@ -189,8 +191,8 @@ export class OwnerNomineeDirective {
           }
         }
         setTimeout(() => {
-          if (this.userForBank.length > 0 && controlsArr.length - 1 == i) {
-
+          if (this.userForBank.length > 0 && this.callGetBank) {
+            this.callGetBank = false;
             this.enumDataService.getAccountList(this.userForBank).then((data) => {
               this.emitBank.emit();
             });

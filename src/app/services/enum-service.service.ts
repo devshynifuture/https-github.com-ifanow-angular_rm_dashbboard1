@@ -11,6 +11,8 @@ export class EnumServiceService {
   bankDematList: any = [];
   clientFamilybankList = [];
   clientViewbankList = new Subject();
+  bankAC = new Subject();
+  dematAC = new Subject();
   clientRoleList: any = [];
   proofTypeList: any = [];
   const;
@@ -92,10 +94,13 @@ export class EnumServiceService {
 
   public addBank(data) {
     this.bankList = data;
+    this.bankAC.next([...data]);
   }
 
   public addDematBank(data) {
     this.bankDematList = data;
+    this.dematAC.next([...data]);
+
   }
 
   public addclientFamilyBanks(data) {
@@ -103,6 +108,8 @@ export class EnumServiceService {
     this.clientFamilybankList = data;
     this.clientViewbankList.next([...data]);
   }
+
+
 
   familyList: any;
 
@@ -124,6 +131,14 @@ export class EnumServiceService {
 
   getclientFamilybankList() {
     return this.clientFamilybankList
+  }
+
+  getBankAC() {
+    return this.bankAC.asObservable();
+  }
+
+  getDenatAC() {
+    return this.dematAC.asObservable();
   }
 
   getclientViewbankList() {

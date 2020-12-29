@@ -11,6 +11,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 import { MatDialog } from '@angular/material';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -46,7 +47,8 @@ export class AddAssetStocksComponent implements OnInit {
   checkValid: boolean = false;
   adviceShowHeaderFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
-
+  private unSubcripBank: Subscription;
+  private unSubcripDemat: Subscription;
   constructor(private subInjectService: SubscriptionInject, private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
@@ -55,8 +57,20 @@ export class AddAssetStocksComponent implements OnInit {
     if (this.editApiData) {
       this.getPortfolioList();
     }
+
+    this.unSubcripBank = this.enumService.getBankAC().subscribe((data: any) => {
+      this.bankList = data;
+    });
+
+    this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
+      this.bankDematList = data;
+    });
   }
 
+  ngOnDestroy() {
+    this.unSubcripBank.unsubscribe();
+    this.unSubcripDemat.unsubscribe();
+  }
   getPortfolioList() {
     const obj =
     {
