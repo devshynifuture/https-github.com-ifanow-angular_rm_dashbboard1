@@ -46,7 +46,7 @@ export class LoginService {
   }
 
   loginWithPassword(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
   sendWelcomeEmail(data) {
