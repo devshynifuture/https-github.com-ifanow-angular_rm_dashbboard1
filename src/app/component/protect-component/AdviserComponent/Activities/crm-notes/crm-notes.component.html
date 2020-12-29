@@ -13,8 +13,9 @@
                             <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
                                 <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
                         </div>
-                        <div class="col-md-2 d-flex justify-content-end align-items-center pl-0">
-                            <img [matMenuTriggerFor]="menu" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                        <div [matMenuTriggerFor]="menu"
+                            class="col-md-2 c-p d-flex justify-content-end align-items-center pl-0">
+                            <img class="c-p" src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>
@@ -75,10 +76,11 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-3 d-flex justify-content-end align-items-center p-0">
+                        <div class="col-md-3 d-flex justify-content-end align-items-center pl-0 pr-16">
                             <div class="text-right">
-                                <mat-checkbox (change)="showToClient($event)" class="example-margin">Check
-                                    me!</mat-checkbox>
+                                For admin <mat-checkbox (change)="showToClient($event)" class="example-margin">
+
+                                </mat-checkbox>
 
 
                                 <!-- <p class="m-0 text-primitive"> Last edited </p>
@@ -179,7 +181,6 @@
                                 <mat-checkbox class="example-margin" [checked]="note.checked"
                                     (change)="selectForDelete($event,note)">
                                 </mat-checkbox>
-
                                 <div class="ml-10  w-80" (click)="selectNote(note)">
                                     <h5 class="m-0 f-500"> {{note.subject}} </h5>
                                     <p class="m-0  ">{{note.clientName}}</p>
@@ -187,13 +188,11 @@
                                         {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
                                     <p class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
                                 </div>
-
                                 <div>
                                     <i (click)="deleteNotes(selectedNote,'')" title="Remove"
                                         class="material-icons deleteIconNote   ml-10 c-p">
                                         delete </i>
                                 </div>
-
                             </div>
 
 
