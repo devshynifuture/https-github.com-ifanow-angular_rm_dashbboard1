@@ -241,7 +241,9 @@ export class CrmNotesComponent implements OnInit {
   }
   onSearchChange(value) {
     this.searchQuery = value
-    this.getNotes()
+    if (this.searchQuery.length > 3) {
+      this.getNotes()
+    }
   }
   deleteNotes(note) {
     if (this.objForDelete.length == 0) {
