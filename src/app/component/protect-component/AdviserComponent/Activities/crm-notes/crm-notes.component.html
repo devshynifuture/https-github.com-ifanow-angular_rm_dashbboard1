@@ -18,7 +18,7 @@
 
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>
-                                    <mat-checkbox class="example-margin" (change)="selectAll()"> </mat-checkbox>
+                                    <mat-checkbox class="example-margin" (change)="selectAll($event)"> </mat-checkbox>
                                     <span class="pl-4"> Select multiple</span>
                                 </button>
 
@@ -176,7 +176,8 @@
                     <ul class="block">
                         <li *ngFor="let note of listOfNotes">
                             <div class="d-flex p-10" [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' ">
-                                <mat-checkbox class="example-margin" (change)="selectForDelete($event,note)">
+                                <mat-checkbox class="example-margin" [checked]="note.checked"
+                                    (change)="selectForDelete($event,note)">
                                 </mat-checkbox>
 
                                 <div class="ml-10  w-80" (click)="selectNote(note)">

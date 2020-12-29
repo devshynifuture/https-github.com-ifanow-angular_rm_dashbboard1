@@ -60,6 +60,10 @@ export class AuthService {
     sessionStorage.setItem('clientList', JSON.stringify(data));
   }
 
+  static setToDoList(data) {
+    sessionStorage.setItem('ToDo', JSON.stringify(data));
+  }
+
   static setClientRolesSettings(data) {
     sessionStorage.setItem('clientRoles', JSON.stringify(data));
   }
@@ -78,6 +82,10 @@ export class AuthService {
 
   static getClientList() {
     return JSON.parse(sessionStorage.getItem('clientList'));
+  }
+
+  static getToDo() {
+    return JSON.parse(sessionStorage.getItem('ToDo'));
   }
 
   static getUserRoleType() {
@@ -205,6 +213,7 @@ export class AuthService {
     window.name = undefined;
     localStorage.clear();
     sessionStorage.removeItem('clientList');
+    sessionStorage.removeItem('ToDo');
     sessionStorage.clear();
     // this.myRoute.navigate(['login']);
   }
