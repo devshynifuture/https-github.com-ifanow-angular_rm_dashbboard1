@@ -17,6 +17,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { Subscription, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { DashboardService } from '../../../dashboard/dashboard.service';
 
 @Component({
   selector: 'app-add-tasks',
@@ -103,7 +104,8 @@ export class AddTasksComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private util: UtilService,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private dashboardService: DashboardService
   ) { }
 
   ngOnInit() {
@@ -1517,6 +1519,8 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
+            this.getTaskDashboardCount();
+            sessionStorage.removeItem('todaysTaskList')
             this.isMainLoading = false;
             console.log("response from add task", res);
             this.eventService.openSnackBar('Task added successfully', "DISMISS");
@@ -1525,6 +1529,16 @@ export class AddTasksComponent implements OnInit {
         })
     }
   }
+
+  getTaskDashboardCount() {
+    this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          DashboardService.setTaskMatrix(res);
+        }
+      })
+  }
+
 
   canAddCollaborators(userId): boolean {
     if (!(this.collaboratorList.some(item => item.userId === userId))) {
