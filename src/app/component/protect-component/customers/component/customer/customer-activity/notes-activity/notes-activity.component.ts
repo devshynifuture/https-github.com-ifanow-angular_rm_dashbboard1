@@ -58,6 +58,20 @@ export class NotesActivityComponent implements OnInit {
   getFormControl(): any {
     return this.notes.controls;
   }
+  selectAll(event) {
+    if (event.checked == true) {
+      this.listOfNotes.forEach(element => {
+        element.checked = true
+        this.objForDelete.push({ id: element.id })
+      });
+    } else {
+      this.listOfNotes.forEach(element => {
+        element.checked = false
+        this.objForDelete = []
+      });
+    }
+  }
+
   clearNote() {
     this.emailBody = ""
     this.selectedNote = undefined
