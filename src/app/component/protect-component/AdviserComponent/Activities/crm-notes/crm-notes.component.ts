@@ -162,6 +162,7 @@ export class CrmNotesComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Note save successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -172,6 +173,7 @@ export class CrmNotesComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
