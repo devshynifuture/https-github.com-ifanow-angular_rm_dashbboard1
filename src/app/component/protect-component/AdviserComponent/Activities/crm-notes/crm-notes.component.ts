@@ -34,6 +34,7 @@ export class CrmNotesComponent implements OnInit {
   clientId: any;
   visibleToClient: boolean = false
   objForDelete: any;
+  searchQuery: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -116,6 +117,7 @@ export class CrmNotesComponent implements OnInit {
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
+      searchQuery: (this.searchQuery) ? this.searchQuery : null,
       limit: -1,
       offset: 0
     }
@@ -208,9 +210,14 @@ export class CrmNotesComponent implements OnInit {
   saveData(data) {
     this.emailBody = data;
   }
-
-  deleteNotes() {
-
+  onSearchChange(value) {
+    this.searchQuery = value
+    this.getNotes()
+  }
+  deleteNotes(note) {
+    if (this.objForDelete.length == 0) {
+      this.objForDelete.push({ id: note.id })
+    }
     const dialogData = {
       data: '',
       header: 'DELETE',
