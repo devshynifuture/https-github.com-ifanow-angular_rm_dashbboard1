@@ -131,6 +131,7 @@ export class CrmNotesComponent implements OnInit {
           this.listOfNotes.forEach(element => {
             element.content = element.content.replace(/<\/?p[^>]*>/g, "");
             element.activeOnSelect = false
+            element.checked = false
           });
           console.log(this.listOfNotes);
         } else {
@@ -144,6 +145,19 @@ export class CrmNotesComponent implements OnInit {
         this.isLoading = false
         this.listOfNotes = []
       })
+  }
+  selectAll(event) {
+    if (event.checked == true) {
+      this.listOfNotes.forEach(element => {
+        element.checked = true
+        this.objForDelete.push({ id: element.id })
+      });
+    } else {
+      this.listOfNotes.forEach(element => {
+        element.checked = false
+        this.objForDelete = []
+      });
+    }
   }
   selectNote(note) {
     console.log('selectedNote', note)
@@ -212,6 +226,11 @@ export class CrmNotesComponent implements OnInit {
         }
       })
     }
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.checked = value.checked
+      }
+    });
   }
   editNotes() {
     let obj = {}
