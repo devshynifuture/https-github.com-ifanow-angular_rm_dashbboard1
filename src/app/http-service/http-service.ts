@@ -102,7 +102,9 @@ export class HttpService {
     } else {
       let headers: HttpHeaders = new HttpHeaders();
       headers = headers.set('Content-Encoding', 'gzip');
-      headers = headers.set('Content-Type', 'application/octet-stream');
+      headers = headers.set('Content-Type', 'application/json');
+
+      // headers = headers.set('Content-Type', 'application/octet-stream');
       httpOptions = {
         headers
       };
