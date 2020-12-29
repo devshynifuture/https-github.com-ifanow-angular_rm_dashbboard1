@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -49,7 +50,7 @@ export class AddAssetStocksComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(private subInjectService: SubscriptionInject, private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService, private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -420,6 +421,7 @@ export class AddAssetStocksComponent implements OnInit {
     this.cusService.addAssetStocks(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
+        this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
         this.submitStockDataRes(data);
         if (data.reasonOfError) {
           // this.eventService.openSnackBar(data.reasonOfError);

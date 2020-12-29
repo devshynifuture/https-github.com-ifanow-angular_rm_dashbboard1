@@ -182,7 +182,7 @@ export class PoRdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
         if (!this.dataList) {
           this.pordDataList.emit(data);
@@ -218,6 +218,7 @@ export class PoRdSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePORD(element.id).subscribe(
           data => {
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;

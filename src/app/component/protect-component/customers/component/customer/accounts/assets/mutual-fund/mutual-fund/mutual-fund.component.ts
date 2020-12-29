@@ -111,7 +111,7 @@ export class MutualFundComponent implements OnInit {
     );
   }
   getDataCount() {
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
   }
   doFiltering(data) {
     data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');

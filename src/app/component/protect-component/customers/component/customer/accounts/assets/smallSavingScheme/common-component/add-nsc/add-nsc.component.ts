@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../../asset-validation.service';
 @Component({
   selector: 'app-add-nsc',
   templateUrl: './add-nsc.component.html',
@@ -43,7 +44,7 @@ export class AddNscComponent implements OnInit {
   inputData: any;
   ownerData: any;
   nscFormField: any;
-  callMethod:any;
+  callMethod: any;
   ownerName: any;
   familyMemberId: any;
   editApi: any;
@@ -57,7 +58,7 @@ export class AddNscComponent implements OnInit {
   flag: any;
   dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
   adviceShowHeaderAndFooter: boolean = true;
-  bankList:any = [];
+  bankList: any = [];
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input()
@@ -75,7 +76,7 @@ export class AddNscComponent implements OnInit {
 
   @Input() popupHeaderText: string = 'Add National savings certificate (NSC)';
 
-  constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   isOptionalField
   ngOnInit() {
     if (this.data && this.data.flag) {
@@ -90,13 +91,13 @@ export class AddNscComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
   }
 
-  tenure10:boolean=false;
-  checkDate(){
-    if(new Date(this.nscFormField.get('commDate').value).getTime() <=  new Date(2015, 11, 19).getTime()){
-      this.tenure10 =true;
+  tenure10: boolean = false;
+  checkDate() {
+    if (new Date(this.nscFormField.get('commDate').value).getTime() <= new Date(2015, 11, 19).getTime()) {
+      this.tenure10 = true;
     }
-    else{
-      this.tenure10 =false;
+    else {
+      this.tenure10 = false;
     }
   }
 
@@ -108,146 +109,146 @@ export class AddNscComponent implements OnInit {
       return false;
     }
   }
-  
 
-    // ===================owner-nominee directive=====================//
- display(value) {
-  console.log('value selected', value)
-  this.ownerName = value.userName;
-  this.familyMemberId = value.id
-}
 
-lisNominee(value) {
-  this.ownerData.Fmember = value;
-  this.nomineesListFM = Object.assign([], value);
-}
-
-disabledMember(value, type) {
-  this.callMethod = {
-    methodName : "disabledMember",
-    ParamValue : value,
-    disControl : type
-  }
-}
-
-displayControler(con) {
-  console.log('value selected', con);
-  if(con.owner != null && con.owner){
-    this.nscFormField.controls.getCoOwnerName = con.owner;
-  }
-  if(con.nominee != null && con.nominee){
-    this.nscFormField.controls.getNomineeName = con.nominee;
-  }
-}
-
-onChangeJointOwnership(data) {
-  this.callMethod = {
-    methodName : "onChangeJointOwnership",
-    ParamValue : data
-  }
-}
-
-/***owner***/ 
-
-get getCoOwner() {
-  return this.nscFormField.get('getCoOwnerName') as FormArray;
-}
-
-addNewCoOwner(data) {
-  this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (data) {
-    setTimeout(() => {
-     this.disabledMember(null,null);
-    }, 1300);
+  // ===================owner-nominee directive=====================//
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
 
-  if(this.getCoOwner.value.length > 1 && !data){
-   let share = 100/this.getCoOwner.value.length;
-   for (let e in this.getCoOwner.controls) {
-    if(!Number.isInteger(share) && e == "0"){
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-    }
-    else{
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-    }
-   }
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
-  
-}
 
-removeCoOwner(item) {
-  this.getCoOwner.removeAt(item);
-  if (this.nscFormField.value.getCoOwnerName.length == 1) {
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  } else {
-    let share = 100/this.getCoOwner.value.length;
-    for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-    }
-  }
-  this.disabledMember(null, null);
-}
-/***owner***/ 
-
-/***nominee***/ 
-
-get getNominee() {
-  return this.nscFormField.get('getNomineeName') as FormArray;
-}
-
-removeNewNominee(item) {
-  this.disabledMember(null, null);
-  this.getNominee.removeAt(item);
-  if (this.nscFormField.value.getNomineeName.length == 1) {
-    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-  } else {
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-      }
-    }
-  }
-}
-
-
-
-addNewNominee(data) {
-  this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (!data || this.getNominee.value.length < 1) {
-    for (let e in this.getNominee.controls) {
-      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
     }
   }
 
-  if(this.getNominee.value.length > 1 && !data){
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.nscFormField.controls.getCoOwnerName = con.owner;
+    }
+    if (con.nominee != null && con.nominee) {
+      this.nscFormField.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
+    }
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.nscFormField.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
-   }
-  
-  
-}
-/***nominee***/ 
-// ===================owner-nominee directive=====================//
+
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.nscFormField.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.nscFormField.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.nscFormField.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+  /***nominee***/
+  // ===================owner-nominee directive=====================//
   getFormDataNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
@@ -266,11 +267,11 @@ addNewNominee(data) {
     this.nscData = data
     this.nscFormField = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: [0,[Validators.required]],
+        name: ['', [Validators.required]],
+        share: [0, [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
@@ -281,52 +282,52 @@ addNewNominee(data) {
       cNo: [data.certificateNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAccount: [data.userBankMappingId? data.userBankMappingId: null],
+      linkedBankAccount: [data.userBankMappingId ? data.userBankMappingId : null],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
+        id: [0]
       })]),
       description: [data.description]
     })
     // this.nscFormField = this.fb.group({
     // })
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
-  if(this.nscFormField.value.getCoOwnerName.length == 1){
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  }
+    /***owner***/
+    if (this.nscFormField.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
 
-  if (data.ownerList && data.ownerList.length > 0) {
-    this.getCoOwner.removeAt(0);
-    data.ownerList.forEach(element => {
-      this.addNewCoOwner(element);
-    });
-  }
-  
-/***owner***/ 
+    if (data.ownerList && data.ownerList.length > 0) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
 
-/***nominee***/ 
-if(data.nomineeList){
-  if(data.nomineeList.length > 0){
-      
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
-  }
-}
-/***nominee***/ 
+    /***owner***/
 
-this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
-// ==============owner-nominee Data ========================\\ 
+    /***nominee***/
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.nscFormField }
+    // ==============owner-nominee Data ========================\\ 
     // this.ownerData = this.nscFormField.controls;
     // this.familyMemberId = this.nscFormField.controls.familyMemberId.value
     // this.familyMemberId = this.familyMemberId[0]
 
   }
-  
+
   // getFormData(data) {
   //   console.log(data)
   //   this.transactionData = data.controls
@@ -365,7 +366,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
       if (this.flag == "editNSC") {
         let obj =
         {
-          "advisorId":this.advisorId,
+          "advisorId": this.advisorId,
           "clientId": this.clientId,
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
@@ -384,11 +385,11 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "description": this.nscFormField.get('description').value,
         }
         obj.nomineeList.forEach((element, index) => {
-          if(element.name == ''){
+          if (element.name == '') {
             this.removeNewNominee(index);
           }
         });
-        obj.nomineeList= this.nscFormField.value.getNomineeName;
+        obj.nomineeList = this.nscFormField.value.getNomineeName;
         this.cusService.editNSCData(obj).subscribe(
           data => this.addNSCResponse(data),
           error => this.eventService.showErrorMessage(error)
@@ -398,7 +399,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         let obj =
         {
           "clientId": this.clientId,
-          "advisorId":this.advisorId,
+          "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
           "ownerList": this.nscFormField.value.getCoOwnerName,
           // "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
@@ -407,7 +408,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormField.get('cNo').value,
           "postOfficeBranch": this.nscFormField.get('poBranch').value,
-          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value?this.nscFormField.get('linkedBankAccount').value:0,
+          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value ? this.nscFormField.get('linkedBankAccount').value : 0,
           "userBankMappingId": this.nscFormField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
@@ -416,11 +417,11 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         }
 
         obj.nomineeList.forEach((element, index) => {
-          if(element.name == ''){
+          if (element.name == '') {
             this.removeNewNominee(index);
           }
         });
-        obj.nomineeList= this.nscFormField.value.getNomineeName;
+        obj.nomineeList = this.nscFormField.value.getNomineeName;
         console.log(obj)
         let adviceObj = {
           // advice_id: this.advisorId,
@@ -431,7 +432,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         if (this.flag == 'adviceNSC') {
           this.cusService.getAdviceNsc(adviceObj).subscribe(
             data => this.getAdviceNscRes(data),
-            err =>{
+            err => {
               this.barButtonOptions.active = false;
               this.eventService.openSnackBar(err, "Dismiss");
             }
@@ -439,7 +440,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         } else {
           this.cusService.addNSCScheme(obj).subscribe(
             data => this.addNSCResponse(data),
-            error =>{
+            error => {
               this.barButtonOptions.active = false;
               this.eventService.showErrorMessage(error)
             }
@@ -456,29 +457,33 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
   }
   addNSCResponse(data) {
     this.barButtonOptions.active = false;
-    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "Dismiss")
-    console.log(data)
+    if (this.editApi) {
+      this.eventService.openSnackBar("Updated successfully!", "Dismiss")
+    } else {
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
+      this.eventService.openSnackBar("Added successfully!", "Dismiss")
+    } console.log(data)
     this.close(data)
   }
   close(data) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data:data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
-   //link bank
-   openDialog(eventData): void {
+  //link bank
+  openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -488,5 +493,5 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
     })
 
   }
-//link bank
+  //link bank
 }

@@ -23,6 +23,7 @@ import { DatePipe } from '@angular/common';
 import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 import { numberFormat } from 'highcharts';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 
 @Component({
@@ -164,6 +165,7 @@ export class MutualFundSummaryComponent implements OnInit {
     public routerActive: ActivatedRoute,
     private onlineTransact: OnlineTransactionService,
     private activatedRoute: ActivatedRoute,
+    private assetValidation: AssetValidationService,
     private cd: ChangeDetectorRef) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -1919,6 +1921,7 @@ export class MutualFundSummaryComponent implements OnInit {
             .subscribe(res => {
               if (res) {
                 this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+                this.assetValidation.addAssetCount({ type: 'Delete', value: 'mutual_fund' })
                 dialogRef.close();
                 this.addedData = true;
                 this.mfService.setDataForMfGet('');

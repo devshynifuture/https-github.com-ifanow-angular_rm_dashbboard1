@@ -233,6 +233,7 @@ export class CommoditiesComponent implements OnInit {
           this.custumService.deleteGold(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.goldDataList.assetList = this.goldDataList.assetList.filter(x => x.id != element.id);
               this.goldList.data = this.goldDataList.assetList;
               // this.getGoldList()
@@ -243,6 +244,7 @@ export class CommoditiesComponent implements OnInit {
           this.custumService.deleteOther(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.otherDataList.assetList = this.otherDataList.assetList.filter(x => x.id != element.id);
               this.otherCommodityList.data = this.otherDataList.assetList;
               // this.getOtherList()
@@ -286,7 +288,7 @@ export class CommoditiesComponent implements OnInit {
   }
   @Output() changeCount = new EventEmitter();
   getGoldRes(data) {
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
     if (data == undefined) {
@@ -312,7 +314,7 @@ export class CommoditiesComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     }
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
     this.otherCommodityList.data = [{}, {}, {}];
     this.custumService.getOthers(obj).subscribe(
       data => this.getOthersRes(data), (error) => {

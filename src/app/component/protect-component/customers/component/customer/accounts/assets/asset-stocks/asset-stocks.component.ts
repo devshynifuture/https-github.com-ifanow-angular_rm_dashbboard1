@@ -208,7 +208,7 @@ export class AssetStocksComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
 
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
@@ -427,6 +427,7 @@ export class AssetStocksComponent implements OnInit {
         this.cusService.deleteStockData(deleteArry).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'STOCKS' })
             dialogRef.close();
             this.getStocksData();
           },

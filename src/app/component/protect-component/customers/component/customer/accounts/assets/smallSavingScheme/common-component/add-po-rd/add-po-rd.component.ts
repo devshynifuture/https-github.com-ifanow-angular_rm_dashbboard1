@@ -1,23 +1,24 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-po-rd',
   templateUrl: './add-po-rd.component.html',
   styleUrls: ['./add-po-rd.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddPoRdComponent implements OnInit {
@@ -39,7 +40,7 @@ export class AddPoRdComponent implements OnInit {
   validatorType = ValidatorType;
   maxDate = new Date();
   minDate = new Date(2002, 1, 1);
-  isOptionalField: any; 
+  isOptionalField: any;
   inputData: any;
   ownerName: any;
   familyMemberId: any;
@@ -61,7 +62,7 @@ export class AddPoRdComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService,
-              private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
+    private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) {
   }
 
   @Input() popupHeaderText = 'Add Post office recurring deposit (PO RD)';
@@ -245,13 +246,13 @@ export class AddPoRdComponent implements OnInit {
   }
 
   /***nominee***/
-// ===================owner-nominee directive=====================//
+  // ===================owner-nominee directive=====================//
 
   checkValue() {
     if (this.PORDForm.get('tenure').value % 5 != 0) {
-      this.PORDForm.get('tenure').setErrors({incorrect: true});
+      this.PORDForm.get('tenure').setErrors({ incorrect: true });
     } else {
-      this.PORDForm.get('tenure').setErrors({incorrect: false});
+      this.PORDForm.get('tenure').setErrors({ incorrect: false });
       this.PORDForm.get('tenure').updateValueAndValidity();
     }
   }
@@ -326,8 +327,8 @@ export class AddPoRdComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.PORDForm};
-// ==============owner-nominee Data ========================\\
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.PORDForm };
+    // ==============owner-nominee Data ========================\\
     // this.ownerData = this.PORDForm.controls;
     // this.familyMemberId = data.familyMemberId;
   }
@@ -433,9 +434,9 @@ export class AddPoRdComponent implements OnInit {
   addPORDResponse(data, isAdd) {
     this.barButtonOptions.active = false;
     if (isAdd) {
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-    this.close(data);
-
+      this.close(data);
     } else {
       this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
       this.close(true);
@@ -445,7 +446,7 @@ export class AddPoRdComponent implements OnInit {
 
   close(data) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data:data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
   }
 
   isFormValuesForAdviceValid() {
@@ -457,21 +458,21 @@ export class AddPoRdComponent implements OnInit {
     }
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
 
   // link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -482,5 +483,5 @@ export class AddPoRdComponent implements OnInit {
 
   }
 
-// link bank
+  // link bank
 }

@@ -148,7 +148,7 @@ export class PPFSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getPpfSchemeDataResponse', data);
         if (!this.dataList) {
           this.ppfDataList.emit(data);
@@ -184,6 +184,7 @@ export class PPFSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePPF(element.id).subscribe(
           data => {
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             // this.getPpfSchemeData();
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);

@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
   styleUrls: ['./recuring-deposit.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class RecuringDepositComponent implements OnInit {
@@ -80,7 +81,7 @@ export class RecuringDepositComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private event: EventService, public dialog: MatDialog, private fb: FormBuilder, private enumService: EnumServiceService, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -112,7 +113,7 @@ export class RecuringDepositComponent implements OnInit {
 
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   // ===================owner-nominee directive=====================//
@@ -289,7 +290,7 @@ export class RecuringDepositComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
-    else{
+    else {
       this.showHide = true;
     }
     this.depoData = data;
@@ -353,9 +354,9 @@ export class RecuringDepositComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.recuringDeposit};
-// this.formData = this.recuringDeposit;
-// ==============owner-nominee Data ========================\\
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.recuringDeposit };
+    // this.formData = this.recuringDeposit;
+    // ==============owner-nominee Data ========================\\
     if (data != undefined) {
       this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value;
       this.familyMemberId = this.familyMemberId[0];
@@ -396,10 +397,10 @@ export class RecuringDepositComponent implements OnInit {
       this.recuringDeposit.markAllAsTouched();
       return;
     }
-      //  else if (this.recuringDeposit.get('ownerType').invalid) {
-      //   this.recuringDeposit.get('ownerType').markAsTouched();
-      //   this.isOwnerType = true;
-      //   return;
+    //  else if (this.recuringDeposit.get('ownerType').invalid) {
+    //   this.recuringDeposit.get('ownerType').markAsTouched();
+    //   this.isOwnerType = true;
+    //   return;
     // }
     else {
 
@@ -483,15 +484,16 @@ export class RecuringDepositComponent implements OnInit {
 
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data);
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editrecuringDepositRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   isFormValuesForAdviceValid() {
@@ -502,20 +504,20 @@ export class RecuringDepositComponent implements OnInit {
     }
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -526,5 +528,5 @@ export class RecuringDepositComponent implements OnInit {
 
   }
 
-//link bank
+  //link bank
 }

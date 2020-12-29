@@ -2,16 +2,20 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { from, Subject} from 'rxjs';
+import { from, Subject, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AssetValidationService {
   advisorId: any;
   clientId: any;
-  counts:any;
+  counts: any;
   updateCounts = new Subject();
-  constructor(private cusService: CustomerService) { 
+
+  private assetCount = new BehaviorSubject<any>({});
+  assetCountObserver = this.assetCount.asObservable();
+
+  constructor(private cusService: CustomerService) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
   }
@@ -29,7 +33,7 @@ export class AssetValidationService {
 
   getAssetCountGLobalData() {
     const obj = {
-      advisorId:  AuthService.getAdvisorId(),
+      advisorId: AuthService.getAdvisorId(),
       clientId: AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1
     };
     this.cusService.getAssetCountGlobalData(obj).subscribe(
@@ -40,7 +44,14 @@ export class AssetValidationService {
     );
   }
 
-  passCounts(){
+  passCounts() {
     return this.updateCounts.asObservable();
+  }
+
+  addAssetCount(obj: object) {
+    this.assetCount.next(obj);
+  }
+  assetCountUnsubscribe() {
+    this.assetCount.unsubscribe();
   }
 }

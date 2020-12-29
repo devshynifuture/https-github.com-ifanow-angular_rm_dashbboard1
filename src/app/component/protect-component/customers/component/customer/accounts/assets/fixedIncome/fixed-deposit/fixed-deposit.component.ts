@@ -1,20 +1,21 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {Observable} from 'rxjs/Observable';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
-import {Router} from '@angular/router';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {ActiityService} from '../../../../customer-activity/actiity.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { ActiityService } from '../../../../customer-activity/actiity.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
   styleUrls: ['./fixed-deposit.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class FixedDepositComponent implements OnInit {
@@ -73,11 +74,11 @@ export class FixedDepositComponent implements OnInit {
   showErrorOwner = false;
   callMethod: any;
   compoundValue = [
-    {name: 'Daily', value: 2},
-    {name: 'Monthly', value: 3},
-    {name: 'Quarterly', value: 1},
-    {name: 'Semi annually ', value: 4},
-    {name: 'Annually', value: 5}
+    { name: 'Daily', value: 2 },
+    { name: 'Monthly', value: 3 },
+    { name: 'Quarterly', value: 1 },
+    { name: 'Semi annually ', value: 4 },
+    { name: 'Annually', value: 5 }
   ];
   isOwnerPercent;
   ownerData: any;
@@ -116,8 +117,9 @@ export class FixedDepositComponent implements OnInit {
   tenureFlag: boolean;
 
   constructor(public utils: UtilService, public dialog: MatDialog, private event: EventService, private router: Router,
-              private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService) {
+    private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService,
+    private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -200,11 +202,11 @@ export class FixedDepositComponent implements OnInit {
   //   }
   // }
   tenureError() {
-    return {flag: true};
+    return { flag: true };
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   // ===================owner-nominee directive=====================//
@@ -235,17 +237,17 @@ export class FixedDepositComponent implements OnInit {
     if (con.nominee != null && con.nominee) {
       this.fixedDeposit.controls.getNomineeName = con.nominee;
     }
-    
+
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
 
   onChangeJointOwnership(data) {
@@ -428,7 +430,7 @@ export class FixedDepositComponent implements OnInit {
 
   getdataForm(data) {
     this.flag = data;
-    if(data){
+    if (data) {
       this.showHide = true;
     }
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
@@ -473,7 +475,7 @@ export class FixedDepositComponent implements OnInit {
       })])
     });
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.fixedDeposit};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.fixedDeposit };
 
     if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -663,7 +665,7 @@ export class FixedDepositComponent implements OnInit {
     console.log('advice activity res ==>', data);
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Fixed deposite added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   onChange(event) {
@@ -676,23 +678,24 @@ export class FixedDepositComponent implements OnInit {
 
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editFixedDepositRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
-  
-//link bank
+
+  //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -703,7 +706,7 @@ export class FixedDepositComponent implements OnInit {
 
   }
 
-//link bank
+  //link bank
 
 
 }

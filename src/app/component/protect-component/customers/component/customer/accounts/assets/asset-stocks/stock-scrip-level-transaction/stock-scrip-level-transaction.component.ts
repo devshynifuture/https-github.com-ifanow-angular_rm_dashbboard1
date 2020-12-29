@@ -12,6 +12,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
+import { AssetValidationService } from '../../asset-validation.service';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   oldOwnerID: number;
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private assetValidation: AssetValidationService, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @ViewChild('holding', { static: false }) holding;
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
@@ -592,6 +593,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
             console.log(data);
+            this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             this.barButtonOptions.active = false;
             this.showPresentMsg(data)
             this.Close();

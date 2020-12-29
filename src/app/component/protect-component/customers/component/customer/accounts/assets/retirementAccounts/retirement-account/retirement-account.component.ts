@@ -317,7 +317,7 @@ export class RetirementAccountComponent implements OnInit {
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
   }
-  getfixedIncomeData(value) {
+  getretirementAccountsData(value) {
     this.showRecurring = value;
     // this.isLoading = true;
     if (value == '2') {
@@ -545,6 +545,8 @@ export class RetirementAccountComponent implements OnInit {
           this.custumService.deleteEPF_EPS(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
+
               // this.getListEPF();
               this.epfDatalist.assetList = this.epfDatalist.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.epfDatalist.assetList;
@@ -561,7 +563,8 @@ export class RetirementAccountComponent implements OnInit {
         } else if (value == 'NPS') {
           this.custumService.deleteNPS(element.id).subscribe(
             data => {
-              dialogRef.close();
+              dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
+
               // this.getListNPS();
               this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != element.id);
               this.npsDatalist.sumOfAmountInvested -= element.totalAmountInvested;
@@ -575,7 +578,8 @@ export class RetirementAccountComponent implements OnInit {
         } else if (value == 'GRATUITY') {
           this.custumService.deleteGratuity(element.id).subscribe(
             data => {
-              dialogRef.close();
+              dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
+
               // this.getListGratuity();
               this.gratuityDatalist.assetList = this.gratuityDatalist.assetList.filter(x => x.id != element.id);
               this.gratuityDatalist.sumOfAmountReceived -= element.amountReceived;
@@ -636,7 +640,7 @@ export class RetirementAccountComponent implements OnInit {
 
       if (data.assetList) {
         console.log('getEPFRes =', data);
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         this.epfDatalist = data;
         this.sumOfcurrentEpfBalance = this.epfDatalist.sumOfEpfBalanceTillToday;
         this.sumOfcurrentEpsBalance = this.epfDatalist.sumOfEpsBalanceTillToday;
@@ -685,7 +689,7 @@ export class RetirementAccountComponent implements OnInit {
         this.gratuityDatalist = data;
         this.sumOfAmountReceived = this.gratuityDatalist.sumOfAmountReceived;
         this.sumOfGratuityReceived = this.gratuityDatalist.sumOfGratuityReceived;
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getGrauityRes =', data);
         this.dataSource.data = this.gratuityDatalist.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
@@ -716,7 +720,7 @@ export class RetirementAccountComponent implements OnInit {
 
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getNPSRes =', data);
         this.npsDatalist = data
         this.dataSource.data = this.npsDatalist.assetList;
@@ -783,7 +787,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalPensionAmount = data.totalPensionAmount;
       if (data.epsList) {
 
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         // console.log('getEPSRes =', data);
         this.dataSource.data = data.epsList;
         this.dataSource.sort = this.epsListTableSort;
@@ -797,7 +801,7 @@ export class RetirementAccountComponent implements OnInit {
   }
 
   activeFilter: any = 'All';
-  filterFixedIncome(key: string, value: any, data: any, type: string) {
+  filterretirementAccounts(key: string, value: any, data: any, type: string) {
     this.sumOfcurrentEpfBalance = 0;
     this.sumOfcurrentEpsBalance = 0;
     this.sumOfcurrentValue = 0;
@@ -864,10 +868,10 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource.data = dataFiltered;
     }
 
-    // this.isFixedIncomeFiltered = true;
+    // this.isretirementAccountsFiltered = true;
 
     // this.dataSource = new MatTableDataSource(data);
-    // this.dataSource.sort = this.fixedIncomeTableSort;
+    // this.dataSource.sort = this.retirementAccountsTableSort;
   }
 }
 export interface PeriodicElement11 {
