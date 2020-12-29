@@ -511,20 +511,20 @@ export class MutualFundOverviewComponent implements OnInit {
       let sortedData = this.MfServiceService.sortingDescending(data.schemeWise, 'navDate');
       sortedData = [...new Map(sortedData.map(item => [item.navDate, item])).values()];
       console.log('NAv Sorted .................',sortedData)
-      if(sortedData.length > 1){
+      if(sortedData.length > 0){
         let maxDateOne = new Date(sortedData[0].navDate);
-        let maxDateTwo = new Date('2020-12-27');
-        console.log('maxDateOne',maxDateOne);
-        console.log('maxDateTwo',maxDateTwo);
-        var Difference_In_Time = maxDateOne.getTime() - maxDateTwo.getTime(); 
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-        console.log('Difference_In_Days',Difference_In_Days);
-      }else if(sortedData.length > 1){
-        navDate =  new Date(sortedData[0].navDate);
-        console.log('maxDateOne',navDate);
+        // let maxDateTwo = new Date('2020-12-27');
+         console.log('maxDateOne',maxDateOne);
+        // console.log('maxDateTwo',maxDateTwo);
+        // var Difference_In_Time = maxDateOne.getTime() - maxDateTwo.getTime(); 
+        // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+        // console.log('Difference_In_Days',Difference_In_Days);
+        navDate = maxDateOne
       }else{
         navDate = null;
       }
+    }else{
+      navDate = null;
     }
     return navDate;
   }
@@ -541,7 +541,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
-      // this.latestNavDate = this.getLatestNavDate(data);
+      this.latestNavDate = this.getLatestNavDate(data);
       if (!this.rightFilterData) {
         if (this.addedData == true || this.mutualFund == '') {
           this.mutualFund = this.filterData;
