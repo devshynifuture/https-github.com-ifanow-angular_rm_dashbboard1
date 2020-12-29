@@ -197,9 +197,9 @@ export class TempserviceService {
 
             obj = {
               schemeName: singleData.schemeName,
-              nav: this.mutualFundRoundAndFormat(singleData.nav, 3),
+              nav: this.mutualFundRoundAndFormat(singleData.nav, 4),
               navDate: singleData.navDate,
-              avgNav: this.mutualFundRoundAndFormat(singleData.avgNav, 3),
+              avgNav: this.mutualFundRoundAndFormat(singleData.avgNav, 4),
               isin: singleData.isin
               // pan: singleData.pan
             };

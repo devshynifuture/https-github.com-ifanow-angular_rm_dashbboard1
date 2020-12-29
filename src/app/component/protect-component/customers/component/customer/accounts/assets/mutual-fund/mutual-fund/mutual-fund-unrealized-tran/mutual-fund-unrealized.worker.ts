@@ -28,7 +28,7 @@ addEventListener('message', ({data}) => {
 
     } else {
     }
-    element.purchasePrice= mfService.mutualFundRoundAndFormat(element.purchasePrice, 3)
+    element.purchasePrice= mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
     if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = element.totalCurrentValue - element.totalTransactionAmt;
       element.totalGain = mfService.mutualFundRoundAndFormat(element.totalGain, 2);
