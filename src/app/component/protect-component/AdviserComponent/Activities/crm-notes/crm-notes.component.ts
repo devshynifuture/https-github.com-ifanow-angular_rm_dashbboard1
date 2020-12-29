@@ -117,7 +117,7 @@ export class CrmNotesComponent implements OnInit {
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
-      searchQuery: (this.searchQuery) ? this.searchQuery : null,
+      searchQuery: (this.searchQuery) ? this.searchQuery : '',
       limit: -1,
       offset: 0
     }
