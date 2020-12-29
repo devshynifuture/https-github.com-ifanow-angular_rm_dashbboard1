@@ -30,7 +30,7 @@ export class NotesActivityComponent implements OnInit {
   isLoading: boolean;
   objForDelete: any;
   searchQuery: any;
-  visibleToClient: boolean = false;
+  visibleToClient: boolean = true;
 
 
   constructor(private peopleService: PeopleService,

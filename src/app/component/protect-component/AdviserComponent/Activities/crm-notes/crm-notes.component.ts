@@ -32,7 +32,7 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = false
+  visibleToClient: boolean = true
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
