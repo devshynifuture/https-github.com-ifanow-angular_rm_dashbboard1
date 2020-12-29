@@ -181,11 +181,17 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     if (this.adviceName != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
     }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
+    }
   }
   changeHeader(data) {
     this.hideAmount = data.value == 'Surrender' ? true : false;
     if (data.value != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
+    }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
     }
     this.adviceNameObj.adviceName = data.value;
     this.adviceName = this.adviceNameObj.adviceName;
@@ -197,6 +203,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
   addOrNextStep() {
     if (this.adviceName != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
+    }
+    if (this.adviceName == 'Continue') {
+      this.adviceForm.get('implementDate').setErrors(null);
     }
     this.count++
 
@@ -1028,7 +1037,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             const addOnList = componentRefComponentValues[form].get('addOnForm') as FormArray;
             if (addOnList && addOnList.controls.length > 0) {
               addOnList.controls.forEach(element => {
-                if (element.get('additionalCovers').value && element.get('sumAddOns').value) {
+                if (element.get('additionalCovers').value && (element.get('sumAddOns').value || element.get('addOnSumInsured').value)) {
                   let obj =
                   {
                     addOnId: element.get('additionalCovers').value,
@@ -1123,7 +1132,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "insuranceSubTypeId": 7,
                 "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 'suggestion': componentRefComponentValues.plannerNotes,
-                'isRecommend': componentRefComponentValues.showRecommendation,
+                'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                 insuredMembers: memberList,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.personalAccidentForm.value.getNomineeName,
@@ -1185,7 +1194,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 id: (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 addOns: addOns,
                 suggestion: componentRefComponentValues.plannerNotes,
-                isRecommend: componentRefComponentValues.showRecommendation,
+                'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                 nominees: componentRefComponentValues.motorInsuranceForm.value.getNomineeName,
                 realOrFictitious: 2,
               };
@@ -1216,7 +1225,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                   "policyFeatures": featureList,
                   "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                   suggestion: componentRefComponentValues.plannerNotes,
-                  isRecommend: componentRefComponentValues.showRecommendation,
+                  'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                   insuredMembers: memberList,
                   realOrFictitious: 2,
                   nominees: componentRefComponentValues.travelInsuranceForm.value.getNomineeName,
@@ -1241,7 +1250,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "policyFeatures": featureList,
                 "addOns": addOns,
                 suggestion: componentRefComponentValues.plannerNotes,
-                isRecommend: componentRefComponentValues.showRecommendation,
+                'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.homeInsuranceForm.value.getNomineeName,
               }
@@ -1263,7 +1272,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 "policyFeatures": featureList,
                 "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
                 suggestion: componentRefComponentValues.plannerNotes,
-                isRecommend: componentRefComponentValues.showRecommendation,
+                'isRecommend': componentRefComponentValues.showRecommendation ? 1 : 0,
                 "addOns": addOns,
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.fireInsuranceForm.value.getNomineeName,
@@ -1353,9 +1362,10 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       adviceId: this.adviceForm.get('headerEdit').value ? parseInt(this.adviceForm.get('headerEdit').value) : 0,
       clientId: AuthService.getClientId(),
       advisorId: AuthService.getAdvisorId(),
+      adviceDescription: this.adviceForm.get('rationale').value,
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-      adviceToGenInsurance: { adviceDescription: this.adviceForm.get('rationale').value,genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
-      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.advice_to_category_id : null,
+      adviceToGenInsurance: {genInsuranceId:obj.id ? obj.id : null, adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
+      adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
       applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')

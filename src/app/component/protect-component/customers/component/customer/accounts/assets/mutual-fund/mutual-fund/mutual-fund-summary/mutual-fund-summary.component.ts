@@ -1309,7 +1309,9 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
         this.mfData.sip = this.grandTotal.sip
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
-        this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
+        // this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
+        this.mfData.total_xirr_Dupl = this.mfData.total_xirr
+        this.mfData.total_xirr_Dupl = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr_Dupl, 2)
         console.log('End time ', new Date());
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
@@ -1844,7 +1846,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'total_absolute_return';
         break;
       case 'XIRR':
-        obj = 'total_xirr';
+        obj = 'total_xirr_Dupl';
         break;
       case 'Dividend payout':
         obj = 'total_dividend_payout';

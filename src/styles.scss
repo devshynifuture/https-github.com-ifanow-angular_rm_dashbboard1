@@ -821,18 +821,20 @@ mat-tab-group[vertical] {
 }
 
 #ui-notes {
-  margin-top: 140px !important;
+  margin-top: 123px !important;
   
 }
-
+.height24 {
+  height: 24px;
+} 
 .fixedClass {
   position: fixed;
   background-color: #fff;
-  z-index: 2;
+  z-index: 5;
 }
 .notesScroll {
   max-height: calc(100vh - 9rem);
- overflow-y: scroll;  
+ overflow-y: auto;  
  padding-bottom: 50px;
  h5{
    cursor: pointer;

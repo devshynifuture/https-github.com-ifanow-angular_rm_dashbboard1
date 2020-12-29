@@ -9,19 +9,19 @@ import {
   ViewChildren,
   ViewContainerRef
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatInput } from '@angular/material';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatInput} from '@angular/material';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -37,10 +37,10 @@ export class ContactDetailsInnComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    public authService: AuthService, private postalService: PostalService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService, public processTransaction: ProcessTransactionService,
-    private peopleService: PeopleService, private ngZone: NgZone) {
+              public authService: AuthService, private postalService: PostalService,
+              private customerService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              public eventService: EventService, public processTransaction: ProcessTransactionService,
+              private peopleService: PeopleService, private ngZone: NgZone) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -128,6 +128,8 @@ export class ContactDetailsInnComponent implements OnInit {
     pincode = pincode.join('');
     pincode = pincode.substring(pincode.length - 6, pincode.length);
     this.contactDetails.get('pinCode').setValue(pincode);
+    const addressLine3Value = this.contactDetails.get('address3').value;
+    this.contactDetails.get('address3').setValue(addressLine3Value.replace(pincode, ''));
     this.getPostalPin(pincode);
   }
 
@@ -163,7 +165,7 @@ export class ContactDetailsInnComponent implements OnInit {
         userId: data.userType == 2 ? data.clientId : data.familyMemberId,
         userType: data.userType
       };
-      this.custumService.getAddressList(obj).subscribe(
+      this.customerService.getAddressList(obj).subscribe(
         responseData => {
           data.address = responseData[0];
           this.setDataForm(this.formId, data);
@@ -199,6 +201,7 @@ export class ContactDetailsInnComponent implements OnInit {
       !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
+      address3: [(address.address3)],
       pinCode: [address.pinCode, [Validators.required]],
       city: [address.city, [Validators.required]],
       state: [address.state, [Validators.required]],
@@ -222,7 +225,8 @@ export class ContactDetailsInnComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
+        this.contactDetails.get('address2').setValue(place.formatted_address.substring(0, 39));
+        this.contactDetails.get('address3').setValue(place.formatted_address.substring(39, 79));
         this.getPincode(place.formatted_address);
         // console.log(place);
       });
@@ -378,6 +382,7 @@ export class ContactDetailsInnComponent implements OnInit {
       holder.foreignAddress = {
         address1: formValue.address1,
         address2: formValue.address2,
+        address3: formValue.address3,
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,
@@ -389,6 +394,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
         address1: formValue.address1,
         address2: formValue.address2,
+        address3: formValue.address3,
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,

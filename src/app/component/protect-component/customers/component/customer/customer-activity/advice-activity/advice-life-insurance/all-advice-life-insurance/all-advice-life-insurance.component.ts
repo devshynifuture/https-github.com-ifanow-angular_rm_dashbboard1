@@ -144,10 +144,14 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     }
     forkJoin(displayList, allAsset, portfolioLi,familyMemberList).subscribe(result => {
       this.globalObj['allAdviceLifeInsurance'] = result[1];
-      this.globalObj['LIData'] = result[2].insuranceList
+      if(result[2]){
+        this.globalObj['LIData'] = result[2].insuranceList
+      }else{
+        this.globalObj['LIData'] = [];
+      }
       this.adviceUtilService.setStoredAdviceData(this.globalObj);
       this.displayList = result[0];
-      this.LIData = this.filterLiData(result[2].insuranceList);
+      this.LIData = this.filterLiData(result[2] ? result[2].insuranceList : []);
       if (result[2]) {
         this.familyMemberList = result[2]
         this.adviceUtilService.setFamilyMemberList(this.familyMemberList);
@@ -166,7 +170,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
   filterLiData(data) {
     if(data.length > 0){
-      data = data.filter(d => d.realOrFictitious === 1);
+      // data = data.filter(d => d.realOrFictitious === 1);
       data.forEach(element => {
         this.totalFundValues = 0;
         if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {

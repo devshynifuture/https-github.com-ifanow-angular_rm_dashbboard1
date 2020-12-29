@@ -60,6 +60,8 @@ export class InsuranceComponent implements OnInit {
   reportDate: Date;
   showDownload: boolean;
   countOthers = 0;
+  exp: Date;
+  difference: Date;
   [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
@@ -341,7 +343,7 @@ export class InsuranceComponent implements OnInit {
     }
     if (insuranceSubTypeId === 11) {
       delete obj.insuranceTypeId;
-      if(this.countOthers == 0){
+      if (this.countOthers == 0) {
         this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
         this.cusService.getOtherInsurance(obj).subscribe(
           data => {
@@ -363,7 +365,7 @@ export class InsuranceComponent implements OnInit {
             this.dataSourceGeneralInsurance.data = [];
           }
         );
-      }else{
+      } else {
         this.loadApiAndData = this.loadAndGetData(insuranceSubTypeId, 'generalInsurance');
         if (this.loadApiAndData.dataLoaded) {
           if (this.isAdded == undefined) {
@@ -459,6 +461,8 @@ export class InsuranceComponent implements OnInit {
         element.premiumAmount = element.premium;
         element.policyStartDate = element.startDate;
         element.policyExpiryDate = element.expiryDate;
+        element.sumInsuredIdv = element.sumAssuredIdv
+        element.durationRemaining = this.calDiffe(element.policyExpiryDate, new Date())
         element.exclusion = element.specialCondition;
         element.hypothetication = element.financierName;
         element.linkedBankAccount = element.linkedBankAccountId;
@@ -480,6 +484,18 @@ export class InsuranceComponent implements OnInit {
     }
     return data;
   }
+  calDiffe(date1, date2) {
+    const diff = new Date(date1 - date2)
+    let duration = this.year(diff)
+    return duration;
+  }
+  year(diff){
+    var num_years = Math.floor(diff /31536000000);
+    var num_months = Math.floor((diff % 31536000000)/2628000000);
+    var num_days = Math.floor(((diff % 31536000000) % 2628000000)/86400000);
+    let duration = (num_years!=0 ? ((num_years) + "Y ") : '') + (num_months!=0 ? ((num_months) + "M ") : '') + (num_days!=0 ? (Math.floor(num_days) + "D") : '')
+    return duration;
+  }
   filterOtherInsuranceSingleData(element) {
     if (element) {
       element.insuranceSubTypeId = 11;
@@ -487,10 +503,12 @@ export class InsuranceComponent implements OnInit {
       element.premiumAmount = element.premium;
       element.policyStartDate = element.startDate;
       element.policyExpiryDate = element.expiryDate;
+      element.durationRemaining = this.calDiffe(element.policyExpiryDate, new Date())
       element.exclusion = element.specialCondition;
       element.hypothetication = element.financierName;
       element.linkedBankAccount = element.linkedBankAccountId;
       element.bankAccount = element.linkedBankAccountId;
+      element.sumInsuredIdv = element.sumAssuredIdv
       element.insuredMembers = this.filteInsuredMember(element.otherInsuranceInsuredMembers);
       element.addOns = this.filteOtherInsuranceAddCovers(element.otherInsuranceAddCovers);
       element.policyFeatures = this.filteOtherInsuranceFeatureList(element.otherInsuranceFeatureList);
@@ -537,15 +555,15 @@ export class InsuranceComponent implements OnInit {
         array = array.filter(d => d.realOrFictitious === 1);
       }
       array = [...new Map(array.map(item => [item.id, item])).values()];
-      if(this.storedData){
+      if (this.storedData) {
         this.storedData.push(array)
         this.storedData = this.storedData.flat();
         this.storedData = [...new Map(this.storedData.map(item => [item.id, item])).values()];
         this.insService.setInsData(this.storedData);
-      }else{
-      this.globalArray.push(array);
-      this.globalArray = this.globalArray.flat();
-      this.insService.setInsData(this.globalArray);
+      } else {
+        this.globalArray.push(array);
+        this.globalArray = this.globalArray.flat();
+        this.insService.setInsData(this.globalArray);
       }
     } else if (this.isAdded) {
       this.storedData == '' ? this.storedData = [] : ''
@@ -677,6 +695,9 @@ export class InsuranceComponent implements OnInit {
     console.log('getInsuranceDataResponse data : ', data);
 
     if (data) {
+      if (data.insuranceList.length > 0) {
+        data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
+      }
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
@@ -876,6 +897,9 @@ export class InsuranceComponent implements OnInit {
     console.log('getInsuranceDataRes data : ', data);
 
     if (data) {
+      if (data.insuranceList.length > 0) {
+        data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
+      }
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
@@ -915,6 +939,9 @@ export class InsuranceComponent implements OnInit {
     if (data) {
       this.dataSourceGeneralInsurance.data = data.generalInsuranceList ? data.generalInsuranceList : data.otherInsuranceList;
       if (this.dataSourceGeneralInsurance.data) {
+        if (this.dataSourceGeneralInsurance.data && !data.otherInsuranceList) {
+          this.dataSourceGeneralInsurance.data = this.dataSourceGeneralInsurance.data.filter(d => (d.realOrFictitious === 1 || !d.realOrFictitious));
+        }
         this.dataSourceGeneralInsurance.data.forEach(singleInsuranceData => {
           if (singleInsuranceData.insuredMembers && singleInsuranceData.insuredMembers.length > 0) {
             singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;

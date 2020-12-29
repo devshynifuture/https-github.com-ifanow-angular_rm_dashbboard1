@@ -199,6 +199,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       let list = this.otherAssetForm.get('InsuredMemberForm') as FormArray;
       list.controls.forEach(element => {
           element.get('sumAssured').setValue(null);
+          element.get('isEdited').setValue(1);
           if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
               element.get('sumAssured').setErrors(null);
               element.get('sumAssured').setValidators(null);
@@ -475,7 +476,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      floaterOrIndividual: [(this.dataForEdit) ? this.addOns.isFloater : null],
+      floaterOrIndividual: [(this.dataForEdit) ? (this.dataForEdit.isFloater == 1 ? 1 : 0) : false],
       policyHolderName: [this.dataForEdit ? this.dataForEdit.policyHolderName : null],
       PlanType: [(this.dataForEdit ? this.dataForEdit.planType : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
@@ -498,7 +499,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccountId) : null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
-      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumAssuredIdv : null, [Validators.required]],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -931,13 +932,13 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'planName': this.otherAssetForm.get('planeName').value,
         'policyNumber': this.otherAssetForm.get('policyNum').value,
         'advisorName': this.otherAssetForm.get('advisorName').value,
-        'isFloater': this.otherAssetForm.get('floaterOrIndividual').value,
+        'isFloater': (this.otherAssetForm.get('floaterOrIndividual').value) ? 1 : 0,
         'serviceBranch': this.otherAssetForm.get('serviceBranch').value,
         'linkedBankAccountId': this.otherAssetForm.get('bankAccount').value,
         'insurerName': this.otherAssetForm.get('insurerName').value,
         'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
         'premium': this.otherAssetForm.get('premium').value,
-        'sumInsuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
+        'sumAssuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : 0,
         // 'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
         'policyHolderName':this.otherAssetForm.get('policyHolderName').value,

@@ -284,6 +284,11 @@ export const appConfig = {
   SAVE_FILTERS_GET: 'mutual-fund/report/config/get',
   SAVE_FILTERS_ADD: 'mutual-fund/report/config/add',
   GET_CLIENT_ALL_ASSET_COUNT: 'account/asset/all/asset/count',
+  GET_NOTES_ACTIVITY: 'activity/note/list/get',
+  ADD_NOTES_ACTIVITY: 'activity/note/add',
+  EDIT_NOTES_ACTIVITY: 'activity/note/edit',
+  DELETE_NOTES_ACTIVITY: 'activity/note/delete',
+
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -995,7 +1000,7 @@ export const appConfig = {
   KEY_METRICS_ADVISOR_DASHBOARD: 'admin/dashboard/key/metrics',
   LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary',
   LAST_7_DAYS_TRANSACTION: 'report/transaction/list/get',
-  LAST_7_DAYS_TRANSACTION_NEW:'backoffice/mf-rejection-reversal/list/get',
+  LAST_7_DAYS_TRANSACTION_NEW: 'backoffice/mf-rejection-reversal/list/get',
   LAST_7_DAYS_INVESTMENT_ACCOUNTS: 'user/register/filter/get',
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',

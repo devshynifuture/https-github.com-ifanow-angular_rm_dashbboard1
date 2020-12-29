@@ -22,7 +22,7 @@
 <div class="mt-70" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
         <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
-            <div class="row pt-28">
+            <div class="row pt-28" *ngIf="inputData?.insuranceType == 1">
                 <div class="col-md-3 p-0">
                     <p class="f-12 m-0 text-primitive">ACTUAL</p>
                     <div class="relClass">
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="row pt-20">
+            <div class="row pt-20" *ngIf="inputData?.insuranceType == 1">
                 <div class="col-md-12 p-0">
                     <h5 class="roboto f-500">Planner notes</h5>
                     <div class="ba-light p-8" *ngIf="!isLoadingPlan">
@@ -1031,7 +1031,7 @@
                             <img style="width: 100%;height: 200px;" src="{{logo}}">
                         </td>
 
-                        <td style="vertical-align: top; padding-left: 15px; width: 70%;padding-top: 30px;">
+                        <td style="vertical-align: top; padding-left: 15px; width: 70%;padding-top: 30px;" >
                             <table
                                 style="border: 0px; width: 100%; border-bottom: 1px solid #dee5e7; padding-bottom: 15px;">
                                 <tr>
@@ -1039,7 +1039,7 @@
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
                                             ACTUAL </p>
                                         <h5 style="font-size: 18px; margin: 0px;">
-                                            Rs. <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                                            Rs. <span appFormatNumber [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actual : '0'"></span>
                                         </h5>
                                     </td>
 
