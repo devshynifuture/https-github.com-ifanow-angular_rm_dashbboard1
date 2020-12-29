@@ -31,6 +31,7 @@ export class NotesActivityComponent implements OnInit {
   objForDelete: any;
   searchQuery: any;
   visibleToClient: boolean = true;
+  before: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -41,6 +42,7 @@ export class NotesActivityComponent implements OnInit {
 
   ngOnInit() {
     this.listOfNotes = []
+    this.objForDelete = []
     this.date = new Date()
     this.getNotes();
     this.getdataForm("")
@@ -93,9 +95,10 @@ export class NotesActivityComponent implements OnInit {
         if (res) {
           console.log(res);
           this.isLoading = false
+          this.before = res
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/(<([^>]+)>)/ig, '');
+            element.showContent = element.content.replace(/(<([^>]+)>)/ig, '');
             element.activeOnSelect = false
             element.checked = false
           });
