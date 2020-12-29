@@ -106,7 +106,7 @@
             </div>
 
 
-            <div class="notesScroll" *ngIf="listOfNotes.length > 0">
+            <div class="notesScroll" *ngIf="listOfNotes.length > 0 && !isLoading">
                 <div *ngFor="let note of listOfNotes">
                     <div class="row b-b pt-10 pb-10" (click)="selectNote(note)">
                         <div class="col-md-12 p-0">

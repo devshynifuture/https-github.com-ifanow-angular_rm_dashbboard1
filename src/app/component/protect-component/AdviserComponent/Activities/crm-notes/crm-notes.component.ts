@@ -203,7 +203,8 @@ export class CrmNotesComponent implements OnInit {
         // };
         this.peopleService.deleteNotes(obj).subscribe(
           data => {
-            //  this.deletedData(data);
+            this.getNotes()
+            this.clearNote()
             dialogRef.close();
           }
         );
@@ -221,8 +222,6 @@ export class CrmNotesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getNotes()
-      this.clearNote()
     });
   }
   ownerDetails(value) {
