@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 // import 'rxjs/Rx';
@@ -8,6 +8,7 @@ import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
 import {catchError} from 'rxjs/operators';
 import {EmailUtilService} from '../services/email-util.service';
+import {EnumDataService} from "../services/enum-data.service";
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -63,7 +64,8 @@ export class HttpService {
   private baseUrl = '';
   cacheMap = new Map<string, CacheEntry>();
 
-  constructor(private _http: HttpClient, private _userService: AuthService, private _router: Router) {
+  constructor(private _http: HttpClient, private _userService: AuthService, private _router: Router,
+              private enumDataService: EnumDataService) {
     this.authToken = this._userService.getToken();
   }
 
@@ -75,7 +77,8 @@ export class HttpService {
     } else {
       // let headers = new HttpHeaders().set('Content-Type', 'application/json');
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (!this.enumDataService.PRODUCTION)
+        headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
       // headers = headers.set('Content-Type', 'application/octet-stream');
       httpOptions = {
@@ -89,7 +92,7 @@ export class HttpService {
     const compressedBody = pako.gzip(JSON.stringify(body));
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
     return this._http
-      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, this.enumDataService.PRODUCTION ? body : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         return this.sendSuccessResponse(res);
       });
@@ -102,7 +105,8 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (!this.enumDataService.PRODUCTION)
+        headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
 
       // headers = headers.set('Content-Type', 'application/octet-stream');
@@ -118,7 +122,7 @@ export class HttpService {
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
-      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, this.enumDataService.PRODUCTION ? inputData : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -139,7 +143,8 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (!this.enumDataService.PRODUCTION)
+        headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
 
       // headers = headers.set('Content-Type', 'application/octet-stream');
@@ -159,7 +164,7 @@ export class HttpService {
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
-      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, this.enumDataService.PRODUCTION ? inputData : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -176,7 +181,8 @@ export class HttpService {
 
   put(url: string, body, params?): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.set('Content-Encoding', 'gzip');
+    if (!this.enumDataService.PRODUCTION)
+      headers = headers.set('Content-Encoding', 'gzip');
     // headers = headers.set('Content-Type', 'application/octet-stream');
     headers = headers.set('Content-Type', 'application/json');
 
@@ -193,7 +199,7 @@ export class HttpService {
     const compressedBody = pako.gzip(JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, this.enumDataService.PRODUCTION ? body : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
