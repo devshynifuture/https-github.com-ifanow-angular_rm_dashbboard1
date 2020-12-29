@@ -19,6 +19,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     FormsModule,
     CustomDirectiveModule,
     CommonComponentModule
+
   ]
 })
 export class NotesActivityModule { }

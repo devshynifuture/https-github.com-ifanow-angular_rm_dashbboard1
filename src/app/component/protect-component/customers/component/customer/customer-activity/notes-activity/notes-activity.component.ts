@@ -63,7 +63,8 @@ export class NotesActivityComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: 5441,
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
       limit: -1,
       offset: 0
     }
@@ -94,8 +95,8 @@ export class NotesActivityComponent implements OnInit {
   addNotes(note) {
     let obj = {
       id: null,
-      advisorId: 5441,
-      clientId: 96138,
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
       clientName: this.clientData.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
@@ -107,6 +108,7 @@ export class NotesActivityComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Note save successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -117,6 +119,7 @@ export class NotesActivityComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -148,7 +151,8 @@ export class NotesActivityComponent implements OnInit {
         // };
         this.peopleService.deleteNotes(obj).subscribe(
           data => {
-            //  this.deletedData(data);
+            this.getNotes()
+            this.clearNote()
             dialogRef.close();
           }
         );
@@ -166,8 +170,6 @@ export class NotesActivityComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getNotes()
-      this.clearNote()
     });
   }
 }

@@ -12,6 +12,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -57,17 +58,28 @@ export class StockScripLevelHoldingComponent implements OnInit {
   callMethod: any;
   oldOwnerFM: number;
   oldOwnerID: number;
-
+  private unSubcripBank: Subscription;
+  private unSubcripDemat: Subscription;
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.unSubcripBank = this.enumService.getBankAC().subscribe((data: any) => {
+      this.bankList = data;
+    });
+
+    this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
+      this.bankDematList = data;
+    });
   }
   set data(data) {
     this.getFormData(data);
   }
-
+  ngOnDestroy() {
+    this.unSubcripBank.unsubscribe();
+    this.unSubcripDemat.unsubscribe();
+  }
   isTHolding: boolean = false;
   @Input() set tHolding(data) {
 
@@ -102,6 +114,18 @@ export class StockScripLevelHoldingComponent implements OnInit {
     if (!this.portfolioT) {
       this.portfolioData = data;
       this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName);
+    }
+    data.linkedBankAccount != 0 ? this.scipLevelHoldingForm.get('linkedBankAccount').setValue(data.linkedBankAccount) : '';
+    data.linkedDematAccount != 0 ? this.scipLevelHoldingForm.get('linkedDematAccount').setValue(data.linkedDematAccount) : '';
+    data.description != 0 ? this.scipLevelHoldingForm.get('description').setValue(data.description) : '';
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+        this.getNominee.removeAt(0);
+        // this.scipLevelHoldingForm.get('getNomineeName').removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
   }
 
@@ -340,6 +364,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
       this.getCoOwner.removeAt(0);
       data.ownerList.forEach(element => {
         this.addNewCoOwner(element);
+        this.disabledMember(element.name, 'owner')
       });
     }
 
@@ -650,21 +675,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   bankDematList: any = [];
   bankList = [];
   getBank() {
-    if (this.enumService.getBank().length > 0) {
-      this.bankList = this.enumService.getBank();
-    }
-    else {
-      this.bankList = [];
-    }
 
-    if (this.enumService.getDematBank().length > 0) {
-      this.bankDematList = this.enumService.getDematBank();
-    }
-    else {
-      this.bankDematList = [];
-      this.getBank();
-    }
-    console.log(this.bankList, "this.bankList2", this.bankDematList, "this.bankDematList");
   }
 
 
@@ -697,14 +708,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
     const dialogRef = this.dialog.open(dailogCompo, obj);
 
     dialogRef.afterClosed().subscribe(result => {
-      setTimeout(() => {
-        if (this.enumService.getBank().length > 0) {
-          this.bankList = this.enumService.getBank();
-        }
-        if (this.enumService.getDematBank().length > 0) {
-          this.bankDematList = this.enumService.getDematBank();
-        }
-      }, 5000);
+
     });
 
   }

@@ -88,14 +88,9 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row pt-70">
             <div class="col-md-3 p-0">
-
-
-                <div *ngIf="listOfNotes.length == 0 && isLoading" class="skeletonAnimation"
-                    [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                <div *ngIf="isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                     <div class="b-b overflow-hidden pt-10 pb-10">
                         <div class="row">
                             <div class="col-md-12 mb-4 p-0 relClass">
@@ -149,12 +144,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
 
-                <div class="notesScroll" *ngIf="listOfNotes.length > 0">
+                <div class="notesScroll" *ngIf="listOfNotes.length > 0 && !isLoading">
                     <div *ngFor="let note of listOfNotes">
                         <div class="row b-b pt-10 pb-10" (click)="selectNote(note)">
                             <div class="col-md-12 p-0">

@@ -111,7 +111,7 @@ export class CrmNotesComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: 5441,
+      advisorId: AuthService.getAdvisorId(),
       limit: -1,
       offset: 0
     }
@@ -141,6 +141,7 @@ export class CrmNotesComponent implements OnInit {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
     this.selectedNote = note
+    this.clientId = note.clientId()
     this.notes.controls.subject.setValue(note.subject)
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
@@ -162,6 +163,7 @@ export class CrmNotesComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Note save successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -172,6 +174,7 @@ export class CrmNotesComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -203,7 +206,8 @@ export class CrmNotesComponent implements OnInit {
         // };
         this.peopleService.deleteNotes(obj).subscribe(
           data => {
-            //  this.deletedData(data);
+            this.getNotes()
+            this.clearNote()
             dialogRef.close();
           }
         );
@@ -221,8 +225,6 @@ export class CrmNotesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getNotes()
-      this.clearNote()
     });
   }
   ownerDetails(value) {
