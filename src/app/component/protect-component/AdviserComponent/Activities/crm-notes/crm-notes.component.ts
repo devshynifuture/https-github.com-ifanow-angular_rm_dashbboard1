@@ -32,10 +32,13 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = false
+  visibleToClient: boolean = true
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
+  showCheckBox: boolean = false;
+  checkAdmin: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -56,11 +59,17 @@ export class CrmNotesComponent implements OnInit {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
       clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
+      check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
 
   }
   showToClient(value) {
+    if (value.checked == true) {
+      this.hideOwner = true
+    } else {
+      this.hideOwner = false
+    }
     this.visibleToClient = value.checked
   }
   getFormControl(): any {
@@ -129,7 +138,7 @@ export class CrmNotesComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.showContent = element.content.replace(/(<([^>]+)>)/ig, '');
             element.activeOnSelect = false
             element.checked = false
           });
@@ -148,15 +157,17 @@ export class CrmNotesComponent implements OnInit {
   }
   selectAll(event) {
     if (event.checked == true) {
-      this.listOfNotes.forEach(element => {
-        element.checked = true
-        this.objForDelete.push({ id: element.id })
-      });
+      this.showCheckBox = true
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = true
+      //   this.objForDelete.push({ id: element.id })
+      // });
     } else {
-      this.listOfNotes.forEach(element => {
-        element.checked = false
-        this.objForDelete = []
-      });
+      this.showCheckBox = false
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = false
+      //   this.objForDelete = []
+      // });
     }
   }
   selectNote(note) {
@@ -166,6 +177,7 @@ export class CrmNotesComponent implements OnInit {
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.notes.controls.clientName.setValue(note.clientName)
+    this.checkAdmin = note.visibleToClient
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {

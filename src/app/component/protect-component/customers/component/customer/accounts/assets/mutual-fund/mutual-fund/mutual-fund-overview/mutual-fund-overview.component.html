@@ -72,11 +72,14 @@
             <div class="row pt-4  ">
                 <div class="col-md-12 tabMarBtm col-lg-5 pr-4 pl-0">
                     <div class="row b-a">
-                        <div class="col-md-12 bg-grey lter p-0">
-                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary <img
-                                    src="assets/images/svg/info.svg" class="c-p hw-17"
-                                    matTooltip="The calculations in this section relate to held portfolio only (i.e. only those transactions of a folio where unit balance is > 0)"
-                                    [matTooltipPosition]="'right'">
+                        <div class="col-md-12 bg-grey lter p-0 ">
+                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b d-flex justify-content-between">
+                                <span class="text-left">Summary <img src="assets/images/svg/info.svg" class="c-p hw-17"
+                                        matTooltip="The calculations in this section relate to held portfolio only (i.e. only those transactions of a folio where unit balance is > 0)"
+                                        [matTooltipPosition]="'right'">
+                                </span>
+                                <span
+                                    class="text-right">{{ latestNavDate ? 'As of closing NAV on ' + (latestNavDate | date:'dd-MMM-yyyy') : ''}}</span>
                             </h5>
                         </div>
                         <div class="col-md-12 p-0">
@@ -1028,18 +1031,26 @@
             <td colspan="5" style="border-bottom: transparent;" valign="top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <p style="margin: 0px; font-weight: 700; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
-                            Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
-                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;"
-                            *ngIf="clientData && showSummaryBar ">
-                            Summary</p>
+                        <td>
+                            <p style="margin: 0px; font-weight: 700; font-size: 14px;padding-top: 4px;"
+                                *ngIf="clientData">
+                                Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+                            <p style="margin-bottom: 10px; font-weight: 600; font-size: 14px; padding-top: 4px;">
+                                Summary </p>
+                        </td>
+                        <td style="text-align: right; vertical-align: bottom;">
+                            <p style="margin-bottom: 10px; font-weight: 600; font-size: 14px; padding-top: 4px;"
+                                *ngIf="clientData && showSummaryBar ">
+                                {{ latestNavDate ? 'As of closing NAV on ' + (latestNavDate | date:'dd-MMM-yyyy') : ''}}
+                            </p>
+                        </td>
                     </tr>
                     <!-- <tr *ngIf="showSummaryBar">
                      
                     </tr> -->
 
                     <tr *ngIf="showSummaryBar">
-                        <td>
+                        <td colspan="2">
                             <table bgcolor="#F5F7F7" style="padding: 16px 15px;border: 1px solid #dee5e7; "
                                 cellpadding="0" cellspacing="0" width="100%">
                                 <tr>

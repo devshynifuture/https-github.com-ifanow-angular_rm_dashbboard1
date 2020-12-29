@@ -9,12 +9,18 @@
             <div class="row">
                 <div class="col-md-3 p-0">
                     <div class="row b-b pb-10 d-flex align-items-center">
-                        <div class="col-md-10 p-0">
+                        <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
                             <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
                                 <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
                         </div>
-                        <div class="col-md-2 d-flex justify-content-end align-items-center pl-0">
-                            <img [matMenuTriggerFor]="menu" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                        <div class="col-md-2" *ngIf="showCheckBox == true && listOfNotes.length > 0">
+                            <i (click)="deleteNotes('')" title="Remove"
+                                class="material-icons deleteIconNote   ml-10 c-p">
+                                delete </i>
+                        </div>
+                        <div [matMenuTriggerFor]="menu" *ngIf="listOfNotes.length > 0"
+                            class="col-md-2 c-p d-flex justify-content-end align-items-center pl-0">
+                            <img class="c-p" src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>
@@ -31,7 +37,7 @@
                 </div>
                 <div class="col-md-9 pr-0">
                     <div class="row">
-                        <div class="col-md-4 remove-top  pl-0">
+                        <div [ngClass]="hideOwner == false ? 'col-md-4': 'col-md-6' " class=" remove-top  pl-0">
                             <mat-form-field appearance="standard">
                                 <input class="form-control br-0" placeholder="Enter subject" matInput
                                     formControlName="subject">
@@ -41,7 +47,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-5  remove-top pl-0">
+                        <div class="col-md-5  remove-top pl-0" *ngIf="hideOwner == false">
                             <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
                                 <input #searchClient (input)="checkOwnerList(searchClient.value)"
                                     [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
@@ -75,10 +81,13 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-3 d-flex justify-content-end align-items-center p-0">
+                        <div [ngClass]="hideOwner == false ? 'col-md-3': 'col-md-6' "
+                            class=" d-flex justify-content-end align-items-center p-0">
                             <div class="text-right">
-                                <mat-checkbox (change)="showToClient($event)" class="example-margin">Check
-                                    me!</mat-checkbox>
+                                <mat-checkbox (change)="showToClient($event)" [checked]="checkAdmin"
+                                    class="example-margin">For
+                                    admin
+                                </mat-checkbox>
 
 
                                 <!-- <p class="m-0 text-primitive"> Last edited </p>
@@ -176,24 +185,21 @@
                     <ul class="block">
                         <li *ngFor="let note of listOfNotes">
                             <div class="d-flex p-10" [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' ">
-                                <mat-checkbox class="example-margin" [checked]="note.checked"
-                                    (change)="selectForDelete($event,note)">
+                                <mat-checkbox *ngIf="showCheckBox == true" class="example-margin"
+                                    [checked]="note.checked" (change)="selectForDelete($event,note)">
                                 </mat-checkbox>
-
                                 <div class="ml-10  w-80" (click)="selectNote(note)">
                                     <h5 class="m-0 f-500"> {{note.subject}} </h5>
                                     <p class="m-0  ">{{note.clientName}}</p>
                                     <p class="m-0   text-primitive">
                                         {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
-                                    <p class="m-0 text-truncate text-primitive"> {{note.content}}</p>
+                                    <p class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
                                 </div>
-
-                                <div>
-                                    <i (click)="deleteNotes(selectedNote,'')" title="Remove"
+                                <div *ngIf="showCheckBox == false">
+                                    <i (click)="deleteNotes(note)" title="Remove"
                                         class="material-icons deleteIconNote   ml-10 c-p">
                                         delete </i>
                                 </div>
-
                             </div>
 
 
