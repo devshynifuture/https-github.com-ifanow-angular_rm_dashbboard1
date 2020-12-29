@@ -36,6 +36,8 @@ export class CrmNotesComponent implements OnInit {
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
+  showCheckBox: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -61,6 +63,11 @@ export class CrmNotesComponent implements OnInit {
 
   }
   showToClient(value) {
+    if (value.checked == true) {
+      this.hideOwner = true
+    } else {
+      this.hideOwner = false
+    }
     this.visibleToClient = value.checked
   }
   getFormControl(): any {
@@ -148,15 +155,17 @@ export class CrmNotesComponent implements OnInit {
   }
   selectAll(event) {
     if (event.checked == true) {
-      this.listOfNotes.forEach(element => {
-        element.checked = true
-        this.objForDelete.push({ id: element.id })
-      });
+      this.showCheckBox = true
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = true
+      //   this.objForDelete.push({ id: element.id })
+      // });
     } else {
-      this.listOfNotes.forEach(element => {
-        element.checked = false
-        this.objForDelete = []
-      });
+      this.showCheckBox = false
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = false
+      //   this.objForDelete = []
+      // });
     }
   }
   selectNote(note) {
