@@ -30,7 +30,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-4 form-group remove-top pl-0">
+                        <div class="col-md-5 form-group remove-top pl-0">
                             <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
                                 <input #searchClient (input)="checkOwnerList(searchClient.value)"
                                     [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
@@ -46,7 +46,7 @@
                                             <div class="col-md-7 pl-0 d-flex align-items-center">
                                                 <p class="t-left m-0">{{f.name}}</p>
                                             </div>
-                                            <div class="col-md-4 text-right">
+                                            <div class="col-md-4 p-0 text-right">
                                                 <button *ngIf="f.userType==3" class="small-primitive"
                                                     mat-stroked-button>
                                                     FAMILY MEMBER
@@ -64,7 +64,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-4 d-flex justify-content-end align-items-center p-0">
+                        <div class="col-md-3 d-flex justify-content-end align-items-center p-0">
                             <div class="text-right">
                                 <p class="m-0 text-primitive"> Last edited </p>
                                 <p class="m-0 text-primitive">
