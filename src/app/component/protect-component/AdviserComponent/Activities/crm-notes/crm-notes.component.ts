@@ -192,7 +192,7 @@ export class CrmNotesComponent implements OnInit {
         this.objForDelete.push({ id: note.id })
       }
     } else {
-      this.objForDelete = this.objForDelete.forEach((x) => {
+      this.objForDelete.forEach((x) => {
         if (x.id != note.id) {
           if (value.checked == true) {
             this.objForDelete.push({ id: note.id })
@@ -209,11 +209,10 @@ export class CrmNotesComponent implements OnInit {
     this.emailBody = data;
   }
 
-  deleteNotes(note, value) {
-    this.noteData = note;
-    let obj = { id: note.id }
+  deleteNotes() {
+
     const dialogData = {
-      data: value,
+      data: '',
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone.',
