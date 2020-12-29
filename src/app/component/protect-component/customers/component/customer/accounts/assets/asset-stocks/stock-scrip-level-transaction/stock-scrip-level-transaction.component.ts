@@ -11,6 +11,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -60,6 +61,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
   Holdings: any;
   oldOwnerFM: number;
   oldOwnerID: number;
+  private unSubcripBank: Subscription;
+  private unSubcripDemat: Subscription;
   constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @ViewChild('holding', { static: false }) holding;
   @Input() set data(data) {
@@ -87,6 +90,18 @@ export class StockScripLevelTransactionComponent implements OnInit {
   }
   ngOnInit() {
     this.getTransactionTypeData();
+    this.unSubcripBank = this.enumService.getBankAC().subscribe((data: any) => {
+      this.bankList = data;
+    });
+
+    this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
+      this.bankDematList = data;
+    });
+  }
+
+  ngOnDestroy() {
+    this.unSubcripBank.unsubscribe();
+    this.unSubcripDemat.unsubscribe();
   }
 
   getTransactionTypeData() {
@@ -400,7 +415,19 @@ export class StockScripLevelTransactionComponent implements OnInit {
     if (this.portfolioData) {
       this.scriptOwner = this.portfolioData;
     }
-    this.scipLevelTransactionForm.get('portfolioName').setValue(data.portfolioName)
+    this.scipLevelTransactionForm.get('portfolioName').setValue(data.portfolioName);
+    data.linkedBankAccount != 0 ? this.scipLevelTransactionForm.get('linkedBankAccount').setValue(data.linkedBankAccount) : '';
+    data.linkedDematAccount != 0 ? this.scipLevelTransactionForm.get('linkedDematAccount').setValue(data.linkedDematAccount) : '';
+    data.description != 0 ? this.scipLevelTransactionForm.get('description').setValue(data.description) : '';
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+        this.getNominee.removeAt(0);
+        // this.scipLevelHoldingForm.get('getNomineeName').removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
+    }
   }
   saveSchemeHolding() {
     if (this.scipLevelTransactionForm.invalid) {
@@ -622,20 +649,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   bankDematList: any = [];
   bankList = [];
   getBank() {
-    if (this.enumService.getBank().length > 0) {
-      this.bankList = this.enumService.getBank();
-    }
-    else {
-      this.bankList = [];
-    }
 
-    if (this.enumService.getDematBank().length > 0) {
-      this.bankDematList = this.enumService.getDematBank();
-    }
-    else {
-      this.bankDematList = [];
-    }
-    console.log(this.bankList, "this.bankList2");
   }
 
   checkOwner() {
@@ -668,14 +682,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     const dialogRef = this.dialog.open(dailogCompo, obj);
 
     dialogRef.afterClosed().subscribe(result => {
-      setTimeout(() => {
-        if (this.enumService.getBank().length > 0) {
-          this.bankList = this.enumService.getBank();
-        }
-        if (this.enumService.getDematBank().length > 0) {
-          this.bankDematList = this.enumService.getDematBank();
-        }
-      }, 5000);
+
     });
 
   }
