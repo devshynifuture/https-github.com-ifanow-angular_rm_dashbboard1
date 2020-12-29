@@ -251,6 +251,18 @@ export class MfServiceService {
 
     return data
   }
+  sortingDescending(data, filterId) {
+    if (data) {
+      data.sort((a, b) =>
+        a[filterId] > b[filterId] ? -1 : (a[filterId] === b[filterId] ? 0 : 1)
+
+      );
+    }
+
+
+    return data
+  }
+
   filterScheme(data) {
     const filterData = [];
     const filterData2 = [];

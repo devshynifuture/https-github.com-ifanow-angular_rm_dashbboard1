@@ -836,12 +836,34 @@ mat-tab-group[vertical] {
   max-height: calc(100vh - 9rem);
  overflow-y: auto;  
  padding-bottom: 50px;
- h5{
-   cursor: pointer;
+ ul{
+   li{
+     text-align: left;
+     padding: 10px;
+    border-bottom: 1px solid #dee5e7;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+   &:hover{
+     background: rgba(0,0,0,.04);
+    .deleteIconNote {
+       
+      font-size: 18px;
+      display: block;
+    }
+   } 
+   }
  }
- p{
-   cursor: pointer;
+
+ .deleteIconNote {
+   display: none;
  }
+  
+//  .listNotesClass{
+//   background: rgba(0,0,0,.04);
+//  }
+
+
 }
 
 .scorllable::-webkit-scrollbar {

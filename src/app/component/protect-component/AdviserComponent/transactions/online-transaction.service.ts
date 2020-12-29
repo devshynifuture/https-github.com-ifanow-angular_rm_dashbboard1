@@ -24,19 +24,19 @@ export class OnlineTransactionService {
   }
 
   addSubBroker(data) {
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data, 1);
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data);
   }
 
   deleteBroker(data) {
-    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_BROKER, data, 1);
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_BROKER, data);
   }
 
   deleteSubBroker(data) {
-    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data, 1);
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data);
   }
 
   getInvestorStatusCheck(data) {
-    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.INVESTOR_STATUS_CHECK, data, 1);
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.INVESTOR_STATUS_CHECK, data);
   }
 
   getBSESubBrokerCredentials(data) {
@@ -88,11 +88,11 @@ export class OnlineTransactionService {
   }
 
   updateAllNseClients(data) {
-    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.UPDATE_ALL_NSE_CLIENTS, data, 1);
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.UPDATE_ALL_NSE_CLIENTS, data);
   }
 
   autoRemapClientsToClientCode(data) {
-    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.AUTO_REMAP_CLIENT, data, 1);
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.AUTO_REMAP_CLIENT, data);
   }
 
   getMapppedClientsFilterClientWise(data) {
@@ -185,7 +185,7 @@ export class OnlineTransactionService {
   // }
 
   imageFileUpload(data) {
-    return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data, 1);
+    return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data);
   }
 
   //
@@ -194,7 +194,7 @@ export class OnlineTransactionService {
   // }
 
   createIINUCC(data) {
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data, 1);
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data);
   }
 
   getToken(data) {
@@ -206,7 +206,7 @@ export class OnlineTransactionService {
   }
 
   addMandate(data) {
-    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_MANDATE, data, 1);
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_MANDATE, data);
   }
 
   getTaxMasterData(data) {
