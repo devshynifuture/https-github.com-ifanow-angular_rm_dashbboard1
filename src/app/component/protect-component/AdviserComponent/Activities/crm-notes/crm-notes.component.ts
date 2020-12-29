@@ -34,13 +34,14 @@ export class CrmNotesComponent implements OnInit {
   clientId: any;
   visibleToClient: boolean = false
   objForDelete: any;
+  activeOnSelect: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService, ) { }
+    public processTransaction: ProcessTransactionService,) { }
 
   ngOnInit() {
     this.objForDelete = []
@@ -150,6 +151,7 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
+    this.activeOnSelect = true;
   }
   addNotes(note) {
     let obj = {
