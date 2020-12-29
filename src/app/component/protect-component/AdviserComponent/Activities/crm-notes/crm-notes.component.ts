@@ -141,7 +141,7 @@ export class CrmNotesComponent implements OnInit {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
     this.selectedNote = note
-    this.clientId = note.clientId()
+    this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
