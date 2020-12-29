@@ -287,7 +287,7 @@ export const appConfig = {
   GET_NOTES_ACTIVITY: 'activity/note/list/get',
   ADD_NOTES_ACTIVITY: 'activity/note/add',
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
-  DELETE_NOTES_ACTIVITY: 'activity/note/delete',
+  DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
 
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

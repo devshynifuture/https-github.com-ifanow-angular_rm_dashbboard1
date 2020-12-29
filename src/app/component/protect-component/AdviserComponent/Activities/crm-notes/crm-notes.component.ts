@@ -34,6 +34,8 @@ export class CrmNotesComponent implements OnInit {
   clientId: any;
   visibleToClient: boolean = false
   objForDelete: any;
+  searchQuery: any;
+  activeOnSelect: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -116,6 +118,7 @@ export class CrmNotesComponent implements OnInit {
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
+      searchQuery: (this.searchQuery) ? this.searchQuery : '',
       limit: -1,
       offset: 0
     }
@@ -127,6 +130,7 @@ export class CrmNotesComponent implements OnInit {
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
             element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.activeOnSelect = false
           });
           console.log(this.listOfNotes);
         } else {
@@ -150,6 +154,14 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.activeOnSelect = true
+      } else {
+        element.activeOnSelect = false
+      }
+
+    });
   }
   addNotes(note) {
     let obj = {
@@ -208,9 +220,14 @@ export class CrmNotesComponent implements OnInit {
   saveData(data) {
     this.emailBody = data;
   }
-
-  deleteNotes() {
-
+  onSearchChange(value) {
+    this.searchQuery = value
+    this.getNotes()
+  }
+  deleteNotes(note) {
+    if (this.objForDelete.length == 0) {
+      this.objForDelete.push({ id: note.id })
+    }
     const dialogData = {
       data: '',
       header: 'DELETE',
