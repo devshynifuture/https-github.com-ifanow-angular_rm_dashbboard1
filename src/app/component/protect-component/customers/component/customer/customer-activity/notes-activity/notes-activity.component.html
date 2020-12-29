@@ -133,11 +133,11 @@
                                 <p class="m-0  ">{{note.clientName}}</p>
                                 <p class="m-0   text-primitive">
                                     {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
-                                <p class="m-0 text-truncate text-primitive"> {{note.content}}</p>
+                                <p class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
                             </div>
 
                             <div>
-                                <i (click)="deleteNotes(selectedNote,'')" title="Remove"
+                                <i (click)="deleteNotes(note)" title="Remove"
                                     class="material-icons deleteIconNote   ml-10 c-p">
                                     delete </i>
                             </div>

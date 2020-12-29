@@ -129,7 +129,7 @@ export class CrmNotesComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/(<([^>]+)>)/ig, '');
+            element.showContent = element.content.replace(/(<([^>]+)>)/ig, '');
             element.activeOnSelect = false
             element.checked = false
           });
