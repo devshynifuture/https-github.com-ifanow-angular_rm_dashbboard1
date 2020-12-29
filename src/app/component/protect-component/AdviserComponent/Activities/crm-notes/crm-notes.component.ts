@@ -36,6 +36,7 @@ export class CrmNotesComponent implements OnInit {
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -61,6 +62,11 @@ export class CrmNotesComponent implements OnInit {
 
   }
   showToClient(value) {
+    if (value.checked == true) {
+      this.hideOwner = true
+    } else {
+      this.hideOwner = false
+    }
     this.visibleToClient = value.checked
   }
   getFormControl(): any {

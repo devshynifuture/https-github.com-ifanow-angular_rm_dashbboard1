@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-9 pr-0">
                     <div class="row">
-                        <div class="col-md-4 remove-top  pl-0">
+                        <div [ngClass]="hideOwner == false ? 'col-md-4': 'col-md-6' " class=" remove-top  pl-0">
                             <mat-form-field appearance="standard">
                                 <input class="form-control br-0" placeholder="Enter subject" matInput
                                     formControlName="subject">
@@ -41,7 +41,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-5  remove-top pl-0">
+                        <div class="col-md-5  remove-top pl-0" *ngIf="hideOwner == false">
                             <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
                                 <input #searchClient (input)="checkOwnerList(searchClient.value)"
                                     [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
@@ -75,10 +75,11 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-3 d-flex justify-content-end align-items-center p-0">
+                        <div [ngClass]="hideOwner == false ? 'col-md-3': 'col-md-6' "
+                            class=" d-flex justify-content-end align-items-center p-0">
                             <div class="text-right">
-                                <mat-checkbox (change)="showToClient($event)" class="example-margin">Check
-                                    me!</mat-checkbox>
+                                <mat-checkbox (change)="showToClient($event)" class="example-margin">For admin
+                                </mat-checkbox>
 
 
                                 <!-- <p class="m-0 text-primitive"> Last edited </p>
