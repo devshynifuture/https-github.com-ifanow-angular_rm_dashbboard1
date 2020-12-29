@@ -822,7 +822,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         if (flag == 'Next') {
           this.changeTabAndSendData(data);
         } else {
-          if (this.unmapFmData.email) {
+          if (this.unmapFmData && this.unmapFmData.email) {
             let obj =
             {
               "ownerClientId": this.basicDetailsData.clientId,
