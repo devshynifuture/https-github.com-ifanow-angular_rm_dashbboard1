@@ -12,6 +12,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-nps-summary-portfolio',
@@ -67,7 +68,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   showHide = false;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-  constructor(private event: EventService, public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+  constructor(private event: EventService, public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,
+    private assetValidation: AssetValidationService) {
     this.summaryNPS = this.fb.group({
       published: true,
       futureContry: this.fb.array([]),
@@ -541,6 +543,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })

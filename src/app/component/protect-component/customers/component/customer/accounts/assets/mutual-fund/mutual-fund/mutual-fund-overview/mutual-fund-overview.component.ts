@@ -128,6 +128,7 @@ export class MutualFundOverviewComponent implements OnInit {
   success: boolean;
   getMfDataSubs: Subscription;
   queryParamsSubs: Subscription;
+  latestNavDate: any;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -503,7 +504,30 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
-
+  getLatestNavDate(data){
+    let navDate;
+    if(data.schemeWise){
+      console.log('NAv non Sorted .................',data.schemeWise)
+      let sortedData = this.MfServiceService.sortingDescending(data.schemeWise, 'navDate');
+      sortedData = [...new Map(sortedData.map(item => [item.navDate, item])).values()];
+      console.log('NAv Sorted .................',sortedData)
+      if(sortedData.length > 1){
+        let maxDateOne = new Date(sortedData[0].navDate);
+        let maxDateTwo = new Date('2020-12-27');
+        console.log('maxDateOne',maxDateOne);
+        console.log('maxDateTwo',maxDateTwo);
+        var Difference_In_Time = maxDateOne.getTime() - maxDateTwo.getTime(); 
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+        console.log('Difference_In_Days',Difference_In_Days);
+      }else if(sortedData.length > 1){
+        navDate =  new Date(sortedData[0].navDate);
+        console.log('maxDateOne',navDate);
+      }else{
+        navDate = null;
+      }
+    }
+    return navDate;
+  }
   getMutualFundResponse(data) {
     this.showZeroFolio = this.setDefaultFilterData.showFolio ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : false;
 
@@ -517,6 +541,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
+      // this.latestNavDate = this.getLatestNavDate(data);
       if (!this.rightFilterData) {
         if (this.addedData == true || this.mutualFund == '') {
           this.mutualFund = this.filterData;

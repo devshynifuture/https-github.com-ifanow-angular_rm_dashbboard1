@@ -12,6 +12,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../asset-validation.service';
 @Component({
   selector: 'app-add-epf',
   templateUrl: './add-epf.component.html',
@@ -65,7 +66,8 @@ export class AddEPFComponent implements OnInit {
   bankList: any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private event: EventService, private dateFormatPipe: DatePipe, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private event: EventService, private dateFormatPipe: DatePipe, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService,
+    private assetValidation: AssetValidationService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -423,6 +425,7 @@ export class AddEPFComponent implements OnInit {
   }
   addEPFRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     console.log('Added successfully!', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })

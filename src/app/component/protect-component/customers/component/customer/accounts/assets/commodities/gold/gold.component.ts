@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-gold',
@@ -53,7 +54,7 @@ export class GoldComponent implements OnInit {
   advisorId: any;
   fdYears: string[];
   clientId: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   flag: any;
   currentYear: any = new Date().getFullYear();
   adviceFlagShowHeaderFooter: boolean = true;
@@ -61,7 +62,7 @@ export class GoldComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   nominees: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+  constructor(private fb: FormBuilder, private assetValidation: AssetValidationService, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
   @Input()
   set data(data) {
@@ -104,30 +105,30 @@ export class GoldComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-    //  disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      //  disControl : type
     }
   }
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.gold.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.gold.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.gold.get('getCoOwnerName') as FormArray;
@@ -135,26 +136,26 @@ export class GoldComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
-       this.disabledMember(null,null);
+        this.disabledMember(null, null);
       }, 1300);
     }
 
-    if(this.getCoOwner.value.length > 1 && !data){
-     let share = 100/this.getCoOwner.value.length;
-     for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-     }
     }
-   
+
   }
 
   removeCoOwner(item) {
@@ -162,38 +163,38 @@ export class GoldComponent implements OnInit {
     if (this.gold.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
-      let share = 100/this.getCoOwner.value.length;
+      let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.gold.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
-  this.disabledMember(null, null);
+    this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.gold.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100/this.getNominee.value.length;
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -201,10 +202,10 @@ export class GoldComponent implements OnInit {
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -212,21 +213,21 @@ export class GoldComponent implements OnInit {
       }
     }
 
-    if(this.getNominee.value.length > 1 && !data){
-      let share = 100/this.getNominee.value.length;
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
-     }
-     
-    
+    }
+
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
   Close(flag) {
@@ -260,11 +261,11 @@ export class GoldComponent implements OnInit {
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
-      formOfGold :  [(data.formOfGold == undefined) ? '' : (data.formOfGold) + "", [Validators.required]],
+      formOfGold: [(data.formOfGold == undefined) ? '' : (data.formOfGold) + "", [Validators.required]],
       noTolasGramsPur: [(data.purchasedGramsOrTola == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data.purchaseYear == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
       carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
@@ -281,7 +282,7 @@ export class GoldComponent implements OnInit {
     });
     // this.ownerData = this.gold.controls;
     // this.familyMemberId = data.familyMemberId
-        // ==============owner-nominee Data ========================\\
+    // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.gold.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -335,18 +336,18 @@ export class GoldComponent implements OnInit {
         purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
-        formOfGold:this.gold.controls.formOfGold.value,
+        formOfGold: this.gold.controls.formOfGold.value,
         carat: this.gold.controls.carats.value,
-        nomineeList:this.gold.value.getNomineeName,
+        nomineeList: this.gold.value.getNomineeName,
         description: (this.gold.controls.description.value == '') ? null : this.gold.controls.description.value,
       }
 
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.gold.value.getNomineeName;
+      obj.nomineeList = this.gold.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -386,6 +387,7 @@ export class GoldComponent implements OnInit {
   }
   addGoldRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'OK');

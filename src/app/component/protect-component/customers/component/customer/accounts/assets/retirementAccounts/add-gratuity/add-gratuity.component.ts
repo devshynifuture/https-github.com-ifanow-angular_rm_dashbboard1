@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../asset-validation.service';
 @Component({
   selector: 'app-add-gratuity',
   templateUrl: './add-gratuity.component.html',
@@ -54,7 +55,7 @@ export class AddGratuityComponent implements OnInit {
   bankList: any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) { }
 
   @Input()
   set data(data) {
@@ -404,6 +405,7 @@ export class AddGratuityComponent implements OnInit {
   }
   addGratuityRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Added successfully!', 'Dismiss');

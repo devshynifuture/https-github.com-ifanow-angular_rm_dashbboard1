@@ -269,6 +269,7 @@ export class CashAndBankComponent implements OnInit {
           this.custumService.deleteBankAccount(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.bankDataList = this.bankDataList.filter(x => x.id != element.id);
               this.bankAccountList.data = this.bankDataList;
               // this.getBankAccountList();
@@ -279,6 +280,7 @@ export class CashAndBankComponent implements OnInit {
           this.custumService.deleteCashInHand(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.cashDataList = this.cashDataList.filter(x => x.id != element.id);
               this.cashInHandList.data = this.cashDataList;
               // this.getCashInHandList();
@@ -328,7 +330,7 @@ export class CashAndBankComponent implements OnInit {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data != undefined) {
-      this.assetValidation.getAssetCountGLobalData()
+      // this.assetValidation.getAssetCountGLobalData()
       this.bankDataList = data.assetList
       this.bankAccountList.data = this.bankDataList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
@@ -365,7 +367,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList.data = [];
     }
     else if (data.assetList.length != 0) {
-      this.assetValidation.getAssetCountGLobalData()
+      // this.assetValidation.getAssetCountGLobalData()
       this.cashDataList = data.assetList;
       this.cashInHandList.data = this.cashDataList;
       this.cashInHandList.sort = this.cashInHandListTableSort;

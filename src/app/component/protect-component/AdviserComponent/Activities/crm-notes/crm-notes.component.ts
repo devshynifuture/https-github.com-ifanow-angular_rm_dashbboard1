@@ -32,7 +32,8 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-
+  visibleToClient: boolean = false
+  objForDelete: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -42,6 +43,7 @@ export class CrmNotesComponent implements OnInit {
     public processTransaction: ProcessTransactionService, ) { }
 
   ngOnInit() {
+    this.objForDelete = []
     this.listOfNotes = []
     this.date = new Date()
     this.getNotes();
@@ -56,7 +58,9 @@ export class CrmNotesComponent implements OnInit {
 
 
   }
-
+  showToClient(value) {
+    this.visibleToClient = value.checked
+  }
   getFormControl(): any {
     return this.notes.controls;
   }
@@ -155,7 +159,8 @@ export class CrmNotesComponent implements OnInit {
       clientName: this.stateCtrl.value.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
-      updatedTime: new Date()
+      updatedTime: new Date(),
+      visibleToClient: this.visibleToClient
     }
     if (!this.selectedNote) {
       this.peopleService.addNotes(obj)
@@ -181,6 +186,21 @@ export class CrmNotesComponent implements OnInit {
     }
 
   }
+  selectForDelete(value, note) {
+    if (this.objForDelete.length == 0) {
+      if (value.checked == true) {
+        this.objForDelete.push({ id: note.id })
+      }
+    } else {
+      this.objForDelete = this.objForDelete.forEach((x) => {
+        if (x.id != note.id) {
+          if (value.checked == true) {
+            this.objForDelete.push({ id: note.id })
+          }
+        }
+      })
+    }
+  }
   editNotes() {
     let obj = {}
 
@@ -204,7 +224,7 @@ export class CrmNotesComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(obj).subscribe(
+        this.peopleService.deleteNotes(this.objForDelete).subscribe(
           data => {
             this.getNotes()
             this.clearNote()

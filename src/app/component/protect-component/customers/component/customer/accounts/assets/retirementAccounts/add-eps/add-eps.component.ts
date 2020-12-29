@@ -1,15 +1,16 @@
-import {Component, OnInit, Input, ViewChildren, QueryList} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS, MatInput} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumDataService} from "../../../../../../../../../services/enum-data.service";
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from "../../../../../../../../../services/enum-data.service";
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -17,7 +18,7 @@ import {EnumDataService} from "../../../../../../../../../services/enum-data.ser
   styleUrls: ['./add-eps.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class AddEPSComponent implements OnInit {
@@ -56,9 +57,9 @@ export class AddEPSComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private event: EventService, private fb: FormBuilder,
-              private custumService: CustomerService, public subInjectService: SubscriptionInject,
-              private datePipe: DatePipe, public utils: UtilService,
-              public enumDataService: EnumDataService) {
+    private custumService: CustomerService, public subInjectService: SubscriptionInject,
+    private datePipe: DatePipe, public utils: UtilService,
+    public enumDataService: EnumDataService, private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -92,7 +93,7 @@ export class AddEPSComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
 
 
@@ -238,7 +239,7 @@ export class AddEPSComponent implements OnInit {
   }
 
   /***nominee***/
-// ===================owner-nominee directive=====================//
+  // ===================owner-nominee directive=====================//
   // getDateYMD(){
   //   let now = moment();
   //   this.tenure =moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
@@ -304,8 +305,8 @@ export class AddEPSComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.eps}
-// ==============owner-nominee Data ========================\\
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.eps }
+    // ==============owner-nominee Data ========================\\
     // this.ownerData = this.eps.controls;
     // this.familyMemberId = this.eps.controls.familyMemberId.value
     // this.familyMemberId = this.familyMemberId[0]
@@ -379,19 +380,20 @@ export class AddEPSComponent implements OnInit {
   getAdviceEpsRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('EPS added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({flag: 'addedEps', state: 'close', data, refreshRequired: true})
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
 
   addEPSRes(data) {
     this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({flag: 'addedEps', state: 'close', data, refreshRequired: true})
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
 
   editEPSRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({flag: 'addedEps', state: 'close', data, refreshRequired: true})
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
 }

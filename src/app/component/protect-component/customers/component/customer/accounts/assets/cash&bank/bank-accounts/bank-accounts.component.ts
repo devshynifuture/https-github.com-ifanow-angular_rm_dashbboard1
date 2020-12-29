@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { AssetValidationService } from '../../asset-validation.service';
 @Component({
   selector: 'app-bank-accounts',
   templateUrl: './bank-accounts.component.html',
@@ -51,7 +52,7 @@ export class BankAccountsComponent implements OnInit {
   showHide = false;
   advisorId: any;
   clientId: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   flag: any;
   nomineesList: any[] = [];
   bankData: any;
@@ -60,12 +61,13 @@ export class BankAccountsComponent implements OnInit {
   isAdviceFormValid: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   editData: any;
-  maxDate:Date = new Date();
-  bankList:any = [];
-  accountTypes:any =[];
+  maxDate: Date = new Date();
+  bankList: any = [];
+  accountTypes: any = [];
   callMethod: { methodName: string; ParamValue: any; };
   userType: any;
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private enumDataService: EnumDataService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private enumDataService: EnumDataService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService,
+    private assetValidation: AssetValidationService) { }
 
   @Input()
   set data(data) {
@@ -87,14 +89,14 @@ export class BankAccountsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
-    console.log(this.bankList,"this.bankList");
+    console.log(this.bankList, "this.bankList");
     this.accountTypes = this.enumDataService.getBankAccountTypes();
-    
+
 
   }
 
-   // ===================owner-nominee directive=====================//
-   display(value) {
+  // ===================owner-nominee directive=====================//
+  display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
@@ -106,18 +108,18 @@ export class BankAccountsComponent implements OnInit {
   }
 
   disabledMember(value, type) {
-    this.userType=type;
+    this.userType = type;
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-    //  disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      //  disControl : type
     }
-    if(this.userType != 'nominee'){
-      if(this.bankData){
+    if (this.userType != 'nominee') {
+      if (this.bankData) {
         this.bankAccounts.get("bankAcNo").setValue(this.bankData.userBankMappingId);
         this.bankAccounts.get("accountType").setValue(this.bankData.accountType);
       }
-      else{
+      else {
         this.bankAccounts.get("bankAcNo").setValue("");
         this.bankAccounts.get("accountType").setValue("");
       }
@@ -127,22 +129,22 @@ export class BankAccountsComponent implements OnInit {
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.bankAccounts.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.bankAccounts.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.bankAccounts.get('getCoOwnerName') as FormArray;
@@ -150,26 +152,26 @@ export class BankAccountsComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
-       this.disabledMember(null,null);
+        this.disabledMember(null, null);
       }, 1300);
     }
 
-    if(this.getCoOwner.value.length > 1 && !data){
-     let share = 100/this.getCoOwner.value.length;
-     for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-     }
     }
-   
+
   }
 
   removeCoOwner(item) {
@@ -177,38 +179,38 @@ export class BankAccountsComponent implements OnInit {
     if (this.bankAccounts.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
-      let share = 100/this.getCoOwner.value.length;
+      let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.bankAccounts.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
-  this.disabledMember(null, null);
+    this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.bankAccounts.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100/this.getNominee.value.length;
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -216,10 +218,10 @@ export class BankAccountsComponent implements OnInit {
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -227,21 +229,21 @@ export class BankAccountsComponent implements OnInit {
       }
     }
 
-    if(this.getNominee.value.length > 1 && !data){
-      let share = 100/this.getNominee.value.length;
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
-     }
-     
-    
+    }
+
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
 
@@ -284,7 +286,7 @@ export class BankAccountsComponent implements OnInit {
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
       accountBalance: [(data.accountBalance == undefined) ? '' : data.accountBalance, [Validators.required]],
@@ -304,7 +306,7 @@ export class BankAccountsComponent implements OnInit {
         id: [0]
       })]),
     });
-         // ==============owner-nominee Data ========================\\
+    // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.bankAccounts.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -380,11 +382,11 @@ export class BankAccountsComponent implements OnInit {
 
       }
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.bankAccounts.value.getNomineeName;
+      obj.nomineeList = this.bankAccounts.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -426,7 +428,7 @@ export class BankAccountsComponent implements OnInit {
     }
   }
 
-  setAccountType(type){
+  setAccountType(type) {
     this.bankAccounts.get('accountType').setValue(type);
   }
 
@@ -437,6 +439,7 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'OK');
@@ -449,23 +452,23 @@ export class BankAccountsComponent implements OnInit {
 
   }
 
-  getBank(){
-    if(this.userType != 'nominee'){
-      if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.userType != 'nominee') {
+      if (this.enumService.getBank().length > 0) {
         this.bankList = this.enumService.getBank();
       }
-      else{
+      else {
         this.bankList = [];
       }
     }
 
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
-   //link bank
-   openDialog(eventData): void {
+  //link bank
+  openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -475,5 +478,5 @@ export class BankAccountsComponent implements OnInit {
     })
 
   }
-//link bank
+  //link bank
 }
