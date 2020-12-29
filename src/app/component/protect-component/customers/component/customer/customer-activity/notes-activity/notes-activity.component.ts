@@ -95,7 +95,7 @@ export class NotesActivityComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.content = element.content.replace(/(<([^>]+)>)/ig, '');
             element.activeOnSelect = false
             element.checked = false
           });
