@@ -107,6 +107,7 @@ export class NotesActivityComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Note save successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -117,6 +118,7 @@ export class NotesActivityComponent implements OnInit {
           console.log(res);
           this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
           this.getNotes()
+          this.clearNote()
         }, err => {
           console.error(err);
         })
@@ -148,7 +150,8 @@ export class NotesActivityComponent implements OnInit {
         // };
         this.peopleService.deleteNotes(obj).subscribe(
           data => {
-            //  this.deletedData(data);
+            this.getNotes()
+            this.clearNote()
             dialogRef.close();
           }
         );
@@ -166,8 +169,6 @@ export class NotesActivityComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getNotes()
-      this.clearNote()
     });
   }
 }
