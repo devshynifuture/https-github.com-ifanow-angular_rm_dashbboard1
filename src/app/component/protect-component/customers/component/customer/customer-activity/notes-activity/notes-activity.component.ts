@@ -28,6 +28,9 @@ export class NotesActivityComponent implements OnInit {
   clientData: any;
   isMainLoading: any;
   isLoading: boolean;
+  objForDelete: any;
+  searchQuery: any;
+  visibleToClient: boolean = true;
 
 
   constructor(private peopleService: PeopleService,
@@ -55,17 +58,35 @@ export class NotesActivityComponent implements OnInit {
   getFormControl(): any {
     return this.notes.controls;
   }
+  selectAll(event) {
+    if (event.checked == true) {
+      this.listOfNotes.forEach(element => {
+        element.checked = true
+        this.objForDelete.push({ id: element.id })
+      });
+    } else {
+      this.listOfNotes.forEach(element => {
+        element.checked = false
+        this.objForDelete = []
+      });
+    }
+  }
+
   clearNote() {
     this.emailBody = ""
     this.selectedNote = undefined
     this.notes.controls.subject.setValue('')
+  }
+  showToClient(value) {
+    this.visibleToClient = value.checked
   }
   getNotes() {
     this.isLoading = true
     let obj = {
       clientId: AuthService.getClientId(),
       limit: -1,
-      offset: 0
+      offset: 0,
+      searchQuery: (this.searchQuery) ? this.searchQuery : '',
     }
     this.peopleService.getNotes(obj)
       .subscribe(res => {
@@ -74,7 +95,9 @@ export class NotesActivityComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.content = element.content.replace(/(<([^>]+)>)/ig, '');
+            element.activeOnSelect = false
+            element.checked = false
           });
           console.log(this.listOfNotes);
         } else {
@@ -90,6 +113,20 @@ export class NotesActivityComponent implements OnInit {
     this.selectedNote = note
     this.notes.controls.subject.setValue(note.subject)
     this.emailBody = note.content
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.activeOnSelect = true
+      } else {
+        element.activeOnSelect = false
+      }
+
+    });
+  }
+  onSearchChange(value) {
+    this.searchQuery = value
+    if (this.searchQuery.length > 3) {
+      this.getNotes()
+    }
   }
   addNotes(note) {
     let obj = {
@@ -99,7 +136,8 @@ export class NotesActivityComponent implements OnInit {
       clientName: this.clientData.name,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
-      updatedTime: new Date()
+      updatedTime: new Date(),
+      visibleToClient: this.visibleToClient
     }
     if (!this.selectedNote) {
       this.peopleService.addNotes(obj)
@@ -132,12 +170,32 @@ export class NotesActivityComponent implements OnInit {
   saveData(data) {
     this.emailBody = data;
   }
-
-  deleteNotes(note, value) {
-    this.noteData = note;
-    let obj = { id: note.id }
+  selectForDelete(value, note) {
+    if (this.objForDelete.length == 0) {
+      if (value.checked == true) {
+        this.objForDelete.push({ id: note.id })
+      }
+    } else {
+      this.objForDelete.forEach((x) => {
+        if (x.id != note.id) {
+          if (value.checked == true) {
+            this.objForDelete.push({ id: note.id })
+          }
+        }
+      })
+    }
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.checked = value.checked
+      }
+    });
+  }
+  deleteNotes(note) {
+    if (this.objForDelete.length == 0) {
+      this.objForDelete.push({ id: note.id })
+    }
     const dialogData = {
-      data: value,
+      data: '',
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone.',
@@ -148,7 +206,7 @@ export class NotesActivityComponent implements OnInit {
         //   advisorId: this.advisorId,
         //   id: this.singlePlanData.id
         // };
-        this.peopleService.deleteNotes(obj).subscribe(
+        this.peopleService.deleteNotes(this.objForDelete).subscribe(
           data => {
             this.getNotes()
             this.clearNote()

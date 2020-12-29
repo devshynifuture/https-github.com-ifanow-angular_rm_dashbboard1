@@ -432,8 +432,7 @@
                     <div class="form-group">
                         <mat-form-field class="ba-date">
                             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
-                                [min]="maxDateForAdultDob" class="form-control br-0 b-0"
-                                formControlName="dobAsPerRecord" matInput readonly>
+                                class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                             <mat-datepicker-toggle [for]="dobAsPerRecord" matSuffix></mat-datepicker-toggle>
                             <mat-datepicker #dobAsPerRecord></mat-datepicker>
                             <mat-hint>Optional</mat-hint>

@@ -487,7 +487,7 @@ export class DashboardComponent implements OnInit {
     this.getKeyMetrics(); // for getting total AUM
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
-    this.getTodoListData();
+    AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
     this.getRecentTransactionData();
     this.initializePieChart();
     // this.connectAccountWithGoogle();
@@ -883,17 +883,17 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.getLastSevenDaysTransactionsNew(obj2).subscribe(
       (data) => {
-        if(data){
+        if (data) {
           this.last7DaysLoading = false
           this.dataSource5 = data;
           console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
-        }else{
+        } else {
           this.last7DaysLoading = false
           this.dataSource5 = [];
           console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
         }
 
-      },err=>{
+      }, err => {
         this.last7DaysLoading = false
         this.dataSource5 = [];
       });
@@ -957,6 +957,7 @@ export class DashboardComponent implements OnInit {
           });
           // data.forEach(element => {
           // });
+          AuthService.setToDoList(data);
           this.todoListData = data;
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
         } else {
@@ -993,7 +994,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
-          this.getTodoListData();
+          // this.getTodoListData();
           this.todoListData = data;
           // this.todoListData.unshift(data);
         }
@@ -1030,7 +1031,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
-          this.getTodoListData();
+          // this.getTodoListData();
           this.todoListData = data;
         }
       }), err => this.eventService.openSnackBar(err, 'Dismiss');

@@ -32,8 +32,10 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = false
+  visibleToClient: boolean = true
   objForDelete: any;
+  searchQuery: any;
+  activeOnSelect: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -116,6 +118,7 @@ export class CrmNotesComponent implements OnInit {
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
+      searchQuery: (this.searchQuery) ? this.searchQuery : '',
       limit: -1,
       offset: 0
     }
@@ -126,7 +129,9 @@ export class CrmNotesComponent implements OnInit {
           this.isLoading = false
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
-            element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.content = element.content.replace(/(<([^>]+)>)/ig, '');
+            element.activeOnSelect = false
+            element.checked = false
           });
           console.log(this.listOfNotes);
         } else {
@@ -141,6 +146,19 @@ export class CrmNotesComponent implements OnInit {
         this.listOfNotes = []
       })
   }
+  selectAll(event) {
+    if (event.checked == true) {
+      this.listOfNotes.forEach(element => {
+        element.checked = true
+        this.objForDelete.push({ id: element.id })
+      });
+    } else {
+      this.listOfNotes.forEach(element => {
+        element.checked = false
+        this.objForDelete = []
+      });
+    }
+  }
   selectNote(note) {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
@@ -150,6 +168,14 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.activeOnSelect = true
+      } else {
+        element.activeOnSelect = false
+      }
+
+    });
   }
   addNotes(note) {
     let obj = {
@@ -200,6 +226,11 @@ export class CrmNotesComponent implements OnInit {
         }
       })
     }
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.checked = value.checked
+      }
+    });
   }
   editNotes() {
     let obj = {}
@@ -208,9 +239,16 @@ export class CrmNotesComponent implements OnInit {
   saveData(data) {
     this.emailBody = data;
   }
-
-  deleteNotes() {
-
+  onSearchChange(value) {
+    this.searchQuery = value
+    if (this.searchQuery.length > 3) {
+      this.getNotes()
+    }
+  }
+  deleteNotes(note) {
+    if (this.objForDelete.length == 0) {
+      this.objForDelete.push({ id: note.id })
+    }
     const dialogData = {
       data: '',
       header: 'DELETE',
