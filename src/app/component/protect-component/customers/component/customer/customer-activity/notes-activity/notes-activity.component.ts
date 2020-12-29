@@ -63,7 +63,6 @@ export class NotesActivityComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: AuthService.getAdvisorId(),
       clientId: AuthService.getClientId(),
       limit: -1,
       offset: 0
