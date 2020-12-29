@@ -11,7 +11,7 @@
                     <div class="row b-b pb-10 d-flex align-items-center">
                         <div class="col-md-10 p-0">
                             <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
-                                <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Take a note</button>
+                                <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
                         </div>
                         <div class="col-md-2 d-flex justify-content-end align-items-center pl-0">
                             <img [matMenuTriggerFor]="menu" class="c-p" src="/assets/images/svg/dot-menu.svg">
@@ -26,6 +26,8 @@
                             </mat-menu>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-md-9 pr-0">
                     <div class="row">
@@ -102,6 +104,17 @@
         </div>
         <div class="row pt-70">
             <div class="col-md-3 p-0">
+
+                <div class="row pt-10 pb-10">
+                    <div class="col-md-12 p-0 remove-top">
+                        <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
+                            <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"
+                                class="form-control br-0" matInput placeholder="Type to search data">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
                 <div *ngIf="isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                     <div class="b-b overflow-hidden pt-10 pb-10">
                         <div class="row">
