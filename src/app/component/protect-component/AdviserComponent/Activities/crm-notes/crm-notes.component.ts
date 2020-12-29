@@ -42,7 +42,7 @@ export class CrmNotesComponent implements OnInit {
     public dialog: MatDialog,
     public eventService: EventService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService,) { }
+    public processTransaction: ProcessTransactionService, ) { }
 
   ngOnInit() {
     this.objForDelete = []
@@ -130,6 +130,7 @@ export class CrmNotesComponent implements OnInit {
           this.listOfNotes = res
           this.listOfNotes.forEach(element => {
             element.content = element.content.replace(/<\/?p[^>]*>/g, "");
+            element.activeOnSelect = false
           });
           console.log(this.listOfNotes);
         } else {
@@ -153,7 +154,14 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.clientName.setValue(note.clientName)
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
-    this.activeOnSelect = true;
+    this.listOfNotes.forEach(element => {
+      if (element.id == note.id) {
+        element.activeOnSelect = true
+      } else {
+        element.activeOnSelect = false
+      }
+
+    });
   }
   addNotes(note) {
     let obj = {
