@@ -38,6 +38,7 @@ export class CrmNotesComponent implements OnInit {
   activeOnSelect: boolean = false;
   hideOwner: boolean = false;
   showCheckBox: boolean = false;
+  checkAdmin: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -58,6 +59,7 @@ export class CrmNotesComponent implements OnInit {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
       clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
+      check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
 
@@ -175,6 +177,7 @@ export class CrmNotesComponent implements OnInit {
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.notes.controls.clientName.setValue(note.clientName)
+    this.checkAdmin = note.visibleToClient
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {

@@ -84,7 +84,9 @@
                         <div [ngClass]="hideOwner == false ? 'col-md-3': 'col-md-6' "
                             class=" d-flex justify-content-end align-items-center p-0">
                             <div class="text-right">
-                                <mat-checkbox (change)="showToClient($event)" class="example-margin">For admin
+                                <mat-checkbox (change)="showToClient($event)" [checked]="checkAdmin"
+                                    class="example-margin">For
+                                    admin
                                 </mat-checkbox>
 
 

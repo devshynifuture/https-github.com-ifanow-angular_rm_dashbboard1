@@ -32,7 +32,10 @@ export class NotesActivityComponent implements OnInit {
   searchQuery: any;
   visibleToClient: boolean = true;
   before: any;
-
+  activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
+  showCheckBox: boolean = false;
+  checkAdmin: boolean = false;
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
@@ -62,15 +65,17 @@ export class NotesActivityComponent implements OnInit {
   }
   selectAll(event) {
     if (event.checked == true) {
-      this.listOfNotes.forEach(element => {
-        element.checked = true
-        this.objForDelete.push({ id: element.id })
-      });
+      this.showCheckBox = true
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = true
+      //   this.objForDelete.push({ id: element.id })
+      // });
     } else {
-      this.listOfNotes.forEach(element => {
-        element.checked = false
-        this.objForDelete = []
-      });
+      this.showCheckBox = false
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = false
+      //   this.objForDelete = []
+      // });
     }
   }
 
@@ -116,6 +121,7 @@ export class NotesActivityComponent implements OnInit {
     this.selectedNote = note
     this.notes.controls.subject.setValue(note.subject)
     this.emailBody = note.content
+    this.checkAdmin = note.visibleToClient
     this.listOfNotes.forEach(element => {
       if (element.id == note.id) {
         element.activeOnSelect = true
