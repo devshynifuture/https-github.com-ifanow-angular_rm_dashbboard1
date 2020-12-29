@@ -317,7 +317,7 @@ export class RetirementAccountComponent implements OnInit {
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
   }
-  getretirementAccountsData(value) {
+  getfixedIncomeData(value) {
     this.showRecurring = value;
     // this.isLoading = true;
     if (value == '2') {
