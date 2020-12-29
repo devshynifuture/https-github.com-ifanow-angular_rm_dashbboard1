@@ -26,15 +26,15 @@ export class AssetsComponent implements OnInit {
   // sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
-    { name: 'Mutual funds', viewmode: 'tab1', count: '0', link: './mutual' },
-    { name: 'Stocks', viewmode: 'tab2', count: '0', link: './stock' },
-    { name: 'Fixed income', viewmode: 'tab3', count: '0', link: './fix' },
-    { name: 'Real estate', viewmode: 'tab4', count: '0', link: './real' },
-    { name: 'Retirement accounts', viewmode: 'tab5', count: '0', link: './retire' },
-    { name: 'Small saving scheme', viewmode: 'tab6', count: '0', link: './small' },
-    { name: 'Cash & Bank', viewmode: 'tab7', count: '0', link: './cash_bank' },
-    { name: 'Commodities', viewmode: 'tab8', count: '0', link: './commodities' },
-    { name: 'Others', viewmode: 'tab9', count: '0', link: './others' }
+    { name: 'Mutual funds', viewmode: 'tab1', count: 0, link: './mutual' },
+    { name: 'Stocks', viewmode: 'tab2', count: 0, link: './stock' },
+    { name: 'Fixed income', viewmode: 'tab3', count: 0, link: './fix' },
+    { name: 'Real estate', viewmode: 'tab4', count: 0, link: './real' },
+    { name: 'Retirement accounts', viewmode: 'tab5', count: 0, link: './retire' },
+    { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: './small' },
+    { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: './cash_bank' },
+    { name: 'Commodities', viewmode: 'tab8', count: 0, link: './commodities' },
+    { name: 'Others', viewmode: 'tab9', count: 0, link: './others' }
   ];
   tab: any;
   Settab: any;
@@ -50,6 +50,13 @@ export class AssetsComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private router: Router, private enumDataService: EnumDataService,
     private mfService: MfServiceService) {
+    this.assetValidation.assetCountObserver.subscribe(
+      data => {
+        if (data.type) {
+          this.updateAssetCount(data);
+        }
+      }
+    )
   }
 
   close() {
@@ -80,50 +87,6 @@ export class AssetsComponent implements OnInit {
   datasource8 = ELEMENT_DATA8;
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
-
-  // displayedColumns10 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
-  // datasource10 = ELEMENT_DATA10;
-
-
-  // displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
-  // datasource11 = ELEMENT_DATA11;
-
-  // displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'account', 'rate', 'mdate', 'scheme', 'ppf', 'desc', 'status', 'icons'];
-  // datasource12 = ELEMENT_DATA12;
-
-  // displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
-  // datasource13 = ELEMENT_DATA13;
-
-  // displayedColumns14 = ['no', 'owner', 'aemp', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
-  // datasource14 = ELEMENT_DATA14;
-
-  // displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
-  // datasource15 = ELEMENT_DATA15;
-
-  // displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  // datasource16 = ELEMENT_DATA16;
-
-  // displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  // datasource17 = ELEMENT_DATA17;
-  // displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  // datasource18 = ELEMENT_DATA18;
-
-  // displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
-  // datasource19 = ELEMENT_DATA19;
-
-  // displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balance', 'bdate', 'desc', 'status', 'icons'];
-  // datasource20 = ELEMENT_DATA20;
-
-
-  // displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  // datasource22 = ELEMENT_DATA22;
-
-
-  // displayedColumns24 = ['name', 'amt', 'cvalue', 'profile', 'abt', 'xirr', 'pay', 'withdraw', 'bal', 'date', 'sip'];
-  // dataSource24 = ELEMENT_DATA24;
-  // displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
-  // dataSource25 = ELEMENT_DATA25;
-
 
   ngOnInit() {
     // this.viewMode = 'tab2';
@@ -157,11 +120,83 @@ export class AssetsComponent implements OnInit {
         this.eventService.tabData('2');
       }
     });
-    this.assetValidation.getAssetCountGLobalData()
-    this.unSudcripCounts = this.assetValidation.passCounts().subscribe((data) => {
-      this.getAssetCountGLobalDataRes(data)
-    })
+    // this.assetValidation.getAssetCountGLobalData()
+    // this.unSudcripCounts = this.assetValidation.passCounts().subscribe((data) => {
+    //   this.getAssetCountGLobalDataRes(data)
+    // })
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1
+    };
+    this.cusService.getAssetCountGlobalData(obj).subscribe(
+      (data) => {
+        if (data) {
+          this.getAssetCountGLobalDataRes(data)
+        }
+      }
+    );
   }
+
+  updateAssetCount(data) {
+    if (data.type == "Add") {
+      if (data.value == 'STOCKS') {
+        this.assetSideBarData[1].count = this.assetSideBarData[1].count + 1;
+      }
+      if (data.value == 'fixedIncome') {
+        this.assetSideBarData[2].count = this.assetSideBarData[2].count + 1;
+      }
+      if (data.value == 'mutual_fund') {
+        this.assetSideBarData[0].count = this.assetSideBarData[0].count + 1;
+      }
+      if (data.value == 'real_estate') {
+        this.assetSideBarData[3].count = this.assetSideBarData[3].count + 1;
+      }
+      if (data.value == 'retirementAccounts') {
+        this.assetSideBarData[4].count = this.assetSideBarData[4].count + 1;
+      }
+      if (data.value == 'smallSavingSchemes') {
+        this.assetSideBarData[5].count = this.assetSideBarData[5].count + 1;
+      }
+      if (data.value == 'cashAndBank') {
+        this.assetSideBarData[6].count = this.assetSideBarData[6].count + 1;
+      }
+      if (data.value == 'commodities') {
+        this.assetSideBarData[7].count = this.assetSideBarData[7].count + 1;
+      }
+      if (data.value == 'otherAsset') {
+        this.assetSideBarData[8].count = this.assetSideBarData[8].count + 1;
+      }
+    } else {
+      if (data.value == 'STOCKS') {
+        this.assetSideBarData[1].count = this.assetSideBarData[1].count - 1;
+      }
+      if (data.value == 'fixedIncome') {
+        this.assetSideBarData[2].count = this.assetSideBarData[2].count - 1;
+      }
+      if (data.value == 'mutual_fund') {
+        this.assetSideBarData[0].count = this.assetSideBarData[0].count - 1;
+      }
+      if (data.value == 'real_estate') {
+        this.assetSideBarData[3].count = this.assetSideBarData[3].count - 1;
+      }
+      if (data.value == 'retirementAccounts') {
+        this.assetSideBarData[4].count = this.assetSideBarData[4].count - 1;
+      }
+      if (data.value == 'smallSavingSchemes') {
+        this.assetSideBarData[5].count = this.assetSideBarData[5].count - 1;
+      }
+      if (data.value == 'cashAndBank') {
+        this.assetSideBarData[6].count = this.assetSideBarData[6].count - 1;
+      }
+      if (data.value == 'commodities') {
+        this.assetSideBarData[7].count = this.assetSideBarData[7].count - 1;
+      }
+      if (data.value == 'otherAsset') {
+        this.assetSideBarData[8].count = this.assetSideBarData[8].count - 1;
+      }
+    }
+  }
+
 
   toggleSideNav() {
     this.stateOfPanel.toggle();
@@ -307,7 +342,7 @@ export class AssetsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.unSudcripCounts.unsubscribe();
+    this.assetValidation.addAssetCount({});
     console.log("unsubscribe");
 
   }

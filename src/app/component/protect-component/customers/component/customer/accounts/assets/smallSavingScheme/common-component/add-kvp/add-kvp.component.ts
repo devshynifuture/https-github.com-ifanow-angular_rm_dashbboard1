@@ -11,6 +11,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
+import { AssetValidationService } from '../../../asset-validation.service';
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
@@ -47,17 +48,17 @@ export class AddKvpComponent implements OnInit {
   ownerData: any;
   isOptionalField: boolean;
   KVPFormScheme: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   nomineesList: any[] = [];
   nominees: any[];
   kvpData;
   flag: any;
-  callMethod:any;
-  bankList:any = [];
+  callMethod: any;
+  bankList: any = [];
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
-    constructor(public utils: UtilService, private datePipe: DatePipe,  private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(public utils: UtilService, private datePipe: DatePipe, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -84,145 +85,145 @@ export class AddKvpComponent implements OnInit {
   }
 
   // ===================owner-nominee directive=====================//
- display(value) {
-  console.log('value selected', value)
-  this.ownerName = value.userName;
-  this.familyMemberId = value.id
-}
-
-lisNominee(value) {
-  this.ownerData.Fmember = value;
-  this.nomineesListFM = Object.assign([], value);
-}
-
-disabledMember(value, type) {
-  this.callMethod = {
-    methodName : "disabledMember",
-    ParamValue : value,
-    disControl : type
-  }
-}
-
-displayControler(con) {
-  console.log('value selected', con);
-  if(con.owner != null && con.owner){
-    this.KVPFormScheme.controls.getCoOwnerName = con.owner;
-  }
-  if(con.nominee != null && con.nominee){
-    this.KVPFormScheme.controls.getNomineeName = con.nominee;
-  }
-}
-
-onChangeJointOwnership(data) {
-  this.callMethod = {
-    methodName : "onChangeJointOwnership",
-    ParamValue : data
-  }
-}
-
-/***owner***/ 
-
-get getCoOwner() {
-  return this.KVPFormScheme.get('getCoOwnerName') as FormArray;
-}
-
-addNewCoOwner(data) {
-  this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (data) {
-    setTimeout(() => {
-     this.disabledMember(null,null);
-    }, 1300);
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
 
-  if(this.getCoOwner.value.length > 1 && !data){
-   let share = 100/this.getCoOwner.value.length;
-   for (let e in this.getCoOwner.controls) {
-    if(!Number.isInteger(share) && e == "0"){
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-    }
-    else{
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-    }
-   }
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
-  
-}
 
-removeCoOwner(item) {
-  this.getCoOwner.removeAt(item);
-  if (this.KVPFormScheme.value.getCoOwnerName.length == 1) {
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  } else {
-    let share = 100/this.getCoOwner.value.length;
-    for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-    }
-  }
-  this.disabledMember(null, null);
-}
-/***owner***/ 
-
-/***nominee***/ 
-
-get getNominee() {
-  return this.KVPFormScheme.get('getNomineeName') as FormArray;
-}
-
-removeNewNominee(item) {
-  this.disabledMember(null, null);
-  this.getNominee.removeAt(item);
-  if (this.KVPFormScheme.value.getNomineeName.length == 1) {
-    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-  } else {
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-      }
-    }
-  }
-}
-
-
-
-addNewNominee(data) {
-  this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (!data || this.getNominee.value.length < 1) {
-    for (let e in this.getNominee.controls) {
-      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: "disabledMember",
+      ParamValue: value,
+      disControl: type
     }
   }
 
-  if(this.getNominee.value.length > 1 && !data){
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.KVPFormScheme.controls.getCoOwnerName = con.owner;
+    }
+    if (con.nominee != null && con.nominee) {
+      this.KVPFormScheme.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
+    }
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.KVPFormScheme.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
-   }
-   
-  
-}
-/***nominee***/ 
-// ===================owner-nominee directive=====================//
 
-  
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.KVPFormScheme.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.KVPFormScheme.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.KVPFormScheme.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+  /***nominee***/
+  // ===================owner-nominee directive=====================//
+
+
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
@@ -244,11 +245,11 @@ addNewNominee(data) {
     this.KVPFormScheme = this.fb.group({
       // ownerName: [data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: [0,[Validators.required]],
+        name: ['', [Validators.required]],
+        share: [0, [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       amtInvested: [data.amountInvested, [Validators.required, Validators.min(1000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
@@ -262,38 +263,38 @@ addNewNominee(data) {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
+        id: [0]
       })])
     })
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
-  if(this.KVPFormScheme.value.getCoOwnerName.length == 1){
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  }
+    /***owner***/
+    if (this.KVPFormScheme.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
 
-  if (data.ownerList && data.ownerList.length > 0) {
-    this.getCoOwner.removeAt(0);
-    data.ownerList.forEach(element => {
-      this.addNewCoOwner(element);
-    });
-  }
-  
-/***owner***/ 
+    if (data.ownerList && data.ownerList.length > 0) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
 
-/***nominee***/ 
-if(data.nomineeList){
-  if(data.nomineeList.length > 0){
-      
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
-  }
-}
-/***nominee***/ 
+    /***owner***/
 
-this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
-// ==============owner-nominee Data ========================\\ 
+    /***nominee***/
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.KVPFormScheme }
+    // ==============owner-nominee Data ========================\\ 
     // this.ownerData = this.KVPFormScheme.controls;
     // this.familyMemberId = data.familyMemberId;
   }
@@ -327,7 +328,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         // "familyMemberId": this.familyMemberId,
         // "ownerName": (this.ownerName == undefined) ? this.KVPFormScheme.controls.ownerName.value : this.ownerName.userName,
         "amountInvested": this.KVPFormScheme.get('amtInvested').value,
-        "commencementDate":this.datePipe.transform(this.KVPFormScheme.get('commDate').value, 'yyyy-MM-dd'), 
+        "commencementDate": this.datePipe.transform(this.KVPFormScheme.get('commDate').value, 'yyyy-MM-dd'),
         "postOfficeBranch": this.KVPFormScheme.get('poBranch').value,
         "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
         "nominees": this.nominees,
@@ -339,12 +340,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       }
 
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.KVPFormScheme.value.getNomineeName;
-      
+      obj.nomineeList = this.KVPFormScheme.value.getNomineeName;
+
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -354,7 +355,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       if (this.flag == 'adviceKVP') {
         this.cusService.getAdviceKvp(adviceObj).subscribe(
           data => this.getAdviceKvpRes(data),
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar(err, "Dismiss")
           }
@@ -363,7 +364,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          error =>{
+          error => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error)
           }
@@ -372,10 +373,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       else {
         this.cusService.addKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          error =>{
+          error => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error)
-          } 
+          }
         )
       }
     }
@@ -388,13 +389,17 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
   }
   addKVPResponse(data) {
     this.barButtonOptions.active = false;
-    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
-    console.log(data)
+    if (this.editApi) {
+      this.eventService.openSnackBar("Updated successfully!", "Dismiss")
+    } else {
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
+      this.eventService.openSnackBar("Added successfully!", "Dismiss")
+    } console.log(data)
     this.close(data);
   }
   close(data) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data:data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
   }
 
   isFormValuesForAdviceValid() {
@@ -406,20 +411,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
   }
 
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -429,5 +434,5 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
     })
 
   }
-//link bank
+  //link bank
 }

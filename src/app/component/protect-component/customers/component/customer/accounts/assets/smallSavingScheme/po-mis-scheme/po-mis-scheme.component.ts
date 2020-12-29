@@ -185,7 +185,7 @@ export class PoMisSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getPoMisSchemedataResponse', data);
         if (!this.dataList) {
           this.pomisDataList.emit(data);
@@ -226,6 +226,7 @@ export class PoMisSchemeComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.dataList.sumOfCurrentValue -= element.currentValue;
             this.dataList.sumOfAmountInvested -= element.amountInvested;
             this.dataList.sumOfMaturityValue -= element.maturityValue;

@@ -1,13 +1,14 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatInput} from '@angular/material';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from '../../../../../../../../../services/enum-service.service';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -70,9 +71,9 @@ export class AddRealEstateComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder, public custmService: CustomerService,
-              public eventService: EventService, public utils: UtilService,
-              public enumService: EnumServiceService) {
+    private fb: FormBuilder, public custmService: CustomerService,
+    public eventService: EventService, public utils: UtilService,
+    public enumService: EnumServiceService, private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -147,7 +148,7 @@ export class AddRealEstateComponent implements OnInit {
   }
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   // ===================owner-nominee directive=====================//
@@ -402,7 +403,7 @@ export class AddRealEstateComponent implements OnInit {
 
   getRealEstate(data) {
     this.flag = data;
-    if(data){
+    if (data) {
       this.showMoreData = true;
     }
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
@@ -479,7 +480,7 @@ export class AddRealEstateComponent implements OnInit {
       }
       /***nominee***/
 
-      this.ownerData = {Fmember: this.nomineesListFM, controleData: this.addrealEstateForm};
+      this.ownerData = { Fmember: this.nomineesListFM, controleData: this.addrealEstateForm };
       // ==============owner-nominee Data ========================\\
 
       // if (data.nominees != undefined) {
@@ -629,18 +630,19 @@ export class AddRealEstateComponent implements OnInit {
   getAdviceRealEstateRes(data) {
     this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Real estate added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
   addRealEstateRes(data) {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data});
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'real_estate' })
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
       this.eventService.openSnackBar('Added successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true, data});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
     }
     this.barButtonOptions.active = false;
 
@@ -650,7 +652,7 @@ export class AddRealEstateComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');

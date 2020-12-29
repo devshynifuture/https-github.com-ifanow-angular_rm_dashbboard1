@@ -183,7 +183,7 @@ export class OthersAssetsComponent implements OnInit {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
     }
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
     // this.loaded.emit(this.realEstateTemp.nativeElement);
   }
@@ -204,6 +204,7 @@ export class OthersAssetsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'otherAsset' })
             // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             // this.dataList.totalCurrentValue -= element.marketValue;
             // // this.dataList.sumOfPurchaseValue += element.amountInvested;

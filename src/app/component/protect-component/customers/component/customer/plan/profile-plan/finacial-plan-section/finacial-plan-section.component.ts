@@ -162,7 +162,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getListFamilyMem();
     this.getGoalSummaryValues();
     this.getInsuranceList();
-    this.getAssetCountGlobalData()
+    // this.getAssetCountGlobalData()
     this.getCountPortfolioInsurance()
     this.getIncome()
     //this.getExpense()

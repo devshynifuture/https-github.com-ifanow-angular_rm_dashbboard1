@@ -13,6 +13,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -60,7 +61,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   oldOwnerID: number;
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -607,6 +608,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
             console.log(data);
+            this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             this.Close();
             // if (data.stockList[0].transactionOrHoldingSummaryList[0].reasonOfError) {
             //   this.eventService.openSnackBar(data.stockList[0].transactionOrHoldingSummaryList[0].reasonOfError + '!', "Dismiss");

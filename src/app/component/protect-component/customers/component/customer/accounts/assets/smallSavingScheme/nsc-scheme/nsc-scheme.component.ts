@@ -180,7 +180,7 @@ export class NscSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log(data, 'getNscSchemedataResponse');
         if (!this.dataList) {
           this.nscDataList.emit(data);
@@ -217,6 +217,7 @@ export class NscSchemeComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
             this.dataList.sumOfMaturityValue -= element.maturityValue;

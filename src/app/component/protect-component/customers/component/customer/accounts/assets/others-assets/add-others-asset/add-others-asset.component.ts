@@ -12,6 +12,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-add-others-asset',
@@ -75,6 +76,7 @@ export class AddOthersAssetComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   private unSubcrip2: Subscription;
   constructor(public custumService: CustomerService, private enumDataService: EnumDataService, private datePipe: DatePipe, public dialog: MatDialog, public subInjectService: SubscriptionInject,
+    private assetValidation: AssetValidationService,
     private fb: FormBuilder, public custmService: CustomerService,
     public eventService: EventService, public utils: UtilService,
     public enumService: EnumServiceService) {
@@ -686,6 +688,7 @@ export class AddOthersAssetComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'otherAsset' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
       this.eventService.openSnackBar('Added successfully!', 'OK');
     } else {

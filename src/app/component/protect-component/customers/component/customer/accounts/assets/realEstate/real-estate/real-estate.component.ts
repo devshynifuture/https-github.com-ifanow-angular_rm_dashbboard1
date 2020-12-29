@@ -189,7 +189,7 @@ export class RealEstateComponent implements OnInit {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
     }
-    this.assetValidation.getAssetCountGLobalData()
+    // this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
     this.loaded.emit(this.realEstateTemp.nativeElement);
   }
@@ -207,6 +207,8 @@ export class RealEstateComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'real_estate' })
+
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfMarketValue -= element.marketValue;
             // this.dataList.sumOfPurchaseValue += element.amountInvested;

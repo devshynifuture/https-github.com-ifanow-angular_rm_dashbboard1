@@ -194,6 +194,7 @@ export class ScssSchemeComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfAmountReceived -= element.totalAmountReceived;
             this.dataList.sumOfAmountInvested -= element.amountInvested;
@@ -227,7 +228,7 @@ export class ScssSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
         if (!this.dataList) {
           this.scssDataList.emit(data);

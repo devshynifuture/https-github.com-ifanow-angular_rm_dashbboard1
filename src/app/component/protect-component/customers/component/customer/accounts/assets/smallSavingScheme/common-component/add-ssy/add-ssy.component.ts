@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../../asset-validation.service';
 
 @Component({
   selector: 'app-add-ssy',
@@ -27,7 +28,8 @@ export class AddSsyComponent implements OnInit {
     public utils: UtilService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private datePipe: DatePipe,
-    public dialog: MatDialog, private enumService: EnumServiceService) {
+    public dialog: MatDialog, private enumService: EnumServiceService,
+    private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -543,8 +545,12 @@ export class AddSsyComponent implements OnInit {
 
   addSSYSchemeResponse(data) {
     this.barButtonOptions.active = false;
-    (this.editApi) ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'added');
-    console.log(data);
+    if (this.editApi) {
+      this.eventService.openSnackBar("Updated successfully!", "Dismiss")
+    } else {
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
+      this.eventService.openSnackBar("Added successfully!", "Dismiss")
+    } console.log(data);
     this.close(data);
   }
 

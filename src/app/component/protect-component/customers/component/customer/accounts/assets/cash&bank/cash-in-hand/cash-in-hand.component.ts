@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-cash-in-hand',
@@ -44,17 +45,18 @@ export class CashInHandComponent implements OnInit {
   ownerData: any;
   cashInHand: any;
   showHide = false;
-  maxDate:Date= new Date();
+  maxDate: Date = new Date();
   advisorId: any;
   private clientId: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   editData: any;
   callMethod: { methodName: string; ParamValue: any; };
   constructor(private fb: FormBuilder, private custumService: CustomerService,
-    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService,
+    private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -81,144 +83,144 @@ export class CashInHandComponent implements OnInit {
 
   }
 
-    // ===================owner-nominee directive=====================//
-    display(value) {
-      console.log('value selected', value)
-      this.ownerName = value.userName;
-      this.familyMemberId = value.id
-    }
-  
-    lisNominee(value) {
-      this.ownerData.Fmember = value;
-      this.nomineesListFM = Object.assign([], value);
-    }
-  
-    disabledMember(value, type) {
-      this.callMethod = {
-        methodName : "disabledMember",
-        ParamValue : value,
+  // ===================owner-nominee directive=====================//
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
+  }
+
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
+  }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: "disabledMember",
+      ParamValue: value,
       //  disControl : type
-      }
     }
-  
-    displayControler(con) {
-      console.log('value selected', con);
-      if(con.owner != null && con.owner){
-        this.cashInHand.controls.getCoOwnerName = con.owner;
-      }
-      if(con.nominee != null && con.nominee){
-        this.cashInHand.controls.getNomineeName = con.nominee;
-      }
+  }
+
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.cashInHand.controls.getCoOwnerName = con.owner;
     }
-  
-    onChangeJointOwnership(data) {
-      this.callMethod = {
-        methodName : "onChangeJointOwnership",
-        ParamValue : data
-      }
+    if (con.nominee != null && con.nominee) {
+      this.cashInHand.controls.getNomineeName = con.nominee;
     }
-  
-    /***owner***/ 
-  
-    get getCoOwner() {
-      return this.cashInHand.get('getCoOwnerName') as FormArray;
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
-  
-    addNewCoOwner(data) {
-      this.getCoOwner.push(this.fb.group({
-        name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-      }));
-      if (data) {
-        setTimeout(() => {
-         this.disabledMember(null,null);
-        }, 1300);
-      }
-  
-      if(this.getCoOwner.value.length > 1 && !data){
-       let share = 100/this.getCoOwner.value.length;
-       for (let e in this.getCoOwner.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.cashInHand.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
-       }
       }
-     
     }
-  
-    removeCoOwner(item) {
-      this.getCoOwner.removeAt(item);
-      if (this.cashInHand.value.getCoOwnerName.length == 1) {
-        this.getCoOwner.controls['0'].get('share').setValue('100');
-      } else {
-        let share = 100/this.getCoOwner.value.length;
-        for (let e in this.getCoOwner.controls) {
-          if(!Number.isInteger(share) && e == "0"){
-            this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-          }
-          else{
-            this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-          }
+
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.cashInHand.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-      }
-      this.disabledMember(null, null);
-    }
-    /***owner***/ 
-  
-    /***nominee***/ 
-  
-    get getNominee() {
-      return this.cashInHand.get('getNomineeName') as FormArray;
-    }
-  
-    removeNewNominee(item) {
-  this.disabledMember(null, null);
-      this.getNominee.removeAt(item);
-      if (this.cashInHand.value.getNomineeName.length == 1) {
-        this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-      } else {
-        let share = 100/this.getNominee.value.length;
-        for (let e in this.getNominee.controls) {
-          if(!Number.isInteger(share) && e == "0"){
-            this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-          }
-          else{
-            this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-          }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
-  
-  
-    
-    addNewNominee(data) {
-      this.getNominee.push(this.fb.group({
-        name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-      }));
-      if (!data || this.getNominee.value.length < 1) {
-        for (let e in this.getNominee.controls) {
-          this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    this.disabledMember(null, null);
+  }
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.cashInHand.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.cashInHand.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
-  
-      if(this.getNominee.value.length > 1 && !data){
-        let share = 100/this.getNominee.value.length;
-        for (let e in this.getNominee.controls) {
-          if(!Number.isInteger(share) && e == "0"){
-            this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-          }
-          else{
-            this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-          }
-        }
-       }
-       
-      
     }
-    /***nominee***/ 
-    // ===================owner-nominee directive=====================//
+  }
+
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+  /***nominee***/
+  // ===================owner-nominee directive=====================//
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
@@ -250,7 +252,7 @@ export class CashInHandComponent implements OnInit {
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       cashBalance: [(data.cashValue == undefined) ? '' : data.cashValue, [Validators.required]],
@@ -264,7 +266,7 @@ export class CashInHandComponent implements OnInit {
         id: [0]
       })]),
     });
-       // ==============owner-nominee Data ========================\\
+    // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.cashInHand.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -315,11 +317,11 @@ export class CashInHandComponent implements OnInit {
 
       };
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.cashInHand.value.getNomineeName;
+      obj.nomineeList = this.cashInHand.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -360,6 +362,7 @@ export class CashInHandComponent implements OnInit {
   }
   addCashInHandRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');

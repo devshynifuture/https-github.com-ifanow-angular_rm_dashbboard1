@@ -243,7 +243,7 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = false;
     } else if (data.assetList) {
-      this.assetValidation.getAssetCountGLobalData()
+      // this.assetValidation.getAssetCountGLobalData()
 
       this.fixDataList = data;
       this.dataSource.data = this.fixDataList.assetList;
@@ -296,7 +296,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData()
+        // this.assetValidation.getAssetCountGLobalData()
 
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.recDataList = data;
@@ -344,7 +344,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.assetValidation.getAssetCountGLobalData();
+        // this.assetValidation.getAssetCountGLobalData();
 
         console.log('getBondsRes ******** ', data);
         this.bondDataList = data;
@@ -458,6 +458,7 @@ export class FixedIncomeComponent implements OnInit {
               this.fixDataList.sumOfAmountInvested -= element.amountInvested;
               this.fixDataList.sumOfCurrentValue -= element.currentValue;
               this.fixDataList.sumOfMaturityValue -= element.maturityValue;
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.getFixedDepositRes(this.fixDataList);
             },
             error => this.eventService.showErrorMessage(error)
@@ -467,6 +468,7 @@ export class FixedIncomeComponent implements OnInit {
             data => {
               dialogRef.close();
               // this.getRecurringDepositList();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
 
               this.recDataList.totalCurrentValue -= element.currentValue;
@@ -482,6 +484,7 @@ export class FixedIncomeComponent implements OnInit {
             data => {
               dialogRef.close();
               // this.getBondsList();
+              this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);
               this.bondDataList.sumOfAmountInvested -= element.amountInvested;
               this.bondDataList.sumOfCouponAmount -= element.couponAmount;

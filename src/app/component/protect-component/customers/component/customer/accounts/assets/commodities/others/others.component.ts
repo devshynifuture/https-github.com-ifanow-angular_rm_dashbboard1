@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-others',
@@ -46,7 +47,7 @@ export class OthersComponent implements OnInit {
   ownerData: any;
   advisorId: any;
   clientId: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   nomineesList: any;
   flag: any;
   otherData: any;
@@ -57,7 +58,7 @@ export class OthersComponent implements OnInit {
   nominees: any;
   todayDate = new Date();
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private assetValidation: AssetValidationService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
 
   @Input()
@@ -101,30 +102,30 @@ export class OthersComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName : "disabledMember",
-      ParamValue : value,
-    //  disControl : type
+      methodName: "disabledMember",
+      ParamValue: value,
+      //  disControl : type
     }
   }
 
   displayControler(con) {
     console.log('value selected', con);
-    if(con.owner != null && con.owner){
+    if (con.owner != null && con.owner) {
       this.others.controls.getCoOwnerName = con.owner;
     }
-    if(con.nominee != null && con.nominee){
+    if (con.nominee != null && con.nominee) {
       this.others.controls.getNomineeName = con.nominee;
     }
   }
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName : "onChangeJointOwnership",
-      ParamValue : data
+      methodName: "onChangeJointOwnership",
+      ParamValue: data
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.others.get('getCoOwnerName') as FormArray;
@@ -132,26 +133,26 @@ export class OthersComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
-       this.disabledMember(null,null);
+        this.disabledMember(null, null);
       }, 1300);
     }
 
-    if(this.getCoOwner.value.length > 1 && !data){
-     let share = 100/this.getCoOwner.value.length;
-     for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == "0") {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        }
+        else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-     }
     }
-   
+
   }
 
   removeCoOwner(item) {
@@ -159,38 +160,38 @@ export class OthersComponent implements OnInit {
     if (this.others.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
-      let share = 100/this.getCoOwner.value.length;
+      let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.others.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
-  this.disabledMember(null, null);
+    this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.others.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100/this.getNominee.value.length;
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -198,10 +199,10 @@ export class OthersComponent implements OnInit {
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -209,21 +210,21 @@ export class OthersComponent implements OnInit {
       }
     }
 
-    if(this.getNominee.value.length > 1 && !data){
-      let share = 100/this.getNominee.value.length;
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == "0") {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         }
-        else{
+        else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
-     }
-     
-    
+    }
+
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
   Close(flag) {
@@ -262,7 +263,7 @@ export class OthersComponent implements OnInit {
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
       marketValue: [(data.marketValue == undefined) ? '' : (data.marketValue), [Validators.required]],
@@ -281,7 +282,7 @@ export class OthersComponent implements OnInit {
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],]
     });
 
-        // ==============owner-nominee Data ========================\\
+    // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.others.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -336,20 +337,20 @@ export class OthersComponent implements OnInit {
         ownerList: this.others.value.getCoOwnerName,
         // ownerName: (this.ownerName == undefined) ? this.others.controls.ownerName.value : this.ownerName,
         commodityTypeId: this.others.controls.typeOfCommodity.value,
-        marketValue:this.others.controls.marketValue.value==""?0.0:parseInt(this.others.controls.marketValue.value) ,
-        marketValueAsOnDate: this.others.controls.marketValueAsOnDate=="" ?null: this.datePipe.transform(this.others.controls.marketValueAsOnDate.value, 'yyyy-MM-dd') ,
-        purchaseValue: this.others.controls.purchaseValue.value==""?0.0:parseInt(this.others.controls.purchaseValue.value),
-        growthRate: this.others.controls.growthRate.value==""?0.0:parseInt(this.others.controls.growthRate.value),
-        dateOfPurchase: this.others.controls.dateOfPurchase=="" ?null: this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd') ,
+        marketValue: this.others.controls.marketValue.value == "" ? 0.0 : parseInt(this.others.controls.marketValue.value),
+        marketValueAsOnDate: this.others.controls.marketValueAsOnDate == "" ? null : this.datePipe.transform(this.others.controls.marketValueAsOnDate.value, 'yyyy-MM-dd'),
+        purchaseValue: this.others.controls.purchaseValue.value == "" ? 0.0 : parseInt(this.others.controls.purchaseValue.value),
+        growthRate: this.others.controls.growthRate.value == "" ? 0.0 : parseInt(this.others.controls.growthRate.value),
+        dateOfPurchase: this.others.controls.dateOfPurchase == "" ? null : this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'),
         description: this.others.controls.description.value,
-        nomineeList:this.others.value.getNomineeName,
+        nomineeList: this.others.value.getNomineeName,
       };
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.others.value.getNomineeName;
+      obj.nomineeList = this.others.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
@@ -390,6 +391,7 @@ export class OthersComponent implements OnInit {
   }
   addOthersRes(data) {
     this.barButtonOptions.active = false;
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     console.log('addrecuringDepositRes', data);
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });

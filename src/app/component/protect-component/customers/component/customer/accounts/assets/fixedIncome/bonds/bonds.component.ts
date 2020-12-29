@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-bonds',
@@ -19,7 +20,7 @@ import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
   styleUrls: ['./bonds.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class BondsComponent implements OnInit {
@@ -68,7 +69,7 @@ export class BondsComponent implements OnInit {
   bankList: any = [];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public dialog: MatDialog, private enumService: EnumServiceService,) {
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) {
   }
 
   @Input()
@@ -108,7 +109,7 @@ export class BondsComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   // ===================owner-nominee directive=====================//
@@ -274,7 +275,7 @@ export class BondsComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
-    else{
+    else {
       this.showHide = true;
     }
     this.bondData = data;
@@ -339,7 +340,7 @@ export class BondsComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.bonds};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bonds };
     // ==============owner-nominee Data ========================\\
 
     this.familyMemberId = this.bonds.controls.familyMemberId.value;
@@ -447,14 +448,15 @@ export class BondsComponent implements OnInit {
   addBondsRes(data) {
     console.log('addbondsRes', data);
     this.barButtonOptions.active = false;
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 
   }
 
   editBondsRes(data) {
     this.barButtonOptions.active = false;
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
   }
@@ -468,20 +470,20 @@ export class BondsComponent implements OnInit {
     }
   }
 
-  getBank(){
-    if(this.enumService.getBank().length > 0){
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
       this.bankList = this.enumService.getBank();
     }
-    else{
+    else {
       this.bankList = [];
     }
-    console.log(this.bankList,"this.bankList2");
+    console.log(this.bankList, "this.bankList2");
   }
   //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true,  ownerList : this.getCoOwner} 
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -492,5 +494,5 @@ export class BondsComponent implements OnInit {
 
   }
 
-//link bank
+  //link bank
 }

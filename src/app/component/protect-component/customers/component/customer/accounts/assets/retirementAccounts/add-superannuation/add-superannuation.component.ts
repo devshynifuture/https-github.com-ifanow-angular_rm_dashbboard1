@@ -1,16 +1,17 @@
-import {Component, OnInit, Input, ViewChildren, QueryList} from '@angular/core';
-import {Validators, FormBuilder, FormArray} from '@angular/forms';
-import {Router} from '@angular/router';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS, MatInput} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumDataService} from "../../../../../../../../../services/enum-data.service";
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { Validators, FormBuilder, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from "../../../../../../../../../services/enum-data.service";
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
     selector: 'app-add-superannuation',
@@ -18,7 +19,7 @@ import {EnumDataService} from "../../../../../../../../../services/enum-data.ser
     styleUrls: ['./add-superannuation.component.scss'],
     providers: [
         [DatePipe],
-        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
     ],
 })
 export class AddSuperannuationComponent implements OnInit {
@@ -60,9 +61,10 @@ export class AddSuperannuationComponent implements OnInit {
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
     constructor(private event: EventService, private router: Router,
-                private fb: FormBuilder, private custumService: CustomerService,
-                public subInjectService: SubscriptionInject, private datePipe: DatePipe,
-                public utils: UtilService, public enumDataService: EnumDataService) {
+        private fb: FormBuilder, private custumService: CustomerService,
+        public subInjectService: SubscriptionInject, private datePipe: DatePipe,
+        public utils: UtilService, public enumDataService: EnumDataService,
+        private assetValidation: AssetValidationService) {
     }
 
     @Input()
@@ -88,7 +90,7 @@ export class AddSuperannuationComponent implements OnInit {
     }
 
     Close(flag) {
-        this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag})
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
     }
 
     // ===================owner-nominee directive=====================//
@@ -233,7 +235,7 @@ export class AddSuperannuationComponent implements OnInit {
     }
 
     /***nominee***/
-// ===================owner-nominee directive=====================//
+    // ===================owner-nominee directive=====================//
     showLess(value) {
         if (value == true) {
             this.showHide = false;
@@ -313,8 +315,8 @@ export class AddSuperannuationComponent implements OnInit {
         }
         /***nominee***/
 
-        this.ownerData = {Fmember: this.nomineesListFM, controleData: this.superannuation}
-// ==============owner-nominee Data ========================\\
+        this.ownerData = { Fmember: this.nomineesListFM, controleData: this.superannuation }
+        // ==============owner-nominee Data ========================\\
         // this.ownerData = this.superannuation.controls;
         // this.familyMemberId = this.superannuation.controls.familyMemberId.value
         // this.familyMemberId = this.familyMemberId[0]
@@ -402,6 +404,7 @@ export class AddSuperannuationComponent implements OnInit {
 
     addSuperannuationRes(data) {
         this.barButtonOptions.active = false;
+        this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
         console.log('addrecuringDepositRes', data)
         this.event.openSnackBar('Added successfully!', 'Dismiss');
         this.subInjectService.changeNewRightSliderState({
