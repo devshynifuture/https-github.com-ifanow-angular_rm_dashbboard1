@@ -111,7 +111,7 @@ export class CrmNotesComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: 5441,
+      advisorId: AuthService.getAdvisorId(),
       limit: -1,
       offset: 0
     }
