@@ -289,15 +289,20 @@
     <div class="col-md-5 pr-0 text-right d-flex align-items-center justify-content-end">
       <h5 class="m-0 ">Growth rate</h5>
     </div>
-    <div class="col-md-3 iconPetage">
-      <mat-form-field>
-        <input autocomplete="off" matInput type="text" appInputValueValidation
-          [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-          formControlName="growthRate">
-        <mat-error class="f-12">
-          This field is required
-        </mat-error>
-      </mat-form-field>
+    <div class="col-md-5 pr-0 iconPetage">
+      <div class="row">
+        <div class="col-md-6 pl-0 pr-0">
+          <mat-form-field>
+            <input autocomplete="off" matInput type="text" appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
+              formControlName="growthRate">
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
     </div>
   </div>
 
