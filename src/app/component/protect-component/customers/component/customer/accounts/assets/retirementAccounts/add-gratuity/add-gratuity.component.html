@@ -79,8 +79,8 @@
         </div>
     </div>
     <div class="row pt-24">
-        <div class="col-md-5 pr-0  text-right">
-            <h5 class="m-0 pt-20 ">Date of joining the organization</h5>
+        <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end ">
+            <h5 class="m-0 ">Date of joining the organization</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -88,7 +88,7 @@
                     <input autocomplete="off" (click)="picker.open()" matInput
                         (dateChange)="setCommencementDate($event.target.value)" formControlName="yearOfJoining"
                         class="form-control br-0 b-0" [matDatepicker]="picker" [max]="maxDate" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12">
                         This field is required
