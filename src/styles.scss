@@ -831,6 +831,7 @@ mat-tab-group[vertical] {
   position: fixed;
   background-color: #fff;
   z-index: 5;
+  height: 85px;
 }
 .notesScroll {
   max-height: calc(100vh - 9rem);
