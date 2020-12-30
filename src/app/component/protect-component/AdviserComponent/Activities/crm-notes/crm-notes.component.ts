@@ -178,8 +178,10 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.subject.setValue(note.subject)
     this.checkAdmin = note.forAdmin
     if (note.clientName) {
+      this.hideOwner = false
       this.stateCtrl.setValue(note.clientName)
     } else {
+      this.hideOwner = true
       this.stateCtrl.setValue('')
     }
     this.emailBody = note.content
