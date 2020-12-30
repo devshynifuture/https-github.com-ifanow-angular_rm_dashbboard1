@@ -32,6 +32,7 @@
                         <mat-form-field appearance="standard">
                             <input class="form-control br-0" placeholder="Enter subject" matInput
                                 formControlName="subject">
+                            <mat-hint align="end" class="f-12">{{subject.value.length}}/50</mat-hint>
                             <mat-error class="f-12">
                                 This field is required
                             </mat-error>

@@ -259,7 +259,8 @@ export class CrmNotesComponent implements OnInit {
     }
   }
   deleteNotes(note) {
-    if (this.objForDelete.length == 0) {
+    if (this.objForDelete.length == 0 && note != "") {
+      this.objForDelete = []
       this.objForDelete.push({ id: note.id })
     }
     const dialogData = {
