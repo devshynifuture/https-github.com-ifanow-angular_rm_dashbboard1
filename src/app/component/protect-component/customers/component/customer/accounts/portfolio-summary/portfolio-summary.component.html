@@ -262,8 +262,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row overflow-hidden bb c-p pt-8 pb-8"
-                routerLink="/customer/detail/account/assets/others">
+              <div class="row overflow-hidden bb c-p pt-8 pb-8" routerLink="/customer/detail/account/assets/others">
                 <div class="col-md-6 relClass pr-0">
                   <div>
                     <a class="text-black m-0 roboto">
@@ -280,8 +279,7 @@
                     </p>
                     <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(Others?.percentage),'text-danger': checkNumberPositiveAndNegative(Others?.percentage)==false,'': checkNumberPositiveAndNegative(Others?.percentage)==undefined}"
                       class="m-0 roboto pr-8">
-                      <span
-                        *ngIf="letsideBarLoader==false">{{Others?.percentage == 0 ? '-' : Others?.percentage}}
+                      <span *ngIf="letsideBarLoader==false">{{Others?.percentage == 0 ? '-' : Others?.percentage}}
                         <span *ngIf="Others?.percentage!=0">%</span></span>
                     </p>
                   </div>
@@ -401,7 +399,7 @@
                       </div>
                     </div>
 
-                    <div *ngIf="finalTotal==0" class="row">
+                    <div *ngIf="graphList && graphList.length==0" class="row">
                       <div class="col-md-12 p-0">
                         <div
                           class=" d-flex flex-column  align-items-center justify-content-center text-center h-300 bg-white">
@@ -416,7 +414,7 @@
                     </div>
 
 
-                    <div *ngIf="finalTotal>0" class="row">
+                    <div *ngIf="graphList && graphList.length>0" class="row">
                       <div class="col-md-12 p-0">
                         <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
                         </div>
