@@ -7,11 +7,11 @@
         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading ">
 
 
-            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload"
                 *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <mat-menu #menu1="matMenu">
+            <mat-menu #summarydownload="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
@@ -377,7 +377,7 @@
                     <td *matCellDef="let element" [matMenuTriggerFor]="menu3" class="c-p" mat-cell>
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
-                        <mat-menu #menu3="matMenu" class="disabledOpacity">
+                        <mat-menu #menu3="matMenu">
                             <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                             <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                             <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
