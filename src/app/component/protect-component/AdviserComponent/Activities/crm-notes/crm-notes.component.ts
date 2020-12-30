@@ -58,7 +58,6 @@ export class CrmNotesComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
       check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
@@ -117,6 +116,7 @@ export class CrmNotesComponent implements OnInit {
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
+    this.checkAdmin = false
   }
   selectClient(value) {
     console.log(value)
@@ -200,28 +200,39 @@ export class CrmNotesComponent implements OnInit {
       updatedTime: new Date(),
       visibleToClient: this.visibleToClient
     }
-    if (!this.selectedNote) {
-      this.peopleService.addNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+    if (this.checkAdmin == true) {
+      if (this.stateCtrl.invalid) {
+        this.stateCtrl.setErrors({ invalid: true })
+        this.stateCtrl.markAllAsTouched();
+      }
+      return;
+    } else if (this.notes.invalid) {
+      this.stateCtrl.markAllAsTouched();
     } else {
-      obj.id = this.selectedNote.id
-      this.peopleService.editNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+      if (!this.selectedNote) {
+        this.peopleService.addNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      } else {
+        obj.id = this.selectedNote.id
+        this.peopleService.editNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      }
     }
+
 
   }
   selectForDelete(value, note) {
@@ -258,7 +269,8 @@ export class CrmNotesComponent implements OnInit {
     }
   }
   deleteNotes(note) {
-    if (this.objForDelete.length == 0) {
+    if (note != "") {
+      this.objForDelete = []
       this.objForDelete.push({ id: note.id })
     }
     const dialogData = {
