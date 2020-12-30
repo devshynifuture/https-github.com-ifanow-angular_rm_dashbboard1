@@ -91,7 +91,7 @@
                     <mat-form-field class="ba-date">
                         <input matInput (click)="KVPpicker.open()" formControlName="commDate" [min]="minDate"
                             [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0 b-0" readonly>
-                        <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
                             This field is required

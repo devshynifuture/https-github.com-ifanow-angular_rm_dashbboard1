@@ -95,7 +95,8 @@
                             <input matInput (click)="commpicker.open()" (dateChange)="checkDate()" autocomplete="off"
                                 [matDatepicker]="commpicker" [min]="minDate" [max]="maxDate"
                                 class="form-control br-0 b-0" formControlName="commDate" matInput readonly>
-                            <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle class="dateIcon" matSuffix [for]="commpicker">
+                            </mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
                             <mat-error class="f-12">
                                 This field is required

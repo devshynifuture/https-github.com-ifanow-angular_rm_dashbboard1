@@ -224,6 +224,7 @@ export class DashboardComponent implements OnInit {
   mfAumValue: any;
   answerObj: any = {};
   answerFlag: boolean;
+  taskSummaryCount: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -505,8 +506,8 @@ export class DashboardComponent implements OnInit {
   }
 
   initPointForTask() {
-    this.getTaskDashboardCount();
-    this.getTodaysTaskList();
+    DashboardService.getTaskMatrix() ? this.taskSummaryDashboardCount = DashboardService.getTaskMatrix() : this.getTaskDashboardCount();
+    DashboardService.getTodaysTaskList() ? this.dataSource2.data = DashboardService.getTodaysTaskList() : this.getTodaysTaskList();
   }
 
 
@@ -576,6 +577,8 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.taskSummaryDashboardCount = res;
+          this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount
+          DashboardService.setTaskMatrix(res);
         }
       })
   }
@@ -815,6 +818,7 @@ export class DashboardComponent implements OnInit {
               menuList: '',
             });
           });
+          DashboardService.setTodaysTaskList(dataArray);
           this.dataSource2.data = dataArray;
         } else {
           this.dataSource2.data = null;
@@ -995,6 +999,7 @@ export class DashboardComponent implements OnInit {
             }
           });
           // this.getTodoListData();
+          AuthService.setToDoList(data);
           this.todoListData = data;
           // this.todoListData.unshift(data);
         }

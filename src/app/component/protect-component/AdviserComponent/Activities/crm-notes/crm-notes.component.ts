@@ -32,10 +32,12 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = true
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
+  showCheckBox: boolean = false;
+  checkAdmin: boolean = false;
 
 
   constructor(private peopleService: PeopleService,
@@ -55,13 +57,18 @@ export class CrmNotesComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
+      check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
 
   }
   showToClient(value) {
-    this.visibleToClient = value.checked
+    if (value.checked == true) {
+      this.hideOwner = true
+    } else {
+      this.hideOwner = false
+    }
+    this.checkAdmin = value.checked
   }
   getFormControl(): any {
     return this.notes.controls;
@@ -108,6 +115,8 @@ export class CrmNotesComponent implements OnInit {
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
+    this.checkAdmin = false
+    this.hideOwner = false
   }
   selectClient(value) {
     console.log(value)
@@ -148,15 +157,17 @@ export class CrmNotesComponent implements OnInit {
   }
   selectAll(event) {
     if (event.checked == true) {
-      this.listOfNotes.forEach(element => {
-        element.checked = true
-        this.objForDelete.push({ id: element.id })
-      });
+      this.showCheckBox = true
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = true
+      //   this.objForDelete.push({ id: element.id })
+      // });
     } else {
-      this.listOfNotes.forEach(element => {
-        element.checked = false
-        this.objForDelete = []
-      });
+      this.showCheckBox = false
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = false
+      //   this.objForDelete = []
+      // });
     }
   }
   selectNote(note) {
@@ -165,8 +176,14 @@ export class CrmNotesComponent implements OnInit {
     this.selectedNote = note
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
-    this.notes.controls.clientName.setValue(note.clientName)
-    this.stateCtrl.setValue(note.clientName)
+    this.checkAdmin = note.forAdmin
+    if (note.clientName) {
+      this.hideOwner = false
+      this.stateCtrl.setValue(note.clientName)
+    } else {
+      this.hideOwner = true
+      this.stateCtrl.setValue('')
+    }
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {
       if (element.id == note.id) {
@@ -181,35 +198,47 @@ export class CrmNotesComponent implements OnInit {
     let obj = {
       id: null,
       advisorId: AuthService.getAdvisorId(),
-      clientId: this.clientId,
-      clientName: this.stateCtrl.value.name,
+      clientId: (this.clientId) ? this.clientId : 0,
+      clientName: this.stateCtrl.value,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
       updatedTime: new Date(),
-      visibleToClient: this.visibleToClient
+      forAdmin: this.checkAdmin
     }
-    if (!this.selectedNote) {
-      this.peopleService.addNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+    console.log(obj);
+
+    if (this.stateCtrl.invalid && this.checkAdmin == false) {
+      this.stateCtrl.setErrors({ invalid: true })
+      this.stateCtrl.markAllAsTouched();
+      return;
+    } else if (this.notes.invalid) {
+      this.notes.markAllAsTouched();
+      return;
     } else {
-      obj.id = this.selectedNote.id
-      this.peopleService.editNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+      if (!this.selectedNote) {
+        this.peopleService.addNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      } else {
+        obj.id = this.selectedNote.id
+        this.peopleService.editNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      }
     }
+
 
   }
   selectForDelete(value, note) {
@@ -246,7 +275,8 @@ export class CrmNotesComponent implements OnInit {
     }
   }
   deleteNotes(note) {
-    if (this.objForDelete.length == 0) {
+    if (note != "") {
+      this.objForDelete = []
       this.objForDelete.push({ id: note.id })
     }
     const dialogData = {

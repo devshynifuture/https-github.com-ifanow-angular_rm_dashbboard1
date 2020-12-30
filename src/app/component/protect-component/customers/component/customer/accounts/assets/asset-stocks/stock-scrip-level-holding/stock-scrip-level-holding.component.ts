@@ -714,6 +714,14 @@ export class StockScripLevelHoldingComponent implements OnInit {
     });
 
   }
+  showHide: boolean = false;
+  showLess(value) {
+    if (value) {
+      this.showHide = false;
+    } else {
+      this.showHide = true;
+    }
+  }
 
   //link bank
 }

@@ -95,4 +95,20 @@ export class DashboardService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.QUESTION_ANSWER_GET, httpParams);
   }
 
+  static setTaskMatrix(data) {
+    sessionStorage.setItem('taskMatrix', JSON.stringify(data));
+  }
+
+  static getTaskMatrix() {
+    return JSON.parse(sessionStorage.getItem('taskMatrix'));
+  }
+
+  static setTodaysTaskList(data) {
+    sessionStorage.setItem('todaysTaskList', JSON.stringify(data));
+  }
+
+  static getTodaysTaskList() {
+    return JSON.parse(sessionStorage.getItem('todaysTaskList'));
+  }
+
 }

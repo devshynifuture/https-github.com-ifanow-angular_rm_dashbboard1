@@ -32,7 +32,10 @@ export class NotesActivityComponent implements OnInit {
   searchQuery: any;
   visibleToClient: boolean = true;
   before: any;
-
+  activeOnSelect: boolean = false;
+  hideOwner: boolean = false;
+  showCheckBox: boolean = false;
+  checkAdmin: boolean = false;
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
@@ -51,7 +54,6 @@ export class NotesActivityComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
     });
 
 
@@ -62,15 +64,17 @@ export class NotesActivityComponent implements OnInit {
   }
   selectAll(event) {
     if (event.checked == true) {
-      this.listOfNotes.forEach(element => {
-        element.checked = true
-        this.objForDelete.push({ id: element.id })
-      });
+      this.showCheckBox = true
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = true
+      //   this.objForDelete.push({ id: element.id })
+      // });
     } else {
-      this.listOfNotes.forEach(element => {
-        element.checked = false
-        this.objForDelete = []
-      });
+      this.showCheckBox = false
+      // this.listOfNotes.forEach(element => {
+      //   element.checked = false
+      //   this.objForDelete = []
+      // });
     }
   }
 
@@ -116,6 +120,7 @@ export class NotesActivityComponent implements OnInit {
     this.selectedNote = note
     this.notes.controls.subject.setValue(note.subject)
     this.emailBody = note.content
+    this.checkAdmin = note.visibleToClient
     this.listOfNotes.forEach(element => {
       if (element.id == note.id) {
         element.activeOnSelect = true
@@ -142,28 +147,34 @@ export class NotesActivityComponent implements OnInit {
       updatedTime: new Date(),
       visibleToClient: this.visibleToClient
     }
-    if (!this.selectedNote) {
-      this.peopleService.addNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+    if (this.notes.invalid) {
+      this.notes.markAllAsTouched();
+      return;
     } else {
-      obj.id = this.selectedNote.id
-      this.peopleService.editNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+      if (!this.selectedNote) {
+        this.peopleService.addNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      } else {
+        obj.id = this.selectedNote.id
+        this.peopleService.editNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      }
     }
+
 
   }
   editNotes() {
@@ -194,7 +205,8 @@ export class NotesActivityComponent implements OnInit {
     });
   }
   deleteNotes(note) {
-    if (this.objForDelete.length == 0) {
+    if (note != "") {
+      this.objForDelete = []
       this.objForDelete.push({ id: note.id })
     }
     const dialogData = {

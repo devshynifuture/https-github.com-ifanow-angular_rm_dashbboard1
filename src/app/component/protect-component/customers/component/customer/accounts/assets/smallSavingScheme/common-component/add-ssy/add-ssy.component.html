@@ -93,7 +93,7 @@
           <input autocomplete="off" matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker" [max]="maxDate"
             [min]="minDate" class="form-control br-0 b-0" (dateChange)="setCommencementDate($event.target.value)"
             formControlName="commDate" matInput readonly>
-          <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle class="dateIcon" matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
           <mat-datepicker #SSYpicker></mat-datepicker>
           <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.required">
             This field is required
@@ -139,7 +139,7 @@
         <mat-form-field class="ba-date"><input autocomplete="off" matInput (click)="balanceAsOn.open()"
             [min]="ssySchemeForm.get('commDate').value" [matDatepicker]="balanceAsOn" [max]="maxDate"
             class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
-          <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+          <mat-datepicker-toggle class="dateIcon" matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
           <mat-datepicker #balanceAsOn></mat-datepicker>
           <mat-error class="f-12 pt-4 w-s">
             {{ssySchemeForm.get('balanceAsOn').value == "Invalid Date" ? 'This field is required' : 'Balance as on date should be greater than commencement date'}}

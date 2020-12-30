@@ -114,7 +114,7 @@
                     <input class="form-control b-0" (focus)="picker.open()" (click)="picker.open()"
                         (dateChange)="checkDate()" matInput formControlName="commencementDate" [max]="maxDate"
                         [matDatepicker]="picker" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
                         This field is required
