@@ -71,11 +71,15 @@ export class PPFSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    if (!this.dataList) {
+    if (!this.dataList && !this.assetValidation.ppflist) {
       this.getPpfSchemeData();
     } else {
-      this.getPpfSchemeDataResponse(this.dataList);
+      this.getPpfSchemeDataResponse(this.dataList ? this.dataList : this.assetValidation.ppflist);
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.ppflist = this.dataList ? this.dataList : null;
   }
 
   Excel(tableTitle) {
@@ -263,10 +267,12 @@ export class PPFSchemeComponent implements OnInit {
               this.dataList['sumOfAccountBalance'] = sideBarData.data.accountBalance;
             }
             else {
-              this.dataList.assetList.push(sideBarData.data);
-              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
-              // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
-              this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
+              if (sideBarData.data) {
+                this.dataList.assetList.push(sideBarData.data);
+                this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
+                this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
+              }
             }
 
             this.getPpfSchemeDataResponse(this.dataList);
@@ -310,6 +316,8 @@ export class PPFSchemeComponent implements OnInit {
     // this.dataSource = new MatTableDataSource(data);
     // this.dataSource.sort = this.tableEl;
   }
+
+
 }
 export interface PeriodicElement16 {
   no: string;

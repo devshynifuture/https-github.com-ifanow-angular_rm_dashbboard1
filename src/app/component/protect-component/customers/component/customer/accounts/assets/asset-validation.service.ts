@@ -11,7 +11,27 @@ export class AssetValidationService {
   clientId: any;
   counts: any;
   updateCounts = new Subject();
-
+  fixDataList: any;
+  recDataList: any;
+  bondDataList: any;
+  realEstateList: any;
+  npsDatalist: any;
+  gratuityDatalist: any;
+  epfDatalist: any;
+  ppflist: any;
+  nsclist: any;
+  ssylist: any;
+  kvplist: any;
+  scsslist: any;
+  poSavingslist: any;
+  pordlist: any;
+  potdlist: any;
+  pomislist: any;
+  cashDataList: any;
+  bankDataList: any;
+  goldDataList: any;
+  otherDataList: any;
+  otherAssetsList: any
   private assetCount = new BehaviorSubject<any>({});
   assetCountObserver = this.assetCount.asObservable();
 
