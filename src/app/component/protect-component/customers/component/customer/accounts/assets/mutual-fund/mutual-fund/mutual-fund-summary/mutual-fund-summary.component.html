@@ -1,7 +1,7 @@
 <div class="wrapper-8" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row pb-12">
         <div class="col-md-4 pl-0">
-            <h4 class="m-0 text-black roboto pt-8">Mutual fund Summary </h4>
+            <h4 class="m-0 text-black roboto pt-8">Mutual fund summary </h4>
         </div>
 
         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading ">
@@ -126,7 +126,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="absoluteReturn">
-                    <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>Abs Ret</th>
+                    <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>Abs ret</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span>{{(isLoading) ? '' : (element.absoluteReturn)}}</span>
@@ -218,7 +218,7 @@
 
                 <ng-container matColumnDef="balanceUnit">
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                        Balance Unit </th>
+                        Balance unit </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span>{{element.balanceUnit}}</span>
 
@@ -295,7 +295,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="investedDate">
-                    <th class="br w-9 text-right" mat-header-cell *matHeaderCellDef>Invested Date
+                    <th class="br w-9 text-right" mat-header-cell *matHeaderCellDef>Invested date
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">

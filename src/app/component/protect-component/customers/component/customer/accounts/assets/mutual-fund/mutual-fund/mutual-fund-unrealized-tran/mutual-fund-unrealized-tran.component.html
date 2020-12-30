@@ -203,7 +203,7 @@
                   <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                </ng-container>
                <ng-container matColumnDef="transactionType">
-                  <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
+                  <th *matHeaderCellDef class="br" mat-header-cell> Transaction type
                   </th>
                   <td *matCellDef="let element" class="br zIndex" mat-cell>
                      <div class="bar">
@@ -212,7 +212,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="transactionTypeTotal">
-                  <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
+                  <th *matHeaderCellDef class="br" mat-header-cell> Transaction type
                   </th>
                   <td *matCellDef="let element" class="br zIndex" mat-cell>
                      <div class="bar">
@@ -855,12 +855,12 @@
                {{item.groupName}}
             </td>
          </tr>
-         <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-            <td class="f-700" [attr.colspan]="colspanValue"
+         <tr  style="page-break-inside: avoid">
+            <td class="f-700" *ngIf="item.schemeName" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
-            <td class="f-700" [attr.colspan]="colspanValue"
+            <td class="f-700" *ngIf="item.navDate" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
                {{item.navDate | date:'dd/MM/yyyy'}}
