@@ -103,14 +103,14 @@ export class RightFilterDuplicateComponent implements OnInit {
   familyChecked: boolean;
   showZeroFolio = false;
   setAllTrue = false;
-  setTrueKey =false;
+  setTrueKey = false;
   parentId: any;
   adminAdvisorIds: string;
   minDate = new Date();
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+    private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -124,12 +124,12 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   ngOnInit(): void {
     this.mfService.getadvisorList()
-    .subscribe(res => {
-      this.adminAdvisorIds = res;
-    });
-    this.minDate = new Date(1990,0,1);
+      .subscribe(res => {
+        this.adminAdvisorIds = res;
+      });
+    this.minDate = new Date(1990, 0, 1);
 
-    this.setTrueKey =this._data.setTrueKey;
+    this.setTrueKey = this._data.setTrueKey;
     this.showZeroFolio = this._data.showFolio == '2' ? false : true;
     this.panelOpenState = false;
     this.advisorId = AuthService.getAdvisorId();
@@ -380,7 +380,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     if (this._data.capitalGainData) {
       const redemptionList = this._data.capitalGainData.redemptionList;
       redemptionList.forEach(element => {
-        if (element && element.hasOwnProperty('purchaceAgainstRedemptionTransactions') && element.purchaceAgainstRedemptionTransactions.length > 0 ) {
+        if (element && element.hasOwnProperty('purchaceAgainstRedemptionTransactions') && element.purchaceAgainstRedemptionTransactions.length > 0) {
           let year = element.financialYear;
           const date = new Date(element.transactionDate);
 
@@ -451,8 +451,8 @@ export class RightFilterDuplicateComponent implements OnInit {
       this.financialYears.forEach(item => {
         if (this._data.capitalGainData.fromDateYear >= 2018) {
           let grandFatheringEffect;
-          (this._data.capitalGainData.grandFatheringEffect == false) ?  form.get('grandfathering').setValue('2') :   form.get('grandfathering').setValue('1');
-        
+          (this._data.capitalGainData.grandFatheringEffect == false) ? form.get('grandfathering').setValue('2') : form.get('grandfathering').setValue('1');
+
         }
       });
     }
@@ -1690,11 +1690,11 @@ export class RightFilterDuplicateComponent implements OnInit {
     }
     this.changeSelect('', '');
   }
-  checkLengthAndSetTrue(){
-    if(this.familyMember.length  == this.countFamily && this.amc.length == this.countAmc && this.scheme.length == this.countScheme && this.folio.length == this.countFolio && this.category.length == this.countCategory ){
-      this.setAllTrue=true;
-    }else{
-      this.setAllTrue=false;
+  checkLengthAndSetTrue() {
+    if (this.familyMember.length == this.countFamily && this.amc.length == this.countAmc && this.scheme.length == this.countScheme && this.folio.length == this.countFolio && this.category.length == this.countCategory) {
+      this.setAllTrue = true;
+    } else {
+      this.setAllTrue = false;
     }
   }
   generateReport() {
@@ -1740,12 +1740,12 @@ export class RightFilterDuplicateComponent implements OnInit {
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        parentId:this.parentId ? this.parentId : this.advisorId,
+        parentId: this.parentId ? this.parentId : this.advisorId,
         advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
-        toDate:this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
+        toDate: this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
-        showFolio:(this.finalFilterData.showFolio == '2')? false:true
+        showFolio: (this.finalFilterData.showFolio == '2') ? false : true
       };
       if (this._data.name == 'Overview Report') {
         this.obj.toDate = todayDate;
