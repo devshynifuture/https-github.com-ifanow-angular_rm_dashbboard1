@@ -117,6 +117,7 @@ export class CrmNotesComponent implements OnInit {
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
+    this.checkAdmin = false
   }
   selectClient(value) {
     console.log(value)
