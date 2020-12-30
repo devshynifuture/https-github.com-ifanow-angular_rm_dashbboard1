@@ -177,7 +177,7 @@ export class CrmNotesComponent implements OnInit {
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.notes.controls.clientName.setValue(note.clientName)
-    this.checkAdmin = note.visibleToClient
+    this.checkAdmin = note.forAdmin
     this.stateCtrl.setValue(note.clientName)
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {
@@ -194,11 +194,11 @@ export class CrmNotesComponent implements OnInit {
       id: null,
       advisorId: AuthService.getAdvisorId(),
       clientId: this.clientId,
-      clientName: this.stateCtrl.value.name,
+      clientName: "",
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
       updatedTime: new Date(),
-      visibleToClient: this.visibleToClient
+      forAdmin: this.visibleToClient
     }
     if (this.checkAdmin == true) {
       if (this.stateCtrl.invalid) {
