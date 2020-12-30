@@ -449,18 +449,22 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.cusService.getAumGraphData(obj).subscribe(
       data => {
         console.log('getAumGraphData data', data);
-        this.summaryFlag = false;
-        this.graphList = [];
-        let sortedDateList = [];
-        sortedDateList = data;
-        sortedDateList.sort((a, b) => {
-          return a.targetDate - b.targetDate;
-        });
-        this.calculate1DayAnd90Days(sortedDateList);
-        for (const singleData of sortedDateList) {
-          this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
+        if (data) {
+          this.summaryFlag = false;
+          this.graphList = [];
+          let sortedDateList = [];
+          sortedDateList = data;
+          sortedDateList.sort((a, b) => {
+            return a.targetDate - b.targetDate;
+          });
+          this.calculate1DayAnd90Days(sortedDateList);
+          for (const singleData of sortedDateList) {
+            this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
+          }
+          this.setPortfolioGraphData(this.graphList);
+        } else {
+          this.graphList = []
         }
-        this.setPortfolioGraphData(this.graphList);
         // this.lineChart('container-hc-figure');
       },
       err => {

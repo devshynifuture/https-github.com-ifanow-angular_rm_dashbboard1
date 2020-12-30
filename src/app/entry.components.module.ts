@@ -137,6 +137,7 @@ import { DetailedViewInsurancePlanningComponent } from './component/protect-comp
 import { DetailedViewOthersAssetComponent } from './component/protect-component/customers/component/customer/accounts/assets/others-assets/detailed-view-others-asset/detailed-view-others-asset.component';
 import { SaveFinPlanSectionComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/save-fin-plan-section/save-fin-plan-section.component';
 import { AddOthersInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-others-insurance-in-asset/add-others-insurance-in-asset.component';
+import { DialogDetailedViewInsPlanningComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/dialog-detailed-view-ins-planning/dialog-detailed-view-ins-planning.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -306,7 +307,8 @@ export const componentList = [
   PreviewFinPlanComponent,
   DetailedViewInsurancePlanningComponent,
   DetailedViewOthersAssetComponent,
-  SaveFinPlanSectionComponent
+  SaveFinPlanSectionComponent,
+  DialogDetailedViewInsPlanningComponent
   // ComposeEmailComponent
 ];
 
@@ -326,7 +328,8 @@ export const componentList = [
     CustomDirectiveModule,
     Ng5SliderModule, // used in MultiYearGoalComponent
     NgxDocViewerModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    
   ],
   exports: [
     FormsModule,

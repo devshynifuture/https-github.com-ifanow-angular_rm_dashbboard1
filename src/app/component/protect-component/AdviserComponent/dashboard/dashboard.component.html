@@ -575,8 +575,8 @@
             <h5 class="m-0 f-500 roboto text-black"> Task summary </h5>
           </div>
           <div class="col-md-4 p-0 text-right">
-            <button [routerLink]="['/admin/activies/tasks']" routerLinkActive="router-link-active" mat-stroked-button
-              class="advisor-view-all">View All </button>
+            <button *ngIf="taskSummaryCount>0" [routerLink]="['/admin/activies/tasks']"
+              routerLinkActive="router-link-active" mat-stroked-button class="advisor-view-all">View All </button>
           </div>
         </div>
         <div class=" ba-primitive br-4 pt-14 pb-14 ">
@@ -792,7 +792,8 @@
             <h5 class="m-0 f-500 roboto text-black">Recent investment accounts</h5>
           </div>
           <div class="col-md-3 p-0 text-right">
-            <button [routerLink]="['/admin/transactions/overview']" mat-stroked-button class="advisor-view-all">View
+            <button *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length >4"
+              [routerLink]="['/admin/transactions/overview']" mat-stroked-button class="advisor-view-all">View
               All</button>
           </div>
         </div>
@@ -975,8 +976,9 @@
             <h5 class="m-0 f-500 roboto text-black">Recent online transactions (MF)</h5>
           </div>
           <div class="col-md-3 p-0 text-right">
-            <button mat-stroked-button [routerLink]="['/admin/transactions/overview']"
-              routerLinkActive="router-link-active" class="advisor-view-all">View All
+            <button *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length>4" mat-stroked-button
+              [routerLink]="['/admin/transactions/overview']" routerLinkActive="router-link-active"
+              class="advisor-view-all">View All
             </button>
           </div>
         </div>
@@ -1161,8 +1163,9 @@
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
         </div>
         <div class="col-md-3 p-0 text-right">
-            <button mat-stroked-button [routerLink]="['/admin/backoffice-mis/mutual-funds']"
-            routerLinkActive="router-link-active" class="advisor-view-all">View All
+          <button *ngIf="dataSource5.length > 4" mat-stroked-button
+            [routerLink]="['/admin/backoffice-mis/mutual-funds']" routerLinkActive="router-link-active"
+            class="advisor-view-all">View All
           </button>
         </div>
 
@@ -1382,7 +1385,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
+        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8">
           <div (click)="changeParentsTab(3)" class="c-p">View all</div>
         </div>
 
@@ -1395,8 +1398,8 @@
           </div>
 
           <div class="col-md-3 p-0 text-right">
-            <button [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']" mat-stroked-button
-              class="advisor-view-all">View All</button>
+            <button *ngIf="aumReconList.length>4" [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']"
+              mat-stroked-button class="advisor-view-all">View All</button>
           </div>
         </div>
 

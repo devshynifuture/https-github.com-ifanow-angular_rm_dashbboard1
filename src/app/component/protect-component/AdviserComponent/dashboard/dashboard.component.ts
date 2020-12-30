@@ -224,6 +224,7 @@ export class DashboardComponent implements OnInit {
   mfAumValue: any;
   answerObj: any = {};
   answerFlag: boolean;
+  taskSummaryCount: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -576,6 +577,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.taskSummaryDashboardCount = res;
+          this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount
           DashboardService.setTaskMatrix(res);
         }
       })
