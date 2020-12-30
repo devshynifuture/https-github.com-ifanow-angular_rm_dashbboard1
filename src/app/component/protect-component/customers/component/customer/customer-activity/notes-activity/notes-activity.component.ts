@@ -54,7 +54,6 @@ export class NotesActivityComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
     });
 
 
@@ -148,28 +147,34 @@ export class NotesActivityComponent implements OnInit {
       updatedTime: new Date(),
       visibleToClient: this.visibleToClient
     }
-    if (!this.selectedNote) {
-      this.peopleService.addNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+    if (this.notes.invalid) {
+      this.notes.markAllAsTouched();
+      return;
     } else {
-      obj.id = this.selectedNote.id
-      this.peopleService.editNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+      if (!this.selectedNote) {
+        this.peopleService.addNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      } else {
+        obj.id = this.selectedNote.id
+        this.peopleService.editNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      }
     }
+
 
   }
   editNotes() {

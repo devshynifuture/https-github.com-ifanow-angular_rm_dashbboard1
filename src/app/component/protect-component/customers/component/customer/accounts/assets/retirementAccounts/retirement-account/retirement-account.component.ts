@@ -53,6 +53,7 @@ export class RetirementAccountComponent implements OnInit {
   totalCurrentValue: any;
   data: Array<any> = [{}, {}, {}];
   isLoading = false;
+  filterFixedIncome;
   dataSource: any = new MatTableDataSource();
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
