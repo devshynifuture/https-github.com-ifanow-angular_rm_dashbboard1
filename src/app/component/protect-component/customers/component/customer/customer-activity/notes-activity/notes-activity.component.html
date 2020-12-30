@@ -55,7 +55,7 @@
 
     <div class="row pt-80">
         <div class="col-md-3 pr-0">
-            <div class="row pt-10 pb-10">
+            <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
                 <div class="col-md-12 p-0 remove-top">
                     <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
                         <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"

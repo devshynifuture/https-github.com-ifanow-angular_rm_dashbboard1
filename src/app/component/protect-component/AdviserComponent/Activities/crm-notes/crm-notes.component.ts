@@ -32,7 +32,6 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = false
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
@@ -69,7 +68,7 @@ export class CrmNotesComponent implements OnInit {
     } else {
       this.hideOwner = false
     }
-    this.visibleToClient = value.checked
+    this.checkAdmin = value.checked
   }
   getFormControl(): any {
     return this.notes.controls;
@@ -203,7 +202,7 @@ export class CrmNotesComponent implements OnInit {
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
       updatedTime: new Date(),
-      forAdmin: this.visibleToClient
+      forAdmin: this.checkAdmin
     }
     console.log(obj);
     if (this.checkAdmin == true) {
