@@ -1,5 +1,9 @@
-<img *ngIf="fieldFlag=='familyMember'" [matMenuTriggerFor]="menu " class="c-p unmap-option"
-    src="/assets/images/svg/dot-menu.svg">
+<button *ngIf="fieldFlag=='familyMember'" mat-icon-button [matMenuTriggerFor]="menu" class="unmap-option c-p">
+    <mat-icon>more_vert</mat-icon>
+</button>
+
+
+
 <mat-menu #menu="matMenu">
     <button (click)="openUnmapPopupORNot()" mat-menu-item>
         <span>Unmap</span>

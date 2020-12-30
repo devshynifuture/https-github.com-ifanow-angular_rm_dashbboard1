@@ -316,8 +316,12 @@
                                             </div>
 
                                             <div class="bar">
-                                                <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg"
-                                                    class="c-p">
+
+                                                <button mat-icon-button class="c-p" [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+
+
                                                 <mat-menu #menu="matMenu">
                                                     <button mat-menu-item (click)="reallocateAsset(allocation)">Change
                                                         allocation percentage</button>
