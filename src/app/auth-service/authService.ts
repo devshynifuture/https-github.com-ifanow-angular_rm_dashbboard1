@@ -215,6 +215,8 @@ export class AuthService {
     sessionStorage.removeItem('clientList');
     sessionStorage.removeItem('ToDo');
     sessionStorage.clear();
+    sessionStorage.removeItem('taskMatrix');
+    sessionStorage.removeItem('todaysTaskList')
     // this.myRoute.navigate(['login']);
   }
 
