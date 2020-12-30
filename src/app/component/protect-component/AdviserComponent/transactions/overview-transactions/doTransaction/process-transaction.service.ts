@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import {AbstractControl, ValidationErrors} from '@angular/forms';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmationTransactionComponent} from './confirmation-transaction/confirmation-transaction.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {PersonalDetailsInnComponent} from '../IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
-import {ContactDetailsInnComponent} from '../IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
-import {BankDetailsIINComponent} from '../IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
-import {NomineeDetailsIinComponent} from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
-import {FatcaDetailsInnComponent} from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
-import {OnlineTransactionService} from '../../online-transaction.service';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmationTransactionComponent } from './confirmation-transaction/confirmation-transaction.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { PersonalDetailsInnComponent } from '../IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
+import { ContactDetailsInnComponent } from '../IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
+import { BankDetailsIINComponent } from '../IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
+import { NomineeDetailsIinComponent } from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
+import { FatcaDetailsInnComponent } from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
+import { OnlineTransactionService } from '../../online-transaction.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +24,14 @@ export class ProcessTransactionService {
   schemeSelection: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-              private onlineTransactService: OnlineTransactionService) {
+    private onlineTransactService: OnlineTransactionService) {
     this.transactionSummary = {};
   }
 
   static errorValidator(familyList) {
     return (control: AbstractControl): ValidationErrors | null => {
       if (familyList == undefined) {
-        return {isFamilyListInvalid: true};
+        return { isFamilyListInvalid: true };
       }
       return null;
     };
@@ -143,7 +143,7 @@ export class ProcessTransactionService {
   }
 
   calculateInstallmentAndEndDateNew(startDate, frequencyType, tenure, noOfInstallments) {
-    const obj: any = {startDate, frequencyType, tenure, noOfInstallments};
+    const obj: any = { startDate, frequencyType, tenure, noOfInstallments };
     if (tenure == 3) {
       const endDate = new Date();
       endDate.setDate(31);
@@ -218,9 +218,9 @@ export class ProcessTransactionService {
     return currentValue;
   }
 
-  getDateByArray = function(arr, flag) {
+  getDateByArray = function (arr, flag) {
     let dArr = [], datesArr = [];
-    const t = (flag == true) ? moment().add('days', 7) : moment().add('days', 30);
+    const t = moment().subtract('days', 7);
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]));
     }
@@ -239,7 +239,7 @@ export class ProcessTransactionService {
     });
     return dArr;
   };
-  formatApiDates = function(_date) {
+  formatApiDates = function (_date) {
     const d = (_date) ? new Date(_date) : new Date(),
       minutes = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes(),
       hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours(),
@@ -249,7 +249,7 @@ export class ProcessTransactionService {
     const date = (d.getDate() < 10) ? '0' + d.getDate() : d.getDate();
     return date + '-' + months[d.getMonth()] + '-' + d.getFullYear();
   };
-  getMonth = function(mnth) {
+  getMonth = function (mnth) {
     let mm;
     const m = parseInt(mnth);
     switch (m - 1) {
@@ -320,7 +320,7 @@ export class ProcessTransactionService {
   public filterActiveMandateData(data, amount?, toDate?) {
     let selectedMandate;
     return data.filter(element => {
-      if (element.statusString == 'ACCEPTED') {
+      if (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED") {
         if (amount && amount > 0 && amount > element.amount) {
           return false;
         }
