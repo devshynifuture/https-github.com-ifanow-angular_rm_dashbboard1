@@ -117,6 +117,7 @@ export class CrmNotesComponent implements OnInit {
     this.emailBody = ""
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
+    this.checkAdmin = false
   }
   selectClient(value) {
     console.log(value)
@@ -258,7 +259,8 @@ export class CrmNotesComponent implements OnInit {
     }
   }
   deleteNotes(note) {
-    if (this.objForDelete.length == 0) {
+    if (this.objForDelete.length == 0 && note != "") {
+      this.objForDelete = []
       this.objForDelete.push({ id: note.id })
     }
     const dialogData = {
