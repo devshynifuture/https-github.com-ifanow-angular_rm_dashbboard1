@@ -116,6 +116,7 @@ export class CrmNotesComponent implements OnInit {
     this.notes.controls.subject.setValue('')
     this, this.stateCtrl.setValue('')
     this.checkAdmin = false
+    this.hideOwner = false
   }
   selectClient(value) {
     console.log(value)
@@ -205,7 +206,7 @@ export class CrmNotesComponent implements OnInit {
       forAdmin: this.checkAdmin
     }
     console.log(obj);
-    if (this.checkAdmin == true) {
+    if (this.checkAdmin == false) {
       if (this.stateCtrl.invalid) {
         this.stateCtrl.setErrors({ invalid: true })
         this.stateCtrl.markAllAsTouched();
