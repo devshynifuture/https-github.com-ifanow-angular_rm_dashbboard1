@@ -117,9 +117,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
 
 
@@ -127,10 +124,10 @@
                 <ul class="block">
                     <li *ngFor="let note of listOfNotes">
                         <div class="d-flex p-10" [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' ">
-                            <mat-checkbox *ngIf="showCheckBox == true" class="example-margin" [checked]="note.checked"
-                                (change)="selectForDelete($event,note)">
+                            <mat-checkbox *ngIf="showCheckBox == true" class="example-margin mr-10"
+                                [checked]="note.checked" (change)="selectForDelete($event,note)">
                             </mat-checkbox>
-                            <div class="ml-10  w-80" (click)="selectNote(note)">
+                            <div class=" w-90" (click)="selectNote(note)">
                                 <h5 class="m-0 f-500"> {{note.subject}} </h5>
                                 <p class="m-0  ">{{note.clientName}}</p>
                                 <p class="m-0   text-primitive">
@@ -144,22 +141,8 @@
                             </div>
                         </div>
 
-
-
-
                     </li>
                 </ul>
-
-
-
-                <!-- <div class="row  b-b pt-10 pb-10" (click)="selectNote(note)">
-                        <div class="col-md-12 p-0">
-                            <h5 class="m-0 f-500"> {{note.subject}} </h5>
-                            <p class="m-0">{{note.clientName}}</p>
-                            <p class="m-0 text-primitive">
-                                {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} {{note.content}}</p>
-                        </div>
-                    </div> -->
 
             </div>
             <div class="text-center mt-10" *ngIf="listOfNotes.length==0 &&  !isLoading">
