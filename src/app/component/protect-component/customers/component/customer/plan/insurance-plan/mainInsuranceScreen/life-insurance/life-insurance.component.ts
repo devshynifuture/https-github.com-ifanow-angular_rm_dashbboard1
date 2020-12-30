@@ -473,6 +473,23 @@ export class LifeInsuranceComponent implements OnInit {
     });
   }
   openDetailedView(data) {
+    if(data && data.adviceDetails){
+      if(data.adviceDetails.gen_insurance_advice_id){
+        let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
+        this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+        data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date
+        data.adviceDetails.applicableDate = data.adviceDetails.applicable_date
+        data.adviceDetails.adviceDescription = data.adviceDetails.advice_description
+        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment
+      }else{
+        let id = data ? (data.adviceDetails ? (data.adviceDetails.insurance_advice_id) :this.adviceName ) :this.adviceName;
+      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+        data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date
+        data.adviceDetails.applicableDate = data.adviceDetails.applicable_date
+        data.adviceDetails.adviceDescription = data.adviceDetails.advice_description
+        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment
+      }
+    }
     const sendData = {
       flag: 'detailedView',
       data: {},
@@ -488,7 +505,7 @@ export class LifeInsuranceComponent implements OnInit {
       insuranceTypeId: this.type.insuranceTypeId,
       insuranceSubTypeId: this.type.insuranceSubTypeId,
       showInsurance: this.inputData,
-
+      adviceName :this.adviceName
 
     };
 

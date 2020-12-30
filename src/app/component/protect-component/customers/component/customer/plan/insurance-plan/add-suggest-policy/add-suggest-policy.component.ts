@@ -41,6 +41,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   policyDetails: any;
   isRecommended = false;
   recommendOrNot: any;
+  ids =[];
   constructor(private datePipe: DatePipe,private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
@@ -198,6 +199,8 @@ export class AddSuggestPolicyComponent implements OnInit {
         this.planService.addSuggestNew(obj).subscribe(
           data => {
             console.log(data);
+            this.ids.push(data);
+            this.saveLifeInsurance();
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar('Suggest policy added', 'Ok');
             this.close(true);
@@ -209,5 +212,20 @@ export class AddSuggestPolicyComponent implements OnInit {
       }
 
     }
+  }
+  saveLifeInsurance() {
+    this.barButtonOptions.active = true;
+    const obj = {
+      id: this.insuranceData.id,
+      needAnalysis: this.ids
+    }
+    this.planService.lifeInsurancePlanAdd(obj).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        // this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
 }
