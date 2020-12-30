@@ -14,6 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-suggested-advice.component';
 import { catchError, defaultIfEmpty } from 'rxjs/operators';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { DetailedViewInsurancePlanningComponent } from '../../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 
 @Component({
   selector: 'app-all-advice-life-insurance',
@@ -38,6 +39,13 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   ulipCount: any;
   displayList: any;
   object: any;
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
+    name: 'Health',
+    id: 5
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+    name: 'Motor',
+    id: 4
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Surrender' }, { id: '3', value: 'Stop paying premium' },]
   termCpy: any;
   tradCopy: any;
@@ -204,6 +212,35 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
     });
     return filterdData;
+  }
+  openDetailedView(heading,data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    const sendData = {
+      flag: 'detailedView',
+      data: {},
+      state: 'open',
+      componentName: DetailedViewInsurancePlanningComponent
+    };
+    sendData.data = {
+      data: data,
+      displayList: this.displayList,
+      allInsurance: this.allInsurance,
+      insuranceTypeId: data ? 1 : null,
+      insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
+      adviceName : this.adviceName,
+      showInsurance: {heading : heading},
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
   getAllSchemeResponse(data) {
     if(data.TERM_LIFE_INSURANCE || data.TRADITIONAL_LIFE_INSURANCE || data.ULIP_LIFE_INSURANCE){

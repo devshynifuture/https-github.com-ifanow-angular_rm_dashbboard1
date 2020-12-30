@@ -1,14 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+export interface DialogData {
+  [x: string]: any;
 
+  animal: string;
+  name: string;
+}
 @Component({
-  selector: 'app-detailed-view-insurance-planning',
-  templateUrl: './detailed-view-insurance-planning.component.html',
-  styleUrls: ['./detailed-view-insurance-planning.component.scss']
+  selector: 'app-dialog-detailed-view-ins-planning',
+  templateUrl: './dialog-detailed-view-ins-planning.component.html',
+  styleUrls: ['./dialog-detailed-view-ins-planning.component.scss']
 })
-export class DetailedViewInsurancePlanningComponent implements OnInit {
-  _data: any;
+
+export class DialogDetailedViewInsPlanningComponent implements OnInit {
+  _data:any;
   nominee: any;
   cashFlowList: any;
   insuranceSubTypeId: any;
@@ -21,20 +28,19 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   dataSourceHealth: any;
   adviceName: any;
-  constructor(private enumService: EnumServiceService, private subInjectService: SubscriptionInject) {
-  }
-
-  @Input()
-  set data(inputData) {
-    this._data = inputData.data;
-    this.insuranceSubTypeId = inputData.data.insuranceSubTypeId;
+  constructor(public dialogRef: MatDialogRef<DialogDetailedViewInsPlanningComponent>,@Inject(MAT_DIALOG_DATA) public inputData: DialogData,private enumService: EnumServiceService, private subInjectService: SubscriptionInject) {
+    this._data =  inputData.data;
+    this._data.parentAsset = inputData.data.stringObject['REAL'] ? inputData.data.stringObject['REAL'] : null;
+    this._data.childAsset = inputData.data.stringObject['FICT'] ? inputData.data.stringObject['FICT'] : null;
+    // this._data.adviceDetails = inputData.adviceDetails;
+    this.insuranceSubTypeId = inputData.insuranceSubTypeId;
     this.dataSourceHealth = this.filterArray(this._data);;
     this.adviceName = inputData.adviceName ? inputData.adviceName : null
     this.showInsurance = inputData.showInsurance
     this.displayList = inputData.displayList;
-    // this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
-
   }
+
+
 
   get data() {
     return this._data;
@@ -89,6 +95,9 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  closeDialog(data): void {
+    this.dialogRef.close(data);
+  }
 
 }
 export interface PeriodicElement {
@@ -129,3 +138,4 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 
 
 ];
+

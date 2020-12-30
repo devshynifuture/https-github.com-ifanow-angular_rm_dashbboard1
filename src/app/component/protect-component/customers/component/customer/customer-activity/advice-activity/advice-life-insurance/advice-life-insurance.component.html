@@ -229,6 +229,8 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEditAdvice('Term Insurance',element)">Edit</button>
+                        <button mat-menu-item
+                        (click)="openDetailedView('Term Insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Term Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -433,6 +435,8 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEditAdvice('Traditional Insurance',element)">Edit</button>
+                        <button mat-menu-item
+                        (click)="openDetailedView('Traditional Insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Traditional Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
@@ -627,6 +631,8 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="openAddEditAdvice('Ulip Insurance',element)">Edit</button>
+                        <button mat-menu-item
+                        (click)="openDetailedView('Ulip Insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Ulip Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>

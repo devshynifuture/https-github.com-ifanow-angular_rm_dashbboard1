@@ -16,6 +16,7 @@ import { EditSuggestedAdviceComponent } from '../edit-suggested-advice/edit-sugg
 import { AddNewLifeInsComponent } from './add-new-life-ins/add-new-life-ins.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { defaultIfEmpty } from 'rxjs/operators';
+import { DetailedViewInsurancePlanningComponent } from '../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -68,6 +69,13 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   adviceName: string;
   adviceNameObj: { adviceName: string; };
   familyMemberList: unknown;
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
+    name: 'Health',
+    id: 5
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+    name: 'Motor',
+    id: 4
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   constructor(private peopleService:PeopleService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
 
   ngOnInit() {
@@ -176,6 +184,37 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     //     this.ulipDataSource['tableFlag'] = (this.ulipDataSource.length == 0) ? false : true;
     //   }
     // );
+  }
+  openDetailedView(heading,data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    const sendData = {
+      flag: 'detailedView',
+      data: {},
+      state: 'open',
+      componentName: DetailedViewInsurancePlanningComponent
+    };
+    sendData.data = {
+      data: data,
+      displayList: this.displayList,
+      allInsurance: this.allInsurance,
+      insuranceTypeId: data ? 1 : null,
+      insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
+      adviceName : this.adviceName,
+      showInsurance: {heading : heading},
+
+
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
   filterForAsset(data) {//filter data to for showing in the table
     let filterdData = [];
