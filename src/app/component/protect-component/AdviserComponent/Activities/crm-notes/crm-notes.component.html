@@ -48,7 +48,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-md-5  remove-top pl-0" *ngIf="hideOwner == false">
+                        <div class="col-md-5  remove-top p-0" *ngIf="hideOwner == false">
                             <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
                                 <input #searchClient (input)="checkOwnerList(searchClient.value)"
                                     [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
@@ -61,15 +61,15 @@
                                             <div class="col-md-1 p-0 d-flex align-items-center">
                                                 <i class="material-icons"> person </i>
                                             </div>
-                                            <div class="col-md-7 pl-0 d-flex align-items-center">
+                                            <div class="col-md-6 pl-0 d-flex align-items-center">
                                                 <p class="t-left m-0">{{f.name}}</p>
                                             </div>
-                                            <div class="col-md-4 p-0 text-right">
-                                                <button *ngIf="f.userType==3" class="small-primitive"
+                                            <div class="col-md-5 p-0 text-right">
+                                                <button *ngIf="f.userType==3" class="small-primitive memberBtnNotes "
                                                     mat-stroked-button>
                                                     FAMILY MEMBER
                                                 </button>
-                                                <button *ngIf="f.userType==2" class="small-primitive"
+                                                <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
                                                     mat-stroked-button>CLIENT
                                                 </button>
                                             </div>
