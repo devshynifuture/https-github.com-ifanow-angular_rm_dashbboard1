@@ -274,7 +274,7 @@
                     <mat-form-field class="ba-date">
                         <input autocomplete="off" matInput (click)="Mpicker.open()" [matDatepicker]="Mpicker"
                             class="form-control br-0 b-0" formControlName="maturityDate" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="Mpicker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="Mpicker"></mat-datepicker-toggle>
                         <mat-datepicker #Mpicker></mat-datepicker>
                         <mat-error class="f-12">
                             Retirement date should be greater then date of joining the organization
