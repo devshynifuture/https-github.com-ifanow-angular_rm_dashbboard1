@@ -193,13 +193,14 @@ export class CrmNotesComponent implements OnInit {
     let obj = {
       id: null,
       advisorId: AuthService.getAdvisorId(),
-      clientId: this.clientId,
+      clientId: (this.clientId) ? this.clientId : 0,
       clientName: "",
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
       updatedTime: new Date(),
       forAdmin: this.visibleToClient
     }
+    console.log(obj);
     if (this.checkAdmin == true) {
       if (this.stateCtrl.invalid) {
         this.stateCtrl.setErrors({ invalid: true })
