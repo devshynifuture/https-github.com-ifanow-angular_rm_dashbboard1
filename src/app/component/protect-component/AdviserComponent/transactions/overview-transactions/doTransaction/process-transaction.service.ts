@@ -220,7 +220,7 @@ export class ProcessTransactionService {
 
   getDateByArray = function (arr, flag) {
     let dArr = [], datesArr = [];
-    const t = moment().add('days', 30);
+    const t = moment().subtract('days', 7);
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]));
     }
