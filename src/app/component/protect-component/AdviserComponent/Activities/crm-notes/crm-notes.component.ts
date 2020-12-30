@@ -32,7 +32,7 @@ export class CrmNotesComponent implements OnInit {
   isLoading: any;
   isMainLoading: any;
   clientId: any;
-  visibleToClient: boolean = true
+  visibleToClient: boolean = false
   objForDelete: any;
   searchQuery: any;
   activeOnSelect: boolean = false;
@@ -176,9 +176,12 @@ export class CrmNotesComponent implements OnInit {
     this.selectedNote = note
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
-    this.notes.controls.clientName.setValue(note.clientName)
     this.checkAdmin = note.forAdmin
-    this.stateCtrl.setValue(note.clientName)
+    if (note.clientName) {
+      this.stateCtrl.setValue(note.clientName)
+    } else {
+      this.stateCtrl.setValue('')
+    }
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {
       if (element.id == note.id) {
@@ -194,7 +197,7 @@ export class CrmNotesComponent implements OnInit {
       id: null,
       advisorId: AuthService.getAdvisorId(),
       clientId: (this.clientId) ? this.clientId : 0,
-      clientName: "",
+      clientName: this.stateCtrl.value,
       subject: this.notes.controls.subject.value,
       content: this.emailBody,
       updatedTime: new Date(),
