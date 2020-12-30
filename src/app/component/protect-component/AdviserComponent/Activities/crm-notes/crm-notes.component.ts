@@ -58,7 +58,6 @@ export class CrmNotesComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      clientName: [(!data.clientName) ? '' : (data.clientName) + '', [Validators.required]],
       check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
@@ -201,28 +200,37 @@ export class CrmNotesComponent implements OnInit {
       updatedTime: new Date(),
       visibleToClient: this.visibleToClient
     }
-    if (!this.selectedNote) {
-      this.peopleService.addNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Note save successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+    if (this.stateCtrl.invalid) {
+      this.stateCtrl.setErrors({ invalid: true })
+      this.stateCtrl.markAllAsTouched();
+      return;
+    } else if (this.notes.invalid) {
+      this.stateCtrl.markAllAsTouched();
     } else {
-      obj.id = this.selectedNote.id
-      this.peopleService.editNotes(obj)
-        .subscribe(res => {
-          console.log(res);
-          this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
-          this.getNotes()
-          this.clearNote()
-        }, err => {
-          console.error(err);
-        })
+      if (!this.selectedNote) {
+        this.peopleService.addNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Note save successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      } else {
+        obj.id = this.selectedNote.id
+        this.peopleService.editNotes(obj)
+          .subscribe(res => {
+            console.log(res);
+            this.eventService.openSnackBar("Notes updated successfully!", "DISMISS");
+            this.getNotes()
+            this.clearNote()
+          }, err => {
+            console.error(err);
+          })
+      }
     }
+
 
   }
   selectForDelete(value, note) {
