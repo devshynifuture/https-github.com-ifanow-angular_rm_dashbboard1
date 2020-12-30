@@ -62,7 +62,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
-            <div class="col-md-5 form-group">
+            <div class="col-md-5 pr-0 form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="bankAccNo" matInput>
                         <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
@@ -73,7 +73,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex">
+            <div class="col-md-2  pt-8 d-flex">
                 <!-- prod build -->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
@@ -112,7 +112,7 @@
                     <mat-form-field class="ba-date"> <input [max]="maxDate" autocomplete="off" matInput
                             formControlName="balAsOn" (focus)="balanceAsOn.open()" (click)="balanceAsOn.open()"
                             class="form-control b-0 br-0" [matDatepicker]="balanceAsOn" readonly>
-                        <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12"> This field is required </mat-error>
                     </mat-form-field>

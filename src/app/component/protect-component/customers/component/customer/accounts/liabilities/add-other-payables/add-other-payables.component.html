@@ -74,7 +74,7 @@
                     <input class="form-control b-0 br-0" #dateOfReceipt
                         (ngModelChange)="dateChange(dateOfReceipt.value,'dateOfReceipt',dateOfRepayment.value)" matInput
                         [max]="maxDate" [matDatepicker]="picker" formControlName="dateOfReceipt" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12"
                         *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
@@ -110,8 +110,9 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #amtBorrowed class="form-control rupess br-0"
-                        formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        #amtBorrowed class="form-control rupess br-0" formControlName="amtBorrowed"
+                        maxlength="{{getFormControl().amtBorrowed.maxLength}}">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
                         This field is required
@@ -129,8 +130,9 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
-                    formControlName="interest">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
+                        formControlName="interest">
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
@@ -150,7 +152,7 @@
                         (ngModelChange)="dateChange(dateOfRepayment.value,'dateOfRepayment',dateOfReceipt.value)"
                         #dateOfRepayment class="form-control b-0 br-0" formControlName="dateOfRepayment" matInput
                         readonly>
-                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker-toggle class="dateIcon" [for]="picker2" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.required)">This
                         field is required
@@ -170,8 +172,9 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #balance appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0"
-                        formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
+                    <input matInput #balance appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        type="text" class="form-control rupess br-0" formControlName="balance"
+                        maxlength="{{getFormControl().balance.maxLength}}">
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
                         This field is required

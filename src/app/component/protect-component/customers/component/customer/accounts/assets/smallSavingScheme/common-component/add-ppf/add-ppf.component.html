@@ -92,7 +92,8 @@
                             [matDatepicker]="CommencementPicker" [min]="minDate" [max]="maxDate"
                             (dateChange)="setCommencementDate(null)" class="form-control br-0 b-0"
                             formControlName="commencementDate" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="CommencementPicker">
+                        </mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12">This field is required
                         </mat-error>
@@ -165,7 +166,7 @@
                         <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
                             [min]="ppfSchemeForm.value.commencementDate" class="form-control br-0 b-0"
                             formControlName="balanceAsOn" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4 w-s">
                             {{ppfSchemeForm.get('balanceAsOn').value == "Invalid Date"? 'This field is required':'balance as on date should be greater than commencement date'}}

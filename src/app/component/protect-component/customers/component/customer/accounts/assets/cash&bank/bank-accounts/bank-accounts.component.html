@@ -85,7 +85,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Linked bank account</h5>
         </div>
-        <div class="col-md-5 form-group">
+        <div class="col-md-5 pr-0 form-group">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="bankAcNo" matInput>
                     <mat-option *ngFor="let option of bankList ;index as i" (click)="setAccountType(option.accountType)"
@@ -97,7 +97,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="col-md-1 p-0 pt-8 d-flex">
+        <div class="col-md-2 p-0 pt-8 d-flex">
             <!-- prod build -->
             <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
         </div>
@@ -111,7 +111,8 @@
                 <mat-form-field>
                     <mat-select matInput formControlName="accountType" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option *ngFor="let account of accountTypes" [value]="account.id" disabled>{{account.name}}</mat-option>
+                        <mat-option *ngFor="let account of accountTypes" [value]="account.id" disabled>{{account.name}}
+                        </mat-option>
                     </mat-select>
                     <mat-error>
                         This field is required
@@ -149,7 +150,7 @@
             <mat-form-field class="ba-date">
                 <input matInput autocomplete="off" (focus)="picker.open()" formControlName="balanceAsOn"
                     class="form-control br-0 b-0" [max]="maxDate" [matDatepicker]="picker" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"
                     [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">

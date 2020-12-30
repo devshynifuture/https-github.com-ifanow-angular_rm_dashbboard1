@@ -104,7 +104,7 @@
             <mat-form-field class="ba-date">
               <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
                 (focus)="picker.open()" [matDatepicker]="picker" formControlName="currentValueAsonDate" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error class="f-12">
                 This field is required
@@ -198,7 +198,7 @@
             <mat-form-field class="ba-date">
               <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker2.open()"
                 [matDatepicker]="picker2" formControlName="maturityDate" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
               <mat-error class="f-12">
                 This field is required
@@ -270,7 +270,7 @@
             <mat-form-field class="ba-date">
               <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker3.open()"
                 [matDatepicker]="picker3" formControlName="endDate" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker3"></mat-datepicker-toggle>
               <mat-datepicker #picker3></mat-datepicker>
               <mat-error class="f-12">
                 This field is required
@@ -342,7 +342,7 @@
               <mat-form-field class="ba-date ">
                 <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
                   (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchaseDate" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12">
                   This field is required
