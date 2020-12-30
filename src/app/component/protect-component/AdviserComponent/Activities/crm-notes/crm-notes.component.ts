@@ -200,9 +200,11 @@ export class CrmNotesComponent implements OnInit {
       updatedTime: new Date(),
       visibleToClient: this.visibleToClient
     }
-    if (this.stateCtrl.invalid) {
-      this.stateCtrl.setErrors({ invalid: true })
-      this.stateCtrl.markAllAsTouched();
+    if (this.checkAdmin == true) {
+      if (this.stateCtrl.invalid) {
+        this.stateCtrl.setErrors({ invalid: true })
+        this.stateCtrl.markAllAsTouched();
+      }
       return;
     } else if (this.notes.invalid) {
       this.stateCtrl.markAllAsTouched();
