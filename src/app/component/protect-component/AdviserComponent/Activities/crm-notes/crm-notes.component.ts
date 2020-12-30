@@ -206,13 +206,11 @@ export class CrmNotesComponent implements OnInit {
       forAdmin: this.checkAdmin
     }
     console.log(obj);
-    if (this.checkAdmin == false) {
-      if (this.stateCtrl.invalid) {
-        this.stateCtrl.setErrors({ invalid: true })
-        this.stateCtrl.markAllAsTouched();
-        return;
-      }
 
+    if (this.stateCtrl.invalid && this.checkAdmin == false) {
+      this.stateCtrl.setErrors({ invalid: true })
+      this.stateCtrl.markAllAsTouched();
+      return;
     } else if (this.notes.invalid) {
       this.notes.markAllAsTouched();
       return;
