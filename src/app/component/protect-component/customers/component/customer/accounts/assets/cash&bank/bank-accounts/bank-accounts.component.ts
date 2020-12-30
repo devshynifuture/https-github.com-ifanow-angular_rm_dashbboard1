@@ -395,7 +395,9 @@ export class BankAccountsComponent implements OnInit {
       }
       if (this.flag == "addBANK") {
         this.custumService.addBankAccounts(obj).subscribe(
-          data => this.addBankAccountsRes(data), (error) => {
+          data => {
+            this.addBankAccountsRes(data)
+          }, (error) => {
             this.eventService.showErrorMessage(error);
             this.barButtonOptions.active = false;
           }

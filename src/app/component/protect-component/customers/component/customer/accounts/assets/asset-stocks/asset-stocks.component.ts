@@ -320,6 +320,7 @@ export class AssetStocksComponent implements OnInit {
                 this.stockListGroup.push({ group: s.categoryName });
               }
               this.stockListGroup.push(cs.stock);
+              // this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             }
 
           });
