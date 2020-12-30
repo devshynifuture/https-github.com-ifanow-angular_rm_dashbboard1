@@ -210,10 +210,12 @@ export class CrmNotesComponent implements OnInit {
       if (this.stateCtrl.invalid) {
         this.stateCtrl.setErrors({ invalid: true })
         this.stateCtrl.markAllAsTouched();
+        return;
       }
-      return;
+
     } else if (this.notes.invalid) {
-      this.stateCtrl.markAllAsTouched();
+      this.notes.markAllAsTouched();
+      return;
     } else {
       if (!this.selectedNote) {
         this.peopleService.addNotes(obj)
