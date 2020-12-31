@@ -124,9 +124,13 @@
       <div *ngIf="transactionSummary.selectedMandate && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
         <div class="col-md-9">
           <p class="m-0 roboto text-custom">UMRN details</p>
-          <h5 class="m-0">
+          <h5 class="m-0" *ngIf="selectedPlatform== 1">
             <span class="f-500">UMRN no.:</span>
             {{(transactionSummary && transactionSummary.selectedMandate) ?  transactionSummary.selectedMandate.umrnNo : '-' }}
+          </h5>
+          <h5 class="m-0" *ngIf="selectedPlatform== 2">
+            <span class="f-500">Mandate Id:</span>
+            {{(transactionSummary && transactionSummary.selectedMandate) ?  transactionSummary.selectedMandate.mandateId : '-' }}
           </h5>
           <h5 class="m-0">
             <span class="f-500">Mandate amount.:</span>
