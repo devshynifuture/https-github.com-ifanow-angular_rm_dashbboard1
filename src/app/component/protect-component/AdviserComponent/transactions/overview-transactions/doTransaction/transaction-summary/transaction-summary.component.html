@@ -121,7 +121,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
+      <div *ngIf="transactionSummary.selectedMandate && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
         <div class="col-md-9">
           <p class="m-0 roboto text-custom">UMRN details</p>
           <h5 class="m-0">
