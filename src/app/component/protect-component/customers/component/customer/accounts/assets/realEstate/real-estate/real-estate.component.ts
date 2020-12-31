@@ -70,7 +70,12 @@ export class RealEstateComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    this.getRealEstate();
+    if (this.assetValidation.realEstateList) {
+      this.getRealEstateRes(this.assetValidation.realEstateList)
+    }
+    else {
+      this.getRealEstate();
+    }
 
   }
 
@@ -320,6 +325,9 @@ export class RealEstateComponent implements OnInit {
         rightSideDataSub.unsubscribe();
       }
     );
+  }
+  ngOnDestroy() {
+    this.assetValidation.realEstateList = this.dataList ? this.dataList : null;
   }
 }
 

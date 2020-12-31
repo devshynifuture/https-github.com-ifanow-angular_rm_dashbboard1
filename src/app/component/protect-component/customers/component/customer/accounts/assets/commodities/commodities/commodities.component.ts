@@ -83,13 +83,13 @@ export class CommoditiesComponent implements OnInit {
     if (this.finPlanObj) {
       if (this.finPlanObj.sectionName == 'Gold') {
         this.showRequring = '1'
-        this.getGoldList()
+        this.getfixedIncomeData('1');
       } else {
         this.showRequring = '2'
-        this.getOtherList();
+        this.getfixedIncomeData('2');
       }
     } else {
-      this.getGoldList()
+      this.getfixedIncomeData('1');
     }
   }
 
@@ -201,24 +201,29 @@ export class CommoditiesComponent implements OnInit {
     console.log('value++++++', value)
     this.showRequring = value
     if (value == '1') {
-      if (this.goldDataList) {
+      if (this.goldDataList || this.assetValidation.goldDataList) {
         this.isLoading = false;
-        this.getGoldRes(this.goldDataList);
+        this.getGoldRes(this.goldDataList ? this.goldDataList : this.assetValidation.goldDataList);
       }
       else {
         this.goldList = new MatTableDataSource(this.data);
         this.getGoldList();
       }
     } else {
-      if (this.otherDataList) {
+      if (this.otherDataList || this.assetValidation.otherDataList) {
         this.isLoading = false;
-        this.getOthersRes(this.otherDataList);
+        this.getOthersRes(this.otherDataList ? this.otherDataList : this.assetValidation.otherDataList);
       }
       else {
         this.otherCommodityList = new MatTableDataSource(this.data);
         this.getOtherList();
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.goldDataList = this.goldDataList ? this.goldDataList : null;
+    this.assetValidation.otherDataList = this.otherDataList ? this.otherDataList : null;
   }
   deleteModal(value, element) {
     const dialogData = {

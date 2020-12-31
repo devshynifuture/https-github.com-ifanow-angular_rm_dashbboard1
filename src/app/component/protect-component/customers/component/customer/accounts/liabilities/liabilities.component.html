@@ -419,7 +419,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode" *ngIf="viewMode=='tab2'">
+        <div class="col-md-10 p-0 min-height" [ngSwitch]="viewMode" *ngIf="viewMode=='tab2'">
             <div *ngSwitchCase="'tab2'">
                 <app-other-payables [payableData]="OtherPayableData" (OtherDataChange)='display($event)'>
                 </app-other-payables>

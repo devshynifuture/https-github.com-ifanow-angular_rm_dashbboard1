@@ -88,16 +88,15 @@ export class CashAndBankComponent implements OnInit {
     if (this.finPlanObj) {
       if (this.finPlanObj.sectionName == 'Bank accounts') {
         this.showRequring = '1'
-        this.getBankAccountList();
+        this.getfixedIncomeData('1');
       } else {
         this.showRequring = '2'
-        this.getCashInHandList();
+        this.getfixedIncomeData('2');
       }
     } else {
-      this.getBankAccountList();
-
+      this.getfixedIncomeData('1');
     }
-    this.bankAccountList = new MatTableDataSource(this.data);
+    // this.bankAccountList = new MatTableDataSource(this.data);
     this.accountTypes = this.enumDataService.accountTypes;
     this.clientFamilybankList = this.enumService.clientFamilybankList;
     this.bankList = this.enumService.getBank();
@@ -236,18 +235,19 @@ export class CashAndBankComponent implements OnInit {
     this.isLoading = true;
     this.showRequring = value;
     if (value == '2') {
-      if (this.cashDataList) {
-        this.isLoading = false;
-        this.cashInHandList.data = this.cashDataList;
+      if (this.cashDataList || this.assetValidation.cashDataList) {
+        this.getCashInHandRes(this.cashDataList ? this.cashDataList : this.assetValidation.cashDataList)
+        // this.cashInHandList.data = this.cashDataList ? this.cashDataList : this.assetValidation.cashDataList;
       }
       else {
         this.getCashInHandList();
         this.cashInHandList = new MatTableDataSource(this.data);
       }
     } else {
-      if (this.bankDataList) {
-        this.isLoading = false;
-        this.bankAccountList.data = this.bankDataList;
+      if (this.bankDataList || this.assetValidation.bankDataList) {
+        this.getBankAccountsRes(this.bankDataList ? this.bankDataList : this.assetValidation.bankDataList)
+        // this.isLoading = false;
+        // this.bankAccountList.data = this.bankDataList ? this.cashDataList : this.assetValidation.bankDataList;
       }
       else {
         this.getBankAccountList();
@@ -255,6 +255,8 @@ export class CashAndBankComponent implements OnInit {
       }
     }
   }
+
+
 
   deleteModal(value, element) {
     const dialogData = {
@@ -331,8 +333,8 @@ export class CashAndBankComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       // this.assetValidation.getAssetCountGLobalData()
-      this.bankDataList = data.assetList
-      this.bankAccountList.data = this.bankDataList;
+      this.bankDataList = data
+      this.bankAccountList.data = this.bankDataList.assetList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.sumOfAccountBalance;
     } else {
@@ -368,8 +370,8 @@ export class CashAndBankComponent implements OnInit {
     }
     else if (data.assetList.length != 0) {
       // this.assetValidation.getAssetCountGLobalData()
-      this.cashDataList = data.assetList;
-      this.cashInHandList.data = this.cashDataList;
+      this.cashDataList = data;
+      this.cashInHandList.data = this.cashDataList.assetList;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {
@@ -438,6 +440,8 @@ export class CashAndBankComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.assetValidation.cashDataList = this.cashDataList ? this.cashDataList : null;
+    this.assetValidation.bankDataList = this.bankDataList ? this.bankDataList : null;
     this.unSubcrip.unsubscribe();
     this.unSubcrip2.unsubscribe();
     console.log("unsubscribe");

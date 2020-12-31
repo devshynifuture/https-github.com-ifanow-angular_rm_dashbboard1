@@ -494,22 +494,20 @@
 
 
 <!-- Health insurance - Detailed view figma -->
-<div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
-        </div>
-        <div class="col-md-2 text-right">
-            <div class="wrapper-12">
-                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
-            </div>
-        </div>
+<div class="row bb-1 popup-header-fix-50">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i (click)="closeDialog(null)" class="material-icons pt-20 c-p pr-16">
+            clear
+        </i>
     </div>
 </div>
-<div class="pt-90 pb-90">
+<div class="pt-90 pb-90" style="max-height:500px; overflow:auto;">
     <div class="row">
         <div class="col-md-12"
-            *ngIf="(adviceName != 'Stop paying premium' &&  adviceName != 'Proposed policy' && adviceName != 'Continue' && adviceName != 'Discontinue' && adviceName != 'Surrender') || adviceName == null">
+            *ngIf="(adviceName != 'Stop paying premium' && adviceName != 'Proposed policy' && adviceName != 'Continue' && adviceName != 'Discontinue' && adviceName != 'Surrender') || adviceName == null">
             <h5 class="m-0 roboto f-500 pb-12">Policy details</h5>
             <div class="policy-details-details-view">
                 <div class="row bg-grey lter pt-6 pb-6 b-a">
@@ -674,7 +672,7 @@
             </div>
         </div>
         <div class="col-md-12 pt-10"
-            *ngIf="(adviceName != 'Stop paying premium' &&  adviceName != 'Proposed policy' && adviceName != 'Continue' && adviceName != 'Discontinue' && adviceName != 'Surrender') || adviceName == null">
+            *ngIf="(adviceName != 'Stop paying premium' && adviceName != 'Proposed policy' && adviceName != 'Continue' && adviceName != 'Discontinue' && adviceName != 'Surrender') || adviceName == null">
             <h5 class="m-0 roboto f-500 pb-12">Insured details</h5>
             <div class="policy-details-details-view">
                 <div class="row bg-grey lter pt-6 pb-6 b-a">
@@ -694,7 +692,7 @@
                     </div>
 
                 </div>
-                <!-- <div class="row bb-1 pt-6 pb-6 br bl-1"
+                <div class="row bb-1 pt-6 pb-6 br bl-1"
                     *ngIf="showInsurance?.heading !='Personal accident' && showInsurance?.heading !='Critical illness'  &&  _data?.insurance?.policyType && showInsurance?.heading !='Health insurance' ">
                     <div class="col-md-4 f-400 f-14">
                         {{(_data?.parentAsset?.insurerName) ? _data?.parentAsset?.insurerName : '-'}}
@@ -704,7 +702,7 @@
                         {{(_data?.childAsset?.insurerName) ? _data?.childAsset?.insurerName : '-'}}
                     </div>
 
-                </div> -->
+                </div>
                 <div class="row bb-1 pt-6 pb-6 br bl-1"
                     *ngIf="showInsurance?.heading !='Personal accident' && showInsurance?.heading !='Critical illness'  &&  _data?.insurance?.policyType && showInsurance?.heading !='Health insurance' ">
                     <div class="col-md-4 f-400 f-14">
@@ -930,7 +928,7 @@
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
                             {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span
-                                appFormatNumber>{{( _data?.adviceAllotment?.adviceAllotment) ?  _data?.adviceDetails?.adviceAllotment : '-'}}</span>
+                                appFormatNumber>{{( _data?.adviceDetails?.adviceAllotment) ?  _data?.adviceDetails?.adviceAllotment : '-'}}</span>
                         </div>
                     </div>
                 </div>
@@ -969,10 +967,10 @@
             </div>
         </div> -->
 </div>
-<div class="bottom-fixed wrapper-12 w-60 ">
+<div class="bottom-fixed wrapper-12 w-50 " style="position: relative; width: 100% !important;">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-12 text-white c-p" (click)="close()">Cancel</h5>
+            <h5 class="mb-0 pt-12 text-white c-p" (click)="closeDialog(null)">Cancel</h5>
         </div>
 
     </div>

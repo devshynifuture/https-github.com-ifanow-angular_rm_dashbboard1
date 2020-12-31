@@ -75,11 +75,16 @@ export class PoSavingsComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.poSavingslist) {
       this.getPoSavingSchemedata();
     } else {
-      this.getPoSavingSchemedataResponse(this.dataList);
+      this.getPoSavingSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.poSavingslist);
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.poSavingslist = this.dataList ? this.dataList : null;
   }
 
   Excel(tableTitle) {

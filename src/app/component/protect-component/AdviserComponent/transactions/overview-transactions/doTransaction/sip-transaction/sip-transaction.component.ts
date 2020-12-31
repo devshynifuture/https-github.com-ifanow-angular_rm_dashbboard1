@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {ProcessTransactionService} from '../process-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {Observable, of} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {MathUtilService} from '../../../../../../../services/math-util.service';
-import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MathUtilService } from '../../../../../../../services/math-util.service';
+import { ConfirmDialogComponent } from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-mandate.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -30,8 +30,8 @@ export class SipTransactionComponent implements OnInit {
   copyTrasactionSummary: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog) {
+    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+    private eventService: EventService, public dialog: MatDialog) {
   }
 
   get data() {
@@ -103,24 +103,24 @@ export class SipTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
-    this.folioList =[]
-    this.reInvestmentOpt =[]
+    this.folioList = []
+    this.reInvestmentOpt = []
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    if(data.mutualFundData){
+    if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
       this.mfDefault = data.transactionData
       this.mutualFundData = data.mutualFundData
-      let foilo = {'folioNumber': this.folioNumber}
-      let schemeName = {'schemeName': this.schemeName}
-      this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      let foilo = { 'folioNumber': this.folioNumber }
+      let schemeName = { 'schemeName': this.schemeName }
+      this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       this.folioList.push(foilo)
       this.ExistingOrNew = 1
-      Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
-      Object.assign(this.transactionSummary, {schemeName: this.schemeName});
+      Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+      Object.assign(this.transactionSummary, { schemeName: this.schemeName });
     }
     if (this.isViewInitCalled) {
       this.getDataForm('', false);
@@ -132,14 +132,14 @@ export class SipTransactionComponent implements OnInit {
     this.getDataForm(this.inputData, false);
     this.childTransactions = [];
     this.transactionSummary = {};
-    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
-    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
-    Object.assign(this.transactionSummary, {transactType: 'SIP'});
-    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
-    Object.assign(this.transactionSummary, {paymentMode: 2});
-    Object.assign(this.transactionSummary, {allEdit: true});
-    Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
-    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
+    Object.assign(this.transactionSummary, { transactType: 'SIP' });
+    Object.assign(this.transactionSummary, { isAdvisorSection: this.inputData.isAdvisorSection });
+    Object.assign(this.transactionSummary, { paymentMode: 2 });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { multiTransact: false }); // when multi transact then disabled edit button in transaction summary
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
 
   backToTransact() {
@@ -147,15 +147,15 @@ export class SipTransactionComponent implements OnInit {
   }
 
   enteredAmount(value) {
-   // this.selectedMandate = this.copyTrasactionSummary.selectedMandate
-    Object.assign(this.transactionSummary, {enteredAmount: value});
+    // this.selectedMandate = this.copyTrasactionSummary.selectedMandate
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
 
   selectExistingOrNew(value) {
     this.sipTransaction.controls.folioSelection.setValue(value);
     if (value == '2') {
       this.setMinAmount();
-      Object.assign(this.transactionSummary, {folioNumber: ''});
+      Object.assign(this.transactionSummary, { folioNumber: '' });
     } else {
       if (this.scheme) {
         this.getFolioList();
@@ -178,8 +178,8 @@ export class SipTransactionComponent implements OnInit {
     this.navOfSelectedScheme = 0;
     this.frequency = undefined;
     this.sipFrequency = [];
-    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
-    Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
     this.selectScheme = value;
     if (this.getDataSummary) {
       if (this.selectScheme == 1) {
@@ -204,8 +204,8 @@ export class SipTransactionComponent implements OnInit {
     }
     if (this.sipTransaction.get('schemeSip').invalid) {
       this.showSchemeSpinner = false;
-      Object.assign(this.transactionSummary, {schemeName: ''});
-      Object.assign(this.transactionSummary, {folioNumber: ''});
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
       // if scheme not present then min amt is 0
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
@@ -235,7 +235,7 @@ export class SipTransactionComponent implements OnInit {
             this.getNewSchemesRes(responseData, data);
           }, (error) => {
             this.showSchemeSpinner = false;
-            this.sipTransaction.get('schemeSip').setErrors({setValue: error});
+            this.sipTransaction.get('schemeSip').setErrors({ setValue: error });
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.openSnackBar(error, 'Dismiss');
@@ -279,7 +279,7 @@ export class SipTransactionComponent implements OnInit {
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
         this.showSchemeSpinner = false;
-        this.sipTransaction.get('schemeSip').setErrors({setValue: error});
+        this.sipTransaction.get('schemeSip').setErrors({ setValue: error });
         this.sipTransaction.get('schemeSip').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
         // this.eventService.openSnackBar(error, 'Dismiss');
@@ -302,7 +302,7 @@ export class SipTransactionComponent implements OnInit {
     }
     // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
-    Object.assign(this.transactionSummary, {aggregatorType: this.platformType});
+    Object.assign(this.transactionSummary, { aggregatorType: this.platformType });
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
     }
@@ -322,7 +322,7 @@ export class SipTransactionComponent implements OnInit {
         this.existingSchemeList = [];
       } else {
         this.mfDefault = newData
-        this.getDataForm(this.inputData,true)
+        this.getDataForm(this.inputData, true)
       }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       if (this.selectScheme == 1) {
@@ -339,9 +339,9 @@ export class SipTransactionComponent implements OnInit {
   }
 
   selectPaymentMode(value) {
-    Object.assign(this.transactionSummary, {paymentMode: value});
+    Object.assign(this.transactionSummary, { paymentMode: value });
     if (value == 2) {
-      Object.assign(this.transactionSummary, {getAch: true});
+      Object.assign(this.transactionSummary, { getAch: true });
       this.getMandateDetails();
     } else {
       this.sipTransaction.controls.employeeContry.clearValidators();
@@ -361,7 +361,7 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = undefined;
     this.sipFrequency = [];
     this.onFolioChange(undefined);
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -390,8 +390,8 @@ export class SipTransactionComponent implements OnInit {
       this.getFolioList();
     }
     this.getFrequency();
-    Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
-    Object.assign(this.transactionSummary, {schemeName: this.schemeName});
+    Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+    Object.assign(this.transactionSummary, { schemeName: this.schemeName });
   }
 
   setMinAmount() {
@@ -405,11 +405,11 @@ export class SipTransactionComponent implements OnInit {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
     if (this.selectedMandate) {
-      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
-      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
+      Object.assign(this.transactionSummary, { selectedMandate: this.selectedMandate });
       if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
         this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount),
-          Validators.max(this.selectedMandate.amount)]);
+        Validators.max(this.selectedMandate.amount)]);
         this.sipTransaction.controls.employeeContry.updateValueAndValidity();
       } else {
         this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
@@ -423,7 +423,7 @@ export class SipTransactionComponent implements OnInit {
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
-      aggregatorType: (this.getDataSummary)?this.getDataSummary.defaultClient.aggregatorType:this.mfDefault.defaultClient.aggregatorType,
+      aggregatorType: (this.getDataSummary) ? this.getDataSummary.defaultClient.aggregatorType : this.mfDefault.defaultClient.aggregatorType,
       orderType: 'SIP'
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
@@ -457,7 +457,6 @@ export class SipTransactionComponent implements OnInit {
   dateArray(sipDates) {
     const currentDate = UtilService.getEndOfDay(new Date());
     currentDate.setDate(currentDate.getDate() + 7);
-
     this.dates = sipDates.split(',');
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true);
     this.dateDisplay = this.dateDisplay.filter(element => {
@@ -517,21 +516,21 @@ export class SipTransactionComponent implements OnInit {
     this.selectedMandate = {}
     if (data.length > 0) {
       data.forEach(element => {
-        if(element.statusString == 'ACCEPTED'){
+        if (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED") {
           this.acceptedMandate.push(element)
           Object.assign(this.transactionSummary, { showUmrnEdit: true });
           Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
-          if(this.bankDetails.ifscCode == element.ifscCode){
+          if (this.bankDetails.ifscCode == element.ifscCode) {
             this.selectedMandate = element
           }
         }
       });
-      Object.assign(this.transactionSummary, {showUmrnEdit: true});
+      Object.assign(this.transactionSummary, { showUmrnEdit: true });
     }
-    
+
     if (this.selectedMandate) {
-      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
-      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
+      Object.assign(this.transactionSummary, { selectedMandate: this.selectedMandate });
       this.setMinAmount();
     }
   }
@@ -630,17 +629,17 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
       if (this.sipTransaction.controls.investmentAccountSelection.valid) {
-        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
       }
     }
   }
 
   selectedFolio(folio) {
     this.folioDetails = folio;
-    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
-    Object.assign(this.transactionSummary, {mutualFundId: folio.id});
-    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
-    this.transactionSummary = {...this.transactionSummary};
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
+    this.transactionSummary = { ...this.transactionSummary };
   }
 
   reinvest(scheme) {
@@ -665,7 +664,7 @@ export class SipTransactionComponent implements OnInit {
       this.editedId = data.id;
       this.scheme = data.scheme;
       this.schemeDetails = data.schemeDetails;
-      if(data.reInvestmentOpt){
+      if (data.reInvestmentOpt) {
         this.reInvestmentOpt = data.reInvestmentOpt;
       }
       this.folioDetails = data.folioDetails;
@@ -691,7 +690,7 @@ export class SipTransactionComponent implements OnInit {
       reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag + '' : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
-      investmentAccountSelection: [(data.folioNumber) ?data.folioNumber: (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -699,7 +698,7 @@ export class SipTransactionComponent implements OnInit {
       date: [(data.date) ? data.date : '', [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
-      schemeSip: [(!data) ? '' : (this.mutualFundData)?this.mutualFundData.schemeName:'', [Validators.required]],
+      schemeSip: [(!data) ? '' : (this.mutualFundData) ? this.mutualFundData.schemeName : '', [Validators.required]],
       isException: true,
     });
     this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {
@@ -718,18 +717,18 @@ export class SipTransactionComponent implements OnInit {
       // this.selectedScheme(data.scheme);
     }
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
-    if(this.mutualFundData){
+    if (this.mutualFundData) {
       this.folioDetails = {}
       this.navOfSelectedScheme = this.mutualFundData.nav
       this.sipTransaction.controls.schemeSelection.setValue('1')
       this.sipTransaction.controls.folioSelection.setValue('1')
-      this.filterSchemeList = of([{'schemeName': this.schemeName}])
-      this.sipTransaction.controls.schemeSip.setValue({'schemeName': this.schemeName})
-      this.sipTransaction.controls['schemeSip'].disable(); 
-      Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
-      this.scheme ={
+      this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
+      this.sipTransaction.controls.schemeSip.setValue({ 'schemeName': this.schemeName })
+      this.sipTransaction.controls['schemeSip'].disable();
+      Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
+      this.scheme = {
         'schemeName': this.schemeName,
-        'mutualFundSchemeMasterId':this.mutualFundData.schemeId
+        'mutualFundSchemeMasterId': this.mutualFundData.schemeId
       }
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
@@ -764,7 +763,7 @@ export class SipTransactionComponent implements OnInit {
 
   getSingleTransactionJson() {
     this.copyTrasactionSummary = {}
-    this.copyTrasactionSummary =this.transactionSummary
+    this.copyTrasactionSummary = this.transactionSummary
     this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
     const tenure = this.sipTransaction.controls.tenure.value;
@@ -892,7 +891,7 @@ export class SipTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, {allEdit: false});
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
 
@@ -906,7 +905,7 @@ export class SipTransactionComponent implements OnInit {
 
   AddMultiTransaction() {
     if (this.validateSingleTransaction()) {
-      Object.assign(this.transactionSummary, {multiTransact: true});
+      Object.assign(this.transactionSummary, { multiTransact: true });
       this.multiTransact = true;
       if (this.isEdit != true) {
         this.id++;
@@ -1042,8 +1041,8 @@ export class SipTransactionComponent implements OnInit {
     this.navOfSelectedScheme = 0;
     this.dateDisplay = [];
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
-    Object.assign(this.transactionSummary, {folioNumber: ''});
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });
     this.sipTransaction.controls.reinvest.setValue('');
     this.sipTransaction.controls.employeeContry.reset();
     this.sipTransaction.controls.investmentAccountSelection.setValue('');

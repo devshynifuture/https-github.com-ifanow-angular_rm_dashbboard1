@@ -39,7 +39,9 @@ export class OwnerNomineeDirective {
 
         case 'disabledMember':
           this.callGetBank = true;
-          this.disabledMember(callMethod.type);
+          if (callMethod.ParamValue) {
+            this.disabledMember(callMethod.type);
+          }
           break;
 
         default:
