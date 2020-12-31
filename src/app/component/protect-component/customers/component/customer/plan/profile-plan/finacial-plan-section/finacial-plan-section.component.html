@@ -19,144 +19,144 @@
                     NEW</button>
             </div>
         </div>
-        <div>
-            <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="!isLoading">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
-                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                    <div class="row p-4 b-a pt-8 pb-8 c-p">
-                        <div class="col-md-1 pl-8">
-                            <div class="bar">
-                                <img src="/assets/images/svg/module-icons.svg" class="c-p">
-                            </div>
-                        </div>
-                        <div class="col-md-10 pl-0">
-                            <div class="bar">
-                                <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-1" (click)="removeModule(module,i)">
-                            <div class="bar">
-                                <img src="/assets/images/svg/close.svg" class="c-p">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
-                    <div class="mt-8 h-auto-500 relClass">
-                        <div class="col-md-12 pl-0">
-                            <div class="bar">
-                                <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
-                            </div>
+        <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="!isLoading">
+            <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                <div class="row p-4 b-a pt-8 pb-8 c-p">
+                    <div class="col-md-1 pl-8">
+                        <div class="bar">
+                            <img src="/assets/images/svg/module-icons.svg" class="c-p">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div *ngIf="moduleAdded.length  == 0 && hideTable == true && !isLoading">
-                <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
-                    <img src="assets/images/svg/documents-empty-states.svg">
-                    No module added
-                </span>
-            </div>
-            <div class="scrollHieght">
-                <div *ngIf="clientDetails.length > 0 && hideTable == false">
-                    <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
-                        [appSkeletonLoading]="isLoading" id="tbs" class=" ">
-                        <ng-container matColumnDef="name">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepared by </th>
-                            <td class="br" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    {{(isLoading) ? '':element.advisorName}}
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="clientName">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
-                            <td class="br" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    {{(isLoading) ? '':element.clientName}}
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="mfoverview">
-                            <th class="br " mat-header-cell *matHeaderCellDef sticky> Report name </th>
-                            <td class="br " mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    {{(isLoading) ? '':element.reportName}}
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="date">
-                            <th class="br  " mat-header-cell *matHeaderCellDef sticky>Report Date </th>
-                            <td class="br  " mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    {{(isLoading) ? '':element.createdDate | date:'dd-MMM-yyyy'}}
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="download">
-                            <th class="br " mat-header-cell *matHeaderCellDef sticky>Download </th>
-                            <td class="br  " mat-cell *matCellDef="let element">
-                                <div class="bar" (click)="downloadPrevoius(element)">
-                                    <img class="c-p align-items-center" (click)="downloadPrevoius(element)"
-                                        src="assets/images/svg/download-pdf-blue.svg">
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="preview">
-                            <th class="br" mat-header-cell *matHeaderCellDef sticky>Preview </th>
-                            <td class="br" mat-cell *matCellDef="let element">
-                                <i (click)="getPreview(element,'table')" class="material-icons eyesPassword c-p text-primitive
-                            align-items-right">
-                                    visibility
-                                </i>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons">
-                            <th mat-header-cell *matHeaderCellDef class=""></th>
-                            <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p text-center">
-                                <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
-                                <mat-menu #menu4="matMenu">
-                                    <button (click)="deletePlanSection('FIN PLAN',element)"
-                                        mat-menu-item>Delete</button>
-                                </mat-menu>
-
-                            </td>
-                            <td mat-footer-cell *matFooterCellDef class="br"></td>
-                        </ng-container>
-                        <!-- Name Column -->
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div>
-            </div>
-            <div class="mt-12">
-                <div class="row pt-12">
-                    <!-- <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="text-primary b-a-custom"
-                            (click)="getPreview()">Preview</button>
-                    </div> -->
-                    <div class="col-md-3 p-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
-
+                    <div class="col-md-10 pl-0">
+                        <div class="bar">
+                            <p class="m-0 pt-4">{{(isLoading) ? '' : module.name}}</p>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
+                    <div class="col-md-1" (click)="removeModule(module,i)">
+                        <div class="bar">
+                            <img src="/assets/images/svg/close.svg" class="c-p">
+                        </div>
                     </div>
-                    <div class="col-md-7 p-0 text-right"
-                        *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
-                        <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
-                    </div>
-                    <!-- <div class="col-md-2 text-right"
-                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
-                        <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
-                    </div> -->
                 </div>
             </div>
         </div>
+
+        <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
+                <div class="mt-8 h-auto-500 relClass">
+                    <div class="col-md-12 pl-0">
+                        <div class="bar">
+                            <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="moduleAdded.length  == 0 && hideTable == true && !isLoading">
+            <span class="text-center pt-28 d-flex flex-column align-items-center mt-20">
+                <img src="assets/images/svg/documents-empty-states.svg">
+                No module added
+            </span>
+        </div>
+        <div class="scrollHieght">
+            <div *ngIf="clientDetails.length > 0 && hideTable == false">
+                <table #tableEl mat-table [dataSource]="clientDetails" class="skeletonAnimation"
+                    [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                    <ng-container matColumnDef="name">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Prepared by </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.advisorName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="clientName">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.clientName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mfoverview">
+                        <th class="br " mat-header-cell *matHeaderCellDef sticky> Report name </th>
+                        <td class="br " mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.reportName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="date">
+                        <th class="br  " mat-header-cell *matHeaderCellDef sticky>Report Date </th>
+                        <td class="br  " mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{(isLoading) ? '':element.createdDate | date:'dd-MMM-yyyy'}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="download">
+                        <th class="br " mat-header-cell *matHeaderCellDef sticky>Download </th>
+                        <td class="br  " mat-cell *matCellDef="let element">
+                            <div class="bar" (click)="downloadPrevoius(element)">
+                                <img class="c-p align-items-center" (click)="downloadPrevoius(element)"
+                                    src="assets/images/svg/download-pdf-blue.svg">
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="preview">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky>Preview </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <i (click)="getPreview(element,'table')" class="material-icons eyesPassword c-p text-primitive
+                            align-items-right">
+                                visibility
+                            </i>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                        <th mat-header-cell *matHeaderCellDef class=""></th>
+                        <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p text-center">
+                            <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
+                            <mat-menu #menu4="matMenu">
+                                <button (click)="deletePlanSection('FIN PLAN',element)" mat-menu-item>Delete</button>
+                            </mat-menu>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br"></td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+        <div class="mt-12">
+            <div class="row pt-12">
+                <!-- <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
+                        <button mat-stroked-button class="text-primary b-a-custom"
+                            (click)="getPreview()">Preview</button>
+                    </div> -->
+                <div class="col-md-3 p-0" *ngIf="moduleAdded.length > 0">
+                    <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
+
+                </div>
+                <div class="col-md-2">
+                    <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
+                </div>
+                <div class="col-md-7 p-0 text-right"
+                    *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
+                    <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
+                </div>
+                <!-- <div class="col-md-2 text-right"
+                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
+                        <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
+                    </div> -->
+            </div>
+        </div>
+
     </div>
+
     <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'" *ngIf="hideTable == true">
         <div class="row bb-1">
             <div class="col-md-6 p-0">
@@ -1424,6 +1424,7 @@
             </mat-tab>
         </mat-tab-group>
     </div>
+
 </div>
 <ng-container #pdfContainer>
 </ng-container>
