@@ -99,7 +99,7 @@
               <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
           </div>
       </div> -->
-      <div *ngIf="selectedPlatform== 1 && bankDetails">
+      <div *ngIf="bankDetails">
         <div class="row  pt-16 pb-16">
           <div class="col-md-10 p-0">
             <p class="m-0 roboto text-custom">Bank A/c details</p>
@@ -115,18 +115,22 @@
             </div>
           </div>
           <div
-            *ngIf="bankDetails.length > 1 && transactionSummary && showBankEdit == true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
+            *ngIf="selectedPlatform== 1 && bankDetails.length > 1 && transactionSummary && showBankEdit == true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
             class="col-md-2">
             <button (click)="showbank = true;openBank(bankDetails)" class="primary-sm" mat-stroked-button>Edit</button>
           </div>
         </div>
       </div>
-      <div *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
+      <div *ngIf="transactionSummary.selectedMandate && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
         <div class="col-md-9">
           <p class="m-0 roboto text-custom">UMRN details</p>
-          <h5 class="m-0">
+          <h5 class="m-0" *ngIf="selectedPlatform== 1">
             <span class="f-500">UMRN no.:</span>
             {{(transactionSummary && transactionSummary.selectedMandate) ?  transactionSummary.selectedMandate.umrnNo : '-' }}
+          </h5>
+          <h5 class="m-0" *ngIf="selectedPlatform== 2">
+            <span class="f-500">Mandate Id:</span>
+            {{(transactionSummary && transactionSummary.selectedMandate) ?  transactionSummary.selectedMandate.mandateId : '-' }}
           </h5>
           <h5 class="m-0">
             <span class="f-500">Mandate amount.:</span>

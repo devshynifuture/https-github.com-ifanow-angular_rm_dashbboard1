@@ -391,7 +391,7 @@ export class SipTransactionComponent implements OnInit {
     }
     this.getFrequency();
     Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
-    Object.assign(this.transactionSummary, { schemeName: this.schemeName });
+    // Object.assign(this.transactionSummary, { schemeName: this.schemeName });
   }
 
   setMinAmount() {
@@ -480,6 +480,8 @@ export class SipTransactionComponent implements OnInit {
     const obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType })
+    this.transactionSummary = { ...this.transactionSummary };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
         this.handleMandateFailure();
@@ -520,8 +522,15 @@ export class SipTransactionComponent implements OnInit {
           this.acceptedMandate.push(element)
           Object.assign(this.transactionSummary, { showUmrnEdit: true });
           Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
-          if (this.bankDetails.ifscCode == element.ifscCode) {
+          if (element.statusString == "APPROVED") {
             this.selectedMandate = element
+            Object.assign(this.transactionSummary, { defaultBank: element });
+            Object.assign(this.transactionSummary, { bankDetails: element });
+            this.transactionSummary = { ...this.transactionSummary };
+          } else {
+            if (this.bankDetails.ifscCode == element.ifscCode) {
+              this.selectedMandate = element
+            }
           }
         }
       });
@@ -637,6 +646,7 @@ export class SipTransactionComponent implements OnInit {
   selectedFolio(folio) {
     this.folioDetails = folio;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     this.transactionSummary = { ...this.transactionSummary };
@@ -1005,6 +1015,10 @@ export class SipTransactionComponent implements OnInit {
   }
 
   calculateMaxInstallmentNumber(sipStartDate, mandateEndDate, frequencyType, tenure) {
+    if (!mandateEndDate) {
+      var d = new Date();
+      mandateEndDate = d.setFullYear(2099, 11, 3);
+    }
     const difference = mandateEndDate - sipStartDate;
     const differenceInDays = difference / (1000 * 3600 * 24);
     const differenceInMonths = differenceInDays / 30;
