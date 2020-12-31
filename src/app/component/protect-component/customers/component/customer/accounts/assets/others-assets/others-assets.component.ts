@@ -65,7 +65,13 @@ export class OthersAssetsComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    this.getOthersAssets();
+
+    if (this.assetValidation.otherAssetsList) {
+      this.getOthersAssetsRes(this.assetValidation.otherAssetsList)
+    }
+    else {
+      this.getOthersAssets();
+    }
 
   }
 
@@ -319,6 +325,10 @@ export class OthersAssetsComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.otherAssetsList = this.dataList ? this.dataList : null;
   }
 }
 

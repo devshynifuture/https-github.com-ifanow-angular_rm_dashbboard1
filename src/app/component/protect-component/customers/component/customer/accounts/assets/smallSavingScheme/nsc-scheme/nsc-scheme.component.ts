@@ -81,12 +81,21 @@ export class NscSchemeComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
     this.getNscSchemedata();
-    if (!this.dataList) {
+    // if (!this.dataList) {
+    //   this.getNscSchemedata();
+    // } else {
+    //   this.getNscSchemedataResponse(this.dataList);
+    // }
+    this.footer = [];
+    if (!this.dataList && !this.assetValidation.nsclist) {
       this.getNscSchemedata();
     } else {
-      this.getNscSchemedataResponse(this.dataList);
+      this.getNscSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.nsclist);
     }
-    this.footer = [];
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.nsclist = this.dataList ? this.dataList : null;
   }
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
@@ -267,9 +276,11 @@ export class NscSchemeComponent implements OnInit {
               this.dataList['sumOfMaturityValue'] += sideBarData.data.maturityValue;
             }
             else {
-              this.dataList.assetList.push(sideBarData.data);
-              this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
-              this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              if (sideBarData.data) {
+                this.dataList.assetList.push(sideBarData.data);
+                this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+              }
             }
             this.getNscSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

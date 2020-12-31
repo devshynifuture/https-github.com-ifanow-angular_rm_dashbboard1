@@ -82,12 +82,18 @@ export class ScssSchemeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.scsslist) {
       this.getScssSchemedata();
     } else {
-      this.getKvpSchemedataResponse(this.dataList);
+      this.getKvpSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.scsslist);
     }
   }
+
+  ngOnDestroy() {
+    this.assetValidation.scsslist = this.dataList ? this.dataList : null;
+  }
+
   fetchData(value, fileName, element, type) {
     element['subCatTypeId'] = type;
     this.isLoadingUpload = true
@@ -274,18 +280,22 @@ export class ScssSchemeComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
 
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfAmountReceived'] = sideBarData.data.totalAmountReceived;
-              this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
-              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
-              this.dataList['sumOfQuarterlyPayout'] = sideBarData.data.quarterlyPayout;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfAmountReceived'] = sideBarData.data.totalAmountReceived;
+                this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+                this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+                this.dataList['sumOfQuarterlyPayout'] = sideBarData.data.quarterlyPayout;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfAmountReceived += sideBarData.data.totalAmountReceived;
               this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
               this.dataList.sumOfQuarterlyPayout += sideBarData.data.quarterlyPayout;
+
             }
             this.getKvpSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

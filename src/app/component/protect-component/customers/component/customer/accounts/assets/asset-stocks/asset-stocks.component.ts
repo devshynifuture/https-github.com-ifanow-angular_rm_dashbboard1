@@ -66,11 +66,18 @@ export class AssetStocksComponent implements OnInit {
     console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getStocksData();
-    this.isLoading = true;
+    if (this.assetValidation.stockDataList) {
+      this.getChart(this.assetValidation.stockDataList);
+      this.getStocksDataRes(this.assetValidation.stockDataList);
+    } else {
+      this.getStocksData();
+      this.isLoading = true;
+    }
     this.getOrgData = AuthService.getOrgDetails();
     this.getDetails();
   }
+
+
 
   pieChart(data) {
     // pieChart(id);
@@ -212,39 +219,10 @@ export class AssetStocksComponent implements OnInit {
 
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
-        let i = 0
+        this.assetValidation.stockDataList = data;
+        this.getChart(data);
         this.getStocksDataRes(data);
-        this.chartData = [];
-        let others: any;
-        for (const [c, e] of Object.entries(data.newGraphData)) {
-          let obj = Object.assign({ e });
-          if (c == "Others") {
-            others = {
-              name: c,
-              y: obj.e.perrcentage,
-              a: obj.e.currentValue,
-              color: this.othersChartColor,
-              dataLabels: {
-                enabled: false
-              }
-            }
-          } else {
-            this.chartData.push({
-              name: c,
-              y: obj.e.perrcentage,
-              a: obj.e.currentValue,
-              color: this.chartColour[i],
-              dataLabels: {
-                enabled: false
-              }
-            })
-            ++i;
-          }
-        }
-        this.chartData.push(others);
-        setTimeout(() => {
-          this.pieChart(this.chartData);
-        }, 1000);
+
         this.isLoading = false;
       },
       err => {
@@ -253,6 +231,41 @@ export class AssetStocksComponent implements OnInit {
         this.eventService.openSnackBar(err);
       }
     );
+  }
+
+  getChart(data) {
+    let i = 0
+    this.chartData = [];
+    let others: any;
+    for (const [c, e] of Object.entries(data.newGraphData)) {
+      let obj = Object.assign({ e });
+      if (c == "Others") {
+        others = {
+          name: c,
+          y: obj.e.perrcentage,
+          a: obj.e.currentValue,
+          color: this.othersChartColor,
+          dataLabels: {
+            enabled: false
+          }
+        }
+      } else {
+        this.chartData.push({
+          name: c,
+          y: obj.e.perrcentage,
+          a: obj.e.currentValue,
+          color: this.chartColour[i],
+          dataLabels: {
+            enabled: false
+          }
+        })
+        ++i;
+      }
+    }
+    this.chartData.push(others);
+    setTimeout(() => {
+      this.pieChart(this.chartData);
+    }, 1000);
   }
 
   categories: any = {
@@ -320,6 +333,7 @@ export class AssetStocksComponent implements OnInit {
                 this.stockListGroup.push({ group: s.categoryName });
               }
               this.stockListGroup.push(cs.stock);
+              // this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             }
 
           });

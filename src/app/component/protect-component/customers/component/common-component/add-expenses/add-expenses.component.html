@@ -98,7 +98,7 @@
                     <mat-form-field class="ba-date">
                         <input matInput class="form-control br-0 b-0" (focus)="picker1.open()"
                             (input)="preventDefault($event)" [matDatepicker]="picker1" formControlName="startsFrom">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -195,30 +195,28 @@
                 </div>
             </div>
         </div>
+
         <div class="pt-32">
             <h5 class="m-0">Linked bank account</h5>
-            <div class="pl-0">
-                <div class="row">
-                    <div class="col-md-5 pl-0">
-                        <div class="pt-8 form-group">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="bankAcNo" matInput>
-                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                                        {{option.bankNameAndLast4Digit}}</mat-option>
-                                </mat-select>
-                                <mat-error>This field is required
-                                </mat-error>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <div class="mt-8 form-group">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="bankAcNo" matInput>
+                                <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                    {{option.bankNameAndLast4Digit}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required
+                            </mat-error>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-1 p-0 pt-16 d-flex">
-                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
-                    </div>
+                </div>
+                <div class="col-md-1 p-0 pt-16 d-flex">
+                    <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="bottom-fixed-35 wrapper-16 pb-12">
         <div class="row">
@@ -253,7 +251,7 @@
                     <mat-form-field class="ba-date">
                         <input matInput class="form-control b-0 br-0" (focus)="picker.open()"
                             (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -367,28 +365,28 @@
         </div>
         <div class="pt-32">
             <h5 class="m-0">Linked bank account</h5>
-            <div class="pl-0">
-                <div class="row">
-                    <div class="col-md-5 pl-0">
-                        <div class="pt-8 form-group">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="bankAcNo" matInput>
-                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                                        {{option.bankNameAndLast4Digit}}</mat-option>
-                                </mat-select>
-                                <mat-error>This field is required
-                                </mat-error>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <div class="mt-8 form-group">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="bankAcNo" matInput>
+                                <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                    {{option.bankNameAndLast4Digit}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required
+                            </mat-error>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-1 p-0 pt-16 d-flex">
-                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
-                    </div>
+                </div>
+                <div class="col-md-1 p-0 pt-16 d-flex">
+                    <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                 </div>
             </div>
         </div>
+
     </div>
+
     <div class="bottom-fixed-35 wrapper-16 pb-12">
         <div class="row">
             <div class="col-md-4 p-0">

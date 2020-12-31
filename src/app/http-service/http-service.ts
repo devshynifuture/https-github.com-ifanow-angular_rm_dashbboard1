@@ -82,8 +82,7 @@ export class HttpService {
       // let headers = new HttpHeaders().set('Content-Type', 'application/json');
       let headers: HttpHeaders = new HttpHeaders();
       headers = headers.set('Content-Encoding', 'gzip');
-
-      // headers = headers.set('Content-Type', 'application/json');
+      headers = headers.set('Content-Type', 'application/json');
       httpOptions = {
         headers
       };
@@ -111,7 +110,7 @@ export class HttpService {
     } else {
       let headers: HttpHeaders = new HttpHeaders();
       headers = headers.set('Content-Encoding', 'gzip');
-      // headers = headers.set('Content-Type', 'application/json');
+      headers = headers.set('Content-Type', 'application/json');
       httpOptions = {
         headers
       };
@@ -146,7 +145,7 @@ export class HttpService {
     } else {
       let headers: HttpHeaders = new HttpHeaders();
       headers = headers.set('Content-Encoding', 'gzip');
-      // headers = headers.set('Content-Type', 'application/json');
+      headers = headers.set('Content-Type', 'application/json');
 
       // headers = headers.set('Content-Type', 'application/octet-stream');
       httpOptions = {
@@ -184,7 +183,7 @@ export class HttpService {
   put(url: string, body, params?): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Encoding', 'gzip');
-    // headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Content-Type', 'application/json');
 
     const httpOptions: any = {
       headers,

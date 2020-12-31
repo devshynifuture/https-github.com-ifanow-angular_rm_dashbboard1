@@ -80,12 +80,16 @@ export class PoMisSchemeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getPoMisSchemedata();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.pomislist) {
       this.getPoMisSchemedata();
     } else {
-      this.getPoMisSchemedataResponse(this.dataList);
+      this.getPoMisSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.pomislist);
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.pomislist = this.dataList ? this.dataList : null;
   }
 
   Excel(tableTitle) {
@@ -293,20 +297,24 @@ export class PoMisSchemeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
-              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
-              this.dataList['sumOfMonthlyPayout'] = sideBarData.data.monthlyPayout;
-              this.dataList['sumOfPayoutTillToday'] = sideBarData.data.totalPayoutTillToday;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+                this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+                this.dataList['sumOfMonthlyPayout'] = sideBarData.data.monthlyPayout;
+                this.dataList['sumOfPayoutTillToday'] = sideBarData.data.totalPayoutTillToday;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
               this.dataList.sumOfMonthlyPayout += sideBarData.data.monthlyPayout;
               this.dataList.sumOfPayoutTillToday += sideBarData.data.totalPayoutTillToday;
+
             }
             this.getPoMisSchemedataResponse(this.dataList)
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
