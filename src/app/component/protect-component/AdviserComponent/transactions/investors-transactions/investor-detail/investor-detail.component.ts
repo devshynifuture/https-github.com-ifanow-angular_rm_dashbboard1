@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { FileUploadService } from '../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../config/main-config';
-import { appConfig } from '../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from '../../../../../../Data-service/event.service';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {FileUploadService} from '../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../config/main-config';
+import {appConfig} from '../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from '../../../../../../Data-service/event.service';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmUploadComponent} from './confirm-upload/confirm-upload.component';
 import {TransactionRoleService} from "../../transaction-role.service";
 
 @Component({
@@ -110,14 +110,14 @@ export class InvestorDetailComponent implements OnInit {
   getDataStatus(data) {
     // this.isLoading = true;
     this.statusDetails = this.statusData;
-    if (data.tpUserCredFamilyMappingId && data.tpUserCredFamilyMappingId > 0) {
+    if (data.tpUserCredFamilyMappingId && data.tpUserCredFamilyMappingId > 0 && data.status > 0) {
       this.statusDetails[2].checked = true;
     }
     // this.isLoading = false;
   }
 
   getInvestorStatus() {
-    const obj = { id: this.details.id };
+    const obj = {id: this.details.id};
     this.isLoading = true;
 
     this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
@@ -131,7 +131,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFormUploadDetail() {
-    const obj = { id: this.details.id };
+    const obj = {id: this.details.id};
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
       /*if (this.details.aggregatorType == 2) {
@@ -154,7 +154,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   openUploadConfirmBox(value, typeId) {
