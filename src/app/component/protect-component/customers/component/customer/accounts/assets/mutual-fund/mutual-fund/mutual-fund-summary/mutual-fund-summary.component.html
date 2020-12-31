@@ -1,17 +1,17 @@
 <div class="wrapper-8" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row pb-12">
         <div class="col-md-4 pl-0">
-            <h4 class="m-0 text-black roboto pt-8">Mutual fund Summary </h4>
+            <h4 class="m-0 text-black roboto pt-8">Mutual fund summary </h4>
         </div>
 
         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading ">
 
 
-            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload"
                 *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
-            <mat-menu #menu1="matMenu">
+            <mat-menu #summarydownload="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
@@ -126,7 +126,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="absoluteReturn">
-                    <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>Abs Ret</th>
+                    <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>Abs ret</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span>{{(isLoading) ? '' : (element.absoluteReturn)}}</span>
@@ -218,7 +218,7 @@
 
                 <ng-container matColumnDef="balanceUnit">
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                        Balance Unit </th>
+                        Balance unit </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span>{{element.balanceUnit}}</span>
 
@@ -295,7 +295,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="investedDate">
-                    <th class="br w-9 text-right" mat-header-cell *matHeaderCellDef>Invested Date
+                    <th class="br w-9 text-right" mat-header-cell *matHeaderCellDef>Invested date
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
@@ -377,7 +377,7 @@
                     <td *matCellDef="let element" [matMenuTriggerFor]="menu3" class="c-p" mat-cell>
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
-                        <mat-menu #menu3="matMenu" class="disabledOpacity">
+                        <mat-menu #menu3="matMenu">
                             <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                             <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                             <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact

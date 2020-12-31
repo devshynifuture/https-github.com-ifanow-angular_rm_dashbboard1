@@ -170,6 +170,10 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
 
   }
   openDetailedView(heading,data) {
+    if(data){
+     data.parentAsset =  data.childParentRel.REAL
+     data.childAsset = data.childParentRel.FICT
+    }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
     const sendData = {

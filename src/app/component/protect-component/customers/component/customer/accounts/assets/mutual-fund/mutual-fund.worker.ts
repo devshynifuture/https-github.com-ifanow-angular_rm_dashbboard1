@@ -17,7 +17,11 @@ addEventListener('message', ({data}) => {
     customDataHolder.push({...element});
     element.balanceUnitOrg = element.balanceUnit;
     element.sipAmountInt = element.sipAmount;
-    element.withdrawalsTillToday = mfService.mutualFundRoundAndFormat(element.withdrawalsTillToday, 0);
+    if(element.currentValue == 0){
+      element.withdrawalsTillToday = mfService.mutualFundRoundAndFormat(element.redemption, 0);
+    }else{
+      element.withdrawalsTillToday = mfService.mutualFundRoundAndFormat(element.withdrawalsTillToday, 0);
+    }
     element.ownerName = mfService.convertInTitleCase(element.ownerName);
     element.amountInvested = mfService.mutualFundRoundAndFormat(element.amountInvested, 0);
     element.totalAmountInvested = mfService.mutualFundRoundAndFormat(element.totalAmountInvested, 0);
