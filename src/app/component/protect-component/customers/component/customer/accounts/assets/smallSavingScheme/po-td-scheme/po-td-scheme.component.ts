@@ -78,11 +78,16 @@ export class PoTdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.potdlist) {
       this.getPoTdSchemedata();
     } else {
-      this.getPoTdSchemedataResponse(this.dataList);
+      this.getPoTdSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.potdlist);
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.potdlist = this.dataList ? this.dataList : null;
   }
 
   fetchData(value, fileName, element, type) {
@@ -296,16 +301,20 @@ export class PoTdSchemeComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
 
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
-              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
+                this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+
             }
             this.getPoTdSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

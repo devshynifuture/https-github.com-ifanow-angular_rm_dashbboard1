@@ -26,6 +26,7 @@ import { MotorInsuranceComponent } from '../../../../plan/insurance-plan/mainIns
 import { TravelInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/travel-insurance/travel-insurance.component';
 import { HouseholdersInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/householders-insurance/householders-insurance.component';
 import { FireInsuranceComponent } from '../../../../plan/insurance-plan/mainInsuranceScreen/fire-insurance/fire-insurance.component';
+import { DetailedViewInsurancePlanningComponent } from '../../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
 
 @Component({
   selector: 'app-all-advice-general-insurance',
@@ -68,6 +69,13 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
   adviceName: string;
   adviceNameObj: { adviceName: string; };
   recommendOrNot: boolean;
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
+    name: 'Health',
+    id: 5
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+    name: 'Motor',
+    id: 4
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   constructor(private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -340,6 +348,41 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
 
     return data;
   }
+  openDetailedView(heading,data) {
+    if(data){
+      data.parentAsset =  data.childParentRel.REAL
+      data.childAsset = data.childParentRel.FICT
+     }
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    const sendData = {
+      flag: 'detailedView',
+      data: {},
+      state: 'open',
+      componentName: DetailedViewInsurancePlanningComponent
+    };
+    sendData.data = {
+      data: data,
+      displayList: this.displayList,
+      allInsurance: this.allInsurance,
+      insuranceTypeId: data ? 1 : null,
+      insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
+      adviceName : this.adviceName,
+      showInsurance: {heading : heading},
+
+
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
@@ -367,8 +410,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
       data['insurance'] = data.InsuranceDetails;
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
     this.adviceNameObj = { adviceName: this.adviceName };
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
     switch (value) {

@@ -77,11 +77,16 @@ export class PoRdSchemeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.pordlist) {
       this.getPoRdSchemedata();
     } else {
-      this.getPoRdSchemedataResponse(this.dataList);
+      this.getPoRdSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.pordlist);
     }
+  }
+
+  ngOnDestroy() {
+    this.assetValidation.pordlist = this.dataList ? this.dataList : null;
   }
   fetchData(value, fileName, element, type) {
     element['subCatTypeId'] = type;
@@ -296,16 +301,20 @@ export class PoRdSchemeComponent implements OnInit {
             this.isLoading = true;
 
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfMonthlyDeposit'] = sideBarData.data.monthlyContribution;
-              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.dataList['sumOfMonthlyDeposit'] = sideBarData.data.monthlyContribution;
+                this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfMonthlyDeposit += sideBarData.data.monthlyContribution;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+
             }
             this.getPoRdSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

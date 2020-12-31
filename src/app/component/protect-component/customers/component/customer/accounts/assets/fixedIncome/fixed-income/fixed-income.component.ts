@@ -104,16 +104,17 @@ export class FixedIncomeComponent implements OnInit {
     if (this.finPlanObj) {
       if (this.finPlanObj.sectionName == 'Fixed deposit') {
         this.showRequring = '1'
-        this.getFixedDepositList();
+        this.getfixedIncomeData(1);
+
       } else if (this.finPlanObj.sectionName == 'Recurring deposits') {
         this.showRequring = '2'
-        this.getRecurringDepositList();
+        this.getfixedIncomeData(2);
       } else {
         this.showRequring = '3'
-        this.getBondsList();
+        this.getfixedIncomeData(3);
       }
     } else {
-      this.getFixedDepositList();
+      this.getfixedIncomeData(1);
     }
     // this.dataSource = new MatTableDataSource(this.data);
   }
@@ -191,25 +192,25 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     if (value == '2') {
-      if (this.recDataList) {
+      if (this.recDataList || this.assetValidation.recDataList) {
         this.isLoading = false;
-        this.getRecurringDepositRes(this.recDataList);
+        this.getRecurringDepositRes(this.recDataList ? this.recDataList : this.assetValidation.recDataList);
       }
       else {
         this.getRecurringDepositList();
       }
     } else if (value == '3') {
-      if (this.bondDataList) {
+      if (this.bondDataList || this.assetValidation.bondDataList) {
         this.isLoading = false;
-        this.getBondsRes(this.bondDataList);
+        this.getBondsRes(this.bondDataList ? this.bondDataList : this.assetValidation.bondDataList);
       }
       else {
         this.getBondsList();
       }
     } else {
-      if (this.fixDataList) {
+      if (this.fixDataList || this.assetValidation.fixDataList) {
         this.isLoading = false;
-        this.getFixedDepositRes(this.fixDataList);
+        this.getFixedDepositRes(this.fixDataList ? this.fixDataList : this.assetValidation.fixDataList);
       }
       else {
         this.getFixedDepositList();
@@ -686,6 +687,12 @@ export class FixedIncomeComponent implements OnInit {
     );
   }
   // ============== upload =======
+
+  ngOnDestroy() {
+    this.assetValidation.fixDataList = this.fixDataList ? this.fixDataList : null;
+    this.assetValidation.recDataList = this.recDataList ? this.recDataList : null;
+    this.assetValidation.bondDataList = this.bondDataList ? this.bondDataList : null;
+  }
 
 }
 

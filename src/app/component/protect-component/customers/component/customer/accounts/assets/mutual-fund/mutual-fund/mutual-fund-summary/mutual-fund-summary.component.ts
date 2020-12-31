@@ -630,7 +630,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'absoluteReturn') {
       this.customDataSource.data.array.push({
-        'name': 'Abs Ret', 'index': ind, isCheked: true,
+        'name': 'Abs ret', 'index': ind, isCheked: true,
         style: {
           'width': '6%',
           'text-align': 'right',
@@ -1191,11 +1191,11 @@ export class MutualFundSummaryComponent implements OnInit {
     // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
     // this.displayColumnsPDf[2].name=(columns[2] = 'currentValue')?'Current value':null;
     // this.displayColumnsPDf[3].name=(columns[3] = 'unrealizedProfit')?'Unrealized profit (loss)':null;
-    // this.displayColumnsPDf[4].name=(columns[4] = 'absoluteReturn')?'Abs Ret %':null;
+    // this.displayColumnsPDf[4].name=(columns[4] = 'absoluteReturn')?'Abs ret %':null;
     // this.displayColumnsPDf[5].name=(columns[5] = 'xirr')?'XIRR %':null;
     // this.displayColumnsPDf[6].name=(columns[6] = 'dividendPayout')?'Dividend payout':null;
     // this.displayColumnsPDf[7].name=(columns[7] = 'switchOut')?'Withdrawals Switch outs':null;
-    // this.displayColumnsPDf[8].name=(columns[8] = 'balanceUnit')?'Balance Unit':null;
+    // this.displayColumnsPDf[8].name=(columns[8] = 'balanceUnit')?'Balance unit':null;
     // this.displayColumnsPDf[9].name=(columns[9] = 'navDate')?'NAV Date':null;
     // this.displayColumnsPDf[10].name=(columns[10] = 'sipAmount')?' SIP':null;
     let filterArray = []
@@ -1206,11 +1206,11 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element == 'amountInvested') { name = 'Amount invested' };
       if (element == 'currentValue') { name = 'Current value' };
       if (element == 'unrealizedProfit') { name = 'Unrealized profit (loss)' };
-      if (element == 'absoluteReturn') { name = 'Abs Ret %' };
+      if (element == 'absoluteReturn') { name = 'Abs ret %' };
       if (element == 'xirr') { name = 'XIRR %' };
       if (element == 'dividendPayout') { name = 'Dividend payout' };
       if (element == 'switchOut') { name = 'Withdrawals Switch outs' };
-      if (element == 'balanceUnit') { name = 'Balance Unit' };
+      if (element == 'balanceUnit') { name = 'Balance unit' };
       if (element == 'navDate') { name = 'NAV/Date' };
       if (element == 'sipAmount') { name = 'SIP' };
       if (element == 'investedDate') { name = 'Invested date' };
@@ -1758,7 +1758,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Unrealized profit':
         obj = 'unrealizedGain';
         break;
-      case 'Abs Ret':
+      case 'Abs ret':
         obj = 'absoluteReturn';
         break;
       case 'XIRR':
@@ -1801,7 +1801,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Unrealized profit':
         obj = 'totalUnrealizedGain';
         break;
-      case 'Abs Ret':
+      case 'Abs ret':
         obj = 'totalAbsoluteReturn';
         break;
       case 'XIRR':
@@ -1844,7 +1844,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Unrealized profit':
         obj = 'total_unrealized_gain';
         break;
-      case 'Abs Ret':
+      case 'Abs ret':
         obj = 'total_absolute_return';
         break;
       case 'XIRR':

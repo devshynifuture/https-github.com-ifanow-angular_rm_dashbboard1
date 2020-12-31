@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="wrapper-20 pt-80 pb-44 mb-44">
+<div class="wrapper-20 pt-80 pb-44 mb-44 right-fliters-duplicate">
     <mat-accordion class="fliterBoxMutual">
         <mat-expansion-panel class="mb-20 boxShadowNone borderLine" (click)="panelOpenState = true" [expanded]="false">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -123,7 +123,7 @@
             </div>
         </mat-expansion-panel>
 
-        
+
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -135,22 +135,24 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <div  cdkDropList (cdkDropListDropped)="drop($event)">
-                    <p class="f-12 text-primitive mb-0 mt-10 lh-16">Customize this report futher by rearranging columns below and managing their visibility. </p>
-                    <mat-list-item class="example-box-pannel" role="listitem"  *ngFor="let item of transactionView let i = index;" cdkDrag>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                           <div class="d-flex align-items-center"> 
+                <div cdkDropList (cdkDropListDropped)="drop($event)">
+                    <p class="f-12 text-primitive mb-0 mt-10 lh-16">Customize this report futher by rearranging columns
+                        below and managing their visibility. </p>
+                    <mat-list-item class="example-box-pannel" role="listitem"
+                        *ngFor="let item of transactionView let i = index;" cdkDrag>
+                        <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                        <div class="d-flex align-items-center">
                             <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
-                             </mat-checkbox> 
-                             <a class="cursorMove">
+                            </mat-checkbox>
+                            <a class="cursorMove">
                                 <span class="material-icons f-20 mr-8">
                                     menu
-                                    </span>
-                                    {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
-                             </a>
-                             
-                            
-                           </div>
+                                </span>
+                                {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
+                            </a>
+
+
+                        </div>
                     </mat-list-item>
                 </div>
 
@@ -258,7 +260,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <p class="f-12 text-primitive mb-0 mt-10 lh-16">Save filters option is applicable for Column View and Report type filters only.</p>
+                <p class="f-12 text-primitive mb-0 mt-10 lh-16">Save filters option is applicable for Column View and
+                    Report type filters only.</p>
                 <mat-list-item role="listitem" *ngFor="let item of saveFilters">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeSaveFilterSelection(item)">{{item.value}}
                     </mat-checkbox>
@@ -305,8 +308,7 @@
     </mat-accordion>
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
-        <div class="col-md-4 pl-0"
-            *ngIf="_data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' ">
+        <div class="col-md-4 pl-0" *ngIf="_data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' ">
             <h5 class="m-0 pb-8">Report as on</h5>
             <div class="col-md-12 p-0">
                 <div class="from-group  ">
@@ -354,7 +356,8 @@
 
             </div>
         </div>
-        <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
+        <div class="col-md-6 pl-0"
+            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
                 <mat-radio-button value="1"

@@ -78,12 +78,16 @@ export class SsySchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.ssylist) {
       this.getSsySchemedata();
     } else {
-      this.getSsySchemedataResponse(this.dataList);
+      this.getSsySchemedataResponse(this.dataList ? this.dataList : this.assetValidation.ssylist);
     }
+  }
 
+  ngOnDestroy() {
+    this.assetValidation.ssylist = this.dataList ? this.dataList : null;
   }
 
   Excel(tableTitle) {
@@ -264,14 +268,18 @@ export class SsySchemeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfAmountInvested'] += sideBarData.data.accountBalance;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.dataList['sumOfAmountInvested'] += sideBarData.data.accountBalance;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
+
             }
             this.getSsySchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);

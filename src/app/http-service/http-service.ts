@@ -81,11 +81,8 @@ export class HttpService {
     } else {
       // let headers = new HttpHeaders().set('Content-Type', 'application/json');
       let headers: HttpHeaders = new HttpHeaders();
-      if (!apiConfig.PRODUCTION) {
-        headers = headers.set('Content-Encoding', 'gzip');
-      }
+      headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
-      // headers = headers.set('Content-Type', 'application/octet-stream');
       httpOptions = {
         headers
       };
@@ -95,9 +92,11 @@ export class HttpService {
     }
 
     const compressedBody = pako.gzip(JSON.stringify(body));
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
+
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
     return this._http
-      .post(this.baseUrl + url, apiConfig.PRODUCTION ? body : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         return this.sendSuccessResponse(res);
       });
@@ -110,12 +109,8 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      if (!apiConfig.PRODUCTION) {
-        headers = headers.set('Content-Encoding', 'gzip');
-      }
+      headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
-
-      // headers = headers.set('Content-Type', 'application/octet-stream');
       httpOptions = {
         headers
       };
@@ -123,12 +118,12 @@ export class HttpService {
         httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
       }
     }
-
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
     const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
-      .post(this.baseUrl + url, apiConfig.PRODUCTION ? inputData : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -149,9 +144,7 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      if (!apiConfig.PRODUCTION) {
-        headers = headers.set('Content-Encoding', 'gzip');
-      }
+      headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
 
       // headers = headers.set('Content-Type', 'application/octet-stream');
@@ -169,9 +162,10 @@ export class HttpService {
 
     const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
 
     return this._http
-      .put(this.baseUrl + url, apiConfig.PRODUCTION ? inputData : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -188,10 +182,7 @@ export class HttpService {
 
   put(url: string, body, params?): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders();
-    if (!apiConfig.PRODUCTION) {
-      headers = headers.set('Content-Encoding', 'gzip');
-    }
-    // headers = headers.set('Content-Type', 'application/octet-stream');
+    headers = headers.set('Content-Encoding', 'gzip');
     headers = headers.set('Content-Type', 'application/json');
 
     const httpOptions: any = {
@@ -205,9 +196,10 @@ export class HttpService {
       httpOptions.params = params;
     }
     const compressedBody = pako.gzip(JSON.stringify(body));
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
 
     return this._http
-      .put(this.baseUrl + url, apiConfig.PRODUCTION ? body : compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;

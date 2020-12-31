@@ -118,7 +118,7 @@
                                 </mat-error>
                             </mat-form-field> -->
                             <mat-form-field>
-                                <input #insuredMembers (keyup)="getIndexOfSelectedElement(obj)"
+                                <input #insuredMembers (keyup)="changeType(this.otherAssetForm.get('floaterOrIndividual').value);getIndexOfSelectedElement(obj)"
                                     [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
                                     appInputValueValidation autocomplete="off" class="form-control br-0"
                                     formControlName="insuredMembers" matInput type="text">
@@ -133,7 +133,7 @@
                     <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                         <div class="form-group iconRupess">
                             <mat-form-field>
-                                <input #sumAssured (keyup)="getIndexOfSelectedElement(obj)"
+                                <input #sumAssured (keyup)="getIndexOfSelectedElement(obj);changeType(this.otherAssetForm.get('floaterOrIndividual').value)"
                                     [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
                                     appInputValueValidation autocomplete="true" class="form-control rupess br-0"
                                     formControlName="sumAssured" matInput type="number">

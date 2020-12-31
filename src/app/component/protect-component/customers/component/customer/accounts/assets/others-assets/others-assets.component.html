@@ -61,7 +61,7 @@
             class="br w-15 right-hc text-right hide-arrow"> Current value
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span>
+            <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.currentValueAsOnToday }}</span>
             </div>
           </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600">
@@ -96,8 +96,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="rate">
-          <th mat-sort-header="purchaseDate" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+          <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-15 right-hc text-right hide-arrow">
             Growth rate
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">

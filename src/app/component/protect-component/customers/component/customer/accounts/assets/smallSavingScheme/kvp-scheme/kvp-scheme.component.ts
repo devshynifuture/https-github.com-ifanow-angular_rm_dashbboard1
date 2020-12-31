@@ -74,12 +74,16 @@ export class KvpSchemeComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if (!this.dataList) {
+
+    if (!this.dataList && !this.assetValidation.kvplist) {
       this.getKvpSchemedata();
     } else {
-      this.getKvpSchemedataResponse(this.dataList);
+      this.getKvpSchemedataResponse(this.dataList ? this.dataList : this.assetValidation.kvplist);
     }
+  }
 
+  ngOnDestroy() {
+    this.assetValidation.kvplist = this.dataList ? this.dataList : null;
   }
 
   Excel(tableTitle) {
@@ -264,16 +268,20 @@ export class KvpSchemeComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
 
             if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfAmountInvested'] = sideBarData.data.accountBalance;
-              this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              if (sideBarData.data) {
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+                this.dataList['sumOfAmountInvested'] = sideBarData.data.accountBalance;
+                this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
+              }
             }
             else {
+
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
               this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+
             }
             this.getKvpSchemedataResponse(this.dataList);
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
