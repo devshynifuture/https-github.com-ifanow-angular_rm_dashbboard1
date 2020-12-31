@@ -66,12 +66,12 @@ export class TransactionSummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionSummary = data;
+    this.getDefaultDetails(this.transactionSummary.aggregatorType);
     if (this.transactionSummary.defaultBank && this.transactionSummary.aggregatorType == 2) {
       this.bankDetails = this.transactionSummary.bankDetails
       this.defaultBank = this.transactionSummary.defaultBank
       this.transactionSummary.selectedMandate = this.defaultBank
     }
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
     this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
   }
 

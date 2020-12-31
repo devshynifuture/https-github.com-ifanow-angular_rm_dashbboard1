@@ -480,6 +480,8 @@ export class SipTransactionComponent implements OnInit {
     const obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType })
+    this.transactionSummary = { ...this.transactionSummary };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
         this.handleMandateFailure();
@@ -646,8 +648,6 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    Object.assign(this.transactionSummary, { bankDetails: this.selectedMandate })
-    Object.assign(this.transactionSummary, { defaultBank: this.selectedMandate })
     Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     this.transactionSummary = { ...this.transactionSummary };
   }
