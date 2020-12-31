@@ -31,7 +31,8 @@ export class AssetValidationService {
   bankDataList: any;
   goldDataList: any;
   otherDataList: any;
-  otherAssetsList: any
+  otherAssetsList: any;
+  stockDataList: any;
   private assetCount = new BehaviorSubject<any>({});
   assetCountObserver = this.assetCount.asObservable();
 
