@@ -447,7 +447,7 @@
                            {{group.schemeName}}{{group.isin ? ' | '+group.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
                         </p>
                         <p class="text-right w-50 m-0 f-400">Avg Cost NAV: {{group.avgNav}} | Current NAV:
-                           {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}
+                           {{group.nav}} | NAV as on {{group?.navDate | date:'dd/MM/yyyy'}}
                         </p>
                      </div>
                   </td>
@@ -860,10 +860,10 @@
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
             </td>
-            <td class="f-700" *ngIf="item.navDate" [attr.colspan]="colspanValue"
+            <td class="f-700" *ngIf="item?.navDate" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: left;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
-               {{item.navDate | date:'dd/MM/yyyy'}}
+               {{item?.navDate | date:'dd/MM/yyyy'}}
             </td>
          </tr>
          <tr style="page-break-inside: avoid">
@@ -1082,7 +1082,7 @@
             <td class="f-700" [attr.colspan]="colspanValue"
                style="padding: 12px;border-right: 1px solid #DADCE0; ;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on
-               {{item.navDate | date:'dd/MM/yyyy'}}
+               {{item?.navDate | date:'dd/MM/yyyy'}}
             </td>
          </tr>
          <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio">
