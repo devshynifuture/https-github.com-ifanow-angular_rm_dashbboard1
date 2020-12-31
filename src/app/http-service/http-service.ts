@@ -92,7 +92,7 @@ export class HttpService {
     }
 
     const compressedBody = pako.gzip(JSON.stringify(body));
-    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
     return this._http
@@ -118,7 +118,7 @@ export class HttpService {
         httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
       }
     }
-    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
     const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
@@ -162,7 +162,7 @@ export class HttpService {
 
     const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
-    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
       .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
@@ -196,7 +196,7 @@ export class HttpService {
       httpOptions.params = params;
     }
     const compressedBody = pako.gzip(JSON.stringify(body));
-    console.log('Request api :', this.baseUrl + url, ' requestBody : ', body);
+    console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
       .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
