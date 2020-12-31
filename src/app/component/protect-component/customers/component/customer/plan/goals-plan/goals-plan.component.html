@@ -418,10 +418,17 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                         </table>
 
-                        <div class="row height40  bl-1 bb-1 br bg-white text-center"
+                        <div class="row p-16 bl-1 bb-1 br bg-white text-center"
                             *ngIf="!loaderFn.loading && isRetirementTab && dataSource1.length == 0">
-                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">No milestone added</span>
+                            <div class="col-md-12">
+                                <span class="pl-10 full-center w-100 f-14" *ngIf="!assetError">
+                                    No milestone added</span>
+
+                                <button class="in-btn text-center mt-8" mat-stroked-button
+                                    (click)="addMilestone(dataSource1,'','add')">
+                                    Add milestone
+                                </button>
+
 
                             </div>
                             <!-- <div class="col-md-12 p-0 d-flex align-items-center justify-content-center"
@@ -431,6 +438,7 @@
                             </div> -->
 
                         </div>
+
                     </div>
                     <div class="row pt-40" *ngIf="!loaderFn.loading && isRetirementTab">
                         <div class="col-md-12 p-0">
