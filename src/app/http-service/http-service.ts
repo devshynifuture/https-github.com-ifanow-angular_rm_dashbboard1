@@ -91,7 +91,12 @@ export class HttpService {
       }
     }
 
-    const compressedBody = pako.gzip(JSON.stringify(body));
+    let compressedBody;
+    if (body instanceof String) {
+      compressedBody = pako.gzip(body);
+    } else {
+      compressedBody = pako.gzip(JSON.stringify(body));
+    }
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
