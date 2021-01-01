@@ -14,6 +14,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {RoleService} from '../../../../../auth-service/role.service';
 import * as $ from 'jquery';
 import {CustomerService} from "./customer.service";
+import { MfServiceService } from './accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-customer',
@@ -56,7 +57,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     private _formBuilder: FormBuilder,
     public enumDataService: EnumDataService,
     public roleService: RoleService,
-    public custumService: CustomerService
+    public custumService: CustomerService,
+    private MfServiceService:MfServiceService
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
@@ -203,6 +205,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     // if (!this.authService.isAdvisor()) {
     this.authService.logout();
     this.router.navigate(['/login']);
+    this.MfServiceService.clearStorage();
     // }
   }
 
