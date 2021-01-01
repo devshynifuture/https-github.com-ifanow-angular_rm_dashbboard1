@@ -134,6 +134,8 @@ export class NotesActivityComponent implements OnInit {
     this.searchQuery = value
     if (this.searchQuery.length > 3) {
       this.getNotes()
+    } else if (this.searchQuery.length == "") {
+      this.getNotes()
     }
   }
   addNotes(note) {
