@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
@@ -36,31 +36,42 @@ export class OverviewRiskProfileComponent implements OnInit {
   showButton;
   scoreStatus;
   hasError: boolean = false;
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   clientRiskAssessmentResults;
 
-  globalRiskProfile:any[] = [];
-  feedsRiskProfile:any = {};
+  globalRiskProfile: any[] = [];
+  feedsRiskProfile: any = {};
   clientId;
-  clientInfo:any;
-  count:number = 0;
+  clientInfo: any;
+  count: number = 0;
   showRetakeTestsButton: boolean = false;
 
-  isEmpty:boolean = true;
-  showQuestionnaire:boolean = false;
+  isEmpty: boolean = true;
+  showQuestionnaire: boolean = false;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+  svg: any;
+  chart: Highcharts.Chart;
 
-  
+
   constructor(
     private fb: FormBuilder,
     public planService: PlanService,
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
     private subInjectService: SubscriptionInject,
-    private eventService: EventService
+    private eventService: EventService,
+    private utilService: UtilService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.reportDate = new Date()
   }
 
   ngOnInit() {
@@ -74,7 +85,23 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showButton = false
     this.count = 0
   }
-
+  download(template, tableTitle) {
+    this.svg = this.chart.getSVG();
+    //let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: 'showPieChart',
+      svg: this.svg
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, true, this.fragmentData, 'showPieChart', this.svg, true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   percentage(data) {
     Highcharts.setOptions({
       chart: {
@@ -136,14 +163,14 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.callFun(data)
   }
   callFun(data) {
-    var chart1 = new Highcharts.Chart({
+    this.chart = new Highcharts.Chart({
 
       chart: { renderTo: 'container1' },
       xAxis: { categories: ['<span class="hc-cat-title"></span>'] },
       yAxis: {
         min: 0,
         max: 100,
-        offset:18,
+        offset: 18,
         lineWidth: 2,
         lineColor: 'black',
         tickLength: 4,
@@ -260,7 +287,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   mergeRiskProfile(data) {
     const globalProfile = this.globalRiskProfile.find(risk => risk.id == data.id);
-    if(globalProfile) {
+    if (globalProfile) {
       this.feedsRiskProfile = {
         "riskAssessmentScore": data.score,
         "riskProfileId": data.id,
@@ -348,7 +375,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.isEmpty = false;
 
         const globalProfile = this.globalRiskProfile.find(risk => risk.id == this.feedsRiskProfile.riskProfileId);
-        if(globalProfile) {
+        if (globalProfile) {
           this.feedsRiskProfile = {
             equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
             equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
@@ -377,7 +404,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     })
   }
 
-  cancelTest(){
+  cancelTest() {
     this.showQuestionnaire = false;
     this.loadRiskProfile();
   }
