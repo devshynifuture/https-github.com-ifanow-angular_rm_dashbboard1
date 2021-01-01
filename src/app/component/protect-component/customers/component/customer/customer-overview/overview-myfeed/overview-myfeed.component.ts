@@ -170,6 +170,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   isAssetAllocationDataLoaded = false;
   parentId: any;
   adminAdvisorIds = [];
+  clientIdToClearStorage: string;
 
   constructor(
     private customerService: CustomerService,
@@ -197,7 +198,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     // } else {
     //   this.imgGenderSrc = '/assets/images/svg/man-profile.svg';
     // }
-    this.clientId - AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.parentId = AuthService.getParentId();
     this.advisorImg = this.advisorInfo.profilePic;
@@ -304,7 +305,24 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
-    this.teamMemberListGet();
+    this.mfServiceService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.mfServiceService.clearStorage();
+      }
+    }
+    this.mfServiceService.setClientId(this.clientId);
+    this.mfServiceService.getMfData()
+    .subscribe(res => {
+      this.mutualFund = res; // used for getting mutual fund data coming from main gain call
+    });
+    if(!this.mutualFund){
+      this.teamMemberListGet();
+    }else{
+      this.getMutualFundResponse(this.mutualFund)
+    }
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
     this.loadCustomerProfile();
@@ -1071,17 +1089,18 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
     if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
       this.loaderFn.increaseCounter();
-
-      this.customerService.getMutualFund(obj).subscribe(
-        data => this.getMutualFundResponse(data), (error) => {
-          // this.eventService.openSnackBar(error, 'DISMISS');
-          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
-          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
-          this.tabsLoaded.portfolioData.dataLoaded = true;
-          this.tabsLoaded.portfolioData.isLoading = false;
-
-        }
-      );
+        this.customerService.getMutualFund(obj).subscribe(
+          data => {
+            this.mfServiceService.setMfData(data);
+            this.getMutualFundResponse(data)}, (error) => {
+            // this.eventService.openSnackBar(error, 'DISMISS');
+            this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+            this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+            this.tabsLoaded.portfolioData.dataLoaded = true;
+            this.tabsLoaded.portfolioData.isLoading = false;
+  
+          }
+        );
     }
   }
 

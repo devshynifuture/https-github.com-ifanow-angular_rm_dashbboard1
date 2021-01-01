@@ -15,6 +15,7 @@ import { PeopleService } from '../../protect-component/PeopleComponent/people.se
 import { debounceTime, startWith } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { RoleService } from '../../../auth-service/role.service';
+import { MfServiceService } from '../../protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -59,7 +60,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     private settingsService: SettingsService,
     private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    public MfServiceService :MfServiceService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -367,6 +369,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.enumDataService.setSearchData(this.clientList);
     this.authService.logout();
     this.router.navigate(['/login']);
+    this.MfServiceService.clearStorage();
+
   }
 
   // prepareRoute(outlet: RouterOutlet) {

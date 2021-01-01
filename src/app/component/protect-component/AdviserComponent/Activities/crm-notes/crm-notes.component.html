@@ -90,7 +90,8 @@
                                     class="example-margin">For
                                     admin
                                 </mat-checkbox>
-                                <button mat-flat-button class="downloadPdfIcon ml-10">
+                                <button mat-flat-button class="downloadPdfIcon ml-10" *ngIf="selectedNote"
+                                    (click)="download('template1','Notes')">
                                     <img src="assets/images/svg/mf-donwload.svg">
                                 </button>
                             </div>
@@ -236,7 +237,7 @@
 
 <!-- ------------------------------------------------ pdf design ---------------------------------------- -->
 
-<table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; display: none;">
+<table #tableEl id="template1" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
     <tr>
         <td>
             <table style="width: 100%;">
@@ -244,28 +245,31 @@
                     <tr>
                         <td style="text-align: left; vertical-align: top; width: 50%;">
 
-                            <div style="width: 200px;">
-                                <img style="max-width: 100%;"
-                                    src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
-                                    alt="">
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
                             </div>
                         </td>
 
                         <td style=" text-align: right; width: 50%;">
                             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
-                                Manek Financial Advisors Pvt Ltd
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
                                 <strong> Number: </strong>
-                                9594319525
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
                                 <strong> Email: </strong>
-                                mandira@futurewise.co.in
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}
                             </p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
-                                    Report as on: 01-Jan-2021</strong>
+                                    Report as on: {{reportDate | date:'dd-MMM-yyyy' }}</strong>
                             </p>
                         </td>
                     </tr>
@@ -279,64 +283,20 @@
             <table style="width: 100%;">
                 <tr>
                     <td>
-                        <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span> Ronak
-                            Hindocha </p>
+                        <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span>
+                            {{clientName}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h1 style="font-size: 20px; margin-top: 0; font-weight: 600; text-align: center;"> Subject
-                            heading </h1>
+                        <h1 style="font-size: 20px; margin-top: 0; font-weight: 600; text-align: center;">
+                            {{subject}} </h1>
                     </td>
                 </tr>
-                <tr>
+                <tr *ngFor="let note of listOfNotes">
                     <td style="padding: 10px;">
                         <p style="font-size: 14px;">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
-                        </p>
-
-                        <p style="font-size: 14px;">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
-                        </p>
-
-                        <p style="font-size: 14px;">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
-                        </p>
-                        <p style="font-size: 14px;">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
-                        </p>
-                        <p style="font-size: 14px;">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.
+                            {{note.showContent}}
                         </p>
                     </td>
                 </tr>

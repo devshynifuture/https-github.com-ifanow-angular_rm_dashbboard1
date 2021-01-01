@@ -243,6 +243,7 @@ export class MfServiceService {
   }
   sorting(data, filterId) {
     if (data) {
+      data = data.filter(d => d[filterId]);
       data.sort((a, b) =>
         a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
       );

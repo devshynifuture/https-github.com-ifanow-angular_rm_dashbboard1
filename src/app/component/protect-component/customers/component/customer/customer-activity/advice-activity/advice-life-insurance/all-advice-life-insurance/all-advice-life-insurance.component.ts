@@ -178,7 +178,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
   filterLiData(data) {
     if(data.length > 0){
-      // data = data.filter(d => d.realOrFictitious === 1);
+      data = data.filter(d => d.realOrFictitious === 1);
       data.forEach(element => {
         this.totalFundValues = 0;
         if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
@@ -321,7 +321,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       liArray = liArray.filter(d => !d.hideGiveAdvice);
 
     }
+    
     if (liArray.length > 0) {
+      liArray = liArray.filter(d => d.realOrFictitious === 1);
       array = [...liArray, ...array];
     }
     return array;

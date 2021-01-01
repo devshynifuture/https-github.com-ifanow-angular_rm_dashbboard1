@@ -186,6 +186,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Port policy'|| this.healthInsurance.get('selectAdvice').value == 'Increase sum assured' || this.healthInsurance.get('selectAdvice').value == 'Decrease sum assured') {
       this.healthInsurance.get('famMember').setErrors(null);
     }
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
   }
   getFormControl(): any {
     return this.healthInsurance.controls;
@@ -200,6 +204,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Discontinue') {
       this.healthInsurance.get('amount').setErrors(null);
     }
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
 
   }
   dateChange(value) {
@@ -228,6 +236,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   }
   saveAdviceOnHealth() {
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Port policy' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
       || this.healthInsurance.get('selectAdvice').value == 'Discontinue' ) {
       this.healthInsurance.get('amount').setErrors(null);
