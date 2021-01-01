@@ -935,7 +935,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 advisorName: componentRefComponentValues.Miscellaneous.get('advisorName').value,
                 serviceBranch: componentRefComponentValues.Miscellaneous.get('serviceBranch').value,
                 linkedBankAccountId: componentRefComponentValues.Miscellaneous.get('bankAccount').value,
-                policyId: componentRefComponentValues.policyData.id ? componentRefComponentValues.policyData.id : null,
+                policyId: componentRefComponentValues.policyData ? componentRefComponentValues.policyData.id : null,
                 policyTypeId: componentRefComponentValues.policyData.policyTypeId ? componentRefComponentValues.policyData.policyTypeId : null,
                 insuranceTypeId: componentRefComponentValues.insuranceTypeId,
                 insuranceSubTypeId: componentRefComponentValues.insuranceSubTypeId,

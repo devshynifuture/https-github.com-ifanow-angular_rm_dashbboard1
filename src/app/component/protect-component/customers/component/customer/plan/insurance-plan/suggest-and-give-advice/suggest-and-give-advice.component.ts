@@ -127,7 +127,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     if (this.adviceName == 'Continue') {
       this.adviceForm.get('implementDate').setErrors(null);
     }
-    this.adviceForm.get('implementDate').setValue(null);
+    // this.adviceForm.get('implementDate').setValue(null);
     this.componentRef._component.adviceName = this.adviceNameObj
     this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
   }

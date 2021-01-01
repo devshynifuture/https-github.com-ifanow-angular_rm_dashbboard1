@@ -15,6 +15,7 @@ import { EditSuggestedAdviceComponent } from '../../edit-suggested-advice/edit-s
 import { catchError, defaultIfEmpty } from 'rxjs/operators';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { DetailedViewInsurancePlanningComponent } from '../../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
+import { AddNewLifeInsComponent } from '../add-new-life-ins/add-new-life-ins.component';
 
 @Component({
   selector: 'app-all-advice-life-insurance',
@@ -215,7 +216,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
   openDetailedView(heading,data) {
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : 'Proposed policy'
     const sendData = {
       flag: 'detailedView',
       data: {},
@@ -426,6 +427,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     return data;
   }
   openAddEditAdvice(value, data) {
+    if(data.childParentRel && data.childParentRel.FICT){
+      data.InsuranceDetails.familyMemberName = data.childParentRel.FICT['familyMemberName']
+    }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
     this.adviceNameObj = {adviceName:this.adviceName};
@@ -452,7 +456,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         break;
     }
     // data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
-    let Component = AddInsuranceComponent;
+    let Component = AddNewLifeInsComponent;
 
     const fragmentData = {
       flag: 'Advice Insurance',
