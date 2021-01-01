@@ -29,6 +29,8 @@ export class DashboardService {
   dashClientWithSubscription: any;
   dashTotalRecivedByDash: any;
   dashAnswerData: any;
+  dashTaskDashboardCount: any;
+  dashTodaysTaskList: any;
   constructor(private http: HttpService) {
   }
 

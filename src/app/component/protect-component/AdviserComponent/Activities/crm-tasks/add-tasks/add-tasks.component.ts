@@ -1446,6 +1446,8 @@ export class AddTasksComponent implements OnInit {
                 .subscribe(res => {
                   if (res) {
                     console.log(res);
+                    this.dashboardService.dashTaskDashboardCount = null;
+                    this.dashboardService.dashTodaysTaskList = null;
                     this.isMainLoading = false;
                     this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
                     this.close(true);
@@ -1461,6 +1463,8 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               console.log(res);
+              this.dashboardService.dashTaskDashboardCount = null;
+              this.dashboardService.dashTodaysTaskList = null;
               this.isMainLoading = false;
               this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
               this.close(true);
@@ -1519,6 +1523,8 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
+            this.dashboardService.dashTaskDashboardCount = null;
+            this.dashboardService.dashTodaysTaskList = null;
             this.getTaskDashboardCount();
             sessionStorage.removeItem('todaysTaskList')
             this.isMainLoading = false;

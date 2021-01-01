@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material';
 import { element } from 'protractor';
 import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
 import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
+import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 const moment = require('moment');
 
@@ -94,6 +95,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private dashboardService: DashboardService,
     private eventService: EventService, private datePipe: DatePipe,
     private utilService: UtilService, private enumDataService: EnumDataService,
     private cusService: CustomerService, private dialog: MatDialog) {
@@ -612,6 +614,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
+            this.dashboardService.dashKeyMetrics = null;
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? 'familyMinor' : 'clientNonIndividual';
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');
