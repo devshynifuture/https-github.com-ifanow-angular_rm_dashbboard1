@@ -1,8 +1,11 @@
 <div class="cashflow-modal">
 
-    <div class="row " *ngIf="cashFlowCategory !== 'surplus'">
-        <div class="col-md-12">
-            <h3 class="m-0 roboto f-400 pt-20">Add {{ cashFlowCategory | titlecase }}</h3>
+    <div class="row bb-1" *ngIf="cashFlowCategory !== 'surplus'">
+        <div class="col-md-11 p-0">
+            <h3 class="m-0 roboto f-400 pt-20 pb-16 pl-20">Add {{ cashFlowCategory | titlecase }}</h3>
+        </div>
+        <div class="col-md-1 full-center">
+            <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
         </div>
     </div>
 

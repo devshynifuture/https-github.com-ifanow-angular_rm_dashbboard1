@@ -21,7 +21,7 @@
 
                 <div [formGroup]="loginForm" class="form_container_new_wrapper login-field">
 
-                    <div class="row ds-none">
+                    <div class="row ds-none-login">
                         <div class="col-md-12">
                             <h6 class="loginTitleName">Welcome to App Name</h6>
                         </div>
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="mobileScreen">
-                            <div class="forgotClassMobile ds-none">
+                            <div class="forgotClassMobile ds-none-login">
                                 <button (click)="otpClick()" class="roboto f-15 mt-4" mat-button>Login with OTP</button>
                             </div>
 
@@ -87,21 +87,21 @@
                             </div>
                         </div>
 
-                        <div class="row ds-none">
+                        <!-- <div class="row ds-none">
                             <div class="col-md-12 text-center">
                                 <h5 class="mt-32" *ngIf="!isClientWebsite">Don’t have an account? <span
                                         [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span>
                                 </h5>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <h5 (click)="otpClick()" class="mt-20 text-primary mobileNone  c-p f-600">Login with OTP</h5>
 
                     <!--          [queryParams]="{'advisorId':2808}"-->
                     <!--  -->
-                    <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
-                            [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span></h5>
+                    <!-- <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                            [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span></h5> -->
                     <h5 *ngIf="!isBetaDomain" class="mt-32 mobileNone mb-24">Login into Support section? <span
                             [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                         </span>
@@ -153,24 +153,24 @@
                                 <!-- <app-progress-button (btnClick)="getOtp()" [options]="getOtpBtnOption">
                 </app-progress-button> -->
 
-                                <button (click)="otpClick()" class="ds-none f-15 roboto" mat-button>Login with
+                                <button (click)="otpClick()" class="ds-none-login f-15 roboto" mat-button>Login with
                                     password
                                 </button>
                             </div>
 
 
-                            <div class="mobileCenter ds-none">
+                            <!-- <div class="mobileCenter ds-none">
                                 <h5 class="mt-12 " *ngIf="!isClientWebsite">Don’t have an account? <span
                                         [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
-                            </div>
+                            </div> -->
 
 
                             <h5 (click)="otpClick()" class="mt-20 mobileNone text-primary c-p f-600">Login with password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                            <!-- <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
                                     [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
-                            </h5>
+                            </h5> -->
                         </div>
 
                         <div *ngIf="getOtpFlag" class="row">
@@ -220,12 +220,12 @@
                                 </app-progress-button>
                             </div>
 
-                            <div class="mobileCenter ds-none">
+                            <div class="mobileCenter ds-none-login">
                                 <button [routerLink]="['/login']" class="f-15 mt-8 mb-8" mat-button>Login with
                                     password
                                 </button>
-                                <h5 class="mt-10 mb-16" *ngIf="!isClientWebsite">Don’t have an account? <span
-                                        [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
+                                <!-- <h5 class="mt-10 mb-16" *ngIf="!isClientWebsite">Don’t have an account? <span
+                                        [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5> -->
                             </div>
 
 
@@ -233,9 +233,9 @@
                                 password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                            <!-- <h5 class="mt-32 mobileNone mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
                                     [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
-                            </h5>
+                            </h5> -->
                             <!-- <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span
                                     [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                                 </span>
@@ -248,8 +248,8 @@
               </button> -->
                             <h5 [routerLink]="['/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
 
-                            <h5 class="mt-32 mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
-                                    [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
+                            <!-- <h5 class="mt-32 mb-24" *ngIf="!isClientWebsite">Don’t have an account? <span
+                                    [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5> -->
                         </div>
                     </div>
                 </div>

@@ -2155,3 +2155,15 @@ a.docFileName:hover{
     border-top: 1px solid #DADCE0;
   }
 }
+
+.imgClient {
+  img{
+    max-width: 100%;
+  }
+}
+
+.finacial_plan_height {
+  // max-height: calc(100% - 50px);
+    overflow-y: auto;
+    max-height: calc(100vh - 290px);
+}

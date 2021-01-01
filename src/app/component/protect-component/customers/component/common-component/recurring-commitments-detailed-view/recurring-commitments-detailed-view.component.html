@@ -3,7 +3,7 @@
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">{{flag}}</h4>
         </div>
-        <div class="col-md-2 text-left">
+        <div class="col-md-2 full-center">
             <div class="wrapper-12">
                 <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
@@ -14,22 +14,23 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui">
-                <div >
+                <div>
                     <h5 class="m-0 text-black">{{startDate}} - {{endDate}}
                     </h5>
                     <div class="example-container mt-8 mb-24 other-commitments" *ngIf="flag =='Mutual fund - SIP'">
-                        <table *ngIf="dataSource.filteredData.length > 0" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <table *ngIf="dataSource.filteredData.length > 0" mat-table [dataSource]="dataSource" id="tbs"
+                            class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef class="br"> Date </th>
                                 <td mat-cell *matCellDef="let element; let i = index;" class="br">
                                     <div [ngClass]="{'bar': isLoading}">
-                                            {{isLoading ? '' : (element.date ? (element.date | date:'dd/MM/yyyy') : '-')}}
+                                        {{isLoading ? '' : (element.date ? (element.date | date:'dd/MM/yyyy') : '-')}}
                                     </div>
 
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="investorName">
-                                <th  mat-header-cell *matHeaderCellDef class="br"> Investor name
+                                <th mat-header-cell *matHeaderCellDef class="br"> Investor name
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br">
                                     <div [ngClass]="{'bar': isLoading}">
@@ -38,7 +39,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="schemeName">
-                                <th  mat-header-cell *matHeaderCellDef class="br text-left">
+                                <th mat-header-cell *matHeaderCellDef class="br text-left">
                                     Scheme name </th>
                                 <td mat-cell *matCellDef="let element" class="br text-left">
                                     <div [ngClass]="{'bar': isLoading}">
@@ -55,7 +56,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sipAmount">
-                                <th  mat-header-cell *matHeaderCellDef class="br"> SIP amount </th>
+                                <th mat-header-cell *matHeaderCellDef class="br"> SIP amount </th>
                                 <td mat-cell *matCellDef="let element" class="br">
                                     <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                         <span appFormatNumber>{{element.sipAmount ? element.sipAmount : '-'}}</span>
@@ -65,7 +66,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-                       
+
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
@@ -78,8 +79,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="example-container mt-8 mb-24 other-commitments" *ngIf="flag !='Mutual fund - SIP' && flag != 'Recurring deposits'">
-                        <table *ngIf="dataSource1.filteredData.length > 0" mat-table [dataSource]="dataSource1" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="example-container mt-8 mb-24 other-commitments"
+                        *ngIf="flag !='Mutual fund - SIP' && flag != 'Recurring deposits'">
+                        <table *ngIf="dataSource1.filteredData.length > 0" mat-table [dataSource]="dataSource1" id="tbs"
+                            class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="No">
                                 <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
                                 <td mat-cell *matCellDef="let element; let i = index;" class="br">
@@ -89,7 +92,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="investorName">
-                                <th  mat-header-cell *matHeaderCellDef class="br"> Investor name
+                                <th mat-header-cell *matHeaderCellDef class="br"> Investor name
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br">
                                     <div [ngClass]="{'bar': isLoading}">
@@ -98,18 +101,19 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="currentValue">
-                                <th  mat-header-cell *matHeaderCellDef class="br text-left">
+                                <th mat-header-cell *matHeaderCellDef class="br text-left">
                                     {{(flag == 'Life insurance premium' || flag == 'General insurance premium') ? 'Premium amount' : (flag == 'Loan EMI') ? 'EMI amount' : (flag == 'Bank recurring deposits' || flag == 'Post office recurring deposits' || flag =='Sukanya samriddhi yojna') ? 'Monthly contribution' : 'Current value' }}
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br text-left">
                                     <div [ngClass]="{'bar': isLoading}">
                                         {{element.currentValue ? '₹' : ''}}
-                                        <span appFormatNumber>{{isLoading ? '' : (element.currentValue ? (element.currentValue) : '-')}}</span>
+                                        <span
+                                            appFormatNumber>{{isLoading ? '' : (element.currentValue ? (element.currentValue) : '-')}}</span>
                                     </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="number">
-                                <th mat-header-cell *matHeaderCellDef class="br"> 
+                                <th mat-header-cell *matHeaderCellDef class="br">
                                     {{(data.name == 'Life insurance premium' ||data.name=='General insurance premium') ? 'Policy number ' : (data.name == 'Loan EMI') ? 'Loan type' : (data.name == 'Bank recurring deposits' || data.name == 'Post office recurring deposits') ? 'RD number' : (data.name == 'Sukanya samriddhi yojna') ? 'SSY number' : 'Account number'}}
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br">
@@ -119,7 +123,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="description">
-                                <th  mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                                <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
                                 <td mat-cell *matCellDef="let element" class="br">
                                     <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                         {{element.description ? element.description : '-'}}
@@ -129,13 +133,14 @@
                                     </div>
                                 </td>
                             </ng-container>
-                       
+
                             <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                         </table>
                         <div class="row">
                             <div class="col-md-12">
-                                <div *ngIf="dataSource1.data.length == 0 " class="d-flex flex-column align-items-center">
+                                <div *ngIf="dataSource1.data.length == 0 "
+                                    class="d-flex flex-column align-items-center">
                                     <img class="width400" src="assets/images/svg/clients-img.svg">
                                     <h4 class="text-center pt-12">No data found</h4>
                                 </div>

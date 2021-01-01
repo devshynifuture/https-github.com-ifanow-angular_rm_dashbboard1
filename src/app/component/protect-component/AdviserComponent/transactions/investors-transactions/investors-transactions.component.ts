@@ -224,7 +224,7 @@ export class InvestorsTransactionsComponent implements OnInit {
           this.noData = 'No pending requests found';
         }
         data.forEach(singleData => {
-          if (singleData.tpUserCredFamilyMappingId && singleData.tpUserCredFamilyMappingId > 0) {
+          if (singleData.tpUserCredFamilyMappingId && singleData.tpUserCredFamilyMappingId > 0 && singleData.status > 0) {
             singleData.statusStringTemp = 'Investment ready';
           } else {
             singleData.statusStringTemp = 'Pending';

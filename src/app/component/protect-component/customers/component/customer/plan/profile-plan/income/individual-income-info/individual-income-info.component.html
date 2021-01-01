@@ -594,7 +594,7 @@
                                             matInput autocomplete="off" (input)="preventDefault($event)"
                                             formControlName="incomeStartDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeStartdate">
-                                        <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
+                                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #incomeStartdate startView="multi-year"
                                             (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeStartDate')"
@@ -611,7 +611,7 @@
                                         <input (ngModelChange)="checkDateDiff($event)" matInput autocomplete="off"
                                             formControlName="incomeEndDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeEndDate">
-                                        <mat-datepicker-toggle matSuffix [for]="incomeEndDate">
+                                        <mat-datepicker-toggle class="dateIcon" matSuffix [for]="incomeEndDate">
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #incomeEndDate startView="multi-year"
                                             (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeEndDate')"
@@ -659,7 +659,7 @@
                                 <mat-form-field class="ba-date" appExternalDateFormat>
                                     <input matInput autocomplete="off" formControlName="nextAppraisal"
                                         class="form-control br-0 b-0" [matDatepicker]="nextAppraisalIN">
-                                    <mat-datepicker-toggle matSuffix [for]="nextAppraisalIN">
+                                    <mat-datepicker-toggle class="dateIcon" matSuffix [for]="nextAppraisalIN">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #nextAppraisalIN></mat-datepicker>
                                     <mat-error class="f-12">This field is required
@@ -682,7 +682,7 @@
                                         <mat-form-field class="ba-date">
                                             <input matInput formControlName="receivingDate" autocomplete="off"
                                                 class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
-                                            <mat-datepicker-toggle matSuffix [for]="expectedBonus">
+                                            <mat-datepicker-toggle class="dateIcon" matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #expectedBonus startView="multi-year"
                                                 (yearSelected)="chosenYearHandler($event,singleBonusForm,'receivingDate')"
