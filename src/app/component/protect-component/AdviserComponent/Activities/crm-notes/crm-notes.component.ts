@@ -8,6 +8,7 @@ import { ProcessTransactionService } from '../../transactions/overview-transacti
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-crm-notes',
@@ -38,13 +39,29 @@ export class CrmNotesComponent implements OnInit {
   hideOwner: boolean = false;
   showCheckBox: boolean = false;
   checkAdmin: boolean = false;
+  clientInfo: any;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: Subscription;
+  subject: any;
+  showContent: "";
+  clientName: any;
+  showContentPDf: any;
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
+    private utilService: UtilService,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService, ) { }
+    public processTransaction: ProcessTransactionService, ) {
+    this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.reportDate = new Date()
+  }
 
   ngOnInit() {
     this.objForDelete = []
@@ -53,6 +70,22 @@ export class CrmNotesComponent implements OnInit {
     this.getNotes();
     this.getdataForm("")
     this.isLoading = true;
+  }
+  download(template, tableTitle) {
+    //let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: 'showPieChart',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
   }
   getdataForm(data) {
     this.notes = this.fb.group({
@@ -174,6 +207,9 @@ export class CrmNotesComponent implements OnInit {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
     this.selectedNote = note
+    this.subject = (note.subject) ? note.subject : '-'
+    this.showContentPDf = note.showContent ? note.showContent : '-'
+    this.clientName = note.clientName ? note.clientName : '-'
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.checkAdmin = note.forAdmin
