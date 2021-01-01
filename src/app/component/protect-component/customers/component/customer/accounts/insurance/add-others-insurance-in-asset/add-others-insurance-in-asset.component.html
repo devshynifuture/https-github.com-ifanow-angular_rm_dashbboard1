@@ -95,7 +95,8 @@
                 <div class="col-md-7 p-0">
                     <h5 class="mb-4 f-14">Name</h5>
                 </div>
-                <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
+                <div class="col-md-3 pr-0"
+                    *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                     <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
@@ -118,7 +119,8 @@
                                 </mat-error>
                             </mat-form-field> -->
                             <mat-form-field>
-                                <input #insuredMembers (keyup)="changeType(this.otherAssetForm.get('floaterOrIndividual').value);getIndexOfSelectedElement(obj)"
+                                <input #insuredMembers
+                                    (keyup)="changeType(this.otherAssetForm.get('floaterOrIndividual').value);getIndexOfSelectedElement(obj)"
                                     [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
                                     appInputValueValidation autocomplete="off" class="form-control br-0"
                                     formControlName="insuredMembers" matInput type="text">
@@ -130,10 +132,12 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 pr-0" *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
+                    <div class="col-md-3 pr-0"
+                        *ngIf="(this.otherAssetForm.get('floaterOrIndividual').value == 0) && showinsuredMemberSum">
                         <div class="form-group iconRupess">
                             <mat-form-field>
-                                <input #sumAssured (keyup)="getIndexOfSelectedElement(obj);changeType(this.otherAssetForm.get('floaterOrIndividual').value)"
+                                <input #sumAssured
+                                    (keyup)="getIndexOfSelectedElement(obj);changeType(this.otherAssetForm.get('floaterOrIndividual').value)"
                                     [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
                                     appInputValueValidation autocomplete="true" class="form-control rupess br-0"
                                     formControlName="sumAssured" matInput type="number">
@@ -246,8 +250,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #insurerName 
-                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                    <input #insurerName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
                         appInputValueValidation autocomplete="off" class="form-control br-0"
                         formControlName="insurerName" matInput type="text">
                     <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
@@ -304,18 +307,20 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
-        <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Policy number</h5>
+    <div class="row pt-40">
+        <div class="col-md-4 pt-16 pr-0 text-right">
+            <h5 class="m-0 pt-8">Policy number</h5>
         </div>
-        <div class="col-md-5 form-group">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum" #policyNum
-                    autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
-                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
-                <mat-error class="f-12">This field is required
-                </mat-error>
-            </mat-form-field>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum"
+                        #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                    <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
+                    <mat-error class="f-12">This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -435,22 +440,22 @@
                                 </mat-error>
                             </mat-form-field> -->
                             <mat-form-field>
-                                    <input #addOns (keyup)="getIndexOfSelectedElement(obj)"
-                                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
-                                        appInputValueValidation autocomplete="off" class="form-control br-0"
-                                        formControlName="addOns" matInput type="text">
-                                    <mat-hint align="end" class="f-12">{{addOns.value.length}}/40</mat-hint>
-    
-                                    <mat-error>This field is required
-                                    </mat-error>
-                                </mat-form-field>
+                                <input #addOns (keyup)="getIndexOfSelectedElement(obj)"
+                                    [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                                    appInputValueValidation autocomplete="off" class="form-control br-0"
+                                    formControlName="addOns" matInput type="text">
+                                <mat-hint align="end" class="f-12">{{addOns.value.length}}/40</mat-hint>
+
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
                         </div>
-                        <div class="col-md-3 pr-0 form-group" >
+                        <div class="col-md-3 pr-0 form-group">
 
                             <mat-form-field class="iconRupess">
-                                <input matInput type="number" (keyup)="getIndexOfSelectedElement(obj)" formControlName="sumInsured"
-                                    [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                                    #premiumdetails autocomplete="true" [maxLength]="10"
+                                <input matInput type="number" (keyup)="getIndexOfSelectedElement(obj)"
+                                    formControlName="sumInsured" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                    appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10"
                                     class="form-control rupess br-0">
                                 <mat-error>This field is required
                                 </mat-error>
@@ -510,7 +515,7 @@
                 *ngFor="let obj of otherAssetForm.controls['planFeatureForm'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-4 pr-0 text-right">
-                    <h5 class="m-0 pt-20 ">Plan features</h5>
+                    <h5 class="m-0 pt-8 ">Plan features</h5>
                 </div>
 
                 <div class="col-md-5 form-group">
@@ -539,15 +544,15 @@
                         </mat-error>
                     </mat-form-field> -->
                     <mat-form-field>
-                            <input #feature (keyup)="getIndexOfSelectedElement(obj)"
-                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
-                                appInputValueValidation autocomplete="off" class="form-control br-0"
-                                formControlName="feature" matInput type="text">
-                            <mat-hint align="end" class="f-12">{{feature.value.length}}/40</mat-hint>
+                        <input #feature (keyup)="getIndexOfSelectedElement(obj)"
+                            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40"
+                            appInputValueValidation autocomplete="off" class="form-control br-0"
+                            formControlName="feature" matInput type="text">
+                        <mat-hint align="end" class="f-12">{{feature.value.length}}/40</mat-hint>
 
-                            <mat-error>This field is required
-                            </mat-error>
-                        </mat-form-field>
+                        <mat-error>This field is required
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
@@ -663,7 +668,8 @@
                 <div *ngIf="getNominee.length > 1" class="col-md-2">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input (focusout)="onChangeJointOwnership('nominee')" (keyup)="getIndexOfSelectedElement(obj)" class="form-control br-0 percentage"
+                            <input (focusout)="onChangeJointOwnership('nominee')"
+                                (keyup)="getIndexOfSelectedElement(obj)" class="form-control br-0 percentage"
                                 formControlName="sharePercentage" matInput type="number">
                             <mat-error *ngIf="obj.controls['sharePercentage'].hasError('required')" class="f-12">
                                 This field is required
