@@ -98,7 +98,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, true, this.fragmentData, 'showPieChart', this.svg, true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', this.svg, true);
     console.log('return value ====', this.returnValue);
     return obj;
   }

@@ -266,16 +266,18 @@
                     <td style="text-align: center;">
                         <p style="margin-bottom: 8px; font-size: 14px; margin-top: 0px; font-weight: 600;">Your risk
                             score</p>
-                        <img src="/assets/images/svg/aggressive.svg" *ngIf="feedsRiskProfile.riskProfileId == 1">
-                        <img src="/assets/images/svg/moderately-aggressive.svg"
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/aggressive.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 1">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderately-aggressive.svg"
                             *ngIf="feedsRiskProfile.riskProfileId == 2">
-                        <img src="/assets/images/svg/moderate.svg" *ngIf="feedsRiskProfile.riskProfileId == 3"
-                            class="center-item ">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderate.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 3" class="center-item ">
                         <div class="text-center">
-                            <img src="/assets/images/svg/moderately-conservative.svg"
+                            <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderately-conservative.svg"
                                 *ngIf="feedsRiskProfile.riskProfileId == 4" class="h-105">
                         </div>
-                        <img src="/assets/images/svg/conservative.svg" *ngIf="feedsRiskProfile.riskProfileId == 5">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/conservative.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 5">
                         <p style="color: #757575; font-size: 14px; line-height: 20px;">
                             {{riskProfileDesc(feedsRiskProfile.riskProfileId)}}
                         </p>
