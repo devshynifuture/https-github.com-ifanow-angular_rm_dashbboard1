@@ -166,7 +166,7 @@ export class EnumServiceService {
     if (this.realEstateTypeList.length == 0) {
       this.realEstateTypeList.push({ value: '0', name: 'Self Occupied property' });
       this.realEstateTypeList.push({ value: '1', name: 'Let out property' });
-      this.realEstateTypeList.push({ value: '2', name: 'Commercial land' });
+      this.realEstateTypeList.push({ value: '2', name: 'Commercial property' });
       this.realEstateTypeList.push({ value: '3', name: 'Agricultural land' });
       this.realEstateTypeList.push({ value: '4', name: 'Non agricultural land' });
     }
