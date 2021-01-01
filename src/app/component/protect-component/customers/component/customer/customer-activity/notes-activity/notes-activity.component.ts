@@ -56,7 +56,7 @@ export class NotesActivityComponent implements OnInit {
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
     });
 
-
+    this.notes.get('subject').disable();
   }
 
   getFormControl(): any {
