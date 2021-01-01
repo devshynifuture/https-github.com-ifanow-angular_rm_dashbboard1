@@ -31,6 +31,11 @@ export class DashboardService {
   dashAnswerData: any;
   dashTaskDashboardCount: any;
   dashTodaysTaskList: any;
+
+  dashRefreshObj = {
+    dashTaskDashboardCount: null,
+    dashTodaysTaskList: null
+  }
   constructor(private http: HttpService) {
   }
 

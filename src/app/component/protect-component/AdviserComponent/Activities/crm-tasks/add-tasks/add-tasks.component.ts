@@ -105,7 +105,7 @@ export class AddTasksComponent implements OnInit {
     public dialog: MatDialog,
     private util: UtilService,
     public roleService: RoleService,
-    private dashboardService: DashboardService
+    public dashboardService: DashboardService
   ) { }
 
   ngOnInit() {
@@ -113,6 +113,7 @@ export class AddTasksComponent implements OnInit {
       this.taskNumberArr.push(index);
     }
     this.initPoint();
+    this.dashboardService.dashRefreshObj.dashTaskDashboardCount
   }
 
   initPoint() {
@@ -1446,8 +1447,8 @@ export class AddTasksComponent implements OnInit {
                 .subscribe(res => {
                   if (res) {
                     console.log(res);
-                    this.dashboardService.dashTaskDashboardCount = null;
-                    this.dashboardService.dashTodaysTaskList = null;
+                    this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
+                    this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
                     this.isMainLoading = false;
                     this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
                     this.close(true);
@@ -1463,8 +1464,8 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               console.log(res);
-              this.dashboardService.dashTaskDashboardCount = null;
-              this.dashboardService.dashTodaysTaskList = null;
+              this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
+              this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
               this.isMainLoading = false;
               this.eventService.openSnackBar("Task saved successfully!", "DISMISS");
               this.close(true);
@@ -1523,8 +1524,8 @@ export class AddTasksComponent implements OnInit {
       this.crmTaskService.addTask(data)
         .subscribe(res => {
           if (res) {
-            this.dashboardService.dashTaskDashboardCount = null;
-            this.dashboardService.dashTodaysTaskList = null;
+            this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
+            this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
             this.getTaskDashboardCount();
             sessionStorage.removeItem('todaysTaskList')
             this.isMainLoading = false;

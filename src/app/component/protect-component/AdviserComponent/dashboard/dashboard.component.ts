@@ -236,7 +236,7 @@ export class DashboardComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private backoffice: BackOfficeService,
     private transactionService: OnlineTransactionService,
-    private dashboardService: DashboardService,
+    public dashboardService: DashboardService,
     private calenderService: calendarService,
     private emailService: EmailServiceService,
     private utils: UtilService,
@@ -246,6 +246,7 @@ export class DashboardComponent implements OnInit {
     public enumDataService: EnumDataService,
     private cancelFlagService: CancelFlagService,
     public roleService: RoleService
+
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -624,10 +625,10 @@ export class DashboardComponent implements OnInit {
 
     // DashboardService.getTaskMatrix() ? this.taskSummaryDashboardCount = DashboardService.getTaskMatrix() : this.getTaskDashboardCount();
     // DashboardService.getTodaysTaskList() ? this.dataSource2.data = DashboardService.getTodaysTaskList() : this.getTodaysTaskList();
-    if (!this.dashboardService.dashTaskDashboardCount) {
+    if (!this.dashboardService.dashRefreshObj.dashTaskDashboardCount) {
       this.getTaskDashboardCount();
     } else {
-      this.getTaskDashboardCountRes(this.dashboardService.dashTaskDashboardCount);
+      this.getTaskDashboardCountRes(this.dashboardService.dashRefreshObj.dashTaskDashboardCount);
     }
 
     if (!this.dashboardService.dashTodaysTaskList) {
@@ -712,7 +713,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.getTaskDashboardCountRes(res);
-          this.dashboardService.dashTaskDashboardCount = res;
+          this.dashboardService.dashRefreshObj.dashTaskDashboardCount = res;
 
         }
       })
@@ -721,7 +722,7 @@ export class DashboardComponent implements OnInit {
   getTaskDashboardCountRes(res) {
     this.taskSummaryDashboardCount = res;
     this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount
-    DashboardService.setTaskMatrix(res);
+    // DashboardService.setTaskMatrix(res);
   }
 
   getAssetAllocationData() {
@@ -902,8 +903,8 @@ export class DashboardComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.dashboardService.dashTaskDashboardCount = null;
-            this.dashboardService.dashTodaysTaskList = null;
+            this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
+            this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
             this.initPointForTask();
           }
           rightSideDataSub.unsubscribe();

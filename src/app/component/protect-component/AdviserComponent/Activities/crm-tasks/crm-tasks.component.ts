@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormControl } from '@angular/forms';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 
 @Component({
@@ -48,13 +49,17 @@ export class CrmTasksComponent implements OnInit {
     private crmTaskService: CrmTaskService,
     private eventService: EventService,
     private dialog: MatDialog,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private dashboardService: DashboardService
+
     // private webPushNotify: WebPushNotifyService,
   ) { }
 
   ngOnInit() {
     this.statusFC = new FormControl(0);
     this.initPoint();
+    this.dashboardService.dashRefreshObj.dashTaskDashboardCount;
+
   }
 
   initPoint() {
@@ -242,7 +247,8 @@ export class CrmTasksComponent implements OnInit {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
           this.finalTaskList = [];
-
+          this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
+          this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
           this.initPoint();
         }
       }, err => {
