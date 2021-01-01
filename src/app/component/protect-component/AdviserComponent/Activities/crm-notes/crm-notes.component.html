@@ -293,10 +293,10 @@
                             {{subject}} </h1>
                     </td>
                 </tr>
-                <tr>
+                <tr *ngFor="let note of listOfNotes">
                     <td style="padding: 10px;">
                         <p style="font-size: 14px;">
-                            {{showContentPDf}}
+                            {{note.showContent}}
                         </p>
                     </td>
                 </tr>

@@ -419,10 +419,13 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   riskProfileDesc(id) {
-    if (this.globalRiskProfile.length > 0) {
-      return this.globalRiskProfile.find(data => data.id == id).description;
-    } else {
-      return '';
+    if (id) {
+      if (this.globalRiskProfile.length > 0) {
+        return this.globalRiskProfile.find(data => data.id == id).description;
+      } else {
+        return '';
+      }
     }
+
   }
 }
