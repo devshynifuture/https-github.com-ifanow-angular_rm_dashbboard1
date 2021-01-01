@@ -8,7 +8,27 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DashboardService {
-
+  dashChartData: any;
+  dashMisData: any;
+  dashPointForTask: any;
+  dashGoalSummaryData: any;
+  dashLastSevenDaysInvestmentAccounts: any;
+  dashLatesAumReconciliationData: any;
+  dashSevenDaysTransactions: any;
+  dashLastSevenDaysTransactions: any;
+  dashLastSevenDaysTransactionsNew: any;
+  dashLatesAumReconciliationDataRes: any;
+  dashInitPointForTask: any
+  dashDocumentTotalSize: any;
+  dashLast7DaysTransactionStatus: any;
+  dashBirthdayOrAnniversary: any;
+  dashInitializePieChart: any;
+  dashRecentTransactionData: any;
+  dashKeyMetrics: any;
+  dashSummaryDataDashboard: any;
+  dashClientWithSubscription: any;
+  dashTotalRecivedByDash: any;
+  dashAnswerData: any;
   constructor(private http: HttpService) {
   }
 

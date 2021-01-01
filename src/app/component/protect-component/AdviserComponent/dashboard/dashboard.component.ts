@@ -225,6 +225,9 @@ export class DashboardComponent implements OnInit {
   answerObj: any = {};
   answerFlag: boolean;
   taskSummaryCount: any;
+
+
+
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -471,7 +474,7 @@ export class DashboardComponent implements OnInit {
       isLoading: true,
     }
   };
-
+  update: boolean = true
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
@@ -479,33 +482,145 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
-    this.getAnswerData();
+    if (!this.update) { }
+    if (this.dashboardService.dashAnswerData) {
+      this.answerObj = this.dashboardService.dashAnswerData;
+    }
+    else {
+      this.getAnswerData();
+    }
+
+    if (this.dashboardService.dashTotalRecivedByDash) {
+      this.getTotalRecivedRes(this.dashboardService.dashTotalRecivedByDash);
+    }
+    else {
+      this.getTotalRecivedByDash();
+    }
+
+    if (this.dashboardService.dashClientWithSubscription) {
+      this.clientWithSubscriptionRes(this.dashboardService.dashClientWithSubscription);
+    } else {
+      this.clientWithSubscription();
+    }
+
+    if (this.dashboardService.dashSummaryDataDashboard) {
+      this.getSubSummaryRes(this.dashboardService.dashSummaryDataDashboard)
+    }
+    else {
+      this.getSummaryDataDashboard(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashKeyMetrics) {
+      this.getKeyMetricsRes(this.dashboardService.dashKeyMetrics)
+    }
+    else {
+      this.getKeyMetrics(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashRecentTransactionData) {
+      this.getRecentTransactionDataRes(this.dashboardService.dashRecentTransactionData);
+    }
+    else {
+      this.getRecentTransactionData(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashBirthdayOrAnniversary) {
+      this.getBirthdayOrAnniversaryRes(this.dashboardService.dashBirthdayOrAnniversary);
+    }
+    else {
+      this.getBirthdayOrAnniversary(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashLast7DaysTransactionStatus) {
+      this.getLast7DaysTransactionStatusRes(this.dashboardService.dashLast7DaysTransactionStatus);
+    }
+    else {
+      this.getLast7DaysTransactionStatus(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashDocumentTotalSize) {
+      this.getDocumentTotalSizeRes(this.dashboardService.dashDocumentTotalSize);
+    }
+    else {
+      this.getDocumentTotalSize(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashLastSevenDaysTransactions && this.dashboardService.dashLastSevenDaysTransactionsNew) {
+      this.getLastSevenDaysTransactionsRes(this.dashboardService.dashLastSevenDaysTransactions);
+      this.getLastSevenDaysTransactionsNewRes(this.dashboardService.dashLastSevenDaysTransactionsNew);
+    }
+    else {
+      this.getLastSevenDaysTransactions(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashLatesAumReconciliationDataRes) {
+      this.getLatesAumReconciliationDataRes(this.dashboardService.dashLatesAumReconciliationDataRes);
+    }
+    else {
+      this.getLatesAumReconciliationData(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashLastSevenDaysInvestmentAccounts) {
+      this.getLastSevenDaysInvestmentAccountsRes(this.dashboardService.dashLastSevenDaysInvestmentAccounts);
+    }
+    else {
+      this.getLastSevenDaysInvestmentAccounts(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashGoalSummaryData) {
+      this.getGoalSummaryDataRes(this.dashboardService.dashGoalSummaryData);
+    }
+    else {
+      this.getGoalSummaryData(); // summry dashbord
+    }
+
+    if (this.dashboardService.dashMisData) {
+      this.getMisDataRes(this.dashboardService.dashMisData);
+    }
+    else {
+      this.getMisData(); // summry dashbord
+    }
+    this.initializePieChart();
+
+    if (this.dashboardService.dashChartData) {
+      this.getChartDataRes(this.dashboardService.dashChartData);
+    }
+    else {
+      this.getChartData(); // summry dashbord
+    }
     // this.getAssetAllocationData();
-    this.getTotalRecivedByDash();
-    this.clientWithSubscription();
-    this.getSummaryDataDashboard(); // summry dashbord
     // this.sipCountGet();//for getting total sip book
-    this.getKeyMetrics(); // for getting total AUM
+    // this.getKeyMetrics(); 
+    // for getting total AUM
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
-    this.getRecentTransactionData();
-    this.initializePieChart();
+    // this.getRecentTransactionData();
     // this.connectAccountWithGoogle();
-    this.getBirthdayOrAnniversary();
-    this.getLast7DaysTransactionStatus();
-    this.getDocumentTotalSize();
-    this.getLastSevenDaysTransactions();
-    this.getLatesAumReconciliationData();
-    this.getLastSevenDaysInvestmentAccounts();
-    this.getGoalSummaryData();
+    // this.getBirthdayOrAnniversary();
+    // this.getLast7DaysTransactionStatus();
+    // this.getDocumentTotalSize();
+    // this.getLastSevenDaysTransactions();
+    // this.getLatesAumReconciliationData();
+    // this.getLastSevenDaysInvestmentAccounts();
+    // this.getGoalSummaryData();
     this.initPointForTask();
-    this.getMisData();
-    this.getChartData()
+    // this.getMisData();
+    // this.getChartData()
+
 
   }
 
+
+
+  ngOnDestroy() {
+    this.dashboardService.dashAnswerData = this.answerObj ? this.answerObj : null;
+  }
+
   initPointForTask() {
+    console.log(DashboardService.getTaskMatrix(), "DashboardService.getTaskMatrix");
+    console.log(DashboardService.getTodaysTaskList(), "DashboardService.getTodaysTaskList");
+
     DashboardService.getTaskMatrix() ? this.taskSummaryDashboardCount = DashboardService.getTaskMatrix() : this.getTaskDashboardCount();
     DashboardService.getTodaysTaskList() ? this.dataSource2.data = DashboardService.getTodaysTaskList() : this.getTodaysTaskList();
   }
@@ -519,6 +634,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getOnBoardingQuestionAnswer(obj).subscribe(
       data => {
         if (data) {
+          this.dashboardService.dashAnswerData = data;
           this.answerFlag = false;
           this.answerObj = data;
         }
@@ -537,28 +653,11 @@ export class DashboardComponent implements OnInit {
     }
     this.dashboardService.getChartData(obj).subscribe(
       data => {
-        this.tabsLoaded.portfolioData.isLoading = false
+        this.tabsLoaded.portfolioData.isLoading = false;
         console.log(data)
         if (data) {
-          this.tabsLoaded.portfolioData.hasData = true;
-          let chartData = [];
-          this.chartTotal
-          data.forEach((element, index) => {
-            this.chartTotal += Math.round(element.totalAum)
-            if (element.name) {
-              chartData.push({
-                y: Math.round(element.totalAum),
-                name: element.name,
-                color: AppConstants.DONUT_CHART_COLORS[index],
-                dataLabels: {
-                  enabled: false
-                }
-              })
-            }
-          });
-          this.newchartData = chartData
-          this.assetAllocationPieChartDataMgnt(this.newchartData);
-          this.tabsLoaded.portfolioData.dataLoaded = true
+          this.dashboardService.dashChartData = data;
+          this.getChartDataRes(data);
         }
         else {
           this.tabsLoaded.portfolioData.hasData = false;
@@ -571,6 +670,28 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  getChartDataRes(data) {
+    this.tabsLoaded.portfolioData.isLoading = false;
+    this.tabsLoaded.portfolioData.hasData = true;
+    let chartData = [];
+    this.chartTotal
+    data.forEach((element, index) => {
+      this.chartTotal += Math.round(element.totalAum)
+      if (element.name) {
+        chartData.push({
+          y: Math.round(element.totalAum),
+          name: element.name,
+          color: AppConstants.DONUT_CHART_COLORS[index],
+          dataLabels: {
+            enabled: false
+          }
+        })
+      }
+    });
+    this.newchartData = chartData
+    this.assetAllocationPieChartDataMgnt(this.newchartData);
+    this.tabsLoaded.portfolioData.dataLoaded = true
+  }
 
   getTaskDashboardCount() {
     this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
@@ -850,6 +971,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
+          this.dashboardService.dashLastSevenDaysInvestmentAccounts = data;
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
@@ -863,7 +985,10 @@ export class DashboardComponent implements OnInit {
 
       });
   }
-
+  getLastSevenDaysInvestmentAccountsRes(data) {
+    this.investmentAccountFlag = false;
+    this.LastSevenDaysInvestmentAccounts = data;
+  }
   getLastSevenDaysTransactions() {
     this.last7DaysLoading = true
 
@@ -888,9 +1013,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLastSevenDaysTransactionsNew(obj2).subscribe(
       (data) => {
         if (data) {
-          this.last7DaysLoading = false
-          this.dataSource5 = data;
-          console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
+          this.dashboardService.dashLastSevenDaysTransactionsNew = data;
+          this.getLastSevenDaysTransactionsNewRes(data);
         } else {
           this.last7DaysLoading = false
           this.dataSource5 = [];
@@ -908,16 +1032,27 @@ export class DashboardComponent implements OnInit {
       (data) => {
         console.log(data, 'LastSevenDaysTransactions 123');
         if (data) {
-          this.transactionFlag = false;
-          this.LastSevenDaysTransactions = data;
-          this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
-            x.status == 1 || x.status == 7;
-          });
+          this.dashboardService.dashLastSevenDaysTransactions = data;
+          this.getLastSevenDaysTransactionsRes(data);
         } else {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
         }
       });
+  }
+
+  getLastSevenDaysTransactionsNewRes(data) {
+    this.last7DaysLoading = false
+    this.dataSource5 = data;
+    console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
+  }
+
+  getLastSevenDaysTransactionsRes(data) {
+    this.transactionFlag = false;
+    this.LastSevenDaysTransactions = data;
+    this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
+      x.status == 1 || x.status == 7;
+    });
   }
 
   getSummaryDataDashboard() {
@@ -934,10 +1069,12 @@ export class DashboardComponent implements OnInit {
     this.dashBoardSummary = [{}, {}, {}];
     this.isLoadingSubSummary = true;
     this.subService.filterSubscription(obj).subscribe(
-      data => this.getSubSummaryRes(data), error => {
+      data => {
+        this.dashboardService.dashSummaryDataDashboard = data;
+        this.getSubSummaryRes(data)
+      }, error => {
         this.isLoadingSubSummary = false;
         this.dataSource = [];
-
       }
     );
   }
@@ -1068,147 +1205,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          console.log("birthday or aniversary", data);
-          this.isBirhtdayLoader = false;
-          // data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
-          // data.forEach(element => {
-          //   if (element.displayName.length > 15) {
-          //     element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
-          //   }
-          //   if (element.dateOfBirth && element.dateOfBirth != 0) {
-          //     element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-          //   }
-          // });
-          let arr = [];
-          if (data && data.length > 0) {
-            data.forEach(element => {
-              if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
-                let shortName,
-                  daysToGo;
-                if (element.displayName.length > 15) {
-                  shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
-                }
-                if (!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate) {
-                  let daysToGoAnniversary;
-                  let daysToGoBirthDate;
-                  if (element.dateOfBirth && element.dateOfBirth != 0) {
-                    daysToGoBirthDate = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-                  }
-                  if (element.anniversaryDate && element.anniversaryDate != 0) {
-                    daysToGoAnniversary = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
-                  }
-                  arr.push({
-                    displayName: element.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: element.userType,
-                    isAnniversaryOrBirthDay: 'birthday',
-                    dateOfBirth: element.dateOfBirth,
-                  });
-                  arr.push({
-                    displayName: element.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: element.userType,
-                    isAnniversaryOrBirthDay: 'anniversary',
-                    anniversaryDate: element.anniversaryDate,
-                  });
-                } else if (!!element.dateOfBirth && element.dateOfBirth) {
-                  if (element.dateOfBirth && element.dateOfBirth != 0) {
-                    daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-                  }
-                  arr.push({
-                    displayName: element.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: element.userType,
-                    isAnniversaryOrBirthDay: 'birthday',
-                    dateOfBirth: element.dateOfBirth,
-                  });
-
-                } else if (!!element.anniversaryDate && element.anniversaryDate) {
-                  if (element.anniversaryDate && element.anniversaryDate != 0) {
-                    daysToGo = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
-                  }
-                  arr.push({
-                    displayName: element.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: element.userType,
-                    isAnniversaryOrBirthDay: 'anniversary',
-                    anniversaryDate: element.anniversaryDate,
-                  });
-                }
-              } else {
-                if (!!element.familyMemberList && element.familyMemberList.length > 0) {
-
-                  element.familyMemberList.forEach(item => {
-                    if (!!item.birthDayOrAnniversary && item.birthDayOrAnniversary) {
-                      let shortName,
-                        daysToGo;
-                      if (item.displayName.length > 15) {
-                        shortName = item.displayName.substr(0, this.getPosition(item.displayName, ' ', 2));
-                      }
-                      if (!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate) {
-                        let daysToGoAnniversary,
-                          daysToGoBirthDate;
-                        if (item.dateOfBirth && item.dateOfBirth != 0) {
-                          daysToGoBirthDate = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
-                        }
-                        if (item.anniversaryDaye && item.anniversaryDate != 0) {
-                          daysToGoAnniversary = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
-                        }
-                        arr.push({
-                          displayName: item.displayName,
-                          daysToGo: daysToGoBirthDate,
-                          shortName,
-                          userType: item.userType,
-                          isAnniversaryOrBirthDay: 'birthday',
-                          dateOfBirth: item.dateOfBirth,
-                        });
-                        arr.push({
-                          displayName: item.displayName,
-                          daysToGo: daysToGoAnniversary,
-                          shortName,
-                          userType: item.userType,
-                          isAnniversaryOrBirthDay: 'anniversary',
-                          anniversaryDate: item.anniversaryDate,
-                        });
-                      } else if (!!item.dateOfBirth && item.dateOfBirth) {
-                        if (item.dateOfBirth && item.dateOfBirth != 0) {
-                          daysToGo = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
-                        }
-                        arr.push({
-                          displayName: item.displayName,
-                          daysToGo,
-                          shortName,
-                          userType: item.userType,
-                          isAnniversaryOrBirthDay: 'birthday',
-                          dateOfBirth: item.dateOfBirth,
-                        });
-
-                      } else if (!!item.anniversaryDate && item.anniversaryDate) {
-                        if (item.anniversaryDate && item.anniversaryDate != 0) {
-                          daysToGo = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
-                        }
-                        arr.push({
-                          displayName: item.displayName,
-                          daysToGo,
-                          shortName,
-                          userType: item.userType,
-                          isAnniversaryOrBirthDay: 'anniversary',
-                          anniversaryDate: item.anniversaryDate,
-                        });
-                      }
-                    }
-                  });
-                }
-              }
-            });
-          }
-          this.utils.calculateAgeFromCurrentDate(arr);
-          this.birthdayAnniList = arr;
-          console.log(this.birthdayAnniList);
+          this.dashboardService.dashBirthdayOrAnniversary = data;
+          this.getBirthdayOrAnniversaryRes(data);
         } else {
           this.birthdayAnniList = [];
           this.isBirhtdayLoader = false;
@@ -1221,6 +1219,149 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getBirthdayOrAnniversaryRes(data) {
+    console.log("birthday or aniversary", data);
+    this.isBirhtdayLoader = false;
+    // data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
+    // data.forEach(element => {
+    //   if (element.displayName.length > 15) {
+    //     element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
+    //   }
+    //   if (element.dateOfBirth && element.dateOfBirth != 0) {
+    //     element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+    //   }
+    // });
+    let arr = [];
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
+          let shortName,
+            daysToGo;
+          if (element.displayName.length > 15) {
+            shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
+          }
+          if (!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate) {
+            let daysToGoAnniversary;
+            let daysToGoBirthDate;
+            if (element.dateOfBirth && element.dateOfBirth != 0) {
+              daysToGoBirthDate = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+            }
+            if (element.anniversaryDate && element.anniversaryDate != 0) {
+              daysToGoAnniversary = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
+            }
+            arr.push({
+              displayName: element.displayName,
+              daysToGo,
+              shortName,
+              userType: element.userType,
+              isAnniversaryOrBirthDay: 'birthday',
+              dateOfBirth: element.dateOfBirth,
+            });
+            arr.push({
+              displayName: element.displayName,
+              daysToGo,
+              shortName,
+              userType: element.userType,
+              isAnniversaryOrBirthDay: 'anniversary',
+              anniversaryDate: element.anniversaryDate,
+            });
+          } else if (!!element.dateOfBirth && element.dateOfBirth) {
+            if (element.dateOfBirth && element.dateOfBirth != 0) {
+              daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+            }
+            arr.push({
+              displayName: element.displayName,
+              daysToGo,
+              shortName,
+              userType: element.userType,
+              isAnniversaryOrBirthDay: 'birthday',
+              dateOfBirth: element.dateOfBirth,
+            });
+
+          } else if (!!element.anniversaryDate && element.anniversaryDate) {
+            if (element.anniversaryDate && element.anniversaryDate != 0) {
+              daysToGo = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
+            }
+            arr.push({
+              displayName: element.displayName,
+              daysToGo,
+              shortName,
+              userType: element.userType,
+              isAnniversaryOrBirthDay: 'anniversary',
+              anniversaryDate: element.anniversaryDate,
+            });
+          }
+        } else {
+          if (!!element.familyMemberList && element.familyMemberList.length > 0) {
+
+            element.familyMemberList.forEach(item => {
+              if (!!item.birthDayOrAnniversary && item.birthDayOrAnniversary) {
+                let shortName,
+                  daysToGo;
+                if (item.displayName.length > 15) {
+                  shortName = item.displayName.substr(0, this.getPosition(item.displayName, ' ', 2));
+                }
+                if (!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate) {
+                  let daysToGoAnniversary,
+                    daysToGoBirthDate;
+                  if (item.dateOfBirth && item.dateOfBirth != 0) {
+                    daysToGoBirthDate = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
+                  }
+                  if (item.anniversaryDaye && item.anniversaryDate != 0) {
+                    daysToGoAnniversary = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
+                  }
+                  arr.push({
+                    displayName: item.displayName,
+                    daysToGo: daysToGoBirthDate,
+                    shortName,
+                    userType: item.userType,
+                    isAnniversaryOrBirthDay: 'birthday',
+                    dateOfBirth: item.dateOfBirth,
+                  });
+                  arr.push({
+                    displayName: item.displayName,
+                    daysToGo: daysToGoAnniversary,
+                    shortName,
+                    userType: item.userType,
+                    isAnniversaryOrBirthDay: 'anniversary',
+                    anniversaryDate: item.anniversaryDate,
+                  });
+                } else if (!!item.dateOfBirth && item.dateOfBirth) {
+                  if (item.dateOfBirth && item.dateOfBirth != 0) {
+                    daysToGo = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
+                  }
+                  arr.push({
+                    displayName: item.displayName,
+                    daysToGo,
+                    shortName,
+                    userType: item.userType,
+                    isAnniversaryOrBirthDay: 'birthday',
+                    dateOfBirth: item.dateOfBirth,
+                  });
+
+                } else if (!!item.anniversaryDate && item.anniversaryDate) {
+                  if (item.anniversaryDate && item.anniversaryDate != 0) {
+                    daysToGo = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
+                  }
+                  arr.push({
+                    displayName: item.displayName,
+                    daysToGo,
+                    shortName,
+                    userType: item.userType,
+                    isAnniversaryOrBirthDay: 'anniversary',
+                    anniversaryDate: item.anniversaryDate,
+                  });
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+    this.utils.calculateAgeFromCurrentDate(arr);
+    this.birthdayAnniList = arr;
+    console.log(this.birthdayAnniList);
+  }
   getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
   }
@@ -1251,9 +1392,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.last7DaysTransactionStatus(obj).subscribe(
       data => {
         if (data) {
-          this.last7DaysFlag = false;
-          this.nscData = data.nse;
-          this.bseData = data.bse;
+          this.dashboardService.dashLast7DaysTransactionStatus = data;
+          this.getLast7DaysTransactionStatusRes(data)
         } else {
           this.last7DaysFlag = false;
           this.nscData = [{}, {}];
@@ -1267,6 +1407,12 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getLast7DaysTransactionStatusRes(data) {
+    this.last7DaysFlag = false;
+    this.nscData = data.nse;
+    this.bseData = data.bse;
+  }
+
   getDocumentTotalSize() {
     this.docOverviewFlag = true;
     const obj = {
@@ -1276,11 +1422,15 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
-          this.docOverviewFlag = false;
-          this.documentSizeData = data;
+          this.dashboardService.dashDocumentTotalSize = data;
+          this.getDocumentTotalSizeRes(data);
         }
       }
     );
+  }
+  getDocumentTotalSizeRes(data) {
+    this.docOverviewFlag = false;
+    this.documentSizeData = data;
   }
 
   getLatesAumReconciliationData() {
@@ -1292,9 +1442,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
-          console.log("this is aum recon list::", data);
-          this.aumFlag = false;
-          this.aumReconList = data;
+          this.dashboardService.dashLatesAumReconciliationDataRes = data;
+          this.getLatesAumReconciliationDataRes(data);
         } else {
           this.aumFlag = false;
           this.aumReconList = [];
@@ -1306,6 +1455,12 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getLatesAumReconciliationDataRes(data) {
+    console.log("this is aum recon list::", data);
+    this.aumFlag = false;
+    this.aumReconList = data;
+  }
+
   getGoalSummaryData() {
     this.isGoalSummaryLoaderFlag = true;
     const obj = {
@@ -1314,8 +1469,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
-          this.isGoalSummaryLoaderFlag = false;
-          this.goalSummaryData = data;
+          this.dashboardService.dashGoalSummaryData = data;
+          this.getGoalSummaryDataRes(data);
         } else {
 
         }
@@ -1325,6 +1480,10 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getGoalSummaryDataRes(data) {
+    this.isGoalSummaryLoaderFlag = false;
+    this.goalSummaryData = data;
+  }
   connectAccountWithGoogle() {
     this.calenderLoader = true;
     this.emailService.getProfile().subscribe(res => {
@@ -1417,16 +1576,21 @@ export class DashboardComponent implements OnInit {
     this.transactionService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {
-          this.isRecentTransactionFlag = false;
-          this.transactionList = data;
-          this.transactionList = TransactionEnumService.setPlatformEnum(data);
-          this.transactionList = TransactionEnumService.setTransactionStatus(data);
+          this.dashboardService.dashRecentTransactionData = data;
+          this.getRecentTransactionDataRes(data);
         }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
       }
     );
+  }
+
+  getRecentTransactionDataRes(data) {
+    this.isRecentTransactionFlag = false;
+    this.transactionList = data;
+    this.transactionList = TransactionEnumService.setPlatformEnum(data);
+    this.transactionList = TransactionEnumService.setTransactionStatus(data);
   }
 
   changeParentsTab(selectedTab) {
@@ -1549,10 +1713,15 @@ export class DashboardComponent implements OnInit {
     };
     this.subService.getTotalRecived(obj).subscribe(
       data => {
-        this.totalSales = data != undefined ? UtilService.getNumberToWord(data.totalSales) : '0';
-        this.feeRecieved = data != undefined ? UtilService.getNumberToWord(data.feeRecieved) : '0';
+        this.dashboardService.dashTotalRecivedByDash = data;
+        this.getTotalRecivedRes(data);
       }
     );
+  }
+
+  getTotalRecivedRes(data) {
+    this.totalSales = data != undefined ? UtilService.getNumberToWord(data.totalSales) : '0';
+    this.feeRecieved = data != undefined ? UtilService.getNumberToWord(data.feeRecieved) : '0';
   }
 
   clientWithSubscription() {
@@ -1562,18 +1731,22 @@ export class DashboardComponent implements OnInit {
     };
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
-        if (data) {
-          this.subOverviewFlag = false;
-          this.dataSourceClientWithSub = data;
-        } else {
-          this.subOverviewFlag = false;
-          this.dataSourceClientWithSub = {};
-        }
+        this.dashboardService.dashClientWithSubscription = data;
+        this.clientWithSubscriptionRes(data);
       }, err => {
         this.subOverviewFlag = false;
         this.dataSourceClientWithSub = {};
       }
     );
+  }
+  clientWithSubscriptionRes(data) {
+    if (data) {
+      this.subOverviewFlag = false;
+      this.dataSourceClientWithSub = data;
+    } else {
+      this.subOverviewFlag = false;
+      this.dataSourceClientWithSub = {};
+    }
   }
 
   sipCountGet() {
@@ -1599,16 +1772,21 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
-        this.isKeyMatrix = false;
-        data.sipBook = UtilService.getNumberToWord(data.sipBook)
-        this.keyMetricJson = data;
-        // this.keyMetricJson.mfAum = '';
-        this.loaderFun();
+        this.dashboardService.dashKeyMetrics = data;
+        this.getKeyMetricsRes(data);
       },
       err => {
         this.keyMetricJson = '';
       }
     );
+  }
+
+  getKeyMetricsRes(data) {
+    this.isKeyMatrix = false;
+    data.sipBook = UtilService.getNumberToWord(data.sipBook)
+    this.keyMetricJson = data;
+    // this.keyMetricJson.mfAum = '';
+    this.loaderFun();
   }
 
   openGuideDialog(): void {
@@ -1649,8 +1827,8 @@ export class DashboardComponent implements OnInit {
       data => {
         this.mfDataflag = false;
         if (data) {
-          this.keyMetricJson.mfAum = data.totalAumRupees;
-          this.mfAumValue = data.totalAumRupees
+          this.dashboardService.dashMisData = data;
+          this.getMisDataRes(data);
         }
         else {
           this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
@@ -1664,7 +1842,10 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-
+  getMisDataRes(data) {
+    this.keyMetricJson.mfAum = data.totalAumRupees;
+    this.mfAumValue = data.totalAumRupees;
+  }
   loaderFun() {
     if (!this.isKeyMatrix && !this.mfDataflag) {
       this.keyMatrixFlag = false
