@@ -90,22 +90,13 @@
                                     class="example-margin">For
                                     admin
                                 </mat-checkbox>
-
-
-                                <!-- <p class="m-0 text-primitive"> Last edited </p>
-                                <p class="m-0 text-primitive">
-                                    {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date
-                                    |
-                                    date:'dd/LL/yyyy hh:mm aaa' }}
-                                </p> -->
+                                <button mat-flat-button class="downloadPdfIcon ml-10">
+                                    <img src="assets/images/svg/mf-donwload.svg">
+                                </button>
                             </div>
 
 
-                            <!-- <i *ngIf="selectedNote" (click)="deleteNotes(selectedNote,'')"
-                                class="material-icons ml-10 c-p"> delete </i> -->
 
-                            <!-- <img class="ml-10 c-p" *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
-                                src="/assets/images/svg/insurance-delect-icon.svg"> -->
 
 
                         </div>
@@ -204,22 +195,8 @@
                                 </div>
                             </div>
 
-
-
-
                         </li>
                     </ul>
-
-
-
-                    <!-- <div class="row  b-b pt-10 pb-10" (click)="selectNote(note)">
-                            <div class="col-md-12 p-0">
-                                <h5 class="m-0 f-500"> {{note.subject}} </h5>
-                                <p class="m-0">{{note.clientName}}</p>
-                                <p class="m-0 text-primitive">
-                                    {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} {{note.content}}</p>
-                            </div>
-                        </div> -->
 
                 </div>
 
@@ -250,10 +227,121 @@
                     </div>
                 </div>
 
-
-
             </div>
 
         </div>
     </div>
 </div>
+
+
+<!-- ------------------------------------------------ pdf design ---------------------------------------- -->
+
+<table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; display: none;">
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                            <div style="width: 200px;">
+                                <img style="max-width: 100%;"
+                                    src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
+                                    alt="">
+                            </div>
+                        </td>
+
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
+                                Manek Financial Advisors Pvt Ltd
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Number: </strong>
+                                9594319525
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Email: </strong>
+                                mandira@futurewise.co.in
+                            </p>
+
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on: 01-Jan-2021</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span> Ronak
+                            Hindocha </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h1 style="font-size: 20px; margin-top: 0; font-weight: 600; text-align: center;"> Subject
+                            heading </h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">
+                        <p style="font-size: 14px;">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+
+                        <p style="font-size: 14px;">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+
+                        <p style="font-size: 14px;">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+                        <p style="font-size: 14px;">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+                        <p style="font-size: 14px;">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

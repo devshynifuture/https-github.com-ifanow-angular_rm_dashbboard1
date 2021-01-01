@@ -17,6 +17,12 @@
     <!-- end empty state -->
     <div class="row">
         <div class="col-md-12 p-0 pb-12 full-end pt-28" *ngIf="showResults && !isEmpty && !loaderFn.loading">
+
+            <button *ngIf="showQuestionnaire" mat-flat-button (click)="download('template1','Risk profile')"
+                class="downloadPdfIcon mr-10">
+                <img src="assets/images/svg/mf-donwload.svg">
+            </button>
+
             <button mat-flat-button class="ba-2xb text-primary h-40 lh-38" (click)="takeTests()">Retake risk
                 assessment</button>
             <button mat-flat-button class="ba-2xb ml-12 text-primary h-40 lh-38"
@@ -43,7 +49,7 @@
                                     <div class="ba-3x text-center riskScoreBox mt-12">
                                         <h1 class="f-48 mb-8">{{feedsRiskProfile.riskAssessmentScore}}</h1>
                                         <p class="m-0 text-custom f-12 ">Max:
-                                            400</p>
+                                            600</p>
                                     </div>
                                 </div>
                             </div>
@@ -171,3 +177,162 @@
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
+
+
+<!-- ---------------------------------------- pdf html ------------------------------------ -->
+
+
+
+<table #tableEl id="template1" style=" width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                        <div style="width: 200px;"
+                            *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                            <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                        </div>
+                        <div style="width: 200px;"
+                            *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                            <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                        </div>
+                    </td>
+
+                    <td style=" text-align: right; width: 50%;">
+                        <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
+                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                        </p>
+                        <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                            <strong> Number: </strong>
+                            {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                        </p>
+                        <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                            <strong> Email: </strong>
+                            {{getOrgData.email ? getOrgData.email : userInfo.email}}
+                        </p>
+
+                        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                Report as on: {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="padding: 10px;"></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <p style="margin-bottom: 4px;"> <span style="font-weight: 600;"> Risk status: </span>
+                            {{feedsRiskProfile.riskProfileStatus}}</p>
+                        <p style="margin-bottom: 10px; margin-top: 0px;"> <span style="font-weight: 600;"> Date:
+                            </span> 29/07/2020 </p>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <table style="width: 60%; margin: 0px auto;">
+                <tr>
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 8px; margin-top: 0px; font-size: 14px; font-weight: 600;">Your risk
+                            score</p>
+                        <div style="border: 2px solid #000000;
+                                    width: 100px;
+                                    height: 100px; margin: 0px auto;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;">
+                            <h1 style="font-size: 40px; margin: 0px;">{{feedsRiskProfile.riskAssessmentScore}}</h1>
+                            <p style="margin: 0px; color: #757575; font-size: 12px;">Max: 600</p>
+                        </div>
+                    </td>
+
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 8px; font-size: 14px; margin-top: 0px; font-weight: 600;">Your risk
+                            score</p>
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/aggressive.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 1">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderately-aggressive.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 2">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderate.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 3" class="center-item ">
+                        <div class="text-center">
+                            <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/moderately-conservative.svg"
+                                *ngIf="feedsRiskProfile.riskProfileId == 4" class="h-105">
+                        </div>
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/conservative.svg"
+                            *ngIf="feedsRiskProfile.riskProfileId == 5">
+                        <p style="color: #757575; font-size: 14px; line-height: 20px;">
+                            {{riskProfileDesc(feedsRiskProfile.riskProfileId)}}
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center;" colspan="2">
+                        <p style="margin-bottom: 8px; margin-top: 0px; font-weight: 600; font-size: 16px;">
+                            Equity asset allocation </p>
+                        <div
+                            style="width: 100%; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
+                            showPieChart</div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+
+
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tr *ngFor="let item of riskAssessmentQuestionList;  let i = index">
+                    <td>
+                        <p style="margin-bottom: 10px; font-size: 15px;"> Your risk profile helps us understand how
+                            much investment risk you can take.</p>
+                        <div
+                            style="background: #F5F7F7; font-size: 14px; height: 20px; line-height: 20px; padding: 10px;">
+                            {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
+                        </div>
+
+                        <div style="padding:15px;" *ngFor="let choice of item.riskAssessmentChoices; let i = index">
+                            <p *ngIf="choice.selected"
+                                style="margin-bottom: 10px; margin-top: 0px; display: flex; font-size: 14px;">
+                                <span
+                                    style="display: block; border: 1px solid #008FFF; background: #008FFF; border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
+                                {{choice.choice}}
+                            </p>
+                            <p *ngIf="!choice.selected"
+                                style="margin-bottom: 10px; margin-top: 0px; display: flex; font-size: 14px;">
+                                <span
+                                    style="display: block; border: 1px solid rgba(0,0,0,.38); border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
+                                {{choice.choice}}
+                            </p>
+                        </div>
+
+
+                    </td>
+                </tr>
+
+
+            </table>
+        </td>
+    </tr>
+
+</table>
