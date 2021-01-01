@@ -247,22 +247,19 @@
         <td>
             <table style="width: 60%; margin: 0px auto;">
                 <tr>
-                    <td style="text-align: center; width: 50%;">
+                    <td style="text-align: center; width: 50%; vertical-align: top;">
                         <p style="margin-bottom: 8px; margin-top: 0px; font-size: 14px; font-weight: 600;">Your risk
                             score</p>
                         <div style="border: 2px solid #000000;
                                     width: 100px;
-                                    height: 100px; margin: 0px auto;
-                                    display: flex;
-                                    flex-direction: column;
-                                    align-items: center;
-                                    justify-content: center;">
+                                    height: 100px; margin: 0px auto; padding-top: 20px;
+                                     ">
                             <h1 style="font-size: 40px; margin: 0px;">{{feedsRiskProfile.riskAssessmentScore}}</h1>
                             <p style="margin: 0px; color: #757575; font-size: 12px;">Max: 600</p>
                         </div>
                     </td>
 
-                    <td style="text-align: center; width: 50%;">
+                    <td style="text-align: center; width: 50%; vertical-align: top;">
                         <p style="margin-bottom: 8px; font-size: 14px; margin-top: 0px; font-weight: 600;">Your risk
                             score</p>
                         <img src="https://res.cloudinary.com/futurewise/image/upload/v1609503568/riskProfile/aggressive.svg"
@@ -284,6 +281,10 @@
                 </tr>
 
                 <tr>
+                    <td colspan="2" style="padding: 10px;"></td>
+                </tr>
+
+                <tr>
                     <td style="text-align: center;" colspan="2">
                         <p style="margin-bottom: 8px; margin-top: 0px; font-weight: 600; font-size: 16px;">
                             Equity asset allocation </p>
@@ -301,30 +302,34 @@
 
     <tr>
         <td>
-            <table style="width: 100%;">
+            <p style="margin-bottom: 8px; font-size: 16px; font-family: Roboto,sans-serif;"> Your risk
+                profile helps us understand how
+                much investment risk you can take.</p>
+            <table style="width: 100%;  ">
                 <tr *ngFor="let item of riskAssessmentQuestionList;  let i = index">
                     <td>
-                        <p style="margin-bottom: 10px; font-size: 15px;"> Your risk profile helps us understand how
-                            much investment risk you can take.</p>
-                        <div
-                            style="background: #F5F7F7; font-size: 14px; height: 20px; line-height: 20px; padding: 10px;">
+                        <div style="background: #F5F7F7; font-size: 14px;   line-height: 20px; padding: 10px;">
                             {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
                         </div>
 
-                        <div style="padding:15px;" *ngFor="let choice of item.riskAssessmentChoices; let i = index">
-                            <p *ngIf="choice.selected"
-                                style="margin-bottom: 10px; margin-top: 0px; display: flex; font-size: 14px;">
-                                <span
-                                    style="display: block; border: 1px solid #008FFF; background: #008FFF; border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
-                                {{choice.choice}}
-                            </p>
-                            <p *ngIf="!choice.selected"
-                                style="margin-bottom: 10px; margin-top: 0px; display: flex; font-size: 14px;">
-                                <span
-                                    style="display: block; border: 1px solid rgba(0,0,0,.38); border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
-                                {{choice.choice}}
-                            </p>
-                        </div>
+
+                        <ul style="list-style-type: none; padding-left: 10px;">
+                            <li *ngFor="let choice of item.riskAssessmentChoices; let i = index">
+                                <p *ngIf="choice.selected" style="margin-bottom: 10px; display: inline-block;
+                            line-height: 15px; margin-top: 0px;font-size: 14px;">
+                                    <span
+                                        style="float: left; border: 1px solid rgba(0,143,255,1); background: rgba(0,143,255,1); border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
+                                    <span> {{choice.choice}} </span>
+                                </p>
+                                <p *ngIf="!choice.selected" style="margin-bottom: 10px; display: inline-block;
+                            line-height: 15px; margin-top: 0px;font-size: 14px;">
+                                    <span
+                                        style="float: left; border: 1px solid rgba(0,0,0,.38); border-radius: 50%; width: 15px; height: 15px; margin-right: 10px;"></span>
+                                    <span> {{choice.choice}} </span>
+                                </p>
+                            </li>
+                        </ul>
+
 
 
                     </td>
