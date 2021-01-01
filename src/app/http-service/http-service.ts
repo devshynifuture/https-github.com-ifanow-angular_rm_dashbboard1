@@ -199,7 +199,7 @@ export class HttpService {
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, JSON.stringify(body), httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
