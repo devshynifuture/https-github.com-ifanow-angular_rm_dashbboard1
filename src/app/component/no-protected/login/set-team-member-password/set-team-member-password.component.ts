@@ -46,7 +46,7 @@ export class SetTeamMemberPasswordComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params.uuid) {
         this.uuId = params.uuid;
-        this.getTeamMemberInfo(this.uuId)
+        this.getTeamMemberInfo(this.uuId);
       }
     });
     this.setNewPasswordForm = this.fb.group({
@@ -55,16 +55,16 @@ export class SetTeamMemberPasswordComponent implements OnInit {
     });
   }
   getTeamMemberInfo(data) {
-    let obj = {
+    const obj = {
       uuid: data
-    }
+    };
     this.loginService.getTeamMemberInfo(obj).subscribe(
       data => {
         this.userData = data;
       }, err => {
-        this.eventService.openSnackBar("Something went wrong");
+        this.eventService.openSnackBar('Something went wrong');
       }
-    )
+    );
   }
   checkUpperCase() {
 
