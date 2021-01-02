@@ -52,6 +52,7 @@ export class CrmNotesComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl: ElementRef;
   @Input() finPlanObj: any;
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  subjectPDF: any;
 
 
   constructor(private peopleService: PeopleService,
@@ -222,7 +223,7 @@ export class CrmNotesComponent implements OnInit {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
     this.selectedNote = note
-    this.subject = (note.subject) ? note.subject : '-'
+    this.subjectPDF = (note.subject) ? note.subject : '-'
     this.showContentPDf = note.showContent ? note.showContent : '-'
     this.clientName = note.clientName ? note.clientName : '-'
     this.clientId = note.clientId
