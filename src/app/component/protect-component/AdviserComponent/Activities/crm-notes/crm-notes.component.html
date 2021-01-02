@@ -90,15 +90,12 @@
                                     class="example-margin">For
                                     admin
                                 </mat-checkbox>
+
                                 <button mat-flat-button class="downloadPdfIcon ml-10" *ngIf="selectedNote"
                                     (click)="download('template1','Notes')">
                                     <img src="assets/images/svg/mf-donwload.svg">
                                 </button>
                             </div>
-
-
-
-
 
                         </div>
 
@@ -237,8 +234,8 @@
 
 <!-- ------------------------------------------------ pdf design ---------------------------------------- -->
 
-<table #tableEl id="template1" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-    <tr>
+<table #tableEl id="template1" style="width: 95%; display: none;  font-family: 'Roboto', sans-serif; margin: 0px auto;">
+    <!-- <tr>
         <td>
             <table style="width: 100%;">
                 <tbody>
@@ -276,11 +273,35 @@
                 </tbody>
             </table>
         </td>
+    </tr> -->
+
+
+    <tr>
+        <td>
+            <table align="center"
+                style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                <tr>
+                    <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                    </td>
+
+                    <td style="text-align: right; vertical-align: top; width: 50%;">
+                        <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
+                            Prepared by
+                        </p>
+                        <h3 style="margin: 0px; font-size: 18px;">
+                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                        </h3>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
     </tr>
 
     <tr>
         <td>
-            <table style="width: 100%;">
+            <table style="width: 95%; margin: 20px auto 0px;">
                 <tr>
                     <td>
                         <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span>
@@ -289,14 +310,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1 style="font-size: 20px; margin-top: 0; font-weight: 600; text-align: center;">
+                        <h1 style="font-size: 20px; margin-top: 10px; font-weight: 600; text-align: center;">
                             {{subject}} </h1>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 10px;">
-                        <p style="font-size: 14px;">
-                            <span>{{showContentPDf}} </span>
+                        <p style="font-size: 16px; line-height: 20px;">
+                            {{showContentPDf}}
                         </p>
                     </td>
                 </tr>
