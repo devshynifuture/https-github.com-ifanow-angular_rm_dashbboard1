@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Subscription, Observable } from 'rxjs';
 import { PeopleService } from '../../../PeopleComponent/people.service';
@@ -49,13 +49,16 @@ export class CrmNotesComponent implements OnInit {
   showContent: "";
   clientName: any;
   showContentPDf: any;
+  @ViewChild('tableEl', { static: false }) tableEl: ElementRef;
   @Input() finPlanObj: any;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
     private utilService: UtilService,
+    private ref: ChangeDetectorRef,
     private fb: FormBuilder,
     public processTransaction: ProcessTransactionService, ) {
     this.clientInfo = AuthService.getClientData();
@@ -65,6 +68,13 @@ export class CrmNotesComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.finPlanObj && this.finPlanObj.data) {
+      //this.getNotes();
+      this.listOfNotes = []
+      this.getdataForm("")
+      this.selectNote(this.finPlanObj.data)
+
+    }
     this.objForDelete = []
     this.listOfNotes = []
     this.date = new Date()
@@ -91,7 +101,6 @@ export class CrmNotesComponent implements OnInit {
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
 
@@ -158,6 +167,7 @@ export class CrmNotesComponent implements OnInit {
   }
 
   getNotes() {
+    this.listOfNotes = []
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
@@ -188,6 +198,10 @@ export class CrmNotesComponent implements OnInit {
         this.isLoading = false
         this.listOfNotes = []
       })
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.tableEl.nativeElement);
+    }
   }
   selectAll(event) {
     if (event.checked == true) {
