@@ -74,7 +74,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   taxStatusList: any[];
   countryCodeFlag: any;
   sendRole: any;
-  disableBtn: boolean = false;
+  disableBtn = false;
   clientTypeList: any;
   tableGetData: any;
   taxStatusFormControl = new FormControl('', [Validators.required]);
@@ -82,7 +82,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   nomineesListFM: any = [];
   ownerData: any;
-  idData
+  idData;
   removedGaurdianList: any = [];
   emailData: any;
   valueChangeFlag: boolean;
@@ -103,9 +103,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
     this.basicDetailsData = data;
-    this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId
+    this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId;
     if (data.fieldFlag == 'familyMember') {
-      this.valueChangeFlag = true
+      this.valueChangeFlag = true;
       if (data.familyMemberType == 3 || data.familyMemberType == 4) {
         this.invTypeCategory = String(data.familyMemberType);
         this.invTaxStatus = String(data.residentFlag);
@@ -128,7 +128,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(this.basicDetailsData);
       } else if (this.basicDetailsData.relationshipId == 4 || this.basicDetailsData.relationshipId == 5) {
-        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age)
+        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         if (this.basicDetailsData.age > 18) {
           (data.relationshipId != 10) ? (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2 : '';
           this.familyMemberType = {name: 'Individual', value: '1'};
@@ -173,7 +173,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.hideDematTab.emit(true);
         this.createIndividualForm(null);
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
-        this.taxStatusList = this.invTaxStatusList.filter(element => element.residentFlag == true)
+        this.taxStatusList = this.invTaxStatusList.filter(element => element.residentFlag == true);
         return;
       } else {
         // this.selectedClientOwner = (this.tableGetData.userId) ? this.tableGetData.advisorId : '';
@@ -247,7 +247,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       {name: 'Grandfather', value: 14},
       {name: 'Niece', value: 15},
       {name: 'Nephew', value: 16},
-    ]
+    ];
     // }
   }
 
@@ -295,9 +295,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     this.basicDetails.valueChanges.subscribe(data => {
       if (this.valueChangeFlag) {
-        this.tabDisableFlag.emit(true)
+        this.tabDisableFlag.emit(true);
       }
-    })
+    });
   }
 
   createMinorForm(data) {
@@ -324,7 +324,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.getCoOwner.removeAt(0);
       data.guardianClientFamilyMappingModelList.forEach(element => {
         setTimeout(() => {
-          element['disable'] = true;
+          element.disable = true;
         }, 1300);
         this.addNewCoOwner(element);
       });
@@ -334,7 +334,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.valueChangeFlag) {
 
       }
-    })
+    });
   }
 
   get getCoOwner() {
@@ -363,7 +363,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   removeCoOwner(item) {
     if (this.getCoOwner.controls[item].value.id) {
-      this.removedGaurdianList.push(this.getCoOwner.controls[item].value)
+      this.removedGaurdianList.push(this.getCoOwner.controls[item].value);
     }
     this.getCoOwner.removeAt(item);
     this.disabledMember(null, null);
@@ -380,7 +380,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
 
   lisNominee(value) {
-    value = value.filter(element => element.familyMemberType != 2)
+    value = value.filter(element => element.familyMemberType != 2);
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
@@ -425,7 +425,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.valueChangeFlag) {
 
       }
-    })
+    });
   }
 
   capitalise(event) {
@@ -445,7 +445,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         if (data == undefined) {
           return;
         } else {
-          this.valueChangeFlag = true
+          this.valueChangeFlag = true;
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
           // this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
           // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
@@ -494,7 +494,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     this.invTaxStatus = '1';
     this.invTypeCategory = event.value;
-    this.changeTaxStatus(1)
+    this.changeTaxStatus(1);
   }
 
   changeTaxStatus(event) {
@@ -508,8 +508,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   saveNextClient(flag) {
     this.emailData.markAllAsTouched();
     if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
-      this.eventService.openSnackBar("Please select gender", "Dimiss");
-      return
+      this.eventService.openSnackBar('Please select gender', 'Dimiss');
+      return;
     }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
@@ -531,7 +531,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     if (this.emailData.invalid) {
       this.emailData.markAllAsTouched();
-      return
+      return;
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
@@ -574,47 +574,45 @@ export class ClientBasicDetailsComponent implements OnInit {
         });
       }
       emailList = emailList.sort(function (a, b) {
-        return b.defaultFlag - a.defaultFlag
+        return b.defaultFlag - a.defaultFlag;
       });
       if (count == 0) {
-        this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
-        return
+        this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
+        return;
       }
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       let gardianObj;
-      let obj = {
-        'parentAdvisorId': this.advisorId,
-        'adminAdvisorId': AuthService.getAdminId(),
-        'advisorId': advisorId,
-        'residentFlag': parseInt(this.invTaxStatus),
-        'advisorOrClientRole': (this.sendRole) ? this.sendRole.advisorOrClientRole : this.basicDetailsData.advisorOrClientRole,
-        'userId': this.basicDetailsData.userId,
-        'clientId': this.basicDetailsData.clientId,
-        'status': (this.fieldFlag == 'client') ? 1 : 2,
-        'clientType': parseInt(this.invTypeCategory)
-      }
+      let obj: any = {
+        parentAdvisorId: this.advisorId,
+        adminAdvisorId: AuthService.getAdminId(),
+        advisorId: advisorId,
+        residentFlag: parseInt(this.invTaxStatus),
+        advisorOrClientRole: (this.sendRole) ? this.sendRole.advisorOrClientRole : this.basicDetailsData.advisorOrClientRole,
+        userId: this.basicDetailsData.userId,
+        clientId: this.basicDetailsData.clientId,
+        status: (this.fieldFlag == 'client') ? 1 : 2,
+        clientType: parseInt(this.invTypeCategory)
+      };
       if (this.invTypeCategory == 1) {
-        obj['dateOfBirth'] = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy')
-        obj =
-          {
-            ...obj,
-            ...individualJson(this.basicDetails, emailList, mobileList)
-          };
+        obj.dateOfBirth = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy');
+        obj = {
+          ...obj,
+          ...individualJson(this.basicDetails, emailList, mobileList)
+        };
       }
       if (this.invTypeCategory == 2) {
       }
 
       if (this.invTypeCategory == 3 || this.invTypeCategory == 4) {
-        obj['dateOfBirth'] = this.datePipe.transform(this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy')
-        obj['gstin'] = this.nonIndividualForm.controls.gstinNum.value
-        obj =
-          {
-            ...obj,
-            ...nonIndividualJson(this.nonIndividualForm, emailList, mobileList)
-          }
+        obj.dateOfBirth = this.datePipe.transform(this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy');
+        obj.gstin = this.nonIndividualForm.controls.gstinNum.value;
+        obj = {
+          ...obj,
+          ...nonIndividualJson(this.nonIndividualForm, emailList, mobileList)
+        };
       }
       if (this.basicDetailsData.userId == null) {
-        obj['sendEmail'] = true;
+        obj.sendEmail = true;
         this.peopleService.addClient(obj).subscribe(
           data => {
             this.disableBtn = false;
@@ -632,17 +630,17 @@ export class ClientBasicDetailsComponent implements OnInit {
           }
         );
       } else {
-        obj['bio'] = this.basicDetailsData.bio;
-        obj['remarks'] = this.basicDetailsData.remarks;
-        obj['aadhaarNumber'] = this.basicDetailsData.aadhaarNumber;
-        obj['martialStatusId'] = this.basicDetailsData.martialStatusId;
+        obj.bio = this.basicDetailsData.bio;
+        obj.remarks = this.basicDetailsData.remarks;
+        obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
+        obj.martialStatusId = this.basicDetailsData.martialStatusId;
         // obj['taxStatusId'] = taxStatusId;
-        obj['anniversaryDate'] = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
+        obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
             this.tabDisableFlag.emit(false);
-            this.valueChangeFlag = true
+            this.valueChangeFlag = true;
             setTimeout(() => {
               this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
             });
@@ -709,11 +707,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     let gardianObj = [];
     if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
-      this.eventService.openSnackBar("Please select gender", "Dimiss");
-      return
+      this.eventService.openSnackBar('Please select gender', 'Dimiss');
+      return;
     }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
-      this.emailData.markAllAsTouched()
+      this.emailData.markAllAsTouched();
       this.basicDetails.markAllAsTouched();
       return;
     }
@@ -722,7 +720,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       return;
     }
     if ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.invalid) {
-      this.emailData.markAllAsTouched()
+      this.emailData.markAllAsTouched();
       this.nonIndividualForm.markAllAsTouched();
       return;
     }
@@ -732,17 +730,17 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     if (this.invTypeCategory == '2') {
       this.getCoOwner.value.forEach(element => {
-        delete element['name'],
-          delete element['share']
+        delete element.name,
+          delete element.share;
         gardianObj.push(element);
       });
       if (this.removedGaurdianList.length > 0) {
         this.removedGaurdianList.forEach(element => {
-          delete element['name'],
-            delete element['share']
-          element['active'] = false;
+          delete element.name,
+            delete element.share;
+          element.active = false;
           gardianObj.push(element);
-        })
+        });
       }
     } else {
       gardianObj = null;
@@ -765,17 +763,17 @@ export class ClientBasicDetailsComponent implements OnInit {
         });
       });
       emailList = emailList.sort(function (a, b) {
-        return b.defaultFlag - a.defaultFlag
+        return b.defaultFlag - a.defaultFlag;
       });
       if (count == 0) {
-        this.eventService.openSnackBar("Please mark one email as a primary", "Dimiss");
-        return
+        this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
+        return;
       }
     }
 
 
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
-    ;
+
     const obj = {
       adminAdvisorId: AuthService.getAdminId(),
       advisorId: AuthService.getClientData().advisorId,
@@ -807,9 +805,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     };
 
     if (this.invTypeCategory != 2) {
-      obj.emailList = emailList
+      obj.emailList = emailList;
     } else {
-      delete obj['emailList']
+      delete obj.emailList;
     }
 
 
@@ -817,13 +815,13 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.remarks = this.basicDetailsData.remarks;
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
     obj.martialStatusId = this.basicDetailsData.martialStatusId;
-    obj.occupationId = ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comOccupation.value !== "") ? parseInt(this.nonIndividualForm.controls.comOccupation.value) : this.basicDetailsData.occupationId;
+    obj.occupationId = ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comOccupation.value !== '') ? parseInt(this.nonIndividualForm.controls.comOccupation.value) : this.basicDetailsData.occupationId;
     // obj.displayName = this.basicDetailsData.displayName;
     obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         this.tabDisableFlag.emit(false);
-        this.valueChangeFlag = true
+        this.valueChangeFlag = true;
         this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
@@ -831,15 +829,14 @@ export class ClientBasicDetailsComponent implements OnInit {
           this.changeTabAndSendData(data);
         } else {
           if (this.unmapFmData && this.unmapFmData.email) {
-            let obj =
-              {
-                "ownerClientId": this.basicDetailsData.clientId,
-                "splitFamilyMemberId": this.basicDetailsData.familyMemberId
-              }
+            const obj = {
+              ownerClientId: this.basicDetailsData.clientId,
+              splitFamilyMemberId: this.basicDetailsData.familyMemberId
+            };
             this.cusService.unmapFamilyMembers(obj).subscribe(
               data => {
                 this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
-                this.close(data)
+                this.close(data);
               },
               error => this.eventService.showErrorMessage(error)
             );
@@ -874,16 +871,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        let obj =
-          {
-            "familyMemberId": this.basicDetailsData.familyMemberId,
-            "userId": this.basicDetailsData.familyMemberId
-          }
+        const obj = {
+          familyMemberId: this.basicDetailsData.familyMemberId,
+          userId: this.basicDetailsData.familyMemberId
+        };
         this.cusService.deleteFamilyMember(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.close(data)
+            this.close(data);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -915,16 +911,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'PROMOTE',
       positiveMethod: () => {
-        let obj =
-          {
-            "familyMemberId": this.basicDetailsData.familyMemberId,
-            "relationshipId": 0
-          }
+        const obj = {
+          familyMemberId: this.basicDetailsData.familyMemberId,
+          relationshipId: 0
+        };
         this.peopleService.promoteToClient(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.close(data)
+            this.close(data);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -958,7 +953,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             number: this.mobileData.controls[0].get('number').value,
             pan: this.basicDetails.get('pan').value
           }
-        }
+        };
 
         const dialogRef = this.dialog.open(UnmapPopupComponent, {
           data: obj
@@ -978,7 +973,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.unmapFamilyMember('FAMILY MEMBER');
       }
     } else {
-      obj = {showField: false}
+      obj = {showField: false};
       const dialogRef = this.dialog.open(UnmapPopupComponent, {
         data: obj
       });
@@ -998,16 +993,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'UNMAP',
       positiveMethod: () => {
-        let obj =
-          {
-            "ownerClientId": this.basicDetailsData.clientId,
-            "splitFamilyMemberId": this.basicDetailsData.familyMemberId
-          }
+        const obj = {
+          ownerClientId: this.basicDetailsData.clientId,
+          splitFamilyMemberId: this.basicDetailsData.familyMemberId
+        };
         this.cusService.unmapFamilyMembers(obj).subscribe(
           data => {
             this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
             dialogRef.close();
-            this.close(data)
+            this.close(data);
           },
           error => this.eventService.showErrorMessage(error)
         );
