@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { LoginService } from 'src/app/component/no-protected/login/login.service';
-import { Router } from '@angular/router';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, AbstractControl, ValidationErrors, FormGroup} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {LoginService} from 'src/app/component/no-protected/login/login.service';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {SubscriptionInject} from '../../AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,11 +26,12 @@ export class ResetPasswordComponent implements OnInit {
   hide3 = true;
   userData: any;
   signUpBarList = [
-    { name: "CREATE ACCOUNT", flag: true },
-    { name: "VERIFY EMAIL", flag: true },
-    { name: "VERIFY MOBILE", flag: true },
-    { name: "SET PASSWORD", flag: false }
+    {name: "CREATE ACCOUNT", flag: true},
+    {name: "VERIFY EMAIL", flag: true},
+    {name: "VERIFY MOBILE", flag: true},
+    {name: "SET PASSWORD", flag: false}
   ]
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -86,12 +87,15 @@ export class ResetPasswordComponent implements OnInit {
                 data => {
                   this.barButtonOptions.active = false;
                 },
-                err => { {} }
+                err => {
+                  {
+                  }
+                }
               );
             }
             // this.authService.setToken(data.token);
             // this.loginService.handleUserData(this.authService, this.router, this.userData);
-            this.authService.setToken('authTokenInLoginComponnennt');
+            // this.authService.setToken('authTokenInLoginComponnennt');
             this.eventService.openSnackBar("Password changed successfully!");
             this.Close(true);
           } else {
@@ -150,7 +154,7 @@ export class ResetPasswordComponent implements OnInit {
     this.newPasswordLength = (password != null) ? password.length : 0;
     if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
-        this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
+        this.setNewPasswordForm.get('confirmPassword').setErrors({mismatch: true});
       } else {
         this.setNewPasswordForm.get('confirmPassword').setErrors(null);
       }
@@ -158,6 +162,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   Close(flag = false) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 }
