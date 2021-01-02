@@ -18,8 +18,8 @@
     <div class="row">
         <div class="col-md-12 p-0 pb-12 full-end pt-28" *ngIf="showResults && !isEmpty && !loaderFn.loading">
 
-            <button style="display: none;" *ngIf="showQuestionnaire" mat-flat-button
-                (click)="download('template1','Risk profile')" class="downloadPdfIcon mr-10">
+            <button *ngIf="showQuestionnaire" mat-flat-button (click)="download('template1','Risk profile')"
+                class="downloadPdfIcon mr-10">
                 <img src="assets/images/svg/mf-donwload.svg">
             </button>
 

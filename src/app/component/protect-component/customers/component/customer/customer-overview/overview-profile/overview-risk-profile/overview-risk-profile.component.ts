@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
@@ -56,6 +56,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   svg: any;
   chart: Highcharts.Chart;
 
+  @Input() finPlanObj: any;
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +76,9 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.finPlanObj && this.finPlanObj.sectionName) {
+      this.riskAssessmentQuestionList = this.finPlanObj.selectionName
+    }
     this.loadGlobalRiskProfile();
     this.getdataForm('');
     this.sendRiskList = [];

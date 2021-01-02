@@ -329,7 +329,7 @@ export const componentList = [
     Ng5SliderModule, // used in MultiYearGoalComponent
     NgxDocViewerModule,
     NgxMaterialTimepickerModule,
-    
+
   ],
   exports: [
     FormsModule,

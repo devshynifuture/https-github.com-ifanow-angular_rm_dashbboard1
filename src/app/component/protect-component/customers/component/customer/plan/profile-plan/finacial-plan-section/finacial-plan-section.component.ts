@@ -80,7 +80,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
     PPFSchemeComponent,
     LifeInsuranceComponent,
     MutualFundsCapitalComponent,
-    MfCapitalDetailedComponent
+    MfCapitalDetailedComponent,
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -134,6 +134,8 @@ export class FinacialPlanSectionComponent implements OnInit {
   clientDob: string;
   familyList: any[];
   svg: any;
+  dataSourceHistory: any;
+  storeResult: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -170,11 +172,43 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.getTemplateSection()
     this.getPlanSection()
     this.getLibilities()
+    this.riskHistory();
     this.isLoading = true
     this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;padding-left:15px;"> <b>Date: ' + this.datePipe.transform(new Date(), 'dd-MM-yyyy') + '</b></div><div style="position: absolute;top: 18px;right: 18px;padding-right:15px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.logoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20; padding-right:15px;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;padding-right:15px"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.getOrgData)
+  }
+  riskHistory() {
+    this.isLoading = true
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.planService.getRiskHistory(obj).subscribe(
+      data => this.getRiskHistoryRes(data), error => {
+      });
+  }
+  getRiskHistoryRes(data) {
+    this.isLoading = false
+    console.log('getRiskHistoryRes', data);
+    this.dataSourceHistory = data.clientRiskProfileList;
+    this.dataSourceHistory.forEach(element => {
+      element.isSelected = false;
+      element.isSelectedCheckbox = false;
+    });
+  }
+  viewResult(obj) {
+    const data = {
+      clientRiskProfileId: obj.id
+    }
+    this.planService.getResultRisk(data).subscribe(
+      data => this.getResultRiskRes(data), error => {
+      });
+  }
+  getResultRiskRes(data) {
+    this.isLoading = false
+    this.storeResult = data;
   }
   getListFamilyMem() {
     this.isLoading = true;
@@ -608,6 +642,9 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   checkAndLoadPdf(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     console.log('value', value)
+    if (sectionName == 'RiskProfile') {
+      this.viewResult(obj)
+    }
     if (value == true) {
       this.moduleAddedLoader = [{}, {}, {}]
       this.isLoading = false
@@ -684,6 +721,9 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Goal':
           factory = this.resolver.resolveComponentFactory(GoalsPlanComponent);
           break;
+        // case 'RiskProfile':
+        //   factory = this.resolver.resolveComponentFactory(OverviewRiskProfileComponent);
+        //   break;
         case 'Gold':
         case 'OthersComm':
           factory = this.resolver.resolveComponentFactory(CommoditiesComponent);
@@ -770,6 +810,8 @@ export class FinacialPlanSectionComponent implements OnInit {
       } else if (sectionName == 'Life insurance') {
         obj.dataLoaded = true;
         pdfContent.finPlanObj = { hideForFinPlan: true, data: obj, allInsuranceList: this.insurancePlanningList };
+      } else if (sectionName == 'Risk profile') {
+        pdfContent.finPlanObj = { hideForFinPlan: true, data: obj };
       } else {
         pdfContent.finPlanObj = { hideForFinPlan: true, sectionName };
       }
