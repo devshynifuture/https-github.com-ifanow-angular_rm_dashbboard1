@@ -383,7 +383,7 @@
                                     </div>
                                 </div>
                             </mat-expansion-panel>
-                            <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                                 class="mt-12">
                                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                                     [expandedHeight]="customExpandedHeight">
@@ -397,13 +397,34 @@
                                         <div class="col-md-12">
                                             <mat-checkbox [checked]="data.isSelected"
                                                 [(ngModel)]="data.isSelectedCheckbox"
-                                                (change)="checkAndLoadPdf($event.checked,'RiskProfile',data,'Plan / Risk profile / '+data.riskProfileStatus,false,data)">
+                                                (change)="viewRiskResult($event.checked,'RiskProfile',data,'Plan / Risk profile / '+data.riskProfileStatus,false,data)">
                                                 Plan / Risk profile / {{data.riskProfileStatus}}
                                             </mat-checkbox>
                                         </div>
                                     </div>
                                 </div>
-                            </mat-expansion-panel> -->
+                            </mat-expansion-panel>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                                class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Notes</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngFor="let data of listOfNotes">
+                                        <div class="col-md-12">
+                                            <mat-checkbox [checked]="data.isSelected"
+                                                [(ngModel)]="data.isSelectedCheckbox"
+                                                (change)="checkAndLoadPdf($event.checked,'Notes',data,'Plan / Notes / '+data.clientName,false,data)">
+                                                Plan / Notes / {{data.clientName}}
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
                         </mat-accordion>
                     </div>
                 </mat-tab>

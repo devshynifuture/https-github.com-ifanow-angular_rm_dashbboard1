@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Subscription, Observable } from 'rxjs';
 import { PeopleService } from '../../../PeopleComponent/people.service';
@@ -49,6 +49,7 @@ export class CrmNotesComponent implements OnInit {
   showContent: "";
   clientName: any;
   showContentPDf: any;
+  @Input() finPlanObj: any;
 
 
   constructor(private peopleService: PeopleService,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
@@ -37,6 +37,8 @@ export class OverviewRiskProfileComponent implements OnInit {
   scoreStatus;
   hasError: boolean = false;
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('riskTemp', { static: false }) riskTemp: ElementRef;
+
   clientRiskAssessmentResults;
 
   globalRiskProfile: any[] = [];
@@ -55,6 +57,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   returnValue: any;
   svg: any;
   chart: Highcharts.Chart;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
 
   @Input() finPlanObj: any;
 
@@ -65,7 +68,8 @@ export class OverviewRiskProfileComponent implements OnInit {
     public loaderFn: LoaderFunction,
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private ref: ChangeDetectorRef
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -76,8 +80,18 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.finPlanObj && this.finPlanObj.sectionName) {
-      this.riskAssessmentQuestionList = this.finPlanObj.selectionName
+    console.log(this.finPlanObj)
+    if (this.finPlanObj && this.finPlanObj.data) {
+      this.loadGlobalRiskProfile();
+      this.riskAssessmentQuestionList = this.finPlanObj.data.assessmentResult
+      this.mergeRiskProfile(this.finPlanObj.data.assessmentScore);
+      this.showQuestionnaire = true;
+      this.showResults = true;
+      this.showErrorMsg = false;
+      this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      this.showButton = false
+      this.showRetakeTestsButton = true;
+
     }
     this.loadGlobalRiskProfile();
     this.getdataForm('');
@@ -363,6 +377,10 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.riskTemp.nativeElement);
+    }
   }
 
   loadRiskProfile() {
