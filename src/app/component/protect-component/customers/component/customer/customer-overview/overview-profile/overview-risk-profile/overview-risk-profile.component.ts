@@ -85,7 +85,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     if (this.finPlanObj && this.finPlanObj.data) {
       this.loadGlobalRiskProfile();
       this.riskAssessmentQuestionList = this.finPlanObj.data.assessmentResult
-      this.dateOfTest = this.finPlanObj.data.assessmentScore
+      this.dateOfTest = this.finPlanObj.data.assessmentScore.riskAssessmentDate
       this.mergeRiskProfile(this.finPlanObj.data.assessmentScore);
       this.showQuestionnaire = true;
       this.showResults = true;
@@ -355,7 +355,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.showQuestionnaire = true;
         this.showResults = true;
         this.riskAssessmentQuestionList = data.data.assessmentResult;
-        this.dateOfTest = data.data.assessmentScore
+        this.dateOfTest = data.data.assessmentScore.riskAssessmentDate
         this.mergeRiskProfile(data.data.assessmentScore);
         this.showErrorMsg = false;
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
