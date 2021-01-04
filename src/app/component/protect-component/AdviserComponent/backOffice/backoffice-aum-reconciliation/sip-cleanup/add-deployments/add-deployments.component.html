@@ -1,0 +1,99 @@
+<div class="row bb-1 popup-header-fix w-65">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">ARN-83865 CAMS</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(false)">
+            clear
+        </i>
+    </div>
+</div>
+<div class="pt-90 pb-48 pl-28 pr-28 add-deployments-table">
+    <div class="row">
+        <div class="col-md-7 pl-0">
+            <p class="m-0 text-primitive f-400 roboto f-12">SCHEME NAME</p>
+            <p class="m-0 f-400 roboto">Franklin Templeton US Equity Bluechip Fund - Regular Plan - Growth</p>
+            <p class="m-0 text-primitive f-400 roboto f-12 pt-24">FOLIO NUMBER</p>
+            <p class="m-0 f-400 roboto">987874938262622</p>
+        </div>
+        <div class="col-md-5 p-0">
+            <p class="m-0 text-primitive f-400 roboto f-12">STATUS</p>
+            <table mat-table [dataSource]="dataSource" id="table-low">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="f-500 br"> Units (IFANOW) </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="f-500 br"> Units (RTA) </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="f-500 br"> Difference </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="row pt-60">
+        <div class="col-md-12 p-0 ">
+            <mat-checkbox class="mr-40">Show all transaction types</mat-checkbox>
+            <mat-checkbox>Show all historical transactions</mat-checkbox>
+            <table mat-table [dataSource]="dataSource1" id="table-low" class="mt-10">
+
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br f-500"> Transaction type </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br f-500"> Date </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br f-500"> Amount </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br f-500"> NAV </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unit">
+                    <th mat-header-cell *matHeaderCellDef class="br f-500"> Units </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.unit}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed  wrapper-12  w-65">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Close</h5>
+        </div>
+
+    </div>
+</div>
