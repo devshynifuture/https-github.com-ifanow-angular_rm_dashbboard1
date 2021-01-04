@@ -1449,6 +1449,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.cd.detectChanges()
     this.showDownload = true
     this.customDataSource.data = this.customDataSource.data
+    const para = document.getElementById('templateSummary');
     // this.customDataSource.data = this.copyOfData
     this.customDataSource.data.forEach(element => {
       var test = element.navDate.includes('$NEXTLINE')
@@ -1462,7 +1463,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     });
     setTimeout(() => {
-      var blob = new Blob([document.getElementById('templateSummary').innerHTML], {
+      var blob = new Blob([para.innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       saveAs(blob, tableTitle + ".xls");
