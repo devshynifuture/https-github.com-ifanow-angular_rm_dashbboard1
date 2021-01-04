@@ -1,18 +1,18 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {AuthService} from '../auth-service/authService';
-import {quotationTemplate} from './quotationTemplate';
-import {debounceTime} from 'rxjs/operators';
-import {AppConstants} from './app-constants';
-import {apiConfig} from '../config/main-config';
+import { ElementRef, Injectable, Input, OnDestroy } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AuthService } from '../auth-service/authService';
+import { quotationTemplate } from './quotationTemplate';
+import { debounceTime } from 'rxjs/operators';
+import { AppConstants } from './app-constants';
+import { apiConfig } from '../config/main-config';
 
 @Injectable({
   providedIn: 'root',
@@ -98,7 +98,7 @@ export class UtilService {
   ): object[] {
     const outputArray = [];
     Object.keys(inputObject).map((key) => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -261,8 +261,8 @@ export class UtilService {
     } else if (taxMasterId == 8) {
       headerText = "AOF (UCC to be created in Trust Name) PAN copy of Trust, Board Resolution (BR) & Authorised Signatory list (ASL) and cancelled cheque."
     }
-      // else if (taxMasterId == 13) {
-      //   headerText = "AOF and cancelled cheque of NRO A/C"
+    // else if (taxMasterId == 13) {
+    //   headerText = "AOF and cancelled cheque of NRO A/C"
     // }
     else if (taxMasterId == 11 && taxMasterId == 14 && taxMasterId == 17 && taxMasterId == 41) {
       headerText = "AOF and cancelled cheque of NRE A/C"
@@ -408,7 +408,7 @@ export class UtilService {
     advanced_permissions.forEach((permission) => {
       permission.featureId = featureId;
     });
-    return {permissions: permissions_json, advanced_permissions};
+    return { permissions: permissions_json, advanced_permissions };
   }
 
   convertEnabledOrDisabledAsBoolean(segregatedPermissions) {
@@ -636,13 +636,13 @@ export class UtilService {
   }
 
   htmlToPdf(header,
-            inputData,
-            pdfName,
-            landscape,
-            fragData: any = {},
-            key = null,
-            svg = null,
-            showFooter
+    inputData,
+    pdfName,
+    landscape,
+    fragData: any = {},
+    key = null,
+    svg = null,
+    showFooter
   ) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
@@ -671,10 +671,10 @@ export class UtilService {
       .post(
         apiConfig.MAIN_URL + 'subscription/html-to-pdf',
         obj,
-        {responseType: 'blob'}
+        { responseType: 'blob' }
       )
       .subscribe((data) => {
-        const file = new Blob([data], {type: 'application/pdf'});
+        const file = new Blob([data], { type: 'application/pdf' });
         fragData.isSpinner = false;
         fragData.size = this.formatFileSize(data.size, 0);
         fragData.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
@@ -754,8 +754,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**
@@ -785,6 +785,16 @@ export class UtilService {
     } else {
       return false;
     }
+  }
+
+  static formatGoogleGeneratedAddress(address: string) {
+    let firstLine = address.substring(0, 39)
+    firstLine = firstLine.substr(0, firstLine.lastIndexOf(' '))
+    firstLine = firstLine.trim();
+    let secondLine = address.substring(firstLine.lastIndexOf(' '), 79)
+    secondLine = secondLine.trim()
+    secondLine = secondLine.substr(secondLine.indexOf(' '), 79)
+    return { firstLine, secondLine }
   }
 
   isEmptyObj(obj) {

@@ -1445,26 +1445,25 @@ export class MutualFundSummaryComponent implements OnInit {
     return str.replace(regex, '')
   }
   Excel(tableTitle) {
+    this.cd.markForCheck();
     this.cd.detectChanges()
     this.showDownload = true
     this.customDataSource.data = this.customDataSource.data
+    const para = document.getElementById('templateSummary');
     // this.customDataSource.data = this.copyOfData
     this.customDataSource.data.forEach(element => {
       var test = element.navDate.includes('$NEXTLINE')
       console.log('includes', test)
-      if (test == true) {
-        element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
-
-      } else {
+      if (element.folioNumber && test == false) {
         let isin = element.isin ? ' | ' + element.isin : '';
         element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        element.navDate = (element.nav + element.navDate);
+        element.navDate = (element.nav + '$NEXTLINE ' + element.navDate);
         console.log(element.navDate)
       }
     });
     setTimeout(() => {
-      var blob = new Blob([document.getElementById('templateSummary').innerHTML], {
+      var blob = new Blob([para.innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       saveAs(blob, tableTitle + ".xls");
