@@ -333,6 +333,8 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       this.selectedClientArray = [];
     }
     if (this.dataSource != undefined) {
+      this.selectedClientArray = [];
+      this.selectedClientsCount = 0;
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
         if (element.selected) {
@@ -434,7 +436,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       subject: this.subject.value,
       messageBody: this.emailBody
     };
-    if (this.isAllSelected) {
+    if (this.isAllSelected && this.searchFC.value == '') {
       obj['allClient'] = true;
     }
 
