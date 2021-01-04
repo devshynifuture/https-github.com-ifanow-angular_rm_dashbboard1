@@ -1452,14 +1452,11 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.forEach(element => {
       var test = element.navDate.includes('$NEXTLINE')
       console.log('includes', test)
-      if (test == true) {
-        element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
-
-      } else {
+      if (element.folioNumber && test == false) {
         let isin = element.isin ? ' | ' + element.isin : '';
         element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
-        element.navDate = (element.nav + element.navDate);
+        element.navDate = (element.nav + '$NEXTLINE ' + element.navDate);
         console.log(element.navDate)
       }
     });
