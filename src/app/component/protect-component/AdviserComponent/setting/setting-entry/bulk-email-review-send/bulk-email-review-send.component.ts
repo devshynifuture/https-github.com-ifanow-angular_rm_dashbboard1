@@ -9,6 +9,7 @@ import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -128,7 +129,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     });
 
     this.searchFC.valueChanges.pipe(
-      debounceTime(1000),
+      debounceTime(700),
       switchMap(data => {
         this.searchName = data;
         if (data === '') {
@@ -191,9 +192,16 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
       if (data) {
         console.log("this is all sip table data, ------", data);
-        if (this.isAllSelected) {
-          data.map(o => o.selected = true);
-        }
+        // if (this.isAllSelected) {
+        //   data.map(o => o.selected = true);
+        // }
+        data.forEach(element => {
+          this.selectedClientArray.forEach(clientId => {
+            if (element.clientId === clientId) {
+              element.selected = true
+            }
+          })
+        })
         if (this.fromSearch || this.searchName === '') {
           this.infiniteScrollClientList = [];
           if (this.searchName == '') {
@@ -319,27 +327,30 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
   selectAll(event) {
     this.dataCount = 0;
-    this.isAllSelected = true;
+    // this.isAllSelected = true;
     if (!event.checked) {
       this.selectedClientsCount = 0;
-      this.isAllSelected = false;
+      this.selectedClientArray = [];
     }
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
         if (element.selected) {
+          this.selectedClientArray.push(element.clientId)
+          this.selectedClientsCount++;
           this.dataCount++;
         }
       });
     }
   }
 
-  changeSelect(element) {
+  changeSelect(element, index) {
     this.dataCount = 0;
-    this.selectedClientArray.push(element.clientId);
     if (element.selected) {
+      this.selectedClientArray.push(element.clientId);
       this.selectedClientsCount++;
     } else {
+      this.selectedClientArray.splice(index, 1);
       this.selectedClientsCount--;
     }
     this.dataSource.filteredData.forEach((item: any) => {
