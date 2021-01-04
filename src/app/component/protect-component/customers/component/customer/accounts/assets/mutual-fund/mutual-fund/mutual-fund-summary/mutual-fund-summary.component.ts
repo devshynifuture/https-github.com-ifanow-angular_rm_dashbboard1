@@ -1445,6 +1445,7 @@ export class MutualFundSummaryComponent implements OnInit {
     return str.replace(regex, '')
   }
   Excel(tableTitle) {
+    this.cd.markForCheck();
     this.cd.detectChanges()
     this.showDownload = true
     this.customDataSource.data = this.customDataSource.data
