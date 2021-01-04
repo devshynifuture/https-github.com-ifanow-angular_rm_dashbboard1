@@ -245,9 +245,11 @@ export class NomineeDetailsIinComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        this.nomineeDetails.get('address2').setValue(place.formatted_address.substring(0, 39))
-        this.nomineeDetails.get('address3').setValue(place.formatted_address.substring(39, 79))
+        const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
+        this.nomineeDetails.get('address2').setValue(firstLine);
+        this.nomineeDetails.get('address3').setValue(secondLine);
         this.getPincode(place.formatted_address);
+        // this.getPincode(place.formatted_address);
         // console.log(place);
       });
       // })
@@ -333,9 +335,15 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getFormControl().state.setValue('');
 
     } else {
-      this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      let addressLine3 = this.nomineeDetails.get('address3').value;
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].District, '')
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].State, '')
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].Circle, '');
+      addressLine3 = addressLine3.replace(/,/g, '')
+      this.nomineeDetails.get('address3').setValue(addressLine3)
       this.pinInvalid = false;
     }
   }
