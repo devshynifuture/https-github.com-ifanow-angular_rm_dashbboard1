@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-deployments',
@@ -10,9 +11,13 @@ export class AddDeploymentsComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'unit'];
   dataSource1 = ELEMENT_DATA1;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
+  }
+
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }
