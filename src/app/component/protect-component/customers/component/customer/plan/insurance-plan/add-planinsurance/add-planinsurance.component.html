@@ -23,7 +23,7 @@
         </app-progress-button>
     </div>
     <div *ngIf="tab == 0">
-        <div class="p-0  br-0 right c-p" (click)="clearAllFeilds()">
+        <div class="p-0  br-0 right c-p" (click)="clearAllFeilds()" *ngIf="familyList?.length > 0">
             <i class="material-icons">
                 refresh
             </i>
@@ -41,7 +41,7 @@
     <mat-tab-group class="tabView" (selectedTabChange)="tabChanged($event)">
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
-            <div class="pt-20">
+            <div class="pt-20" *ngIf="!isLodingNeedAnalysis && familyList?.length > 0">
                 <div class="row pb-20">
                     <div class="col-md-3 f-14 p-0 f-500 d-flex align-items-center justify-content-between">
                         Select main dependent
@@ -587,13 +587,24 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="isLodingNeedAnalysis" class="bg-white p-20">Loading data...</div>
 
 
             </div>
-
-
-
+            <div class="pt-20" *ngIf="!isLodingNeedAnalysis && familyList?.length == 0">
+                <div class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12 bg-white">No main dependent found</h4>
+                </div>
+                <!-- <div  class="bg-white p-20">No main dependent found</div> -->
+            </div>
+            <!-- <div class="pt-20">
+                <div *ngIf="isLodingNeedAnalysis" class="d-flex flex-column align-items-center bg-white pt-20">Loading data...</div>
+            </div> -->
+            <div *ngIf="isLodingNeedAnalysis" class="bg-white p-20">
+                    <div class="col-md-12 d-flex justify-content-center align-items-center text-center h-80vh">
+                        <div class="pl-28 pr-28 text-center">Loading data...</div>
+                    </div>
+                </div>
         </mat-tab>
 
         <mat-tab class="f-14 f-500 roboto" label="Manual">
@@ -639,7 +650,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" >
+        <div class="col-md-8 right text-right">
             <app-progress-button [options]="barButtonOptions3" (btnClick)="saveAnalysis()">
             </app-progress-button>
         </div>

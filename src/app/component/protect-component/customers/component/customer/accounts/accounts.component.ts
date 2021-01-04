@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { MfServiceService } from './assets/mutual-fund/mf-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { AssetValidationService } from './assets/asset-validation.service';
 
 @Component({
   selector: 'app-accounts',
@@ -29,7 +30,7 @@ export class AccountsComponent implements OnInit {
   showRouter = false;
   selected;
 
-  constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
+  constructor(private eventService: EventService, private router: Router, private ngZone: NgZone, private assetValidation: AssetValidationService,
     public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
@@ -54,7 +55,7 @@ export class AccountsComponent implements OnInit {
     this._value = 1;
     this.loading = false;
     this.clientData = AuthService.getClientData();
-
+    this.assetValidation.clearAssetData();
 
     // this.enumDataService.getAccountList();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
@@ -95,6 +96,7 @@ export class AccountsComponent implements OnInit {
          }
        });
      });*/
+
     this.showRouter = false;
     this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     setTimeout(() => {

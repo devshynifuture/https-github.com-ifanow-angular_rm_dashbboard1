@@ -109,7 +109,7 @@
                                     <p class="m-0 text-black roboto pt-24" *ngIf="adviceName != 'Continue'">Implementation date</p>
                                     <div class="form-group" *ngIf="adviceName != 'Continue'">
                                         <mat-form-field class="ba-date">
-                                            <input (ngModelChange)="dateChange('implementDate')"
+                                            <input [min]="todayDate" (ngModelChange)="dateChange('implementDate')"
                                                 matInput (focus)="picker1.open()" formControlName="implementDate"
                                                 [matDatepicker]="picker1" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

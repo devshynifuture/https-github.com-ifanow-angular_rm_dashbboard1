@@ -42,6 +42,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   isRecommended = false;
   recommendOrNot: any;
   ids =[];
+  todayDate: Date;
   constructor(private datePipe: DatePipe,private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
@@ -56,6 +57,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   ngOnInit() {
+    this.todayDate = new Date();
   }
   saveData(data) {
 
