@@ -994,7 +994,7 @@ export class InsuranceComponent implements OnInit {
           if (this.sumAssured != 0) {
             element.sumAssured = this.sumAssured;
           }
-          if (element.sumAssured == 0) {
+          if (!element.sumAssured) {
             element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
           }
         } else {
@@ -1005,6 +1005,9 @@ export class InsuranceComponent implements OnInit {
             element.sumAssured += ele.addOnSumInsured;
           });
         }
+          // if(!element.sumAssured){
+          //   element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
+          // }
       });
       this.dataSourceGeneralInsurance.data.forEach(element => {
         this.totalSumAssured += element.sumAssured,

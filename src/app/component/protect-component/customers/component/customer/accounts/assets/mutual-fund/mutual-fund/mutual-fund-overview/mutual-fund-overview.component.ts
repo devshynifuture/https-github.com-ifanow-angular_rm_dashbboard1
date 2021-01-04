@@ -258,7 +258,7 @@ export class MutualFundOverviewComponent implements OnInit {
       (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
       (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
       (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-      if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+      if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
         this.showSummaryBar = false;
       }
     }
@@ -381,7 +381,7 @@ export class MutualFundOverviewComponent implements OnInit {
           (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
           (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
           (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-          if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+          if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
             this.showSummaryBar = false;
           }
         }
@@ -432,7 +432,9 @@ export class MutualFundOverviewComponent implements OnInit {
           this.getCashFlowStatus();
         }
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
-        this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+        if(this.showSummaryBar){
+          this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+        }
         // this.isLoading = false;
         if (this.router.url.split('?')[0] == '/pdf/overview') {
           this.generatePdfBulk();
@@ -592,6 +594,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment);
       this.schemeWiseAllocation(data); // for shemeWiseAllocation
     } else {
+      this.isLoading = false;
       this.showSummaryBar = false;
       this.dataSource.data = [];
       this.showFamilyMember = false;
@@ -738,8 +741,11 @@ export class MutualFundOverviewComponent implements OnInit {
       this.sendaata.dataSource3 = this.dataSource3;
 
       this.MfServiceService.setSendData(this.sendaata);
-      if (this.dataSource3.data.length == 0) {
-        this.showSubCategory = false;
+      // if (this.dataSource3.data.length == 0) {
+      //   this.showSubCategory = false;
+      // }
+      if (this.dataSource3.data.length > 0) {
+        this.showSubCategory = this.showHideTable  ? (this.showHideTable[5].selected ? true : false) : true;
       }
       // this.isLoading = false;
       this.changeInput.emit(false);
@@ -761,9 +767,14 @@ export class MutualFundOverviewComponent implements OnInit {
       this.sendaata.dataSource = this.dataSource;
 
       this.MfServiceService.setSendData(this.sendaata);
-      if (this.dataSource.data.length == 0) {
-        this.showFamilyMember = false;
+      // if (this.dataSource.data.length == 0) {
+      //   this.showFamilyMember = false;
+
+      // }
+      if (this.dataSource.data.length > 0) {
+        this.showFamilyMember = this.showHideTable  ? (this.showHideTable[3].selected ? true : false) : true;
       }
+
       // this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -884,14 +895,18 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.dataSource4 = this.dataSource4;
 
     this.MfServiceService.setSendData(this.sendaata);
-    if (this.dataSource4.data.length == 0) {
-      this.showCategory = false;
+    // if (this.dataSource4.data.length == 0) {
+    //   this.showCategory = false;
+    // }
+    if (this.dataSource4.data.length > 0) {
+      this.showCategory = this.showHideTable  ? (this.showHideTable[4].selected ? true : false) : true;
     }
+
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     // this.isLoading = false;
     this.changeInput.emit(false);
-    if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+    if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
       this.showSummaryBar = false;
       this.showCashFlow = false;
       this.showSchemeWise = false
@@ -900,9 +915,11 @@ export class MutualFundOverviewComponent implements OnInit {
     if (this.chart) {
       this.svg = this.chart.getSVG();
     }
-    this.ref.detectChanges();
-    this.loaded.emit(this.mfOverviewTemplate.nativeElement);
-    this.loadsvg.emit(this.svg)
+    if(this.finPlanObj){
+      this.ref.detectChanges();
+      this.loaded.emit(this.mfOverviewTemplate.nativeElement);
+      this.loadsvg.emit(this.svg)
+    }
   }
   generatePdf() {
     this.svg = this.chart.getSVG();
@@ -1201,7 +1218,7 @@ export class MutualFundOverviewComponent implements OnInit {
               (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true && this.dataSource.data.length > 0) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
               (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true && this.dataSource4.data.length > 0) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
               (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true && this.dataSource3.data.length > 0) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-              if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+              if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
                 this.showSummaryBar = false;
               }
             }

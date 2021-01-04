@@ -1445,6 +1445,7 @@ export class MutualFundSummaryComponent implements OnInit {
     return str.replace(regex, '')
   }
   Excel(tableTitle) {
+    this.cd.detectChanges()
     this.showDownload = true
     this.customDataSource.data = this.customDataSource.data
     // this.customDataSource.data = this.copyOfData
@@ -1455,7 +1456,8 @@ export class MutualFundSummaryComponent implements OnInit {
         element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
 
       } else {
-        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        let isin = element.isin ? ' | ' + element.isin : '';
+        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         element.navDate = (element.nav + element.navDate);
         console.log(element.navDate)

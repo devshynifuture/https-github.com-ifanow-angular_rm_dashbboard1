@@ -19,7 +19,7 @@
 
         <div class="row b-a">
             <div class="col-md-6 p-0">
-                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Step 1 - Select existing policy</h5>
+                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Select existing policy</h5>
                 <div class="pl-12 pr-12">
                     <div class="scroll-table-health">
                         <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
@@ -114,12 +114,12 @@
                         (click)="openHelthInsurance(showInsurance)">SELECT ONE
                     </button>
                 </div>
-                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12" *ngIf="!isLoading && dataSource.length > 0"
-                    (click)="openHelthInsurance(showInsurance)">+ Add more
+                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12" *ngIf="!isLoading && dataSource.length > 0">
+                    <span  (click)="openHelthInsurance(showInsurance)">+ Add more</span>
                 </p>
             </div>
             <div class="col-md-6 bl-1 p-0">
-                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Step 2 - Suggest new policy</h5>
+                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Suggest new policy</h5>
                 <!-- <div class="row center-items">
                     <div class="col-md-12 p-0">
                         <p class="m-0 roboto text-black">Suggest new policy from here.</p>
