@@ -123,7 +123,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.step1Flag = true;
     this.getClientListValue(0);
     this.getEmailVerification();
-    this.searchFC = new FormControl();
+    this.searchFC = new FormControl('');
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
@@ -436,7 +436,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       subject: this.subject.value,
       messageBody: this.emailBody
     };
-    if (this.isAllSelected && this.searchFC.value == '') {
+    if (this.dataSource.data.length == this.selectedClientsCount && this.searchFC.value == '') {
       obj['allClient'] = true;
     }
 
