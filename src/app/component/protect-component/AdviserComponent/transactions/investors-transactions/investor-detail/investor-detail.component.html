@@ -79,17 +79,17 @@
       </div>
     </div>
   </div>
-  <div *ngIf="transactionRoleService.investorsModule.capabilityMap.edit&&!statusData[1].checked&&!isLoading"
+  <div *ngIf="transactionRoleService.investorsModule.capabilityMap.edit&&(!isAOFUploaded||!isChequeUploaded)&&!isLoading"
        class="row pt-12 pb-44 text-center">
     <div class="col-md-6">
-      <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
+      <button [hidden]="isAOFUploaded" (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
               mat-button>
         Upload AOF
         <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
       </button>
     </div>
     <div class="col-md-6">
-      <button *ngIf="details.aggregatorType != 2" (click)="openUploadConfirmBox('CHEQUE',4)"
+      <button [hidden]="isChequeUploaded" *ngIf="details.aggregatorType != 2" (click)="openUploadConfirmBox('CHEQUE',4)"
               [disabled]="isFileUploading"
               class="h-40 bg-primary text-white ml-8" mat-button>
         Upload Cheque
