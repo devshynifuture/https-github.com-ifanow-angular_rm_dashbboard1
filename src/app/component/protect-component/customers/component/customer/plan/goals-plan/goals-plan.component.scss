@@ -250,7 +250,10 @@
  border: 1px solid #478fff;
     padding: 10px;}
 
-
+.more-dots-btn {
+  min-width: 30px !important;
+  padding: 0 !important;
+}
 
 
  @media screen and (min-width: 1025px) and (max-width: 1400px){
