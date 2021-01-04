@@ -98,10 +98,10 @@ export class HttpService {
       compressedBody = pako.gzip(JSON.stringify(body));
     }
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
-    //compressedBody.buffer
+
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
     return this._http
-      .post(this.baseUrl + url, JSON.stringify(body), httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         return this.sendSuccessResponse(res);
       });
@@ -128,7 +128,7 @@ export class HttpService {
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
-      .post(this.baseUrl + url, JSON.stringify(body), httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -170,7 +170,7 @@ export class HttpService {
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, JSON.stringify(body), httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -204,7 +204,7 @@ export class HttpService {
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, JSON.stringify(body), httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
