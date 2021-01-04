@@ -983,7 +983,7 @@ export class InsuranceComponent implements OnInit {
           });
           (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
           if (this.insuranceSubTypeId == 4) {
-            element.planName = element.policyName;
+            element.planName = (element.policyName != 'NA') ? element.policyName : element.planName;
           }
         }
         this.sumAssured = 0;

@@ -517,11 +517,16 @@
 
                     </div>
                     <div class="row pt-24" *ngIf="selectedGoal?.remainingData?.loan || loaderFn.loading">
-                        <div class="col-md-11 p-0">
+                        <div class="col-md-10 p-0">
                             <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
                         </div>
-                        <div class="col-md-1 text-right">
-                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                        <div class="col-md-2 text-right pr-0">
+                            <button [matMenuTriggerFor]="menu" mat-button class="c-p more-dots-btn">
+                                <i class="material-icons">
+                                    more_vert
+                                </i>
+                            </button>
+
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item
                                     (click)="openInSideBar(selectedGoal?.remainingData?.loan, 'openCalculators')">Edit

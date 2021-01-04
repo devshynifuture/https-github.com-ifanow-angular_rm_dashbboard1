@@ -947,10 +947,12 @@ export class LifeInsuranceComponent implements OnInit {
     if (this.inputData.insuranceType != 1) {
       data.forEach(element => {
         if(!element.insurance.sumInsuredIdv){
-          element.insurance.insuredMembers = this.getSumAssuredByArray(element.insurance,element.insurance.insuredMembers);
-          element.parentAsset.insuredMembers = this.getSumAssuredByArray(element.parentAsset,element.parentAsset.insuredMembers);
+          element.insurance.insuredMembers = this.getSumAssuredByArray(element.insurance,(element.insurance.insuredMembers ? element.insurance.insuredMembers : null));
+          if(element.parentAsset){
+            element.parentAsset.insuredMembers = this.getSumAssuredByArray(element.parentAsset,(element.parentAsset ? element.parentAsset.insuredMembers : null));
+          }
           if(element.childAsset){
-            element.childAsset.insuredMembers = this.getSumAssuredByArray(element.childAsset,element.childAsset.insuredMembers);
+            element.childAsset.insuredMembers = this.getSumAssuredByArray(element.childAsset,(element.childAsset ? element.childAsset.insuredMembers :null));
           }
         }
       });

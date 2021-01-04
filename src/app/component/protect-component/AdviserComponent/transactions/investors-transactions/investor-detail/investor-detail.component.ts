@@ -9,7 +9,7 @@ import {EventService} from '../../../../../../Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {UtilService} from 'src/app/services/util.service';
 import {ConfirmUploadComponent} from './confirm-upload/confirm-upload.component';
-import {TransactionRoleService} from "../../transaction-role.service";
+import {TransactionRoleService} from '../../transaction-role.service';
 
 @Component({
   selector: 'app-investor-detail',
@@ -29,7 +29,8 @@ export class InvestorDetailComponent implements OnInit {
   isFileUploading = false;
   barWidth1: any = '0%';
   barWidth2: any = '0%';
-
+  isChequeUploaded = false;
+  isAOFUploaded = false;
   statusData = [
     {
       name: 'Request sent', checked: true, status: 0
@@ -81,7 +82,7 @@ export class InvestorDetailComponent implements OnInit {
         this.num++;
       }
       this.barWidth1 = this.num + '%';
-      console.log("1");
+      console.log('1');
       this.recall();
     }, 500);
 
@@ -100,7 +101,7 @@ export class InvestorDetailComponent implements OnInit {
         this.num1++;
       }
       this.barWidth2 = this.num1 + '%';
-      console.log("1");
+      console.log('1');
       this.recall1();
     }, 500);
 
@@ -137,7 +138,20 @@ export class InvestorDetailComponent implements OnInit {
       /*if (this.details.aggregatorType == 2) {
         this.statusData[1].checked = true;
       } else*/
-      if (resultData && resultData.length > 1) {
+
+      if (resultData) {
+        resultData.forEach(singleData => {
+          if (singleData.documentType == 1) {
+            this.isAOFUploaded = true;
+            if (this.details.aggregatorType == 2) {
+              this.isChequeUploaded = true;
+            }
+          } else if (singleData.documentType == 4) {
+            this.isChequeUploaded = true;
+          }
+        });
+      }
+      if (this.isAOFUploaded && this.isChequeUploaded) {
         this.statusData[1].checked = true;
       }
       this.isLoading = false;
@@ -158,12 +172,12 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   openUploadConfirmBox(value, typeId) {
-    console.log(this.details)
+    console.log(this.details);
     if (typeId == 1 && this.barWidth1 > 0) {
-      return
+      return;
     }
     if (typeId == 4 && this.barWidth2 > 0) {
-      return
+      return;
     }
     const dialogData = {
       data: value,
@@ -194,12 +208,12 @@ export class InvestorDetailComponent implements OnInit {
         this.numlimit = 30;
         if (typeId == 1) {
           this.addbarWidth(1);
-          this.loader1 = true
+          this.loader1 = true;
         } else {
           this.addbarWidth1(1);
-          this.loader2 = true
+          this.loader2 = true;
         }
-        this.getFileDetails(typeId, result)
+        this.getFileDetails(typeId, result);
       }
     });
   }
@@ -208,10 +222,10 @@ export class InvestorDetailComponent implements OnInit {
     if (this.data.aggregatorType == 1 && e.target.files[0].type !== 'image/tiff') {
       if (documentType == 1) {
         this.addbarWidth(0);
-        this.loader1 = false
+        this.loader1 = false;
       } else {
         this.addbarWidth1(0);
-        this.loader2 = false
+        this.loader2 = false;
       }
       this.file = e.target.files[0];
       const file = e.target.files[0];
@@ -224,10 +238,10 @@ export class InvestorDetailComponent implements OnInit {
           this.isFileUploading = false;
           if (documentType == 1) {
             this.addbarWidth(100);
-            this.loader1 = true
+            this.loader1 = true;
           } else {
             this.addbarWidth1(100);
-            this.loader2 = true
+            this.loader2 = true;
           }
           if (status == 200) {
             (documentType == 1) ? this.loader1 = false : this.loader2 = false;
@@ -235,7 +249,7 @@ export class InvestorDetailComponent implements OnInit {
             this.eventService.openSnackBar('File uploaded successfully');
             this.getFormUploadDetail();
           } else {
-            (documentType == 1) ? this.loader1 = false : this.loader2 = false
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false;
             const responseObject = JSON.parse(response);
             this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
           }
@@ -246,10 +260,10 @@ export class InvestorDetailComponent implements OnInit {
       //
       if (documentType == 1) {
         this.addbarWidth(30);
-        this.loader1 = true
+        this.loader1 = true;
       } else {
         this.addbarWidth1(30);
-        this.loader2 = true
+        this.loader2 = true;
       }
       this.file = e.target.files[0];
       const file = e.target.files[0];
@@ -261,20 +275,20 @@ export class InvestorDetailComponent implements OnInit {
       // this.addbarWidth(50);
       if (documentType == 1) {
         this.addbarWidth(50);
-        this.loader1 = true
+        this.loader1 = true;
       } else {
         this.addbarWidth1(0);
-        this.loader2 = true
+        this.loader2 = true;
       }
       FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
         file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           this.isFileUploading = false;
           if (documentType == 1) {
             this.addbarWidth(100);
-            this.loader1 = true
+            this.loader1 = true;
           } else {
             this.addbarWidth1(100);
-            this.loader2 = true
+            this.loader2 = true;
           }
           if (status == 200) {
             (documentType == 1) ? this.loader1 = false : this.loader2 = false;
@@ -282,7 +296,7 @@ export class InvestorDetailComponent implements OnInit {
             this.eventService.openSnackBar('File uploaded successfully');
             this.getFormUploadDetail();
           } else {
-            (documentType == 1) ? this.loader1 = false : this.loader2 = false
+            (documentType == 1) ? this.loader1 = false : this.loader2 = false;
             const responseObject = JSON.parse(response);
             this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
           }
