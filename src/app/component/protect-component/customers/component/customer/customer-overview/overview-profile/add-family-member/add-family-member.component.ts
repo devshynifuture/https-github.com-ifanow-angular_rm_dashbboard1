@@ -152,7 +152,8 @@ export class AddFamilyMemberComponent implements OnInit {
           genderId: element.get('genderId').value,
           dateOfBirth: this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),
           relationshipId: element.get('relationTypeId').value,
-          name: element.get('name').value
+          name: element.get('name').value,
+          companyStatus: element.get('relationTypeId').value == 18 ? 7 : element.get('relationTypeId').value == 19 ? 1 : 0
         });
       });
 

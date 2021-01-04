@@ -65,8 +65,12 @@
         </div>
     </div>
 </div>
-
-<div class="row pt-24 sip-cleanup pb-28">
+<div class="row pt-20">
+    <div class="col-md-12 full-end">
+        <button mat-stroked-button class="btn-primary">Run SIP Mapping Wizard</button>
+    </div>
+</div>
+<div class="row pt-20 sip-cleanup pb-28">
     <div class="col-md-12 ">
         <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide sip-cleanup-scroll responsive-table-port">
             <table mat-table [dataSource]="dataSource" id="tbs" class="skeletionAnimation"
