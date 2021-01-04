@@ -55,13 +55,16 @@ export class DetailedViewInsurancePlanningComponent implements OnInit {
   }
   ngOnInit() {
     this.bankList = this.enumService.getBank();
-    this.bankList.forEach(element => {
-      if(this._data.insurance){
-        if (element.id == this._data.insurance.linkedBankAccountId) {
-          this._data.insurance.bankName = element.bankName;
+    if(this.bankList && this.bankList.length > 0){
+      this.bankList.forEach(element => {
+        if(this._data.insurance){
+          if (element.id == this._data.insurance.linkedBankAccountId) {
+            this._data.insurance.bankName = element.bankName;
+          }
         }
-      }
-    });
+      });
+    }
+
 
     this.displayList.policyTypes.forEach(ele => {
       if (this._data.insurance && this._data.insurance.policyTypeId) {
