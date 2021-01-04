@@ -102,6 +102,20 @@ export class UpdateClientProfileComponent implements OnInit {
     }
   }
 
+  deleteImg() {
+    const jsonDataObj = {
+      clientId: this.clientId,
+      profilePicUrl: "https://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png"
+    };
+    this.cusService.updateClientProfilePic(jsonDataObj).subscribe((res) => {
+      this.barButtonOptions.active = false;
+      this.subInjectService.setRefreshRequired();
+      this.imgURL = jsonDataObj.profilePicUrl;
+      this.Close()
+      this.event.openSnackBar('Image deleted sucessfully', 'Dismiss');
+    });
+  }
+
   showCroppedImage(imageAsBase64) {
     setTimeout(() => {
       this.finalImage = imageAsBase64;
