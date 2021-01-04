@@ -16,10 +16,10 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
   selector: 'app-helth-insurance-policy',
   templateUrl: './helth-insurance-policy.component.html',
   styleUrls: ['./helth-insurance-policy.component.scss'],
-  providers: [
-    [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-  ],
+  // providers: [
+  //   [DatePipe],
+  //   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  // ],
 })
 export class HelthInsurancePolicyComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {

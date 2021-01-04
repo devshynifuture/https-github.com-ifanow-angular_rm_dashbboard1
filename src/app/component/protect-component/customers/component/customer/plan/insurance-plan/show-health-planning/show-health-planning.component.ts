@@ -367,7 +367,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         this.adviceName = singleInsuranceData.advice;
         singleInsuranceData.insuranceDetails['adviceDetails'] = singleInsuranceData.adviceDetails ? singleInsuranceData.adviceDetails : null
         this.adviceDetails = singleInsuranceData.insuranceDetails['adviceDetails'];
-        if (singleInsuranceData['insurance'] ? singleInsuranceData['insurance'].isRecommend == 1 : singleInsuranceData['insuranceDetails'] == 1) {
+        if (singleInsuranceData['insurance'] ? singleInsuranceData['insurance'].isRecommend == 1 : singleInsuranceData['insuranceDetails'].isRecommend == 1) {
           countSuggest++
           this.recommendOrNot = true;
         }

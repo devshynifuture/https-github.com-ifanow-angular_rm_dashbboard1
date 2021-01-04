@@ -744,6 +744,7 @@ export class LifeInsuranceComponent implements OnInit {
       });
       suggested = suggested.filter(d => d.id != deletedId);
       singleData[0][1].suggested = suggested;
+      this.ipService.setNeedAnlysisData('');
     }
     this.ipService.setIpData(this.storedData);
     this.getForkJoinResponse(singleData[0])
