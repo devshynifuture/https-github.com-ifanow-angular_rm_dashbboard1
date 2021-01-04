@@ -41,12 +41,12 @@
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [ngClass]="{'v-h': selectedClientsCount==0}" *ngIf="!isAllSelected"
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}" *ngIf="dataSource.data.length!=selectedClientsCount"
                         class="text-right italicText text-primitive mb-0 f-14">
                         {{selectedClientsCount}} clients
                         selected
                     </p>
-                    <p *ngIf="isAllSelected">
+                    <p *ngIf="dataSource.data.length==selectedClientsCount">
                         All clients selected
                     </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
@@ -60,9 +60,9 @@
                                         [checked]="dataCount == dataSource.data.length">
                                     </mat-checkbox>
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="c-p br">
+                                <td mat-cell *matCellDef="let element;index as i" class="c-p br">
                                     <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
-                                        (change)="changeSelect(element)" *ngIf="!isLoading">
+                                        (change)="changeSelect(element,i)" *ngIf="!isLoading">
                                     </mat-checkbox>
                                 </td>
                             </ng-container>

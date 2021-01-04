@@ -24,13 +24,15 @@
     <div class="row pl-10 pr-10">
         <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('overview',overview)">
             <mat-checkbox [checked]="overview" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="overview == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="overview == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 text-center">
                     <img src="assets/images/svg/overview-report-icon.svg">
                 </div>
                 <div class="col-md-8 pl-0">
                     <h3 class="mb-4 f-14">Overview</h3>
-                    <p class="mb-0 lh-13 f-12 text-primitive">Just an overview of the mutual fund portfolio. Sometimes less is more!
+                    <p class="mb-0 lh-13 f-12 text-primitive">Just an overview of the mutual fund portfolio. Sometimes
+                        less is more!
                     </p>
                 </div>
             </div>
@@ -38,35 +40,42 @@
 
         <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('summary',summary)">
             <mat-checkbox [checked]="summary" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="summary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="summary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 text-center">
                     <img src="assets/images/svg/summary-report-icon.svg">
                 </div>
                 <div class="col-md-8 pl-0">
                     <h3 class="mb-4 f-14">Summary</h3>
-                    <p class="mb-0 lh-13  f-12 text-primitive">This report has the scheme level summary with more data points.
+                    <p class="mb-0 lh-13  f-12 text-primitive">This report has the scheme level summary with more data
+                        points.
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('allTransactions',allTransactions)">
+        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p"
+            (click)="selectReportType('allTransactions',allTransactions)">
             <mat-checkbox [checked]="allTransactions" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="allTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="allTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 text-center">
                     <img src="assets/images/svg/all-transactions-icon.svg">
                 </div>
                 <div class="col-md-8 pl-0">
                     <h3 class="mb-4 f-14">All transactions</h3>
-                    <p class="mb-0 lh-13  f-12 text-primitive"> A simple report which just lists down all transactions during a certain period.
+                    <p class="mb-0 lh-13  f-12 text-primitive"> A simple report which just lists down all transactions
+                        during a certain period.
                     </p>
                 </div>
             </div>
         </div>
- 
-        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('unrealisedTransactions',unrealisedTransactions)">
+
+        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p"
+            (click)="selectReportType('unrealisedTransactions',unrealisedTransactions)">
             <mat-checkbox [checked]="unrealisedTransactions" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="unrealisedTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="unrealisedTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 pr-10 text-center">
                     <img src="assets/images/svg/unrealized-icon.svg">
                 </div>
@@ -79,9 +88,11 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('capitalGainDetails',capitalGainDetails)">
+        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p"
+            (click)="selectReportType('capitalGainDetails',capitalGainDetails)">
             <mat-checkbox [checked]="capitalGainDetails" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="capitalGainDetails == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="capitalGainDetails == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 text-center">
                     <img src="assets/images/svg/capital-gains-icon.svg">
                 </div>
@@ -94,15 +105,18 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p" (click)="selectReportType('capitalGainSummary',capitalGainSummary)">
+        <div class="col-md-6 col-lg-4 mb-10 pl-8 pr-8 c-p"
+            (click)="selectReportType('capitalGainSummary',capitalGainSummary)">
             <mat-checkbox [checked]="capitalGainSummary" class="custom-checkbox checked poscheck"> </mat-checkbox>
-            <div [ngClass]="capitalGainSummary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+            <div
+                [ngClass]="capitalGainSummary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
                 <div class="col-md-4 text-center">
                     <img src="assets/images/svg/capital-summary-icon.svg">
                 </div>
                 <div class="col-md-8 pl-0">
                     <h3 class="mb-4 f-14">Capital gains: Summary</h3>
-                    <p class="mb-0 lh-13  f-12 text-primitive"> Scheme level summary of capital gains for a financial year
+                    <p class="mb-0 lh-13  f-12 text-primitive"> Scheme level summary of capital gains for a financial
+                        year
                     </p>
                 </div>
             </div>
@@ -126,7 +140,8 @@
                     <h5 class="m-0">Report as on</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
-                            <input class="form-control br-0 b-0" matInput [matDatepicker]="picker3" readonly [(ngModel)]="toDate"  (dateChange)="changeFromDate($event,'reportASOn')">
+                            <input class="form-control br-0 b-0" matInput [matDatepicker]="picker3" readonly
+                                [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'reportASOn')">
                             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                             <mat-datepicker #picker3></mat-datepicker>
                         </mat-form-field>
@@ -143,7 +158,8 @@
                     <h5 class="m-0">From date</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
-                            <input class="form-control br-0 b-0" [max]="maxDate" matInput [matDatepicker]="picker1" readonly [(ngModel)]="fromDate" (dateChange)="changeFromDate($event,'fromDate')">
+                            <input class="form-control br-0 b-0" [max]="maxDate" matInput [matDatepicker]="picker1"
+                                readonly [(ngModel)]="fromDate" (dateChange)="changeFromDate($event,'fromDate')">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
@@ -154,7 +170,8 @@
                     <h5 class="m-0">To date</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
-                            <input class="form-control br-0 b-0" [min]="minDate" matInput [matDatepicker]="picker2" readonly [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
+                            <input class="form-control br-0 b-0" [max]="maxDate" matInput [matDatepicker]="picker2"
+                                readonly [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
@@ -177,11 +194,13 @@
 
                     </div>
                 </div> -->
-                <div class="col-md-4 d-flex flex-column justify-content-center p-0" *ngIf="unrealisedTransactions == true">
+                <div class="col-md-4 d-flex flex-column justify-content-center p-0"
+                    *ngIf="unrealisedTransactions == true">
                     <h5 class="m-0">Report as on</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
-                            <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" readonly [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
+                            <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" readonly
+                                [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
@@ -197,7 +216,8 @@
                 <div class="col-md-6 d-flex align-items-center">
                     <mat-form-field>
                         <mat-select class="form-control">
-                            <mat-option (click)="changeFinancialYear(item)" role="listitem" [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
+                            <mat-option (click)="changeFinancialYear(item)" role="listitem"
+                                [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
                                 {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -210,7 +230,8 @@
                 <div class="col-md-6 d-flex align-items-center">
                     <mat-form-field>
                         <mat-select class="form-control" [(ngModel)]="default">
-                            <mat-option (click)="changeFinancialYear(item)" role="listitem" [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
+                            <mat-option (click)="changeFinancialYear(item)" role="listitem"
+                                [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
                                 {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -227,7 +248,8 @@
         </div>
 
         <div class="col-md-8 text-right">
-            <button class="btn-primary f-14 ml-12" (click)="proceed()" mat-stroked-button cdkFocusInitial>PROCEED</button>
+            <button class="btn-primary f-14 ml-12" (click)="proceed()" mat-stroked-button
+                cdkFocusInitial>PROCEED</button>
         </div>
     </div>
 </div>
