@@ -112,7 +112,7 @@
                         <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">Implementation date</p>
                         <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">
                             <mat-form-field class="ba-date">
-                                <input #implementationDate
+                                <input [min]="todayDate" #implementationDate
                                     (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"
                                     formControlName="implementationDate" [matDatepicker]="picker1"
                                     class="form-control b-0">

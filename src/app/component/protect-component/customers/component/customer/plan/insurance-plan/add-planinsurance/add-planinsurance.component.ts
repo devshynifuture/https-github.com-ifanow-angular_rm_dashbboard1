@@ -132,7 +132,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.years = this.constantService.yearsMap;
     this.getdataForm(null)
     this.getAnalysis()
-    if (this.insuranceData && this.insuranceData.hasOwnProperty('needAnalysisSaved')) {
+    if (this.insuranceData && this.insuranceData.needAnalysisSaved && this.insuranceData.hasOwnProperty('needAnalysisSaved')) {
       this.isLodingNeedAnalysis = false
     } else {
       this.getNeedBasedAnalysis(0, 0, 0);
@@ -226,7 +226,9 @@ export class AddPlaninsuranceComponent implements OnInit {
       this.calculateGrossAndadditional();
     } else {
       if (!this.mainDependent.value && !this.retirementAgeControl.value && !this.expectancy.value) {
-        this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
+        if(this.familyList.length > 0){
+          this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
+        }
       }
       this.plannerObj = this.setAll(this.plannerObj, 0);
     }
@@ -662,7 +664,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   tabChanged(event) {
     console.log('tabChanged', event)
     this.tab = event.index
-    if (this.tab == 1 && this.manualObj.isMapped == 1) {
+    if (this.tab == 1 && this.manualObj && this.manualObj.isMapped == 1) {
       this.barButtonOptions3.disabled = true;
     } else {
       this.barButtonOptions3.disabled = false;

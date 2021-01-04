@@ -208,7 +208,8 @@ export class HelthInsurancePolicyComponent implements OnInit {
       this.healthInsurance.get('implementationDate').setErrors(null);
       this.healthInsurance.get('implementationDate').setErrors(null);   
      }
-
+     this.healthInsurance.get('implementationDate').setValue(null);   
+     this.healthInsurance.get('amount').setValue(null);   
   }
   dateChange(value) {
     let adviceHeaderDate = this.datePipe.transform(this.healthInsurance.controls.adviceHeaderDate.value, 'yyyy/MM/dd')
