@@ -63,7 +63,9 @@
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary" (click)="cropImg()">EDIT
                             IMAGE</button>
-                        <button mat-stroked-button class="btn-custom ml-12" (click)="deleteImg()">DELETE
+                        <button
+                            *ngIf="imgURL!='https://res.cloudinary.com/futurewise/image/upload/v1585806986/advisor_profile_logo/gmtvhr0lwbskvlpucyfk.png'"
+                            mat-stroked-button class="btn-custom ml-12" (click)="deleteImg()">DELETE
                             IMAGE</button>
                     </div>
                 </div>
