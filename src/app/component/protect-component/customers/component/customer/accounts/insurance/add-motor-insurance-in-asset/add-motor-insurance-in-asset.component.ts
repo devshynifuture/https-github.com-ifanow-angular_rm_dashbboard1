@@ -297,7 +297,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      policyName: [(this.dataForEdit ? this.dataForEdit.policyName : null), [Validators.required]],
+      policyName: [(this.dataForEdit ? (this.dataForEdit.policyName != 'NA' ? this.dataForEdit.policyName : this.dataForEdit.planName) : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       declaredValue: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null), [Validators.required]],

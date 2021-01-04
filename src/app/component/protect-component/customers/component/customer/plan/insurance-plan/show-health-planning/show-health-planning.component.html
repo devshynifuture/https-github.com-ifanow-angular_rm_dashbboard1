@@ -92,8 +92,11 @@
                                             <button mat-menu-item [disabled]="!element.advice"
                                                 (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
                                         </div>
-                                        <button mat-menu-item
-                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete</button>
+                                        <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
+                                            <button mat-menu-item [disabled]="!element.advice"
+                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete Advice</button>
+                                        </div>
+                                       
                                     </mat-menu>
                                 </td>
                             </ng-container>
