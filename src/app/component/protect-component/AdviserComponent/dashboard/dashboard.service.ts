@@ -8,34 +8,30 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DashboardService {
-  dashChartData: any;
-  dashMisData: any;
-  dashPointForTask: any;
-  dashGoalSummaryData: any;
-  dashLastSevenDaysInvestmentAccounts: any;
-  dashLatesAumReconciliationData: any;
-  dashSevenDaysTransactions: any;
-  dashLastSevenDaysTransactions: any;
-  dashLastSevenDaysTransactionsNew: any;
-  dashLatesAumReconciliationDataRes: any;
-  dashInitPointForTask: any
-  dashDocumentTotalSize: any;
-  dashLast7DaysTransactionStatus: any;
-  dashBirthdayOrAnniversary: any;
-  dashInitializePieChart: any;
-  dashRecentTransactionData: any;
-  dashKeyMetrics: any;
-  dashSummaryDataDashboard: any;
-  dashClientWithSubscription: any;
-  dashTotalRecivedByDash: any;
-  dashAnswerData: any;
-  dashTaskDashboardCount: any;
-  dashTodaysTaskList: any;
-
-  dashRefreshObj = {
-    dashTaskDashboardCount: null,
-    dashTodaysTaskList: null
-  }
+  static dashChartData: any;
+  static dashMisData: any;
+  static dashPointForTask: any;
+  static dashGoalSummaryData: any;
+  static dashLastSevenDaysInvestmentAccounts: any;
+  static dashLatesAumReconciliationData: any;
+  static dashSevenDaysTransactions: any;
+  static dashLastSevenDaysTransactions: any;
+  static dashLastSevenDaysTransactionsNew: any;
+  static dashLatesAumReconciliationDataRes: any;
+  static staticdashInitPointForTask: any
+  static dashDocumentTotalSize: any;
+  static dashLast7DaysTransactionStatus: any;
+  static dashBirthdayOrAnniversary: any;
+  static dashInitializePieChart: any;
+  static dashRecentTransactionData: any;
+  static dashKeyMetrics: any;
+  static dashSummaryDataDashboard: any;
+  static dashClientWithSubscription: any;
+  static dashTotalRecivedByDash: any;
+  static dashAnswerData: any;
+  static dashTaskDashboardCount: any;
+  static dashTodaysTaskList: any;
+  static dashTodoListData: any;
   constructor(private http: HttpService) {
   }
 

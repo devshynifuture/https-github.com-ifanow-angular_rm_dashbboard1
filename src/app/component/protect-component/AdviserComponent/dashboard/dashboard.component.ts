@@ -484,110 +484,117 @@ export class DashboardComponent implements OnInit {
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
     if (!this.update) { }
-    if (this.dashboardService.dashAnswerData) {
-      this.answerObj = this.dashboardService.dashAnswerData;
+    if (DashboardService.dashAnswerData) {
+      this.answerObj = DashboardService.dashAnswerData;
     }
     else {
       this.getAnswerData();
     }
 
-    if (this.dashboardService.dashTotalRecivedByDash) {
-      this.getTotalRecivedRes(this.dashboardService.dashTotalRecivedByDash);
+    if (DashboardService.dashTotalRecivedByDash) {
+      this.getTotalRecivedRes(DashboardService.dashTotalRecivedByDash);
     }
     else {
       this.getTotalRecivedByDash();
     }
 
-    if (this.dashboardService.dashClientWithSubscription) {
-      this.clientWithSubscriptionRes(this.dashboardService.dashClientWithSubscription);
+    if (DashboardService.dashClientWithSubscription) {
+      this.clientWithSubscriptionRes(DashboardService.dashClientWithSubscription);
     } else {
       this.clientWithSubscription();
     }
 
-    if (this.dashboardService.dashSummaryDataDashboard) {
-      this.getSubSummaryRes(this.dashboardService.dashSummaryDataDashboard)
+    if (DashboardService.dashSummaryDataDashboard) {
+      this.getSubSummaryRes(DashboardService.dashSummaryDataDashboard)
     }
     else {
       this.getSummaryDataDashboard(); // summry dashbord
     }
 
-    if (this.dashboardService.dashKeyMetrics) {
-      this.getKeyMetricsRes(this.dashboardService.dashKeyMetrics)
+    if (DashboardService.dashKeyMetrics) {
+      this.getKeyMetricsRes(DashboardService.dashKeyMetrics)
     }
     else {
       this.getKeyMetrics(); // summry dashbord
     }
 
-    if (this.dashboardService.dashRecentTransactionData) {
-      this.getRecentTransactionDataRes(this.dashboardService.dashRecentTransactionData);
+    if (DashboardService.dashRecentTransactionData) {
+      this.getRecentTransactionDataRes(DashboardService.dashRecentTransactionData);
     }
     else {
       this.getRecentTransactionData(); // summry dashbord
     }
 
-    if (this.dashboardService.dashBirthdayOrAnniversary) {
-      this.getBirthdayOrAnniversaryRes(this.dashboardService.dashBirthdayOrAnniversary);
+    if (DashboardService.dashBirthdayOrAnniversary) {
+      this.getBirthdayOrAnniversaryRes(DashboardService.dashBirthdayOrAnniversary);
     }
     else {
       this.getBirthdayOrAnniversary(); // summry dashbord
     }
 
-    if (this.dashboardService.dashLast7DaysTransactionStatus) {
-      this.getLast7DaysTransactionStatusRes(this.dashboardService.dashLast7DaysTransactionStatus);
+    if (DashboardService.dashLast7DaysTransactionStatus) {
+      this.getLast7DaysTransactionStatusRes(DashboardService.dashLast7DaysTransactionStatus);
     }
     else {
       this.getLast7DaysTransactionStatus(); // summry dashbord
     }
 
-    if (this.dashboardService.dashDocumentTotalSize) {
-      this.getDocumentTotalSizeRes(this.dashboardService.dashDocumentTotalSize);
+    if (DashboardService.dashDocumentTotalSize) {
+      this.getDocumentTotalSizeRes(DashboardService.dashDocumentTotalSize);
     }
     else {
       this.getDocumentTotalSize(); // summry dashbord
     }
 
-    if (this.dashboardService.dashLastSevenDaysTransactions && this.dashboardService.dashLastSevenDaysTransactionsNew) {
-      this.getLastSevenDaysTransactionsRes(this.dashboardService.dashLastSevenDaysTransactions);
-      this.getLastSevenDaysTransactionsNewRes(this.dashboardService.dashLastSevenDaysTransactionsNew);
+    if (DashboardService.dashLastSevenDaysTransactions && DashboardService.dashLastSevenDaysTransactionsNew) {
+      this.getLastSevenDaysTransactionsRes(DashboardService.dashLastSevenDaysTransactions);
+      this.getLastSevenDaysTransactionsNewRes(DashboardService.dashLastSevenDaysTransactionsNew);
     }
     else {
       this.getLastSevenDaysTransactions(); // summry dashbord
     }
 
-    if (this.dashboardService.dashLatesAumReconciliationDataRes) {
-      this.getLatesAumReconciliationDataRes(this.dashboardService.dashLatesAumReconciliationDataRes);
+    if (DashboardService.dashLatesAumReconciliationDataRes) {
+      this.getLatesAumReconciliationDataRes(DashboardService.dashLatesAumReconciliationDataRes);
     }
     else {
       this.getLatesAumReconciliationData(); // summry dashbord
     }
 
-    if (this.dashboardService.dashLastSevenDaysInvestmentAccounts) {
-      this.getLastSevenDaysInvestmentAccountsRes(this.dashboardService.dashLastSevenDaysInvestmentAccounts);
+    if (DashboardService.dashLastSevenDaysInvestmentAccounts) {
+      this.getLastSevenDaysInvestmentAccountsRes(DashboardService.dashLastSevenDaysInvestmentAccounts);
     }
     else {
       this.getLastSevenDaysInvestmentAccounts(); // summry dashbord
     }
 
-    if (this.dashboardService.dashGoalSummaryData) {
-      this.getGoalSummaryDataRes(this.dashboardService.dashGoalSummaryData);
+    if (DashboardService.dashGoalSummaryData) {
+      this.getGoalSummaryDataRes(DashboardService.dashGoalSummaryData);
     }
     else {
       this.getGoalSummaryData(); // summry dashbord
     }
 
-    if (this.dashboardService.dashMisData) {
-      this.getMisDataRes(this.dashboardService.dashMisData);
+    if (DashboardService.dashMisData) {
+      this.getMisDataRes(DashboardService.dashMisData);
     }
     else {
       this.getMisData(); // summry dashbord
     }
     this.initializePieChart();
 
-    if (this.dashboardService.dashChartData) {
-      this.getChartDataRes(this.dashboardService.dashChartData);
+    if (DashboardService.dashChartData) {
+      this.getChartDataRes(DashboardService.dashChartData);
     }
     else {
       this.getChartData(); // summry dashbord
+    }
+
+    if (DashboardService.dashTodoListData) {
+      this.todoListData = DashboardService.dashTodoListData;
+    }
+    else {
+      this.getTodoListData(); // summry dashbord
     }
     // this.getAssetAllocationData();
     // this.sipCountGet();//for getting total sip book
@@ -595,7 +602,7 @@ export class DashboardComponent implements OnInit {
     // for getting total AUM
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
-    AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
+    // AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
     // this.getRecentTransactionData();
     // this.connectAccountWithGoogle();
     // this.getBirthdayOrAnniversary();
@@ -615,7 +622,7 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnDestroy() {
-    this.dashboardService.dashAnswerData = this.answerObj ? this.answerObj : null;
+    DashboardService.dashAnswerData = this.answerObj ? this.answerObj : null;
 
   }
 
@@ -625,16 +632,16 @@ export class DashboardComponent implements OnInit {
 
     // DashboardService.getTaskMatrix() ? this.taskSummaryDashboardCount = DashboardService.getTaskMatrix() : this.getTaskDashboardCount();
     // DashboardService.getTodaysTaskList() ? this.dataSource2.data = DashboardService.getTodaysTaskList() : this.getTodaysTaskList();
-    if (!this.dashboardService.dashRefreshObj.dashTaskDashboardCount) {
+    if (!DashboardService.dashTaskDashboardCount) {
       this.getTaskDashboardCount();
     } else {
-      this.getTaskDashboardCountRes(this.dashboardService.dashRefreshObj.dashTaskDashboardCount);
+      this.getTaskDashboardCountRes(DashboardService.dashTaskDashboardCount);
     }
 
-    if (!this.dashboardService.dashTodaysTaskList) {
+    if (!DashboardService.dashTodaysTaskList) {
       this.getTodaysTaskList();
     } else {
-      this.dataSource2.data = this.dashboardService.dashTodaysTaskList
+      this.dataSource2.data = DashboardService.dashTodaysTaskList
     }
 
 
@@ -649,7 +656,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getOnBoardingQuestionAnswer(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashAnswerData = data;
+          DashboardService.dashAnswerData = data;
           this.answerFlag = false;
           this.answerObj = data;
         }
@@ -671,7 +678,7 @@ export class DashboardComponent implements OnInit {
         this.tabsLoaded.portfolioData.isLoading = false;
         console.log(data)
         if (data) {
-          this.dashboardService.dashChartData = data;
+          DashboardService.dashChartData = data;
           this.getChartDataRes(data);
         }
         else {
@@ -713,7 +720,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.getTaskDashboardCountRes(res);
-          this.dashboardService.dashRefreshObj.dashTaskDashboardCount = res;
+          DashboardService.dashTaskDashboardCount = res;
 
         }
       })
@@ -903,8 +910,8 @@ export class DashboardComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
-            this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
+            DashboardService.dashTaskDashboardCount = null;
+            DashboardService.dashTodaysTaskList = null;
             this.initPointForTask();
           }
           rightSideDataSub.unsubscribe();
@@ -964,7 +971,7 @@ export class DashboardComponent implements OnInit {
           });
           DashboardService.setTodaysTaskList(dataArray);
           this.dataSource2.data = dataArray;
-          this.dashboardService.dashTodaysTaskList = dataArray;
+          DashboardService.dashTodaysTaskList = dataArray;
         } else {
           this.dataSource2.data = null;
           // this.eventService.openSnackBar('No Task Found', 'DISMISS');
@@ -995,7 +1002,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
-          this.dashboardService.dashLastSevenDaysInvestmentAccounts = data;
+          DashboardService.dashLastSevenDaysInvestmentAccounts = data;
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
@@ -1037,7 +1044,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLastSevenDaysTransactionsNew(obj2).subscribe(
       (data) => {
         if (data) {
-          this.dashboardService.dashLastSevenDaysTransactionsNew = data;
+          DashboardService.dashLastSevenDaysTransactionsNew = data;
           this.getLastSevenDaysTransactionsNewRes(data);
         } else {
           this.last7DaysLoading = false
@@ -1056,7 +1063,7 @@ export class DashboardComponent implements OnInit {
       (data) => {
         console.log(data, 'LastSevenDaysTransactions 123');
         if (data) {
-          this.dashboardService.dashLastSevenDaysTransactions = data;
+          DashboardService.dashLastSevenDaysTransactions = data;
           this.getLastSevenDaysTransactionsRes(data);
         } else {
           this.transactionFlag = false;
@@ -1094,7 +1101,7 @@ export class DashboardComponent implements OnInit {
     this.isLoadingSubSummary = true;
     this.subService.filterSubscription(obj).subscribe(
       data => {
-        this.dashboardService.dashSummaryDataDashboard = data;
+        DashboardService.dashSummaryDataDashboard = data;
         this.getSubSummaryRes(data)
       }, error => {
         this.isLoadingSubSummary = false;
@@ -1122,8 +1129,9 @@ export class DashboardComponent implements OnInit {
           });
           // data.forEach(element => {
           // });
-          AuthService.setToDoList(data);
+          // AuthService.setToDoList(data);
           this.todoListData = data;
+          DashboardService.dashTodoListData = data;
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
         } else {
           this.todoListData = undefined;
@@ -1148,6 +1156,7 @@ export class DashboardComponent implements OnInit {
       data => {
         this.todoDescription = ''
         if (data) {
+          DashboardService.dashTodaysTaskList = null;
           this.eventService.openSnackBar('To-Do note is added', 'Dismiss');
           this.showInput = false;
           data.forEach(element => {
@@ -1229,7 +1238,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashBirthdayOrAnniversary = data;
+          DashboardService.dashBirthdayOrAnniversary = data;
           this.getBirthdayOrAnniversaryRes(data);
         } else {
           this.birthdayAnniList = [];
@@ -1416,7 +1425,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.last7DaysTransactionStatus(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashLast7DaysTransactionStatus = data;
+          DashboardService.dashLast7DaysTransactionStatus = data;
           this.getLast7DaysTransactionStatusRes(data)
         } else {
           this.last7DaysFlag = false;
@@ -1446,7 +1455,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashDocumentTotalSize = data;
+          DashboardService.dashDocumentTotalSize = data;
           this.getDocumentTotalSizeRes(data);
         }
       }
@@ -1466,7 +1475,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashLatesAumReconciliationDataRes = data;
+          DashboardService.dashLatesAumReconciliationDataRes = data;
           this.getLatesAumReconciliationDataRes(data);
         } else {
           this.aumFlag = false;
@@ -1493,7 +1502,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashGoalSummaryData = data;
+          DashboardService.dashGoalSummaryData = data;
           this.getGoalSummaryDataRes(data);
         } else {
 
@@ -1600,7 +1609,7 @@ export class DashboardComponent implements OnInit {
     this.transactionService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {
-          this.dashboardService.dashRecentTransactionData = data;
+          DashboardService.dashRecentTransactionData = data;
           this.getRecentTransactionDataRes(data);
         }
       },
@@ -1737,7 +1746,7 @@ export class DashboardComponent implements OnInit {
     };
     this.subService.getTotalRecived(obj).subscribe(
       data => {
-        this.dashboardService.dashTotalRecivedByDash = data;
+        DashboardService.dashTotalRecivedByDash = data;
         this.getTotalRecivedRes(data);
       }
     );
@@ -1755,7 +1764,7 @@ export class DashboardComponent implements OnInit {
     };
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
-        this.dashboardService.dashClientWithSubscription = data;
+        DashboardService.dashClientWithSubscription = data;
         this.clientWithSubscriptionRes(data);
       }, err => {
         this.subOverviewFlag = false;
@@ -1796,7 +1805,7 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
-        this.dashboardService.dashKeyMetrics = data;
+        DashboardService.dashKeyMetrics = data;
         this.getKeyMetricsRes(data);
       },
       err => {
@@ -1851,7 +1860,7 @@ export class DashboardComponent implements OnInit {
       data => {
         this.mfDataflag = false;
         if (data) {
-          this.dashboardService.dashMisData = data;
+          DashboardService.dashMisData = data;
           this.getMisDataRes(data);
         }
         else {

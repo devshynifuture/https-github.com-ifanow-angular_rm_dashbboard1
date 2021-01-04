@@ -614,7 +614,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
-            this.dashboardService.dashKeyMetrics = null;
+            DashboardService.dashKeyMetrics = null;
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? 'familyMinor' : 'clientNonIndividual';
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');

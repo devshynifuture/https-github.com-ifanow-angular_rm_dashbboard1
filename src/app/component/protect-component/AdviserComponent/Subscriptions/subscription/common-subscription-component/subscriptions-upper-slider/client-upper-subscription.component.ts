@@ -16,6 +16,7 @@ import { CreateSubscriptionComponent } from '../create-subscription/create-subsc
 import { PlanRightsliderComponent } from '../plan-rightslider/plan-rightslider.component';
 import { SubscriptionDetailsComponent } from '../biller-profile-advisor/subscription-details/subscription-details.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { DashboardService } from '../../../../dashboard/dashboard.service';
 
 // import { element } from 'protractor';
 export interface PeriodicElement {
@@ -110,7 +111,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getSummaryDataClient();
-
+            DashboardService.dashClientWithSubscription = null;
+            DashboardService.dashSummaryDataDashboard = null;
           }
           rightSideDataSub.unsubscribe();
         }
@@ -285,6 +287,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           }
         });
         this.subscriptionData[i].subscriptions = tempList;
+        DashboardService.dashClientWithSubscription = null;
+        DashboardService.dashSummaryDataDashboard = null;
+
       }
     });
   }

@@ -19,6 +19,7 @@ import { ErrPageOpenComponent } from 'src/app/component/protect-component/custom
 import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { DashboardService } from '../../../dashboard/dashboard.service';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -375,6 +376,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.tableData = [];
             this.getClientSubData(false, false);
+            DashboardService.dashClientWithSubscription = null;
+            DashboardService.dashSummaryDataDashboard = null;
 
           }
           rightSideDataSub.unsubscribe();
@@ -483,6 +486,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
             this.deletedData(data);
             dialogRef.close(subData);
             this.getClientSubData(false, false);
+            DashboardService.dashClientWithSubscription = null;
+            DashboardService.dashSummaryDataDashboard = null;
           }
         );
 
@@ -671,6 +676,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.getClientSubData(false, false);
+          DashboardService.dashClientWithSubscription = null;
+          DashboardService.dashSummaryDataDashboard = null;
         }
       });
     }

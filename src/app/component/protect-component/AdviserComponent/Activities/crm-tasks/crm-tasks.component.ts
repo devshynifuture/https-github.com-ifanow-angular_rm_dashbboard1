@@ -58,7 +58,7 @@ export class CrmTasksComponent implements OnInit {
   ngOnInit() {
     this.statusFC = new FormControl(0);
     this.initPoint();
-    this.dashboardService.dashRefreshObj.dashTaskDashboardCount;
+    DashboardService.dashTaskDashboardCount;
 
   }
 
@@ -247,8 +247,8 @@ export class CrmTasksComponent implements OnInit {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
           this.finalTaskList = [];
-          this.dashboardService.dashRefreshObj.dashTaskDashboardCount = null;
-          this.dashboardService.dashRefreshObj.dashTodaysTaskList = null;
+          DashboardService.dashTaskDashboardCount = null;
+          DashboardService.dashTodaysTaskList = null;
           this.initPoint();
         }
       }, err => {
