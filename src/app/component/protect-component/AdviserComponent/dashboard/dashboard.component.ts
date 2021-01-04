@@ -479,29 +479,30 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
+    this.getMisData();
+    this.getKeyMetrics(); // for getting total AUM
     this.getAnswerData();
+    this.clientWithSubscription();
+    this.getDocumentTotalSize();
+    this.getChartData()
+    this.getBirthdayOrAnniversary();
+    this.initPointForTask();
+    this.getLast7DaysTransactionStatus();
+    this.getLastSevenDaysInvestmentAccounts();
+    this.getLastSevenDaysTransactions();
+    this.getSummaryDataDashboard(); // summry dashbord
+    this.getLatesAumReconciliationData();
+
     // this.getAssetAllocationData();
     this.getTotalRecivedByDash();
-    this.clientWithSubscription();
-    this.getSummaryDataDashboard(); // summry dashbord
     // this.sipCountGet();//for getting total sip book
-    this.getKeyMetrics(); // for getting total AUM
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
     this.getRecentTransactionData();
     this.initializePieChart();
     // this.connectAccountWithGoogle();
-    this.getBirthdayOrAnniversary();
-    this.getLast7DaysTransactionStatus();
-    this.getDocumentTotalSize();
-    this.getLastSevenDaysTransactions();
-    this.getLatesAumReconciliationData();
-    this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
-    this.initPointForTask();
-    this.getMisData();
-    this.getChartData()
 
   }
 
