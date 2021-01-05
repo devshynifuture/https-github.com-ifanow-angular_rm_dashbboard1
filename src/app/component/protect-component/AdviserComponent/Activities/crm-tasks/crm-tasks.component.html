@@ -38,7 +38,7 @@
                 </div>
                 <div class="pl-0" [ngClass]="finalTaskList.length>0 ? 'col-md-2': 'col-md-12 text-right'"
                     *ngIf="finalTaskList.length>0">
-                    <button *ngIf="roleService.activityPermission.subModule.taskCapabilityList[1].enabledOrDisabled==1"
+                    <button *ngIf="roleService.activityPermission.subModule.taskCapabilityObj.add==true"
                         (click)="openAddTask(null)" class="btn-primary br-0" mat-stroked-button>
                         ADD NEW
                     </button>
@@ -118,8 +118,7 @@
                             <img *ngIf="roleService.activityPermission.subModule.taskCapabilityList[3].enabledOrDisabled==1"
                                 [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
-                                <button
-                                    *ngIf="roleService.activityPermission.subModule.taskCapabilityList[3].enabledOrDisabled==1"
+                                <button *ngIf="roleService.activityPermission.subModule.taskCapabilityObj.delete==true"
                                     mat-menu-item (click)="deleteTask(element.id)">Delete</button>
                             </mat-menu>
                         </div>
@@ -135,7 +134,7 @@
                 <div class="col-md-8 text-center">
                     <img src="/assets/images/svg/task-empty.svg">
                     <h5 class="m-0 pt-12 f-500 roboto pb-16">No tasks added yet</h5>
-                    <button *ngIf="roleService.activityPermission.subModule.taskCapabilityList[1].enabledOrDisabled==1"
+                    <button *ngIf="roleService.activityPermission.subModule.taskCapabilityObj.add==true"
                         mat-stroked-button class="btn-primary" (click)="openAddTask(null)">ADD NEW</button>
                 </div>
                 <div class="col-md-4 p-20 ba-dotted">

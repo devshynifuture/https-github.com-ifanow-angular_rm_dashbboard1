@@ -61,7 +61,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService,
     public roleService: RoleService,
-    public MfServiceService :MfServiceService) {
+    public MfServiceService: MfServiceService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -100,10 +100,9 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     const obj = {
       advisorId: AuthService.getAdvisorId()
     };
-    this.peopleService.getUniqueStringForLogin(obj).subscribe(
+    this.peopleService.getUniqueLoginNew(obj).subscribe(
       data => this.stringRes(data)
     );
-
   }
 
   stringRes(data) {

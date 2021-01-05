@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
-import {apiConfig} from '../config/main-config';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
+import { apiConfig } from '../config/main-config';
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -28,7 +28,7 @@ export class CacheEntry {
 export class HttpService {
 
   constructor(private _http: HttpClient, private _userService: AuthService, private _router: Router,
-              // private enumDataService: EnumDataService
+    // private enumDataService: EnumDataService
   ) {
     this.authToken = this._userService.getToken();
   }
@@ -124,7 +124,7 @@ export class HttpService {
       }
     }
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
@@ -165,7 +165,7 @@ export class HttpService {
       }
     }
 
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
     const compressedBody = pako.gzip(JSON.stringify(inputData));
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
@@ -190,21 +190,22 @@ export class HttpService {
     headers = headers.set('Content-Encoding', 'gzip');
     headers = headers.set('Content-Type', 'application/json');
 
-    const httpOptions: any = {
+    let httpOptions: any = {
       headers,
       params: undefined
     };
-    if (this._userService.getToken()) {
-      httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
-    }
+    // if (this._userService.getToken()) {
+    //   httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
+    // }
     if (params != undefined) {
-      httpOptions.params = params;
+      httpOptions = params;
     }
+
     const compressedBody = pako.gzip(JSON.stringify(body));
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
@@ -260,7 +261,7 @@ export class HttpService {
           return res;
         } else if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          return {res: resData, statusCode: res.status};
+          return { res: resData, statusCode: res.status };
         } else {
           const err = new Error(res.message);
           throwError(err);
@@ -295,7 +296,7 @@ export class HttpService {
     }
 
     return this._http
-      .request('delete', url, {body}).pipe(this.errorObservable)
+      .request('delete', url, { body }).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
@@ -464,11 +465,18 @@ export class HttpService {
   // ------------------------Aman jain code date 22 aug ------------------------------------------------------
 
   get(url: string, params): Observable<any> {
-
+    const httpParams = params;
+    // httpParams = httpParams.append('query', params);
+    let httpHeader: HttpHeaders;
+    if (this._userService.getToken()) {
+      httpHeader = new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json');
+    } else {
+      httpHeader = new HttpHeaders().set('Content-Type', 'application/json');
+    }
     const httpOptions = {
-      headers: new HttpHeaders().set('authToken', this._userService.getToken())
-        .set('Content-Type', 'application/json'),
-      params
+      headers: httpHeader,
+      params: httpParams
     };
     url = url.trim();
     return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
