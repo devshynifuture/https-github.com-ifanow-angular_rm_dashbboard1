@@ -58,10 +58,17 @@
     border: 1px solid #f16724;
     color: #f16724;
   }
-.mat-stroked-accepted {
+// .mat-stroked-accepted {
+//   border: 1px solid #008FFF;
+// }
+.mat-accepted-bg {
   border: 1px solid #008FFF;
+  color: #008FFF;
 }
-
+.mat-danger-bg{
+  background: #f16724;
+  color: #ffffff;
+}
 .mat-stroked-accepted{
   background: #008FFF;
   color: #ffffff;
