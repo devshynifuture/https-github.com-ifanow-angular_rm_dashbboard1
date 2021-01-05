@@ -103,10 +103,15 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       userType: AuthService.getUserInfo().userType
 
     };
+    // this.peopleService.getUniqueStringForLogin(obj).subscribe(
+    //   data => this.stringRes(data),
+    // );
+
     this.peopleService.getUniqueLoginNew(obj).subscribe(
       data => this.stringRes(data),
     );
-    console.log('userIdvaib', AuthService.getUserInfo())
+
+    // console.log('userIdvaib', AuthService.getUserInfo())
   }
 
   stringRes(data) {
