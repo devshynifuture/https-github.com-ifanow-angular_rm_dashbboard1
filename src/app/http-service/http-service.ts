@@ -190,21 +190,22 @@ export class HttpService {
     headers = headers.set('Content-Encoding', 'gzip');
     headers = headers.set('Content-Type', 'application/json');
 
-    const httpOptions: any = {
+    let httpOptions: any = {
       headers,
       params: undefined
     };
-    if (this._userService.getToken()) {
-      httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
-    }
+    // if (this._userService.getToken()) {
+    //   httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
+    // }
     if (params != undefined) {
-      httpOptions.params = params;
+      httpOptions = params;
     }
+
     const compressedBody = pako.gzip(JSON.stringify(body));
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
