@@ -149,7 +149,8 @@ export class RoleService {
       },
       taskCapabilityList: [],
       calendarCapabilityList: [],
-      emailCapabilityList: []
+      emailCapabilityList: [],
+      taskCapabilityObj: { add: true, edit: true, delete: true }
     }
   };
   overviewPermission = {
@@ -281,6 +282,7 @@ export class RoleService {
     this.activityPermission.subModule.emails.enabled = activityPermissions.emails ? activityPermissions.emails.showModule : false;
     this.activityPermission.subModule.calendar.enabled = activityPermissions.calendar ? activityPermissions.calendar.showModule : false;
     this.activityPermission.subModule.taskCapabilityList = activityPermissions.tasks.subModule.tasks.capabilityList;
+    this.activityPermission.subModule.taskCapabilityObj = UtilService.getCapabilityMap(activityPermissions.tasks.subModule.tasks.capabilityList);
     this.activityPermission.subModule.calendarCapabilityList = activityPermissions.calendar.subModule.calendar.capabilityList;
     this.activityPermission.subModule.emailCapabilityList = activityPermissions.emails.subModule.emails.capabilityList;
   }
