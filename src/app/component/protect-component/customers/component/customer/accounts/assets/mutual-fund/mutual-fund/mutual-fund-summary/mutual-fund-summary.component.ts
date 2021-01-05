@@ -135,6 +135,8 @@ export class MutualFundSummaryComponent implements OnInit {
   adminAdvisorIds: any;
   parentId: any;
   loadingDone = false;
+  download: boolean;
+  pdfDownload: boolean;
 
   // setTrueKey = false;
 
@@ -1478,20 +1480,30 @@ export class MutualFundSummaryComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
     this.showDownload = true;
+    this.download = true
     this.customDataSource.data = this.customDataSource.data;
     const para = document.getElementById('templateSummary');
     // this.customDataSource.data = this.copyOfData
     this.customDataSource.data.forEach(element => {
       const test = element.navDate.includes('$NEXTLINE');
+      const xls = element.navDate.includes('|');
       console.log('includes', test);
-      if (element.folioNumber && test == true) {
+      if (element.folioNumber && test == true && this.pdfDownload != true) {
         let isin = element.isin ? ' | ' + element.isin : '';
         element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
+        const navPresent = element.navDate.includes('|');
         let nav = element.nav ? element.nav : '';
         element.navDate = (nav + ' | ' + element.navDate);
         console.log(element.navDate)
+      } else if (xls != true) {
+        let isin = element.isin ? ' | ' + element.isin : '';
+        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        var type = typeof element.navDate == "boolean" ? element.navDate : false;
+        let nav = element.nav ? element.nav : '';
+        element.navDate = (nav + ' | ' + element.navDate);
+        element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
       }
     });
     setTimeout(() => {
@@ -1745,6 +1757,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
+    this.pdfDownload = true
     this.customDataSource.data.array = [];
     this.customDataSource.data.array1 = [];
     this.customDataSource.data.array2 = [];
@@ -1754,12 +1767,14 @@ export class MutualFundSummaryComponent implements OnInit {
       const test = element.navDate.includes('$NEXTLINE');
       console.log('includes', test);
       if (element.folioNumber && test == false) {
-        const isin = element.isin ? ' | ' + element.isin : '';
-        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName;
-        const type = typeof element.navDate == 'boolean' ? element.navDate : false;
-        let nav = element.nav ? element.nav + ' | ' : '';
-        element.navDate = (nav + '$NEXTLINE ' + element.navDate);
-        console.log(element.navDate);
+        if (this.download != true) {
+          const isin = element.isin ? ' | ' + element.isin : '';
+          element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName;
+          const type = typeof element.navDate == 'boolean' ? element.navDate : false;
+          let nav = element.nav ? element.nav + ' | ' : '';
+          element.navDate = (nav + '$NEXTLINE ' + element.navDate);
+          console.log(element.navDate);
+        }
       }
     });
     this.displayedColumns.forEach((element, ind) => {
