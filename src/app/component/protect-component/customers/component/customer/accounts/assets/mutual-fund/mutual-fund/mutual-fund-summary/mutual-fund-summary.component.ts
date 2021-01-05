@@ -1484,7 +1484,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.forEach(element => {
       const test = element.navDate.includes('$NEXTLINE');
       console.log('includes', test);
-      if (element.folioNumber && test == false) {
+      if (element.folioNumber && test == true) {
         let isin = element.isin ? ' | ' + element.isin : '';
         element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
