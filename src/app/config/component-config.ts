@@ -902,6 +902,7 @@ export const appConfig = {
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
   GET_RANDOM_STRING: 'user/advisor/marketplace-login/detail/add',
   GET_UNIQUE_STRING_FOR_LOGIN: 'user/advisor/marketplace-login/detail/add',
+  GET_UNIQUE_STRING_FOR_LOGIN_NEW: '/user/verify/generate/uuid',
   GET_LOGIN_DATA_FROM_RANDOM_STRING: 'user/advisor/marketplace-login',
   MOVE_FAMILY_MEMBER: 'user/family-member/move',
   PROMOTE_TO_CLIENT: 'user/family-member/promote',
