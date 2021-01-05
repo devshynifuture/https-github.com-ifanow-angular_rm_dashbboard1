@@ -190,7 +190,7 @@ export class PeopleService {
   }
 
   getUniqueLoginNew(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.GET_UNIQUE_STRING_FOR_LOGIN_NEW, data);
+    return this.http.post(apiConfig.USER + appConfig.GET_UNIQUE_STRING_FOR_LOGIN_NEW, data);
   }
 
   getLoginDataFromUniqueString(data) {
