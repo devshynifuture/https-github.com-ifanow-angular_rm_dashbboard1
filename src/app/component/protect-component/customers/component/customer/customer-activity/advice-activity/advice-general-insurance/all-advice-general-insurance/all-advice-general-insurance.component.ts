@@ -447,6 +447,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           this.object.showInsurance = 'Motor';
         this.object.adviceToCategoryId = 37;
         component = MotorInsuranceComponent;
+        this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }]
         break;
       case "Travel insurance":
         this.object.insuranceSubTypeId = 8;
@@ -455,6 +456,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           this.object.showInsurance = 'Travel';
         this.object.adviceToCategoryId = 38;
         component = TravelInsuranceComponent;
+        this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }]
         break;
       case "Home insurance":
         this.object.insuranceSubTypeId = 9;
@@ -463,6 +465,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           this.object.showInsurance = 'Home';
         this.object.adviceToCategoryId = 39;
         component = HouseholdersInsuranceComponent;
+        this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
         break;
       case "Fire & special perils insurance":
         this.object.insuranceSubTypeId = 10;
@@ -471,6 +474,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           this.object.adviceToCategoryId = 40;
         this.object.showInsurance = 'Fire & special perils';
         component = FireInsuranceComponent;
+        this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
         break;
     }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;

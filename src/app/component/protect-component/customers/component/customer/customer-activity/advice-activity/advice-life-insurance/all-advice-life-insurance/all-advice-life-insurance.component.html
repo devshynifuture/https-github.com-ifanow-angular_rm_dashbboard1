@@ -231,7 +231,7 @@
                                 advice</button>
                         </div>
 
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item  *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Term Insurance',element)">Edit</button>
                             <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                         (click)="openDetailedView('Term Insurance',element)">Detailed View</button>
@@ -441,7 +441,7 @@
                                 *ngIf="!element?.adviceDetails?.id" [disabled]="element.hideGiveAdvice">Give
                                 advice</button>
                         </div>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Traditional Insurance',element)">Edit</button>
                             <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                         (click)="openDetailedView('Traditional Insurance',element)">Detailed View</button>
@@ -641,7 +641,7 @@
                                 [disabled]="element.hideGiveAdvice" (click)="editAdvice('Ulip Insurance',element)">Give
                                 advice</button>
                         </div>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Ulip Insurance',element)">Edit</button>
                             <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="openDetailedView('Ulip Insurance',element)">Detailed View</button>

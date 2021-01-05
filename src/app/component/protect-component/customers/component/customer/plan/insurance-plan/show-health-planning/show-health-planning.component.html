@@ -88,10 +88,10 @@
                                     <img *ngIf="!isLoading" class="c-p ng-star-inserted"
                                         src="/assets/images/svg/dot-menu.svg">
                                     <mat-menu #menu="matMenu">
-                                        <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
+                                        <!-- <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
                                             <button mat-menu-item [disabled]="!element.advice"
-                                                (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
-                                        </div>
+                                                (click)="openAddEditAdvice(showInsurance,element.childAsset ? element.childAsset : element.insuranceDetails,'existingAdvice')">Edit</button>
+                                        </div> -->
                                         <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
                                             <button mat-menu-item [disabled]="!element.advice"
                                             (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete Advice</button>
