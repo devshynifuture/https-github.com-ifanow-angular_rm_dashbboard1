@@ -111,7 +111,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       data => this.stringRes(data),
     );
 
-    // console.log('userIdvaib', AuthService.getUserInfo())
+    console.log('userIdvaib', AuthService.getUserInfo())
   }
 
   stringRes(data) {
