@@ -1459,6 +1459,7 @@ export class MutualFundSummaryComponent implements OnInit {
         element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
+        element.navDate = (element.nav + ' | ' + element.navDate);
         console.log(element.navDate)
       }
     });
