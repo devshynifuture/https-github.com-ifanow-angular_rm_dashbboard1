@@ -1,18 +1,18 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {SubscriptionInject} from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, FormControl, Validators, FormArray, FormGroup} from '@angular/forms';
-import {EventService} from '../../../../../../../../Data-service/event.service';
-import {PeopleService} from '../../../../../../PeopleComponent/people.service';
-import {MatTableDataSource, MatAutocompleteTrigger} from '@angular/material';
-import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
-import {map, startWith} from 'rxjs/operators';
-import {EnumDataService} from '../../../../../../../../services/enum-data.service';
-import {ProcessTransactionService} from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
-import {UtilService} from '../../../../../../../../services/util.service';
-import {CancelFlagService} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
-import {ClientSggestionListService} from '../client-sggestion-list.service';
-import {element} from 'protractor';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { SubscriptionInject } from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, FormControl, Validators, FormArray, FormGroup } from '@angular/forms';
+import { EventService } from '../../../../../../../../Data-service/event.service';
+import { PeopleService } from '../../../../../../PeopleComponent/people.service';
+import { MatTableDataSource, MatAutocompleteTrigger } from '@angular/material';
+import { MatProgressButtonOptions } from '../../../../../../../../common/progress-button/progress-button.component';
+import { map, startWith } from 'rxjs/operators';
+import { EnumDataService } from '../../../../../../../../services/enum-data.service';
+import { ProcessTransactionService } from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
+import { UtilService } from '../../../../../../../../services/util.service';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { ClientSggestionListService } from '../client-sggestion-list.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-merge-client-family-member',
@@ -50,22 +50,22 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   showSuggestion = true;
   selectedClientData: any;
   rows: FormArray = this.fb.array([]);
-  form: FormGroup = this.fb.group({clients: this.rows});
+  form: FormGroup = this.fb.group({ clients: this.rows });
   selectedClientFormGroup: FormGroup;
   requiredRefresh = false;
   clientListEmail;
   clientListMobile;
   finalSuggestionList;
   clientList: any;
-  @ViewChild('searchClient', {read: MatAutocompleteTrigger, static: true}) autoComplete: MatAutocompleteTrigger;
+  @ViewChild('searchClient', { read: MatAutocompleteTrigger, static: true }) autoComplete: MatAutocompleteTrigger;
   addClientList = [];
 
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private eventService: EventService,
-              private peopleService: PeopleService, private enumDataService: EnumDataService,
-              public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService,
-              private clientSuggeService: ClientSggestionListService) {
+    private fb: FormBuilder, private eventService: EventService,
+    private peopleService: PeopleService, private enumDataService: EnumDataService,
+    public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService,
+    private clientSuggeService: ClientSggestionListService) {
   }
 
   ngOnInit() {
@@ -80,48 +80,49 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     // }
     if (this.data.clientData.client.clientType == 2 || this.data.clientData.client.martialStatusId == 2) {
       this.relationTypeList = [
-        {name: 'Father', value: 6},
-        {name: 'Mother', value: 7},
+        { name: 'Father', value: 6 },
+        { name: 'Mother', value: 7 },
         // { name: 'Other', value: 10 }
       ];
     } else {
       if (this.data.clientData.client.duplicateFlag) {
         this.relationTypeList = [
           // { name: 'Mother', value:  },
-          {name: 'Father', value: 6},
-          {name: 'Mother', value: 7},
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
           // { name: 'Other', value: 10 },
-          {name: 'Son', value: 4},
-          {name: 'Daughter', value: 5},
-          {name: 'Brother', value: 8},
-          {name: 'Sister', value: 9},
-          {name: 'Daughter_In_Law', value: 11},
-          {name: 'Sister_In_Law', value: 12},
-          {name: 'Niece', value: 15},
-          {name: 'Nephew', value: 16},
-          {name: 'Others', value: 10},
-          {name: 'Grandmother', value: 13},
-          {name: 'Grandfather', value: 14},
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 },
+          { name: 'Brother', value: 8 },
+          { name: 'Sister', value: 9 },
+          { name: 'Daughter_In_Law', value: 11 },
+          { name: 'Sister_In_Law', value: 12 },
+          { name: 'Niece', value: 15 },
+          { name: 'Nephew', value: 16 },
+          { name: 'Others', value: 10 },
+          { name: 'Grandmother', value: 13 },
+          { name: 'Grandfather', value: 14 },
         ];
       } else {
-        const obj = (this.data.clientData.client.genderId == 2) ? {name: 'Husband', value: 2} : {name: 'Wife', value: 3};
+        // const obj = (this.data.clientData.client.genderId == 2) ?  : ;
         this.relationTypeList = [
-          obj,
+          { name: 'Husband', value: 2 },
+          { name: 'Wife', value: 3 },
           // { name: 'Mother', value:  },
-          {name: 'Father', value: 6},
-          {name: 'Mother', value: 7},
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
           // { name: 'Other', value: 10 },
-          {name: 'Son', value: 4},
-          {name: 'Daughter', value: 5},
-          {name: 'Brother', value: 8},
-          {name: 'Sister', value: 9},
-          {name: 'Daughter_In_Law', value: 11},
-          {name: 'Sister_In_Law', value: 12},
-          {name: 'Niece', value: 15},
-          {name: 'Nephew', value: 16},
-          {name: 'Others', value: 10},
-          {name: 'Grandmother', value: 13},
-          {name: 'Grandfather', value: 14},
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 },
+          { name: 'Brother', value: 8 },
+          { name: 'Sister', value: 9 },
+          { name: 'Daughter_In_Law', value: 11 },
+          { name: 'Sister_In_Law', value: 12 },
+          { name: 'Niece', value: 15 },
+          { name: 'Nephew', value: 16 },
+          { name: 'Others', value: 10 },
+          { name: 'Grandmother', value: 13 },
+          { name: 'Grandfather', value: 14 },
         ];
       }
     }
@@ -167,7 +168,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
             const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
               this.showSuggestion = true;
-              this.stateCtrl.setErrors({invalid: true});
+              this.stateCtrl.setErrors({ invalid: true });
               this.stateCtrl.markAsTouched();
             }
             return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
@@ -191,7 +192,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.showSuggestion = true;
       this.selectedClientData = undefined;
     }
-    
+
   }
 
   optionSelected(value) {
@@ -242,7 +243,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     if (this.requiredRefresh) {
       this.enumDataService.searchClientList();
     }
-    this.subInjectService.changeNewRightSliderState((data == 'close' && this.requiredRefresh == false) ? {state: 'close'} : {
+    this.subInjectService.changeNewRightSliderState((data == 'close' && this.requiredRefresh == false) ? { state: 'close' } : {
       state: 'close',
       refreshRequired: true
     });
