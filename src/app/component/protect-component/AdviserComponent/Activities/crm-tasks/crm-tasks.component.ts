@@ -253,7 +253,7 @@ export class CrmTasksComponent implements OnInit {
 
   openAddTask(data) {
     if (data) {
-      if (this.roleService.activityPermission.subModule.taskCapabilityObj.edit == true) {
+      if (this.roleService.activityPermission.subModule.taskCapabilityObj.edit == false) {
         return;
       }
     }
