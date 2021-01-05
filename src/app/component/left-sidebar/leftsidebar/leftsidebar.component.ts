@@ -98,11 +98,15 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   // }
   openNew() {
     const obj = {
-      advisorId: AuthService.getAdvisorId()
+      // advisorId: AuthService.getAdvisorId()
+      userId: AuthService.getUserId(),
+      userType: AuthService.getUserInfo().userType
+
     };
     this.peopleService.getUniqueLoginNew(obj).subscribe(
-      data => this.stringRes(data)
+      data => this.stringRes(data),
     );
+    console.log('userIdvaib', AuthService.getUserInfo())
   }
 
   stringRes(data) {
