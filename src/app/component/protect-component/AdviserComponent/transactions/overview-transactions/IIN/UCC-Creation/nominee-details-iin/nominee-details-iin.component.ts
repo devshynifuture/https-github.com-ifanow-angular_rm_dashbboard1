@@ -342,6 +342,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       addressLine3 = addressLine3.replace(data[0].PostOffice[0].District, '')
       addressLine3 = addressLine3.replace(data[0].PostOffice[0].State, '')
       addressLine3 = addressLine3.replace(data[0].PostOffice[0].Circle, '');
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].Country, '');
       addressLine3 = addressLine3.replace(/,/g, '')
       this.nomineeDetails.get('address3').setValue(addressLine3)
       this.pinInvalid = false;
