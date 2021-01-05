@@ -1467,7 +1467,7 @@ export class MutualFundSummaryComponent implements OnInit {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       saveAs(blob, tableTitle + ".xls");
-    }, 200);
+    }, 400);
     // if (data) {
     // this.fragmentData.isSpinner = false;
     // }
