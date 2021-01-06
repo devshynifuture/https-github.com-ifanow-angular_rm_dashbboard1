@@ -190,7 +190,11 @@ export class PeopleService {
   }
 
   getUniqueLoginNew(data) {
-    return this.http.post(apiConfig.USER + appConfig.GET_UNIQUE_STRING_FOR_LOGIN_NEW, data);
+    return this.http.post(apiConfig.USER + appConfig.POST_UNIQUE_STRING_FOR_LOGIN_NEW, data);
+  }
+
+  getUUIDLogin(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_UUID_RESPONSE, data);
   }
 
   getLoginDataFromUniqueString(data) {

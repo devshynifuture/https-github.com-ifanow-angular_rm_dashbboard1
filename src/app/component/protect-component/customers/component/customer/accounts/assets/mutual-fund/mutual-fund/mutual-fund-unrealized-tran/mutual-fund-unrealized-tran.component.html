@@ -29,7 +29,7 @@
             <i class="material-icons">filter_list</i>FILTERS
          </button> -->
          <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
-               class="material-icons">filter_list</i>FILTERS</button>
+               (click)="openFilter()" class="material-icons">filter_list</i>FILTERS</button>
       </div>
    </div>
    <div class="row">
@@ -855,7 +855,7 @@
                {{item.groupName}}
             </td>
          </tr>
-         <tr  style="page-break-inside: avoid">
+         <tr style="page-break-inside: avoid">
             <td class="f-700" *ngIf="item.schemeName" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
