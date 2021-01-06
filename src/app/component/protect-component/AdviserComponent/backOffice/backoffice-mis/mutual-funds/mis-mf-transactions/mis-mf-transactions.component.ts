@@ -46,8 +46,8 @@ export class MisMfTransactionsComponent implements OnInit {
   maxDate = new Date();
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['name', 'scheme', 'folio', 'tType', 'tDate'];
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  displayedColumns: string[] = ['name', 'scheme', 'folio','unit','Amount' ,'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
@@ -322,7 +322,7 @@ export class MisMfTransactionsComponent implements OnInit {
         console.log(res);
         if (res) {
           this.isLoading = false
-          this.mfTransaction.data = res
+          this.mfTransaction =new MatTableDataSource(res) 
           this.mfTransaction.sort = this.sort
         } else {
           this.isLoading = false

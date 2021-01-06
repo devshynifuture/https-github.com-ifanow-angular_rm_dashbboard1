@@ -145,7 +145,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
     policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [''],
+    policyStatusLastUnpaid: ['',[Validators.required]],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -484,8 +484,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure);
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm);
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
-      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium);
-      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium ? new Date(this.editInsuranceData.lastUnpaidPremium) : null);
+      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastPaidPremium);
+      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastPaidPremium ? new Date(this.editInsuranceData.lastPaidPremium) : null);
       this.insuranceTypeId = this.editInsuranceData.insuranceTypeId;
       this.insuranceSubTypeId = this.editInsuranceData.insuranceSubTypeId;
       this.policyData = {};
@@ -699,6 +699,13 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
+  changePolicyStatus(){
+    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+    }else{
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
+    }
+  }
   saveAddInsurance() {
     this.getClientId();
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
@@ -755,8 +762,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         policyName: this.lifeInsuranceForm.get('policyName').value,
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
         policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
-        // lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
-        lastUnpaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+        // lastPaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
+        lastPaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
         premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
@@ -764,7 +771,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         riskCover: this.keyDetailsForm.get('riskCover').value,
         surrenderValue: this.keyDetailsForm.get('surrenderName').value,
         nominee: this.keyDetailsForm.get('nomineeName').value,
-        vestedBonus: this.keyDetailsForm.get('vestedBonus').value,
+        currentValue: this.keyDetailsForm.get('vestedBonus').value,
         assumedRate: this.keyDetailsForm.get('assumedRate').value,
         loanAvailable: this.loanDetailsForm.get('loanAvailable').value,
         loanTaken: this.loanDetailsForm.get('loanTaken').value,
