@@ -265,7 +265,8 @@ export class AddHealthInsuranceComponent implements OnInit {
             }
           });
         });
-        let data = this.getHolderNameAndSumAssured(result[0]);
+        responseArry = responseArry.filter(d => d.isSelected == true || d.isAttachedToPlan == false);
+        let data = this.getHolderNameAndSumAssured(responseArry);
         this.dataSource2 = data;
         this.isLoading = false;
         console.log('data cvcccccccccccccccccccccccccccccccccccccccc', this.familyMemberList);

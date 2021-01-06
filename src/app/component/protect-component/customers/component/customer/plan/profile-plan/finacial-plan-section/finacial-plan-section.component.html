@@ -398,7 +398,7 @@
                                             <mat-checkbox [checked]="data.isSelected"
                                                 [(ngModel)]="data.isSelectedCheckbox"
                                                 (change)="viewRiskResult($event.checked,'RiskProfile',data,'Plan / Risk profile / '+data.riskProfileStatus,false,data)">
-                                                Plan / Risk profile / {{data.riskProfileStatus}}
+                                                Plan / Risk profile / {{data.riskAssessmentDate | date:'dd/MM/yyyy'}}
                                             </mat-checkbox>
                                         </div>
                                     </div>

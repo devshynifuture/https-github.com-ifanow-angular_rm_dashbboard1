@@ -16,6 +16,7 @@ import { TransactionEnumService } from '../transaction-enum.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { TransactionRoleService } from "../transaction-role.service";
 import { DashboardService } from '../../dashboard/dashboard.service';
+import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -189,10 +190,25 @@ export class OverviewTransactionsComponent implements OnInit {
 
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        if (err === "Something went wrong !") {
+          this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        } else {
+          this.openCredentialsErrorPopup();
+        }
+        // this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         //  this.errMessage = err.error.message;
       }
     );
+  }
+
+  openCredentialsErrorPopup() {
+    const dialogRef = this.dialog.open(CredentialsErrorPopupComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
   }
 
   getMandate() {

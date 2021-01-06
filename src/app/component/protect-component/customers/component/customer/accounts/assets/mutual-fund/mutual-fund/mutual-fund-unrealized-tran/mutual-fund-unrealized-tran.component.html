@@ -29,7 +29,7 @@
             <i class="material-icons">filter_list</i>FILTERS
          </button> -->
          <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
-               class="material-icons">filter_list</i>FILTERS</button>
+               (click)="openFilter()" class="material-icons">filter_list</i>FILTERS</button>
       </div>
    </div>
    <div class="row">
@@ -115,7 +115,7 @@
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
                      <div class="bar">
-                        <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain + grandTotal.dividendPayout | number:'1.2-2') : 0)}}</span>
+                        <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain  | number:'1.2-2') : 0)}}</span>
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
@@ -855,7 +855,7 @@
                {{item.groupName}}
             </td>
          </tr>
-         <tr  style="page-break-inside: avoid">
+         <tr style="page-break-inside: avoid">
             <td class="f-700" *ngIf="item.schemeName" [attr.colspan]="colspanValue"
                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}

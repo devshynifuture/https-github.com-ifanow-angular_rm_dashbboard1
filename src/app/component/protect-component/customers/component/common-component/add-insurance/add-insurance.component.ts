@@ -144,8 +144,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
-    policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [''],
+    policyStatus: ['', [Validators.required]],
+    policyStatusLastUnpaid: ['',[Validators.required]],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -496,7 +496,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover);
       this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue);
       this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee);
-      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.vestedBonus);
+      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.currentValue);
       this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate);
       if (this.editInsuranceData) {
         this.getCoOwner.removeAt(0);
@@ -699,8 +699,20 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
+  changePolicyStatus(){
+    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+    }else{
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
+    }
+  }
   saveAddInsurance() {
     this.getClientId();
+    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+    }else{
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
+    }
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
     let ulipFundDetails = [];
     const ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray;
@@ -764,7 +776,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         riskCover: this.keyDetailsForm.get('riskCover').value,
         surrenderValue: this.keyDetailsForm.get('surrenderName').value,
         nominee: this.keyDetailsForm.get('nomineeName').value,
-        vestedBonus: this.keyDetailsForm.get('vestedBonus').value,
+        currentValue: this.keyDetailsForm.get('vestedBonus').value,
         assumedRate: this.keyDetailsForm.get('assumedRate').value,
         loanAvailable: this.loanDetailsForm.get('loanAvailable').value,
         loanTaken: this.loanDetailsForm.get('loanTaken').value,

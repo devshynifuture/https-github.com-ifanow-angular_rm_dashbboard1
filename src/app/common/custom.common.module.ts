@@ -13,6 +13,7 @@ import { CalendarScheduleComponent } from '../component/protect-component/Advise
 import { DashEvent } from '../component/protect-component/AdviserComponent/Activities/calendar/dash-event';
 import { RealEstatePropertyComponent } from './real-estate-property/real-estate-property.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { CredentialsErrorPopupComponent } from './credentials-error-popup/credentials-error-popup.component';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -27,6 +28,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     GoogleConnectComponent,
     CalendarScheduleComponent,
     DashEvent,
+    CredentialsErrorPopupComponent,
   ],
   imports: [
     MaterialModule,
@@ -48,7 +50,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     CalendarScheduleComponent,
     DashEvent
   ],
-  entryComponents: [LinkBankComponent, RealEstatePropertyComponent, DashEvent]
+  entryComponents: [LinkBankComponent, RealEstatePropertyComponent, DashEvent, CredentialsErrorPopupComponent]
 })
 export class CustomCommonModule {
 }

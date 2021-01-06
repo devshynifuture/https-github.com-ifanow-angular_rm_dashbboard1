@@ -24,7 +24,8 @@
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
                 <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                     (click)="openFilter()">
-                    <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
+                    <span class="mat-button-wrapper"><i (click)="openFilter()"
+                            class="material-icons">filter_list</i>FILTERS</span>
                     <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                         ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
                     </div>

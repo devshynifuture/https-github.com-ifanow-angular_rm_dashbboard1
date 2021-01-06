@@ -62,22 +62,32 @@ export class AuthGuard implements CanActivate {
       console.log('AppComponent getRandomStringFromPlanner winName: ', winName);
 
       if (winName.includes('uniqueString')) {
-        return this.peopleService.getLoginDataFromUniqueString(winName)
+        try {
+          const winNameObj = JSON.parse(winName);
+          const obj = {
+            uuid: winNameObj.uniqueString
+          };
+          return this.peopleService.getLoginDataFromUUID(obj)
 
-          ./*pipe(*/map((response) => {
-            console.log('AppComponent getRandomStringFromPlanner response: ', response);
-            window.name = undefined;
-            if (response) {
-              this.loginService.handleUserData(this.authService, this.myRoute, response);
-              return true;
-            } else {
-              return false;
-            }
-          }, catchError(err => {
-            this.myRoute.navigate(['/login']);
-            console.log('AppComponent getRandomStringFromPlanner err: ', err);
-            return of(false);
-          }));
+            ./*pipe(*/map((response) => {
+              console.log('AppComponent getRandomStringFromPlanner response: ', response);
+              window.name = undefined;
+              if (response) {
+                this.loginService.handleUserData(this.authService, this.myRoute, response);
+                return true;
+              } else {
+                return false;
+              }
+            }, catchError(err => {
+              this.myRoute.navigate(['/login']);
+              console.log('AppComponent getRandomStringFromPlanner err: ', err);
+              return of(false);
+            }));
+        } catch (e) {
+          console.error(e);
+          this.myRoute.navigate(['/login']);
+          return false;
+        }
       } else if (state && state.url.split('/').includes('login')) {
         return true;
       }

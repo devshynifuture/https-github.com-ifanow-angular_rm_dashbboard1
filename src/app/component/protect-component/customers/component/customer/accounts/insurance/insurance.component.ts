@@ -703,7 +703,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
       this.getCount();
-      this.getStatusId(this.dataSource.data);
+      // this.getStatusId(this.dataSource.data);
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
       this.totalCurrentValue = 0;
@@ -905,7 +905,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
       this.getCount();
-      this.getStatusId(this.dataSource.data);
+      // this.getStatusId(this.dataSource.data);
       this.totalCurrentValue = 0;
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
