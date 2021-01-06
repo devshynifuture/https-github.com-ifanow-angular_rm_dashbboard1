@@ -359,9 +359,10 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.currentViewId = 2;
     } else if (window.pageYOffset < this.riskProfileSectionOffset) {
       this.currentViewId = 3;
-    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
+    } else {
       this.currentViewId = 4;
     }
+    //window.pageYOffset >= this.riskProfileSectionOffset
   }
 
   goToSectionView(scrollOffset) {
