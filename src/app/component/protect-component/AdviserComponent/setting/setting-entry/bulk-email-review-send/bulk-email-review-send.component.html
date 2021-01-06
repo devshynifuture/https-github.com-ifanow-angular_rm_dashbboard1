@@ -41,13 +41,20 @@
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [ngClass]="{'v-h': selectedClientsCount==0}" *ngIf="dataSource.data.length!=selectedClientsCount"
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}"
+                        *ngIf="dataSource.data.length!=selectedClientsCount && !isLoading"
                         class="text-right italicText text-primitive mb-0 f-14">
                         {{selectedClientsCount}} clients
                         selected
                     </p>
-                    <p *ngIf="dataSource.data.length==selectedClientsCount">
+                    <p *ngIf="dataSource.data.length==selectedClientsCount && searchFC.value == '' && !isLoading">
                         All clients selected
+                    </p>
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}"
+                        *ngIf="dataSource.data.length==selectedClientsCount && searchFC.value.length>0 && !isLoading"
+                        class="text-right italicText text-primitive mb-0 f-14">
+                        {{selectedClientsCount}} clients
+                        selected
                     </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
                         [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
