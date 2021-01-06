@@ -96,23 +96,19 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //     this.showDefaultDropDownOnSearch = true;
   //   }
   // }
+
   openNew() {
     const obj = {
       // advisorId: AuthService.getAdvisorId()
       userId: AuthService.getUserId(),
       userType: AuthService.getUserInfo().userType
-
     };
-    // this.peopleService.getUniqueStringForLogin(obj).subscribe(
-    //   data => this.stringRes(data),
-    // );
 
     this.peopleService.getUniqueLoginNew(obj).subscribe(
       data => this.stringRes(data),
     );
-
-    console.log('userIdvaib', AuthService.getUserInfo())
   }
+
 
   stringRes(data) {
     // const url = 'http://localhost:4100/admin/advisor-marketplace/engage-grow';
@@ -120,10 +116,26 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     data.appName = 'marketplace';
     // const dataString = data.toString();
     const dataString = JSON.stringify(data);
-
     // console.log('dataString : ', dataString);
+    this.getuuid(data);
     window.open(url, dataString);
   }
+
+  getuuid(uuid) {
+    const obj = {
+      uuid: uuid
+    }
+    this.peopleService.getuuIDlogin(obj).subscribe(
+      data => this.uuidRes(data),
+    );
+  }
+
+  uuidRes(data) {
+
+  }
+
+
+
 
   getActiveLink(value) {
     const link = this.router.url.split('/')[2];

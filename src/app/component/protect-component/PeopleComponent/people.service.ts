@@ -193,6 +193,10 @@ export class PeopleService {
     return this.http.post(apiConfig.USER + appConfig.POST_UNIQUE_STRING_FOR_LOGIN_NEW, data);
   }
 
+  getuuIDlogin(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_UUID_RESPONSE, data)
+  }
+
   getLoginDataFromUniqueString(data) {
     return this.http.post(apiConfig.USER + appConfig.GET_LOGIN_DATA_FROM_RANDOM_STRING, data);
   }

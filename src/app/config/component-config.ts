@@ -284,6 +284,7 @@ export const appConfig = {
   SAVE_FILTERS_GET: 'mutual-fund/report/config/get',
   SAVE_FILTERS_ADD: 'mutual-fund/report/config/add',
   GET_CLIENT_ALL_ASSET_COUNT: 'account/asset/all/asset/count',
+  GET_UUID_RESPONSE: 'user/login/with/uuid',
   GET_NOTES_ACTIVITY: 'activity/note/list/get',
   ADD_NOTES_ACTIVITY: 'activity/note/add',
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
