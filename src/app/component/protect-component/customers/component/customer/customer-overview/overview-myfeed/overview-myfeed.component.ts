@@ -360,7 +360,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.currentViewId = 2;
     } else if (window.pageYOffset < this.riskProfileSectionOffset) {
       this.currentViewId = 3;
-    } else {
+    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
       this.currentViewId = 4;
     }
     //window.pageYOffset >= this.riskProfileSectionOffset
@@ -610,7 +610,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             element['gainAmount'] = ''
           }
         })
-        this.portFolioData.unshift(this.mutualFundObj ? this.mutualFundObj :mfValue[0]);
+        this.portFolioData.unshift(this.mutualFundObj ? this.mutualFundObj : mfValue[0]);
         // this.portFolioData.splice(mfIndex, 1)
 
       }
