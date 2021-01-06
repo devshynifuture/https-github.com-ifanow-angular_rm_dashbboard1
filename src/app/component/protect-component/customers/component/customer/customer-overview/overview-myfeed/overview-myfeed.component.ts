@@ -315,12 +315,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }
     this.mfServiceService.setClientId(this.clientId);
     this.mfServiceService.getMfData()
-    .subscribe(res => {
-      this.mutualFund = res; // used for getting mutual fund data coming from main gain call
-    });
-    if(!this.mutualFund){
+      .subscribe(res => {
+        this.mutualFund = res; // used for getting mutual fund data coming from main gain call
+      });
+    if (!this.mutualFund) {
       this.teamMemberListGet();
-    }else{
+    } else {
       this.getMutualFundResponse(this.mutualFund)
     }
     this.loadLogicBasedOnRoleType();
@@ -359,9 +359,10 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.currentViewId = 2;
     } else if (window.pageYOffset < this.riskProfileSectionOffset) {
       this.currentViewId = 3;
-    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
+    } else {
       this.currentViewId = 4;
     }
+    //window.pageYOffset >= this.riskProfileSectionOffset
   }
 
   goToSectionView(scrollOffset) {
@@ -588,6 +589,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
           if (element.assetType == 5) {
             element['path'] = '/customer/detail/account/assets/mutual'
+          }
+          if (element.assetType == 35) {
+            element['path'] = '/customer/detail/account/assets/others'
           }
         })
         let mfValue = this.portFolioData.filter(record => record.assetType === 5);
@@ -1089,18 +1093,19 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
     if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
       this.loaderFn.increaseCounter();
-        this.customerService.getMutualFund(obj).subscribe(
-          data => {
-            this.mfServiceService.setMfData(data);
-            this.getMutualFundResponse(data)}, (error) => {
-            // this.eventService.openSnackBar(error, 'DISMISS');
-            this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
-            this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
-            this.tabsLoaded.portfolioData.dataLoaded = true;
-            this.tabsLoaded.portfolioData.isLoading = false;
-  
-          }
-        );
+      this.customerService.getMutualFund(obj).subscribe(
+        data => {
+          this.mfServiceService.setMfData(data);
+          this.getMutualFundResponse(data)
+        }, (error) => {
+          // this.eventService.openSnackBar(error, 'DISMISS');
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+          this.tabsLoaded.portfolioData.dataLoaded = true;
+          this.tabsLoaded.portfolioData.isLoading = false;
+
+        }
+      );
     }
   }
 
