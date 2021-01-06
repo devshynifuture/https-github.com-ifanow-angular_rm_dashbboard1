@@ -590,6 +590,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           if (element.assetType == 5) {
             element['path'] = '/customer/detail/account/assets/mutual'
           }
+          if (element.assetType == 35) {
+            element['path'] = '/customer/detail/account/assets/others'
+          }
         })
         let mfValue = this.portFolioData.filter(record => record.assetType === 5);
         this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
